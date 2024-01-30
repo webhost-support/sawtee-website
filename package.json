@@ -1,0 +1,41 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build && vite build --ssr && vite build && vite build --ssr --ssr"
+    },
+    "devDependencies": {
+        "@inertiajs/react": "^1.0.0",
+        "@vitejs/plugin-react": "^4.0.3",
+        "autoprefixer": "^10.4.16",
+        "axios": "^1.1.2",
+        "laravel-vite-plugin": "^0.8.0",
+        "postcss": "^8.4.31",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "vite": "^4.0.0"   
+    },
+    "volta": {
+        "node": "21.3.0"
+    },
+    "dependencies": {
+        "@chakra-ui/icons": "^2.1.1",
+        "@chakra-ui/react": "^2.8.1",
+        "@emotion/react": "^11.11.1",
+        "@emotion/styled": "^11.11.0",
+        "@tanstack/react-table": "^8.10.6",
+        "@tinymce/tinymce-react": "^4.3.0",
+        "chakra-react-select": "^4.7.4",
+        "framer-motion": "^10.16.4",
+        "install": "^0.13.0",
+        "nprogress": "^0.2.0",
+        "react-datepicker": "^4.23.0",
+        "react-hook-form": "^7.47.0",
+        "react-icons": "^4.11.0",
+        "react-medium-image-zoom": "^5.1.8",
+        "react-twitter-embed": "^4.0.4",
+        "recharts": "^2.9.2",
+        "swiper": "^11.0.4"
+    }
+}
