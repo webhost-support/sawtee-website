@@ -15,20 +15,20 @@ class ThemeSeeder extends Seeder
         DB::table('themes')->insert([
             "title" => "Economic and social reform, growth and poverty",
             "description" => "Identifies South Asia’s development interests, in particular, those of the marginalized and poor people, communities and workers, in regional economic and social reform processes; and advocates their mainstreaming into economic and social policies, and growth and development processes.",
-            'created_at' => fake()->dateTimeThisDecade(now(), 'Asia/Kathmandu'),
-            'updated_at' => fake()->dateTimeThisDecade(now(), 'Asia/Kathmandu'),
+            'created_at' => now(),
+            'updated_at' => '',
             ]);
             DB::table('themes')->insert([
             "title" => "Trade integration and supply-side constraints",
             "description" => "Advocates the region’s trade and development interests in bilateral, regional and multilateral trade negotiations and deals; and identifies ways and mechanisms to address South Asian countries’ supply-side constraints for their meaningful integration into the global economy.",
-            'created_at' => fake()->dateTimeThisDecade(now(), 'Asia/Kathmandu'),
-            'updated_at' => fake()->dateTimeThisDecade(now(), 'Asia/Kathmandu'),
+            'created_at' => now(),
+            'updated_at' => '',
             ]);
             DB::table('themes')->insert([
             "title" => "Trade and climate change",
             "description" => "Promotes mutual compatibility between trade and climate change objectives by providing support to government, private sector and civil society organizations to design and implement policies that contribute to climate change mitigation and adaptation by utilizing trade as an instrument, and supporting government agencies in international negotiations.",
-            'created_at' => fake()->dateTimeThisDecade(now(), 'Asia/Kathmandu'),
-            'updated_at' => fake()->dateTimeThisDecade(now(), 'Asia/Kathmandu'),
+            'created_at' => now(),
+            'updated_at' => '',
             ]);
             DB::table('themes')->insert([
             "title" => "Agriculture policies, biodiversity management and food security",
