@@ -9,7 +9,6 @@ import {
     Image,
     LinkBox,
     useColorModeValue,
-    useDisclosure,
     Collapse,
     Button,
 } from "@chakra-ui/react";

@@ -9,7 +9,6 @@ import "swiper/css/navigation";
 import "swiper/css/effect-cards";
 // import required modules
 import { Keyboard, Navigation, EffectCards } from "swiper/modules";
-import InertiaChakraLink from "./styles/inertia-chakra-link";
 
 const CardsCarousel = ({ slides, navigation = false }) => {
     const ImageBorderColor = useColorModeValue("gray.900", "whiteAlpha.900");

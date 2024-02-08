@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { Box, useColorModeValue } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 // import required modules
 
 const MultiPostsCarousel = ({

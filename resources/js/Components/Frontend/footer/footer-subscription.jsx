@@ -1,9 +1,7 @@
 import {
     Heading,
-    Container,
     Box,
     Checkbox,
-    Text,
     FormControl,
     FormLabel,
     Input,

@@ -4,7 +4,6 @@ import {
     DrawerContent,
     useDisclosure,
     Show,
-    DrawerOverlay,
 } from "@chakra-ui/react";
 import {
     FiHome,
@@ -18,8 +17,6 @@ import {
     FiGrid,
     FiUsers,
     FiMail,
-    FiFeather,
-    FiUser,
 } from "react-icons/fi";
 import { RiPagesLine } from "react-icons/ri";
 import { TbSlideshow } from "react-icons/tb";

@@ -1,7 +1,6 @@
 import { Box, Heading, Image, Link } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import React from "react";
-import { transform } from "framer-motion";
 
 export const PostLink = styled(Link)`
     width: 100%;

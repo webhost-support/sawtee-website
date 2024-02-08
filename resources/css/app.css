@@ -110,20 +110,6 @@ h6 {
     overflow-wrap: break-word;
 }
 
-/* a {
-    color: var(--chakra-colors-primary-700);
-
-    &:hover {
-        color: var(--chakra-colors-primary-500);
-    }
-}
-[data-theme="dark"] a {
-    color: var(--chakra-colors-primary-500);
-    &:hover {
-        color: var(--chakra-colors-primary-300);
-    }
-} */
-
 .swiper-button-prev, .swiper-button-next {
     width: 40px !important;
     height: 35px !important;

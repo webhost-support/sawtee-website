@@ -5,13 +5,12 @@ import {
     DrawerCloseButton,
     DrawerContent,
     DrawerOverlay,
-    // Link,
     Show,
     Button,
     useColorModeValue,
     useDisclosure,
 } from "@chakra-ui/react";
-import React, { forwardRef, useRef } from "react";
+import React, { useRef } from "react";
 import { SocialMenu } from "@/Components/Frontend/header/social-menu";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { Link } from "@inertiajs/react";

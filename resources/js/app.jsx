@@ -1,11 +1,10 @@
 import "./bootstrap";
 import "../css/app.css";
 
-import { createRoot, hydrateRoot } from "react-dom/client";
+import { createRoot } from "react-dom/client";
 import { createInertiaApp } from "@inertiajs/react";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
-// import globalStyle from "@/Components/Frontned/styles/global-styles";
 
 const appName = import.meta.env.VITE_APP_NAME || "SAWTEE";
 const font_heading =
@@ -78,7 +77,7 @@ createInertiaApp({
             import.meta.glob("./Pages/**/*.jsx")
         ),
     setup({ el, App, props }) {
-        const root = hydrateRoot(el);
+        const root = createRoot(el);
 
         root.render(
             <ChakraProvider resetCSS theme={{ config, ...theme }}>

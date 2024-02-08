@@ -6,7 +6,6 @@ import {
     Flex,
     Icon,
     Heading,
-    useColorMode,
     useColorModeValue,
 } from "@chakra-ui/react";
 

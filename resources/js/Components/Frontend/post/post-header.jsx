@@ -1,4 +1,4 @@
-import { Box, Heading, Text, useColorModeValue, Link } from "@chakra-ui/react";
+import { Box, Heading, Text} from "@chakra-ui/react";
 import React from "react";
 import PostCategories from "./post-categories";
 import { formatDate } from "@/Utils/helpers";

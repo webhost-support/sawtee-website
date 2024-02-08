@@ -1,5 +1,5 @@
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
-import { HStack, IconButton } from "@chakra-ui/react";
+import { IconButton } from "@chakra-ui/react";
 
 export function TableEditAction(props) {
     return (

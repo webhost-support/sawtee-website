@@ -12,7 +12,6 @@ import {
     useToast,
     Input,
     Textarea,
-    Text,
 } from "@chakra-ui/react";
 import React from "react";
 import FileUpload, { PreviewImage } from "@/Components/Backend/FileUpload";

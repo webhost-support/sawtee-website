@@ -1,6 +1,5 @@
 import { Button, Box, useColorMode, useColorModeValue } from "@chakra-ui/react";
 import { SunIcon, MoonIcon } from "@chakra-ui/icons";
-// import { IoMoon, IoSunny } from "react-icons/io5";
 import { AnimatePresence, motion } from "framer-motion";
 
 const ToggleDiv = motion(Box);

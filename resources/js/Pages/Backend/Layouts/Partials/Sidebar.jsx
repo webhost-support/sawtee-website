@@ -1,4 +1,3 @@
-import ApplicationLogo from "@/Components/Backend/ApplicationLogo";
 import {
     Box,
     Flex,
@@ -78,7 +77,11 @@ export default function Sidebar({ menu, props }) {
                 </Show>
 
                 <Show above="lg">
-                    <Image w="100px" src="/assets/logo-sawtee.webp" alt="logo" />
+                    <Image
+                        w="100px"
+                        src="/assets/logo-sawtee.webp"
+                        alt="logo"
+                    />
                 </Show>
                 <Text
                     display={{ base: "none", lg: "block" }}

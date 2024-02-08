@@ -4,7 +4,6 @@ import {
     Text,
     useColorModeValue,
     Icon,
-    Show,
     Image,
 } from "@chakra-ui/react";
 import { Link } from "@inertiajs/react";
@@ -75,7 +74,7 @@ export default function DrawerMenu({ menu, props }) {
             <Flex flexDir={"column"} px="4" py="5" align="center">
                 <Image src="/assets/logo-sawtee.webp" alt="logo" />
                 <Text
-                   
+
                     fontSize="2xl"
                     ml="2"
                     color="brand.500"

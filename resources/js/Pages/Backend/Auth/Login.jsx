@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import GuestLayout from "@/Pages/Backend/Layouts/GuestLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 import {
@@ -21,7 +21,6 @@ import {
 } from "@chakra-ui/react";
 import PrimaryButton from "@/Components/Backend/PrimaryButton";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import SecondaryButton from "@/Components/Backend/SecondaryButton";
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({

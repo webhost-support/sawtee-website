@@ -5,7 +5,6 @@ import Section from "@/Components/Frontend/styles/section";
 import FeaturedMedia from "@/Components/Frontend/post/featured-media";
 import { Content } from "@/Components/Frontend/index";
 import PostCategories from "@/Components/Frontend/post/post-categories";
-import { formatDate } from "@/Utils/helpers";
 
 const PostLayout = ({ children, showPattern, isProgramPost, post }) => {
     const postHeaderColor = useColorModeValue("gray.600", "whiteAlpha.600");

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import Iframe from "@frontity/components/iframe";
 import {
     Box,
     Text,
@@ -21,7 +20,6 @@ import {
 import { HiChevronRight, HiChevronDown, HiArrowRight } from "react-icons/hi";
 import styled from "@emotion/styled";
 import { TwitterTimelineEmbed } from "react-twitter-embed";
-// import Script from "@frontity/components/script";
 import { Link } from "@inertiajs/react";
 import ChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
 import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
@@ -55,43 +53,6 @@ export function DebouncedInput({
         />
     );
 }
-
-// export const Wrapper = styled.ul`
-//     margin: 0;
-//     position: relative;
-
-//     & li {
-//         display: flex;
-//         flex-direction: column;
-//         justify-content: center;
-//         cursor: pointer;
-//         padding: 2rem 4rem;
-//         background-color: rgba(255, 255, 255, 0.3);
-//         backdrop-filter: blur(5px);
-
-//         ul {
-//             & li {
-//                 background-color: transparent;
-//                 cursor: initial;
-//                 padding: 1rem;
-//                 margin: 0;
-//             }
-//         }
-
-//         & .accordian-item {
-//             display: flex;
-//             justify-content: space-between;
-//             align-items: center;
-//             & p {
-//                 margin: 0;
-//             }
-//         }
-
-//         & .accordian-content {
-//             margin-top: 2rem;
-//         }
-//     }
-// `;
 
 export const Content = styled(Box)`
     word-break: break-word;

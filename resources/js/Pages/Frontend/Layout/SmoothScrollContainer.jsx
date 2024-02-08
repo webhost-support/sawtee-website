@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect } from "react";
 import { useScroll, useSpring, useTransform, motion } from "framer-motion";
 
 function SmoothScrollContainer({ children }) {

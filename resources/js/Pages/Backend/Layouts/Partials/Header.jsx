@@ -12,13 +12,12 @@ import {
     MenuButton,
     HStack,
     MenuList,
-    MenuItem,
     Show,
     MenuDivider,
     Button,
     useColorMode,
 } from "@chakra-ui/react";
-import { FiMenu, FiBell, FiChevronDown, FiSearch } from "react-icons/fi";
+import { FiMenu, FiChevronDown, FiSearch } from "react-icons/fi";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Link } from "@inertiajs/react";
 import styled from "@emotion/styled";

@@ -1,6 +1,6 @@
 import { useColorModeValue, Box } from "@chakra-ui/react";
 import Section from "@/Components/Frontend/styles/section";
-import { Content, GlassBox } from "@/Components/Frontend/index";
+import { Content } from "@/Components/Frontend/index";
 
 const ProgramPost = ({ post }) => {
     const contentColor = useColorModeValue(
