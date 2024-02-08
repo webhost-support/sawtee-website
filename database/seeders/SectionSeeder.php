@@ -25,7 +25,7 @@ class SectionSeeder extends Seeder
             'page_id' => 1,
             'link' => null,
             'created_at' => now(),
-            'updated_at' => '',
+            
 
         ]);
         DB::table("sections")->insert([
@@ -37,7 +37,7 @@ class SectionSeeder extends Seeder
             'page_id' => 1,
             'link' => null,
             'created_at' => now(),
-            'updated_at' => '',
+            
         ]);
         DB::table("sections")->insert([
             'id' => 3,
@@ -48,7 +48,7 @@ class SectionSeeder extends Seeder
             'page_id' => 1,
             'link' => null,
             'created_at' => now(),
-            'updated_at' => '',
+            
         ]);
         DB::table("sections")->insert([
             'id' => 4,
@@ -59,7 +59,7 @@ class SectionSeeder extends Seeder
             'page_id' => 1,
             'link' => null,
             'created_at' => now(),
-            'updated_at' => '',
+            
         ]);
          DB::table("sections")->insert([
             'id' => 5,
@@ -70,7 +70,7 @@ class SectionSeeder extends Seeder
             'page_id' => 1,
             'link' => null,
             'created_at' => now(),
-            'updated_at' => '',
+            
         ]);
         DB::table("sections")->insert([
             'id' => 6,
@@ -87,7 +87,7 @@ class SectionSeeder extends Seeder
             'page_id' => 1,
             'link' => null,
             'created_at' => now(),
-            'updated_at' => '',
+            
         ]);
 
 
@@ -100,7 +100,7 @@ class SectionSeeder extends Seeder
             'page_id' => 1,
             'link' => null,
             'created_at' => now(),
-            'updated_at' => '',
+            
         ]);
         DB::table("sections")->insert([
             'id' => 8,
@@ -122,7 +122,7 @@ class SectionSeeder extends Seeder
             'page_id' => 1,
             'link' => null,
             'created_at' => now(),
-            'updated_at' => '',
+            
         ]);
         DB::table("sections")->insert([
             'id' => 9,
@@ -141,7 +141,7 @@ class SectionSeeder extends Seeder
             'page_id' => 1,
             'link' => null,
             'created_at' => now(),
-            'updated_at' => '',
+            
         ]);
         DB::table("sections")->insert([
             'id' => 10,
@@ -162,7 +162,7 @@ class SectionSeeder extends Seeder
 
             'link' => null,
             'created_at' => now(),
-            'updated_at' => '',
+            
         ]);
         DB::table("sections")->insert([
             'id' => 11,
@@ -181,7 +181,7 @@ class SectionSeeder extends Seeder
 
             'link' => null,
             'created_at' => now(),
-            'updated_at' => '',
+            
         ]);
         DB::table("sections")->insert([
             'id' => 12,
@@ -193,7 +193,7 @@ class SectionSeeder extends Seeder
 
             'link' => null,
             'created_at' => now(),
-            'updated_at' => '',
+            
         ]);
         DB::table("sections")->insert([
             'id' => 13,
@@ -222,7 +222,7 @@ class SectionSeeder extends Seeder
 
             'link' => null,
             'created_at' => now(),
-            'updated_at' => '',
+            
         ]);
         DB::table("sections")->insert([
             'id' => 14,
@@ -233,7 +233,7 @@ class SectionSeeder extends Seeder
             'page_id' => 2,
             'link' => null,
             'created_at' => now(),
-            'updated_at' => '',
+            
         ]);
         DB::table("sections")->insert([
             'id' => 15,
@@ -244,7 +244,7 @@ class SectionSeeder extends Seeder
             'page_id' => 2,
             'link' => null,
             'created_at' => now(),
-            'updated_at' => '',
+            
         ]);
         DB::table("sections")->insert([
             'id' => 16,
@@ -255,7 +255,7 @@ class SectionSeeder extends Seeder
             'page_id' => 2,
             'link' => "programmes",
             'created_at' => now(),
-            'updated_at' => '',
+            
         ]);
         DB::table("sections")->insert([
             'id' => 17,
@@ -266,7 +266,7 @@ class SectionSeeder extends Seeder
             'page_id' => 2,
             'link' => "research",
             'created_at' => now(),
-            'updated_at' => '',
+            
         ]);
     }
 }

@@ -15,26 +15,26 @@ class PageSeeder extends Seeder
         Db::table("pages")->insert([
             'name' => 'About',
             'slug'=> 'about',
-            'created_at' => '',
-            'updated_at' => '',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
         Db::table("pages")->insert([
             'name' => 'Our Work',
             'slug'=> 'our-work',
-            'created_at' => '',
-            'updated_at' => '',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
         Db::table("pages")->insert([
             'name' => 'Contact',
             'slug'=> 'contact',
-            'created_at' => '',
-            'updated_at' => '',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
         Db::table("pages")->insert([
             'name' => 'Career',
             'slug'=> 'career',
-            'created_at' => '',
-            'updated_at' => '',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
     }
 }
