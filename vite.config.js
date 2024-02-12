@@ -11,4 +11,9 @@ export default defineConfig({
         }),
         react(),
     ],
+    build: {
+        commonjsOptions: {
+            transformMixedEsModules: true,
+        },
+    },
 });
