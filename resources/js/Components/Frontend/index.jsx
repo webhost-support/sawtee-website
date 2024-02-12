@@ -19,7 +19,6 @@ import {
 } from "@chakra-ui/react";
 import { HiChevronRight, HiChevronDown, HiArrowRight } from "react-icons/hi";
 import styled from "@emotion/styled";
-// import { TwitterTimelineEmbed } from "react-twitter-embed";
 import { Link } from "@inertiajs/react";
 import ChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
 import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";

@@ -15,6 +15,7 @@ import {
 import React from "react";
 import FileUpload, { PreviewImage } from "@/Components/Backend/FileUpload";
 import ContentEditor from "@/Components/Backend/ContentEditor";
+import { slugify } from "@/Utils/helpers";
 
 export default function CreatePageForm() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -53,8 +54,9 @@ export default function CreatePageForm() {
     // Set Slug if title value changes
     React.useEffect(() => {
         if (data.name) {
-            setSlug(data.name.toLowerCase().replace(/\s+/g, "-"));
+            setSlug(slugify(data.name));
         }
+        return () => {}
     }, [data.name]);
 
     return (

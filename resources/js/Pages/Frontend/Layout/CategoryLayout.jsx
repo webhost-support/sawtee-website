@@ -3,7 +3,7 @@ import { Box, Heading, Image, useColorModeValue } from "@chakra-ui/react";
 
  const CategoryLayout = ({
      children,
-     showBackgroundPattern,
+     showBackgroundPattern = false,
      image,
      headingColor,
      category,

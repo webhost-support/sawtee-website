@@ -37,7 +37,7 @@ export const PatternBoxInner = (props) => (
 );
 
 export const LightPatternBox = React.forwardRef(
-    ({ showPattern = true, ...props }, ref) => (
+    ({ showPattern = false, ...props }, ref) => (
         <Box
             ref={ref}
             pt="40px"

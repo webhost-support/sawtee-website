@@ -10,7 +10,7 @@ import SubscriptionCard from "@/Components/Frontend/subscriptionCard";
 import NewsletterArchive from "./Archives/NewsletterArchive";
 import EventsArchive from "./Archives/EventsArchive";
 import CovidArchive from "./Archives/CovidArchive";
-import { GlassBox, TwitterTimeline } from "@/Components/Frontend";
+import { GlassBox } from "@/Components/Frontend";
 import Pagination from "@/Components/Frontend/Pagination";
 import BlogArchive from "./Archives/BlogArchive";
 
@@ -21,17 +21,10 @@ export default function Category({
     sawteeInMedia,
     events,
     showSubscriptionBox = true,
-    showTwitterTimeline = true,
     featured_image,
-    srcSet,
 }) {
-    // console.log(featured_image, srcSet);
     const news = sawteeInMedia;
     const isEvent = category.slug === "featured-events";
-    const isProgramme = category.parent
-        ? category.parent.slug
-        : category.slug === "programmes";
-
     const isCovid = category.slug === "covid";
     const isInFocus = category.slug === "infocus";
     const isMedia = category.slug === "sawtee-in-media";
@@ -50,8 +43,6 @@ export default function Category({
         "rgba(12, 17, 43, 0.8)",
         "whiteAlpha.800"
     );
-
-    console.log(category);
 
     return (
         <MainLayout>
@@ -218,22 +209,7 @@ export default function Category({
                                     maxW={"md"}
                                 />
                             )}
-                            {showTwitterTimeline && (
-                                <GlassBox
-                                    rounded="xl"
-                                    maxW={"md"}
-                                    height="max-content"
-                                >
-                                    <TwitterTimeline
-                                        handle="sawteenp"
-                                        width={"100%"}
-                                        height="500px"
-                                        maxH={"700px"}
-                                        rounded="xl"
-                                    />
-                                </GlassBox>
-                            )}
-
+                            
                             {showSubscriptionBox && (
                                 <GlassBox
                                     py="4"
