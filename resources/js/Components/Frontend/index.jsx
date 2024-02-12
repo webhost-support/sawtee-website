@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 import { HiChevronRight, HiChevronDown, HiArrowRight } from "react-icons/hi";
 import styled from "@emotion/styled";
-import { TwitterTimelineEmbed } from "react-twitter-embed";
+// import { TwitterTimelineEmbed } from "react-twitter-embed";
 import { Link } from "@inertiajs/react";
 import ChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
 import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
@@ -291,7 +291,7 @@ export const TwitterTimeline = ({ height, width, handle, limit = 5 }) => {
             id="twitter-wrapper"
             padding={6}
         >
-            <TwitterTimelineEmbed
+            {/* <TwitterTimelineEmbed
                 sourceType="timeline"
                 screenName={handle || "sawteenp"}
                 theme={theme}
@@ -302,7 +302,7 @@ export const TwitterTimeline = ({ height, width, handle, limit = 5 }) => {
                 ariaPolite="assertive"
                 placeholder="Track @sawteenp on Twitter"
                 options={{ height: height, width: width }}
-            />
+            /> */}
         </Box>
     );
 };

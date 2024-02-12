@@ -22,7 +22,6 @@ import {
     Title,
     FancyTitle,
     ExploreButton,
-    TwitterTimeline,
     GlassBox,
 } from "@/Components/Frontend/index";
 import FullWidthCarousel from "@/Components/Frontend/FullWidthCarousel";
@@ -538,8 +537,6 @@ const InFocusSection = ({ articles }) => {
     );
 };
 
-
-
 const InfoSection = () => {
     return (
         <Box
@@ -573,13 +570,13 @@ const InfoSection = () => {
                     justifyContent="center"
                     alignItems="center"
                 >
-                    <TwitterTimeline
+                    {/* <TwitterTimeline
                         maxH="700"
                         height="500px"
                         width="100%"
                         handle="sawteenp"
                         limit={3}
-                    />
+                    /> */}
                 </GlassBox>
             </Stack>
         </Box>
