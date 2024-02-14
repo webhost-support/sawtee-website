@@ -35,7 +35,6 @@ import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link"
 import InertiaChakraLinkOverlay from "@/Components/Frontend/styles/inertia-chakra-link-overlay";
 import { Newsletter } from "@/Components/Frontend/newsletter";
 import PostPreviewCard from "@/Components/Frontend/PostPreviewCard";
-// import Section from "@/Components/Frontend/styles/section";
 
 const Home = ({
     infocus,
@@ -569,15 +568,7 @@ const InfoSection = () => {
                     display="flex"
                     justifyContent="center"
                     alignItems="center"
-                >
-                    {/* <TwitterTimeline
-                        maxH="700"
-                        height="500px"
-                        width="100%"
-                        handle="sawteenp"
-                        limit={3}
-                    /> */}
-                </GlassBox>
+                ></GlassBox>
             </Stack>
         </Box>
     );

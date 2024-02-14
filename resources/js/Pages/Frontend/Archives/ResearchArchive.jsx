@@ -17,7 +17,7 @@ import SidebarWidget from "@/Components/Frontend/sidebarWidget";
 import MainLayout from "../Layout/MainLayout";
 import { FaFilePdf } from "react-icons/fa";
 import { FiCheckCircle } from "react-icons/fi";
-import { GlassBox, TwitterTimeline } from "@/Components/Frontend";
+import { GlassBox } from "@/Components/Frontend";
 import SubscriptionCard from "@/Components/Frontend/subscriptionCard";
 import { Head } from "@inertiajs/react";
 import React from "react";
@@ -179,21 +179,7 @@ const ResearchArchive = ({
                                     <SubscriptionCard />
                                 </GlassBox>
                             )}
-                            {showTwitterTimeline && (
-                                <GlassBox
-                                    rounded="xl"
-                                    maxW={"xl"}
-                                    height="max-content"
-                                >
-                                    <TwitterTimeline
-                                        handle="sawteenp"
-                                        width={"100%"}
-                                        height="500px"
-                                        maxH={"700px"}
-                                        rounded="xl"
-                                    />
-                                </GlassBox>
-                            )}
+
                             {news && (
                                 <SidebarWidget
                                     array={news}

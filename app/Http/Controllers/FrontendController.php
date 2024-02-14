@@ -25,7 +25,6 @@ class FrontendController extends Controller
         $infocus = Post::where('category_id', strval($infocusId))->where('status', 'published')->orderBy('id', 'DESC')->take(7)->get();
         $sawteeInMedia = Post::with('category')->where('category_id', strval($sawteeInMediaId))->where('status', 'published')->orderBy('id', 'DESC')->take(6)->get();
         $events = Post::with('category', 'media', 'tags')->where('category_id', strval($eventsId))->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
-        // dd($events);
         $books = Publication::where('category_id', strval(Category::where('slug', 'books')->first()->id))->orderBy('id', 'DESC')->take(6)->get();
         $trade_insights = Publication::where('category_id', strval(Category::where('slug', 'trade-insight')->first()->id))->orderBy('id', 'DESC')->take(6)->get();
 
@@ -44,7 +43,6 @@ class FrontendController extends Controller
     {
         $page = Page::where('slug', $slug)->firstOrFail();
 
-        // dd($page);
         $sections = Section::with('media')->where('page_id', $page->id)->get();
         $themes = null;
 
@@ -93,7 +91,6 @@ class FrontendController extends Controller
         if ($slug === 'research' && !$subcategory) {
             $collection = Research::with('media', 'file')->orderByDesc('id')->get();
             $research = collect($collection)->groupBy('year')->all();
-            // dd($research);
             return Inertia::render('Frontend/Archives/ResearchArchive', ['category' => $category, 'infocus' => $infocus, 'sawteeInMedia' => $sawteeInMedia, 'research' => $research]);
         }
 
@@ -102,7 +99,6 @@ class FrontendController extends Controller
             if (!$category) {
                 $category = Team::where('slug', 'team-members')->first();
             }
-            // dd($research);
             return Inertia::render('Frontend/Archives/TeamsArchive', ['infocus' => $infocus, 'sawteeInMedia' => $sawteeInMedia, 'teams' => $teams]);
         }
 

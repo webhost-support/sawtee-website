@@ -16,7 +16,7 @@ import Section from "@/Components/Frontend/styles/section";
 import SidebarWidget from "@/Components/Frontend/sidebarWidget";
 import MainLayout from "../Layout/MainLayout";
 import MultiItemCarousel from "@/Components/Frontend/MultiItemCarousel";
-import { GlassBox, TwitterTimeline } from "@/Components/Frontend";
+import { GlassBox } from "@/Components/Frontend";
 import SubscriptionCard from "@/Components/Frontend/subscriptionCard";
 
 export default function PublicationsArchive({
@@ -139,21 +139,6 @@ export default function PublicationsArchive({
                                 />
                             )}
 
-                            {showTwitterTimeline && (
-                                <GlassBox
-                                    rounded="xl"
-                                    maxW={"xl"}
-                                    height="max-content"
-                                >
-                                    <TwitterTimeline
-                                        handle="sawteenp"
-                                        width={"100%"}
-                                        height="500px"
-                                        maxH={"700px"}
-                                        rounded="xl"
-                                    />
-                                </GlassBox>
-                            )}
                             {showSubscriptionBox && (
                                 <GlassBox
                                     py="4"

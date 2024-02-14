@@ -1,4 +1,4 @@
-import { VStack, Text, Heading, HStack, Box } from "@chakra-ui/react";
+import { VStack, Text, Heading, HStack } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { formatDate } from "@/Utils/helpers";
 import { ExploreButton, GlassBox } from "@/Components/Frontend/index";

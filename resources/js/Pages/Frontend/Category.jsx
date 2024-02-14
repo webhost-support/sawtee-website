@@ -209,7 +209,7 @@ export default function Category({
                                     maxW={"md"}
                                 />
                             )}
-                            
+
                             {showSubscriptionBox && (
                                 <GlassBox
                                     py="4"

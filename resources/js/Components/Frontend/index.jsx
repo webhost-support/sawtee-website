@@ -146,7 +146,6 @@ export const Accordian = ({ data }) => {
                     <li
                         key={id}
                         onClick={() => ChangeAccordianOpenState(id, open)}
-                        // style={open ? { position: "absolute", top: "1rem" } : null}
                     >
                         <div className="accordian-item">
                             <p>{name}</p>
@@ -268,43 +267,6 @@ export const Title = ({ text, color, ...rest }) => {
     );
 };
 
-export const TwitterTimeline = ({ height, width, handle, limit = 5 }) => {
-    const theme = useColorModeValue("light", "dark");
-
-    const TwitterWrapper = styled(Box)`
-        display: block;
-        text-align: center;
-        fontweight: bold;
-        width: 100%;
-
-        & div {
-            width: 100%;
-        }
-    `;
-
-    return (
-        <Box
-            textAlign="center"
-            fontWeight="bold"
-            w="full"
-            id="twitter-wrapper"
-            padding={6}
-        >
-            {/* <TwitterTimelineEmbed
-                sourceType="timeline"
-                screenName={handle || "sawteenp"}
-                theme={theme}
-                tweetLimit={limit}
-                noBorders={true}
-                noScrollbar={true}
-                transparent={true}
-                ariaPolite="assertive"
-                placeholder="Track @sawteenp on Twitter"
-                options={{ height: height, width: width }}
-            /> */}
-        </Box>
-    );
-};
 
 export const ExploreButton = ({ text = "Explore All", ...rest }) => {
     const [hovered, setHovered] = useState(false);
