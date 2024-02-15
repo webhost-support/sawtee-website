@@ -15,7 +15,6 @@ import SidebarWidget from "@/Components/Frontend/sidebarWidget";
 import MainLayout from "../Layout/MainLayout";
 import CategoryLayout from "../Layout/CategoryLayout";
 import InertiaChakraLinkOverlay from "@/Components/Frontend/styles/inertia-chakra-link-overlay";
-// import NumberedPagination from "@/Components/NumberedPagination";
 
 export default function Publications({
     category,
