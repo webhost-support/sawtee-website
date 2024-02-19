@@ -4,7 +4,6 @@ import { Text, HStack, Stack, Image, Box, Heading } from "@chakra-ui/react";
 import { Link } from "@inertiajs/react";
 
 const NewsletterArchive = ({ posts }) => {
-    console.log(posts);
     return (
         <GlassBox as="section" role="group">
             <Heading as="h2" fontSize="xl" px={10} my={10}>

@@ -8,7 +8,7 @@ import {
     Skeleton,
     useColorModeValue,
 } from "@chakra-ui/react";
-import { Head, Link } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 import React from "react";
 import Section from "@/Components/Frontend/styles/section";
 import SidebarWidget from "@/Components/Frontend/sidebarWidget";
