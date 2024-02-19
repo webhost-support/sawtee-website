@@ -1,4 +1,4 @@
-import { Box, Text, Heading, VStack } from "@chakra-ui/react";
+import { Box, VStack } from "@chakra-ui/react";
 import { Head } from "@inertiajs/react";
 import React from "react";
 import MainLayout from "./Layout/MainLayout";
@@ -69,23 +69,19 @@ export default function Post({ post }) {
                 />
             </Head>
 
-            <PostLayout post={post} isProgramPost={false}>
+            <PostLayout post={post} isProgramPost={isProgramme}>
                 {isProgramme && <ProgramPost post={post} />}
                 {isNewsletter && <NewsletterPost post={post} />}
 
                 {isDefault && (
-                    <Box mt={6}>
+                    <Box className="default_post_content" mt={6}>
                         <VStack align={"start"} spacing={4}>
-                            return (
-                            <VStack>
-                                <Box
-                                    mt={6}
-                                    dangerouslySetInnerHTML={{
-                                        __html: content,
-                                    }}
-                                />
-                            </VStack>
-                            );
+                            <Box
+                                mt={6}
+                                dangerouslySetInnerHTML={{
+                                    __html: content,
+                                }}
+                            />
                         </VStack>
                     </Box>
                 )}

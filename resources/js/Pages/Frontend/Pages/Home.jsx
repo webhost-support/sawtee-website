@@ -116,16 +116,8 @@ const Home = ({
                 books={books}
                 show={show}
             />
-
             {infocus && <InFocusSection articles={infocus} />}
-
-            <InfoSection />
             {events && <BlogSection linkColor={linkColor} events={events} />}
-
-            {/* <PublicationSection
-                books={books}
-                show={show}
-            /> */}
             <NewsletterSection />
             {sawteeInMedia && (
                 <SawteeInMediaSection
@@ -133,6 +125,7 @@ const Home = ({
                     show={show}
                 />
             )}
+            <InfoSection />
         </MainLayout>
     );
 };
@@ -223,7 +216,7 @@ const AboutSection = ({ intro, image, tradeInsights, books, show }) => {
                             w={{ base: "sm", md: "md" }}
                         >
                             <Link
-                                href="/covid"
+                                href="/category/covid"
                                 role="banner"
                                 aria-labelledby="SAWTEEs response to COVID-19"
                                 title="SAWTEEs response to COVID-19"
@@ -542,34 +535,27 @@ const InfoSection = () => {
             className="section"
             bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
         >
-            <Stack
-                id="twitter-section"
-                direction={{ base: "column", lg: "row" }}
-                py={{ base: "6", md: "12", lg: "16" }}
-                px={{ base: "10", md: "16", lg: "20" }}
-                spacing={"10"}
-            >
+
                 <Box
                     id="chart-wrapper"
-                    w={{ base: "100%", lg: "62%" }}
                     p={{ base: "6", lg: "8" }}
                     display="flex"
                     justifyContent="center"
                     alignItems="center"
                     minH={"500px"}
                 >
-                    <DemoChart />
-                    <ExamplePie />
+                    {/* <DemoChart />
+                    <ExamplePie /> */}
+
+                    <iframe
+                        title="Reform Meter Dashboard_revised"
+                        width="100%"
+                        height="804"
+                        src="https://app.powerbi.com/view?r=eyJrIjoiOGRhNGUzNzUtYTk2NS00YzFjLWE3NDAtM2NjMjdjYTg1NmE1IiwidCI6IjIzM2IyYmFhLTdjNzUtNGI0YS04YjNiLTE3NTNkYmQzODBmOSIsImMiOjF9"
+                        frameborder="0"
+                        allowFullScreen="true"
+                    ></iframe>
                 </Box>
-                <GlassBox
-                    rounded="2xl"
-                    w={{ base: "100%", lg: "35%" }}
-                    m={{ base: "2", lg: "4" }}
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                ></GlassBox>
-            </Stack>
         </Box>
     );
 };

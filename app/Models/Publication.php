@@ -49,4 +49,5 @@ class Publication extends Model implements HasMedia
             ->singleFile();
     }
 
+
 }

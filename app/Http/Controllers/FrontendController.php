@@ -78,6 +78,7 @@ class FrontendController extends Controller
         $parent_and_subcategory_ids = array_merge(array($slug === 'programmes' ? null : $category->id), $subcategory_ids);
         $posts = Post::query()->with('category', 'category.parent', 'media')->whereIn('category_id', $parent_and_subcategory_ids)->orderByDesc('id')->where('status', 'published')->paginate(10);
 
+        // If route is for publications category
         if ($slug === 'publications' && !$subcategory) {
             $publications = array();
             foreach ($category->children as $subcategory) {
@@ -88,12 +89,14 @@ class FrontendController extends Controller
             return Inertia::render('Frontend/Archives/PublicationsArchive', ['category' => $category, 'infocus' => $infocus, 'sawteeInMedia' => $sawteeInMedia, 'publications' => $publications]);
         }
 
+        // If route is for research category
         if ($slug === 'research' && !$subcategory) {
             $collection = Research::with('media', 'file')->orderByDesc('id')->get();
             $research = collect($collection)->groupBy('year')->all();
             return Inertia::render('Frontend/Archives/ResearchArchive', ['category' => $category, 'infocus' => $infocus, 'sawteeInMedia' => $sawteeInMedia, 'research' => $research]);
         }
 
+        // If route is for teams category
         if ($slug === 'teams' && !$subcategory) {
             $teams = Team::with('media')->orderByDesc('order')->get();
             if (!$category) {

@@ -63,12 +63,7 @@ const PostLayout = ({ children, showPattern, isProgramPost, post }) => {
                         // srcSet={srcSet}
                     />
                 )}
-                <Content
-                    as={Section}
-                    px={{ base: "32px", md: "0" }}
-                    size="md"
-                    pt="50px"
-                >
+                <Content px={{ base: "32px", md: "0" }} size="md" pt="50px">
                     {children}
                 </Content>
             </Section>

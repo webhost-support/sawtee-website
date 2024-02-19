@@ -44,6 +44,7 @@ export default function Category({
         "whiteAlpha.800"
     );
 
+    console.log(posts);
     return (
         <MainLayout>
             <Head>
@@ -150,8 +151,6 @@ export default function Category({
                             {isNewsletter && (
                                 <NewsletterArchive posts={posts.data} />
                             )}
-
-
 
                             {isDefault && (
                                 <DefaultArchive
