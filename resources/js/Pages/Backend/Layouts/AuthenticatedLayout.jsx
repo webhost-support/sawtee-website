@@ -35,11 +35,11 @@ const MenuItems = [
         icon: FiGlobe,
         route: "home",
     },
-    {
-        name: "Menu",
-        icon: FiGrid,
-        route: "admin.manage.menus",
-    },
+    // {
+    //     name: "Menu",
+    //     icon: FiGrid,
+    //     route: "admin.manage.menus",
+    // },
     // {
     //     name: "Menu Items",
     //     icon: FiFeather,

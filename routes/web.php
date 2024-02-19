@@ -53,13 +53,13 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->as('admin.')->group(fu
     Route::resource('/pages', PageController::class);
     Route::resource('/teams', TeamController::class);
     Route::get('/post/uploadmedia', [PostController::class, 'uploadmedia'])->name('post.upload');
-    Route::get('/menus/manage-menus/{id?}', [MenuController::class, 'manage'])->name('manage.menus');
-    Route::post('/menus/create', [MenuController::class, 'store'])->name('create.menu');
-    Route::delete('/menus/delete/{id}', [MenuController::class, 'delete'])->name('delete.menu');
-    Route::post('/menus/add-menu-items-to-menu', [MenuController::class, 'addMenuItemToMenu'])->name('addMenuItems.menu');
-    Route::patch('/menus/edit-menu-item/{id}', [MenuController::class, 'editMenuItem'])->name('editMenuItem.menu');
-    Route::delete('/menus/delete-menu-item/{id}', [MenuController::class, 'deleteMenuItem'])->name('deleteMenuItem.menu');
-    Route::post('/menus/add-custom-link', [MenuController::class, 'addCustomLink'])->name('addCustomLink.menu');
+    // Route::get('/menus/manage-menus/{id?}', [MenuController::class, 'manage'])->name('manage.menus');
+    // Route::post('/menus/create', [MenuController::class, 'store'])->name('create.menu');
+    // Route::delete('/menus/delete/{id}', [MenuController::class, 'delete'])->name('delete.menu');
+    // Route::post('/menus/add-menu-items-to-menu', [MenuController::class, 'addMenuItemToMenu'])->name('addMenuItems.menu');
+    // Route::patch('/menus/edit-menu-item/{id}', [MenuController::class, 'editMenuItem'])->name('editMenuItem.menu');
+    // Route::delete('/menus/delete-menu-item/{id}', [MenuController::class, 'deleteMenuItem'])->name('deleteMenuItem.menu');
+    // Route::post('/menus/add-custom-link', [MenuController::class, 'addCustomLink'])->name('addCustomLink.menu');
     Route::get('/subscribers', [SubscriptionController::class, 'index'])->name('subscribers.list');
 });
 
