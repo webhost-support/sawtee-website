@@ -56,6 +56,7 @@ export default function EditPostForm({ post: postData, categories, tags, themes 
         meta_description: postData.meta_description,
     });
 
+    console.log(postData);
 
     const toast = useToast();
     const [imageUrl, setImageUrl] = React.useState(
@@ -99,10 +100,19 @@ export default function EditPostForm({ post: postData, categories, tags, themes 
     // Set Slug if title value changes
     React.useEffect(() => {
         if (data.title) {
-            setSlug(data.title.toLowerCase().replace(/\s+/g, "-"));
-            setData("slug", data.title.toLowerCase().replace(/\s+/g, "-"));
+            setSlug(
+                data.title
+                    .toLowerCase()
+                    .replace(/\s+/g, "-")
+                    .replaceAll(",", "")
+            );
+            setData("slug", slug);
         }
     }, [data.title]);
+
+    React.useEffect(() => {
+        setData("slug", slug);
+    }, [slug]);
 
     React.useEffect(() => {
         if (postTags && tags) {
@@ -146,7 +156,7 @@ export default function EditPostForm({ post: postData, categories, tags, themes 
             <Grid
                 templateColumns={{
                     base: "1fr",
-                    xl: "repeat(7, minmax(150px, 1fr))",
+                    xl: "repeat(7, minmax(auto, 1fr))",
                 }}
                 gap={8}
             >
@@ -365,7 +375,7 @@ export default function EditPostForm({ post: postData, categories, tags, themes 
                             </FormLabel>
 
                             <Input
-                                type="date"
+                                type="datetime-local"
                                 id="published_at"
                                 name="published_at"
                                 value={data.published_at}

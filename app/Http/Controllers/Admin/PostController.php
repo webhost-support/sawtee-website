@@ -48,6 +48,7 @@ class PostController extends Controller
         $validated = $request->validated();
         $validated['title']=Str::of($validated['title'])->squish();
         $validated['slug'] = Str::slug($validated['title'], '-');
+        $validated['meta_title'] = $validated['title'];
         $post = Post::create($validated);
         if ($request->has('tags')) {
             $post->tags()->attach($request->tags);
