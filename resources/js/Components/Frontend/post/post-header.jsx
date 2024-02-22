@@ -22,7 +22,7 @@ const PostHeader = ({
         <Heading
             as="h1"
             fontWeight="bold"
-            fontSize={{ base: "3xl", md: "5xl", xl: "6xl" }}
+            fontSize={{ base: "xl", md: "2xl", xl: "3xl" }}
             mt="30px"
             mb={{ base: "20px", lg: "32px" }}
             textTransform="capitalize"

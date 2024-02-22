@@ -56,17 +56,24 @@ const PostLayout = ({ children, showPattern, isProgramPost, post }) => {
             {/* <PostProgressBar value={scroll} /> */}
 
             {/* Look at the settings to see if we should include the featured image */}
-            <Section pb="80px" size="lg">
+            <Box as="section" maxW="4xl" mx="auto">
                 {featured_media != null && (
                     <FeaturedMedia
                         src={featured_media.original_url}
+                        rounded={"xl"}
                         // srcSet={srcSet}
                     />
                 )}
-                <Content px={{ base: "32px", md: "0" }} size="md" pt="50px">
+
+                <Content
+                    as={Section}
+                    px={{ base: "1rem", md: "2rem" }}
+                    size="lg"
+                    pb="80px"
+                >
                     {children}
                 </Content>
-            </Section>
+            </Box>
         </LightPatternBox>
     );
 };

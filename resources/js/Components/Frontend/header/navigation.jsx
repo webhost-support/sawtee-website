@@ -379,7 +379,7 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
             flexDirection={"column"}
             {...rest}
         >
-            {/* <VStack spacing={10} maxW="90%" m="0 auto">
+            <VStack spacing={10} maxW="90%" m="0 auto">
                 <Text fontSize="2xl" fontFamily={"body"}>
                     <MenuLink as={Link} href={item.children[0].url}>
                         {item.children[0].title}
@@ -409,81 +409,34 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                 </SimpleGrid>
             </VStack>
 
-            <Divider borderBottomWidth="2px" /> */}
+            <Divider borderBottomWidth="2px" />
 
-            <Grid
-                templateColumns={"repeat(5, 1fr)"}
-                columnGap={12}
-                templateRows={"auto"}
-                maxW="90%"
-                m="0 auto"
-                placeItems={"center"}
-            >
-                <GridItem colSpan={2} rowSpan={1}>
-                    <VStack spacing={10}>
-                        <Text fontSize="2xl" fontWeight="bold">
-                            <MenuLink as={Link} href={item.children[1].url}>
-                                {item.children[0].title}
-                            </MenuLink>
-                        </Text>
-                        <SimpleGrid
-                            columns={2}
-                            spacing={6}
-                            as={motion.ul}
-                            variants={ListContainerVariants}
-                            animate={isOpen ? "open" : "closed"}
-                        >
-                            {item.children[0].children.map((child) => {
-                                return (
-                                    <Text
-                                        key={child.title}
-                                        as={motion.li}
-                                        variants={ListVariants}
+            <VStack spacing={10}>
+                <Text fontSize="2xl" fontWeight="bold">
+                    <Link href={item.children[1].url}>
+                        {item.children[1].title}
+                    </Link>
+                </Text>
+                <SimpleGrid columns={2} spacing={6}>
+                    {item.children[1].children &&
+                        item.children[1].children.map((child) => {
+                            return (
+                                <Text
+                                    key={child.title}
+                                    as={motion.li}
+                                    variants={ListVariants}
+                                >
+                                    <MenuLink
+                                        href={child.url}
+                                        textAlign="center"
                                     >
-                                        <StyledLink href={child.url}>
-                                            {child.title}
-                                        </StyledLink>
-                                    </Text>
-                                );
-                            })}
-                        </SimpleGrid>
-                    </VStack>
-                </GridItem>
-                <GridItem
-                    colSpan={3}
-                    rowSpan={1}
-                    as={motion.ul}
-                    variants={ListContainerVariants}
-                    animate={isOpen ? "open" : "closed"}
-                >
-                    <VStack spacing={10}>
-                        <Text fontSize="2xl" fontWeight="bold">
-                            <Link href={item.children[1].url}>
-                                {item.children[1].title}
-                            </Link>
-                        </Text>
-                        <SimpleGrid columns={5} spacing={6}>
-                            {item.children[1].children &&
-                                item.children[1].children.map((child) => {
-                                    return (
-                                        <Text
-                                            key={child.title}
-                                            as={motion.li}
-                                            variants={ListVariants}
-                                        >
-                                            <MenuLink
-                                                href={child.url}
-                                                textAlign="center"
-                                            >
-                                                {child.title}
-                                            </MenuLink>
-                                        </Text>
-                                    );
-                                })}
-                        </SimpleGrid>
-                    </VStack>
-                </GridItem>
-            </Grid>
+                                        {child.title}
+                                    </MenuLink>
+                                </Text>
+                            );
+                        })}
+                </SimpleGrid>
+            </VStack>
         </Box>
     );
 };

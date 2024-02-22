@@ -17,7 +17,7 @@ const EventsArchive = ({ posts, headingColor, textColor }) => {
                 spacing={4}
                 role="group"
                 shadow="xl"
-                maxW="xl"
+                maxW="2xl"
             >
                 <LinkBox>
                     <Box>
