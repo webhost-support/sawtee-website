@@ -9,11 +9,11 @@ import DefaultArchive from "./Archives/DefaultArchive";
 import SubscriptionCard from "@/Components/Frontend/subscriptionCard";
 import NewsletterArchive from "./Archives/NewsletterArchive";
 import EventsArchive from "./Archives/EventsArchive";
-import CovidArchive from "./Archives/CovidArchive";
 import { GlassBox } from "@/Components/Frontend";
 import Pagination from "@/Components/Frontend/Pagination";
 import BlogArchive from "./Archives/BlogArchive";
 import WebsiteHead from "@/Components/Frontend/Head";
+import ResearchArchive from "./Archives/ResearchArchive";
 
 export default function Category({
     category,
@@ -31,7 +31,8 @@ export default function Category({
     const isMedia = category.slug === "sawtee-in-media";
     const isNewsletter = category.slug === "newsletters";
     const isBlog = category.slug === "blog";
-    const isDefault = isCovid || isMedia;
+    const isReasearch = category.slug === "research";
+    const isDefault = !isEvent && !isNewsletter && !isBlog;
     const HeadingColor = useColorModeValue(
         "var(--color-dark)",
         "var(--color-light)"
@@ -90,8 +91,24 @@ export default function Category({
                             mb="56px"
                             colSpan={{ base: 1, md: 2, lg: 1 }}
                         >
-                            {isEvent && isInFocus && isDefault && (
+                            {isDefault && (
                                 <DefaultArchive
+                                    posts={posts.data}
+                                    headingColor={HeadingColor}
+                                    textColor={TextColor}
+                                />
+                            )}
+
+                            {isEvent && (
+                                <EventsArchive
+                                    posts={posts.data}
+                                    headingColor={HeadingColor}
+                                    textColor={TextColor}
+                                />
+                            )}
+
+                            {isReasearch && (
+                                <ResearchArchive
                                     posts={posts.data}
                                     headingColor={HeadingColor}
                                     textColor={TextColor}

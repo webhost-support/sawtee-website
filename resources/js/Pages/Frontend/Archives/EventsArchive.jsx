@@ -6,6 +6,8 @@ import { Link } from "@inertiajs/react";
 import InertiaChakraLinkOverlay from "@/Components/Frontend/styles/inertia-chakra-link-overlay";
 
 const EventsArchive = ({ posts, headingColor, textColor }) => {
+    if (!posts || posts.length <= 0) return "No posts found";
+
     return posts.map((post) => {
         const featured_image = post.media.filter(
             (media) => media.collection_name === "post-featured-image"
