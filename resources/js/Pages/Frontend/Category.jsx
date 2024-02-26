@@ -14,6 +14,7 @@ import Pagination from "@/Components/Frontend/Pagination";
 import BlogArchive from "./Archives/BlogArchive";
 import WebsiteHead from "@/Components/Frontend/Head";
 import ResearchArchive from "./Archives/ResearchArchive";
+import TeamsArchive from "./Archives/TeamsArchive";
 
 export default function Category({
     category,
@@ -26,13 +27,14 @@ export default function Category({
 }) {
     const news = sawteeInMedia;
     const isEvent = category.slug === "featured-events";
-    const isCovid = category.slug === "covid";
+    const isTeam = category.slug === "team-members";
     const isInFocus = category.slug === "infocus";
     const isMedia = category.slug === "sawtee-in-media";
     const isNewsletter = category.slug === "newsletters";
     const isBlog = category.slug === "blog";
-    const isReasearch = category.slug === "research";
-    const isDefault = !isEvent && !isNewsletter && !isBlog;
+    const isResearch = category.slug === "research";
+    const isDefault =
+        !isEvent && !isNewsletter && !isBlog && !isTeam && !isResearch;
     const HeadingColor = useColorModeValue(
         "var(--color-dark)",
         "var(--color-light)"
@@ -107,7 +109,15 @@ export default function Category({
                                 />
                             )}
 
-                            {isReasearch && (
+                            {isTeam && (
+                                <TeamsArchive
+                                    posts={posts}
+                                    headingColor={HeadingColor}
+                                    textColor={TextColor}
+                                />
+                            )}
+
+                            {isResearch && (
                                 <ResearchArchive
                                     posts={posts.data}
                                     headingColor={HeadingColor}

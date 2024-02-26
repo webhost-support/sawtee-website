@@ -68,15 +68,29 @@ class FrontendController extends Controller
         $infocusId = Category::where('slug', 'infocus')->first()->id;
         $sawteeInMediaId = Category::where('slug', 'sawtee-in-media')->first()->id;
 
-        $infocus = Post::where('category_id', strval($infocusId))->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
-        $sawteeInMedia = Post::where('category_id', strval($sawteeInMediaId))->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
-        $events = Post::with('category', 'media')->where('category_id', strval($eventsId))->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
+        $infocus = Post::where('category_id', strval($infocusId))
+                        ->where('status', 'published')
+                        ->orderBy('id', 'DESC')
+                        ->take(5)->get();
+        $sawteeInMedia = Post::where('category_id', strval($sawteeInMediaId))
+                               ->where('status', 'published')
+                               ->orderBy('id', 'DESC')
+                               ->take(5)->get();
+        $events = Post::with('category', 'media')
+                        ->where('category_id', strval($eventsId))
+                        ->where('status', 'published')
+                        ->orderBy('id', 'DESC')
+                        ->take(5)->get();
 
 
         $category = Category::with('parent', 'children')->where('slug', $slug)->firstOrFail();
         $subcategory_ids = $category->children->pluck('id')->toArray();
         $parent_and_subcategory_ids = array_merge(array($slug === 'programmes' ? null : $category->id), $subcategory_ids);
-        $posts = Post::query()->with('category', 'category.parent', 'media')->whereIn('category_id', $parent_and_subcategory_ids)->orderByDesc('id')->where('status', 'published')->paginate(10);
+        $posts = Post::query()->with('category', 'category.parent', 'media')
+                        ->whereIn('category_id', $parent_and_subcategory_ids)
+                        ->orderByDesc('id')
+                        ->where('status', 'published')
+                        ->paginate(10);
 
         // If route is for publications category
         if ($slug === 'publications' && !$subcategory) {
@@ -92,17 +106,13 @@ class FrontendController extends Controller
         // If route is for research category
         if ($slug === 'research' && !$subcategory) {
             $collection = Research::with('media', 'file')->orderByDesc('id')->get();
-            $research = collect($collection)->groupBy('year')->all();
-            return Inertia::render('Frontend/Archives/ResearchArchive', ['category' => $category, 'infocus' => $infocus, 'sawteeInMedia' => $sawteeInMedia, 'research' => $research]);
+            $posts = collect($collection)->groupBy('year')->all();
+
         }
 
         // If route is for teams category
         if ($slug === 'teams' && !$subcategory) {
-            $teams = Team::with('media')->orderByDesc('order')->get();
-            if (!$category) {
-                $category = Team::where('slug', 'team-members')->first();
-            }
-            return Inertia::render('Frontend/Archives/TeamsArchive', ['infocus' => $infocus, 'sawteeInMedia' => $sawteeInMedia, 'teams' => $teams]);
+            $posts = Team::with('media')->orderByDesc('order')->get();
         }
 
         // if route is for category/subcategory/post eg: sawtee.org/programmes/ongoing-programmes/post-slug
