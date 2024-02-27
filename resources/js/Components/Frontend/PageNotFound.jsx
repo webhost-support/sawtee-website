@@ -1,4 +1,4 @@
-import { Box, Text, Heading, Link, Flex } from "@chakra-ui/react";
+import { Box, Text, Heading, Link } from "@chakra-ui/react";
 import InertiaChakraLink from "./styles/inertia-chakra-link";
 
 const PageNotFound = () => {
