@@ -20,23 +20,68 @@ class Handler extends ExceptionHandler
     ];
 
     /**
+     * A list of error messages
+     *
+     * @var array<int, string>
+     */
+    protected $messages = [
+        500 => 'Something went wrong',
+        503 => 'Service unavailable',
+        404 => 'Page Not found',
+        403 => 'Not authorized',
+        419 => 'Page expired, please try again.'
+    ];
+
+    /**
      * Register the exception handling callbacks for the application.
      */
     public function register(): void
     {
-        $this->reportable(function ($request, Throwable $e) {
+        $this->reportable(function (Throwable $e) {
             //
-            $response = parent::render($request, $e);
 
-            if(!app()->environment(['development', 'testing']) && in_array($response->getStatusCode(), [500, 503, 404, 403])){
-                return Inertia::render('Error', ['status' => $response->getStatusCode()])->toResponse($request)->setStatusCode($response->getStatusCode());
-            }elseif($response->getStatusCode() === 419){
-                return back()->with(['message' => __('The page has expired, please try again.')]);
-            }
-
-            return $response;
 
         });
     }
+
+    /**
+     * Render an exception into an HTTP response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Throwable
+     */
+
+    public function render($request, Throwable $e)
+    {
+        $response = parent::render($request, $e);
+        $status = $response->getStatusCode();
+
+        if (app()->environment(['local', 'testing'])) {
+            return $response;
+        }
+
+        if (! array_key_exists($status, $this->messages)) {
+            return $response;
+        }
+
+        if (! $request->isMethod('GET')) {
+            return back()
+                ->setStatusCode($status)
+                ->with('error', $this->messages[$status]);
+        }
+
+        return inertia('Errors/Error', [
+            'status' => $status,
+            'message' => $this->messages[$status],
+        ])
+            ->toResponse($request)
+            ->setStatusCode($status);
+    }
+
+
+
+
 
 }

@@ -1,37 +1,34 @@
-import React from "react";
-import { styled } from "@emotion/styled";
+import { Box, Heading, Text } from "@chakra-ui/react";
+import InertiaChakraLink from "./styles/inertia-chakra-link";
+import PrimaryButton from "../Backend/PrimaryButton";
 
-const Page404 = () => (
-    <Container>
-        <Title>Oops! 404</Title>
-        <Description>
-            That page can’t be found{" "}
-            <span role="img" aria-label="confused face">
-                😕
-            </span>
-        </Description>
-    </Container>
+const Page404 = ({ status, message }) => (
+    <Box textAlign="center" py={10} px={6}>
+        <Heading
+            display="inline-block"
+            as="h2"
+            size="4xl"
+            bgGradient="linear(to-r, primary.400,primary.500, teal.600)"
+            backgroundClip="text"
+        >
+            {status}
+        </Heading>
+        <Text fontSize="18px" mt={3} mb={2}>
+            {message}
+        </Text>
+        <Text color={"gray.500"} mb={6}>
+            The page you&apos;re looking for does not seem to exist
+        </Text>
+
+        <PrimaryButton
+            as={InertiaChakraLink}
+            bgGradient="linear(to-r, primary.400, primary.500, teal.600)"
+            color="white"
+            variant="solid"
+        >
+            Go to Home
+        </PrimaryButton>
+    </Box>
 );
 
 export default Page404;
-
-const Container = styled.div`
-    width: 800px;
-    margin: 0;
-    padding: 24px;
-    text-align: center;
-`;
-
-const Title = styled.h1`
-    margin: 0;
-    margin-top: 24px;
-    margin-bottom: 8px;
-    color: rgba(12, 17, 43);
-    font-size: 4em;
-`;
-
-const Description = styled.div`
-    line-height: 1.6em;
-    color: rgba(12, 17, 43, 0.8);
-    margin: 24px 0;
-`;
