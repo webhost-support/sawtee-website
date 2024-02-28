@@ -1,5 +1,5 @@
 import React from "react";
-import { Head, Link } from "@inertiajs/react";
+import { Link } from "@inertiajs/react";
 import {
     Text,
     Box,
@@ -28,6 +28,7 @@ import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link"
 import InertiaChakraLinkOverlay from "@/Components/Frontend/styles/inertia-chakra-link-overlay";
 import { Newsletter } from "@/Components/Frontend/newsletter";
 import PostPreviewCard from "@/Components/Frontend/PostPreviewCard";
+import WebsiteHead from "@/Components/Frontend/Head";
 
 const Home = ({
     infocus,
@@ -41,7 +42,7 @@ const Home = ({
         "Dedicated to fair, equitable, inclusive, and sustainable growth and development in South Asia, SAWTEE is working towards poverty reduction, food and livelihood security, gender equity, and biodiversity conservation and environmental sustainability.";
     const introImage = "/assets/hero-image.webp";
     const linkColor = "";
-    const show = useBreakpointValue({ base: 1, lg: 2, xl: 3 });
+    const show = useBreakpointValue({ base: 1, md: 2, lg: 3, xl: 4 });
 
     /*
     ? Question
@@ -50,56 +51,12 @@ const Home = ({
 
     return (
         <MainLayout>
-            <Head>
-                <title>{"Home"}</title>
-                <meta http-equiv="imagetoolbar" content="no" />
-                <meta
-                    head-key="description"
-                    name="description"
-                    content="Explore South Asia's dynamic journey since the 1980s, navigating global integration and economic challenges."
-                />
-                <meta
-                    head-key="imagetoolbar"
-                    http-equiv="imagetoolbar"
-                    content="no"
-                />
-                <meta
-                    head-key="og:title"
-                    property="og:title"
-                    content={"SAWTEE | Home"}
-                />
-                <meta
-                    head-key="og:type"
-                    property="og:type"
-                    content="Home page"
-                />
-                <meta
-                    head-key="og:description"
-                    property="og:description"
-                    content="Explore South Asia's dynamic journey since the 1980s, navigating global integration and economic challenges."
-                />
-                <meta
-                    head-key="og:image"
-                    property="og:image"
-                    content={"/assets/logo-sawtee.webp"}
-                />
-                <meta head-key="og:url" property="og:url" content="/" />
-                <meta
-                    head-key="og:site_name"
-                    property="og:site_name"
-                    content="SOUTH ASIA WATCH ON TRADE, ECONOMICS AND ENVIRONMENT"
-                />
-                <meta
-                    head-key="twitter:card"
-                    name="twitter:card"
-                    content="summary_large_image"
-                />
-                <script
-                    async
-                    src="https://platform.twitter.com/widgets.js"
-                    charset="utf-8"
-                ></script>
-            </Head>
+            <WebsiteHead
+                title={"SAWTEE | Home"}
+                description="Explore South Asia's dynamic journey since the 1980s, navigating global integration and economic challenges."
+                image={"/assets/logo-sawtee.webp"}
+            />
+
             <CarouselSection slides={slides} />
             <AboutSection intro={introText} image={introImage} />
             <PublicationSection
@@ -209,8 +166,11 @@ const AboutSection = ({ intro, image }) => {
                             htmlHeight={"150px"}
                         />
                     </Box>
-                    <Box shadow={"xl"} rounded="xl">
-                        <Link
+                    <HStack gap={4}>
+                        <Box
+                            as={Link}
+                            shadow={"xl"}
+                            rounded="xl"
                             href="/category/covid"
                             role="banner"
                             aria-labelledby="Media Fellowship"
@@ -222,10 +182,11 @@ const AboutSection = ({ intro, image }) => {
                                 fit="cover"
                                 rounded="xl"
                             />
-                        </Link>
-                    </Box>
-                    {/* <Box shadow={"xl"} rounded="xl">
-                        <Link
+                        </Box>
+                        <Box
+                            as={Link}
+                            shadow={"xl"}
+                            rounded="xl"
                             href="/category/covid"
                             role="banner"
                             aria-labelledby="SAWTEEs response to COVID-19"
@@ -237,8 +198,8 @@ const AboutSection = ({ intro, image }) => {
                                 fit="cover"
                                 rounded="xl"
                             />
-                        </Link>
-                    </Box> */}
+                        </Box>
+                    </HStack>
                 </VStack>
             </SimpleGrid>
         </Box>
@@ -255,11 +216,7 @@ const SawteeInMediaSection = ({ sawteeInMedia, show }) => {
         >
             <Container maxW="7xl">
                 <VStack spacing={6}>
-                    <MultiPostsCarousel
-                        itemsToShow={show}
-                        spacing={30}
-                        w="full"
-                    >
+                    <MultiPostsCarousel itemsToShow={3} spacing={30} w="full">
                         {sawteeInMedia.map((slide) => {
                             return (
                                 <swiper-slide key={slide.id} class="post-slide">
@@ -295,7 +252,7 @@ const SawteeInMediaSection = ({ sawteeInMedia, show }) => {
                             text="Explore All "
                             w="full"
                             variant="outline"
-                            size="sm"
+                            size="md"
                         />
                     </InertiaChakraLink>
                 </VStack>
@@ -366,7 +323,7 @@ const BlogSection = ({ events }) => {
                         href={"/category/featured-events"}
                     >
                         <ExploreButton
-                            size="sm"
+                            size="md"
                             text="Explore All"
                             w="xl"
                             mt={6}
@@ -477,7 +434,7 @@ const InFocusSection = ({ articles }) => {
                         w="50%"
                     >
                         <ExploreButton
-                            size="sm"
+                            size="md"
                             text="Explore All "
                             w="full"
                             variant="outline"
@@ -569,7 +526,7 @@ const PublicationSection = ({ tradeInsights, books, show }) => {
                                     <ExploreButton
                                         text={"View All"}
                                         variant={"solid"}
-                                        size="sm"
+                                        size="md"
                                     />
                                 </Link>
                             </HStack>

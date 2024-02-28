@@ -18,7 +18,6 @@ import React from "react";
 const ResearchArchive = ({ posts, headingColor, textColor }) => {
     // Get the data of the current list.
 
-    console.log(posts);
 
     if (!posts || posts.length <= 0)
         return <Text fontSize={"2xl"}>"No posts found"</Text>;

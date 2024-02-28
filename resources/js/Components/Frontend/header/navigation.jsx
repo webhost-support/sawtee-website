@@ -414,7 +414,7 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                 {item.children.map((grandChildren, idx) => {
                     if (idx !== 0) {
                         return (
-                            <VStack spacing={10}>
+                            <VStack spacing={10} key={grandChildren.title}>
                                 <Text fontSize="2xl" fontWeight="bold">
                                     <Link href={grandChildren.url}>
                                         {grandChildren.title}

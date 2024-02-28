@@ -25,7 +25,6 @@ export default function Category({
     showSubscriptionBox = true,
     featured_image,
 }) {
-    const news = sawteeInMedia;
     const isEvent = category.slug === "featured-events";
     const isTeam = category.slug === "team-members";
     const isInFocus = category.slug === "infocus";
@@ -48,7 +47,6 @@ export default function Category({
         "whiteAlpha.800"
     );
 
-    console.log(posts);
     return (
         <MainLayout>
             <WebsiteHead
@@ -152,9 +150,9 @@ export default function Category({
                             spacing={12}
                             className="sidebar"
                         >
-                            {!isMedia && news && (
+                            {!isMedia && sawteeInMedia && (
                                 <SidebarWidget
-                                    array={news}
+                                    array={sawteeInMedia}
                                     title={"Sawtee in Media"}
                                     link={"/category/sawtee-in-media"}
                                     maxW={"md"}

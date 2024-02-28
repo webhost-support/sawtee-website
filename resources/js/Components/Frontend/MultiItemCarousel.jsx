@@ -65,7 +65,7 @@ const MultiItemCarousel = ({
             <swiper-container
                 ref={swiperRef}
                 init="false"
-                slides-per-view={3}
+                slides-per-view={itemsToShow}
                 space-between={spacing}
                 navigation={true}
                 slides-per-group={3}

@@ -1,4 +1,3 @@
-import { Head } from "@inertiajs/react";
 import React from "react";
 import { PageLayout } from "./Layout/PageLayout";
 import OurWork from "./Pages/OurWork";
