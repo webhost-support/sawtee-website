@@ -6,7 +6,7 @@ import PostLayout from "./Layout/PostLayout";
 import NewsletterPost from "./Pages/NewsletterPost";
 import WebsiteHead from "@/Components/Frontend/Head";
 
-export default function Post({ post }) { 
+export default function Post({ post }) {
     const { category, title, content } = post;
     const featured_image = post.media.filter(
         (m) => m.collection_name === "post-featured-image"
@@ -29,7 +29,11 @@ export default function Post({ post }) {
                 }
             />
 
-            <PostLayout post={post} isProgramPost={isProgramme}>
+            <PostLayout
+                post={post}
+                isProgramPost={isProgramme}
+                isNewsletter={isNewsletter}
+            >
                 {isProgramme && <ProgramPost post={post} />}
                 {isNewsletter && <NewsletterPost post={post} />}
 

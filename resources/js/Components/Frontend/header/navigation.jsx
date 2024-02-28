@@ -393,15 +393,15 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                     variants={ListContainerVariants}
                     animate={isOpen ? "open" : "closed"}
                 >
-                    {item.children[0].children.map((child) => {
+                    {item.children[0].children.map((grandChild) => {
                         return (
                             <Text
-                                key={child.title}
+                                key={grandChild.title}
                                 as={motion.li}
                                 variants={ListVariants}
                             >
-                                <StyledLink href={child.url}>
-                                    {child.title}
+                                <StyledLink href={grandChild.url}>
+                                    {grandChild.title}
                                 </StyledLink>
                             </Text>
                         );
@@ -410,33 +410,40 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
             </VStack>
 
             <Divider borderBottomWidth="2px" />
-
-            <VStack spacing={10}>
-                <Text fontSize="2xl" fontWeight="bold">
-                    <Link href={item.children[1].url}>
-                        {item.children[1].title}
-                    </Link>
-                </Text>
-                <SimpleGrid columns={2} spacing={6}>
-                    {item.children[1].children &&
-                        item.children[1].children.map((child) => {
-                            return (
-                                <Text
-                                    key={child.title}
-                                    as={motion.li}
-                                    variants={ListVariants}
-                                >
-                                    <MenuLink
-                                        href={child.url}
-                                        textAlign="center"
-                                    >
-                                        {child.title}
-                                    </MenuLink>
+            <SimpleGrid columns={2} spacing={6}>
+                {item.children.map((grandChildren, idx) => {
+                    if (idx !== 0) {
+                        return (
+                            <VStack spacing={10}>
+                                <Text fontSize="2xl" fontWeight="bold">
+                                    <Link href={grandChildren.url}>
+                                        {grandChildren.title}
+                                    </Link>
                                 </Text>
-                            );
-                        })}
-                </SimpleGrid>
-            </VStack>
+                                <SimpleGrid columns={2} spacing={6}>
+                                    {grandChildren.children &&
+                                        grandChildren.children.map((child) => {
+                                            return (
+                                                <Text
+                                                    key={child.title}
+                                                    as={motion.li}
+                                                    variants={ListVariants}
+                                                >
+                                                    <MenuLink
+                                                        href={child.url}
+                                                        textAlign="center"
+                                                    >
+                                                        {child.title}
+                                                    </MenuLink>
+                                                </Text>
+                                            );
+                                        })}
+                                </SimpleGrid>
+                            </VStack>
+                        );
+                    }
+                })}
+            </SimpleGrid>
         </Box>
     );
 };

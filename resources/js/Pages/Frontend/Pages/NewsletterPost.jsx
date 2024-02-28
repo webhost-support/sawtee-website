@@ -1,34 +1,15 @@
 import { Box } from "@chakra-ui/react";
 import React, { useEffect } from "react";
-import Section from "@/Components/Frontend/styles/section";
 import { Head } from "@inertiajs/react";
 
 const NewsletterPost = ({ post }) => {
-    const pdf = post.media.filter((m) => m.collection_name === "post-files")[0];
-    console.log(post, pdf);
-    return (
-        <div pt="0px">
-            <Head>
-                <script
-                    src="https://documentcloud.adobe.com/view-sdk/main.js"
-                    defer
-                />
-            </Head>
-            <PDFEMBED url={pdf ? pdf.original_url : null} title={post.title} />
-        </div>
-    );
-};
-
-export default NewsletterPost;
-
-const PDFEMBED = ({ url, title }) => {
     const viewerConfig = {
         embedMode: "IN_LINE",
         defaultViewMode: "CONTINUOUS",
         showDownloadPDF: true,
         showPrintPDF: true,
     };
-
+    const pdf = post.media.filter((m) => m.collection_name === "post-files")[0];
     useEffect(() => {
         document.addEventListener("adobe_dc_view_sdk.ready", function () {
             /* Initialize the AdobeDC View object */
@@ -42,23 +23,40 @@ const PDFEMBED = ({ url, title }) => {
                 {
                     content: {
                         location: {
-                            url: url,
+                            url: pdf.original_url,
                         },
                     },
                     metaData: {
-                        fileName: title,
+                        fileName: post.title,
                     },
                 },
                 viewerConfig
             );
         });
     }, []);
-
     return (
-        <Box
-            id="adobe-dc-view"
-            className="full-window-div"
-            style={{ width: "100%", height: "100vh", margin: "0 auto" }}
-        ></Box>
+        <div pt="0px">
+            <Head>
+                <script
+                    src="https://acrobatservices.adobe.com/view-sdk/viewer.js"
+                    defer
+                />
+            </Head>
+            <Box
+                id="adobe-dc-view"
+                className="full-window-div"
+                style={{ width: "100%", margin: "0 auto" }}
+            ></Box>
+            {/* <iframe
+                src={pdf ? pdf.original_url : null}
+                width="100%"
+                height="800px"
+                title={post.title}
+            ></iframe> */}
+        </div>
     );
 };
+
+export default NewsletterPost;
+
+

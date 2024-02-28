@@ -23,6 +23,7 @@ const MultiItemCarousel = ({
     const ImageBorderColor = useColorModeValue("gray.900", "whiteAlpha.900");
     const swiperRef = useRef(null);
 
+
     useEffect(() => {
         const swiperContainer = swiperRef.current;
         const params = {
@@ -107,7 +108,11 @@ const MultiItemCarousel = ({
                                         target="_blank"
                                     >
                                         <Image
-                                            src={`${slide.media[0].original_url}`}
+                                            src={
+                                                slide.media
+                                                    ? `${slide.media[0].original_url}`
+                                                    : ""
+                                            }
                                             alt={slide.title}
                                             title={slide.title}
                                             rounded="xl"
