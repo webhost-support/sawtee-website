@@ -210,9 +210,6 @@ export class DemoChart extends PureComponent {
 }
 
 export class ExamplePie extends PureComponent {
-    static demoUrl =
-        "https://codesandbox.io/s/pie-chart-with-customized-active-shape-y93si";
-
     state = {
         activeIndex: 0,
     };

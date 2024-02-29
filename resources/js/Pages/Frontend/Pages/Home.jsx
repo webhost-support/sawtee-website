@@ -29,6 +29,7 @@ import InertiaChakraLinkOverlay from "@/Components/Frontend/styles/inertia-chakr
 import { Newsletter } from "@/Components/Frontend/newsletter";
 import PostPreviewCard from "@/Components/Frontend/PostPreviewCard";
 import WebsiteHead from "@/Components/Frontend/Head";
+import { DemoChart, ExamplePie } from "@/Components/Frontend/charts";
 
 const Home = ({
     infocus,
@@ -206,7 +207,7 @@ const AboutSection = ({ intro, image }) => {
     );
 };
 
-const SawteeInMediaSection = ({ sawteeInMedia, show }) => {
+const SawteeInMediaSection = ({ sawteeInMedia }) => {
     return (
         <Section
             title={"SAWTEE in Media"}
@@ -244,7 +245,7 @@ const SawteeInMediaSection = ({ sawteeInMedia, show }) => {
                     <InertiaChakraLink
                         as={Link}
                         mt={6}
-                        href={"/category/sawtee-in-media"}
+                        href={`/category/${sawteeInMedia[0].category.slug}`}
                         w="50%"
                         textAlign={"center"}
                     >
@@ -320,7 +321,7 @@ const BlogSection = ({ events }) => {
                     </Grid>
                     <InertiaChakraLink
                         as={Link}
-                        href={"/category/featured-events"}
+                        href={`/category/${events[0].category.slug}`}
                     >
                         <ExploreButton
                             size="md"
@@ -375,7 +376,7 @@ const InFocusSection = ({ articles }) => {
                                         >
                                             <InertiaChakraLinkOverlay
                                                 as={Link}
-                                                href={`/category/infocus/${article.slug}`}
+                                                href={`/category/${article.category.slug}/${article.slug}`}
                                             >
                                                 {article.title}
                                             </InertiaChakraLinkOverlay>
@@ -457,17 +458,17 @@ const InfoSection = () => {
                 alignItems="center"
                 minH={"500px"}
             >
-                {/* <DemoChart />
-                    <ExamplePie /> */}
+                <DemoChart />
+                <ExamplePie />
 
-                <iframe
+                {/* <iframe
                     title="Reform Meter Dashboard_revised"
                     width="100%"
                     height="804"
                     src="https://app.powerbi.com/view?r=eyJrIjoiOGRhNGUzNzUtYTk2NS00YzFjLWE3NDAtM2NjMjdjYTg1NmE1IiwidCI6IjIzM2IyYmFhLTdjNzUtNGI0YS04YjNiLTE3NTNkYmQzODBmOSIsImMiOjF9"
                     frameBorder="0"
                     allowFullScreen="true"
-                ></iframe>
+                ></iframe> */}
             </Box>
         </Box>
     );

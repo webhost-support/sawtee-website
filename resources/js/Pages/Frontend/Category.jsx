@@ -15,6 +15,7 @@ import BlogArchive from "./Archives/BlogArchive";
 import WebsiteHead from "@/Components/Frontend/Head";
 import ResearchArchive from "./Archives/ResearchArchive";
 import TeamsArchive from "./Archives/TeamsArchive";
+import CovidArchive from "./Archives/CovidArchive";
 
 export default function Category({
     category,
@@ -31,9 +32,15 @@ export default function Category({
     const isMedia = category.slug === "sawtee-in-media";
     const isNewsletter = category.slug === "newsletters";
     const isBlog = category.slug === "blog";
+    const isCovid = category.slug === "covid";
     const isResearch = category.slug === "research";
     const isDefault =
-        !isEvent && !isNewsletter && !isBlog && !isTeam && !isResearch;
+        !isEvent &&
+        !isNewsletter &&
+        !isBlog &&
+        !isTeam &&
+        !isResearch &&
+        !isCovid;
     const HeadingColor = useColorModeValue(
         "var(--color-dark)",
         "var(--color-light)"
@@ -79,9 +86,9 @@ export default function Category({
                             base: "1fr",
                             md: "1fr",
                             lg: "1fr 1fr",
-                            xl: "var(--chakra-sizes-3xl) minmax(auto, var(--chakra-sizes-md))",
+                            xl: "var(--chakra-sizes-3xl) minmax(var(--chakra-sizes-md), var(--chakra-sizes-lg))",
                         }}
-                        gap={20}
+                        gap={16}
                         pos={"relative"}
                         placeContent={"center"}
                     >
@@ -93,6 +100,13 @@ export default function Category({
                         >
                             {isDefault && (
                                 <DefaultArchive
+                                    posts={posts.data}
+                                    headingColor={HeadingColor}
+                                    textColor={TextColor}
+                                />
+                            )}
+                            {isCovid && (
+                                <CovidArchive
                                     posts={posts.data}
                                     headingColor={HeadingColor}
                                     textColor={TextColor}
