@@ -9,10 +9,12 @@ import DefaultArchive from "./Archives/DefaultArchive";
 import SubscriptionCard from "@/Components/Frontend/subscriptionCard";
 import NewsletterArchive from "./Archives/NewsletterArchive";
 import EventsArchive from "./Archives/EventsArchive";
-import CovidArchive from "./Archives/CovidArchive";
 import { GlassBox } from "@/Components/Frontend";
 import Pagination from "@/Components/Frontend/Pagination";
 import BlogArchive from "./Archives/BlogArchive";
+import WebsiteHead from "@/Components/Frontend/Head";
+import ResearchArchive from "./Archives/ResearchArchive";
+import TeamsArchive from "./Archives/TeamsArchive";
 
 export default function Category({
     category,
@@ -23,14 +25,15 @@ export default function Category({
     showSubscriptionBox = true,
     featured_image,
 }) {
-    const news = sawteeInMedia;
     const isEvent = category.slug === "featured-events";
-    const isCovid = category.slug === "covid";
+    const isTeam = category.slug === "team-members";
     const isInFocus = category.slug === "infocus";
     const isMedia = category.slug === "sawtee-in-media";
     const isNewsletter = category.slug === "newsletters";
     const isBlog = category.slug === "blog";
-    const isDefault = !isEvent && !isCovid && !isNewsletter && !isBlog;
+    const isResearch = category.slug === "research";
+    const isDefault =
+        !isEvent && !isNewsletter && !isBlog && !isTeam && !isResearch;
     const HeadingColor = useColorModeValue(
         "var(--color-dark)",
         "var(--color-light)"
@@ -46,51 +49,15 @@ export default function Category({
 
     return (
         <MainLayout>
-            <Head>
-                <title>{category.name}</title>
-                <meta http-equiv="imagetoolbar" content="no" />
-                <meta
-                    head-key="description"
-                    name="description"
-                    content={category.meta_description}
-                />
-                <meta
-                    head-key="imagetoolbar"
-                    http-equiv="imagetoolbar"
-                    content="no"
-                />
-                <meta
-                    head-key="og:title"
-                    property="og:title"
-                    content={"SAWTEE | " + category.name}
-                />
-                <meta
-                    head-key="og:type"
-                    property="og:type"
-                    content="category page"
-                />
-                <meta
-                    head-key="og:description"
-                    property="og:description"
-                    content={category.meta_description}
-                />
-                <meta
-                    head-key="og:image"
-                    property="og:image"
-                    content={featured_image || "/assets/logo-sawtee.webp"}
-                />
-                <meta head-key="og:url" property="og:url" content="/" />
-                <meta
-                    head-key="og:site_name"
-                    property="og:site_name"
-                    content="SOUTH ASIA WATCH ON TRADE, ECONOMICS AND ENVIRONMENT"
-                />
-                <meta
-                    head-key="twitter:card"
-                    name="twitter:card"
-                    content="summary_large_image"
-                />
-            </Head>
+            <WebsiteHead
+                title={"SAWTEE | " + category.meta_title}
+                description={category.meta_description}
+                image={
+                    featured_image
+                        ? featured_image.original_url
+                        : "/assets/logo-sawtee.webp"
+                }
+            />
             <CategoryLayout
                 showBackgroundPattern={false}
                 image={null}
@@ -100,7 +67,7 @@ export default function Category({
 
                 <Section
                     pb="80px"
-                    padding={{ base: "24px", lg: "80px" }}
+                    padding={{ base: "24px", lg: "40px" }}
                     w="full"
                     size={"huge"}
                     mx="auto"
@@ -112,7 +79,7 @@ export default function Category({
                             base: "1fr",
                             md: "1fr",
                             lg: "1fr 1fr",
-                            xl: "var(--chakra-sizes-2xl) minmax(auto, var(--chakra-sizes-md))",
+                            xl: "var(--chakra-sizes-3xl) minmax(auto, var(--chakra-sizes-md))",
                         }}
                         gap={20}
                         pos={"relative"}
@@ -124,6 +91,14 @@ export default function Category({
                             mb="56px"
                             colSpan={{ base: 1, md: 2, lg: 1 }}
                         >
+                            {isDefault && (
+                                <DefaultArchive
+                                    posts={posts.data}
+                                    headingColor={HeadingColor}
+                                    textColor={TextColor}
+                                />
+                            )}
+
                             {isEvent && (
                                 <EventsArchive
                                     posts={posts.data}
@@ -132,13 +107,22 @@ export default function Category({
                                 />
                             )}
 
-                            {isCovid && (
-                                <CovidArchive
+                            {isTeam && (
+                                <TeamsArchive
+                                    posts={posts}
+                                    headingColor={HeadingColor}
+                                    textColor={TextColor}
+                                />
+                            )}
+
+                            {isResearch && (
+                                <ResearchArchive
                                     posts={posts.data}
                                     headingColor={HeadingColor}
                                     textColor={TextColor}
                                 />
                             )}
+
                             {isBlog && (
                                 <BlogArchive
                                     posts={posts.data}
@@ -149,16 +133,6 @@ export default function Category({
 
                             {isNewsletter && (
                                 <NewsletterArchive posts={posts.data} />
-                            )}
-
-
-
-                            {isDefault && (
-                                <DefaultArchive
-                                    posts={posts.data}
-                                    headingColor={HeadingColor}
-                                    textColor={TextColor}
-                                />
                             )}
 
                             <Pagination
@@ -176,9 +150,9 @@ export default function Category({
                             spacing={12}
                             className="sidebar"
                         >
-                            {!isMedia && news && (
+                            {!isMedia && sawteeInMedia && (
                                 <SidebarWidget
-                                    array={news}
+                                    array={sawteeInMedia}
                                     title={"Sawtee in Media"}
                                     link={"/category/sawtee-in-media"}
                                     maxW={"md"}

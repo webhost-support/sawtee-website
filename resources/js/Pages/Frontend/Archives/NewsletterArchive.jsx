@@ -4,7 +4,8 @@ import { Text, HStack, Stack, Image, Box, Heading } from "@chakra-ui/react";
 import { Link } from "@inertiajs/react";
 
 const NewsletterArchive = ({ posts }) => {
-    console.log(posts);
+    if (!posts || posts.length <= 0) return "No posts found";
+
     return (
         <GlassBox as="section" role="group">
             <Heading as="h2" fontSize="xl" px={10} my={10}>

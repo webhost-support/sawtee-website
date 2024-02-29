@@ -1,5 +1,5 @@
 import React from "react";
-import { Head, Link } from "@inertiajs/react";
+import { Link } from "@inertiajs/react";
 import {
     Text,
     Box,
@@ -11,21 +11,14 @@ import {
     Container,
     Image,
     LinkBox,
-    Stack,
     Divider,
     HStack,
     Skeleton,
     useBreakpointValue,
     useColorModeValue,
 } from "@chakra-ui/react";
-import {
-    Title,
-    FancyTitle,
-    ExploreButton,
-    GlassBox,
-} from "@/Components/Frontend/index";
+import { Title, FancyTitle, ExploreButton } from "@/Components/Frontend/index";
 import FullWidthCarousel from "@/Components/Frontend/FullWidthCarousel";
-import { DemoChart, ExamplePie } from "@/Components/Frontend/charts";
 import { formatDate } from "@/Utils/helpers";
 import MainLayout from "../Layout/MainLayout";
 import MultiItemCarousel from "@/Components/Frontend/MultiItemCarousel";
@@ -35,6 +28,7 @@ import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link"
 import InertiaChakraLinkOverlay from "@/Components/Frontend/styles/inertia-chakra-link-overlay";
 import { Newsletter } from "@/Components/Frontend/newsletter";
 import PostPreviewCard from "@/Components/Frontend/PostPreviewCard";
+import WebsiteHead from "@/Components/Frontend/Head";
 
 const Home = ({
     infocus,
@@ -48,7 +42,7 @@ const Home = ({
         "Dedicated to fair, equitable, inclusive, and sustainable growth and development in South Asia, SAWTEE is working towards poverty reduction, food and livelihood security, gender equity, and biodiversity conservation and environmental sustainability.";
     const introImage = "/assets/hero-image.webp";
     const linkColor = "";
-    const show = useBreakpointValue({ base: 1, lg: 2, xl: 3 });
+    const show = useBreakpointValue({ base: 1, md: 2, lg: 3, xl: 4 });
 
     /*
     ? Question
@@ -57,82 +51,29 @@ const Home = ({
 
     return (
         <MainLayout>
-            <Head>
-                <title>{"Home"}</title>
-                <meta http-equiv="imagetoolbar" content="no" />
-                <meta
-                    head-key="description"
-                    name="description"
-                    content="Explore South Asia's dynamic journey since the 1980s, navigating global integration and economic challenges."
-                />
-                <meta
-                    head-key="imagetoolbar"
-                    http-equiv="imagetoolbar"
-                    content="no"
-                />
-                <meta
-                    head-key="og:title"
-                    property="og:title"
-                    content={"SAWTEE | Home"}
-                />
-                <meta
-                    head-key="og:type"
-                    property="og:type"
-                    content="Home page"
-                />
-                <meta
-                    head-key="og:description"
-                    property="og:description"
-                    content="Explore South Asia's dynamic journey since the 1980s, navigating global integration and economic challenges."
-                />
-                <meta
-                    head-key="og:image"
-                    property="og:image"
-                    content={"/assets/logo-sawtee.webp"}
-                />
-                <meta head-key="og:url" property="og:url" content="/" />
-                <meta
-                    head-key="og:site_name"
-                    property="og:site_name"
-                    content="SOUTH ASIA WATCH ON TRADE, ECONOMICS AND ENVIRONMENT"
-                />
-                <meta
-                    head-key="twitter:card"
-                    name="twitter:card"
-                    content="summary_large_image"
-                />
-                <script
-                    async
-                    src="https://platform.twitter.com/widgets.js"
-                    charset="utf-8"
-                ></script>
-            </Head>
-            <CarouselSection slides={slides} />
+            <WebsiteHead
+                title={"SAWTEE | Home"}
+                description="Explore South Asia's dynamic journey since the 1980s, navigating global integration and economic challenges."
+                image={"/assets/logo-sawtee.webp"}
+            />
 
-            <AboutSection
-                intro={introText}
-                image={introImage}
+            <CarouselSection slides={slides} />
+            <AboutSection intro={introText} image={introImage} />
+            <PublicationSection
                 tradeInsights={tradeInsights}
                 books={books}
                 show={show}
             />
-
             {infocus && <InFocusSection articles={infocus} />}
-
-            <InfoSection />
             {events && <BlogSection linkColor={linkColor} events={events} />}
-
-            {/* <PublicationSection
-                books={books}
-                show={show}
-            /> */}
-            <NewsletterSection />
             {sawteeInMedia && (
                 <SawteeInMediaSection
                     sawteeInMedia={sawteeInMedia}
                     show={show}
                 />
             )}
+            <InfoSection />
+            <NewsletterSection />
         </MainLayout>
     );
 };
@@ -150,9 +91,7 @@ const CarouselSection = ({ slides }) => {
     );
 };
 
-const AboutSection = ({ intro, image, tradeInsights, books, show }) => {
-    const titleColor = useColorModeValue("gray.800", "whiteAlpha.900");
-
+const AboutSection = ({ intro, image }) => {
     return (
         <Box width="full" id="about-section" className="section">
             <SimpleGrid columns={{ base: 1, lg: 2 }}>
@@ -162,7 +101,7 @@ const AboutSection = ({ intro, image, tradeInsights, books, show }) => {
                     overflow="hidden"
                     backgroundImage={`url(${image})`}
                     backgroundSize="cover"
-                    minH={{ base: "400px", md: "auto" }}
+                    minH={"300px"}
                 >
                     <Box
                         backgroundColor="rgba(0,0,0,0.6)"
@@ -176,10 +115,10 @@ const AboutSection = ({ intro, image, tradeInsights, books, show }) => {
                         justifyContent="center"
                         alignItems="center"
                     >
-                        {/* {intro && (
+                        {intro && (
                             <Text
                                 as="blockquote"
-                                fontSize={["sm", "lg", "xl", "2xl"]}
+                                fontSize={["xl", "2xl"]}
                                 color={"whiteAlpha.800"}
                                 m="0"
                                 alignSelf={"center"}
@@ -196,47 +135,7 @@ const AboutSection = ({ intro, image, tradeInsights, books, show }) => {
                             >
                                 {intro}
                             </Text>
-                        )} */}
-                        <Box
-                            shadow={"xl"}
-                            rounded="xl"
-                            w={{ base: "sm", md: "md" }}
-                        >
-                            <Link
-                                href="/about"
-                                role="banner"
-                                aria-labelledby="Advancing LDCs' Trade Interests"
-                                title="Advancing LDCs' Trade Interests"
-                            >
-                                <Image
-                                    src="/assets/advancing-ldc_upscaled.webp"
-                                    alt="Advancing LDCs' Trade Interests"
-                                    fit="cover"
-                                    w="100%"
-                                    rounded="xl"
-                                />
-                            </Link>
-                        </Box>
-                        <Box
-                            shadow={"xl"}
-                            rounded="xl"
-                            w={{ base: "sm", md: "md" }}
-                        >
-                            <Link
-                                href="/covid"
-                                role="banner"
-                                aria-labelledby="SAWTEEs response to COVID-19"
-                                title="SAWTEEs response to COVID-19"
-                            >
-                                <Image
-                                    src="/assets/COVID-19-South-Asia-and-LDCs.webp"
-                                    alt="SAWTEEs response to COVID-19"
-                                    fit="cover"
-                                    w="100%"
-                                    rounded="xl"
-                                />
-                            </Link>
-                        </Box>
+                        )}
                     </Box>
                 </Box>
 
@@ -247,46 +146,60 @@ const AboutSection = ({ intro, image, tradeInsights, books, show }) => {
                     )}
                     alignItems={"center"}
                     gap={6}
-                    p={6}
+                    p={{ base: 10, lg: 20 }}
                     justify={"center"}
                 >
-                    <Box px={6} w="full" py={{ base: "6", md: "8", lg: "10" }}>
-                        <VStack
-                            mb={8}
-                            spacing={4}
-                            alignItems={"start"}
-                            mx="auto"
-                        >
-                            <HStack justify={"space-between"} w="full">
-                                <Title
-                                    text={"Latest Publications"}
-                                    fontWeight="semibold"
-                                    color={titleColor}
-                                    fontSize={["sm", "md", "lg", "lg"]}
-                                />
-                                <Link href="/category/publications/trade-insight">
-                                    <ExploreButton
-                                        text={"View All"}
-                                        variant={"solid"}
-                                        size="sm"
-                                    />
-                                </Link>
-                            </HStack>
-                            <Box
-                                h="5px"
-                                w="full"
-                                bg="repeating-linear-gradient(135deg,#fff 1px,#fff 4px,var(--color-grey-lighter) 6px)"
-                            />
-                        </VStack>
-                        {tradeInsights && (
-                            <MultiItemCarousel
-                                slides={tradeInsights}
-                                itemsToShow={show}
-                                spacing={10}
-                                className={"trade-slider"}
-                            />
-                        )}
+                    <Box
+                        as={Link}
+                        shadow={"xl"}
+                        rounded="xl"
+                        href="/category/covid"
+                        role="banner"
+                        aria-labelledby="Policy Reform Dashboard"
+                        title="Policy Reform Dashboard"
+                    >
+                        <Image
+                            src="/assets/Policy-Reform-Banner-green-sized.webp"
+                            alt="Policy Reform Dashboard"
+                            fit="cover"
+                            rounded="xl"
+                            htmlHeight={"150px"}
+                        />
                     </Box>
+                    <HStack gap={4}>
+                        <Box
+                            as={Link}
+                            shadow={"xl"}
+                            rounded="xl"
+                            href="/category/covid"
+                            role="banner"
+                            aria-labelledby="Media Fellowship"
+                            title="Media Fellowship"
+                        >
+                            <Image
+                                src="/assets/Media-Fellowship-banner.webp"
+                                alt="Media Fellowship"
+                                fit="cover"
+                                rounded="xl"
+                            />
+                        </Box>
+                        <Box
+                            as={Link}
+                            shadow={"xl"}
+                            rounded="xl"
+                            href="/category/covid"
+                            role="banner"
+                            aria-labelledby="SAWTEEs response to COVID-19"
+                            title="SAWTEEs response to COVID-19"
+                        >
+                            <Image
+                                src="/assets/COVID-19-South-Asia-and-LDCs.webp"
+                                alt="SAWTEEs response to COVID-19"
+                                fit="cover"
+                                rounded="xl"
+                            />
+                        </Box>
+                    </HStack>
                 </VStack>
             </SimpleGrid>
         </Box>
@@ -299,14 +212,11 @@ const SawteeInMediaSection = ({ sawteeInMedia, show }) => {
             title={"SAWTEE in Media"}
             id="media-section"
             className="section"
+            bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
         >
             <Container maxW="7xl">
                 <VStack spacing={6}>
-                    <MultiPostsCarousel
-                        itemsToShow={show}
-                        spacing={30}
-                        w="full"
-                    >
+                    <MultiPostsCarousel itemsToShow={3} spacing={30} w="full">
                         {sawteeInMedia.map((slide) => {
                             return (
                                 <swiper-slide key={slide.id} class="post-slide">
@@ -342,7 +252,7 @@ const SawteeInMediaSection = ({ sawteeInMedia, show }) => {
                             text="Explore All "
                             w="full"
                             variant="outline"
-                            size="sm"
+                            size="md"
                         />
                     </InertiaChakraLink>
                 </VStack>
@@ -413,7 +323,7 @@ const BlogSection = ({ events }) => {
                         href={"/category/featured-events"}
                     >
                         <ExploreButton
-                            size="sm"
+                            size="md"
                             text="Explore All"
                             w="xl"
                             mt={6}
@@ -475,7 +385,7 @@ const InFocusSection = ({ articles }) => {
                                                 as="span"
                                                 w="5px"
                                                 h="full"
-                                                bg="accent.400"
+                                                bg="primary.400"
                                                 rounded="lg"
                                                 pos={"absolute"}
                                             />
@@ -524,7 +434,7 @@ const InFocusSection = ({ articles }) => {
                         w="50%"
                     >
                         <ExploreButton
-                            size="sm"
+                            size="md"
                             text="Explore All "
                             w="full"
                             variant="outline"
@@ -538,38 +448,27 @@ const InFocusSection = ({ articles }) => {
 
 const InfoSection = () => {
     return (
-        <Box
-            className="section"
-            bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
-        >
-            <Stack
-                id="twitter-section"
-                direction={{ base: "column", lg: "row" }}
-                py={{ base: "6", md: "12", lg: "16" }}
-                px={{ base: "10", md: "16", lg: "20" }}
-                spacing={"10"}
+        <Box className="section">
+            <Box
+                id="chart-wrapper"
+                p={{ base: "6", lg: "8" }}
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                minH={"500px"}
             >
-                <Box
-                    id="chart-wrapper"
-                    w={{ base: "100%", lg: "62%" }}
-                    p={{ base: "6", lg: "8" }}
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    minH={"500px"}
-                >
-                    <DemoChart />
-                    <ExamplePie />
-                </Box>
-                <GlassBox
-                    rounded="2xl"
-                    w={{ base: "100%", lg: "35%" }}
-                    m={{ base: "2", lg: "4" }}
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                ></GlassBox>
-            </Stack>
+                {/* <DemoChart />
+                    <ExamplePie /> */}
+
+                <iframe
+                    title="Reform Meter Dashboard_revised"
+                    width="100%"
+                    height="804"
+                    src="https://app.powerbi.com/view?r=eyJrIjoiOGRhNGUzNzUtYTk2NS00YzFjLWE3NDAtM2NjMjdjYTg1NmE1IiwidCI6IjIzM2IyYmFhLTdjNzUtNGI0YS04YjNiLTE3NTNkYmQzODBmOSIsImMiOjF9"
+                    frameBorder="0"
+                    allowFullScreen="true"
+                ></iframe>
+            </Box>
         </Box>
     );
 };
@@ -586,16 +485,13 @@ const NewsletterSection = () => {
     );
 };
 
-const PublicationSection = ({ books, show }) => {
+const PublicationSection = ({ tradeInsights, books, show }) => {
     const titleColor = useColorModeValue("gray.800", "whiteAlpha.900");
 
+    const publications = [...tradeInsights, ...books];
+
     return (
-        <Box
-            className="section"
-            maxW="7xl"
-            mx="auto"
-            bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
-        >
+        <Section mx="auto">
             <Box
                 px={6}
                 w="full"
@@ -603,46 +499,54 @@ const PublicationSection = ({ books, show }) => {
                 py={{ base: "6", md: "8", lg: "10" }}
             >
                 <VStack
-                    mb={8}
-                    spacing={4}
-                    w="90%"
-                    alignItems={"start"}
-                    mx="auto"
+                    bg={useColorModeValue(
+                        "blackAlpha.50",
+                        "var(--color-darker)"
+                    )}
+                    alignItems={"center"}
+                    gap={6}
+                    p={6}
+                    justify={"center"}
                 >
-                    <HStack justify={"space-between"} w="full">
-                        <Title
-                            text={"Latest in Books"}
-                            fontWeight="semibold"
-                            color={titleColor}
-                            fontSize={["md", "lg"]}
-                        />
-                        <Link href="/category/publications/books">
-                            <ExploreButton
-                                size="md"
-                                text={"View All"}
-                                variant={"solid"}
-                                colorScheme="accent"
+                    <Box px={6} w="full" py={{ base: "6", md: "8", lg: "10" }}>
+                        <VStack
+                            mb={8}
+                            spacing={4}
+                            alignItems={"start"}
+                            mx="auto"
+                        >
+                            <HStack justify={"space-between"} w="full">
+                                <Title
+                                    text={"Latest Publications"}
+                                    fontWeight="semibold"
+                                    color={titleColor}
+                                    fontSize={["sm", "md", "lg", "lg"]}
+                                />
+                                <Link href="/category/publications">
+                                    <ExploreButton
+                                        text={"View All"}
+                                        variant={"solid"}
+                                        size="md"
+                                    />
+                                </Link>
+                            </HStack>
+                            <Box
+                                h="5px"
+                                w="full"
+                                bg="repeating-linear-gradient(135deg,#fff 3px,#fff 3px,var(--color-grey-lighter) 6px)"
                             />
-                        </Link>
-                    </HStack>
-                    <Box
-                        h="20px"
-                        w="full"
-                        mx="auto"
-                        bg="repeating-linear-gradient(135deg,#fff 1px,#fff 4px,var(--color-grey-lighter) 6px)"
-                    />
-                </VStack>
+                        </VStack>
 
-                {books && (
-                    <MultiItemCarousel
-                        slides={books}
-                        itemsToShow={4}
-                        spacing={30}
-                        className={"books-slider"}
-                    />
-                )}
+                        <MultiItemCarousel
+                            slides={publications}
+                            itemsToShow={show}
+                            spacing={10}
+                            className={"books-slider"}
+                        />
+                    </Box>
+                </VStack>
             </Box>
-        </Box>
+        </Section>
     );
 };
 

@@ -6,7 +6,13 @@ import FeaturedMedia from "@/Components/Frontend/post/featured-media";
 import { Content } from "@/Components/Frontend/index";
 import PostCategories from "@/Components/Frontend/post/post-categories";
 
-const PostLayout = ({ children, showPattern, isProgramPost, post }) => {
+const PostLayout = ({
+    children,
+    showPattern,
+    isProgramPost,
+    isNewsletter,
+    post,
+}) => {
     const postHeaderColor = useColorModeValue("gray.600", "whiteAlpha.600");
     const featured_media = post.media.filter(
         (m) => m.collection_name === "post-featured-image"
@@ -56,22 +62,24 @@ const PostLayout = ({ children, showPattern, isProgramPost, post }) => {
             {/* <PostProgressBar value={scroll} /> */}
 
             {/* Look at the settings to see if we should include the featured image */}
-            <Section pb="80px" size="lg">
+            <Box maxW={isNewsletter ? "full" : "4xl"} mx="auto">
                 {featured_media != null && (
                     <FeaturedMedia
                         src={featured_media.original_url}
+                        rounded={"xl"}
                         // srcSet={srcSet}
                     />
                 )}
+
                 <Content
                     as={Section}
-                    px={{ base: "32px", md: "0" }}
-                    size="md"
-                    pt="50px"
+                    px={{ base: "1rem", md: "2rem" }}
+                    size={isNewsletter ? "full" : "lg"}
+                    pb="80px"
                 >
                     {children}
                 </Content>
-            </Section>
+            </Box>
         </LightPatternBox>
     );
 };

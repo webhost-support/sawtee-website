@@ -99,57 +99,57 @@ export default function MainLayout(props) {
             title: "Our Work",
             url: "/our-work",
             children: [
-                // {
-                //     title: "Thematic Areas",
-                //     url: null,
-                //     children: [
-                //         {
-                //             title: "Economic and social reform, growth and poverty",
-                //             url: "/our-work#theme1",
-                //             children: null,
-                //         },
-                //         {
-                //             title: "Trade integration and supply-side constrants",
-                //             url: "/our-work#theme2",
-                //             children: null,
-                //         },
-                //         {
-                //             title: "Trade and climate change",
-                //             url: "/our-work#theme3",
-                //             children: null,
-                //         },
-                //         {
-                //             title: "Agriculture policies, biodiversity management and food security",
-                //             url: "/our-work#theme4",
-                //             children: null,
-                //         },
-                //         {
-                //             title: "Competition, regulation and competitiveness",
-                //             url: "/our-work#theme5",
-                //             children: null,
-                //         },
-                //         {
-                //             title: "Financial resource management",
-                //             url: "/our-work#theme6",
-                //             children: null,
-                //         },
-                //         {
-                //             title: "Remittance and development",
-                //             url: "/our-work#theme7",
-                //             children: null,
-                //         },
-                //         {
-                //             title: "Covid-19",
-                //             url: "/our-work#theme8",
-                //             children: null,
-                //         },
-                //         {
-                //             title: "Advancing LDCs' Trade Interest",
-                //             url: "/our-work#theme9",
-                //             children: null,
-                //         },
-                //     ],
-                // },
+                {
+                    title: "Thematic Areas",
+                    url: null,
+                    children: [
+                        {
+                            title: "Economic and social reform, growth and poverty",
+                            url: "/our-work#theme1",
+                            children: null,
+                        },
+                        {
+                            title: "Trade integration and supply-side constrants",
+                            url: "/our-work#theme2",
+                            children: null,
+                        },
+                        {
+                            title: "Trade and climate change",
+                            url: "/our-work#theme3",
+                            children: null,
+                        },
+                        {
+                            title: "Agriculture policies, biodiversity management and food security",
+                            url: "/our-work#theme4",
+                            children: null,
+                        },
+                        {
+                            title: "Competition, regulation and competitiveness",
+                            url: "/our-work#theme5",
+                            children: null,
+                        },
+                        {
+                            title: "Financial resource management",
+                            url: "/our-work#theme6",
+                            children: null,
+                        },
+                        {
+                            title: "Remittance and development",
+                            url: "/our-work#theme7",
+                            children: null,
+                        },
+                        {
+                            title: "Covid-19",
+                            url: "/our-work#theme8",
+                            children: null,
+                        },
+                        {
+                            title: "Advancing LDCs' Trade Interest",
+                            url: "/our-work#theme9",
+                            children: null,
+                        },
+                    ],
+                },
                 {
                     title: "Programmes",
                     url: "/category/programmes",

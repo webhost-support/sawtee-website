@@ -55,8 +55,7 @@ export const Newsletter = (props) => (
                 Never miss an update!
             </Heading>
             <Text mt={4} fontSize="xl" color="accent.400">
-                Receive the latest publication releases, events, blog posts and
-                tutorials.
+                Receive the latest publication releases, events, blog posts.
             </Text>
             <SubscribeForm />
         </Box>

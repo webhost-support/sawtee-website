@@ -1,7 +1,6 @@
 import { Box, useColorModeValue, Heading } from "@chakra-ui/react";
 import { LightPatternBox } from "@/Components/Frontend/styles/pattern-box";
 import FeaturedMedia from "@/Components/Frontend/post/featured-media";
-import React from "react";
 
 export const PageLayout = ({
     showBackgroundPattern,

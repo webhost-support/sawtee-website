@@ -34,8 +34,8 @@ class PostRequest extends FormRequest
             'file' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx|max:10240',
             'link' => 'nullable|string|max:255',
             'published_at' => 'nullable|date',
-            'meta_title' => 'required|string|max:255',
-            'meta_description' => 'nullable|string|max:160'
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string|max:255'
         ];
     }
 }

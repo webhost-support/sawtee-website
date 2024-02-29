@@ -235,7 +235,7 @@ export class ExamplePie extends PureComponent {
                         cy="50%"
                         innerRadius={60}
                         outerRadius={80}
-                        fill="#8884d8"
+                        fill="#006181"
                         dataKey="value"
                         onMouseEnter={this.onPieEnter}
                     />

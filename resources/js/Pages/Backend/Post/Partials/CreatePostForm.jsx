@@ -75,8 +75,8 @@ export default function CreatePostForm({ categories, themes, tags }) {
     // Set Slug if title value changes
     React.useEffect(() => {
         if (data.title) {
-            setSlug(data.title.toLowerCase().replace(/\s+/g, "-"));
-            setData("slug", data.title.toLowerCase().replace(/\s+/g, "-"));
+            setSlug(data.title.toLowerCase().replace(/\s+/g, "-")).replaceAll(",", "");
+            setData("slug", slug);
         }
     }, [data.title]);
 
@@ -118,7 +118,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
             <Grid
                 templateColumns={{
                     base: "1fr",
-                    xl: "repeat(7, minmax(150px, 1fr))",
+                    xl: "repeat(7, minmax(auto, 1fr))",
                 }}
                 autoRows={"auto"}
                 gap={8}
@@ -301,7 +301,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
                                     </VStack>
                                 </AccordionPanel>
                             </AccordionItem>
-                        </Accordion>                        
+                        </Accordion>
 
                         <FormControl
                             isInvalid={errors.category_id}
@@ -349,7 +349,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
                             </FormLabel>
 
                             <Input
-                                type="date"
+                                type="datetime-local"
                                 id="published_at"
                                 name="published_at"
                                 onChange={(e) =>
@@ -430,7 +430,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
                                 Status
                             </FormLabel>
 
-                            <Stack direction="row" spacing={8}>
+                            <Stack direction="row" flexWrap={'wrap'} spacing={8}>
                                 {["unpublished", "draft", "published"].map(
                                     (item) => {
                                         return (

@@ -1,4 +1,4 @@
-import { Box, Heading, Text} from "@chakra-ui/react";
+import { Box, HStack, Heading, Text } from "@chakra-ui/react";
 import React from "react";
 import PostCategories from "./post-categories";
 import { formatDate } from "@/Utils/helpers";
@@ -22,21 +22,27 @@ const PostHeader = ({
         <Heading
             as="h1"
             fontWeight="bold"
-            fontSize={{ base: "3xl", md: "5xl", xl: "6xl" }}
+            fontSize={{ base: "xl", md: "2xl", xl: "3xl" }}
             mt="30px"
             mb={{ base: "20px", lg: "32px" }}
             textTransform="capitalize"
             dangerouslySetInnerHTML={{ __html: heading }}
         />
-        {description && <Text mt={4}>{description}</Text>}
+        {description && <Text>{description}</Text>}
         {/* Don't show the author if we're on a page type */}
-        {author && <Text fontSize="lg">by {author}</Text>}
-        {/* Don't show the date if we're on a page type */}
-        {date && (
-            <Text fontSize="md" mt="12px">
-                {formatDate(date)}
-            </Text>
-        )}
+        <HStack gap="4" justify={"center"} align={"center"}>
+            {/* {author && <Text fontSize="lg">by {author}</Text>} */}
+            {/* Don't show the date if we're on a page type */}
+            {date && (
+                <Text
+                    fontSize="md"
+                    fontStyle={"italic"}
+                    fontWeight={"semibold"}
+                >
+                    Published date: {formatDate(date)}
+                </Text>
+            )}
+        </HStack>
     </Box>
 );
 

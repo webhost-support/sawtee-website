@@ -9,7 +9,7 @@ import {
     VStack,
     Box,
 } from "@chakra-ui/react";
-import { Head, Link } from "@inertiajs/react";
+import { Link } from "@inertiajs/react";
 import React from "react";
 import CategoryLayout from "../Layout/CategoryLayout";
 import Section from "@/Components/Frontend/styles/section";
@@ -18,6 +18,7 @@ import MainLayout from "../Layout/MainLayout";
 import MultiItemCarousel from "@/Components/Frontend/MultiItemCarousel";
 import { GlassBox } from "@/Components/Frontend";
 import SubscriptionCard from "@/Components/Frontend/subscriptionCard";
+import WebsiteHead from "@/Components/Frontend/Head";
 
 export default function PublicationsArchive({
     category,
@@ -25,9 +26,7 @@ export default function PublicationsArchive({
     sawteeInMedia,
     publications,
     showSubscriptionBox = true,
-    showTwitterTimeline = true,
 }) {
-    const news = sawteeInMedia;
     const contentColor = useColorModeValue(
         "rgba(12, 17, 43, 0.8)",
         "whiteAlpha.800"
@@ -35,55 +34,15 @@ export default function PublicationsArchive({
     const show = useBreakpointValue([1, 2, 3]);
     return (
         <MainLayout>
-            <Head>
-                <title>{category.name}</title>
-                <meta http-equiv="imagetoolbar" content="no" />
-                <meta
-                    head-key="description"
-                    name="description"
-                    content={category.meta_description}
-                />
-                <meta
-                    head-key="imagetoolbar"
-                    http-equiv="imagetoolbar"
-                    content="no"
-                />
-                <meta
-                    head-key="og:title"
-                    property="og:title"
-                    content={"SAWTEE | " + category.name}
-                />
-                <meta
-                    head-key="og:type"
-                    property="og:type"
-                    content="category page"
-                />
-                <meta
-                    head-key="og:description"
-                    property="og:description"
-                    content={category.meta_description}
-                />
-                <meta
-                    head-key="og:image"
-                    property="og:image"
-                    content={
-                        category.featured_image
-                            ? category.featured_image
-                            : "/assets/logo-sawtee.webp"
-                    }
-                />
-                <meta head-key="og:url" property="og:url" content="/" />
-                <meta
-                    head-key="og:site_name"
-                    property="og:site_name"
-                    content="SOUTH ASIA WATCH ON TRADE, ECONOMICS AND ENVIRONMENT"
-                />
-                <meta
-                    head-key="twitter:card"
-                    name="twitter:card"
-                    content="summary_large_image"
-                />
-            </Head>
+            <WebsiteHead
+                title={"SAWTEE | " + category.meta_title}
+                description={category.meta_description}
+                image={
+                    category.featured_image
+                        ? category.featured_image.original_url
+                        : "/assets/logo-sawtee.webp"
+                }
+            />
             <CategoryLayout
                 showBackgroundPattern={false}
                 image={`/assets/publications-1-resized.jpg`}
@@ -122,9 +81,9 @@ export default function PublicationsArchive({
                             spacing={12}
                             className="sidebar"
                         >
-                            {news && (
+                            {sawteeInMedia && (
                                 <SidebarWidget
-                                    array={news}
+                                    array={sawteeInMedia}
                                     title={"SAWTEE in Media"}
                                     link={"/category/sawtee-in-media"}
                                     maxW={"xl"}
