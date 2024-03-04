@@ -245,7 +245,11 @@ const SawteeInMediaSection = ({ sawteeInMedia }) => {
                     <InertiaChakraLink
                         as={Link}
                         mt={6}
-                        href={`/category/${sawteeInMedia[0].category.slug}`}
+                        href={
+                            sawteeInMedia[0].category.slug
+                                ? `/category/${sawteeInMedia[0].category.slug}`
+                                : ""
+                        }
                         w="50%"
                         textAlign={"center"}
                     >
@@ -321,7 +325,11 @@ const BlogSection = ({ events }) => {
                     </Grid>
                     <InertiaChakraLink
                         as={Link}
-                        href={`/category/${events[0].category.slug}`}
+                        href={
+                            events[0].category.slug
+                                ? `/category/${events[0].category.slug}`
+                                : ""
+                        }
                     >
                         <ExploreButton
                             size="md"
@@ -431,7 +439,11 @@ const InFocusSection = ({ articles }) => {
                     <InertiaChakraLink
                         as={Link}
                         mt={6}
-                        href={"/category/infocus"}
+                        href={
+                            articles[0].category.slug
+                                ? `category/${articles[0].category.slug}`
+                                : "/category/infocus"
+                        }
                         w="50%"
                     >
                         <ExploreButton
