@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "@inertiajs/react";
 import {
     Text,
@@ -29,7 +28,6 @@ import InertiaChakraLinkOverlay from "@/Components/Frontend/styles/inertia-chakr
 import { Newsletter } from "@/Components/Frontend/newsletter";
 import PostPreviewCard from "@/Components/Frontend/PostPreviewCard";
 import WebsiteHead from "@/Components/Frontend/Head";
-import { DemoChart, ExamplePie } from "@/Components/Frontend/charts";
 
 const Home = ({
     infocus,
@@ -42,13 +40,7 @@ const Home = ({
     const introText =
         "Dedicated to fair, equitable, inclusive, and sustainable growth and development in South Asia, SAWTEE is working towards poverty reduction, food and livelihood security, gender equity, and biodiversity conservation and environmental sustainability.";
     const introImage = "/assets/hero-image.webp";
-    const linkColor = "";
     const show = useBreakpointValue({ base: 1, md: 2, lg: 3, xl: 4 });
-
-    /*
-    ? Question
-    TODO: Load webP image in About Section
-  */
 
     return (
         <MainLayout>
@@ -65,7 +57,7 @@ const Home = ({
                 show={show}
             />
             {infocus && <InFocusSection articles={infocus} />}
-            {events && <BlogSection linkColor={linkColor} events={events} />}
+            {events && <BlogSection events={events} />}
             {sawteeInMedia && (
                 <SawteeInMediaSection
                     sawteeInMedia={sawteeInMedia}
@@ -457,17 +449,13 @@ const InfoSection = () => {
                 alignItems="center"
                 minH={"500px"}
             >
-                <DemoChart />
-                <ExamplePie />
-
-                {/* <iframe
+                <iframe
                     title="Reform Meter Dashboard_revised"
                     width="100%"
                     height="804"
                     src="https://app.powerbi.com/view?r=eyJrIjoiOGRhNGUzNzUtYTk2NS00YzFjLWE3NDAtM2NjMjdjYTg1NmE1IiwidCI6IjIzM2IyYmFhLTdjNzUtNGI0YS04YjNiLTE3NTNkYmQzODBmOSIsImMiOjF9"
-                    frameBorder="0"
                     allowFullScreen="true"
-                ></iframe> */}
+                ></iframe>
             </Box>
         </Box>
     );

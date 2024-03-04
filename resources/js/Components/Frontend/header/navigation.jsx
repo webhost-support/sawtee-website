@@ -28,7 +28,7 @@ import React, { Fragment } from "react";
 const MenuLink = styled(InertiaChakraLink)`
     position: relative;
     text-decoration: none;
-    text-align: center;
+    // text-align: center;
     font-size: inherit;
     font-family: var(--chakra-fonts-heading);
     font-weight: normal;
@@ -122,7 +122,6 @@ const MenuItem = ({
             role="group"
         >
             <Button
-                // as={motion.button}
                 borderRadius={"5px"}
                 _focus={{
                     boxShadow: "none",
@@ -285,9 +284,7 @@ const AboutMegaMenu = ({
                                     position="relative"
                                     cursor="pointer"
                                 >
-                                    <StyledLink href={child.url}>
-                                        {child.title}
-                                    </StyledLink>
+                                    <Link href={child.url}>{child.title}</Link>
                                 </Box>
                             );
                         })}
@@ -400,9 +397,9 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                                 as={motion.li}
                                 variants={ListVariants}
                             >
-                                <StyledLink href={grandChild.url}>
+                                <Link href={grandChild.url}>
                                     {grandChild.title}
-                                </StyledLink>
+                                </Link>
                             </Text>
                         );
                     })}
