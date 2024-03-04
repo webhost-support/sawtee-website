@@ -439,11 +439,7 @@ const InFocusSection = ({ articles }) => {
                     <InertiaChakraLink
                         as={Link}
                         mt={6}
-                        href={
-                            articles[0].category.slug
-                                ? `category/${articles[0].category.slug}`
-                                : "/category/infocus"
-                        }
+                        href={"/category/infocus"}
                         w="50%"
                     >
                         <ExploreButton

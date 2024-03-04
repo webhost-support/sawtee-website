@@ -1,1 +1,0 @@
-import{j as n}from"./app-b86f65ba.js";import{B as m}from"./chunk-UVUR7MCU-0c7d985a.js";function a({className:o="",disabled:r,children:t,...e}){return n.jsx(m,{className:o,colorScheme:"red",disabled:r,...e,children:t})}export{a as D};

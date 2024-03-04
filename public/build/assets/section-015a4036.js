@@ -1,1 +1,0 @@
-import{j as o}from"./app-b86f65ba.js";import{B as t}from"./chunk-PULVB27S-40ef37d8.js";const m={xs:"640px",sm:"700px",md:"750px",lg:"1150px",huge:"1550px",max:"2560px",full:"100%"},p=({size:s="lg",...x})=>o.jsx(t,{as:"section",mx:"auto",maxW:m[s],...x}),i=p;export{i as S};
