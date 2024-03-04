@@ -1,11 +1,11 @@
-import { Box, Stack, Text, Image } from "@chakra-ui/react";
+import { Box, Stack, Text, Image, AspectRatio } from "@chakra-ui/react";
 import React, { useRef, useEffect } from "react";
 
 // Import Swiper styles
-// import "swiper/css";
-// import "swiper/css/navigation";
-// import "swiper/css/pagination";
-// import "swiper/css/effect-fade";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/effect-fade";
 
 import { register } from "swiper/element/bundle";
 // register Swiper custom elements
@@ -23,28 +23,46 @@ const FullWidthCarousel = ({ slides, loop = true }) => {
     useEffect(() => {
         const swiperContainer = swiperRef.current;
         const params = {
-            pagination: {
-                clickable: true,
-                renderBullet: function (index, className) {
-                    return '<span class="' + className + '">' + "</span>";
-                },
-            },
+            pagination: pagination,
+            navigatioin: true,
             injectStyles: [
                 `
                     .swiper-pagination-bullet {
-                        width: 20px !important;
-                        height: 20px !important;
+                        width: 1.125rem !important;
+                        height: 1.125rem !important;
                         text-align: center;
-                        line-height: 20px;
+                        line-height: 1.5rem;
                         font-size: 12px;
                         opacity: 1;
                         background: rgba(0, 0, 0, 0.4);
                     }
 
                     .swiper-pagination-bullet-active {
-                        background: #fff;
+                        background: #eee;
                     }
-            `,
+                    .swiper-button-prev {
+                        left: 1rem !important;
+                    }
+                    .swiper-button-next {
+                        right: 1rem !important;
+                    }
+                    .swiper-button-next,
+                    .swiper-button-prev {
+                        bottom: 50% !important;
+                        background-color: transparent;
+                        background-size: 1.5rem;
+                        padding-inline: 8px;
+                        border-radius: 5px;
+                        border: 2px solid var(--color-text);
+                        width: 2rem !important;
+                        height: 2.75rem !important;
+                    }
+                    .swiper-button-next > svg ,
+                    .swiper-button-prev > svg{
+                        height: 1.5rem !important;
+                        color: var(--color-text);
+                    }
+                `,
             ],
         };
 
@@ -59,7 +77,7 @@ const FullWidthCarousel = ({ slides, loop = true }) => {
                 delay: 2500,
                 disableOnInteraction: false,
             }}
-            navigation={false}
+            navigation={true}
             lazy={true}
             keyboard={true}
             effect="fade"
@@ -70,7 +88,6 @@ const FullWidthCarousel = ({ slides, loop = true }) => {
                 <swiper-slide key={slide.id}>
                     <Box
                         pos="relative"
-                        // h={{ base: "auto", md: "calc(100dvh - 4rem)" }}
                         _before={{
                             content: `''`,
                             position: "absolute",
@@ -78,30 +95,28 @@ const FullWidthCarousel = ({ slides, loop = true }) => {
                             left: 0,
                             width: `100%`,
                             height: "100%",
-                            background: "rgba(0,0,0,0.5)",
-                            backgroundBlendMode: "overlay",
+                            background: "rgba(0,0,0,0.3)",
+                            backgroundBlendMode: "multiply",
                         }}
+                        maxH="600px"
                     >
                         <Image
                             src={`${slide.media[0].original_url}`}
                             alt={slide.title}
-                            w="100%"
-                            h="100%"
-                            aspectRatio="16/9"
                             objectFit={"cover"}
+                            boxSize={'full'}
                         />
                         <Stack
                             p="8px 12px"
                             pos="absolute"
-                            w="full"
-                            bottom="24px"
+                            bottom="1.5rem"
                             textAlign="center"
                             mb="8"
                             color="white"
                             zIndex={1}
                         >
-                            <Text fontSize="2xl">{slide.title}</Text>
-                            <Text fontSize="lg">{slide.subtitle}</Text>
+                            <Text fontSize="xl">{slide.title}</Text>
+                            <Text fontSize="md">{slide.subtitle}</Text>
                         </Stack>
                     </Box>
                 </swiper-slide>

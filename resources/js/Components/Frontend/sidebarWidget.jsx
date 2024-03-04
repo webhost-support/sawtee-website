@@ -5,7 +5,6 @@ import {
     Heading,
     Skeleton,
     Stack,
-    Spacer,
     useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
@@ -22,7 +21,7 @@ const ListHeading = ({ title, link }) => {
             px={6}
             py={3}
         >
-            <Flex align="center" p="3">
+            <Flex justify={"space-between"} align="center" wrap={"wrap"} p="3">
                 <Heading
                     as="h3"
                     color={"#fff"}
@@ -30,7 +29,6 @@ const ListHeading = ({ title, link }) => {
                 >
                     {title}
                 </Heading>
-                <Spacer />
                 <ChakraLink
                     as={Link}
                     href={link}

@@ -42,8 +42,17 @@ const Home = ({
     const introText =
         "Dedicated to fair, equitable, inclusive, and sustainable growth and development in South Asia, SAWTEE is working towards poverty reduction, food and livelihood security, gender equity, and biodiversity conservation and environmental sustainability.";
     const introImage = "/assets/hero-image.webp";
-    const linkColor = "";
-    const show = useBreakpointValue({ base: 1, md: 2, lg: 3, xl: 4 });
+    const showPublication = useBreakpointValue({
+        base: 1,
+        md: 2,
+        lg: 3,
+        xl: 4,
+    });
+    const show = useBreakpointValue({
+        base: 1,
+        md: 2,
+        lg: 3,
+    });
 
     /*
     ? Question
@@ -66,10 +75,10 @@ const Home = ({
             <AboutSection intro={introText} image={introImage} />
             {infocus && <InFocusSection articles={infocus} />}
 
-            {/* <PublicationSection
+            <PublicationSection
                 publications={[...tradeInsights, ...books]}
-                show={show}
-            /> */}
+                showPublication={showPublication}
+            />
             {events && <BlogSection events={events} />}
             {sawteeInMedia && (
                 <SawteeInMediaSection
@@ -91,30 +100,30 @@ const CarouselSection = ({ slides, tradeInsights, books }) => {
             as={Grid}
             templateColumns={{
                 base: "1fr",
-                md: "repeat(7, 1fr)",
+                lg: "repeat(7, 1fr)",
             }}
-            templateRows={"auto"}
             id="carousel-section"
             width="full"
         >
             <GridItem colSpan={{ base: 1, md: 4 }}>
-                <FullWidthCarousel
-                    slides={slides}
-                    loop={slides.length > 1 ? true : false}
-                />
+                <FullWidthCarousel slides={slides} loop={false} />
             </GridItem>
-            <GridItem colSpan={{ base: 1, md: 3 }} alignSelf={"center"}>
+            <GridItem colSpan={{ base: 1, md: 3 }} alignSelf={"center"} p={10}>
+                <Title
+                    text={"Featured Publications"}
+                    fontWeight="semibold"
+                    // color={titleColor}
+                    fontSize={["lg", "xl"]}
+                    mb={-2}
+                />
+
                 <MultiItemCarousel
                     slides={tradeInsights}
                     itemsToShow={3}
-                    spacing={10}
+                    spacing={30}
                 />
-                <Spacer h="20" />
-                {/* <MultiItemCarousel
-                    slides={books}
-                    itemsToShow={3}
-                    spacing={10}
-                /> */}
+                <Spacer h="2rem" />
+
             </GridItem>
         </Box>
     );
@@ -130,7 +139,7 @@ const AboutSection = ({ intro, image }) => {
                     overflow="hidden"
                     backgroundImage={`url(${image})`}
                     backgroundSize="cover"
-                    minH={"300px"}
+                    minH={"500px"}
                 >
                     <Box
                         backgroundColor="rgba(0,0,0,0.6)"
@@ -243,7 +252,7 @@ const SawteeInMediaSection = ({ sawteeInMedia, show }) => {
             className="section"
             bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
         >
-            <Container maxW="7xl">
+            <Container maxW="8xl">
                 <VStack spacing={6}>
                     <MultiPostsCarousel
                         itemsToShow={show}
@@ -256,7 +265,7 @@ const SawteeInMediaSection = ({ sawteeInMedia, show }) => {
                                     <PostPreviewCard
                                         post={slide}
                                         showImage={false}
-                                        pt={20}
+                                        py={20}
                                         minH="260px"
                                     />
                                 </swiper-slide>
@@ -272,7 +281,6 @@ const SawteeInMediaSection = ({ sawteeInMedia, show }) => {
 
                     <InertiaChakraLink
                         as={Link}
-                        mt={6}
                         href={"/category/sawtee-in-media"}
                         w="50%"
                         textAlign={"center"}
@@ -304,7 +312,7 @@ const BlogSection = ({ events }) => {
                         gridTemplateColumns={{
                             base: "1fr",
                             md: "1fr 1fr",
-                            lg: "auto repeat(2, 180px);",
+                            lg: "auto repeat(2, 300px);",
                         }}
                         gridTemplateRows={"auto"}
                         gap={8}
@@ -494,8 +502,7 @@ const InfoSection = () => {
                     width="100%"
                     height="804"
                     src="https://app.powerbi.com/view?r=eyJrIjoiOGRhNGUzNzUtYTk2NS00YzFjLWE3NDAtM2NjMjdjYTg1NmE1IiwidCI6IjIzM2IyYmFhLTdjNzUtNGI0YS04YjNiLTE3NTNkYmQzODBmOSIsImMiOjF9"
-                    frameBorder="0"
-                    allowFullScreen="true"
+                    allowFullScreen={true}
                 ></iframe>
             </Box>
         </Box>
@@ -514,10 +521,8 @@ const NewsletterSection = () => {
     );
 };
 
-const PublicationSection = ({ tradeInsights, books, show }) => {
+const PublicationSection = ({ publications, showPublication }) => {
     const titleColor = useColorModeValue("gray.800", "whiteAlpha.900");
-
-    const publications = [...tradeInsights, ...books];
 
     return (
         <Section mx="auto">
@@ -575,8 +580,8 @@ const PublicationSection = ({ tradeInsights, books, show }) => {
 
                         <MultiItemCarousel
                             slides={publications}
-                            itemsToShow={show}
-                            spacing={10}
+                            itemsToShow={showPublication}
+                            spacing={120}
                             className={"books-slider"}
                         />
                     </Box>

@@ -128,7 +128,7 @@ export default function About({ sections }) {
             as={Section}
             px={{ base: "32px", md: "0" }}
             py={"80px"}
-            size={"md"}
+            size={"lg"}
             fontSize={{ base: "md", lg: "lg" }}
         >
             {sections !== null &&

@@ -122,15 +122,14 @@ const MenuItem = ({
             role="group"
         >
             <Button
-                // as={motion.button}
                 borderRadius={"5px"}
                 _focus={{
                     boxShadow: "none",
-                    border: "1px solid",
-                    borderColor: useColorModeValue(
-                        "blackAlpha.700",
-                        "whiteAlpaha.700"
-                    ),
+                    // border: "1px solid",
+                    // borderColor: useColorModeValue(
+                    //     "blackAlpha.700",
+                    //     "whiteAlpaha.700"
+                    // ),
                 }}
                 alignItems="center"
                 fontSize={"sm"}
