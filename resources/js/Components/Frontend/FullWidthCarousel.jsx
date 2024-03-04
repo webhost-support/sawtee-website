@@ -2,10 +2,10 @@ import { Box, Stack, Text, Image } from "@chakra-ui/react";
 import React, { useRef, useEffect } from "react";
 
 // Import Swiper styles
-// import "swiper/css";
-// import "swiper/css/navigation";
-// import "swiper/css/pagination";
-// import "swiper/css/effect-fade";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/effect-fade";
 
 import { register } from "swiper/element/bundle";
 // register Swiper custom elements
@@ -24,10 +24,7 @@ const FullWidthCarousel = ({ slides, loop = true }) => {
         const swiperContainer = swiperRef.current;
         const params = {
             pagination: {
-                clickable: true,
-                renderBullet: function (index, className) {
-                    return '<span class="' + className + '">' + "</span>";
-                },
+                pagination,
             },
             injectStyles: [
                 `
@@ -42,7 +39,7 @@ const FullWidthCarousel = ({ slides, loop = true }) => {
                     }
 
                     .swiper-pagination-bullet-active {
-                        background: #fff;
+                        background: var(--chakra-colors-primary-400);
                     }
             `,
             ],
@@ -54,12 +51,12 @@ const FullWidthCarousel = ({ slides, loop = true }) => {
     return (
         <swiper-container
             ref={swiperRef}
-            init="false"
+            init="true"
             autoplay={{
                 delay: 2500,
                 disableOnInteraction: false,
             }}
-            navigation={false}
+            navigation={true}
             lazy={true}
             keyboard={true}
             effect="fade"
