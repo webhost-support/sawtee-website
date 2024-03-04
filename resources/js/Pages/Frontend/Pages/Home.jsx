@@ -53,7 +53,7 @@ const Home = ({
     return (
         <MainLayout>
             <WebsiteHead
-                title={"SAWTEE | Home"}
+                title={"Home"}
                 description="Explore South Asia's dynamic journey since the 1980s, navigating global integration and economic challenges."
                 image={"/assets/logo-sawtee.webp"}
             />
@@ -61,8 +61,7 @@ const Home = ({
             <CarouselSection slides={slides} />
             <AboutSection intro={introText} image={introImage} />
             <PublicationSection
-                tradeInsights={tradeInsights}
-                books={books}
+                publications={[...tradeInsights, ...books]}
                 show={show}
             />
             {infocus && <InFocusSection articles={infocus} />}
@@ -245,11 +244,7 @@ const SawteeInMediaSection = ({ sawteeInMedia }) => {
                     <InertiaChakraLink
                         as={Link}
                         mt={6}
-                        href={
-                            sawteeInMedia[0].category.slug
-                                ? `/category/${sawteeInMedia[0].category.slug}`
-                                : ""
-                        }
+                        href={`/category/sawtee-in-media`}
                         w="50%"
                         textAlign={"center"}
                     >
@@ -325,11 +320,7 @@ const BlogSection = ({ events }) => {
                     </Grid>
                     <InertiaChakraLink
                         as={Link}
-                        href={
-                            events[0].category.slug
-                                ? `/category/${events[0].category.slug}`
-                                : ""
-                        }
+                        href={`/category/featured-events`}
                     >
                         <ExploreButton
                             size="md"
@@ -494,10 +485,8 @@ const NewsletterSection = () => {
     );
 };
 
-const PublicationSection = ({ tradeInsights, books, show }) => {
+const PublicationSection = ({ publications, show }) => {
     const titleColor = useColorModeValue("gray.800", "whiteAlpha.900");
-
-    const publications = [...tradeInsights, ...books];
 
     return (
         <Section mx="auto">
