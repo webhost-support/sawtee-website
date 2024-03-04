@@ -22,6 +22,7 @@ const FooterSection = ({ children, ...rest }) => (
         w="full"
         pos="relative"
         bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
+        mx={"auto"}
         {...rest}
     >
         {children}
@@ -130,40 +131,31 @@ const Widget = ({ item, linkcolor }) => {
 
 const Footer = ({ menu = null, socialMenu = null }) => {
     const StyledLinkColor = useColorModeValue("#232323", "#F1F1F1");
-    const maxWidth = useBreakpointValue(["xs", "sm", "md"]);
+    // const maxWidth = useBreakpointValue(["xs", "sm", "md"]);
 
     return (
-        <FooterSection
-            alignSelf="flex-end"
-            px={{ base: 6, md: 8, lg: 12 }}
-            py={12}
-        >
+        <FooterSection px={{ base: 8, md: 10, lg: 16 }} pt={12} pb={6}>
             <FooterSectionGroup
                 templateColumns={{
                     base: "1fr",
-                    sm: "repeat(2, 1fr)",
+                    sm: "repeat(3, 1fr)",
                     lg: "repeat(6, 1fr)",
                 }}
-                columnGap={[2, 4, 6]}
-                rowGap={4}
+                gap={4}
             >
                 {Object.entries(menu).map(([key, item]) => {
                     return (
                         <FooterSectionItem
                             key={key}
-                            colSpan={
-                                item.title === "Contact Us"
-                                    ? { base: 1, lg: 2 }
-                                    : 1
-                            }
-                            placeSelf="start"
-                            maxW={maxWidth}
+                            colSpan={{ base: 1, lg: 2 }}
+                            placeSelf="center"
+                            // maxW={maxWidth}
                         >
                             <Widget item={item} linkcolor={StyledLinkColor} />
                         </FooterSectionItem>
                     );
                 })}
-                <FooterSectionItem
+                {/* <FooterSectionItem
                     colSpan={{ base: 1, md: 1, lg: 2 }}
                     placeSelf="center"
                     w="full"
@@ -172,7 +164,7 @@ const Footer = ({ menu = null, socialMenu = null }) => {
                         fontSize={{ base: "sm", lg: "md" }}
                         showIcon={false}
                     />
-                </FooterSectionItem>
+                </FooterSectionItem> */}
             </FooterSectionGroup>
 
             <Stack

@@ -16,6 +16,7 @@ import {
     Skeleton,
     useBreakpointValue,
     useColorModeValue,
+    Spacer,
 } from "@chakra-ui/react";
 import { Title, FancyTitle, ExploreButton } from "@/Components/Frontend/index";
 import FullWidthCarousel from "@/Components/Frontend/FullWidthCarousel";
@@ -57,15 +58,19 @@ const Home = ({
                 image={"/assets/logo-sawtee.webp"}
             />
 
-            <CarouselSection slides={slides} />
-            <AboutSection intro={introText} image={introImage} />
-            <PublicationSection
+            <CarouselSection
+                slides={slides}
                 tradeInsights={tradeInsights}
                 books={books}
-                show={show}
             />
+            <AboutSection intro={introText} image={introImage} />
             {infocus && <InFocusSection articles={infocus} />}
-            {events && <BlogSection linkColor={linkColor} events={events} />}
+
+            {/* <PublicationSection
+                publications={[...tradeInsights, ...books]}
+                show={show}
+            /> */}
+            {events && <BlogSection events={events} />}
             {sawteeInMedia && (
                 <SawteeInMediaSection
                     sawteeInMedia={sawteeInMedia}
@@ -80,13 +85,37 @@ const Home = ({
 
 export default Home;
 
-const CarouselSection = ({ slides }) => {
+const CarouselSection = ({ slides, tradeInsights, books }) => {
     return (
-        <Box id="carousel-section" width="full">
-            <FullWidthCarousel
-                slides={slides}
-                loop={slides.length > 1 ? true : false}
-            />
+        <Box
+            as={Grid}
+            templateColumns={{
+                base: "1fr",
+                md: "repeat(7, 1fr)",
+            }}
+            templateRows={"auto"}
+            id="carousel-section"
+            width="full"
+        >
+            <GridItem colSpan={{ base: 1, md: 4 }}>
+                <FullWidthCarousel
+                    slides={slides}
+                    loop={slides.length > 1 ? true : false}
+                />
+            </GridItem>
+            <GridItem colSpan={{ base: 1, md: 3 }} alignSelf={"center"}>
+                <MultiItemCarousel
+                    slides={tradeInsights}
+                    itemsToShow={3}
+                    spacing={10}
+                />
+                <Spacer h="20" />
+                {/* <MultiItemCarousel
+                    slides={books}
+                    itemsToShow={3}
+                    spacing={10}
+                /> */}
+            </GridItem>
         </Box>
     );
 };
@@ -216,7 +245,11 @@ const SawteeInMediaSection = ({ sawteeInMedia, show }) => {
         >
             <Container maxW="7xl">
                 <VStack spacing={6}>
-                    <MultiPostsCarousel itemsToShow={3} spacing={30} w="full">
+                    <MultiPostsCarousel
+                        itemsToShow={show}
+                        spacing={30}
+                        w="full"
+                    >
                         {sawteeInMedia.map((slide) => {
                             return (
                                 <swiper-slide key={slide.id} class="post-slide">
@@ -232,11 +265,7 @@ const SawteeInMediaSection = ({ sawteeInMedia, show }) => {
                         {sawteeInMedia.length <= 0 &&
                             [1, 2, 3].map((_) => (
                                 <swiper-slide>
-                                    <Skeleton
-                                        rounded="xl"
-                                        w="200px"
-                                        h="260px"
-                                    />
+                                    <Skeleton rounded="xl" w="auto" h="260px" />
                                 </swiper-slide>
                             ))}
                     </MultiPostsCarousel>
@@ -515,12 +544,19 @@ const PublicationSection = ({ tradeInsights, books, show }) => {
                             alignItems={"start"}
                             mx="auto"
                         >
-                            <HStack justify={"space-between"} w="full">
+                            <HStack
+                                justify={{
+                                    base: "center",
+                                    md: "space-between",
+                                }}
+                                wrap={"wrap"}
+                                w="full"
+                            >
                                 <Title
                                     text={"Latest Publications"}
                                     fontWeight="semibold"
                                     color={titleColor}
-                                    fontSize={["sm", "md", "lg", "lg"]}
+                                    fontSize={["lg", "xl"]}
                                 />
                                 <Link href="/category/publications">
                                     <ExploreButton
@@ -557,7 +593,7 @@ const Section = ({ children, title = null, ...props }) => {
             w="9xl"
             mx="auto"
             py={6}
-            px={{ base: "16", md: "24" }}
+            px={{ base: "6", md: "24" }}
             className="section"
             {...props}
         >

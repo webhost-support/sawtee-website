@@ -9,6 +9,7 @@ use App\Models\Publication;
 use App\Models\Research;
 use App\Models\Section;
 use App\Models\Slide;
+use App\Models\Slider;
 use App\Models\Team;
 use App\Models\Theme;
 use Inertia\Inertia;
@@ -46,7 +47,7 @@ class FrontendController extends Controller
         $sawteeInMediaId = Category::where('slug', 'sawtee-in-media')->first()->id;
         $eventsId = Category::where('slug', 'featured-events')->first()->id;
 
-        $slides = Slide::with('media')->where('slider_id', 1)->get();
+        $slides = Slide::with('media')->where('slider_id', Slider::first()->id)->get();
         $infocus = Post::where('category_id', strval($infocusId))->where('status', 'published')->orderBy('id', 'DESC')->take(7)->get();
         $sawteeInMedia = Post::with('category')->where('category_id', strval($sawteeInMediaId))->where('status', 'published')->orderBy('id', 'DESC')->take(6)->get();
         $events = Post::with('category', 'media', 'tags')->where('category_id', strval($eventsId))->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();

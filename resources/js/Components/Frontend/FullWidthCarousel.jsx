@@ -70,7 +70,7 @@ const FullWidthCarousel = ({ slides, loop = true }) => {
                 <swiper-slide key={slide.id}>
                     <Box
                         pos="relative"
-                        h={{ base: "auto", md: "calc(100dvh - 4rem)" }}
+                        // h={{ base: "auto", md: "calc(100dvh - 4rem)" }}
                         _before={{
                             content: `''`,
                             position: "absolute",
