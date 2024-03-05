@@ -50,7 +50,9 @@ const MultiPostsCarousel = ({
         swiperContainer.initialize();
     }, []);
     return (
-        <Box pos="relative" {...rest}>
+        <Box pos="relative" 
+        w="full"
+        {...rest}>
             {title && (
                 <Title
                     text={title}

@@ -128,7 +128,6 @@ const CarouselSection = ({ slides, infocus }) => {
                     <MultiPostsCarousel
                         itemsToShow={1}
                         spacing={30}
-                        w="full"
                         title="In Focus"
                         pagination={true}
                     >
@@ -319,7 +318,7 @@ const AboutSection = ({ intro, image }) => {
     );
 };
 
-const SawteeInMediaSection = ({ sawteeInMedia }) => {
+const SawteeInMediaSection = ({ sawteeInMedia, show }) => {
     return (
         <Section
             title={"SAWTEE in Media"}
