@@ -91,6 +91,8 @@ video,
 canvas {
     display: block;
     max-width: 100%;
+    /* width: 100%;
+    height: 100%; */
 }
 
 input,
@@ -194,7 +196,6 @@ time {
 }
 
 .blockquote{
-  font-size: 1.8em;
   width:80%;
   font-style:italic;
   color: var(--chakra-colors-whiteAlpha-800);

@@ -78,7 +78,7 @@ const MultiItemCarousel = ({
                         <swiper-slide key={slide.id}>
                             <LinkBox
                                 pos={"relative"}
-                                maxW="full"
+                                maxW="md"
                                 mx="auto"
                                 _before={{
                                     content: `''`,
@@ -134,7 +134,8 @@ const MultiItemCarousel = ({
                             rounded="xl"
                             startColor="primary.50"
                             endColor="primary.200"
-                            aspectRatio={3/4}
+                            aspectRatio={3 / 4}
+                            maxW={"xs"}
                             mx="auto"
                         />
                     </swiper-slide>

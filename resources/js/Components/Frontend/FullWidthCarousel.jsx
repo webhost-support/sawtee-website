@@ -1,4 +1,4 @@
-import { Box, Stack, Text, Image, AspectRatio } from "@chakra-ui/react";
+import { Box, Stack, Text, Image } from "@chakra-ui/react";
 import React, { useRef, useEffect } from "react";
 
 // Import Swiper styles
@@ -23,14 +23,11 @@ const FullWidthCarousel = ({ slides, loop = true, pagination }) => {
     useEffect(() => {
         const swiperContainer = swiperRef.current;
         const params = {
-
             pagination: pagination ? paginationBullet : false,
             navigatioin: true,
             injectStyles: [
                 `
-                    .swiper, .carousel {
-                        width: 100% !important;
-                    }
+
                     .swiper-pagination-bullet {
                         width: 1rem !important;
                         height: 1rem !important;
@@ -104,13 +101,13 @@ const FullWidthCarousel = ({ slides, loop = true, pagination }) => {
                             background: "rgba(0,0,0,0.3)",
                             backgroundBlendMode: "multiply",
                         }}
-                        h="100%"
                     >
                         <Image
                             src={`${slide.media[0].original_url}`}
                             alt={slide.title}
                             objectFit={"cover"}
-
+                            w="full"
+                            h="full"
                         />
                         <Stack
                             pos="absolute"

@@ -163,6 +163,7 @@ const AboutSection = ({ intro, image }) => {
                         as="blockquote"
                         className="blockquote"
                         m="0"
+                        fontSize={{ base: "1em", md: "1.8em" }}
                         alignSelf={"center"}
                         zIndex={10}
                         maxW="6xl"
