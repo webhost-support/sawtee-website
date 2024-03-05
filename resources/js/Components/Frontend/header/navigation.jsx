@@ -1,10 +1,8 @@
 import {
     Box,
     Stack,
-    useColorModeValue,
     Grid,
     Button,
-    ButtonGroup,
     IconButton,
     useDisclosure,
     GridItem,
@@ -15,41 +13,19 @@ import {
     VStack,
     Divider,
     useOutsideClick,
-    //   Link,
 } from "@chakra-ui/react";
-import styled from "@emotion/styled";
 import { StyledChakraLink } from "@/Components/Frontend/index";
 import { Link, usePage } from "@inertiajs/react";
 import { HiChevronDown, HiChevronUp } from "react-icons/hi";
 import { motion } from "framer-motion";
-import InertiaChakraLink from "../styles/inertia-chakra-link";
+import MenuLink from "../styles/inertia-chakra-link";
 import React, { Fragment } from "react";
-
-const MenuLink = styled(InertiaChakraLink)`
-    position: relative;
-    text-decoration: none;
-    text-align: center;
-    font-size: inherit;
-    font-family: var(--chakra-fonts-heading);
-    font-weight: normal;
-    &:hover {
-        text-decoration: none;
-    }
-    &:focus,
-    :focus-within,
-    :focus-visible {
-        outline: none;
-        box-shadow: none;
-    }
-`;
 
 const StyledLink = ({ children, ...rest }) => {
     return (
         <StyledChakraLink
             as={Link}
-            fontFamily={"body"}
             fontSize={"md"}
-            fontWeight={"normal"}
             {...rest}
         >
             {children}
@@ -105,7 +81,6 @@ const MenuItem = ({
     megamenuref,
     ...rest
 }) => {
-    const li = useColorModeValue("gray.800", "whiteAlpha.800");
     const { url } = usePage();
     const active = url === slug;
     useOutsideClick({
@@ -113,53 +88,42 @@ const MenuItem = ({
         handler: onClose,
     });
     return (
-        <ButtonGroup
-            isAttached
-            variant={active ? "solid" : "ghost"}
-            colorScheme={active ? "primary" : "gray"}
-            borderRadius={"5px"}
-            size="sm"
-            role="group"
-        >
-            <Button
-                borderRadius={"5px"}
-                _focus={{
-                    boxShadow: "none",
-                    // border: "1px solid",
-                    // borderColor: useColorModeValue(
-                    //     "blackAlpha.700",
-                    //     "whiteAlpaha.700"
-                    // ),
-                }}
-                alignItems="center"
-                fontSize={"sm"}
-                {...rest}
+        <>
+            <MenuLink
+                as={Link}
+                className={active ? "active " : ""}
+                href={slug}
+                preserveState
             >
-                <MenuLink
-                    as={Link}
-                    className={active ? "active " : ""}
-                    href={slug}
-                    preserveState
+                <Button
+                    alignItems="center"
+                    variant={active ? "solid" : "ghost"}
+                    colorScheme={active ? "primary" : "gray"}
+                    size="sm"
+                    borderRadius={showIcon ? "5px 0 0 5px" : "5px"}
+                    {...rest}
                 >
                     {title}
-                </MenuLink>
-            </Button>
+                </Button>
+            </MenuLink>
             {showIcon && (
                 <IconButton
                     aria-label={title}
-                    borderRadius={"5px"}
+                    variant={active ? "solid" : "ghost"}
+                    colorScheme={active ? "primary" : "gray"}
+                    size="sm"
+                    borderRadius={"0 5px 5px 0"}
                     onClick={isOpen ? onClose : onOpen}
                     icon={isOpen ? <HiChevronUp /> : <HiChevronDown />}
                 />
             )}
-        </ButtonGroup>
+        </>
     );
 };
 
 const ExpertCard = ({ expert }) => {
     const image = expert.media[0].original_url;
     return (
-        <Flex p={3} w="full" alignItems="center" justifyContent="center">
             <Flex
                 shadow="lg"
                 rounded="lg"
@@ -170,7 +134,6 @@ const ExpertCard = ({ expert }) => {
                 direction="column"
                 justifyContent="center"
                 minH="180px"
-                w="full"
             >
                 <Box
                     height="100%"
@@ -209,7 +172,7 @@ const ExpertCard = ({ expert }) => {
                     </Text>
 
                     <Text
-                        fontSize="xs"
+                        fontSize="0.65rem"
                         fontWeight="normal"
                         color="gray.800"
                         _dark={{
@@ -220,7 +183,6 @@ const ExpertCard = ({ expert }) => {
                     </Text>
                 </Box>
             </Flex>
-        </Flex>
     );
 };
 
@@ -246,20 +208,13 @@ const AboutMegaMenu = ({
     ...rest
 }) => {
     return (
-        <Box
-            bg={"primary.500"}
-            backdropFilter="blur(5px) saturate(180%)"
-            px={8}
-            py={10}
-            pb={20}
-        >
+        <Box bg={"primary.500"} mx="auto" px={4} py={10} pb={20}>
             <Grid
                 templateColumns="repeat(6, 1fr)"
                 pos="relative"
                 gap={6}
                 px={6}
                 m="0 auto"
-                placeItems="center"
                 {...rest}
             >
                 <GridItem colSpan={1} placeSelf="center">
@@ -267,10 +222,6 @@ const AboutMegaMenu = ({
                         as={motion.ul}
                         variants={ListContainerVariants}
                         animate={isOpen ? "open" : "closed"}
-                        display="flex"
-                        flexDirection="column"
-                        alignItems={"start"}
-                        gap={8}
                     >
                         {item.children.map((child) => {
                             return (
@@ -278,11 +229,11 @@ const AboutMegaMenu = ({
                                     key={child.title}
                                     as={motion.li}
                                     variants={ListVariants}
-                                    m="0"
                                     fontSize={"md"}
                                     fontWeight="medium"
                                     position="relative"
                                     cursor="pointer"
+                                    pb={6}
                                 >
                                     <StyledLink href={child.url}>
                                         {child.title}
@@ -295,35 +246,36 @@ const AboutMegaMenu = ({
                 <GridItem colSpan={3} width="full" placeSelf="center">
                     <Box
                         position="relative"
-                        width="100%"
-                        minH="400px"
                         display="flex"
                         justifyContent="center"
                         alignItems="center"
                         overflow="hidden"
                         rounded="xl"
                         backgroundImage={`url(${introImage})`}
+                        backgroundSize="cover"
+                        bgRepeat={"no-repeat"}
+                        bgPos={"center center"}
                         px={6}
-                        _after={{
+                        py={24}
+                        _before={{
                             content: "''",
                             position: "absolute",
                             inset: 0,
                             width: "100%",
                             height: "100%",
                             backdropFilter: "blur(3px)",
-                            backgroundColor: "rgba(0,0,0,0.3)",
-                            backgroundBlendMode: "blend",
-                            backgroundSize: "cover",
+                            backgroundColor: "rgba(0,0,0,0.5)",
+                            backgroundBlendMode: "multiply",
                         }}
                     >
                         <Text
-                            fontSize={"lg"}
+                            fontSize={"md"}
                             color={"gray-100"}
                             m="0"
                             alignSelf={"center"}
                             zIndex={10}
                             px={6}
-                            lineHeight="taller"
+                            lineHeight="1.8"
                         >
                             {introText}
                         </Text>
@@ -331,29 +283,21 @@ const AboutMegaMenu = ({
                 </GridItem>
                 <GridItem
                     colSpan={2}
-                    display="flex"
-                    flexDirection="column"
-                    justifyContent="center"
                     gap={4}
                 >
-                    <Text fontSize="xl" fontWeight={"semibold"}>
+                    <Text fontSize="xl" pb={4} fontWeight={"semibold"}>
                         Our Experts
                     </Text>
                     <Grid
                         templateColumns={"repeat(3, 1fr)"}
                         templateRows={"repeat(2, auto)"}
-                        rowGap={2}
-                        placeItems="center"
+                        gap={2}
                     >
                         {experts &&
                             experts.length > 0 &&
                             experts.map((expert) => {
                                 return (
-                                    <GridItem
-                                        key={expert.name}
-                                        display="flex"
-                                        w="full"
-                                    >
+                                    <GridItem key={expert.name} colSpan={1}>
                                         <ExpertCard expert={expert} />
                                     </GridItem>
                                 );

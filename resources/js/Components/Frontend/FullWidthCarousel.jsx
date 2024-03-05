@@ -10,10 +10,10 @@ import "swiper/css/effect-fade";
 import { register } from "swiper/element/bundle";
 // register Swiper custom elements
 register();
-const FullWidthCarousel = ({ slides, loop = true }) => {
+const FullWidthCarousel = ({ slides, loop = true, pagination }) => {
     const swiperRef = useRef(null);
 
-    const pagination = {
+    const paginationBullet = {
         clickable: true,
         renderBullet: function (index, className) {
             return '<span class="' + className + '">' + "</span>";
@@ -23,22 +23,25 @@ const FullWidthCarousel = ({ slides, loop = true }) => {
     useEffect(() => {
         const swiperContainer = swiperRef.current;
         const params = {
-            pagination: pagination,
+            pagination: pagination ? paginationBullet : false,
             navigatioin: true,
             injectStyles: [
                 `
+                    .swiper, .carousel {
+                        width: 100% !important;
+                    }
                     .swiper-pagination-bullet {
-                        width: 1.125rem !important;
-                        height: 1.125rem !important;
+                        width: 1rem !important;
+                        height: 1rem !important;
                         text-align: center;
-                        line-height: 1.5rem;
+                        line-height: 1.2;
                         font-size: 12px;
                         opacity: 1;
                         background: rgba(0, 0, 0, 0.4);
                     }
 
                     .swiper-pagination-bullet-active {
-                        background: #eee;
+                        background: var(--color-grey-lighter);
                     }
                     .swiper-button-prev {
                         left: 1rem !important;
@@ -53,14 +56,14 @@ const FullWidthCarousel = ({ slides, loop = true }) => {
                         background-size: 1.5rem;
                         padding-inline: 8px;
                         border-radius: 5px;
-                        border: 2px solid var(--color-text);
+                        border: 2px solid var(--color-light);
                         width: 2rem !important;
                         height: 2.75rem !important;
                     }
                     .swiper-button-next > svg ,
                     .swiper-button-prev > svg{
                         height: 1.5rem !important;
-                        color: var(--color-text);
+                        color: var(--color-light);
                     }
                 `,
             ],
@@ -77,6 +80,7 @@ const FullWidthCarousel = ({ slides, loop = true }) => {
                 delay: 2500,
                 disableOnInteraction: false,
             }}
+            padingation
             navigation={true}
             lazy={true}
             keyboard={true}
@@ -98,25 +102,29 @@ const FullWidthCarousel = ({ slides, loop = true }) => {
                             background: "rgba(0,0,0,0.3)",
                             backgroundBlendMode: "multiply",
                         }}
-                        maxH="600px"
+                        h="100%"
                     >
                         <Image
                             src={`${slide.media[0].original_url}`}
                             alt={slide.title}
                             objectFit={"cover"}
-                            boxSize={'full'}
+                            boxSize={"full"}
+                            w="full"
+                            h="full"
                         />
                         <Stack
-                            p="8px 12px"
                             pos="absolute"
-                            bottom="1.5rem"
+                            bottom="60px"
                             textAlign="center"
-                            mb="8"
-                            color="white"
+                            w="full"
+                            color="whiteAlpha.800"
                             zIndex={1}
+                            gap={2}
+                            justify="center"
+                            align="center"
                         >
-                            <Text fontSize="xl">{slide.title}</Text>
-                            <Text fontSize="md">{slide.subtitle}</Text>
+                            <Text fontSize="3xl">{slide.title}</Text>
+                            <Text fontSize="sm">{slide.subtitle}</Text>
                         </Stack>
                     </Box>
                 </swiper-slide>

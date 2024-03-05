@@ -3,7 +3,6 @@ import { Link } from "@inertiajs/react";
 import {
     Text,
     Box,
-    SimpleGrid,
     VStack,
     Heading,
     Grid,
@@ -16,7 +15,7 @@ import {
     Skeleton,
     useBreakpointValue,
     useColorModeValue,
-    Spacer,
+    Flex,
 } from "@chakra-ui/react";
 import { Title, FancyTitle, ExploreButton } from "@/Components/Frontend/index";
 import FullWidthCarousel from "@/Components/Frontend/FullWidthCarousel";
@@ -62,7 +61,7 @@ const Home = ({
     return (
         <MainLayout>
             <WebsiteHead
-                title={"SAWTEE | Home"}
+                title={"Home"}
                 description="Explore South Asia's dynamic journey since the 1980s, navigating global integration and economic challenges."
                 image={"/assets/logo-sawtee.webp"}
             />
@@ -71,9 +70,10 @@ const Home = ({
                 slides={slides}
                 tradeInsights={tradeInsights}
                 books={books}
+                infocus={infocus}
             />
             <AboutSection intro={introText} image={introImage} />
-            {infocus && <InFocusSection articles={infocus} />}
+            {/* {infocus && <InFocusSection articles={infocus} />} */}
 
             <PublicationSection
                 publications={[...tradeInsights, ...books]}
@@ -94,7 +94,9 @@ const Home = ({
 
 export default Home;
 
-const CarouselSection = ({ slides, tradeInsights, books }) => {
+const CarouselSection = ({ slides, infocus }) => {
+    const itemBG = useColorModeValue("blackAlpha.200", "blackAlpha.300");
+
     return (
         <Box
             as={Grid}
@@ -105,25 +107,112 @@ const CarouselSection = ({ slides, tradeInsights, books }) => {
             id="carousel-section"
             width="full"
         >
-            <GridItem colSpan={{ base: 1, md: 4 }}>
-                <FullWidthCarousel slides={slides} loop={false} />
+            <GridItem as={Flex} w="full" colSpan={{ base: 1, md: 4 }}>
+                <FullWidthCarousel slides={slides} loop={true} pagination={true} />
             </GridItem>
             <GridItem colSpan={{ base: 1, md: 3 }} alignSelf={"center"} p={10}>
-                <Title
-                    text={"Featured Publications"}
-                    fontWeight="semibold"
-                    // color={titleColor}
-                    fontSize={["lg", "xl"]}
-                    mb={-2}
-                />
+                <VStack alignItems={"center"} gap={10} justify={"center"}>
+                    <Box
+                        as={Link}
+                        shadow={"xl"}
+                        rounded="xl"
+                        href="/category/covid"
+                        role="banner"
+                        aria-labelledby="Policy Reform Dashboard"
+                        title="Policy Reform Dashboard"
+                    >
+                        <Image
+                            src="/assets/Policy-Reform-Banner-green-sized.webp"
+                            alt="Policy Reform Dashboard"
+                            fit="cover"
+                            rounded="xl"
+                            htmlHeight={"150px"}
+                        />
+                    </Box>
 
-                <MultiItemCarousel
-                    slides={tradeInsights}
-                    itemsToShow={3}
-                    spacing={30}
-                />
-                <Spacer h="2rem" />
+                    <MultiPostsCarousel
+                        itemsToShow={1}
+                        spacing={30}
+                        w="full"
+                        title="In Focus"
+                        pagination={true}
+                    >
 
+                        {infocus.map((article) => {
+                            return (
+                                <swiper-slide
+                                    key={article.id}
+                                    class="post-slide"
+                                >
+                                    <LinkBox w="full" py={20}>
+                                        <Box
+                                            w="100%"
+                                            p={{ base: 2, sm: 4 }}
+                                            alignItems="center"
+                                            _hover={{ bg: itemBG }}
+                                            m={0}
+                                        >
+                                            <Box
+                                                gridColumnEnd={{
+                                                    base: "span 2",
+                                                    md: "unset",
+                                                }}
+                                            >
+                                                <Heading
+                                                    as="h3"
+                                                    fontFamily={"heading"}
+                                                    fontWeight="bold"
+                                                    fontSize={{
+                                                        base: "sm",
+                                                        lg: "md",
+                                                    }}
+                                                >
+                                                    <InertiaChakraLinkOverlay
+                                                        as={Link}
+                                                        href={`/category/infocus/${article.slug}`}
+                                                    >
+                                                        {article.title}
+                                                    </InertiaChakraLinkOverlay>
+                                                </Heading>
+                                                <HStack
+                                                    pos="relative"
+                                                    mt="20px"
+                                                >
+                                                    <Text
+                                                        as="span"
+                                                        w="5px"
+                                                        h="full"
+                                                        bg="primary.400"
+                                                        rounded="lg"
+                                                        pos={"absolute"}
+                                                    />
+
+                                                    <Text
+                                                        noOfLines={3}
+                                                        pl="20px"
+                                                        fontSize={{
+                                                            base: "xs",
+                                                            lg: "sm",
+                                                        }}
+                                                    >
+                                                        {article.excerpt}
+                                                    </Text>
+                                                </HStack>
+                                            </Box>
+                                        </Box>
+                                        <Divider m={0} />
+                                    </LinkBox>
+                                </swiper-slide>
+                            );
+                        })}
+                        {infocus.length <= 0 &&
+                            [1, 2, 3].map((_) => (
+                                <swiper-slide>
+                                    <Skeleton rounded="xl" h="260px" />
+                                </swiper-slide>
+                            ))}
+                    </MultiPostsCarousel>
+                </VStack>
             </GridItem>
         </Box>
     );
@@ -131,57 +220,49 @@ const CarouselSection = ({ slides, tradeInsights, books }) => {
 
 const AboutSection = ({ intro, image }) => {
     return (
-        <Box width="full" id="about-section" className="section">
-            <SimpleGrid columns={{ base: 1, lg: 2 }}>
-                <Box
-                    w="full"
-                    position="relative"
-                    overflow="hidden"
-                    backgroundImage={`url(${image})`}
-                    backgroundSize="cover"
-                    minH={"500px"}
-                >
-                    <Box
-                        backgroundColor="rgba(0,0,0,0.6)"
-                        backgroundBlendMode="multiply"
-                        backdropFilter={"blur(3px)"}
-                        pos={"absolute"}
-                        inset={"0"}
-                        display="flex"
-                        flexDir={"column"}
-                        gap={8}
-                        justifyContent="center"
-                        alignItems="center"
+        <Box
+            width="full"
+            pos={"relative"}
+            id="about-section"
+            overflow="hidden"
+            backgroundImage={`url(${image})`}
+            bgRepeat={"no-repeat"}
+            backgroundPosition={"center center"}
+            backgroundSize="cover"
+            minH={"500px"}
+            className="section"
+        >
+            <Box
+                w="full"
+                display="flex"
+                flexDir="column"
+                gap={8}
+                justifyContent="center"
+                alignItems="center"
+                position="relative"
+                backgroundColor={"rgba(0,0,0,0.6)"}
+                backgroundBlendMode={"multiply"}
+                backdropFilter="blur(5px)"
+                pos={"absolute"}
+                inset={0}
+                h="full"
+            >
+                {intro && (
+                    <Text
+                        as="blockquote"
+                        className="blockquote"
+                        // color={"whiteAlpha.800"}
+                        m="0"
+                        alignSelf={"center"}
+                        zIndex={10}
+                        fontFamily="system"
                     >
-                        {intro && (
-                            <Text
-                                as="blockquote"
-                                fontSize={["xl", "2xl"]}
-                                color={"whiteAlpha.800"}
-                                m="0"
-                                alignSelf={"center"}
-                                zIndex={10}
-                                px={{ base: "2rem", md: "4rem" }}
-                                margin={{ base: "10px", lg: "1rem auto" }}
-                                fontFamily="body"
-                                _before={{
-                                    content: '"“"',
-                                }}
-                                _after={{
-                                    content: '"”"',
-                                }}
-                            >
-                                {intro}
-                            </Text>
-                        )}
-                    </Box>
-                </Box>
+                        {intro}
+                    </Text>
+                )}
+            </Box>
 
-                <VStack
-                    bg={useColorModeValue(
-                        "blackAlpha.50",
-                        "var(--color-darker)"
-                    )}
+            {/* <VStack
                     alignItems={"center"}
                     gap={6}
                     p={{ base: 10, lg: 20 }}
@@ -238,8 +319,7 @@ const AboutSection = ({ intro, image }) => {
                             />
                         </Box>
                     </HStack>
-                </VStack>
-            </SimpleGrid>
+                </VStack> */}
         </Box>
     );
 };
@@ -312,7 +392,7 @@ const BlogSection = ({ events }) => {
                         gridTemplateColumns={{
                             base: "1fr",
                             md: "1fr 1fr",
-                            lg: "auto repeat(2, 300px);",
+                            lg: "auto repeat(2, 220px);",
                         }}
                         gridTemplateRows={"auto"}
                         gap={8}

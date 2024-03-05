@@ -20,7 +20,7 @@ export default function MainLayout(props) {
             media: [{ original_url: "/assets/paras-foto.webp" }],
         },
         {
-            name: "Dhrubes C. Regmi",
+            name: "Dhrubesh C. Regmi",
             designation: "General Secretary",
             media: [{ original_url: "/assets/dhrubesh.webp" }],
         },
@@ -36,7 +36,7 @@ export default function MainLayout(props) {
         },
         {
             name: "Kshitiz Dahal",
-            designation: "Senior Research Officer",
+            designation: "Sr. Research Officer",
             media: [{ original_url: "/assets/Kshitiz.webp" }],
         },
     ];

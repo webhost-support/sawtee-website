@@ -22,6 +22,7 @@ import styled from "@emotion/styled";
 import { Link } from "@inertiajs/react";
 import ChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
 import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
+import Zoom from "react-medium-image-zoom";
 
 // A debounced input react component
 export function DebouncedInput({
@@ -226,12 +227,14 @@ export const MapModel = ({ isOpen, onClose, mapLink }) => {
                 <ModalHeader color={modelHeaderColor}>Our Location</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody margin={"0 auto"}>
-                    <Image
-                        w="100%"
-                        height={"500px"}
-                        objectFit={"cover"}
-                        src={"/assets/location-map-resized.webp"}
-                    />
+                    <Zoom>
+                        <Image
+                            w="100%"
+                            height={"500px"}
+                            objectFit={"cover"}
+                            src={"/assets/location-map-resized.webp"}
+                        />
+                    </Zoom>
                 </ModalBody>
 
                 <ModalFooter>
@@ -241,7 +244,7 @@ export const MapModel = ({ isOpen, onClose, mapLink }) => {
                             target="_blank"
                             onClick={onClose}
                         >
-                            View Map
+                            View in Google Map
                         </ChakraLink>
                     </Button>
                 </ModalFooter>
@@ -267,7 +270,6 @@ export const Title = ({ text, color, ...rest }) => {
     );
 };
 
-
 export const ExploreButton = ({ text = "Explore All", ...rest }) => {
     const [hovered, setHovered] = useState(false);
 
@@ -292,16 +294,16 @@ export const ExploreButton = ({ text = "Explore All", ...rest }) => {
 export const StyledLink = styled(Link)`
     position: relative;
     text-decoration: none;
-    font-family: var(--chakra-fonts-heading);
-    font-size: var(--chakra-fontSizes-sm);
+    font-size: ${(props) =>
+        props.fontSize ? props.fontSize : "var(--chakra-fontSizes-sm)"};
     color: ${(props) => (props.color ? props.color : "inherit")};
 
     &::after {
         content: "";
         width: 0%;
-        height: 1px;
+        height: 2px;
         position: absolute;
-        bottom: 0;
+        bottom: 1;
         left: 0;
         margin: 0;
 

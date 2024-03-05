@@ -8,13 +8,11 @@ import {
     GridItem,
     ListItem,
     Tooltip,
-    List,
-    useBreakpointValue,
+    UnorderedList,
 } from "@chakra-ui/react";
 import React from "react";
 import { SocialMenu } from "@/Components/Frontend/header/social-menu";
 import { MapModel, StyledChakraLink } from "@/Components/Frontend/index";
-import SubscriptionCard from "../subscriptionCard";
 
 const FooterSection = ({ children, ...rest }) => (
     <Box
@@ -41,7 +39,11 @@ const FooterSectionItem = ({ children, ...rest }) => (
 
 const ListHeader = ({ children }) => {
     return (
-        <Text fontSize={"xl"} fontWeight={"medium"} mb={2}>
+        <Text
+            fontSize={{ base: "2xl", lg: "3xl" }}
+            fontWeight={"medium"}
+            mb={2}
+        >
             {children}
         </Text>
     );
@@ -54,7 +56,7 @@ const Widget = ({ item, linkcolor }) => {
         return (
             <Stack align="flex-start" id={item.title}>
                 <ListHeader>{item.title}</ListHeader>
-                <List
+                <UnorderedList
                     spacing={3}
                     color={useColorModeValue("gray.700", "whiteAlpha.700")}
                 >
@@ -99,14 +101,14 @@ const Widget = ({ item, linkcolor }) => {
                                 </ListItem>
                             );
                         })}
-                </List>
+                </UnorderedList>
             </Stack>
         );
     } else {
         return (
             <Stack align="flex-start" id={item.title}>
                 <ListHeader>{item.title}</ListHeader>
-                <List spacing={3}>
+                <UnorderedList spacing={3}>
                     {item.children &&
                         item.children.map((child_item) => {
                             const { url, title } = child_item;
@@ -123,7 +125,7 @@ const Widget = ({ item, linkcolor }) => {
                                 </ListItem>
                             );
                         })}
-                </List>
+                </UnorderedList>
             </Stack>
         );
     }
@@ -131,7 +133,6 @@ const Widget = ({ item, linkcolor }) => {
 
 const Footer = ({ menu = null, socialMenu = null }) => {
     const StyledLinkColor = useColorModeValue("#232323", "#F1F1F1");
-    // const maxWidth = useBreakpointValue(["xs", "sm", "md"]);
 
     return (
         <FooterSection px={{ base: 8, md: 10, lg: 16 }} pt={12} pb={6}>
@@ -149,7 +150,6 @@ const Footer = ({ menu = null, socialMenu = null }) => {
                             key={key}
                             colSpan={{ base: 1, lg: 2 }}
                             placeSelf="center"
-                            // maxW={maxWidth}
                         >
                             <Widget item={item} linkcolor={StyledLinkColor} />
                         </FooterSectionItem>

@@ -46,18 +46,18 @@ class FrontendController extends Controller
         $infocusId = Category::where('slug', 'infocus')->first()->id;
         $sawteeInMediaId = Category::where('slug', 'sawtee-in-media')->first()->id;
         $eventsId = Category::where('slug', 'featured-events')->first()->id;
-
-        $slides = Slide::with('media')->where('slider_id', Slider::first()->id)->get();
-        $infocus = Post::where('category_id', strval($infocusId))->where('status', 'published')->orderBy('id', 'DESC')->take(7)->get();
-        $sawteeInMedia = Post::with('category')->where('category_id', strval($sawteeInMediaId))->where('status', 'published')->orderBy('id', 'DESC')->take(6)->get();
-        $events = Post::with('category', 'media', 'tags')->where('category_id', strval($eventsId))->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
+        $slider = Slider::first();
+        $slides = Slide::where('slider_id', $slider->id)->get();
+        $infocus = Post::where('category_id', strval($infocusId))->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
+        $sawteeInMedia = Post::where('category_id', strval($sawteeInMediaId))->where('status', 'published')->orderBy('id', 'DESC')->take(6)->get();
+        $events = Post::where('category_id', strval($eventsId))->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
         $books = Publication::where('category_id', strval(Category::where('slug', 'books')->first()->id))->orderBy('id', 'DESC')->take(6)->get();
         $trade_insights = Publication::where('category_id', strval(Category::where('slug', 'trade-insight')->first()->id))->orderBy('id', 'DESC')->take(6)->get();
         return Inertia::render('Frontend/Pages/Home', [
-            'slides' => $slides,
-            'infocus' => $infocus,
-            'sawteeInMedia' => $sawteeInMedia,
-            'events' => $events,
+            'slides' => $slides->load(['media']),
+            'infocus' => $infocus->load(['category']),
+            'sawteeInMedia' => $sawteeInMedia->load('category'),
+            'events' => $events->load(['category','media', 'tags']),
             'books' => $books,
             'tradeInsights' => $trade_insights
         ]);
@@ -68,7 +68,7 @@ class FrontendController extends Controller
     {
         $page = Page::where('slug', $slug)->firstOrFail();
 
-        $sections = Section::with('media')->where('page_id', $page->id)->get();
+        $sections = Section::where('page_id', $page->id)->get();
         $themes = null;
 
         if ($slug === 'our-work') {
@@ -101,12 +101,11 @@ class FrontendController extends Controller
                                ->where('status', 'published')
                                ->orderBy('id', 'DESC')
                                ->take(5)->get();
-        $events = Post::with('category', 'media')
-                        ->where('category_id', strval($eventsId))
+        $events = Post::where('category_id', strval($eventsId))
                         ->where('status', 'published')
                         ->orderBy('id', 'DESC')
                         ->take(5)->get();
-        $category = Category::with('parent', 'children')->where('slug', $slug)->firstOrFail();
+        $category = Category::where('slug', $slug)->firstOrFail();
 
         $posts = getPosts($category, $slug);
 
@@ -146,7 +145,7 @@ class FrontendController extends Controller
             }
 
             return Inertia::render('Frontend/Category', [
-                'category' => $category,
+                'category' => $category->load(['parent', 'children']),
                 'posts' => $posts,
                 'infocus' => $infocus,
                 'sawteeInMedia' => $sawteeInMedia,
@@ -156,11 +155,11 @@ class FrontendController extends Controller
         }
 
         return Inertia::render('Frontend/Category', [
-            'category' => $category,
+            'category' => $category->load(['parent', 'children']),
             'posts' => $posts,
             'infocus' => $infocus,
             'sawteeInMedia' => $sawteeInMedia,
-            'events' => $events,
+            'events' => $events->load(['category', 'media']),
             'featured_image' => $category->getFirstMediaUrl('category_media'),
             'srcSet' => $category->getFirstMedia('category_media')?->getSrcset('responsive'),
         ]);

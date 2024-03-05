@@ -1,5 +1,5 @@
-import React from "react";
-import {Link} from "@inertiajs/react";
+import { useState, useEffect } from "react";
+import { Link } from "@inertiajs/react";
 import {
     Box,
     Text,
@@ -15,9 +15,9 @@ import {
 import InertiaChakraLinkOverlay from "@/Components/Frontend/styles/inertia-chakra-link-overlay";
 
 export default function OurWork({ themes, sections }) {
-    const [intro, setIntro] = React.useState(null);
-    const [sectors, setSectors] = React.useState(null);
-    React.useEffect(() => {
+    const [intro, setIntro] = useState(null);
+    const [sectors, setSectors] = useState(null);
+    useEffect(() => {
         const intro = sections.filter(
             (section) => section.title === "Intro"
         )[0];
@@ -28,8 +28,6 @@ export default function OurWork({ themes, sections }) {
         sectors && setSectors(sectors);
     }, [sections]);
     const headingColor = useColorModeValue("gray.900, whiteAlpha.900");
-    const contentColor = useColorModeValue("gray.800", "whiteAlpha.800");
-    const linkColor = useColorModeValue("blackAlpha.700", "whiteAlpha.600");
     const cardBackground = useColorModeValue(
         "blackAlpha.100",
         "blackAlpha.300"
@@ -73,7 +71,7 @@ export default function OurWork({ themes, sections }) {
                     px={8}
                 >
                     {themes.map((theme) => {
-                        const [show, setShow] = React.useState(false);
+                        const [show, setShow] = useState(false);
                         const handleToggle = () => setShow(!show);
                         return (
                             <Box
@@ -81,7 +79,6 @@ export default function OurWork({ themes, sections }) {
                                 bg={cardBackground}
                                 p={6}
                                 rounded="lg"
-                                // textAlign="center"
                                 pos="relative"
                                 role="group"
                                 cursor={"pointer"}
