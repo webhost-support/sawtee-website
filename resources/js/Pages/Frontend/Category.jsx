@@ -15,6 +15,7 @@ import BlogArchive from "./Archives/BlogArchive";
 import WebsiteHead from "@/Components/Frontend/Head";
 import ResearchArchive from "./Archives/ResearchArchive";
 import TeamsArchive from "./Archives/TeamsArchive";
+import CovidArchive from "./Archives/CovidArchive";
 
 export default function Category({
     category,
@@ -31,9 +32,15 @@ export default function Category({
     const isMedia = category.slug === "sawtee-in-media";
     const isNewsletter = category.slug === "newsletters";
     const isBlog = category.slug === "blog";
+    const isCovid = category.slug === "covid";
     const isResearch = category.slug === "research";
     const isDefault =
-        !isEvent && !isNewsletter && !isBlog && !isTeam && !isResearch;
+        !isEvent &&
+        !isNewsletter &&
+        !isBlog &&
+        !isTeam &&
+        !isResearch &&
+        !isCovid;
     const HeadingColor = useColorModeValue(
         "var(--color-dark)",
         "var(--color-light)"
@@ -92,6 +99,13 @@ export default function Category({
                         >
                             {isDefault && (
                                 <DefaultArchive
+                                    posts={posts.data}
+                                    headingColor={HeadingColor}
+                                    textColor={TextColor}
+                                />
+                            )}
+                            {isCovid && (
+                                <CovidArchive
                                     posts={posts.data}
                                     headingColor={HeadingColor}
                                     textColor={TextColor}

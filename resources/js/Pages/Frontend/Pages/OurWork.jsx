@@ -102,16 +102,6 @@ export default function OurWork({ themes, sections }) {
                                 >
                                     Show {show ? "Less" : "More"}
                                 </Button>
-                                {/* <Box
-                                fontSize={"md"}
-                                h="full"
-                                mt={4}
-                                color={contentColor}
-                            >
-                                <Box overflow={"hidden"}>
-                                    <Text></Text>
-                                </Box>
-                            </Box> */}
                             </Box>
                         );
                     })}
@@ -178,7 +168,7 @@ export default function OurWork({ themes, sections }) {
                                             >
                                                 <InertiaChakraLinkOverlay
                                                     as={Link}
-                                                    href={link}
+                                                    href={`/category/${link}`}
                                                 >
                                                     {title}
                                                 </InertiaChakraLinkOverlay>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
     Box,
     Text,
@@ -31,13 +31,13 @@ export function DebouncedInput({
     debounce = 500,
     ...props
 }) {
-    const [value, setValue] = React.useState(initialValue);
+    const [value, setValue] = useState(initialValue);
 
-    React.useEffect(() => {
+    useEffect(() => {
         setValue(initialValue);
     }, [initialValue]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const timeout = setTimeout(() => {
             onChange(value);
         }, debounce);

@@ -2,6 +2,7 @@
     "private": true,
     "type": "module",
     "scripts": {
+        "commit": "cz",
         "dev": "vite",
         "build": "vite build && vite build --ssr"
     },

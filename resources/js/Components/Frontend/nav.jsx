@@ -1,5 +1,4 @@
-import React from "react";
-import {  styled } from "@emotion/styled";
+import { styled } from "@emotion/styled";
 import { Link } from "@inertiajs/react";
 
 const Nav = ({ state }) => (

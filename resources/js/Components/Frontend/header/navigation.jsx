@@ -21,6 +21,24 @@ import { motion } from "framer-motion";
 import MenuLink from "../styles/inertia-chakra-link";
 import React, { Fragment } from "react";
 
+const MenuLink = styled(InertiaChakraLink)`
+    position: relative;
+    text-decoration: none;
+    // text-align: center;
+    font-size: inherit;
+    font-family: var(--chakra-fonts-heading);
+    font-weight: normal;
+    &:hover {
+        text-decoration: none;
+    }
+    &:focus,
+    :focus-within,
+    :focus-visible {
+        outline: none;
+        box-shadow: none;
+    }
+`;
+
 const StyledLink = ({ children, ...rest }) => {
     return (
         <StyledChakraLink
@@ -95,6 +113,7 @@ const MenuItem = ({
                 href={slug}
                 preserveState
             >
+           
                 <Button
                     alignItems="center"
                     variant={active ? "solid" : "ghost"}
@@ -102,7 +121,7 @@ const MenuItem = ({
                     size="sm"
                     borderRadius={showIcon ? "5px 0 0 5px" : "5px"}
                     {...rest}
-                >
+                  >
                     {title}
                 </Button>
             </MenuLink>
@@ -235,9 +254,7 @@ const AboutMegaMenu = ({
                                     cursor="pointer"
                                     pb={6}
                                 >
-                                    <StyledLink href={child.url}>
-                                        {child.title}
-                                    </StyledLink>
+                                    <Link href={child.url}>{child.title}</Link>
                                 </Box>
                             );
                         })}
@@ -343,9 +360,9 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                                 as={motion.li}
                                 variants={ListVariants}
                             >
-                                <StyledLink href={grandChild.url}>
+                                <Link href={grandChild.url}>
                                     {grandChild.title}
-                                </StyledLink>
+                                </Link>
                             </Text>
                         );
                     })}

@@ -23,6 +23,7 @@ const FullWidthCarousel = ({ slides, loop = true, pagination }) => {
     useEffect(() => {
         const swiperContainer = swiperRef.current;
         const params = {
+
             pagination: pagination ? paginationBullet : false,
             navigatioin: true,
             injectStyles: [
@@ -59,6 +60,7 @@ const FullWidthCarousel = ({ slides, loop = true, pagination }) => {
                         border: 2px solid var(--color-light);
                         width: 2rem !important;
                         height: 2.75rem !important;
+                        background: var(--chakra-colors-primary-400);
                     }
                     .swiper-button-next > svg ,
                     .swiper-button-prev > svg{
@@ -75,7 +77,7 @@ const FullWidthCarousel = ({ slides, loop = true, pagination }) => {
     return (
         <swiper-container
             ref={swiperRef}
-            init="false"
+            init="true"
             autoplay={{
                 delay: 2500,
                 disableOnInteraction: false,

@@ -31,7 +31,7 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        $experts = Team::with('media')->orderBy('order', 'ASC')->take(6)->get();
+        $experts = Team::orderBy('order', 'ASC')->take(6)->get();
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
@@ -39,7 +39,7 @@ class HandleInertiaRequests extends Middleware
             'flash' => [
                 'message' => fn() => $request->session()->get('message')
             ],
-            'experts' => $experts,
+            'experts' => fn() => $experts->load('media'),
             'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),

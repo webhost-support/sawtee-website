@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "@inertiajs/react";
 import {
     Text,
@@ -53,11 +52,6 @@ const Home = ({
         lg: 3,
     });
 
-    /*
-    ? Question
-    TODO: Load webP image in About Section
-  */
-
     return (
         <MainLayout>
             <WebsiteHead
@@ -79,6 +73,7 @@ const Home = ({
                 publications={[...tradeInsights, ...books]}
                 showPublication={showPublication}
             />
+            
             {events && <BlogSection events={events} />}
             {sawteeInMedia && (
                 <SawteeInMediaSection
@@ -324,7 +319,7 @@ const AboutSection = ({ intro, image }) => {
     );
 };
 
-const SawteeInMediaSection = ({ sawteeInMedia, show }) => {
+const SawteeInMediaSection = ({ sawteeInMedia }) => {
     return (
         <Section
             title={"SAWTEE in Media"}
@@ -437,7 +432,7 @@ const BlogSection = ({ events }) => {
                     </Grid>
                     <InertiaChakraLink
                         as={Link}
-                        href={"/category/featured-events"}
+                        href={`/category/featured-events`}
                     >
                         <ExploreButton
                             size="md"
@@ -492,7 +487,7 @@ const InFocusSection = ({ articles }) => {
                                         >
                                             <InertiaChakraLinkOverlay
                                                 as={Link}
-                                                href={`/category/infocus/${article.slug}`}
+                                                href={`/category/${article.category.slug}/${article.slug}`}
                                             >
                                                 {article.title}
                                             </InertiaChakraLinkOverlay>
@@ -574,9 +569,6 @@ const InfoSection = () => {
                 alignItems="center"
                 minH={"500px"}
             >
-                {/* <DemoChart />
-                    <ExamplePie /> */}
-
                 <iframe
                     title="Reform Meter Dashboard_revised"
                     width="100%"
@@ -602,6 +594,7 @@ const NewsletterSection = () => {
 };
 
 const PublicationSection = ({ publications, showPublication }) => {
+
     const titleColor = useColorModeValue("gray.800", "whiteAlpha.900");
 
     return (
