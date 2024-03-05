@@ -16,8 +16,8 @@ import {
     useColorModeValue,
     Flex,
     Button,
+    Skeleton,
     SkeletonText,
-    AspectRatio,
 } from "@chakra-ui/react";
 import { Title, FancyTitle, ExploreButton } from "@/Components/Frontend/index";
 import FullWidthCarousel from "@/Components/Frontend/FullWidthCarousel";
