@@ -1,7 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { Box, Button } from "@chakra-ui/react";
-import { Title } from "@/Components/Frontend/index";
-import { Link } from "@inertiajs/react";
+
 import PostPreviewCard from "./PostPreviewCard";
 
 // import required modules

@@ -4,14 +4,12 @@ import {
     Box,
     Flex,
     Heading,
-    LinkOverlay,
     Text,
     Image,
     AspectRatio,
     HStack,
     useColorModeValue,
-    Skeleton,
-    SkeletonText,
+   
 } from "@chakra-ui/react";
 import { formatDate } from "@/Utils/helpers";
 import { Link } from "@inertiajs/react";

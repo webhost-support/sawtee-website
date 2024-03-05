@@ -11,12 +11,10 @@ import {
     LinkBox,
     Divider,
     HStack,
-    Skeleton,
     useBreakpointValue,
     useColorModeValue,
     Flex,
     Button,
-    SkeletonText,
 } from "@chakra-ui/react";
 import { Title, FancyTitle, ExploreButton } from "@/Components/Frontend/index";
 import FullWidthCarousel from "@/Components/Frontend/FullWidthCarousel";
@@ -28,7 +26,6 @@ import PostCard from "@/Components/Frontend/PostCard";
 import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
 import InertiaChakraLinkOverlay from "@/Components/Frontend/styles/inertia-chakra-link-overlay";
 import { Newsletter } from "@/Components/Frontend/newsletter";
-import PostPreviewCard from "@/Components/Frontend/PostPreviewCard";
 import WebsiteHead from "@/Components/Frontend/Head";
 
 const Home = ({
@@ -401,39 +398,7 @@ const BlogSection = ({ events }) => {
                                 }
                             })}
 
-                        {!events &&
-                            [1, 2, 3, 4, 5].map((item) => {
-                                if (item < 2) {
-                                    return (
-                                        <GridItem
-                                            key={item}
-                                            colSpan={{ base: 1, md: 2, xl: 1 }}
-                                            rowSpan={2}
-                                        >
-                                            <Skeleton
-                                                height="100%"
 
-                                            >  <Box h="200px"></Box></Skeleton>
-
-                                            <SkeletonText h={8} noOfLines={2} />
-                                        </GridItem>
-                                    );
-                                } else {
-                                    return (
-                                        <GridItem
-                                            key={item}
-                                            colSpan={1}
-                                            rowSpan="1"
-                                        >
-                                            <Skeleton
-                                                height="100%"
-
-                                            >  <Box h="100px"></Box></Skeleton>
-                                            <SkeletonText h={8} noOfLines={2} />
-                                        </GridItem>
-                                    );
-                                }
-                            })}
                     </Grid>
                     <InertiaChakraLink
                         as={Link}

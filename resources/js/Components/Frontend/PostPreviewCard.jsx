@@ -4,7 +4,6 @@ import {
     HStack,
     Heading,
     Text,
-    Show,
     LinkBox,
     useColorModeValue,
 } from "@chakra-ui/react";
