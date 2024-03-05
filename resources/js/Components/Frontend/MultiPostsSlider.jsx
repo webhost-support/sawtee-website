@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
 
 import PostPreviewCard from "./PostPreviewCard";
+import { Skeleton } from "@chakra-ui/react";
 
 // import required modules
 
@@ -50,7 +51,7 @@ const MultiPostsCarousel = ({
     }, []);
     return (
 
-            
+
             <swiper-container
                 ref={swiperRef}
                 init="false"

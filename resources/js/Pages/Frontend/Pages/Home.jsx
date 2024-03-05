@@ -72,7 +72,7 @@ const Home = ({
                 showPublication={showPublication}
             />
 
-            {events && <BlogSection events={null} />}
+            {events && <BlogSection events={events} />}
             {sawteeInMedia && (
                 <SawteeInMediaSection
                     articles={sawteeInMedia}
