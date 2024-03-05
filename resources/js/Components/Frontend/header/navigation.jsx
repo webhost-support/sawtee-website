@@ -21,24 +21,6 @@ import { motion } from "framer-motion";
 import MenuLink from "../styles/inertia-chakra-link";
 import React, { Fragment } from "react";
 
-const MenuLink = styled(InertiaChakraLink)`
-    position: relative;
-    text-decoration: none;
-    // text-align: center;
-    font-size: inherit;
-    font-family: var(--chakra-fonts-heading);
-    font-weight: normal;
-    &:hover {
-        text-decoration: none;
-    }
-    &:focus,
-    :focus-within,
-    :focus-visible {
-        outline: none;
-        box-shadow: none;
-    }
-`;
-
 const StyledLink = ({ children, ...rest }) => {
     return (
         <StyledChakraLink
