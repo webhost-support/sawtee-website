@@ -1,15 +1,16 @@
 import React, { useRef, useEffect } from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 import { Title } from "@/Components/Frontend/index";
+import { Link } from "@inertiajs/react";
+import PostPreviewCard from "./PostPreviewCard";
 
 // import required modules
 
 const MultiPostsCarousel = ({
-    children,
+    posts,
     itemsToShow = 3,
     spacing,
     pagination,
-    title = null,
     ...rest
 }) => {
     const swiperRef = useRef(null);
@@ -50,18 +51,8 @@ const MultiPostsCarousel = ({
         swiperContainer.initialize();
     }, []);
     return (
-        <Box pos="relative" 
-        w="full"
-        {...rest}>
-            {title && (
-                <Title
-                    text={title}
-                    pos={"absolute"}
-                    top="20px"
-                    fontWeight="semibold"
-                    fontSize={["lg", "xl"]}
-                />
-            )}
+
+            
             <swiper-container
                 ref={swiperRef}
                 init="false"
@@ -74,9 +65,27 @@ const MultiPostsCarousel = ({
                 keyboard={true}
                 class={"multi-post-carousel"}
             >
-                {children}
+                {posts.map((article) => {
+                    return (
+                        <swiper-slide
+                            key={article.id}
+                            class="post-slide"
+                        >
+                            <PostPreviewCard
+                                post={article}
+                                showImage={false}
+                                {...rest}
+                            />
+                        </swiper-slide>
+                    );
+                })}
+                {posts.length <= 0 &&
+                    [1, 2, 3].map((_) => (
+                        <swiper-slide>
+                            <Skeleton rounded="xl" h="300px" />
+                        </swiper-slide>
+                    ))}
             </swiper-container>
-        </Box>
     );
 };
 

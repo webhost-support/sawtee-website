@@ -50,7 +50,6 @@ export const Newsletter = (props) => (
             zIndex="1"
             overflow="hidden"
             textAlign="center"
-            maxW="640px"
             mx="auto"
             px={6}
         >
@@ -106,7 +105,11 @@ const SubscribeButton = (props) => (
 );
 
 const SubscribeForm = (props) => (
-    <Box>
+    <Box 
+    maxW="640px"
+    mx="auto"
+
+    >
         <Flex as="form" mt="40px" {...props}>
             <SubscribeInput />
             <SubscribeButton />

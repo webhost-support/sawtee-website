@@ -10,6 +10,8 @@ import {
     AspectRatio,
     HStack,
     useColorModeValue,
+    Skeleton,
+    SkeletonText,
 } from "@chakra-ui/react";
 import { formatDate } from "@/Utils/helpers";
 import { Link } from "@inertiajs/react";
@@ -20,21 +22,24 @@ function PostCard({
     post,
     showImage = "true",
     showDescription = "true",
-    headingSize = "xs",
+    headingSize = "md",
     showTags = false,
     imageHeadgingGap = "20px",
+    showDate = false,
     ...rest
 }) {
     const color = useColorModeValue("var(--color-dark", "var(--color-light)");
     const featured_image =
         post.media.length > 0
             ? post.media.filter(
-                  (item) => item.collection_name === "post-featured-image"
-              )[0]
+                (item) => item.collection_name === "post-featured-image"
+            )[0]
             : null;
     const srcSet = featured_image
         ? featured_image.responsive_images.responsive.urls
         : [];
+
+
     return (
         <Box>
             <LinkBox as="article" {...rest} role="group">
@@ -44,15 +49,14 @@ function PostCard({
                             <Image
                                 width={"100%"}
                                 height="auto"
-                                aspectRatio={3 / 2}
                                 fit={"cover"}
                                 alt={post.title}
                                 src={
                                     featured_image
                                         ? featured_image.original_url
-                                        : "https://placehold.co/300x150"
+                                        : "/assets/SM-placeholder-150x150.png"
                                 }
-                                // srcSet={srcSet ? srcSet : ""}
+                            // srcSet={srcSet ? srcSet : ""}
                             />
                         </AspectRatio>
                         <Box
@@ -95,9 +99,9 @@ function PostCard({
                 </Flex>
             </LinkBox>
             <Flex mt={3} gap={2} justify={"space-between"} flexWrap={"wrap"}>
-                <Box as="time" fontSize={"xs"}>
+                {showDate && <Box as="time" fontSize={"xs"}>
                     {formatDate(post.published_at)}
-                </Box>
+                </Box>}
                 {showTags && post.tags && post.tags.length > 0 && (
                     <HStack flexWrap={"wrap"}>
                         {post.tags.map((tag) => {

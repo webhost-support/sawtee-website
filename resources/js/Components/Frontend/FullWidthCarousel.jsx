@@ -110,9 +110,7 @@ const FullWidthCarousel = ({ slides, loop = true, pagination }) => {
                             src={`${slide.media[0].original_url}`}
                             alt={slide.title}
                             objectFit={"cover"}
-                            boxSize={"full"}
-                            w="full"
-                            h="full"
+
                         />
                         <Stack
                             pos="absolute"

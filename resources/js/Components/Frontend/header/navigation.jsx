@@ -133,12 +133,11 @@ const ExpertCard = ({ expert }) => {
                     bg: "blackAlpha.500",
                 }}
                 direction="column"
-                justifyContent="center"
-                minH="180px"
+                justifyContent="space-between"
+                h={48}
+                py={3}
             >
                 <Box
-                    height="100%"
-                    width="100%"
                     borderRadius="lg"
                     p={3}
                     display="flex"
@@ -149,15 +148,11 @@ const ExpertCard = ({ expert }) => {
                         src={image}
                         name={expert.name}
                         borderRadius="full"
-                        boxSize="65px"
+                        boxSize="75px"
                     />
                 </Box>
                 <Box
-                    gridColumn="span 8"
                     p={2}
-                    width="full"
-                    height="full"
-                    borderRadius="lg"
                     textAlign="center"
                     mt={3}
                 >

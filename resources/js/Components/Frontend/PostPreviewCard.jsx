@@ -26,37 +26,33 @@ const PostPreviewCard = ({
     const color = useColorModeValue("var(--color-dark", "var(--color-light)");
     const featured_image = media
         ? media.filter(
-              (item) => item.collection_name === "post-featured-image"
-          )[0]
+            (item) => item.collection_name === "post-featured-image"
+        )[0]
         : null;
     return (
-        <LinkBox as="article" role="group" {...rest}>
-            <GlassBox
+        <GlassBox
+            shadow="md"
+            rounded="xl"
+            {...rest}
+        >
+            <LinkBox as="article"
+                justify="center"
                 display="flex"
                 flexDir="column"
                 position="relative"
-                shadow="md"
-                justify="center"
-                w="full"
-                rounded="xl"
-            >
+                role="group" >
                 {showImage && featured_image && (
-                    <InertiaChakraLinkOverlay
-                        as={Link}
-                        href={`/${category.slug}/${slug}`}
-                    >
-                        <PostImageWithOverlay
-                            borderRadius={"0.5rem 0.5rem 0 0"}
-                            role="group"
-                            src={featured_image.original_url}
-                        />
-                    </InertiaChakraLinkOverlay>
+                    <PostImageWithOverlay
+                        borderRadius={"0.5rem 0.5rem 0 0"}
+                        src={featured_image.original_url}
+                    />
                 )}
 
                 <Flex
+                    mt={4}
                     p={6}
                     flexGrow="1"
-                    gap={4}
+                    gap={8}
                     justify={"center"}
                     direction="column"
                 >
@@ -87,14 +83,14 @@ const PostPreviewCard = ({
                             textUnderlineOffset: "3px",
                         }}
                     >
-                        <Heading fontSize="sm" as="h4">
+                        <Heading fontSize={{base: "lg", lg: "xl"}} as="h4">
                             {title}
                         </Heading>
                     </InertiaChakraLinkOverlay>
 
                     <Text
                         flex="1"
-                        fontSize="sm"
+                        fontSize={{base: "sm", lg: "md"}}
                         overflow="hidden"
                         textOverflow="ellipsis"
                         display="-webkit-box"
@@ -108,8 +104,8 @@ const PostPreviewCard = ({
                         dangerouslySetInnerHTML={{ __html: excerpt }}
                     />
                 </Flex>
-            </GlassBox>
-        </LinkBox>
+            </LinkBox>
+        </GlassBox>
     );
 };
 
