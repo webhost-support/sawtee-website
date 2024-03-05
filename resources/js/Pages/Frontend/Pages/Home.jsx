@@ -16,7 +16,6 @@ import {
     useColorModeValue,
     Flex,
     Button,
-    Skeleton,
     SkeletonText,
 } from "@chakra-ui/react";
 import { Title, FancyTitle, ExploreButton } from "@/Components/Frontend/index";
