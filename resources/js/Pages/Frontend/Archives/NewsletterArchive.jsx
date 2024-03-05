@@ -7,7 +7,7 @@ const NewsletterArchive = ({ posts }) => {
     if (!posts || posts.length <= 0) return "No posts found";
 
     return (
-        <GlassBox as="section" role="group">
+        <GlassBox as="section" w="2xl" maxW="full" role="group">
             <Heading as="h2" fontSize="xl" px={10} my={10}>
                 Trade, Climate Change and Development Monitor
             </Heading>

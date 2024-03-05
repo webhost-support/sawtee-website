@@ -19,11 +19,10 @@ const TeamsArchive = ({ posts, headingColor, textColor }) => {
                 spacing={4}
                 role="group"
                 shadow="xl"
-                maxW="2xl"
+                w="2xl"
+                maxW="full"
             >
-                <LinkBox>
-
-                </LinkBox>
+                <LinkBox></LinkBox>
             </GlassBox>
         );
     });

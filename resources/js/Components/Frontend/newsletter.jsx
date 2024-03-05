@@ -8,6 +8,9 @@ import {
     useColorModeValue,
 } from "@chakra-ui/react";
 import { IoIosArrowRoundForward } from "react-icons/io";
+import InertiaChakraLink from "./styles/inertia-chakra-link";
+import { ExploreButton } from ".";
+import { Link } from "@inertiajs/react";
 
 export const PatternBox = ({ showPattern = false, ...props }) => (
     <Box
@@ -103,8 +106,18 @@ const SubscribeButton = (props) => (
 );
 
 const SubscribeForm = (props) => (
-    <Flex as="form" mt="40px" {...props}>
-        <SubscribeInput />
-        <SubscribeButton />
-    </Flex>
+    <Box>
+        <Flex as="form" mt="40px" {...props}>
+            <SubscribeInput />
+            <SubscribeButton />
+        </Flex>
+        <InertiaChakraLink as={Link} href={"/category/newsletters"}>
+            <ExploreButton
+                size="lg"
+                text="Explore before deciding"
+                mt={10}
+                variant="solid"
+            />
+        </InertiaChakraLink>
+    </Box>
 );

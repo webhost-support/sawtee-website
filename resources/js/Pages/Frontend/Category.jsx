@@ -74,8 +74,7 @@ export default function Category({
 
                 <Section
                     pb="80px"
-                    padding={{ base: "24px", lg: "40px" }}
-                    w="full"
+                    padding={{ base: "15px", lg: "30px" }}
                     size={"huge"}
                     mx="auto"
                     pt="50px"
@@ -88,7 +87,7 @@ export default function Category({
                             lg: "1fr 1fr",
                             xl: "var(--chakra-sizes-3xl) minmax(var(--chakra-sizes-md), var(--chakra-sizes-lg))",
                         }}
-                        gap={16}
+                        gap={10}
                         pos={"relative"}
                         placeContent={"center"}
                     >

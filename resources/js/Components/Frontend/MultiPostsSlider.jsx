@@ -1,11 +1,15 @@
 import React, { useRef, useEffect } from "react";
 import { Box } from "@chakra-ui/react";
+import { Title } from "@/Components/Frontend/index";
+
 // import required modules
 
 const MultiPostsCarousel = ({
     children,
     itemsToShow = 3,
     spacing,
+    pagination,
+    title = null,
     ...rest
 }) => {
     const swiperRef = useRef(null);
@@ -14,6 +18,7 @@ const MultiPostsCarousel = ({
         const swiperContainer = swiperRef.current;
         const params = {
             navigation: true,
+            pagination: pagination ? pagination : false,
             injectStyles: [
                 `
                 .swiper-button-prev {
@@ -45,13 +50,23 @@ const MultiPostsCarousel = ({
         swiperContainer.initialize();
     }, []);
     return (
-        <Box {...rest}>
+        <Box pos="relative" {...rest}>
+            {title && (
+                <Title
+                    text={title}
+                    pos={"absolute"}
+                    top="20px"
+                    fontWeight="semibold"
+                    fontSize={["lg", "xl"]}
+                />
+            )}
             <swiper-container
                 ref={swiperRef}
                 init="false"
                 slides-per-view={itemsToShow}
                 space-between={spacing}
                 navigation={true}
+                pagination
                 slides-per-group={itemsToShow}
                 centered={true}
                 keyboard={true}

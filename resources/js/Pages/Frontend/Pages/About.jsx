@@ -1,5 +1,4 @@
 import { Content } from "@/Components/Frontend/index";
-import Section from "@/Components/Frontend/styles/section";
 import {
     Box,
     Heading,
@@ -17,9 +16,9 @@ import {
     AccordionButton,
     AccordionIcon,
     AccordionPanel,
-    List,
     ListItem,
     HStack,
+    OrderedList,
 } from "@chakra-ui/react";
 import React from "react";
 import { HiOutlineExternalLink } from "react-icons/hi";
@@ -125,10 +124,10 @@ export default function About({ sections }) {
     return (
         <Content
             className="page_content"
-            as={Section}
             px={{ base: "32px", md: "0" }}
+            mx="auto"
             py={"80px"}
-            size={"md"}
+            maxW={"3xl"}
             fontSize={{ base: "md", lg: "lg" }}
         >
             {sections !== null &&
@@ -191,7 +190,7 @@ export const Members = ({ memberInstitutions }) => {
                                 <AccordionIcon />
                             </AccordionButton>
                             <AccordionPanel px={["5", "10"]}>
-                                <List spacing="3">
+                                <OrderedList spacing="3">
                                     {institutes.map(
                                         (
                                             {
@@ -273,7 +272,7 @@ export const Members = ({ memberInstitutions }) => {
                                             );
                                         }
                                     )}
-                                </List>
+                                </OrderedList>
                             </AccordionPanel>
                         </AccordionItem>
                     );

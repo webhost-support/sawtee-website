@@ -32,7 +32,8 @@ const ArchivePost = ({ post, featured_image, headingColor, textColor }) => {
             spacing={4}
             role="group"
             shadow="xl"
-            maxW="2xl"
+            w="2xl"
+            maxW="full"
         >
             <LinkBox>
                 <Box>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "@inertiajs/react";
 import {
     Box,
@@ -71,7 +71,7 @@ export default function OurWork({ themes, sections }) {
                     px={8}
                 >
                     {themes.map((theme) => {
-                        const [show, setShow] = React.useState(false);
+                        const [show, setShow] = useState(false);
                         const handleToggle = () => setShow(!show);
                         return (
                             <Box

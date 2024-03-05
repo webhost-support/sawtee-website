@@ -189,6 +189,55 @@ time {
     top: 8rem;
 }
 
+.carousel {
+    width: 100%
+}
+
+.blockquote{
+  font-size: 1.8em;
+  width:80%;
+  font-style:italic;
+  color: var(--chakra-colors-whiteAlpha-800);
+  padding:1.2em 30px 1.2em 75px;
+  border-left:8px solid  var(--chakra-colors-primary-500) ;
+  line-height:1.5;
+  position: relative;
+  background: var(--chakra-colors-blackAlpha-400);
+  backdrop-filter: blur(3px);
+}
+
+.blockquote::before{
+  font-family:Arial;
+  content: "\201C";
+  color:var(--chakra-colors-primary-500);
+  font-size:4em;
+  position: absolute;
+  left: 10px;
+  top:-10px;
+}
+
+
+
+.blockquote::after{
+  font-family:Arial;
+  content: "\201F";
+  color:var(--chakra-colors-primary-500);
+  font-size:4em;
+  transform: scaleX(-1);
+  transform: rotate(180deg);
+  position: absolute;
+  right: 90px;
+  bottom:0px;
+}
+
+.blockquote span{
+  display:block;
+  color:#333333;
+  font-style: normal;
+  font-weight: bold;
+  margin-top:1em;
+}
+
 @media (min-width: 420px) {
     & .cards {
         & .title {
