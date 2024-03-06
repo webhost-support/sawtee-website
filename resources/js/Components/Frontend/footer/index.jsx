@@ -56,10 +56,7 @@ const Widget = ({ item, linkcolor }) => {
         return (
             <Stack align="flex-start" id={item.title}>
                 <ListHeader>{item.title}</ListHeader>
-                <UnorderedList
-                    spacing={3}
-                    color={useColorModeValue("gray.700", "whiteAlpha.700")}
-                >
+                <UnorderedList spacing={3}>
                     {item.children &&
                         item.children.map((child_item) => {
                             const { url, title } = child_item;
@@ -149,22 +146,12 @@ const Footer = ({ menu = null, socialMenu = null }) => {
                         <FooterSectionItem
                             key={key}
                             colSpan={{ base: 1, lg: 2 }}
-                            placeSelf="center"
+                            placeSelf={{ base: "start", md: "center" }}
                         >
                             <Widget item={item} linkcolor={StyledLinkColor} />
                         </FooterSectionItem>
                     );
                 })}
-                {/* <FooterSectionItem
-                    colSpan={{ base: 1, md: 1, lg: 2 }}
-                    placeSelf="center"
-                    w="full"
-                >
-                    <SubscriptionCard
-                        fontSize={{ base: "sm", lg: "md" }}
-                        showIcon={false}
-                    />
-                </FooterSectionItem> */}
             </FooterSectionGroup>
 
             <Stack

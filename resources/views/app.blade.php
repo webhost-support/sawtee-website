@@ -8,8 +8,6 @@
         <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
         <!-- Load nprogress style -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
-        <!-- Load Scripts -->
-        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
 
         @routes
         @viteReactRefresh

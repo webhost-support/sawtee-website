@@ -88,7 +88,6 @@ const Home = ({
 export default Home;
 
 const CarouselSection = ({ slides, infocus }) => {
-
     return (
         <Box
             as={Grid}
@@ -97,15 +96,24 @@ const CarouselSection = ({ slides, infocus }) => {
                 lg: "repeat(7, 1fr)",
             }}
             id="carousel-section"
-            width="full"
         >
-            <GridItem as={Flex} w="full" colSpan={{ base: 1, md: 4 }}>
-                <FullWidthCarousel slides={slides} loop={true} pagination={true} />
+            <GridItem colSpan={{ base: 1, md: 4 }}>
+                <FullWidthCarousel
+                    slides={slides}
+                    loop={true}
+                    pagination={true}
+                />
             </GridItem>
-            <GridItem as={VStack}
-                alignItems={"center"} gap={10} justify={"center"}
-                colSpan={{ base: 1, md: 3 }} alignSelf={"center"} p={10}
-                w="full">
+            <GridItem
+                as={VStack}
+                alignItems={"center"}
+                gap={10}
+                justify={"center"}
+                colSpan={{ base: 1, md: 3 }}
+                alignSelf={"center"}
+                p={10}
+                w="full"
+            >
                 <Box
                     as={Link}
                     shadow={"xl"}
@@ -123,6 +131,17 @@ const CarouselSection = ({ slides, infocus }) => {
                     />
                 </Box>
 
+                <Button
+                    as={Link}
+                    variant={"link"}
+                    colorScheme="primary"
+                    mx="auto"
+                    fontWeight="semibold"
+                    fontSize={["lg", "2xl"]}
+                    href={"/category/infocus"}
+                >
+                    {"In Focus"}
+                </Button>
                 <InfocusSection infocus={infocus} />
             </GridItem>
         </Box>
@@ -238,9 +257,11 @@ const AboutSection = ({ intro, image }) => {
 const SawteeInMediaSection = ({ articles, link }) => {
     const itemBG = useColorModeValue("blackAlpha.200", "blackAlpha.300");
     return (
-        <Section title={"Sawtee in Media"}
-            bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}>
-            <Container maxW="5xl">
+        <Section
+            title={"Sawtee in Media"}
+            bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
+        >
+            <Container maxW="6xl">
                 <VStack spacing={6}>
                     {articles.map((article) => {
                         return (
@@ -319,7 +340,7 @@ const SawteeInMediaSection = ({ articles, link }) => {
                                     >
                                         {formatDate(
                                             article.published_at ||
-                                            article.created_at
+                                                article.created_at
                                         )}
                                     </Text>
                                 </Grid>
@@ -327,12 +348,7 @@ const SawteeInMediaSection = ({ articles, link }) => {
                             </LinkBox>
                         );
                     })}
-                    <InertiaChakraLink
-                        as={Link}
-                        mt={6}
-                        href={link}
-                        w="50%"
-                    >
+                    <InertiaChakraLink as={Link} mt={6} href={link} w="50%">
                         <ExploreButton
                             size="md"
                             text="Explore All "
@@ -344,7 +360,6 @@ const SawteeInMediaSection = ({ articles, link }) => {
             </Container>
         </Section>
     );
-
 };
 
 const BlogSection = ({ events }) => {
@@ -398,8 +413,6 @@ const BlogSection = ({ events }) => {
                                     );
                                 }
                             })}
-
-
                     </Grid>
                     <InertiaChakraLink
                         as={Link}
@@ -420,61 +433,15 @@ const BlogSection = ({ events }) => {
 
 const InfocusSection = ({ infocus }) => {
     return (
-        // <Section
-        //     title={"SAWTEE in Media"}
-        //     id="media-section"
-        //     className="section"
-        //     bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
-        // >
-        //     <Container maxW="8xl">
-        //         <VStack spacing={6}>
-        <Box w='full' >
-            <Button
-                as={Link}
-                variant={'link'}
-                colorScheme="primary"
-                // pos="absolute"
-                // top={10}
-                mx="auto"
-                fontWeight="semibold"
-                fontSize={["lg", "2xl"]}
-                href={"/category/infocus"}
-            >
-                {"In Focus"}
-            </Button>
-            <MultiPostsCarousel
-                posts={infocus}
-                itemsToShow={1}
-                spacing={30}
-                pagination={true}
-                showCategoryTag={true}
-                p={4}
-                my={12}
-            >
-
-
-
-            </MultiPostsCarousel>
-        </Box>
-
-        //             <InertiaChakraLink
-        //                 as={Link}
-        //                 href={"/category/sawtee-in-media"}
-        //                 w="50%"
-        //                 textAlign={"center"}
-        //             >
-        //                 <ExploreButton
-        //                     text="Explore All "
-        //                     w="full"
-        //                     variant="outline"
-        //                     size="md"
-        //                 />
-        //             </InertiaChakraLink>
-        //         </VStack>
-        //     </Container>
-        // </Section>
+        <MultiPostsCarousel
+            posts={infocus}
+            itemsToShow={1}
+            spacing={30}
+            pagination={true}
+            showCategoryTag={true}
+            my={12}
+        />
     );
-
 };
 
 // const InfoSection = () => {

@@ -1,4 +1,3 @@
-import React, { useRef, useEffect } from "react";
 import {
     Image,
     Box,
@@ -6,11 +5,15 @@ import {
     Skeleton,
     useColorModeValue,
 } from "@chakra-ui/react";
+import InertiaChakraLinkOverlay from "./styles/inertia-chakra-link-overlay";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
+// import required modules
+import { Pagination, Navigation, Keyboard } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-import InertiaChakraLinkOverlay from "./styles/inertia-chakra-link-overlay";
+import "swiper/css/pagination";
 // import required modules
 
 const MultiItemCarousel = ({
@@ -21,61 +24,21 @@ const MultiItemCarousel = ({
     ...rest
 }) => {
     const ImageBorderColor = useColorModeValue("gray.900", "whiteAlpha.900");
-    const swiperRef = useRef(null);
-
-
-    useEffect(() => {
-        const swiperContainer = swiperRef.current;
-        const params = {
-            navigation: true,
-            injectStyles: [
-                `
-                .swiper {
-                    padding-top: 4rem;
-                }
-                .swiper-button-prev {
-                    left: auto !important;
-                    right: 3.5rem !important;
-                }
-                .swiper-button-next,
-                .swiper-button-prev {
-                    top: 2rem !important;
-                    background-color: transparent;
-                    background-size: 1.35rem;
-                    padding-inline: 8px;
-                    border-radius: 5px;
-                    border: 2px solid var(--color-text);
-                    width: 1.5rem !important;
-                    height: 2.025rem !important;
-                }
-                .swiper-button-next > svg ,
-                .swiper-button-prev > svg{
-                    height: 1.5rem !important;
-                    color: var(--color-text);
-                }
-            `,
-            ],
-        };
-
-        Object.assign(swiperContainer, params);
-        swiperContainer.initialize();
-    }, []);
     return (
-        <swiper-container
-            ref={swiperRef}
-            init="false"
-            slides-per-view={itemsToShow}
-            space-between={spacing}
+        <Swiper
+            slidesPerView={itemsToShow}
+            spaceBetween={spacing}
             navigation={true}
-            slides-per-group={itemsToShow}
-            centered={true}
+            slidesPerGroup={itemsToShow}
+            // centered={true}
             keyboard={true}
+            modules={[Navigation, Pagination, Keyboard]}
             class={"multi-item-carousel " + className}
         >
             {slides.length >= 1 &&
                 slides.map((slide) => {
                     return (
-                        <swiper-slide key={slide.id}>
+                        <SwiperSlide key={slide.id}>
                             <LinkBox
                                 pos={"relative"}
                                 maxW="md"
@@ -124,12 +87,12 @@ const MultiItemCarousel = ({
                                     />
                                 </InertiaChakraLinkOverlay>
                             </LinkBox>
-                        </swiper-slide>
+                        </SwiperSlide>
                     );
                 })}
             {slides.length <= 0 &&
                 [1, 2, 3, 4, 5, 6].map((item) => (
-                    <swiper-slide key={`${item}+1`}>
+                    <SwiperSlide key={`${item}+1`}>
                         <Skeleton
                             rounded="xl"
                             startColor="primary.50"
@@ -138,9 +101,9 @@ const MultiItemCarousel = ({
                             maxW={"xs"}
                             mx="auto"
                         />
-                    </swiper-slide>
+                    </SwiperSlide>
                 ))}
-        </swiper-container>
+        </Swiper>
     );
 };
 

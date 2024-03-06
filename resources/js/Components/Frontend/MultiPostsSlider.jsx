@@ -1,90 +1,49 @@
-import React, { useRef, useEffect } from "react";
-
 import PostPreviewCard from "./PostPreviewCard";
-import { Skeleton } from "@chakra-ui/react";
+import { Box, Skeleton } from "@chakra-ui/react";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 // import required modules
+import { Pagination, Navigation, Keyboard } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 const MultiPostsCarousel = ({
     posts,
     itemsToShow = 3,
     spacing,
     pagination,
-    ...rest
+    showCategoryTag = false,
 }) => {
-    const swiperRef = useRef(null);
-
-    useEffect(() => {
-        const swiperContainer = swiperRef.current;
-        const params = {
-            navigation: true,
-            pagination: pagination ? pagination : false,
-            injectStyles: [
-                `
-                .swiper-button-prev {
-                    left: auto !important;
-                    right: 60px !important;
-                }
-                .swiper-button-next,
-                .swiper-button-prev {
-                    top: 40px !important;
-                    background-color: transparent;
-                    background-size: 20px;
-                    padding-inline: 8px;
-                    border-radius: 5px;
-                    border: 2px solid var(--color-text);
-                    color: var(--color-text);
-                    width: 24px !important;
-                    height: 35px !important;
-                }
-                .swiper-button-next > svg ,
-                .swiper-button-prev > svg{
-                    height: 20px !important;
-                    color: var(--color-text);
-                }
-            `,
-            ],
-        };
-
-        Object.assign(swiperContainer, params);
-        swiperContainer.initialize();
-    }, []);
     return (
-
-
-            <swiper-container
-                ref={swiperRef}
-                init="false"
-                slides-per-view={itemsToShow}
-                space-between={spacing}
-                navigation={true}
-                pagination
-                slides-per-group={itemsToShow}
-                centered={true}
-                keyboard={true}
-                class={"multi-post-carousel"}
-            >
-                {posts.map((article) => {
-                    return (
-                        <swiper-slide
-                            key={article.id}
-                            class="post-slide"
-                        >
-                            <PostPreviewCard
-                                post={article}
-                                showImage={false}
-                                {...rest}
-                            />
-                        </swiper-slide>
-                    );
-                })}
-                {posts.length <= 0 &&
-                    [1, 2, 3].map((_) => (
-                        <swiper-slide>
-                            <Skeleton rounded="xl" h="300px" />
-                        </swiper-slide>
-                    ))}
-            </swiper-container>
+        <Swiper
+            slidesPerView={itemsToShow}
+            spaceBetween={spacing}
+            navigation={true}
+            pagination={true}
+            slidesPerGroup={itemsToShow}
+            keyboard={true}
+            modules={[Pagination, Navigation, Keyboard]}
+            class={"multi-post-carousel"}
+        >
+            {posts.map((article) => {
+                return (
+                    <SwiperSlide key={article.id} class="post-slide">
+                        <PostPreviewCard
+                            post={article}
+                            showImage={false}
+                            showCategoryTag={showCategoryTag}
+                        />
+                    </SwiperSlide>
+                );
+            })}
+            {posts.length <= 0 &&
+                [1, 2, 3].map((_) => (
+                    <SwiperSlide>
+                        <Skeleton rounded="xl" h="300px" />
+                    </SwiperSlide>
+                ))}
+        </Swiper>
     );
 };
 

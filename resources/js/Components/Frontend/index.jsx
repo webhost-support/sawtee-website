@@ -22,7 +22,6 @@ import styled from "@emotion/styled";
 import { Link } from "@inertiajs/react";
 import ChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
 import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
-import Zoom from "react-medium-image-zoom";
 
 // A debounced input react component
 export function DebouncedInput({
@@ -227,14 +226,12 @@ export const MapModel = ({ isOpen, onClose, mapLink }) => {
                 <ModalHeader color={modelHeaderColor}>Our Location</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody margin={"0 auto"}>
-                    <Zoom>
-                        <Image
-                            w="100%"
-                            height={"500px"}
-                            objectFit={"cover"}
-                            src={"/assets/location-map-resized.webp"}
-                        />
-                    </Zoom>
+                    <Image
+                        w="100%"
+                        height={"500px"}
+                        objectFit={"cover"}
+                        src={"/assets/location-map-resized.webp"}
+                    />
                 </ModalBody>
 
                 <ModalFooter>

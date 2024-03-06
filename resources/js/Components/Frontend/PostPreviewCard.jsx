@@ -17,7 +17,7 @@ import InertiaChakraLinkOverlay from "./styles/inertia-chakra-link-overlay";
 
 const PostPreviewCard = ({
     post,
-    showImage,
+    showImage = false,
     showCategoryTag = false,
     ...rest
 }) => {
@@ -25,21 +25,19 @@ const PostPreviewCard = ({
     const color = useColorModeValue("var(--color-dark", "var(--color-light)");
     const featured_image = media
         ? media.filter(
-            (item) => item.collection_name === "post-featured-image"
-        )[0]
+              (item) => item.collection_name === "post-featured-image"
+          )[0]
         : null;
     return (
-        <GlassBox
-            shadow="md"
-            rounded="xl"
-            {...rest}
-        >
-            <LinkBox as="article"
+        <GlassBox shadow="md" rounded="xl" p={6} {...rest}>
+            <LinkBox
+                as="article"
                 justify="center"
                 display="flex"
                 flexDir="column"
                 position="relative"
-                role="group" >
+                role="group"
+            >
                 {showImage && featured_image && (
                     <PostImageWithOverlay
                         borderRadius={"0.5rem 0.5rem 0 0"}
@@ -48,10 +46,9 @@ const PostPreviewCard = ({
                 )}
 
                 <Flex
-                    mt={4}
-                    p={6}
+                    mt={showImage ? 4 : 0}
                     flexGrow="1"
-                    gap={8}
+                    gap={6}
                     justify={"center"}
                     direction="column"
                 >
@@ -82,14 +79,14 @@ const PostPreviewCard = ({
                             textUnderlineOffset: "3px",
                         }}
                     >
-                        <Heading fontSize={{base: "lg", lg: "xl"}} as="h4">
+                        <Heading fontSize={{ base: "lg", lg: "xl" }} as="h4">
                             {title}
                         </Heading>
                     </InertiaChakraLinkOverlay>
 
                     <Text
                         flex="1"
-                        fontSize={{base: "sm", lg: "md"}}
+                        fontSize={{ base: "sm", lg: "md" }}
                         overflow="hidden"
                         textOverflow="ellipsis"
                         display="-webkit-box"

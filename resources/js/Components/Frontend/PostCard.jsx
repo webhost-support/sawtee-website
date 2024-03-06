@@ -9,7 +9,7 @@ import {
     AspectRatio,
     HStack,
     useColorModeValue,
-   
+
 } from "@chakra-ui/react";
 import { formatDate } from "@/Utils/helpers";
 import { Link } from "@inertiajs/react";
@@ -54,7 +54,7 @@ function PostCard({
                                         ? featured_image.original_url
                                         : "/assets/SM-placeholder-150x150.png"
                                 }
-                            // srcSet={srcSet ? srcSet : ""}
+                                // srcSet={srcSet ? srcSet : ""}
                             />
                         </AspectRatio>
                         <Box
@@ -97,9 +97,11 @@ function PostCard({
                 </Flex>
             </LinkBox>
             <Flex mt={3} gap={2} justify={"space-between"} flexWrap={"wrap"}>
-                {showDate && <Box as="time" fontSize={"xs"}>
-                    {formatDate(post.published_at)}
-                </Box>}
+                {showDate && (
+                    <Box as="time" fontSize={"xs"}>
+                        {formatDate(post.published_at)}
+                    </Box>
+                )}
                 {showTags && post.tags && post.tags.length > 0 && (
                     <HStack flexWrap={"wrap"}>
                         {post.tags.map((tag) => {
