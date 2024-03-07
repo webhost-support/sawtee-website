@@ -56,7 +56,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
     const [filename, setFilename] = React.useState(null);
     const [image, setImage] = React.useState(null);
     const [selectedCategory, setSelectedCategory] = React.useState(null);
-    const [slug, setSlug] = React.useState(data.slug);
+    const [slug, setSlug] = React.useState("");
 
     const [postTags, setPostTags] = React.useState([]);
 
@@ -73,12 +73,15 @@ export default function CreatePostForm({ categories, themes, tags }) {
     });
 
     // Set Slug if title value changes
-    React.useEffect(() => {
-        if (data.title) {
-            setSlug(data.title.toLowerCase().replace(/\s+/g, "-")).replaceAll(",", "");
-            setData("slug", slug);
-        }
-    }, [data.title]);
+    // React.useEffect(() => {
+    //     if (data.title.length > 0) {
+    //         setSlug(data.title.toLowerCase().replace(/\s+/g, "-")).replaceAll(
+    //             ",",
+    //             ""
+    //         );
+    //         setData("slug", slug);
+    //     }
+    // }, [data.title]);
 
     function setDataTags(e) {
         let array = [];
@@ -86,7 +89,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
         e.forEach((item) =>
             array.push({
                 tag_id: item.value,
-                post_id: postData.id,
+                post_id: item.id,
             })
         );
 
@@ -135,9 +138,14 @@ export default function CreatePostForm({ categories, themes, tags }) {
                                 display="flex"
                                 mt={1}
                                 autoComplete="title"
-                                onChange={(e) =>
-                                    setData("title", e.target.value)
-                                }
+                                onChange={(e) => {
+                                    setData("title", e.target.value);
+                                    setSlug(
+                                        e.target.value
+                                            .toLowerCase()
+                                            .replace(/\s+/g, "-")
+                                    ).replaceAll(",", "");
+                                }}
                             />
 
                             {errors.title && (
@@ -213,7 +221,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
                 </GridItem>
                 <GridItem colSpan={{ base: 1, xl: 2 }}>
                     <VStack spacing={8}>
-<Accordion allowToggle w="full">
+                        <Accordion allowToggle w="full">
                             <AccordionItem>
                                 <h2>
                                     <AccordionButton
@@ -349,7 +357,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
                             </FormLabel>
 
                             <Input
-                                type="datetime-local"
+                                type="date"
                                 id="published_at"
                                 name="published_at"
                                 onChange={(e) =>
@@ -430,7 +438,11 @@ export default function CreatePostForm({ categories, themes, tags }) {
                                 Status
                             </FormLabel>
 
-                            <Stack direction="row" flexWrap={'wrap'} spacing={8}>
+                            <Stack
+                                direction="row"
+                                flexWrap={"wrap"}
+                                spacing={8}
+                            >
                                 {["unpublished", "draft", "published"].map(
                                     (item) => {
                                         return (

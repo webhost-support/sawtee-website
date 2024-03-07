@@ -12,6 +12,7 @@ import "swiper/css/scrollbar";
 const MultiPostsCarousel = ({
     posts,
     itemsToShow = 3,
+    itemsToSlide = itemsToShow,
     spacing,
     pagination,
     scrollbar,
@@ -22,16 +23,20 @@ const MultiPostsCarousel = ({
 }) => {
     return (
         <Swiper
-            slidesPerView={"auto"}
+            slidesPerView={itemsToShow}
             spaceBetween={spacing}
             navigation={true}
             pagination={pagination}
-            slidesPerGroup={itemsToShow}
+            slidesPerGroup={itemsToSlide}
             keyboard={true}
             modules={[Pagination, Navigation, Keyboard, Scrollbar]}
-            scrollbar={ scrollbar ? {
-                hide: false,
-            } : null}
+            scrollbar={
+                scrollbar
+                    ? {
+                          hide: false,
+                      }
+                    : null
+            }
             direction={direction ? direction : "horizontal"}
             className={"multi-post-carousel"}
         >

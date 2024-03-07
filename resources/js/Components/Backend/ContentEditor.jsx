@@ -17,7 +17,6 @@ export default function ContentEditor(props) {
 
     React.useEffect(() => {
         setEditorTheme(colorMode === "dark" ? "oxide-dark" : "oxide");
-        console.log(colorMode);
     }, [colorMode]);
 
     return (

@@ -1,0 +1,38 @@
+.card-swiper {
+  width: 240px !important;
+  height: 320px !important;
+}
+
+.card-swiper-slide {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 18px !important;
+  font-size: 22px !important;
+  font-weight: bold;
+  color: #fff;
+}
+
+.card-swiper-slide:nth-child(1n) {
+  background-color: rgb(206, 17, 17) !important;
+}
+
+.card-swiper-slide:nth-child(2n) {
+  background-color: rgb(0, 140, 255) !important;
+}
+
+.card-swiper-slide:nth-child(3n) {
+  background-color: rgb(10, 184, 111) !important;
+}
+
+.card-swiper-slide:nth-child(4n) {
+  background-color: rgb(211, 122, 7) !important;
+}
+
+.card-swiper-slide:nth-child(5n) {
+  background-color: rgb(118, 163, 12) !important;
+}
+
+.card-swiper-slide:nth-child(6n) {
+  background-color: rgb(180, 10, 47) !important;
+}
