@@ -74,8 +74,9 @@ export default function Category({
 
                 <Section
                     pb="80px"
-                    padding={{ base: "15px", lg: "30px" }}
-                    size={"huge"}
+                    py={{ base: "24px", lg: "80px" }}
+                    px={{ base: "16px", lg: "40px" }}
+                    size={"full"}
                     mx="auto"
                     pt="50px"
                     color={contentColor}

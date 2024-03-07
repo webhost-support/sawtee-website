@@ -29,79 +29,73 @@ const PostPreviewCard = ({
           )[0]
         : null;
     return (
-        <GlassBox shadow="md" rounded="xl" p={6} {...rest}>
-            <LinkBox
-                as="article"
-                justify="center"
-                display="flex"
-                flexDir="column"
-                position="relative"
-                role="group"
+        <LinkBox
+            as={GlassBox}
+            role="group"
+            shadow="md"
+            rounded="xl"
+            p={6}
+            {...rest}
+        >
+            {showImage && featured_image && (
+                <PostImageWithOverlay
+                    borderRadius={"0.5rem 0.5rem 0 0"}
+                    src={featured_image.original_url}
+                />
+            )}
+
+            <Flex
+                mt={showImage ? 4 : 0}
+                gap={6}
+                justify={"center"}
+                direction="column"
             >
-                {showImage && featured_image && (
-                    <PostImageWithOverlay
-                        borderRadius={"0.5rem 0.5rem 0 0"}
-                        src={featured_image.original_url}
-                    />
-                )}
-
-                <Flex
-                    mt={showImage ? 4 : 0}
-                    flexGrow="1"
-                    gap={6}
-                    justify={"center"}
-                    direction="column"
+                <HStack
+                    justifyContent="space-between"
+                    alignItems={"center"}
                 >
-                    <HStack
-                        flexWrap={"wrap"}
-                        justifyContent="space-between"
-                        alignItems={"center"}
-                    >
-                        {showCategoryTag && (
-                            <PostCategories
-                                justify="flex-start"
-                                category={category}
-                                mt="0px"
-                                color={color}
-                            />
-                        )}
+                    {showCategoryTag && (
+                        <PostCategories
+                            justify="flex-start"
+                            category={category}
+                            mt="0px"
+                            color={color}
+                        />
+                    )}
 
-                        <Box as="time" fontSize={"xs"} color={color}>
-                            {formatDate(created_at)}
-                        </Box>
-                    </HStack>
+                    <Box as="time" fontSize={"xs"} color={color}>
+                        {formatDate(created_at)}
+                    </Box>
+                </HStack>
 
-                    <InertiaChakraLinkOverlay
-                        as={Link}
-                        href={`/category/${category.slug}/${slug}`}
-                        _groupHover={{
-                            textDecoration: "underline",
-                            textUnderlineOffset: "3px",
-                        }}
-                    >
-                        <Heading fontSize={{ base: "lg", lg: "xl" }} as="h4">
-                            {title}
-                        </Heading>
-                    </InertiaChakraLinkOverlay>
+                <InertiaChakraLinkOverlay
+                    as={Link}
+                    href={`/category/${category.slug}/${slug}`}
+                    _groupHover={{
+                        textDecoration: "underline",
+                        textUnderlineOffset: "3px",
+                    }}
+                >
+                    <Heading fontSize={{ base: "lg", lg: "xl" }} as="h4">
+                        {title}
+                    </Heading>
+                </InertiaChakraLinkOverlay>
 
-                    <Text
-                        flex="1"
-                        fontSize={{ base: "sm", lg: "md" }}
-                        overflow="hidden"
-                        textOverflow="ellipsis"
-                        display="-webkit-box"
-                        lineHeight="1.5"
-                        noOfLines="3"
-                        color={color}
-                        sx={{
-                            webkitLineClamp: "3",
-                            webkitBoxOrient: "vertical",
-                        }}
-                        dangerouslySetInnerHTML={{ __html: excerpt }}
-                    />
-                </Flex>
-            </LinkBox>
-        </GlassBox>
+                <Text
+                    fontSize={{ base: "sm", lg: "md" }}
+                    overflow="hidden"
+                    textOverflow="ellipsis"
+                    display="-webkit-box"
+                    noOfLines="3"
+                    color={color}
+                    sx={{
+                        webkitLineClamp: "3",
+                        webkitBoxOrient: "vertical",
+                    }}
+                    dangerouslySetInnerHTML={{ __html: excerpt }}
+                />
+            </Flex>
+        </LinkBox>
     );
 };
 

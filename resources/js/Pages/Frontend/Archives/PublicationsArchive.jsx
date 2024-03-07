@@ -32,10 +32,14 @@ export default function PublicationsArchive({
         "whiteAlpha.800"
     );
     const show = useBreakpointValue([1, 2, 3]);
+
+    console.log(category);
     return (
         <MainLayout>
             <WebsiteHead
-                title={"SAWTEE | " + category.meta_title}
+                title={
+                    category.meta_title ? category.meta_title : category.name
+                }
                 description={category.meta_description}
                 image={
                     category.featured_image
@@ -61,7 +65,7 @@ export default function PublicationsArchive({
                 >
                     <Grid
                         templateColumns={{ base: "1fr", xl: "repeat(5, 1fr)" }}
-                        gap={20}
+                        gap={10}
                         pos={"relative"}
                         placeContent={"center"}
                     >
@@ -70,7 +74,7 @@ export default function PublicationsArchive({
                                 <PublicationSliders
                                     category={category}
                                     publications={publications}
-                                    show={show || 3}
+                                    show={show}
                                 />
                             )}
                         </GridItem>
@@ -117,40 +121,42 @@ export default function PublicationsArchive({
     );
 }
 
-const PublicationSliders = ({ category, publications, show }) => {
+const PublicationSliders = ({ category, publications, show = 3 }) => {
     return (
         <Stack
             divider={<StackDivider borderColor="gray.200" />}
-            spacing={"60px"}
+            spacing={"40px"}
         >
             {category.children.map((item) => {
                 return (
-                    <Stack key={item.name} spacing="4">
-                        <Text
-                            as="h3"
-                            id={`#${item.name}`}
-                            m="0 0 2rem 0"
-                            fontSize={{ base: "xl", lg: "2xl" }}
-                            fontFamily="heading"
-                            fontWeight={"bold"}
-                            color={"var(--color-text)"}
+                    <Box key={item.name} spacing="4">
+                        <MultiItemCarousel
+                            slides={publications[item.slug]}
+                            itemsToShow={show}
+                            mt={16}
                         >
-                            {
-                                <Link
-                                    title={`View All ${item.name}`}
-                                    href={`/category/publications/${item.slug}`}
-                                >
-                                    {item.name}
-                                </Link>
-                            }
-                        </Text>
-                        <Box w="full">
-                            <MultiItemCarousel
-                                slides={publications[item.slug]}
-                                itemsToShow={show}
-                            />
-                        </Box>
-                    </Stack>
+                            <Text
+                                as="h3"
+                                id={`#${item.name}`}
+                                pos={"absolute"}
+                                top={0}
+                                zIndex={1020}
+                                fontSize={{ base: "xl", lg: "2xl" }}
+                                fontFamily="heading"
+                                fontWeight={"bold"}
+                                color={"var(--color-text)"}
+                            >
+                                {
+                                    <Link
+                                        title={`View All ${item.name}`}
+                                        href={`/category/publications/${item.slug}`}
+                                    >
+                                        {item.name}
+                                    </Link>
+                                }
+                            </Text>
+                        </MultiItemCarousel>
+                    </Box>
                 );
             })}
         </Stack>

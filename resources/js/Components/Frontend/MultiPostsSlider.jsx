@@ -1,47 +1,61 @@
 import PostPreviewCard from "./PostPreviewCard";
-import { Box, Skeleton } from "@chakra-ui/react";
+import { Box, Flex, Skeleton } from "@chakra-ui/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // import required modules
-import { Pagination, Navigation, Keyboard } from "swiper/modules";
+import { Pagination, Navigation, Keyboard, Scrollbar } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 
 const MultiPostsCarousel = ({
     posts,
     itemsToShow = 3,
     spacing,
     pagination,
+    scrollbar,
     showCategoryTag = false,
+    direction,
+    children,
+    ...rest
 }) => {
     return (
         <Swiper
-            slidesPerView={itemsToShow}
+            slidesPerView={"auto"}
             spaceBetween={spacing}
             navigation={true}
-            pagination={true}
+            pagination={pagination}
             slidesPerGroup={itemsToShow}
             keyboard={true}
-            modules={[Pagination, Navigation, Keyboard]}
-            class={"multi-post-carousel"}
+            modules={[Pagination, Navigation, Keyboard, Scrollbar]}
+            scrollbar={ scrollbar ? {
+                hide: false,
+            } : null}
+            direction={direction ? direction : "horizontal"}
+            className={"multi-post-carousel"}
         >
+            {children}
             {posts.map((article) => {
                 return (
-                    <SwiperSlide key={article.id} class="post-slide">
-                        <PostPreviewCard
-                            post={article}
-                            showImage={false}
-                            showCategoryTag={showCategoryTag}
-                        />
+                    <SwiperSlide key={article.id} className="post-slide">
+                        <Flex {...rest}>
+                            <PostPreviewCard
+                                post={article}
+                                showImage={false}
+                                showCategoryTag={showCategoryTag}
+                            />
+                        </Flex>
                     </SwiperSlide>
                 );
             })}
             {posts.length <= 0 &&
                 [1, 2, 3].map((_) => (
-                    <SwiperSlide>
-                        <Skeleton rounded="xl" h="300px" />
-                    </SwiperSlide>
+                    <Box {...rest}>
+                        <SwiperSlide>
+                            <Skeleton rounded="xl" h="300px" />
+                        </SwiperSlide>
+                    </Box>
                 ))}
         </Swiper>
     );

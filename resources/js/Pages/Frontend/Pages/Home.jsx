@@ -15,6 +15,8 @@ import {
     useColorModeValue,
     Flex,
     Button,
+    Stack,
+    Spacer,
 } from "@chakra-ui/react";
 import { Title, FancyTitle, ExploreButton } from "@/Components/Frontend/index";
 import FullWidthCarousel from "@/Components/Frontend/FullWidthCarousel";
@@ -44,11 +46,6 @@ const Home = ({
         md: 2,
         lg: 3,
         xl: 4,
-    });
-    const show = useBreakpointValue({
-        base: 1,
-        md: 2,
-        lg: 3,
     });
 
     return (
@@ -89,30 +86,27 @@ export default Home;
 
 const CarouselSection = ({ slides, infocus }) => {
     return (
-        <Box
-            as={Grid}
+        <Grid
             templateColumns={{
                 base: "1fr",
                 lg: "repeat(7, 1fr)",
             }}
             id="carousel-section"
         >
-            <GridItem colSpan={{ base: 1, md: 4 }}>
+            <GridItem colSpan={{ base: 1, md: 4 }} overflow={"hidden"}>
                 <FullWidthCarousel
                     slides={slides}
                     loop={true}
+                    rewind={true}
                     pagination={true}
+                    paginationType={"fraction"}
                 />
             </GridItem>
             <GridItem
-                as={VStack}
-                alignItems={"center"}
-                gap={10}
-                justify={"center"}
                 colSpan={{ base: 1, md: 3 }}
                 alignSelf={"center"}
-                p={10}
-                w="full"
+                px={10}
+                py={6}
             >
                 <Box
                     as={Link}
@@ -122,6 +116,7 @@ const CarouselSection = ({ slides, infocus }) => {
                     role="banner"
                     aria-labelledby="Policy Reform Dashboard"
                     title="Policy Reform Dashboard"
+                    mb={6}
                 >
                     <Image
                         src="/assets/Policy-Reform-Banner-green-sized.webp"
@@ -130,21 +125,33 @@ const CarouselSection = ({ slides, infocus }) => {
                         rounded="xl"
                     />
                 </Box>
+                <Spacer h="30px" />
 
-                <Button
-                    as={Link}
-                    variant={"link"}
-                    colorScheme="primary"
-                    mx="auto"
-                    fontWeight="semibold"
-                    fontSize={["lg", "2xl"]}
-                    href={"/category/infocus"}
+                <MultiPostsCarousel
+                    posts={infocus}
+                    itemsToShow={1}
+                    spacing={0}
+                    pagination={false}
+                    showCategoryTag={true}
+                    scrollbar={true}
+                    my={16}
                 >
-                    {"In Focus"}
-                </Button>
-                <InfocusSection infocus={infocus} />
+                    <Button
+                        as={Link}
+                        variant={"link"}
+                        colorScheme="primary"
+                        pos={"absolute"}
+                        top={"10px"}
+                        zIndex={1020}
+                        fontWeight="semibold"
+                        fontSize={["lg", "2xl"]}
+                        href={"/category/infocus"}
+                    >
+                        {"In Focus"}
+                    </Button>
+                </MultiPostsCarousel>
             </GridItem>
-        </Box>
+        </Grid>
     );
 };
 
@@ -276,7 +283,7 @@ const SawteeInMediaSection = ({ articles, link }) => {
                                         base: "1fr",
                                         md: "4fr 2fr",
                                     }}
-                                    p={{ base: 2, sm: 4 }}
+                                    p={{ base: 4, sm: 6 }}
                                     alignItems="center"
                                     _hover={{ bg: itemBG }}
                                     rowGap={3}
@@ -293,6 +300,7 @@ const SawteeInMediaSection = ({ articles, link }) => {
                                             fontFamily={"heading"}
                                             fontWeight="bold"
                                             fontSize={{ base: "md", lg: "lg" }}
+                                            pl={"20px"}
                                         >
                                             <InertiaChakraLinkOverlay
                                                 as={Link}
@@ -337,6 +345,7 @@ const SawteeInMediaSection = ({ articles, link }) => {
                                             color: "gray.300",
                                         }}
                                         mt={{ base: "4", md: 0 }}
+                                        pl={"20px"}
                                     >
                                         {formatDate(
                                             article.published_at ||
@@ -417,30 +426,18 @@ const BlogSection = ({ events }) => {
                     <InertiaChakraLink
                         as={Link}
                         href={`/category/featured-events`}
+                        w="50%"
                     >
                         <ExploreButton
                             size="md"
                             text="Explore All"
-                            w="xl"
                             variant="outline"
+                            w="full"
                         />
                     </InertiaChakraLink>
                 </VStack>
             </Container>
         </Section>
-    );
-};
-
-const InfocusSection = ({ infocus }) => {
-    return (
-        <MultiPostsCarousel
-            posts={infocus}
-            itemsToShow={1}
-            spacing={30}
-            pagination={true}
-            showCategoryTag={true}
-            my={12}
-        />
     );
 };
 
@@ -480,38 +477,34 @@ const NewsletterSection = () => {
 };
 
 const PublicationSection = ({ publications, showPublication }) => {
-
-
     return (
         <Section
             title={"Latest Publications"}
-
             bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
         >
-
-
             <Container maxW="6xl">
-
-                <MultiItemCarousel
-                    slides={publications}
-                    itemsToShow={showPublication}
-                    spacing={120}
-                />
-                <Box textAlign={"center"} mt={12}>
-
-                    <Link href="/category/publications">
+                <VStack spacing={6}>
+                    <MultiItemCarousel
+                        slides={publications}
+                        itemsToShow={showPublication}
+                        spacing={90}
+                        mt={16}
+                    />
+                    <InertiaChakraLink
+                        href="/category/publications"
+                        w="50%"
+                        textAlign={"center"}
+                        mt={6}
+                    >
                         <ExploreButton
                             size="md"
+                            w="full"
                             text="Explore All"
-                            w="xl"
-
                             variant="outline"
                         />
-                    </Link>
-                </Box>
+                    </InertiaChakraLink>
+                </VStack>
             </Container>
-
-
         </Section>
     );
 };

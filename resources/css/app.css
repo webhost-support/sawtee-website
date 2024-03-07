@@ -190,46 +190,53 @@ time {
     top: 8rem;
 }
 
-swiper-slide img {
+.swiper, .swiper-wrapper,
+.swiper-initialized{
+    max-width: 100% !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.swiper-slide img {
     display: block;
-    width: 100%;
-    height: 100%;
     object-fit: cover;
+    max-width: 100%;
 }
 
-.blockquote {
-    width: 80%;
-    font-style: italic;
-    color: var(--chakra-colors-whiteAlpha-800);
-    padding: 1.2em 30px 1.2em 75px;
-    border-left: 8px solid var(--chakra-colors-primary-500);
-    line-height: 1.5;
-    position: relative;
-    background: var(--chakra-colors-blackAlpha-400);
-    backdrop-filter: blur(3px);
+.post-slide {
+    max-width: 100% !important;
 }
 
-.swiper-button-prev {
-    left: auto !important;
-    right: 60px !important;
-}
 .swiper-button-next,
 .swiper-button-prev {
-    top: 25px !important;
-    background-color: transparent;
-    background-size: 20px;
+    background-color: var(--chakra-colors-blackAlpha-400);
     padding-inline: 8px;
     border-radius: 5px;
-    border: 2px solid var(--color-text);
+    border: 2px solid ;
+    border-color: var(--color-text);
     color: var(--color-text);
-    width: 24px !important;
-    height: 35px !important;
+    width: 2.5rem !important;
+    height: 2.5rem !important;
 }
-.swiper-button-next > svg,
-.swiper-button-prev > svg {
-    height: 20px !important;
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    font-size: 1.25rem !important;
     color: var(--color-text);
 }
+
+.multi-post-carousel .swiper-button-next,
+.multi-post-carousel .swiper-button-prev,
+.multi-item-carousel .swiper-button-next,
+.multi-item-carousel .swiper-button-prev  {
+    top: 25px;
+}
+
+.multi-post-carousel > .swiper-button-prev,
+.multi-item-carousel > .swiper-button-prev {
+    right: var(--swiper-navigation-sides-offset, 60px) !important;
+    left: auto !important;
+}
+
 
 .blockquote::before {
     font-family: Arial;
@@ -239,6 +246,18 @@ swiper-slide img {
     position: absolute;
     left: 10px;
     top: -10px;
+}
+
+.blockquote {
+    width: 80%;
+    font-style: italic;
+    color: var(--chakra-colors-whiteAlpha-800);
+    padding: 1.2em 1.8rem 1.2em 4rem;
+    border-left: 8px solid var(--chakra-colors-primary-500);
+    line-height: 1.5;
+    position: relative;
+    background: var(--chakra-colors-blackAlpha-400);
+    backdrop-filter: blur(3px);
 }
 
 .blockquote::after {

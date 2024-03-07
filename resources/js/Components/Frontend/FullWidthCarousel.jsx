@@ -1,18 +1,59 @@
-import { Box, Stack, Text, Image, Flex } from "@chakra-ui/react";
+import {
+    Box,
+    Stack,
+    Text,
+    Image,
+    Flex,
+    useColorModeValue,
+} from "@chakra-ui/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import "swiper/css/effect-fade";
-import { Autoplay, Pagination, Navigation, EffectFade } from "swiper/modules";
+import "swiper/css/effect-creative";
+import {
+    Autoplay,
+    Pagination,
+    Navigation,
+    EffectCreative,
+} from "swiper/modules";
 // register Swiper custom elements
 
-const FullWidthCarousel = ({ slides, loop = true, pagination }) => {
+const FullWidthCarousel = ({
+    slides,
+    rewind,
+    loop,
+    pagination,
+    paginationType,
+}) => {
     const paginationBullet = {
         clickable: true,
+        dynamicBullets: true,
         renderBullet: function (index, className) {
-            return '<span class="' + className + '">' + "</span>";
+            return '<span className="' + className + '">' + "</span>";
+        },
+    };
+
+    const creativeEffect = {
+        // prev: {
+        //     shadow: true,
+        //     origin: "left center",
+        //     translate: ["-5%", 0, -200],
+        //     rotate: [0, 100, 0],
+        // },
+        // next: {
+        //     origin: "right center",
+        //     translate: ["5%", 0, -200],
+        //     rotate: [0, -100, 0],
+        // },
+
+        prev: {
+            shadow: true,
+            translate: ["-20%", 0, -1],
+        },
+        next: {
+            translate: ["100%", 0, 0],
         },
     };
 
@@ -24,48 +65,57 @@ const FullWidthCarousel = ({ slides, loop = true, pagination }) => {
                 delay: 2500,
                 disableOnInteraction: false,
             }}
-            pagination={pagination ? paginationBullet : pagination}
+            pagination={
+                paginationType
+                    ? {
+                          type: paginationType,
+                      }
+                    : pagination
+                    ? paginationBullet
+                    : pagination
+            }
             navigation={true}
-            modules={[Autoplay, Pagination, Navigation, EffectFade]}
-            effect="fade"
+            modules={[Autoplay, Pagination, Navigation, EffectCreative]}
+            effect="creative"
             loop={loop}
-            class="full-width-carousel"
+            rewind={rewind}
+            creativeEffect={creativeEffect}
+            className="full-width-carousel"
         >
             {slides.map((slide) => (
-                <SwiperSlide class="swiper-slide" key={slide.id}>
-                    <Flex
-                        pos="relative"
+                <SwiperSlide className="swiper-slide" key={slide.id}>
+                    <Box
+                        h="full"
                         _before={{
                             content: `''`,
                             position: "absolute",
                             inset: 0,
-                            background: "rgba(0,0,0,0.3)",
-                            backgroundBlendMode: "multiply",
+                            background: "rgba(0,0,0,0.4)",
+                            backgroundBlendMode: "overlay",
                         }}
-                        h="100%"
                     >
                         <Image
                             src={`${slide.media[0].original_url}`}
                             alt={slide.title}
                             objectFit={"cover"}
-                            w='full'
                             h="full"
                         />
                         <Stack
                             pos="absolute"
-                            bottom="60px"
-                            textAlign="center"
-                            w="full"
+                            bottom="0px"
                             color="whiteAlpha.800"
-                            zIndex={1}
-                            gap={2}
-                            justify="center"
-                            align="center"
+                            bg={"blackAlpha.500"}
+                            p={2}
+                            px={6}
                         >
-                            <Text fontSize="3xl">{slide.title}</Text>
-                            <Text fontSize="sm">{slide.subtitle}</Text>
+                            <Text fontSize={{ base: "md", md: "3xl" }}>
+                                {slide.title}
+                            </Text>
+                            <Text fontSize={{ base: "xs", md: "sm" }}>
+                                {slide.subtitle}
+                            </Text>
                         </Stack>
-                    </Flex>
+                    </Box>
                 </SwiperSlide>
             ))}
         </Swiper>

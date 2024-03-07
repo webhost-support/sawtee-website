@@ -21,6 +21,7 @@ const MultiItemCarousel = ({
     itemsToShow = 3,
     className,
     spacing = 30,
+    children,
     ...rest
 }) => {
     const ImageBorderColor = useColorModeValue("gray.900", "whiteAlpha.900");
@@ -30,18 +31,18 @@ const MultiItemCarousel = ({
             spaceBetween={spacing}
             navigation={true}
             slidesPerGroup={itemsToShow}
-            // centered={true}
             keyboard={true}
             modules={[Navigation, Pagination, Keyboard]}
-            class={"multi-item-carousel " + className}
+            className={"multi-item-carousel " + className}
         >
+            {children}
             {slides.length >= 1 &&
                 slides.map((slide) => {
                     return (
-                        <SwiperSlide key={slide.id}>
+                        <SwiperSlide className="swiper-slide" key={slide.id}>
                             <LinkBox
                                 pos={"relative"}
-                                maxW="md"
+                                maxW="220px"
                                 mx="auto"
                                 _before={{
                                     content: `''`,
@@ -92,15 +93,17 @@ const MultiItemCarousel = ({
                 })}
             {slides.length <= 0 &&
                 [1, 2, 3, 4, 5, 6].map((item) => (
-                    <SwiperSlide key={`${item}+1`}>
-                        <Skeleton
-                            rounded="xl"
-                            startColor="primary.50"
-                            endColor="primary.200"
-                            aspectRatio={3 / 4}
-                            maxW={"xs"}
-                            mx="auto"
-                        />
+                    <SwiperSlide className="swiper-slide" key={`${item}+1`}>
+                        <Box {...rest}>
+                            <Skeleton
+                                rounded="xl"
+                                startColor="primary.100"
+                                endColor="primary.300"
+                                aspectRatio={3 / 4}
+                                maxW={"220px"}
+                                mx="auto"
+                            />
+                        </Box>
                     </SwiperSlide>
                 ))}
         </Swiper>
