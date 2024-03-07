@@ -31,7 +31,7 @@ import InertiaChakraLinkOverlay from "@/Components/Frontend/styles/inertia-chakr
 import { Newsletter } from "@/Components/Frontend/newsletter";
 import WebsiteHead from "@/Components/Frontend/Head";
 import CardsCarousel from "@/Components/Frontend/CardsCarousel";
-import { Barchart, TreemapChart } from "@/Components/Frontend/Charts";
+// import { Barchart, TreemapChart } from "@/Components/Frontend/Charts";
 
 const Home = ({
     infocus,
@@ -81,7 +81,7 @@ const Home = ({
                     link={"/category/sawtee-in-media"}
                 />
             )}
-            <InfoSection />
+            {/* <InfoSection /> */}
             <NewsletterSection />
         </MainLayout>
     );
@@ -467,8 +467,8 @@ const InfoSection = () => {
                 alignItems="center"
                 minH={"500px"}
             >
-                <Barchart />
-                <TreemapChart />
+                {/* <Barchart />
+                <TreemapChart /> */}
                 {/* <iframe
                     title="Reform Meter Dashboard_revised"
                     width="100%"
