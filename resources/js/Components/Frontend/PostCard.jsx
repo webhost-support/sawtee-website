@@ -90,6 +90,7 @@ function PostCard({
                             fontSize="sm"
                             textOverflow="ellipsis"
                             display="-webkit-box"
+                            noOfLines={2}
                             color={color}
                             dangerouslySetInnerHTML={{ __html: post.excerpt }}
                         />

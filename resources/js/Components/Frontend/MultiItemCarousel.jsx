@@ -14,7 +14,6 @@ import { Pagination, Navigation, Keyboard } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-// import required modules
 
 const MultiItemCarousel = ({
     slides,
@@ -43,6 +42,7 @@ const MultiItemCarousel = ({
                             <LinkBox
                                 pos={"relative"}
                                 maxW="220px"
+                                aspectRatio={3 / 4}
                                 mx="auto"
                                 _before={{
                                     content: `''`,
@@ -83,8 +83,6 @@ const MultiItemCarousel = ({
                                         border={`1px solid`}
                                         borderColor={ImageBorderColor}
                                         objectFit="cover"
-                                        w="full"
-                                        h="full"
                                     />
                                 </InertiaChakraLinkOverlay>
                             </LinkBox>

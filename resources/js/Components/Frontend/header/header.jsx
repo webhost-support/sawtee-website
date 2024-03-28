@@ -53,7 +53,7 @@ const Logo = ({ text = "SAWTEE", src }) => {
     }
 };
 
-const SiteLogo = ({ src }) => {
+const SiteLogo = ({ src, established }) => {
     // check if the logo is a url,
     // we assume, if it's a url, it points to an image, else it's a text
     return (
@@ -61,9 +61,11 @@ const SiteLogo = ({ src }) => {
             <Link href="/">
                 <Logo src={src} />
             </Link>
-            <Text fontSize={".65rem"} fontWeight={"semibold"}>
-                Estd: 1994
-            </Text>
+            {established && (
+                <Text fontSize={".65rem"} fontWeight={"semibold"}>
+                    Estd: {established}
+                </Text>
+            )}
         </Box>
     );
 };
@@ -72,7 +74,7 @@ const Header = ({ menu = null, children, ...props }) => (
     <SiteHeader {...props}>
         <SiteHeaderInner>
             <MobileMenu menu={menu} />
-            <SiteLogo src={"/assets/logo-sawtee.webp"} />
+            <SiteLogo src={"/assets/logo-sawtee.webp"} established={null} />
             {children}
         </SiteHeaderInner>
     </SiteHeader>

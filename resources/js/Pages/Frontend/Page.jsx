@@ -18,7 +18,7 @@ export default function Page({
     return (
         <>
             <WebsiteHead
-                title={"SAWTEE | " + (meta_title ? meta_title : name)}
+                title={meta_title ? meta_title : name}
                 description={meta_description}
                 image={
                     featured_image
