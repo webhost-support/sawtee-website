@@ -41,7 +41,7 @@ const MultiItemCarousel = ({
                         <SwiperSlide className="swiper-slide" key={slide.id}>
                             <LinkBox
                                 pos={"relative"}
-                                maxW="220px"
+                                maxW="180px"
                                 aspectRatio={3 / 4}
                                 mx="auto"
                                 _before={{
@@ -70,6 +70,8 @@ const MultiItemCarousel = ({
                                             : "#"
                                     }
                                     target="_blank"
+                                    maxW="180px"
+                                    aspectRatio={3 / 4}
                                 >
                                     <Image
                                         src={
@@ -98,7 +100,7 @@ const MultiItemCarousel = ({
                                 startColor="primary.100"
                                 endColor="primary.300"
                                 aspectRatio={3 / 4}
-                                maxW={"220px"}
+                                maxW={"180px"}
                                 mx="auto"
                             />
                         </Box>

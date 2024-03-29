@@ -131,7 +131,7 @@ export default function Category({
 
                             {isResearch && (
                                 <ResearchArchive
-                                    posts={posts.data}
+                                    posts={posts}
                                     headingColor={HeadingColor}
                                     textColor={TextColor}
                                 />

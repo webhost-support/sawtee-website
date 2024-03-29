@@ -14,33 +14,45 @@ use App\Models\Team;
 use App\Models\Theme;
 use Inertia\Inertia;
 
+/**
+ * A function to retrieve posts based on category and slug.
+ *
+ * @param Category $category The category object.
+ * @param string $slug The slug parameter.
+ * @return \Illuminate\Pagination\LengthAwarePaginator|array The paginated list of posts or grouped posts.
+ */
 function getPosts($category, $slug){
-        $subcategory_ids = $category->children->pluck('id')->toArray();
-        $parent_and_subcategory_ids = array_merge(array($slug === 'programmes' ? null : $category->id), $subcategory_ids);
-        $posts = Post::query()->with('category', 'category.parent', 'media')
-                        ->whereIn('category_id', $parent_and_subcategory_ids)
-                        ->orderByDesc('id')
-                        ->where('status', 'published')
-                        ->paginate(10);
+    $subcategory_ids = $category->children->pluck('id')->toArray();
+    $parent_and_subcategory_ids = array_merge(array($slug === 'programmes' ? null : $category->id), $subcategory_ids);
+    $posts = Post::query()
+            ->with('category', 'category.parent', 'media')
+            ->whereIn('category_id', $parent_and_subcategory_ids)
+            ->orderByDesc('id')
+            ->where('status', 'published')
+            ->paginate(10);
 
-        // If route is for research category
-        if ($slug === 'research' ) {
-            $collection = Research::with('media', 'file')->orderByDesc('id')->get();
-            $posts = collect($collection)->groupBy('year')->all();
-
-        }
-
-        // If route is for teams category
-        if ($slug === 'teams') {
-            $posts = Team::with('media')->orderByDesc('order')->get();
-        }
-
-        return $posts;
+    // If route is for research category
+    if ($slug === 'research' ) {
+        $collection = Research::with('media', 'file')->orderByDesc('id')->get();
+        $posts = collect($collection)->groupBy('year')->all();
     }
+
+    // If route is for teams category
+    if ($slug === 'teams') {
+        $posts = Team::with('media')->orderByDesc('order')->get();
+    }
+
+    return $posts;
+}
 
 class FrontendController extends Controller
 {
 
+    /**
+     * Retrieves data for the home page and renders the 'Frontend/Pages/Home' view.
+     *
+     * @return \Inertia\Response
+     */
     public function index()
     {
         $infocusId = Category::where('slug', 'infocus')->first()->id;
@@ -63,7 +75,13 @@ class FrontendController extends Controller
         ]);
     }
 
-
+    /**
+     * Retrieves a page by its slug and loads associated sections and themes if necessary.
+     *
+     * @param datatype $slug The slug of the page to retrieve
+     * @throws ModelNotFoundException if the page is not found
+     * @return \Inertia\Response
+     */
     public function page($slug)
     {
         $page = Page::where('slug', $slug)->firstOrFail();
@@ -85,7 +103,15 @@ class FrontendController extends Controller
     }
 
 
-
+    /**
+     * Retrieves the category, subcategory, and post information based on the provided slugs.
+     *
+     * @param string $slug The slug of the category.
+     * @param string|null $subcategory The slug of the subcategory (optional).
+     * @param string|null $post The slug of the post (optional).
+     * @return \Inertia\Response The rendered Inertia response.
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException If the category is not found.
+     */
     public function category($slug, $subcategory = null, $post = null)
     {
         $segments = request()->segments();
@@ -120,7 +146,6 @@ class FrontendController extends Controller
             }
             return Inertia::render('Frontend/Archives/PublicationsArchive', ['category' => $category, 'infocus' => $infocus, 'sawteeInMedia' => $sawteeInMedia, 'publications' => $publications]);
         }
-
 
 
         // if route is for category/subcategory/post eg: sawtee.org/programmes/ongoing-programmes/post-slug

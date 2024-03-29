@@ -1,27 +1,26 @@
-import { useState } from "react";
+import { default as ChakraLink, default as InertiaChakraLink } from "@/Components/Frontend/styles/inertia-chakra-link";
 import {
     Box,
-    Text,
-    useColorModeValue,
-    Heading,
-    HStack,
-    Divider,
     Button,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalCloseButton,
-    ModalBody,
-    ModalFooter,
+    Divider,
+    HStack,
+    Heading,
     Image,
     Input,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
+    Text,
+    useColorModeValue,
 } from "@chakra-ui/react";
-import { HiChevronRight, HiChevronDown, HiArrowRight } from "react-icons/hi";
 import styled from "@emotion/styled";
 import { Link } from "@inertiajs/react";
-import ChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
-import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
+import { useState } from "react";
+import { HiArrowRight, HiChevronDown, HiChevronRight } from "react-icons/hi";
 
 // A debounced input react component
 export function DebouncedInput({

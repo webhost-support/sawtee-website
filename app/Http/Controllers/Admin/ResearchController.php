@@ -43,8 +43,8 @@ class ResearchController extends Controller
             'year' => 'nullable|numeric|max:3030',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'file' => 'file|mimes:pdf,doc,docx|max:5120',
-            'meta_title' => "required|string|max:60",
-            'meta_description' => "nullable|string|max:160"
+            'meta_title' => "required|string|max:255",
+            'meta_description' => "nullable|string"
         ]);
         $validated['slug'] = Str::slug($validated['title'], '-');
         $research = Research::create($validated);
