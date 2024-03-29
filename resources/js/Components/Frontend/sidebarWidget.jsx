@@ -36,6 +36,7 @@ const ListHeading = ({ title, link }) => {
                     color="#fff"
                     textDecor={"underline"}
                     textUnderlineOffset={"2px"}
+                    transition={"all 0.2s linear"}
                     _hover={{
                         textDecor: "underline",
                         color: "primary.300",
@@ -91,12 +92,13 @@ const SidebarWidget = ({ array, title, link, ...rest }) => {
                                     color={HeadingColor}
                                     fontWeight="semibold"
                                 >
-                                    <Link
+                                    <ChakraLink
+                                        as={Link}
                                         className="primary-link"
                                         href={`${link}/${post.slug}`}
                                     >
                                         {post.title}
-                                    </Link>
+                                    </ChakraLink>
                                 </Heading>
                                 <Box
                                     as="time"

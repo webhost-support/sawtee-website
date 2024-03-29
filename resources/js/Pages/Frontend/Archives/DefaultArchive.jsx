@@ -1,9 +1,9 @@
-import { Box, LinkBox, Text, Heading, Stack } from "@chakra-ui/react";
+import { Box, LinkBox, Text, Heading, Stack, LinkOverlay } from "@chakra-ui/react";
 import { ExploreButton, GlassBox } from "@/Components/Frontend/index";
 import { formatDate } from "@/Utils/helpers";
 import { PostImageWithOverlay } from "@/Components/Frontend/featured-post/components";
 import { Link } from "@inertiajs/react";
-import InertiaChakraLinkOverlay from "@/Components/Frontend/styles/inertia-chakra-link-overlay";
+import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
 
 const DefaultArchive = ({ posts, headingColor, textColor }) => {
     if (!posts || posts.length <= 0) return "No posts found";
@@ -24,7 +24,7 @@ const DefaultArchive = ({ posts, headingColor, textColor }) => {
 
 export default DefaultArchive;
 
-const ArchivePost = ({ post, featured_image, headingColor, textColor }) => {
+const ArchivePost = ({ post, featured_image }) => {
     return (
         <GlassBox
             key={post.id}
@@ -36,12 +36,12 @@ const ArchivePost = ({ post, featured_image, headingColor, textColor }) => {
             maxW="full"
         >
             <LinkBox>
+
                 <Box>
-                    <InertiaChakraLinkOverlay
-                        as={Link}
+                    {featured_image && (
+                    <LinkOverlay
                         href={`/category/${post.category.slug}/${post.slug}`}
                     >
-                        {featured_image && (
                             <PostImageWithOverlay
                                 height="200px"
                                 borderRadius="0.75rem 0.75rem 0 0"
@@ -56,28 +56,28 @@ const ArchivePost = ({ post, featured_image, headingColor, textColor }) => {
                                     featured_image.original_url
                                 }
                             />
+                    </LinkOverlay>
                         )}
-                    </InertiaChakraLinkOverlay>
                 </Box>
                 <Box p={[4, 8]}>
-                    <Box>
+                    <Box >
                         <Heading
                             as="h3"
-                            color={headingColor}
                             fontSize={"md"}
                             fontWeight="semibold"
                             mb={4}
+
                         >
-                            <InertiaChakraLinkOverlay
-                                as={Link}
+                            <InertiaChakraLink
                                 href={`/category/${post.category.slug}/${post.slug}`}
+
                                 className="primary-link"
                             >
                                 {post.title}
-                            </InertiaChakraLinkOverlay>
+                            </InertiaChakraLink>
                         </Heading>
 
-                        <Text fontSize={"sm"} color={textColor} noOfLines={3}>
+                        <Text fontSize={"sm"}  noOfLines={3}>
                             {post.excerpt}
                         </Text>
                     </Box>
@@ -93,7 +93,6 @@ const ArchivePost = ({ post, featured_image, headingColor, textColor }) => {
                             <Text
                                 as="time"
                                 fontSize={"xs"}
-                                color={textColor}
                                 dangerouslySetInnerHTML={{
                                     __html: formatDate(post.published_at),
                                 }}
@@ -112,7 +111,7 @@ const ArchivePost = ({ post, featured_image, headingColor, textColor }) => {
                             </Link>
                         </Stack>
                     </Box>
-                </Box>
+                    </Box>
             </LinkBox>
         </GlassBox>
     );

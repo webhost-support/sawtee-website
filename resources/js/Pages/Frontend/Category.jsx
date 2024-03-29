@@ -41,14 +41,14 @@ export default function Category({
         !isTeam &&
         !isResearch &&
         !isCovid;
-    const HeadingColor = useColorModeValue(
-        "var(--color-dark)",
-        "var(--color-light)"
-    );
-    const TextColor = useColorModeValue(
-        "var(--color-dark-acc)",
-        "var(--color-light-acc)"
-    );
+    // const HeadingColor = useColorModeValue(
+    //     "var(--color-dark)",
+    //     "var(--color-light)"
+    // );
+    // const TextColor = useColorModeValue(
+    //     "var(--color-dark-acc)",
+    //     "var(--color-light-acc)"
+    // );
     const contentColor = useColorModeValue(
         "rgba(12, 17, 43, 0.8)",
         "whiteAlpha.800"
@@ -101,47 +101,41 @@ export default function Category({
                             {isDefault && (
                                 <DefaultArchive
                                     posts={posts.data}
-                                    headingColor={HeadingColor}
-                                    textColor={TextColor}
+
                                 />
                             )}
                             {isCovid && (
                                 <CovidArchive
                                     posts={posts.data}
-                                    headingColor={HeadingColor}
-                                    textColor={TextColor}
+
                                 />
                             )}
 
                             {isEvent && (
                                 <EventsArchive
                                     posts={posts.data}
-                                    headingColor={HeadingColor}
-                                    textColor={TextColor}
+
                                 />
                             )}
 
                             {isTeam && (
                                 <TeamsArchive
                                     posts={posts}
-                                    headingColor={HeadingColor}
-                                    textColor={TextColor}
+
                                 />
                             )}
 
                             {isResearch && (
                                 <ResearchArchive
                                     posts={posts}
-                                    headingColor={HeadingColor}
-                                    textColor={TextColor}
+
                                 />
                             )}
 
                             {isBlog && (
                                 <BlogArchive
                                     posts={posts.data}
-                                    headingColor={HeadingColor}
-                                    textColor={TextColor}
+
                                 />
                             )}
 

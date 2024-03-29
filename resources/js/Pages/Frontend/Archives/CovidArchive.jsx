@@ -12,8 +12,7 @@ import {
 import { formatDate } from "@/Utils/helpers";
 import { GlassBox } from "@/Components/Frontend/index";
 
-const CovidArchive = ({ posts, headingColor, textColor }) => {
-    console.log(posts[0]);
+const CovidArchive = ({ posts }) => {
     return (
         <SimpleGrid columns={2} gap={0}>
             {posts.map((post) => {
@@ -65,7 +64,6 @@ const CovidArchive = ({ posts, headingColor, textColor }) => {
                         <Link href={post.link} className="primary-link">
                             <Heading
                                 as="h3"
-                                color={headingColor}
                                 fontSize={"lg"}
                             >
                                 {post.title}
@@ -81,7 +79,6 @@ const CovidArchive = ({ posts, headingColor, textColor }) => {
                             {post.author && (
                                 <Text
                                     key={post.author}
-                                    color={textColor}
                                     fontSize="sm"
                                 >
                                     {post.author}

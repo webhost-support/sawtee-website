@@ -1,9 +1,9 @@
-import { Box, LinkBox, Text, Heading, Stack } from "@chakra-ui/react";
+import { Box, LinkBox, Text, Heading, Stack, LinkOverlay } from "@chakra-ui/react";
 import { ExploreButton, GlassBox } from "@/Components/Frontend/index";
 import { formatDate } from "@/Utils/helpers";
 import { PostImageWithOverlay } from "@/Components/Frontend/featured-post/components";
 import { Link } from "@inertiajs/react";
-import InertiaChakraLinkOverlay from "@/Components/Frontend/styles/inertia-chakra-link-overlay";
+import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
 
 const EventsArchive = ({ posts, headingColor, textColor }) => {
     if (!posts || posts.length <= 0) return "No posts found";
@@ -25,8 +25,7 @@ const EventsArchive = ({ posts, headingColor, textColor }) => {
                 <LinkBox>
                     <Box>
                         {
-                            <InertiaChakraLinkOverlay
-                                as={Link}
+                            <LinkOverlay
                                 href={`/category/${post.category.slug}/${post.slug}`}
                             >
                                 <PostImageWithOverlay
@@ -53,30 +52,33 @@ const EventsArchive = ({ posts, headingColor, textColor }) => {
                                             `
                                     }
                                 />
-                            </InertiaChakraLinkOverlay>
+                            </LinkOverlay>
                         }
                     </Box>
                     <Box p={[4, 8]}>
                         <Box>
                             <Heading
                                 as="h3"
-                                color={headingColor}
                                 fontSize={"md"}
                                 fontWeight="semibold"
                                 mb={4}
                             >
-                                <InertiaChakraLinkOverlay
+                                <InertiaChakraLink
                                     as={Link}
                                     href={`/category/${post.category.slug}/${post.slug}`}
+                                    _groupHover={{
+                                        textDecoration: "underline",
+                                        textUnderlineOffset: "3px",
+                                        transition: "all 200ms ease-in"
+                                    }}
                                     className="primary-link"
                                 >
                                     {post.title}
-                                </InertiaChakraLinkOverlay>
+                                </InertiaChakraLink>
                             </Heading>
 
                             <Text
                                 fontSize={"sm"}
-                                color={textColor}
                                 noOfLines={3}
                             >
                                 {post.excerpt}
@@ -94,7 +96,7 @@ const EventsArchive = ({ posts, headingColor, textColor }) => {
                                 <Text
                                     as="time"
                                     fontSize={"xs"}
-                                    color={textColor}
+                                    // color={textColor}
                                     dangerouslySetInnerHTML={{
                                         __html: formatDate(post.published_at),
                                     }}

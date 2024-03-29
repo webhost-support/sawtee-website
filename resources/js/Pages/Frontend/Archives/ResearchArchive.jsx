@@ -40,7 +40,6 @@ const ResearchArchive = ({ posts, headingColor, textColor }) => {
                                     fontSize="2xl"
                                     fontWeight="bold"
                                     my={5}
-                                    color={headingColor}
                                 >
                                     {tagitem[0]}
                                 </Heading>
@@ -75,7 +74,6 @@ const ResearchArchive = ({ posts, headingColor, textColor }) => {
                                             }
                                         >
                                             <Text
-                                                color={textColor}
                                                 fontSize="md"
                                                 _hover={{
                                                     color: "linkColor",
@@ -83,6 +81,7 @@ const ResearchArchive = ({ posts, headingColor, textColor }) => {
                                             >
                                                 <Link
                                                     target="_blank"
+                                                    class="primary-link"
                                                     href={`/Research_Reports/${researchItem.file.name}`}
                                                 >
                                                     {researchItem.title}

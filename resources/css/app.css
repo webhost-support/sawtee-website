@@ -49,9 +49,6 @@ body {
     -webkit-scrollbar-width: thin;
     scrollbar-width: thin;
     scrollbar-color: var(--thumbBG) var(--scrollbarBG);
-}
-
-body {
     position: relative;
     background-color: var(--color-body-bg);
     color: var(--color-text);
@@ -111,6 +108,17 @@ h6 {
     overflow-wrap: break-word;
 }
 
+.primary-link {
+    text-decoration: inherit;
+
+}
+.primary-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--linkcolor) !important;
+    color: var(--linkcolor) !important;
+    transition: all 200ms ease-in;
+}
 .swiper-button-prev,
 .swiper-button-next {
     width: 40px !important;
@@ -166,16 +174,7 @@ main {
     scrollbar-width: none;
 }
 
-.primary-link {
-    text-decoration: none;
 
-    & :hover {
-        text-decoration: underline;
-        text-underline-offset: 3px;
-        text-decoration-color: var(--linkcolor);
-        color: var(--linkcolor);
-    }
-}
 
 time {
     font-family: var(--chakra-fonts-mono);
