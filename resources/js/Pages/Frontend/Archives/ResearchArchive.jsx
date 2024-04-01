@@ -22,6 +22,8 @@ const ResearchArchive = ({ posts, headingColor, textColor }) => {
 
     const sortedPosts = Object.entries(posts).sort(([a], [b]) => b - a);
 
+    console.log(posts);
+
     return (
         <Section
             pb="80px"
@@ -35,7 +37,6 @@ const ResearchArchive = ({ posts, headingColor, textColor }) => {
             <Container maxW="5xl" p={2}>
                 <VStack textAlign="start" align="start" mb={5} spacing={10}>
                     {sortedPosts.map((tagitem) => {
-                        console.log(tagitem);
                         return (
                             <Box zIndex={5} w="full" key={tagitem[0]}>
                                 <Heading
@@ -85,7 +86,11 @@ const ResearchArchive = ({ posts, headingColor, textColor }) => {
                                             >
                                                 <Link
                                                     target="_blank"
-                                                    href={`/Research_Reports/${researchItem.file.name}`}
+                                                    href={
+                                                        researchItem.file
+                                                            ? `/Research_Reports/${researchItem.file.name}`
+                                                            : researchItem.link
+                                                    }
                                                 >
                                                     {researchItem.title}
                                                 </Link>

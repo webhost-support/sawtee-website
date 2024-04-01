@@ -35,6 +35,7 @@ export default function CreateResearchForm() {
         subtitle: "",
         description: "",
         year: "",
+        link: "",
         image: null,
         file: null,
         meta_title: "",
@@ -373,6 +374,30 @@ export default function CreateResearchForm() {
                                 </FormErrorMessage>
                             )}
                         </FormControl>
+
+                        <FormControl isInvalid={errors.link}>
+                            <FormLabel htmlFor="link">External Link</FormLabel>
+
+                            <Input
+                                type="text"
+                                id="link"
+                                name="link"
+                                display="flex"
+                                placeholder="enter research link"
+                                mt={1}
+                                autoComplete="link"
+                                onChange={(e) =>
+                                    setData("link", e.target.value)
+                                }
+                            />
+
+                            {errors.link && (
+                                <FormErrorMessage mt={2}>
+                                    {errors.link}
+                                </FormErrorMessage>
+                            )}
+                        </FormControl>
+
                         <PrimaryButton
                             type="submit"
                             disabled={processing}

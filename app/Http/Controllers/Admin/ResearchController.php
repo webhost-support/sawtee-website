@@ -41,12 +41,14 @@ class ResearchController extends Controller
             'subtitle' =>'nullable|string|max:255',
             'description' => 'nullable|string|max:2000',
             'year' => 'nullable|numeric|max:3030',
+            'link' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'file' => 'file|mimes:pdf,doc,docx|max:5120',
-            'meta_title' => "required|string|max:255",
+            'file' => 'nullable|file|mimes:pdf,doc,docx|max:5120',
+            'meta_title' => "nullable|string|max:255",
             'meta_description' => "nullable|string"
         ]);
         $validated['slug'] = Str::slug($validated['title'], '-');
+        $validated['meta_title'] = $validated['title'];
         $research = Research::create($validated);
         if ($request->hasFile('image')) {
             $research->addMediaFromRequest('image')->toMediaCollection('research_featured_image');

@@ -14,7 +14,7 @@ class Research extends Model implements HasMedia
 {
     use HasFactory;
     use InteractsWithMedia;
-    protected $fillable = ['title', 'subtitle', 'description', 'year', 'meta_title', 'meta_description'];
+    protected $fillable = ['title', 'subtitle', 'description', 'year', 'link', 'meta_title', 'meta_description'];
 
     public function registerMediaConversions(Media $media = null): void
     {
