@@ -22,8 +22,6 @@ const ResearchArchive = ({ posts, headingColor, textColor }) => {
 
     const sortedPosts = Object.entries(posts).sort(([a], [b]) => b - a);
 
-    console.log(posts);
-
     return (
         <Section
             pb="80px"

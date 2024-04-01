@@ -33,7 +33,6 @@ export default function PublicationsArchive({
     );
     const show = useBreakpointValue([1, 2, 3]);
 
-    console.log(category);
     return (
         <MainLayout>
             <WebsiteHead

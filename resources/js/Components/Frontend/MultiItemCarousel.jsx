@@ -73,19 +73,28 @@ const MultiItemCarousel = ({
                                     maxW="180px"
                                     aspectRatio={3 / 4}
                                 >
-                                    <Image
-                                        src={
-                                            slide.media
-                                                ? `${slide.media[0].original_url}`
-                                                : ""
-                                        }
-                                        alt={slide.title}
-                                        title={slide.title}
-                                        rounded="xl"
-                                        border={`1px solid`}
-                                        borderColor={ImageBorderColor}
-                                        objectFit="cover"
-                                    />
+                                    {slide.media[0] && (
+                                        <Image
+                                            src={`${slide.media[0].original_url}`}
+                                            alt={slide.title}
+                                            title={slide.title}
+                                            rounded="xl"
+                                            border={`1px solid`}
+                                            borderColor={ImageBorderColor}
+                                            objectFit="cover"
+                                            w="180px"
+                                            aspectRatio={3 / 4}
+                                        />
+                                    )}
+                                    {!slide.media[0] && (
+                                        <Box
+                                            rounded="xl"
+                                            bg="gray.200"
+                                            aspectRatio={3 / 4}
+                                            maxW={"180px"}
+                                            mx="auto"
+                                        />
+                                    )}
                                 </InertiaChakraLinkOverlay>
                             </LinkBox>
                         </SwiperSlide>
