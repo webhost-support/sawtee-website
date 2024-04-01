@@ -17,9 +17,10 @@ import React from "react";
 
 const ResearchArchive = ({ posts, headingColor, textColor }) => {
     // Get the data of the current list.
-
     if (!posts || posts.length <= 0)
         return <Text fontSize={"2xl"}>"No posts found"</Text>;
+
+    const sortedPosts = Object.entries(posts).sort(([a], [b]) => b - a);
 
     return (
         <Section
@@ -33,13 +34,15 @@ const ResearchArchive = ({ posts, headingColor, textColor }) => {
         >
             <Container maxW="5xl" p={2}>
                 <VStack textAlign="start" align="start" mb={5} spacing={10}>
-                    {Array.from(Object.entries(posts)).map((tagitem) => {
+                    {sortedPosts.map((tagitem) => {
+                        console.log(tagitem);
                         return (
                             <Box zIndex={5} w="full" key={tagitem[0]}>
                                 <Heading
                                     fontSize="2xl"
                                     fontWeight="bold"
                                     my={5}
+                                    color={headingColor}
                                 >
                                     {tagitem[0]}
                                 </Heading>
@@ -74,6 +77,7 @@ const ResearchArchive = ({ posts, headingColor, textColor }) => {
                                             }
                                         >
                                             <Text
+                                                color={textColor}
                                                 fontSize="md"
                                                 _hover={{
                                                     color: "linkColor",
@@ -81,7 +85,6 @@ const ResearchArchive = ({ posts, headingColor, textColor }) => {
                                             >
                                                 <Link
                                                     target="_blank"
-                                                    class="primary-link"
                                                     href={`/Research_Reports/${researchItem.file.name}`}
                                                 >
                                                     {researchItem.title}
