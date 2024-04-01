@@ -25,7 +25,7 @@ export default function Publications({ category, publications, infocus, sawteeIn
     return (
         <MainLayout>
             <WebsiteHead
-                title={"SAWTEE | " + category.meta_title}
+                title={category.meta_title}
                 description={category.meta_description}
                 image={
                     category.featured_image

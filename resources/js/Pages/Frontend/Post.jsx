@@ -20,7 +20,7 @@ export default function Post({ post }) {
     return (
         <MainLayout>
             <WebsiteHead
-                title={"SAWTEE | " + category.name + " | " + title}
+                title={category.name + " | " + title}
                 description={post.meta_description}
                 image={
                     featured_image
