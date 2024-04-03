@@ -57,6 +57,7 @@ const FullWidthCarousel = ({
         },
     };
 
+
     return (
         <Swiper
             spaceBetween={30}
@@ -82,7 +83,7 @@ const FullWidthCarousel = ({
             creativeEffect={creativeEffect}
             className="full-width-carousel"
         >
-            {slides.map((slide) => (
+            {slides && slides.length > 0 && slides.map((slide) => (
                 <SwiperSlide className="swiper-slide" key={slide.id}>
                     <Box
                         h="full"
