@@ -214,6 +214,11 @@ time {
     color: var(--color-darker)
 }
 
+.full-width-carousel .swiper-pagination {
+  color: #fff;
+  font-weight: bold;
+}
+
 
 .swiper-button-next,
 .swiper-button-prev {
@@ -246,7 +251,7 @@ time {
 
 
 .blockquote::before {
-    font-family: Arial;
+    font-family: sans-serif;
     content: "\201C";
     color: var(--chakra-colors-primary-500);
     font-size: 4em;

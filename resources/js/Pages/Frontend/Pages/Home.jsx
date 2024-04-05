@@ -13,8 +13,6 @@ import {
     HStack,
     useBreakpointValue,
     useColorModeValue,
-    Flex,
-    Button,
     Stack,
     Spacer,
     SimpleGrid,
@@ -113,7 +111,51 @@ const CarouselSection = ({ slides, books }) => {
                 px={10}
                 py={6}
             >
-                <CardsCarousel slides={books} />
+                <Stack direction="row" gap="4">
+                    <CardsCarousel slides={books} />
+
+                    <VStack
+                        spacing={5}
+                        alignItems="center"
+                        justify="center"
+                        maxW="300px"
+                    >
+                        {books &&
+                            books.length > 0 &&
+                            books.map((slide, i) => {
+                                return (
+                                    <Box key={slide.id}>
+                                        <HStack spacing={4}>
+                                            <Text
+                                                fontWeight="bold"
+                                                boxShadow="md"
+                                                color="white"
+                                                bg="primary.400"
+                                                rounded="md"
+                                                px="2"
+                                            >
+                                                {i + 1}
+                                            </Text>
+                                            <InertiaChakraLink
+                                                href={`/publications/${slide.file.name}`}
+                                                target="_blank"
+                                                fontWeight="semibold"
+                                                fontSize="md"
+                                                color="gray.700"
+                                                _dark={{
+                                                    color: "gray.400",
+                                                }}
+                                            >
+                                                {slide.title +
+                                                    " " +
+                                                    slide.subtitle}
+                                            </InertiaChakraLink>
+                                        </HStack>
+                                    </Box>
+                                );
+                            })}
+                    </VStack>
+                </Stack>
                 <Spacer h="30px" />
                 <Box
                     as={Link}

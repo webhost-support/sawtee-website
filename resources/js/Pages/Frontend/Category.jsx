@@ -26,7 +26,7 @@ export default function Category({
     showSubscriptionBox = true,
     featured_image,
 }) {
-    // const isEvent = category.slug === "featured-events";
+    const isEvent = category.slug === "featured-events";
     const isTeam = category.slug === "team-members";
     const isInFocus = category.slug === "infocus";
     const isMedia = category.slug === "sawtee-in-media";
@@ -35,7 +35,7 @@ export default function Category({
     const isCovid = category.slug === "covid";
     const isResearch = category.slug === "research";
     const isDefault =
-        // !isEvent &&
+        !isEvent &&
         !isNewsletter &&
         !isBlog &&
         !isTeam &&
@@ -98,46 +98,16 @@ export default function Category({
                             mb="56px"
                             colSpan={{ base: 1, md: 2, lg: 1 }}
                         >
-                            {isDefault && (
-                                <DefaultArchive
-                                    posts={posts.data}
+                            {isDefault && <DefaultArchive posts={posts.data} />}
+                            {isCovid && <CovidArchive posts={posts.data} />}
 
-                                />
-                            )}
-                            {isCovid && (
-                                <CovidArchive
-                                    posts={posts.data}
+                            {isEvent && <EventsArchive posts={posts.data} />}
 
-                                />
-                            )}
+                            {isTeam && <TeamsArchive posts={posts} />}
 
-                            {/* {isEvent && (
-                                <EventsArchive
-                                    posts={posts.data}
+                            {isResearch && <ResearchArchive posts={posts} />}
 
-                                />
-                            )} */}
-
-                            {isTeam && (
-                                <TeamsArchive
-                                    posts={posts}
-
-                                />
-                            )}
-
-                            {isResearch && (
-                                <ResearchArchive
-                                    posts={posts}
-
-                                />
-                            )}
-
-                            {isBlog && (
-                                <BlogArchive
-                                    posts={posts.data}
-
-                                />
-                            )}
+                            {isBlog && <BlogArchive posts={posts.data} />}
 
                             {isNewsletter && (
                                 <NewsletterArchive posts={posts.data} />

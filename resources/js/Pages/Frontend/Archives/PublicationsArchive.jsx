@@ -31,7 +31,11 @@ export default function PublicationsArchive({
         "rgba(12, 17, 43, 0.8)",
         "whiteAlpha.800"
     );
-    const show = useBreakpointValue([1, 2, 3]);
+    const show = useBreakpointValue({
+        base: 1,
+        md: 2,
+        lg: 3,
+    });
 
     return (
         <MainLayout>
@@ -58,7 +62,6 @@ export default function PublicationsArchive({
                     px={{ base: "16px", lg: "40px" }}
                     size={"full"}
                     mx="auto"
-                    pt="50px"
                     fontSize={["md", "lg", "xl", "huge"]}
                     color={contentColor}
                 >

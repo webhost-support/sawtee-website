@@ -1,10 +1,4 @@
-import {
-    Image,
-    Box,
-    LinkBox,
-    Skeleton,
-    useColorModeValue,
-} from "@chakra-ui/react";
+import { Image, Box, LinkBox, Skeleton } from "@chakra-ui/react";
 import InertiaChakraLinkOverlay from "./styles/inertia-chakra-link-overlay";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation, Keyboard } from "swiper/modules";
@@ -22,8 +16,6 @@ const MultiItemCarousel = ({
     children,
     ...rest
 }) => {
-    const ImageBorderColor = useColorModeValue("gray.900", "whiteAlpha.900");
-
     return (
         <Swiper
             slidesPerView={itemsToShow}
@@ -38,7 +30,11 @@ const MultiItemCarousel = ({
             {slides.length >= 1 &&
                 slides.map((slide) => {
                     return (
-                        <SwiperSlide className="swiper-slide" key={slide.id}>
+                        <SwiperSlide
+                            className="swiper-slide"
+                            maxW="180px"
+                            key={slide.id}
+                        >
                             <LinkBox
                                 as="article"
                                 maxW="180px"
@@ -70,14 +66,11 @@ const MultiItemCarousel = ({
                                     }
                                     target="_blank"
                                 >
-
                                     <Image
                                         src={`${slide.media[0]?.original_url}`}
                                         alt={slide.title}
                                         title={slide.title}
                                         rounded="md"
-                                        // border={`1px solid`}
-                                        // borderColor={ImageBorderColor}
                                         objectFit="cover"
                                         w="180px"
                                         fallbackSrc="/assets/SM-placeholder-150x150.png"
@@ -91,7 +84,7 @@ const MultiItemCarousel = ({
             {slides.length <= 0 &&
                 [1, 2, 3, 4, 5, 6].map((item) => (
                     <SwiperSlide className="swiper-slide" key={`${item}+1`}>
-                        <Box {...rest} cursor='pointer'>
+                        <Box {...rest} cursor="pointer">
                             <Skeleton
                                 rounded="md"
                                 startColor="gray.300"
@@ -99,7 +92,6 @@ const MultiItemCarousel = ({
                                 w="180px"
                                 h="240px"
                                 mx="auto"
-
                             />
                         </Box>
                     </SwiperSlide>

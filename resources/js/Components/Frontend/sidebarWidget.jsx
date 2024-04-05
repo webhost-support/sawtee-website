@@ -56,10 +56,6 @@ const SidebarWidget = ({ array, title, link, ...rest }) => {
         "var(--color-dark)",
         "var(--color-light)"
     );
-    const TextColor = useColorModeValue(
-        "var(--color-dark-acc)",
-        "var(--color-light-acc)"
-    );
 
     return (
         <GlassBox
@@ -87,7 +83,7 @@ const SidebarWidget = ({ array, title, link, ...rest }) => {
                                 <Heading
                                     as="h4"
                                     className="title"
-                                    fontSize={{ base: "xs", lg: "sm" }}
+                                    fontSize={{ base: "xs", md: "sm" }}
                                     mb="2"
                                     color={HeadingColor}
                                     fontWeight="semibold"

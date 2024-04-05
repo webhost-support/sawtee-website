@@ -1,13 +1,13 @@
 .card-swiper {
   width: 180px !important;
-  height: 240px !important;
+  aspect-ratio: 3/4;
 }
 
 .card-swiper-slide {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  border-radius: 18px !important;
+  border-radius: var(--chakra-radii-md) !important;
   font-size: 22px !important;
   font-weight: bold;
   color: #fff;
