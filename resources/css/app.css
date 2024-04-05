@@ -191,7 +191,6 @@ time {
 
 .swiper, .swiper-wrapper,
 .swiper-initialized{
-    max-width: 100% !important;
     width: 100% !important;
     height: 100% !important;
 }
@@ -199,19 +198,28 @@ time {
 .swiper-slide img {
     display: block;
     object-fit: cover;
-    max-width: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .post-slide {
     max-width: 100% !important;
 }
 
+.full-width-carousel .swiper-button-next, .full-width-carousel .swiper-button-prev {
+    border-color: var(--color-darker);
+}
+
+.full-width-carousel .swiper-button-next::after, .full-width-carousel .swiper-button-prev::after {
+    color: var(--color-darker)
+}
+
+
 .swiper-button-next,
 .swiper-button-prev {
-    background-color: var(--chakra-colors-blackAlpha-400);
     padding-inline: 8px;
     border-radius: 5px;
-    border: 2px solid ;
+    border: 3px solid ;
     border-color: var(--color-text);
     color: var(--color-text);
     width: 2.5rem !important;

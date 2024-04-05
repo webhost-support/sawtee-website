@@ -1,18 +1,16 @@
 import React from "react";
-import { Image, Box, useColorModeValue, Skeleton } from "@chakra-ui/react";
+import { Image } from "@chakra-ui/react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Keyboard, EffectCards } from "swiper/modules";
 
 // Import Swiper styles
 import "swiper/css";
-// import "swiper/css/pagination";
-// import "swiper/css/navigation";
+
 import "swiper/css/effect-cards";
 import "../../../css/card-carousel.css";
-// import required modules
-import { Keyboard, Navigation, EffectCards } from "swiper/modules";
+import InertiaChakraLink from "./styles/inertia-chakra-link";
 
 const CardsCarousel = ({ slides, navigation = false }) => {
-    const ImageBorderColor = useColorModeValue("gray.900", "whiteAlpha.900");
     return (
         <Swiper
             effect="cards"
@@ -32,39 +30,29 @@ const CardsCarousel = ({ slides, navigation = false }) => {
                             key={slide.id}
                             className="card-swiper-slide"
                         >
-                            <Image
-                                src={slide.media[0].original_url}
-                                alt={slide.title}
-                                title={slide.title}
-                                rounded={"md"}
-                                border={`1px solid`}
-                                borderColor={ImageBorderColor}
-                                objectFit="cover"
-                                // w="160px"
-                                // h="220px"
-                            />
-                            {/* <InertiaChakraLink
+                            <InertiaChakraLink
                                 mt={4}
                                 target="_blank"
                                 href={`/publications/${slide.file.name}`}
                             >
-                                Open Pdf
-                            </InertiaChakraLink> */}
+                                <Image
+                                    src={slide.media[0].original_url}
+                                    alt={slide.title}
+                                    title={slide.title}
+                                    rounded={"md"}
+                                    objectFit="cover"
+                                />
+                            </InertiaChakraLink>
                         </SwiperSlide>
                     );
                 })}
-            {!slides &&
-                [1, 2, 3, 4, 5, 6].map((item) => {
+            {!slides || slides.length == 0 &&
+                [1, 2, 3].map((item) => {
                     return (
                         <SwiperSlide
                             className="card-swiper-slide"
                             key={item * 2.096}
                         >
-                            {/* <Skeleton
-                                rounded={"md"}
-                                maxW="240px"
-                                aspectRatio={3 / 4}
-                            /> */}
                             {"Book " + item.toString()}
                         </SwiperSlide>
                     );

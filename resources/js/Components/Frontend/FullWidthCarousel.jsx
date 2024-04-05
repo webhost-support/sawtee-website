@@ -86,20 +86,16 @@ const FullWidthCarousel = ({
             {slides && slides.length > 0 && slides.map((slide) => (
                 <SwiperSlide className="swiper-slide" key={slide.id}>
                     <Box
+                        w="full"
                         h="full"
-                        _before={{
-                            content: `''`,
-                            position: "absolute",
-                            inset: 0,
-                            background: "rgba(0,0,0,0.2)",
-                            backgroundBlendMode: "overlay",
-                        }}
+                        backgroundColor="rgba(0,0,0,0.2)"
+
                     >
                         <Image
                             src={`${slide.media[0].original_url}`}
                             alt={slide.title}
                             objectFit={"cover"}
-                            h="full"
+                            mixBlendMode="darken"
                         />
                         <Stack
                             pos="absolute"

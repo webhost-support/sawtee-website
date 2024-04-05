@@ -7,23 +7,23 @@ import {
 } from "@chakra-ui/react";
 import InertiaChakraLinkOverlay from "./styles/inertia-chakra-link-overlay";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Navigation, Keyboard } from "swiper/modules";
 
 // Import Swiper styles
-// import required modules
-import { Pagination, Navigation, Keyboard } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 const MultiItemCarousel = ({
     slides,
-    itemsToShow = 3,
     className,
+    itemsToShow = 3,
     spacing = 30,
     children,
     ...rest
 }) => {
     const ImageBorderColor = useColorModeValue("gray.900", "whiteAlpha.900");
+
     return (
         <Swiper
             slidesPerView={itemsToShow}
@@ -40,9 +40,8 @@ const MultiItemCarousel = ({
                     return (
                         <SwiperSlide className="swiper-slide" key={slide.id}>
                             <LinkBox
-                                pos={"relative"}
+                                as="article"
                                 maxW="180px"
-                                aspectRatio={3 / 4}
                                 mx="auto"
                                 _before={{
                                     content: `''`,
@@ -51,8 +50,8 @@ const MultiItemCarousel = ({
                                     left: 0,
                                     width: `100%`,
                                     height: "100%",
-                                    borderRadius: "15px",
-                                    background: "rgba(0,0,0,0.3)",
+                                    borderRadius: "var(--chakra-radii-md)",
+                                    background: "rgba(0,0,0,0.1)",
                                     backgroundBlendMode: "overlay",
                                 }}
                                 _hover={{
@@ -70,31 +69,20 @@ const MultiItemCarousel = ({
                                             : "#"
                                     }
                                     target="_blank"
-                                    maxW="180px"
-                                    aspectRatio={3 / 4}
                                 >
-                                    {slide.media[0] && (
-                                        <Image
-                                            src={`${slide.media[0].original_url}`}
-                                            alt={slide.title}
-                                            title={slide.title}
-                                            rounded="xl"
-                                            border={`1px solid`}
-                                            borderColor={ImageBorderColor}
-                                            objectFit="cover"
-                                            w="180px"
-                                            aspectRatio={3 / 4}
-                                        />
-                                    )}
-                                    {!slide.media[0] && (
-                                        <Box
-                                            rounded="xl"
-                                            bg="gray.200"
-                                            aspectRatio={3 / 4}
-                                            maxW={"180px"}
-                                            mx="auto"
-                                        />
-                                    )}
+
+                                    <Image
+                                        src={`${slide.media[0]?.original_url}`}
+                                        alt={slide.title}
+                                        title={slide.title}
+                                        rounded="md"
+                                        // border={`1px solid`}
+                                        // borderColor={ImageBorderColor}
+                                        objectFit="cover"
+                                        w="180px"
+                                        fallbackSrc="/assets/SM-placeholder-150x150.png"
+                                        aspectRatio={3 / 4}
+                                    />
                                 </InertiaChakraLinkOverlay>
                             </LinkBox>
                         </SwiperSlide>
@@ -103,14 +91,15 @@ const MultiItemCarousel = ({
             {slides.length <= 0 &&
                 [1, 2, 3, 4, 5, 6].map((item) => (
                     <SwiperSlide className="swiper-slide" key={`${item}+1`}>
-                        <Box {...rest}>
+                        <Box {...rest} cursor='pointer'>
                             <Skeleton
-                                rounded="xl"
-                                startColor="primary.100"
-                                endColor="primary.300"
-                                aspectRatio={3 / 4}
-                                maxW={"180px"}
+                                rounded="md"
+                                startColor="gray.300"
+                                endColor="gray.400"
+                                w="180px"
+                                h="240px"
                                 mx="auto"
+
                             />
                         </Box>
                     </SwiperSlide>

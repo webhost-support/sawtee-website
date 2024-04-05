@@ -113,7 +113,7 @@ const CarouselSection = ({ slides, books }) => {
                 px={10}
                 py={6}
             >
-                <CardsCarousel slides={null} />
+                <CardsCarousel slides={books} />
                 <Spacer h="30px" />
                 <Box
                     as={Link}

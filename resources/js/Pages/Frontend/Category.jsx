@@ -26,7 +26,7 @@ export default function Category({
     showSubscriptionBox = true,
     featured_image,
 }) {
-    const isEvent = category.slug === "featured-events";
+    // const isEvent = category.slug === "featured-events";
     const isTeam = category.slug === "team-members";
     const isInFocus = category.slug === "infocus";
     const isMedia = category.slug === "sawtee-in-media";
@@ -35,7 +35,7 @@ export default function Category({
     const isCovid = category.slug === "covid";
     const isResearch = category.slug === "research";
     const isDefault =
-        !isEvent &&
+        // !isEvent &&
         !isNewsletter &&
         !isBlog &&
         !isTeam &&
@@ -75,8 +75,8 @@ export default function Category({
                 <Section
                     pb="80px"
                     py={{ base: "24px", lg: "80px" }}
-                    px={{ base: "16px", lg: "40px" }}
-                    size={"full"}
+                    px={{ base: "16px", lg: "32px" }}
+                    size="full"
                     mx="auto"
                     pt="50px"
                     color={contentColor}
@@ -111,12 +111,12 @@ export default function Category({
                                 />
                             )}
 
-                            {isEvent && (
+                            {/* {isEvent && (
                                 <EventsArchive
                                     posts={posts.data}
 
                                 />
-                            )}
+                            )} */}
 
                             {isTeam && (
                                 <TeamsArchive
