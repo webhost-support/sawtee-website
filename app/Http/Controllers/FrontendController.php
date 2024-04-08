@@ -63,8 +63,8 @@ class FrontendController extends Controller
         $infocus = Post::where('category_id', strval($infocusId))->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
         $sawteeInMedia = Post::where('category_id', strval($sawteeInMediaId))->where('status', 'published')->orderBy('id', 'DESC')->take(6)->get();
         $events = Post::where('category_id', strval($eventsId))->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
-        $books = Publication::where('category_id', strval(Category::where('slug', 'books')->first()->id))->orderBy('id', 'DESC')->take(6)->get();
-        $trade_insights = Publication::where('category_id', strval(Category::where('slug', 'trade-insight')->first()->id))->orderBy('id', 'DESC')->take(6)->get();
+        $books = Publication::where('category_id', strval(Category::where('slug', 'books')->first()->id))->orderBy('id', 'DESC')->take(3)->get();
+        $trade_insights = Publication::where('category_id', strval(Category::where('slug', 'trade-insight')->first()->id))->orderBy('id', 'DESC')->take(3)->get();
         return Inertia::render('Frontend/Pages/Home', [
             'slides' => $slides->load(['media']),
             'infocus' => $infocus->load(['category']),
