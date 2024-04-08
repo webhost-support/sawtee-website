@@ -22,10 +22,12 @@ export default function Publications({ category, publications, infocus, sawteeIn
         "whiteAlpha.800"
     );
 
+    console.log(category);
+
     return (
         <MainLayout>
             <WebsiteHead
-                title={category.meta_title}
+                title={category.meta_title || category.name}
                 description={category.meta_description}
                 image={
                     category.featured_image
@@ -55,7 +57,8 @@ export default function Publications({ category, publications, infocus, sawteeIn
                     >
                         <GridItem colSpan={{ base: 1, lg: 3 }} px={4}>
                             <SimpleGrid
-                                spacing={6}
+                                spacingX={6}
+                                spacingY={12}
                                 columns={{ base: 2, md: 3 }}
                             >
                                 {publications.length > 0 ? (
@@ -63,61 +66,44 @@ export default function Publications({ category, publications, infocus, sawteeIn
                                         return (
                                             <LinkBox
                                                 key={publication.id}
-                                                pos={"relative"}
-                                                role="group"
-                                                display={"flex"}
-                                                justifyContent={"center"}
+                                                as="article"
+                                                maxW="180px"
+                                                mx="auto"
+                                                _before={{
+                                                    content: `''`,
+                                                    position: "absolute",
+                                                    top: 0,
+                                                    left: 0,
+                                                    width: `100%`,
+                                                    height: "100%",
+                                                    borderRadius:
+                                                        "var(--chakra-radii-md)",
+                                                    background:
+                                                        "rgba(0,0,0,0.1)",
+                                                    backgroundBlendMode:
+                                                        "overlay",
+                                                }}
+                                                _hover={{
+                                                    _before: {
+                                                        background:
+                                                            "transparent",
+                                                    },
+                                                }}
                                             >
-                                                {
-                                                    <InertiaChakraLinkOverlay
-                                                        target="_blank"
-                                                        href={`/category/publications/${publication.file.name}`}
-                                                    >
-                                                        <Box
-                                                            cursor="pointer"
-                                                            height="240px"
-                                                            width={"180px"}
-                                                            pos="relative"
-                                                            rounded="xl"
-                                                        >
-                                                            <Box
-                                                                zIndex={1}
-                                                                boxSize="100%"
-                                                                position="absolute"
-                                                                rounded="xl"
-                                                                top="0"
-                                                                left="0"
-                                                                background="rgba(0,0,0,0.4)"
-                                                                transition="background-color ease 0.25s"
-                                                                _groupHover={{
-                                                                    background:
-                                                                        "rgba(0,0,0,0.1)",
-                                                                }}
-                                                            />
-                                                            <Image
-                                                                height="280px"
-                                                                width="220px"
-                                                                position="absolute"
-                                                                boxSize="100%"
-                                                                objectFit="cover"
-                                                                aspectRatio={
-                                                                    3 / 4
-                                                                }
-                                                                alt={
-                                                                    publication.title
-                                                                }
-                                                                rounded="xl"
-                                                                border={`1px solid`}
-                                                                borderColor={
-                                                                    "var(--color-border)"
-                                                                }
-                                                                top="0"
-                                                                left="0"
-                                                                src={`${publication.media[0].original_url}`}
-                                                            />
-                                                        </Box>
-                                                    </InertiaChakraLinkOverlay>
-                                                }
+                                                <InertiaChakraLinkOverlay
+                                                    href={`/category/publications/${publication.file.name}`}
+                                                    target="_blank"
+                                                >
+                                                    <Image
+                                                        src={`${publication.media[0].original_url}`}
+                                                        alt={publication.title}
+                                                        rounded="md"
+                                                        objectFit="cover"
+                                                        w="180px"
+                                                        fallbackSrc="/assets/SM-placeholder-150x150.png"
+                                                        aspectRatio={3 / 4}
+                                                    />
+                                                </InertiaChakraLinkOverlay>
                                             </LinkBox>
                                         );
                                     })
@@ -132,9 +118,9 @@ export default function Publications({ category, publications, infocus, sawteeIn
                                                     key={`100 + ${item.toString()}`}
                                                 >
                                                     <Skeleton
-                                                        height="280px"
-                                                        width="220px"
-                                                        rounded={"xl"}
+                                                        height="240px"
+                                                        width="180px"
+                                                        rounded={"md"}
                                                     />
                                                 </Box>
                                             );
@@ -156,7 +142,7 @@ export default function Publications({ category, publications, infocus, sawteeIn
                                     array={sawteeInMedia}
                                     title={"SAWTEE in Media"}
                                     link={"/category/sawtee-in-media"}
-                                    maxW={"xl"}
+                                    maxW={"md"}
                                     mt={12}
                                 />
                             )}
@@ -165,7 +151,7 @@ export default function Publications({ category, publications, infocus, sawteeIn
                                     array={infocus}
                                     title={"Infocus"}
                                     link={"/category/infocus"}
-                                    maxW={"xl"}
+                                    maxW={"md"}
                                     mt={12}
                                     position={"sticky"}
                                     top={"8.5rem"}
