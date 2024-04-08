@@ -1,11 +1,4 @@
-import {
-    Box,
-    Stack,
-    Text,
-    Image,
-    Flex,
-    useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, Stack, Text, Image } from "@chakra-ui/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
@@ -36,18 +29,6 @@ const FullWidthCarousel = ({
     };
 
     const creativeEffect = {
-        // prev: {
-        //     shadow: true,
-        //     origin: "left center",
-        //     translate: ["-5%", 0, -200],
-        //     rotate: [0, 100, 0],
-        // },
-        // next: {
-        //     origin: "right center",
-        //     translate: ["5%", 0, -200],
-        //     rotate: [0, -100, 0],
-        // },
-
         prev: {
             shadow: true,
             translate: ["-20%", 0, -1],
@@ -56,7 +37,6 @@ const FullWidthCarousel = ({
             translate: ["100%", 0, 0],
         },
     };
-
 
     return (
         <Swiper
@@ -83,38 +63,39 @@ const FullWidthCarousel = ({
             creativeEffect={creativeEffect}
             className="full-width-carousel"
         >
-            {slides && slides.length > 0 && slides.map((slide) => (
-                <SwiperSlide className="swiper-slide" key={slide.id}>
-                    <Box
-                        w="full"
-                        h="full"
-                        backgroundColor="rgba(0,0,0,0.2)"
-
-                    >
-                        <Image
-                            src={`${slide.media[0].original_url}`}
-                            alt={slide.title}
-                            objectFit={"cover"}
-                            mixBlendMode="darken"
-                        />
-                        <Stack
-                            pos="absolute"
-                            bottom="0px"
-                            color="whiteAlpha.800"
-                            bg={"blackAlpha.500"}
-                            p={2}
-                            px={6}
+            {slides &&
+                slides.length > 0 &&
+                slides.map((slide) => (
+                    <SwiperSlide className="swiper-slide" key={slide.id}>
+                        <Box
+                            w="full"
+                            h="full"
+                            backgroundColor="rgba(0,0,0,0.2)"
                         >
-                            <Text fontSize={{ base: "md", md: "3xl" }}>
-                                {slide.title}
-                            </Text>
-                            <Text fontSize={{ base: "xs", md: "sm" }}>
-                                {slide.subtitle}
-                            </Text>
-                        </Stack>
-                    </Box>
-                </SwiperSlide>
-            ))}
+                            <Image
+                                src={`${slide.media[0].original_url}`}
+                                alt={slide.title}
+                                objectFit={"cover"}
+                                mixBlendMode="darken"
+                            />
+                            <Stack
+                                pos="absolute"
+                                bottom="0px"
+                                color="whiteAlpha.800"
+                                bg={"blackAlpha.500"}
+                                p={2}
+                                px={6}
+                            >
+                                <Text fontSize={{ base: "md", md: "3xl" }}>
+                                    {slide.title}
+                                </Text>
+                                <Text fontSize={{ base: "xs", md: "sm" }}>
+                                    {slide.subtitle}
+                                </Text>
+                            </Stack>
+                        </Box>
+                    </SwiperSlide>
+                ))}
         </Swiper>
     );
 };

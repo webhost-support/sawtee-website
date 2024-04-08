@@ -4,7 +4,6 @@ import AuthenticatedLayout from "@/Pages/Backend/Layouts/AuthenticatedLayout";
 import {
     HStack,
     Image,
-    Tooltip,
     Box,
     Text,
     useToast,

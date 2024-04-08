@@ -18,7 +18,6 @@ export default function CreateSliderForm() {
 
     const submit = (e) => {
         e.preventDefault();
-        console.log(data);
 
         post(route("admin.sliders.store"), {
             preserveScroll: true,

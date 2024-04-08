@@ -38,7 +38,6 @@ export default function CreatePublicationForm({ categories }) {
 
     const submit = (e) => {
         e.preventDefault();
-        console.log(data);
         post(route("admin.publications.store"), {
             preserveScroll: true,
             onSuccess: () =>

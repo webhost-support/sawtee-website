@@ -35,7 +35,7 @@ export default function EditPublicationForm({ publication, categories }) {
     const toast = useToast();
     const [filename, setFilename] = React.useState(data.file);
     const [image, setImage] = React.useState(data.image);
-    
+
     const submit = (e) => {
         e.preventDefault();
         post(

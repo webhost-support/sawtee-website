@@ -30,7 +30,6 @@ export default function EditTeamForm({ team }) {
         image: "",
     });
 
-    console.log(team);
 
     const toast = useToast();
     const [image, setImage] = React.useState(

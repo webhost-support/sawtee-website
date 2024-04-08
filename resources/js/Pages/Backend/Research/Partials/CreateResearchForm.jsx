@@ -50,7 +50,6 @@ export default function CreateResearchForm() {
     const [startDate, setStartDate] = React.useState(new Date());
     const submit = (e) => {
         e.preventDefault();
-        console.log(data);
         post(route("admin.research.store"), {
             preserveScroll: true,
             onSuccess: () =>
@@ -250,7 +249,6 @@ export default function CreateResearchForm() {
                                 name="year"
                                 selected={startDate}
                                 onChange={(date) => {
-                                    console.log(date.getYear());
                                     setData("year", date.getFullYear());
                                     setStartDate(date);
                                 }}

@@ -27,7 +27,6 @@ export default function EditCategoryForm({ category, categories }) {
         meta_description: category.meta_description,
     });
 
-    console.log(category.meta_title);
 
     const toast = useToast();
     const [image, setImage] = React.useState(

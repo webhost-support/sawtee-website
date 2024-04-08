@@ -25,7 +25,6 @@ export default function EditSlideForm({ slide, sliders }) {
 
     const submit = (e) => {
         e.preventDefault();
-        console.log(data);
 
         post(
             route("admin.slides.store", {

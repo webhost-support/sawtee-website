@@ -1,7 +1,7 @@
 import PrimaryButton from "@/Components/Backend/PrimaryButton";
 import { DataTable } from "@/Components/Backend/DataTable";
 import AuthenticatedLayout from "@/Pages/Backend/Layouts/AuthenticatedLayout";
-import { Box, HStack, useDisclosure, useToast } from "@chakra-ui/react";
+import { Box, HStack, useDisclosure } from "@chakra-ui/react";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { createColumnHelper } from "@tanstack/react-table";
 import {
@@ -12,7 +12,6 @@ import React from "react";
 import DeletePublicationModal from "./Partials/DeletePublicationModal";
 
 export default function Index({ auth, publications: data }) {
-    const toast = useToast();
     const columnHelper = createColumnHelper();
     const { processing, delete: destroy, get } = useForm();
     const [publicationId, setPublicationId] = React.useState();

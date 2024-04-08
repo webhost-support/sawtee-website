@@ -321,7 +321,6 @@ export default function CreateResearchForm({ research }) {
                                         placeholder="Browse Image"
                                         size="md"
                                         onChange={(e) => {
-                                            console.log(e.target.files);
                                             setData("image", e.target.files[0]);
 
                                             setImage(

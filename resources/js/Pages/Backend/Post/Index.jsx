@@ -1,14 +1,7 @@
 import PrimaryButton from "@/Components/Backend/PrimaryButton";
 import { DataTable } from "@/Components/Backend/DataTable";
 import AuthenticatedLayout from "@/Pages/Backend/Layouts/AuthenticatedLayout";
-import {
-    Box,
-    Tag,
-    HStack,
-    useToast,
-    Text,
-    useDisclosure,
-} from "@chakra-ui/react";
+import { Box, Tag, HStack, Text, useDisclosure } from "@chakra-ui/react";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { createColumnHelper } from "@tanstack/react-table";
 import {
@@ -19,7 +12,6 @@ import React from "react";
 import DeletePostModal from "./Partials/DeletePostModal";
 
 export default function Index({ auth, posts }) {
-    const toast = useToast();
     const columnHelper = createColumnHelper();
     const { processing, get, delete: destroy } = useForm();
     const { isOpen, onOpen, onClose } = useDisclosure();

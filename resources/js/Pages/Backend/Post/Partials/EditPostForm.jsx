@@ -56,7 +56,6 @@ export default function EditPostForm({ post: postData, categories, tags, themes 
         meta_description: postData.meta_description,
     });
 
-    console.log(postData);
 
     const toast = useToast();
     const [imageUrl, setImageUrl] = React.useState(

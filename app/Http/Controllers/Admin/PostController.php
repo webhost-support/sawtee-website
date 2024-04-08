@@ -21,7 +21,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['category', 'media', 'tags', 'theme'])->idDescending()->simplePaginate(50);
+        $posts = Post::with(['category', 'media', 'tags', 'theme'])->idDescending()->simplePaginate(1000);
         return Inertia::render('Backend/Post/Index', [
             'posts' => $posts
         ]);

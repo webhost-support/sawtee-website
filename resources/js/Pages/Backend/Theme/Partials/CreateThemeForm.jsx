@@ -19,7 +19,6 @@ export default function CreateThemeForm() {
 
     const submit = (e) => {
         e.preventDefault();
-        console.log(data);
 
         post(route("admin.themes.store"), {
             preserveScroll: true,
