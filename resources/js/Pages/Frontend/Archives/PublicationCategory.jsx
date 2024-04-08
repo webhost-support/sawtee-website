@@ -58,7 +58,7 @@ export default function Publications({ category, publications, infocus, sawteeIn
                         <GridItem colSpan={{ base: 1, lg: 3 }} px={4}>
                             <SimpleGrid
                                 spacingX={6}
-                                spacingY={12}
+                                spacingY={24}
                                 columns={{ base: 2, md: 3 }}
                             >
                                 {publications.length > 0 ? (

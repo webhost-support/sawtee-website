@@ -26,7 +26,7 @@ class PublicationController extends Controller
      */
     public function create()
     {
-        $categories = Category::where('type', 'publication')->whereNotNull('parent_id')->get();
+        $categories = Category::where('type', 'publication')->get()->all();
         return Inertia::render('Backend/Publication/Create', ['categories' => $categories]);
     }
 
