@@ -37,7 +37,7 @@ class PublicationController extends Controller
     {
         $validated = $request->validate([
             'category_id' =>'required|numeric|exists:categories,id',
-            'title' =>'required|string|unique:publications|max:255',
+            'title' =>'required|string|max:255',
             'slug' =>'nullable|string|unique:publications|max:255',
             'subtitle' =>'nullable|string|max:255',
             'description' =>'nullable|string|max:2000',
