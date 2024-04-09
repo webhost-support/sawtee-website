@@ -6,6 +6,8 @@ import {
     LinkBox,
     SimpleGrid,
     Skeleton,
+    Text,
+    VStack,
     useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
@@ -15,8 +17,14 @@ import MainLayout from "../Layout/MainLayout";
 import CategoryLayout from "../Layout/CategoryLayout";
 import InertiaChakraLinkOverlay from "@/Components/Frontend/styles/inertia-chakra-link-overlay";
 import WebsiteHead from "@/Components/Frontend/Head";
+import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
 
-export default function Publications({ category, publications, infocus, sawteeInMedia }) {
+export default function Publications({
+    category,
+    publications,
+    infocus,
+    sawteeInMedia,
+}) {
     const contentColor = useColorModeValue(
         "rgba(12, 17, 43, 0.8)",
         "whiteAlpha.800"
@@ -64,47 +72,75 @@ export default function Publications({ category, publications, infocus, sawteeIn
                                 {publications.length > 0 ? (
                                     publications.map((publication) => {
                                         return (
-                                            <LinkBox
-                                                key={publication.id}
-                                                as="article"
-                                                maxW="180px"
-                                                mx="auto"
-                                                _before={{
-                                                    content: `''`,
-                                                    position: "absolute",
-                                                    top: 0,
-                                                    left: 0,
-                                                    width: `100%`,
-                                                    height: "100%",
-                                                    borderRadius:
-                                                        "var(--chakra-radii-md)",
-                                                    background:
-                                                        "rgba(0,0,0,0.1)",
-                                                    backgroundBlendMode:
-                                                        "overlay",
-                                                }}
-                                                _hover={{
-                                                    _before: {
+                                            <VStack key={publication.id}>
+                                                <LinkBox
+                                                    as="article"
+                                                    maxW="140px"
+                                                    mx="auto"
+                                                    _before={{
+                                                        content: `''`,
+                                                        position: "absolute",
+                                                        top: 0,
+                                                        left: 0,
+                                                        width: `100%`,
+                                                        height: "100%",
+                                                        borderRadius:
+                                                            "var(--chakra-radii-md)",
                                                         background:
-                                                            "transparent",
-                                                    },
-                                                }}
-                                            >
-                                                <InertiaChakraLinkOverlay
-                                                    href={`/category/publications/${publication.file.name}`}
-                                                    target="_blank"
+                                                            "rgba(0,0,0,0.1)",
+                                                        backgroundBlendMode:
+                                                            "overlay",
+                                                    }}
+                                                    _hover={{
+                                                        _before: {
+                                                            background:
+                                                                "transparent",
+                                                        },
+                                                    }}
                                                 >
-                                                    <Image
-                                                        src={`${publication.media[0].original_url}`}
-                                                        alt={publication.title}
-                                                        rounded="md"
-                                                        objectFit="cover"
-                                                        w="180px"
-                                                        fallbackSrc="/assets/SM-placeholder-150x150.png"
-                                                        aspectRatio={3 / 4}
-                                                    />
-                                                </InertiaChakraLinkOverlay>
-                                            </LinkBox>
+                                                    <InertiaChakraLinkOverlay
+                                                        href={`/category/publications/${publication.file.name}`}
+                                                        target="_blank"
+                                                    >
+                                                        <Image
+                                                            src={`${publication.media[0]?.original_url}`}
+                                                            alt={
+                                                                publication.title
+                                                            }
+                                                            rounded="md"
+                                                            objectFit="cover"
+                                                            w="140px"
+                                                            fallbackSrc="/assets/SM-placeholder-150x150.png"
+                                                            aspectRatio={3 / 4}
+                                                        />
+                                                    </InertiaChakraLinkOverlay>
+                                                </LinkBox>
+                                                {publication.title && (
+                                                    <InertiaChakraLink
+                                                        href={`/publications/${publication.file.name}`}
+                                                    >
+                                                        <Text
+                                                            mt={4}
+                                                            fontSize="sm"
+                                                            fontWeight="semibold"
+                                                            textAlign="center"
+                                                        >
+                                                            {publication.title}
+                                                        </Text>
+                                                        {publication.subtitle && (
+                                                            <Text
+                                                                mt={1}
+                                                                fontSize="xs"
+                                                                textAlign="center"
+                                                            >
+                                                                {
+                                                                    publication.subtitle
+                                                                }
+                                                            </Text>
+                                                        )}
+                                                    </InertiaChakraLink>
+                                                )}
+                                            </VStack>
                                         );
                                     })
                                 ) : (
@@ -118,8 +154,8 @@ export default function Publications({ category, publications, infocus, sawteeIn
                                                     key={`100 + ${item.toString()}`}
                                                 >
                                                     <Skeleton
-                                                        height="240px"
-                                                        width="180px"
+                                                        height="200px"
+                                                        width="140px"
                                                         rounded={"md"}
                                                     />
                                                 </Box>

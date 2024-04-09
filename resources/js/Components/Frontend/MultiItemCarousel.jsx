@@ -1,17 +1,20 @@
-import { Image, Box, LinkBox, Skeleton } from "@chakra-ui/react";
+import { Image, Box, LinkBox, Skeleton, Text } from "@chakra-ui/react";
 import InertiaChakraLinkOverlay from "./styles/inertia-chakra-link-overlay";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation, Keyboard } from "swiper/modules";
+import { Link } from "@inertiajs/react";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import InertiaChakraLink from "./styles/inertia-chakra-link";
 
 const MultiItemCarousel = ({
     slides,
     className,
     itemsToShow = 3,
+    showTitle = false,
     spacing = 30,
     children,
     ...rest
@@ -32,12 +35,12 @@ const MultiItemCarousel = ({
                     return (
                         <SwiperSlide
                             className="swiper-slide"
-                            maxW="180px"
+                            maxW="140px"
                             key={slide.id}
                         >
                             <LinkBox
                                 as="article"
-                                maxW="180px"
+                                maxW="140px"
                                 mx="auto"
                                 _before={{
                                     content: `''`,
@@ -72,12 +75,35 @@ const MultiItemCarousel = ({
                                         title={slide.title}
                                         rounded="md"
                                         objectFit="cover"
-                                        w="180px"
+                                        w="140px"
                                         fallbackSrc="/assets/SM-placeholder-150x150.png"
                                         aspectRatio={3 / 4}
                                     />
                                 </InertiaChakraLinkOverlay>
                             </LinkBox>
+                            {showTitle && slide.title && (
+                                <InertiaChakraLink
+                                    href={`/publications/${slide.file.name}`}
+                                >
+                                    <Text
+                                        mt={4}
+                                        fontSize="sm"
+                                        fontWeight="semibold"
+                                        textAlign="center"
+                                    >
+                                        {slide.title}
+                                    </Text>
+                                    {slide.subtitle && (
+                                        <Text
+                                            mt={1}
+                                            fontSize="xs"
+                                            textAlign="center"
+                                        >
+                                            {slide.subtitle}
+                                        </Text>
+                                    )}
+                                </InertiaChakraLink>
+                            )}
                         </SwiperSlide>
                     );
                 })}
@@ -89,8 +115,8 @@ const MultiItemCarousel = ({
                                 rounded="md"
                                 startColor="gray.300"
                                 endColor="gray.400"
-                                w="180px"
-                                h="240px"
+                                w="140px"
+                                h="200px"
                                 mx="auto"
                             />
                         </Box>

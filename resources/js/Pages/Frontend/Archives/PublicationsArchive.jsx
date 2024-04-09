@@ -135,6 +135,7 @@ const PublicationSliders = ({ category, publications, show = 3 }) => {
                         <MultiItemCarousel
                             slides={publications[item.slug]}
                             itemsToShow={show}
+                            showTitle={true}
                             mt={16}
                         >
                             <Text
