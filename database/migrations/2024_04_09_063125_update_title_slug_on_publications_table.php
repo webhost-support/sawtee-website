@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::table('publications', function (Blueprint $table) {
             $table->string('title', 255)->unique(false)->change();
             $table->string('slug', 255)->nullable()->unique(false)->change();
-            $table->dropUnique('publications_slug_unique');
         });
     }
 
