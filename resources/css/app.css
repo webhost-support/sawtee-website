@@ -30,6 +30,16 @@
     --color-text-reverse: var(--color-dark);
 }
 
+@font-face {
+    font-family: 'kantipur';
+    src: url('kantipur_regular-webfont.woff2') format('woff2'),
+         url('kantipur_regular-webfont.woff') format('woff'),
+         url('/assets/fonts/kantipur_regular.otf') format('otf');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 *,
 *::before,
 *::after {

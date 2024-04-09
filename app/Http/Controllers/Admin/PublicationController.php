@@ -38,14 +38,16 @@ class PublicationController extends Controller
         $validated = $request->validate([
             'category_id' =>'required|numeric|exists:categories,id',
             'title' =>'required|string|max:255',
-            'slug' =>'nullable|string|max:255',
+            'slug' =>'nullable|string|unique:pubications|max:255',
             'subtitle' =>'nullable|string|max:255',
             'description' =>'nullable|string|max:2000',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'file' => 'required|file|mimes:pdf,doc,docx,ppt,pptx|max:10240',
 
         ]);
-        $validated['slug'] = Str::slug($validated['title'], '-');
+        $slug = $validated['title'] . " " . $validated['subtitle'];
+
+        $validated['slug'] = Str::slug($slug, '-');
         $publication = Publication::create($validated);
         if ($request->hasFile('image')) {
             $publication->addMediaFromRequest('image')->toMediaCollection('publication_featured_image');
@@ -86,10 +88,14 @@ class PublicationController extends Controller
     public function update(Request $request, Publication $publication)
     {
         $validated = $request->validate([
-            'category_id' => 'required|numeric|exists:categories,id',
-            'title' => 'required|string|max:255',
+           'category_id' =>'required|numeric|exists:categories,id',
+            'title' =>'required|string|max:255',
+            'slug' =>'nullable|string|unique:pubications|max:255',
+            'subtitle' =>'nullable|string|max:255',
+            'description' =>'nullable|string|max:2000',
         ]);
-        $validated['slug'] = Str::slug($validated['title'], '-');
+        $slug = $validated['title'] . " " . $validated['subtitle'];
+        $validated['slug'] = Str::slug($slug, '-');
 
         if ($request->hasFile('image')) {
             $publication->addMediaFromRequest('image')->toMediaCollection('publication_featured_image');
