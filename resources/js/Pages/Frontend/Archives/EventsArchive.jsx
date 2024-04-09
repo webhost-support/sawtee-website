@@ -5,7 +5,7 @@ import { PostImageWithOverlay } from "@/Components/Frontend/featured-post/compon
 import { Link } from "@inertiajs/react";
 import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
 
-const EventsArchive = ({ posts, headingColor, textColor }) => {
+const EventsArchive = ({ posts }) => {
     if (!posts || posts.length <= 0) return "No posts found";
 
     return posts.map((post) => {
@@ -69,7 +69,7 @@ const EventsArchive = ({ posts, headingColor, textColor }) => {
                                     _groupHover={{
                                         textDecoration: "underline",
                                         textUnderlineOffset: "3px",
-                                        transition: "all 200ms ease-in"
+                                        transition: "all 200ms ease-in",
                                     }}
                                     className="primary-link"
                                 >
@@ -77,10 +77,7 @@ const EventsArchive = ({ posts, headingColor, textColor }) => {
                                 </InertiaChakraLink>
                             </Heading>
 
-                            <Text
-                                fontSize={"sm"}
-                                noOfLines={3}
-                            >
+                            <Text fontSize={"sm"} noOfLines={3}>
                                 {post.excerpt}
                             </Text>
                         </Box>
@@ -96,7 +93,6 @@ const EventsArchive = ({ posts, headingColor, textColor }) => {
                                 <Text
                                     as="time"
                                     fontSize={"xs"}
-                                    // color={textColor}
                                     dangerouslySetInnerHTML={{
                                         __html: formatDate(post.published_at),
                                     }}

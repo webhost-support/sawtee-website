@@ -18,6 +18,7 @@ import CategoryLayout from "../Layout/CategoryLayout";
 import InertiaChakraLinkOverlay from "@/Components/Frontend/styles/inertia-chakra-link-overlay";
 import WebsiteHead from "@/Components/Frontend/Head";
 import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
+import Pagination from "@/Components/Frontend/Pagination";
 
 export default function Publications({
     category,
@@ -30,7 +31,7 @@ export default function Publications({
         "whiteAlpha.800"
     );
 
-    console.log(category);
+    console.log(publications);
 
     return (
         <MainLayout>
@@ -164,6 +165,14 @@ export default function Publications({
                                     </>
                                 )}
                             </SimpleGrid>
+                            <Pagination
+                                links={publications.links}
+                                currentPage={publications.current_page}
+                                totalPages={publications.last_page}
+                                nextPage={publications.next_page_url}
+                                prevPage={publications.prev_page_url}
+                                width="full"
+                            />
                         </GridItem>
 
                         <GridItem
