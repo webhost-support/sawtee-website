@@ -161,15 +161,15 @@ const CarouselSection = ({ slides, books }) => {
                     as={Link}
                     shadow={"xl"}
                     rounded="xl"
-                    href="/category/covid"
+                    href="/reform-monitoring-platform"
                     role="banner"
-                    aria-labelledby="Policy Reform Dashboard"
-                    title="Policy Reform Dashboard"
+                    aria-labelledby="Reform monitoring Platform"
+                    title="Reform monitoring Platform"
                     mb={6}
                 >
                     <Image
                         src="/assets/Policy-Reform-Banner-green-sized.webp"
-                        alt="Policy Reform Dashboard"
+                        alt="Reform monitoring Platform"
                         fit="cover"
                         rounded="xl"
                     />

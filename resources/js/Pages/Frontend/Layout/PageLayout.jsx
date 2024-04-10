@@ -1,6 +1,7 @@
-import { Box, useColorModeValue, Heading } from "@chakra-ui/react";
+import { Box, useColorModeValue } from "@chakra-ui/react";
 import { LightPatternBox } from "@/Components/Frontend/styles/pattern-box";
 import FeaturedMedia from "@/Components/Frontend/post/featured-media";
+import PostHeader from "@/Components/Frontend/post/post-header";
 
 export const PageLayout = ({
     showBackgroundPattern,
@@ -9,7 +10,6 @@ export const PageLayout = ({
     srcSet,
     children,
 }) => {
-    // const postHeaderColor = useColorModeValue("gray.900", "whiteAlpha.900");
     const headingColor = useColorModeValue(
         "var(--color-dark)",
         "var(--color-light)"
@@ -23,12 +23,11 @@ export const PageLayout = ({
                         height={"350px"}
                         src={featured_image}
                         srcSet={srcSet}
-                        _after={{
+                        _before={{
                             display: "block",
                             content: '""',
                             width: "100%",
-                            // height: "350px",
-                            background: "rgba(0,0,0,0.4)",
+                            background: "var(--chakra-colors-blackAlpha-400)",
                             position: "absolute",
                             top: 0,
                             left: 0,
@@ -40,10 +39,9 @@ export const PageLayout = ({
                     <Box
                         pos="relative"
                         bg={useColorModeValue(
-                            "blackAlpha.400",
-                            "blackAlpha.700"
+                            "blackAlpha.50",
+                            "blackAlpha.500"
                         )}
-                        opacity={"0.4"}
                         height="350px"
                         zIndex={0}
                         _before={{
@@ -55,14 +53,9 @@ export const PageLayout = ({
                             left: 0,
                             zIndex: -1,
                             display: "block",
-                            opacity: 0.4,
-                            borderBottom: "1px solid ",
-                            borderColor: useColorModeValue(
-                                "gray.400",
-                                "gray.500"
-                            ),
                             bgSize: "1018px",
                             bgPos: "top center",
+                            bgBlendMode: "overlay",
                             bgImage: useColorModeValue(
                                 `url(/assets/pattern-tile-green.svg)`,
                                 `url(/assets/pattern-tile-light-fade.svg)`
@@ -70,34 +63,14 @@ export const PageLayout = ({
                         }}
                     />
                 )}
-                {/* <PostHeader
-                    mt={{ base: "20px", lg: "4rem" }}
-                    px={{ base: "32px", md: "0" }}
-                    color={featured_image ? "whiteAlpha.900" : postHeaderColor}
+                <PostHeader
+                    px={10}
+                    color={featured_image ? "gray.100" : headingColor}
                     heading={title}
                     position="absolute"
-                    bottom="15px"
-                    left="50px"
-                /> */}
-                <Box
-                    textAlign="center"
-                    mt={{ base: "20px", lg: "4rem" }}
-                    px={{ base: "32px", md: "0" }}
-                    color={headingColor}
-                    position="absolute"
-                    bottom="15%"
-                    left="15%"
-                >
-                    <Heading
-                        as="h1"
-                        fontSize={{ base: "2xl", md: "4xl", lg: "6xl" }}
-                        mt="30px"
-                        mb={{ base: "20px", lg: "32px" }}
-                        textTransform="capitalize"
-                    >
-                        {title}
-                    </Heading>
-                </Box>
+                    bottom="1rem"
+                    left="3rem"
+                />
             </Box>
             {children}
         </LightPatternBox>

@@ -19,6 +19,7 @@ import MultiItemCarousel from "@/Components/Frontend/MultiItemCarousel";
 import { GlassBox } from "@/Components/Frontend";
 import SubscriptionCard from "@/Components/Frontend/subscriptionCard";
 import WebsiteHead from "@/Components/Frontend/Head";
+import { PageLayout } from "../Layout/PageLayout";
 
 export default function PublicationsArchive({
     category,
@@ -26,6 +27,8 @@ export default function PublicationsArchive({
     sawteeInMedia,
     publications,
     showSubscriptionBox = true,
+    featured_image,
+    srcSet,
 }) {
     const contentColor = useColorModeValue(
         "rgba(12, 17, 43, 0.8)",
@@ -45,16 +48,16 @@ export default function PublicationsArchive({
                 }
                 description={category.meta_description}
                 image={
-                    category.featured_image
-                        ? category.featured_image.original_url
+                    featured_image
+                        ? featured_image.original_url
                         : "/assets/logo-sawtee.webp"
                 }
             />
-            <CategoryLayout
+            <PageLayout
+                featured_image={featured_image}
+                srcSet={srcSet}
+                title={category.name}
                 showBackgroundPattern={false}
-                image={`/assets/publications-1-resized.jpg`}
-                category={category}
-                headingColor={"white"}
             >
                 <Section
                     pb="80px"
@@ -92,7 +95,6 @@ export default function PublicationsArchive({
                                     array={sawteeInMedia}
                                     title={"SAWTEE in Media"}
                                     link={"/category/sawtee-in-media"}
-                                    maxW={"xl"}
                                 />
                             )}
                             {infocus && (
@@ -100,25 +102,18 @@ export default function PublicationsArchive({
                                     array={infocus}
                                     title={"Infocus"}
                                     link={"/category/infocus"}
-                                    maxW={"xl"}
                                 />
                             )}
 
                             {showSubscriptionBox && (
-                                <GlassBox
-                                    py="4"
-                                    px="8"
-                                    rounded="xl"
-                                    maxW={"xl"}
-                                    height="max-content"
-                                >
+                                <GlassBox py="4" px="8" rounded="xl">
                                     <SubscriptionCard />
                                 </GlassBox>
                             )}
                         </GridItem>
                     </Grid>
                 </Section>
-            </CategoryLayout>
+            </PageLayout>
         </MainLayout>
     );
 }

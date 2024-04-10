@@ -1,14 +1,11 @@
-import { VStack, Grid, GridItem, useColorModeValue } from "@chakra-ui/react";
-import { Head } from "@inertiajs/react";
+import { VStack, Grid, GridItem } from "@chakra-ui/react";
 import React from "react";
-import CategoryLayout from "./Layout/CategoryLayout";
 import Section from "@/Components/Frontend/styles/section";
 import SidebarWidget from "@/Components/Frontend/sidebarWidget";
 import MainLayout from "./Layout/MainLayout";
 import DefaultArchive from "./Archives/DefaultArchive";
 import SubscriptionCard from "@/Components/Frontend/subscriptionCard";
 import NewsletterArchive from "./Archives/NewsletterArchive";
-import EventsArchive from "./Archives/EventsArchive";
 import { GlassBox } from "@/Components/Frontend";
 import Pagination from "@/Components/Frontend/Pagination";
 import BlogArchive from "./Archives/BlogArchive";
@@ -16,6 +13,7 @@ import WebsiteHead from "@/Components/Frontend/Head";
 import ResearchArchive from "./Archives/ResearchArchive";
 import TeamsArchive from "./Archives/TeamsArchive";
 import CovidArchive from "./Archives/CovidArchive";
+import { PageLayout } from "./Layout/PageLayout";
 
 export default function Category({
     category,
@@ -25,8 +23,9 @@ export default function Category({
     events,
     showSubscriptionBox = true,
     featured_image,
+    srcSet,
 }) {
-    const isEvent = category.slug === "featured-events";
+    const isEvent = category.slug === 'featured-events';
     const isTeam = category.slug === "team-members";
     const isInFocus = category.slug === "infocus";
     const isMedia = category.slug === "sawtee-in-media";
@@ -35,29 +34,14 @@ export default function Category({
     const isCovid = category.slug === "covid";
     const isResearch = category.slug === "research";
     const isDefault =
-        !isEvent &&
-        !isNewsletter &&
-        !isBlog &&
-        !isTeam &&
-        !isResearch &&
-        !isCovid;
-    // const HeadingColor = useColorModeValue(
-    //     "var(--color-dark)",
-    //     "var(--color-light)"
-    // );
-    // const TextColor = useColorModeValue(
-    //     "var(--color-dark-acc)",
-    //     "var(--color-light-acc)"
-    // );
-    const contentColor = useColorModeValue(
-        "rgba(12, 17, 43, 0.8)",
-        "whiteAlpha.800"
-    );
+        !isNewsletter && !isBlog && !isTeam && !isResearch && !isCovid;
 
     return (
         <MainLayout>
             <WebsiteHead
-                title={"SAWTEE | " + category.meta_title}
+                title={
+                    category.meta_title ? category.meta_title : category.name
+                }
                 description={category.meta_description}
                 image={
                     featured_image
@@ -65,28 +49,26 @@ export default function Category({
                         : "/assets/logo-sawtee.webp"
                 }
             />
-            <CategoryLayout
+            <PageLayout
+                featured_image={featured_image}
+                srcSet={srcSet}
+                title={category.name}
                 showBackgroundPattern={false}
-                image={null}
-                category={category}
             >
-                <Head title={category.name} />
-
                 <Section
                     pb="80px"
                     py={{ base: "24px", lg: "80px" }}
-                    px={{ base: "16px", lg: "32px" }}
+                    px={{ base: "16px", lg: "40px" }}
                     size="full"
                     mx="auto"
                     pt="50px"
-                    color={contentColor}
                 >
                     <Grid
                         templateColumns={{
                             base: "1fr",
                             md: "1fr",
                             lg: "1fr 1fr",
-                            xl: "var(--chakra-sizes-3xl) minmax(var(--chakra-sizes-md), var(--chakra-sizes-lg))",
+                            xl: "var(--chakra-sizes-3xl) minmax(var(--chakra-sizes-lg), var(--chakra-sizes-xl))",
                         }}
                         gap={10}
                         pos={"relative"}
@@ -98,10 +80,8 @@ export default function Category({
                             mb="56px"
                             colSpan={{ base: 1, md: 2, lg: 1 }}
                         >
-                            {isDefault && <DefaultArchive posts={posts.data} />}
+                            {isDefault && <DefaultArchive posts={posts.data} showFallbackImage={isEvent} />}
                             {isCovid && <CovidArchive posts={posts.data} />}
-
-                            {isEvent && <EventsArchive posts={posts.data} />}
 
                             {isTeam && <TeamsArchive posts={posts} />}
 
@@ -176,7 +156,7 @@ export default function Category({
                         </GridItem>
                     </Grid>
                 </Section>
-            </CategoryLayout>
+            </PageLayout>
         </MainLayout>
     );
 }

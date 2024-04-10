@@ -6,6 +6,7 @@ import DefaultPage from "./Pages/DefaultPage";
 import MainLayout from "./Layout/MainLayout";
 import Contact from "./Pages/Contact";
 import WebsiteHead from "@/Components/Frontend/Head";
+import MediaFellows from "./Pages/MediaFellows";
 
 export default function Page({
     page,
@@ -14,7 +15,7 @@ export default function Page({
     themes = null,
     sections,
 }) {
-    const { name, content, meta_description, meta_title } = page;
+    const { name, content, meta_description, meta_title, slug } = page;
     return (
         <>
             <WebsiteHead
@@ -28,34 +29,60 @@ export default function Page({
             />
 
             <MainLayout>
-                <PageLayout
-                    featured_image={featured_image}
-                    srcSet={srcSet}
-                    title={name}
-                    showBackgroundPattern={false}
-                >
+                {slug !== "reform-monitoring-platform" ? (
+                    <PageLayout
+                        featured_image={featured_image}
+                        srcSet={srcSet}
+                        title={name}
+                        showBackgroundPattern={false}
+                    >
+                        <PageContent
+                            slug={slug}
+                            themes={themes}
+                            sections={sections}
+                            content={content}
+                        />
+                    </PageLayout>
+                ) : (
                     <PageContent
-                        slug={page.slug}
+                        slug={slug}
                         themes={themes}
                         sections={sections}
                         content={content}
                     />
-                </PageLayout>
+                )}
             </MainLayout>
         </>
     );
 }
 
 const PageContent = ({ slug, themes, sections, content }) => {
-    if (slug === "our-work") {
-        return (
-            <OurWork themes={themes} sections={sections} content={content} />
-        );
-    } else if (slug === "about") {
-        return <About sections={sections} content={content} />;
-    } else if (slug === "contact") {
-        return <Contact content={content} />;
-    } else {
-        return <DefaultPage sections={sections} content={content} />;
+    switch (slug) {
+        case "our-work":
+            return (
+                <OurWork
+                    themes={themes}
+                    sections={sections}
+                    content={content}
+                />
+            );
+
+        case "about":
+            return <About sections={sections} content={content} />;
+
+        case "contact":
+            return <Contact content={content} />;
+
+        case "media-fellowship":
+            return <MediaFellows content={content} />;
+
+        default:
+            return (
+                <DefaultPage
+                    sections={sections}
+                    content={content}
+                    size={slug === "reform-monitoring-platform" ? "full" : "md"}
+                />
+            );
     }
 };

@@ -27,7 +27,6 @@ export default function OurWork({ themes, sections }) {
         intro && setIntro(intro);
         sectors && setSectors(sectors);
     }, [sections]);
-    const headingColor = useColorModeValue("gray.900, whiteAlpha.900");
     const cardBackground = useColorModeValue(
         "blackAlpha.100",
         "blackAlpha.300"
@@ -49,7 +48,6 @@ export default function OurWork({ themes, sections }) {
                     fontWeight="bold"
                     mb={12}
                     textAlign="center"
-                    color={headingColor}
                 >
                     Thematic Areas
                 </Heading>
@@ -88,7 +86,6 @@ export default function OurWork({ themes, sections }) {
                                     mb={3}
                                     fontWeight="semibold"
                                     fontSize={["md", "lg"]}
-                                    color={headingColor}
                                 >
                                     {theme.title}
                                 </Heading>

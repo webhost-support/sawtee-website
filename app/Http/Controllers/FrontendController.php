@@ -21,18 +21,19 @@ use Inertia\Inertia;
  * @param string $slug The slug parameter.
  * @return \Illuminate\Pagination\LengthAwarePaginator|array The paginated list of posts or grouped posts.
  */
-function getPosts($category, $slug){
+function getPosts($category, $slug)
+{
     $subcategory_ids = $category->children->pluck('id')->toArray();
     $parent_and_subcategory_ids = array_merge(array($slug === 'programmes' ? null : $category->id), $subcategory_ids);
     $posts = Post::query()
-            ->with('category', 'category.parent', 'media')
-            ->whereIn('category_id', $parent_and_subcategory_ids)
-            ->orderByDesc('id')
-            ->where('status', 'published')
-            ->paginate(10);
+        ->with('category', 'category.parent', 'media')
+        ->whereIn('category_id', $parent_and_subcategory_ids)
+        ->orderByDesc('id')
+        ->where('status', 'published')
+        ->paginate(10);
 
     // If route is for research category
-    if ($slug === 'research' ) {
+    if ($slug === 'research') {
         $collection = Research::with('media', 'file')->orderByDesc('id')->get();
         $posts = collect($collection)->groupBy('year')->all();
     }
@@ -69,7 +70,7 @@ class FrontendController extends Controller
             'slides' => $slides->load(['media']),
             'infocus' => $infocus->load(['category']),
             'sawteeInMedia' => $sawteeInMedia->load('category'),
-            'events' => $events->load(['category','media', 'tags']),
+            'events' => $events->load(['category', 'media', 'tags']),
             'books' => $books,
             'tradeInsights' => $trade_insights
         ]);
@@ -120,19 +121,20 @@ class FrontendController extends Controller
         $sawteeInMediaId = Category::where('slug', 'sawtee-in-media')->first()->id;
 
         $infocus = Post::where('category_id', strval($infocusId))
-                        ->where('status', 'published')
-                        ->orderBy('id', 'DESC')
-                        ->take(5)->get();
+            ->where('status', 'published')
+            ->orderBy('id', 'DESC')
+            ->take(5)->get();
         $sawteeInMedia = Post::where('category_id', strval($sawteeInMediaId))
-                               ->where('status', 'published')
-                               ->orderBy('id', 'DESC')
-                               ->take(5)->get();
+            ->where('status', 'published')
+            ->orderBy('id', 'DESC')
+            ->take(5)->get();
         $events = Post::where('category_id', strval($eventsId))
-                        ->where('status', 'published')
-                        ->orderBy('id', 'DESC')
-                        ->take(5)->get();
+            ->where('status', 'published')
+            ->orderBy('id', 'DESC')
+            ->take(5)->get();
         $category = Category::where('slug', $slug)->firstOrFail();
-
+        $featured_image = $category->getFirstMediaUrl('category_media');
+        $srcSet = $category->getFirstMedia('category_media')?->getSrcset('responsive');
         $posts = getPosts($category, $slug);
 
 
@@ -142,9 +144,14 @@ class FrontendController extends Controller
             foreach ($category->children as $subcategory) {
                 $posts = $subcategory->publications()->orderByDesc('id')->take(6)->get();
                 $publications[$subcategory->slug] = $posts->toArray();
-
             }
-            return Inertia::render('Frontend/Archives/PublicationsArchive', ['category' => $category, 'infocus' => $infocus, 'sawteeInMedia' => $sawteeInMedia, 'publications' => $publications]);
+            return Inertia::render('Frontend/Archives/PublicationsArchive', [
+                'category' => $category,
+                'infocus' => $infocus,
+                'sawteeInMedia' => $sawteeInMedia,
+                'publications' => $publications,
+                'srcSet' => $srcSet
+            ]);
         }
 
 
@@ -161,13 +168,19 @@ class FrontendController extends Controller
             if ($slug === 'publications') {
                 $publications = $category->publications()->orderByDesc('id')->paginate(12);
 
-                return Inertia::render('Frontend/Archives/PublicationCategory', ['category' => $category, 'publications' => $publications->load('media', 'file'), 'infocus' => $infocus, 'sawteeInMedia' => $sawteeInMedia]);
+                return Inertia::render('Frontend/Archives/PublicationCategory', [
+                    'category' => $category,
+                    'publications' => $publications->load('media', 'file'),
+                    'infocus' => $infocus,
+                    'sawteeInMedia' => $sawteeInMedia,
+                    'featured_image' => $featured_image,
+                    'srcSet' => $srcSet
+                ]);
             }
             if (!$category) {
                 $category = Category::with('parent')->where('slug', $segments[1])->first();
                 $post = Post::where('slug', $segments[2])->firstOrFail();
                 return Inertia::render('Frontend/Post', ['post' => $post->load('category', 'media')]);
-
             }
 
             return Inertia::render('Frontend/Category', [
@@ -175,8 +188,8 @@ class FrontendController extends Controller
                 'posts' => $posts,
                 'infocus' => $infocus,
                 'sawteeInMedia' => $sawteeInMedia,
-                'featured_image' => $category->getFirstMediaUrl('category_media'),
-                'srcSet' => $category->getFirstMedia('category_media')?->getSrcset('responsive'),
+                'featured_image' => $featured_image,
+                'srcSet' => $srcSet
             ]);
         }
 
@@ -186,8 +199,8 @@ class FrontendController extends Controller
             'infocus' => $infocus,
             'sawteeInMedia' => $sawteeInMedia,
             'events' => $events->load(['category', 'media']),
-            'featured_image' => $category->getFirstMediaUrl('category_media'),
-            'srcSet' => $category->getFirstMedia('category_media')?->getSrcset('responsive'),
+            'featured_image' => $featured_image,
+            'srcSet' => $srcSet
         ]);
     }
 }

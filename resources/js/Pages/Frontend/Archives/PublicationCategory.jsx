@@ -19,12 +19,15 @@ import InertiaChakraLinkOverlay from "@/Components/Frontend/styles/inertia-chakr
 import WebsiteHead from "@/Components/Frontend/Head";
 import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
 import Pagination from "@/Components/Frontend/Pagination";
+import { PageLayout } from "../Layout/PageLayout";
 
 export default function Publications({
     category,
     publications,
     infocus,
     sawteeInMedia,
+    featured_image,
+    srcSet,
 }) {
     const contentColor = useColorModeValue(
         "rgba(12, 17, 43, 0.8)",
@@ -39,16 +42,16 @@ export default function Publications({
                 title={category.meta_title || category.name}
                 description={category.meta_description}
                 image={
-                    category.featured_image
-                        ? category.featured_image.original_url
+                    featured_image
+                        ? featured_image.original_url
                         : "/assets/logo-sawtee.webp"
                 }
             />
-            <CategoryLayout
+            <PageLayout
+                featured_image={featured_image}
+                srcSet={srcSet}
+                title={category.name}
                 showBackgroundPattern={false}
-                image={`/assets/publications-1-resized.jpg`}
-                category={category}
-                headingColor={"white"}
             >
                 <Section
                     pb="80px"
@@ -100,7 +103,7 @@ export default function Publications({
                                                     }}
                                                 >
                                                     <InertiaChakraLinkOverlay
-                                                        href={`/category/publications/${publication.file.name}`}
+                                                        href={`/publications/${publication.file.name}`}
                                                         target="_blank"
                                                     >
                                                         <Image
@@ -172,6 +175,7 @@ export default function Publications({
                                 nextPage={publications.next_page_url}
                                 prevPage={publications.prev_page_url}
                                 width="full"
+                                mt={12}
                             />
                         </GridItem>
 
@@ -205,7 +209,7 @@ export default function Publications({
                         </GridItem>
                     </Grid>
                 </Section>
-            </CategoryLayout>
+            </PageLayout>
         </MainLayout>
     );
 }

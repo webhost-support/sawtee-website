@@ -103,8 +103,8 @@ export const GlassBox = ({ children, ...rest }) => {
         <Box
             border="1px solid"
             borderColor={useColorModeValue("#ebebeb", "#333")}
-            rounded="xl"
-            shadow="lg"
+            rounded="md"
+            shadow="md"
             w="full"
             bg="var(--color-bg)"
             {...rest}
