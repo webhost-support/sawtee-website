@@ -13,9 +13,10 @@ import {
     HStack,
     useBreakpointValue,
     useColorModeValue,
-    Stack,
+    Flex,
     Spacer,
     SimpleGrid,
+    Show,
 } from "@chakra-ui/react";
 import { Title, FancyTitle, ExploreButton } from "@/Components/Frontend/index";
 import FullWidthCarousel from "@/Components/Frontend/FullWidthCarousel";
@@ -111,7 +112,7 @@ const CarouselSection = ({ slides, books }) => {
                 px={10}
                 py={6}
             >
-                <Stack direction="row" gap="4">
+                <SimpleGrid columns={2} spacing="4">
                     <CardsCarousel slides={books} />
 
                     <VStack
@@ -155,25 +156,30 @@ const CarouselSection = ({ slides, books }) => {
                                 );
                             })}
                     </VStack>
-                </Stack>
-                <Spacer h="30px" />
-                <Box
-                    as={Link}
-                    shadow={"xl"}
-                    rounded="xl"
-                    href="/reform-monitoring-platform"
-                    role="banner"
-                    aria-labelledby="Reform monitoring Platform"
-                    title="Reform monitoring Platform"
-                    mb={6}
+                </SimpleGrid>
+                <Spacer h="60px" />
+                <Flex
+                    justifyContent="center"
+                    alignItems="center"
+                    w="sm"
+                    mx="auto"
                 >
-                    <Image
-                        src="/assets/Policy-Reform-Banner-green-sized.webp"
-                        alt="Reform monitoring Platform"
-                        fit="cover"
-                        rounded="xl"
-                    />
-                </Box>
+                    <LinkBox shadow={"xl"} rounded="xl" w="sm">
+                        <InertiaChakraLink
+                            href="/reform-monitoring-platform"
+                            role="banner"
+                            aria-labelledby="Reform monitoring Platform"
+                            title="Reform monitoring Platform"
+                        >
+                            <Image
+                                src="/assets/Policy-Reform-Banner-green-sized.webp"
+                                alt="Reform monitoring Platform"
+                                fit="cover"
+                                rounded="xl"
+                            />
+                        </InertiaChakraLink>
+                    </LinkBox>
+                </Flex>
             </GridItem>
         </Grid>
     );
@@ -181,77 +187,65 @@ const CarouselSection = ({ slides, books }) => {
 
 const AboutSection = ({ intro, image }) => {
     return (
-        <Box
-            width="full"
-            pos={"relative"}
-            id="about-section"
-            overflow="hidden"
-            backgroundImage={`url(${image})`}
-            bgRepeat={"no-repeat"}
-            backgroundPosition={"center center"}
-            backgroundSize="cover"
-            minH={"500px"}
-            className="section"
-        >
+        <Box>
             <Box
-                w="full"
-                display="flex"
-                flexDir="column"
-                gap={8}
-                justifyContent="center"
-                alignItems="center"
-                position="relative"
-                backgroundColor={"rgba(0,0,0,0.6)"}
-                backgroundBlendMode={"multiply"}
-                backdropFilter="blur(5px)"
-                pos={"absolute"}
-                inset={0}
-                h="full"
+                width="full"
+                pos={"relative"}
+                id="about-section"
+                overflow="hidden"
+                backgroundImage={`url(${image})`}
+                bgRepeat={"no-repeat"}
+                backgroundPosition={"center center"}
+                backgroundSize="cover"
+                minH={"500px"}
+                className="section"
             >
-                {intro && (
-                    <Text
-                        as="blockquote"
-                        className="blockquote"
-                        m="0"
-                        fontSize={{ base: "1em", md: "1.8em" }}
-                        alignSelf={"center"}
-                        zIndex={10}
-                        maxW="6xl"
-                    >
-                        {intro}
-                    </Text>
-                )}
-            </Box>
-
-            {/* <VStack
-                    alignItems={"center"}
-                    gap={6}
-                    p={{ base: 10, lg: 20 }}
-                    justify={"center"}
+                <Box
+                    w="full"
+                    display="flex"
+                    flexDir="column"
+                    gap={8}
+                    justifyContent="center"
+                    alignItems="center"
+                    position="relative"
+                    backgroundColor={"rgba(0,0,0,0.6)"}
+                    backgroundBlendMode={"multiply"}
+                    backdropFilter="blur(5px)"
+                    pos={"absolute"}
+                    inset={0}
+                    h="full"
                 >
-                    <Box
-                        as={Link}
-                        shadow={"xl"}
-                        rounded="xl"
-                        href="/category/covid"
-                        role="banner"
-                        aria-labelledby="Policy Reform Dashboard"
-                        title="Policy Reform Dashboard"
-                    >
-                        <Image
-                            src="/assets/Policy-Reform-Banner-green-sized.webp"
-                            alt="Policy Reform Dashboard"
-                            fit="cover"
-                            rounded="xl"
-                            htmlHeight={"150px"}
-                        />
-                    </Box>
-                    <HStack gap={4}>
-                        <Box
-                            as={Link}
-                            shadow={"xl"}
-                            rounded="xl"
-                            href="/category/covid"
+                    {intro && (
+                        <Text
+                            as="blockquote"
+                            className="blockquote"
+                            m="0"
+                            fontSize={{ base: "1em", md: "1.8em" }}
+                            alignSelf={"center"}
+                            zIndex={10}
+                            maxW="6xl"
+                        >
+                            {intro}
+                        </Text>
+                    )}
+                </Box>
+            </Box>
+            <SimpleGrid
+                px={10}
+                py={16}
+                columns={{ base: 1, md: 3 }}
+                spacing={6}
+            >
+                <Flex
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                    w="sm"
+                    mx="auto"
+                >
+                    <LinkBox shadow={"xl"} rounded="xl">
+                        <InertiaChakraLink
+                            href="/media-fellowship"
                             role="banner"
                             aria-labelledby="Media Fellowship"
                             title="Media Fellowship"
@@ -262,25 +256,57 @@ const AboutSection = ({ intro, image }) => {
                                 fit="cover"
                                 rounded="xl"
                             />
-                        </Box>
-                        <Box
-                            as={Link}
-                            shadow={"xl"}
-                            rounded="xl"
-                            href="/category/covid"
+                        </InertiaChakraLink>
+                    </LinkBox>
+                </Flex>
+
+                <Flex
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                    w="sm"
+                    mx="auto"
+                >
+                    <LinkBox shadow={"xl"} rounded="xl">
+                        <InertiaChakraLink
+                            href="/reform-monitoring-platform"
                             role="banner"
-                            aria-labelledby="SAWTEEs response to COVID-19"
-                            title="SAWTEEs response to COVID-19"
+                            aria-labelledby="SAWTEE's Response to Covid-19"
+                            title="SAWTEE's Response to Covid-19"
                         >
                             <Image
                                 src="/assets/COVID-19-South-Asia-and-LDCs.webp"
-                                alt="SAWTEEs response to COVID-19"
+                                alt="SAWTEE's Response to Covid-19"
                                 fit="cover"
                                 rounded="xl"
                             />
-                        </Box>
-                    </HStack>
-                </VStack> */}
+                        </InertiaChakraLink>
+                    </LinkBox>
+                </Flex>
+                <Flex
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                    w="sm"
+                    mx="auto"
+                >
+                    <LinkBox shadow={"xl"} rounded="xl">
+                        <InertiaChakraLink
+                            href="/reform-monitoring-platform"
+                            role="banner"
+                            aria-labelledby="Advancing LDC's Trade Interests"
+                            title="Advancing LDC's Trade Interests"
+                        >
+                            <Image
+                                src="/assets/advancing-ldc_upscaled.webp"
+                                alt="Advancing LDC's Trade Interests"
+                                fit="cover"
+                                rounded="xl"
+                            />
+                        </InertiaChakraLink>
+                    </LinkBox>
+                </Flex>
+            </SimpleGrid>
         </Box>
     );
 };
@@ -410,13 +436,25 @@ const SawteeInMediaSection = ({ articles, link, show }) => {
                     scrollbar={true}
                     my={16}
                 >
-                    <InertiaChakraLink
-                        as={Link}
-                        pos={"absolute"}
-                        top={"10px"}
-                        zIndex={1020}
-                        href={link}
-                    >
+                    <Show above="sm">
+                        <InertiaChakraLink
+                            as={Link}
+                            pos={"absolute"}
+                            top={"10px"}
+                            zIndex={1020}
+                            href={link}
+                        >
+                            <ExploreButton
+                                size="md"
+                                text="Explore All "
+                                variant="outline"
+                                px={10}
+                            />
+                        </InertiaChakraLink>
+                    </Show>
+                </MultiPostsCarousel>
+                <Show below="sm">
+                    <InertiaChakraLink as={Link} href={link} mt="4">
                         <ExploreButton
                             size="md"
                             text="Explore All "
@@ -424,7 +462,7 @@ const SawteeInMediaSection = ({ articles, link, show }) => {
                             px={10}
                         />
                     </InertiaChakraLink>
-                </MultiPostsCarousel>
+                </Show>
             </Container>
         </Section>
     );
@@ -509,15 +547,13 @@ const InfoSection = () => {
                 alignItems="center"
                 minH={"500px"}
             >
-                {/* <Barchart />
-                <TreemapChart /> */}
-                {/* <iframe
+                <iframe
                     title="Reform Meter Dashboard_revised"
                     width="100%"
                     height="804"
                     src="https://app.powerbi.com/view?r=eyJrIjoiOGRhNGUzNzUtYTk2NS00YzFjLWE3NDAtM2NjMjdjYTg1NmE1IiwidCI6IjIzM2IyYmFhLTdjNzUtNGI0YS04YjNiLTE3NTNkYmQzODBmOSIsImMiOjF9"
                     allowFullScreen={true}
-                ></iframe> */}
+                ></iframe>
             </SimpleGrid>
         </Box>
     );
@@ -548,12 +584,27 @@ const PublicationSection = ({ publications, showPublication }) => {
                     spacing={90}
                     my={20}
                 >
+                    <Show above="sm">
+                        <InertiaChakraLink
+                            href="/category/publications"
+                            textAlign={"center"}
+                            pos={"absolute"}
+                            top={"10px"}
+                            zIndex={1020}
+                        >
+                            <ExploreButton
+                                size="md"
+                                text="Explore All"
+                                variant="outline"
+                                px={10}
+                            />
+                        </InertiaChakraLink>
+                    </Show>
+                </MultiItemCarousel>
+                <Show below="sm">
                     <InertiaChakraLink
                         href="/category/publications"
                         textAlign={"center"}
-                        pos={"absolute"}
-                        top={"10px"}
-                        zIndex={1020}
                     >
                         <ExploreButton
                             size="md"
@@ -562,7 +613,7 @@ const PublicationSection = ({ publications, showPublication }) => {
                             px={10}
                         />
                     </InertiaChakraLink>
-                </MultiItemCarousel>
+                </Show>
             </Container>
         </Section>
     );
