@@ -269,7 +269,7 @@ const AboutSection = ({ intro, image }) => {
                 >
                     <LinkBox shadow={"xl"} rounded="xl">
                         <InertiaChakraLink
-                            href="/reform-monitoring-platform"
+                            href="/category/covid"
                             role="banner"
                             aria-labelledby="SAWTEE's Response to Covid-19"
                             title="SAWTEE's Response to Covid-19"
