@@ -166,11 +166,10 @@ class FrontendController extends Controller
         if ($subcategory) {
             $category = Category::with('parent')->where('slug', $subcategory)->first();
             if ($slug === 'publications') {
-                $publications = $category->publications()->orderByDesc('id')->paginate(12);
-
+                $publications = Publication::where('category_id', $category->id)->orderByDesc('id')->paginate(12);
                 return Inertia::render('Frontend/Archives/PublicationCategory', [
                     'category' => $category,
-                    'publications' => $publications->load('media', 'file'),
+                    'publications' => $publications,
                     'infocus' => $infocus,
                     'sawteeInMedia' => $sawteeInMedia,
                     'featured_image' => $featured_image,

@@ -291,29 +291,27 @@ time {
     margin-top: 1em;
 }
 
-@media (min-width: 420px) {
-    & .cards {
+.cards {
+    & .title {
+        color: white !important;
+        z-index: 1;
+    }
+
+    & .content {
+        z-index: 1;
+    }
+
+    &:hover {
+        transition: all 0.4s ease-in-out;
+
         & .title {
-            color: white !important;
-            z-index: 1;
+            background: hsl(194, 100%, 25%, 0.6);
         }
 
         & .content {
-            z-index: 1;
-        }
-
-        &:hover {
-            transition: all 0.4s ease-in-out;
-
-            & .title {
-                background: hsl(194, 100%, 25%, 0.4);
-            }
-
-            & .content {
-                color: rgb(0, 0, 0);
-                background: hsl(0, 17%, 95%, 0.4);
-                opacity: 1;
-            }
+            color: rgb(0, 0, 0);
+            background: hsl(0, 17%, 95%, 0.4);
+            opacity: 1;
         }
     }
 }

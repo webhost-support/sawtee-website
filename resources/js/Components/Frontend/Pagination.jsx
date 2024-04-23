@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Link } from "@inertiajs/react";
 import { IoIosArrowRoundForward, IoIosArrowRoundBack } from "react-icons/io";
-import { Box, Stack, Button, useColorModeValue } from "@chakra-ui/react";
+import { Box, Stack, Button } from "@chakra-ui/react";
 
 export const PaginationButton = styled(Button)`
     width: 100%;
@@ -13,13 +13,8 @@ export const PaginationButton = styled(Button)`
     min-height: 60px;
 `;
 
-export const PrevLink = ({
-    isDisabled,
-    label = "See older posts",
-    link,
-    ...rest
-}) => (
-    <Box width="100%" {...rest} role="group">
+export const PrevLink = ({ isDisabled, label = "See older posts", link, ...rest }) => (
+    <Box width="100%" role="group" {...rest}>
         <StyledLink href={link} aria-disabled={isDisabled}>
             <PaginationButton
                 colorScheme={"primary"}
@@ -40,13 +35,8 @@ export const PrevLink = ({
     </Box>
 );
 
-export const NextLink = ({
-    isDisabled,
-    label = "See newer posts",
-    link,
-    ...rest
-}) => (
-    <Box width="100%" {...rest} role="group">
+export const NextLink = ({ isDisabled, label = "See newer posts", link, ...rest }) => (
+    <Box width="100%" role="group" {...rest}>
         <StyledLink href={link} aria-disabled={isDisabled}>
             <PaginationButton
                 colorScheme={"primary"}

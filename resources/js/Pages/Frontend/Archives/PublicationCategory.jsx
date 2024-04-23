@@ -14,7 +14,6 @@ import React from "react";
 import Section from "@/Components/Frontend/styles/section";
 import SidebarWidget from "@/Components/Frontend/sidebarWidget";
 import MainLayout from "../Layout/MainLayout";
-import CategoryLayout from "../Layout/CategoryLayout";
 import InertiaChakraLinkOverlay from "@/Components/Frontend/styles/inertia-chakra-link-overlay";
 import WebsiteHead from "@/Components/Frontend/Head";
 import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
@@ -73,8 +72,8 @@ export default function Publications({
                                 spacingY={24}
                                 columns={{ base: 2, md: 3 }}
                             >
-                                {publications.length > 0 ? (
-                                    publications.map((publication) => {
+                                {publications.data.length > 0 ? (
+                                    publications.data.map((publication) => {
                                         return (
                                             <VStack key={publication.id}>
                                                 <LinkBox

@@ -80,7 +80,12 @@ export default function Category({
                             mb="56px"
                             colSpan={{ base: 1, md: 2, lg: 1 }}
                         >
-                            {isDefault && <DefaultArchive posts={posts.data} showFallbackImage={isEvent} />}
+                            {isDefault && (
+                                <DefaultArchive
+                                    posts={posts.data}
+                                    showFallbackImage={isEvent}
+                                />
+                            )}
                             {isCovid && <CovidArchive posts={posts.data} />}
 
                             {isTeam && <TeamsArchive posts={posts} />}
@@ -93,14 +98,16 @@ export default function Category({
                                 <NewsletterArchive posts={posts.data} />
                             )}
 
-                            <Pagination
-                                links={posts.links}
-                                currentPage={posts.current_page}
-                                totalPages={posts.last_page}
-                                nextPage={posts.next_page_url}
-                                prevPage={posts.prev_page_url}
-                                width="full"
-                            />
+                            {!isResearch && (
+                                <Pagination
+                                    links={posts.links}
+                                    currentPage={posts.current_page}
+                                    totalPages={posts.last_page}
+                                    nextPage={posts.next_page_url}
+                                    prevPage={posts.prev_page_url}
+                                    width="full"
+                                />
+                            )}
                         </GridItem>
                         <GridItem
                             colSpan={1}
