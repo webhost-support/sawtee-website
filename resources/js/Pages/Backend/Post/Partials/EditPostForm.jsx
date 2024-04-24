@@ -431,63 +431,51 @@ export default function EditPostForm({
                                 </FormErrorMessage>
                             )}
                         </FormControl>
-                        {selectedCategory !== "Covid" && (
-                            <FormControl
-                                isInvalid={errors.theme_id}
-                                as="fieldset"
+                        <FormControl isInvalid={errors.theme_id} as="fieldset">
+                            <FormLabel as="legend" htmlFor="theme_id">
+                                Theme
+                            </FormLabel>
+
+                            <Select
+                                name="theme_id"
+                                placeholder="Select theme"
+                                value={data.theme_id}
+                                onChange={(e) => {
+                                    setData("theme_id", e.target.value);
+                                }}
                             >
-                                <FormLabel as="legend" htmlFor="theme_id">
-                                    Theme
-                                </FormLabel>
+                                {themes &&
+                                    themes.map((theme) => (
+                                        <option key={theme.id} value={theme.id}>
+                                            {theme.title}
+                                        </option>
+                                    ))}
+                            </Select>
 
-                                <Select
-                                    name="theme_id"
-                                    placeholder="Select theme"
-                                    value={data.theme_id}
-                                    onChange={(e) => {
-                                        setData("theme_id", e.target.value);
-                                    }}
-                                >
-                                    {themes &&
-                                        themes.map((theme) => (
-                                            <option
-                                                key={theme.id}
-                                                value={theme.id}
-                                            >
-                                                {theme.title}
-                                            </option>
-                                        ))}
-                                </Select>
+                            {errors.theme_id && (
+                                <FormErrorMessage mt={2}>
+                                    {errors.theme_id}
+                                </FormErrorMessage>
+                            )}
+                        </FormControl>
+                        <FormControl py={4} id={"tags"}>
+                            <FormLabel htmlFor="tags">{" Add Tags"}</FormLabel>
 
-                                {errors.theme_id && (
-                                    <FormErrorMessage mt={2}>
-                                        {errors.theme_id}
-                                    </FormErrorMessage>
-                                )}
-                            </FormControl>
-                        )}
-                        {selectedCategory !== "Covid" && (
-                            <FormControl py={4} id={"tags"}>
-                                <FormLabel htmlFor="tags">
-                                    {" Add Tags"}
-                                </FormLabel>
-
-                                <ControlledMultiSelect
-                                    isMulti
-                                    name={"tags"}
-                                    options={tagOptions}
-                                    variant="filled"
-                                    tagVariant="solid"
-                                    placeholder="Select Tags"
-                                    value={postTags}
-                                    onChange={(e) => {
-                                        setPostTags(e);
-                                        setDataTags(e);
-                                    }}
-                                    selectedOptionColorScheme="blue"
-                                />
-                            </FormControl>
-                        )}
+                            <ControlledMultiSelect
+                                isMulti
+                                name={"tags"}
+                                options={tagOptions}
+                                variant="filled"
+                                tagVariant="solid"
+                                placeholder="Select Tags"
+                                value={postTags}
+                                onChange={(e) => {
+                                    setPostTags(e);
+                                    setDataTags(e);
+                                }}
+                                selectedOptionColorScheme="blue"
+                            />
+                        </FormControl>
                         <FormControl
                             mt={4}
                             isInvalid={errors.status}
