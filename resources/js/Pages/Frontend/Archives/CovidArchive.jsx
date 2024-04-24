@@ -9,11 +9,10 @@ import {
     Divider,
     SimpleGrid,
 } from "@chakra-ui/react";
-import { formatDate } from "@/Utils/helpers";
+import { DateFormat } from "@/Utils/helpers";
 import { GlassBox } from "@/Components/Frontend/index";
 
 const CovidArchive = ({ posts }) => {
-    console.log(posts);
     return (
         <SimpleGrid columns={2} gap={2}>
             {posts.map((post) => {
@@ -58,7 +57,7 @@ const CovidArchive = ({ posts }) => {
                                 fontWeight="medium"
                                 justifySelf={"flex-end"}
                                 dangerouslySetInnerHTML={{
-                                    __html: formatDate(post.published_at),
+                                    __html: DateFormat(post.published_at),
                                 }}
                             />
                         </HStack>

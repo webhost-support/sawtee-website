@@ -145,6 +145,14 @@ export function formatDate(date) {
   return `${day} ${monthNames[month]}, ${year}`;
 }
 
+export function DateFormat(date) {
+    const jsDate = new Date(date);
+
+    const month = jsDate.getMonth();
+    const year = jsDate.getFullYear();
+    return `${monthNames[month]} ${year}`;
+}
+
 export function isUrl(str) {
   // let regexp =
   //   /(ftp|http|https):\/\/(\w+:?\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!-/]))?/;
