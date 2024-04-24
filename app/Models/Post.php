@@ -16,7 +16,7 @@ class Post extends Model implements HasMedia
     use InteractsWithMedia;
     use HasFactory;
 
-    protected $fillable = ['title', 'slug', 'content', 'excerpt', 'category_id', 'theme_id', 'author', 'status', 'link', 'published_at', 'meta_title', 'meta_description'];
+    protected $fillable = ['title', 'slug', 'content', 'excerpt', 'category_id', 'theme_id', 'author', 'genre', 'status', 'link', 'published_at', 'meta_title', 'meta_description'];
 
     /**
      * Get the route key for the model.

@@ -26,13 +26,16 @@ import {
     AccordionIcon,
     Tooltip,
     useColorModeValue,
+    InputRightElement,
+    Text,
 } from "@chakra-ui/react";
 import FileUpload, { PreviewImage } from "@/Components/Backend/FileUpload";
 import ContentEditor from "@/Components/Backend/ContentEditor";
 import React from "react";
 import { FiFile } from "react-icons/fi";
-import { CloseIcon, QuestionOutlineIcon } from "@chakra-ui/icons";
+import { CheckIcon, CloseIcon, CopyIcon, QuestionOutlineIcon } from "@chakra-ui/icons";
 import ControlledMultiSelect from "@/Components/Backend/MultiSelect";
+import { useClipboard } from "@chakra-ui/react";
 
 export default function CreatePostForm({ categories, themes, tags }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -57,7 +60,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
     const [image, setImage] = React.useState(null);
     const [selectedCategory, setSelectedCategory] = React.useState(null);
     const [slug, setSlug] = React.useState("");
-
+    const { onCopy, value, setValue, hasCopied } = useClipboard("");
     const [postTags, setPostTags] = React.useState([]);
 
     const [tagOptions, setTagOptions] = React.useState(() => {
@@ -156,21 +159,49 @@ export default function CreatePostForm({ categories, themes, tags }) {
                         </FormControl>
 
                         <FormControl>
-                            <FormLabel htmlFor="slug">Slug</FormLabel>
+                            <Stack
+                                flexDir={"row"}
+                                align="center"
+                                justify="space-between"
+                            >
+                                <FormLabel htmlFor="slug">Slug</FormLabel>
+                                <Text
+                                    as="span"
+                                    fontSize="xs"
+                                    fontStyle="italic"
+                                >
+                                    Click to copy
+                                </Text>
+                            </Stack>
 
-                            <Input
-                                type="text"
-                                id="slug"
-                                isReadOnly
-                                name="slug"
-                                color={useColorModeValue(
-                                    "blue.600",
-                                    "blue.300"
-                                )}
-                                value={slug}
-                                display="flex"
-                                mt={1}
-                            />
+                            <InputGroup>
+                                <InputRightElement>
+                                    <Button
+                                        variant="ghost"
+                                        size={"sm"}
+                                        onClick={onCopy}
+                                    >
+                                        {hasCopied ? (
+                                            <CheckIcon color={"green.500"} />
+                                        ) : (
+                                            <CopyIcon color={"gray.500"} />
+                                        )}
+                                    </Button>
+                                </InputRightElement>
+                                <Input
+                                    type="text"
+                                    id="slug"
+                                    isReadOnly
+                                    name="slug"
+                                    color={useColorModeValue(
+                                        "blue.600",
+                                        "blue.300"
+                                    )}
+                                    value={slug}
+                                    display="flex"
+                                    alignItems="center"
+                                />
+                            </InputGroup>
                         </FormControl>
 
                         <FormControl mt={4} isInvalid={errors.content}>

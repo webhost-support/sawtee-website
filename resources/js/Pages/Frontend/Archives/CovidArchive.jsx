@@ -13,6 +13,7 @@ import { formatDate } from "@/Utils/helpers";
 import { GlassBox } from "@/Components/Frontend/index";
 
 const CovidArchive = ({ posts }) => {
+    console.log(posts);
     return (
         <SimpleGrid columns={2} gap={2}>
             {posts.map((post) => {
@@ -32,7 +33,7 @@ const CovidArchive = ({ posts }) => {
                             transform: "scale(1.02)",
                         }}
                     >
-                        <HStack justify="space-between">
+                        <HStack w="full" justify="space-between">
                             {post.genre && (
                                 <Box
                                     bg={useColorModeValue(
@@ -62,25 +63,18 @@ const CovidArchive = ({ posts }) => {
                             />
                         </HStack>
                         <Link href={post.link} className="primary-link">
-                            <Heading
-                                as="h3"
-                                fontSize={"lg"}
-                            >
+                            <Heading as="h3" fontSize={"lg"}>
                                 {post.title}
                             </Heading>
                         </Link>
                         <Divider borderColor="var(--color-border)" />
 
                         <HStack
-                            shouldWrapChildren="true"
                             align="center"
                             __css={{ columnGap: 2, flexWrap: "wrap" }}
                         >
                             {post.author && (
-                                <Text
-                                    key={post.author}
-                                    fontSize="sm"
-                                >
+                                <Text key={post.author} fontSize="sm">
                                     {post.author}
                                 </Text>
                             )}

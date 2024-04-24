@@ -12,6 +12,7 @@ import {
     InputGroup,
     InputLeftAddon,
     InputRightAddon,
+    InputRightElement,
     Radio,
     Select,
     Stack,
@@ -25,16 +26,28 @@ import {
     AccordionButton,
     AccordionPanel,
     AccordionIcon,
+    Text,
 } from "@chakra-ui/react";
 import FileUpload, { PreviewImage } from "@/Components/Backend/FileUpload";
 import React from "react";
 import ContentEditor from "@/Components/Backend/ContentEditor";
 import ControlledMultiSelect from "@/Components/Backend/MultiSelect";
 import { filterByReference } from "@/Utils";
-import { CloseIcon, QuestionOutlineIcon } from "@chakra-ui/icons";
+import {
+    CheckIcon,
+    CloseIcon,
+    CopyIcon,
+    QuestionOutlineIcon,
+} from "@chakra-ui/icons";
 import { FiFile } from "react-icons/fi";
+import { useClipboard } from "@chakra-ui/react";
 
-export default function EditPostForm({ post: postData, categories, tags, themes }) {
+export default function EditPostForm({
+    post: postData,
+    categories,
+    tags,
+    themes,
+}) {
     const { data, setData, post, processing, errors } = useForm({
         title: postData.title,
         category_id: postData.category_id,
@@ -56,7 +69,6 @@ export default function EditPostForm({ post: postData, categories, tags, themes 
         meta_description: postData.meta_description,
     });
 
-
     const toast = useToast();
     const [imageUrl, setImageUrl] = React.useState(
         data.image ? data.image.preview_url : null
@@ -76,6 +88,8 @@ export default function EditPostForm({ post: postData, categories, tags, themes 
 
         return tagsarray;
     });
+
+    const { onCopy, value, setValue, hasCopied } = useClipboard("");
 
     const [tagOptions, setTagOptions] = React.useState([]);
 
@@ -185,21 +199,49 @@ export default function EditPostForm({ post: postData, categories, tags, themes 
                         </FormControl>
 
                         <FormControl>
-                            <FormLabel htmlFor="slug">Slug</FormLabel>
+                            <Stack
+                                flexDir={"row"}
+                                align="center"
+                                justify="space-between"
+                            >
+                                <FormLabel htmlFor="slug">Slug</FormLabel>
+                                <Text
+                                    as="span"
+                                    fontSize="xs"
+                                    fontStyle="italic"
+                                >
+                                    Click to copy
+                                </Text>
+                            </Stack>
 
-                            <Input
-                                type="text"
-                                id="slug"
-                                isReadOnly
-                                name="slug"
-                                color={useColorModeValue(
-                                    "blue.600",
-                                    "blue.300"
-                                )}
-                                value={slug}
-                                display="flex"
-                                mt={1}
-                            />
+                            <InputGroup>
+                                <InputRightElement>
+                                    <Button
+                                        variant="ghost"
+                                        size={"sm"}
+                                        onClick={onCopy}
+                                    >
+                                        {hasCopied ? (
+                                            <CheckIcon color={"green.500"} />
+                                        ) : (
+                                            <CopyIcon color={"gray.500"} />
+                                        )}
+                                    </Button>
+                                </InputRightElement>
+                                <Input
+                                    type="text"
+                                    id="slug"
+                                    isReadOnly
+                                    name="slug"
+                                    color={useColorModeValue(
+                                        "blue.600",
+                                        "blue.300"
+                                    )}
+                                    value={slug}
+                                    display="flex"
+                                    alignItems="center"
+                                />
+                            </InputGroup>
                         </FormControl>
 
                         <FormControl mt={4} isInvalid={errors.content}>
@@ -529,6 +571,7 @@ export default function EditPostForm({ post: postData, categories, tags, themes 
                                     id="genre"
                                     name="genre"
                                     display="block"
+                                    value={data.genre}
                                     w="full"
                                     mt={1}
                                     autoComplete="genre"
