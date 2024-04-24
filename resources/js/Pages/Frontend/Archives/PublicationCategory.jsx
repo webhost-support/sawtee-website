@@ -167,15 +167,17 @@ export default function Publications({
                                     </>
                                 )}
                             </SimpleGrid>
-                            <Pagination
-                                links={publications.links}
-                                currentPage={publications.current_page}
-                                totalPages={publications.last_page}
-                                nextPage={publications.next_page_url}
-                                prevPage={publications.prev_page_url}
-                                width="full"
-                                mt={12}
-                            />
+                            {publications.data.length >= 12 && (
+                                <Pagination
+                                    links={publications.links}
+                                    currentPage={publications.current_page}
+                                    totalPages={publications.last_page}
+                                    nextPage={publications.next_page_url}
+                                    prevPage={publications.prev_page_url}
+                                    width="full"
+                                    mt={12}
+                                />
+                            )}
                         </GridItem>
 
                         <GridItem

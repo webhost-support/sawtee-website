@@ -292,7 +292,7 @@ const AboutSection = ({ intro, image }) => {
                 >
                     <LinkBox shadow={"xl"} rounded="xl">
                         <InertiaChakraLink
-                            href="/reform-monitoring-platform"
+                            href="/advancing-ldcs’-interests-in-the-wto-strengthening-participation,-securing-priorities"
                             role="banner"
                             aria-labelledby="Advancing LDC's Trade Interests"
                             title="Advancing LDC's Trade Interests"

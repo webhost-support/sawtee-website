@@ -68,44 +68,44 @@ export default function CreateCategoryForm({ categories }) {
                 <FormErrorMessage message={errors.name} className="mt-2" />
             </FormControl>
             <SimpleGrid columns={2} gap={10} w="full">
+                <FormControl>
+                    <FormLabel htmlFor="type">Select Category Type</FormLabel>
 
-            <FormControl>
-                <FormLabel htmlFor="type">Select Category Type</FormLabel>
+                    <Select
+                        name="type"
+                        id="type"
+                        placeholder="Select Type"
+                        onChange={(e) => setData("type", e.target.value)}
+                    >
+                        {["post", "publication", "research", "team"].map(
+                            (item) => (
+                                <option key={item} value={item}>
+                                    {item}
+                                </option>
+                            )
+                        )}
+                    </Select>
+                </FormControl>
 
-                <Select
-                    name="type"
-                    id="type"
-                    placeholder="Select Type"
-                    onChange={(e) => setData("type", e.target.value)}
-                >
-                    {["post", "publication", "research", "team"].map((item) => (
-                        <option key={item} value={item}>
-                            {item}
-                        </option>
-                    ))}
-                </Select>
-            </FormControl>
+                <FormControl>
+                    <FormLabel htmlFor="parent_id">Select Parent</FormLabel>
 
-            <FormControl>
-                <FormLabel htmlFor="parent_id">Select Parent</FormLabel>
-
-                <Select
-                    name="parent_id"
-                    id="parent_id"
-                    placeholder="Select Parent"
-                    onChange={(e) => {
-                        console.log(e.target.value);
-                        setData("parent_id", e.target.value);
-                    }}
-                >
-                    {categories &&
-                        categories.map((item) => (
-                            <option key={item.id} value={item.id}>
-                                {item.name}
-                            </option>
-                        ))}
-                </Select>
-            </FormControl>
+                    <Select
+                        name="parent_id"
+                        id="parent_id"
+                        placeholder="Select Parent"
+                        onChange={(e) => {
+                            setData("parent_id", e.target.value);
+                        }}
+                    >
+                        {categories &&
+                            categories.map((item) => (
+                                <option key={item.id} value={item.id}>
+                                    {item.name}
+                                </option>
+                            ))}
+                    </Select>
+                </FormControl>
             </SimpleGrid>
 
             <FormControl>

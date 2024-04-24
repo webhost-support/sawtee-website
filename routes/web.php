@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\ThemeController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\TeamController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\FrontendController;
@@ -45,6 +46,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->as('admin.')->group(fu
     Route::resource('/categories', CategoryController::class);
     Route::resource('/posts', PostController::class);
     Route::resource('/themes', ThemeController::class);
+    Route::resource('/tags', TagController::class);
     Route::resource('/sections', SectionController::class);
     Route::resource('/publications', PublicationController::class);
     Route::resource('/research', ResearchController::class);

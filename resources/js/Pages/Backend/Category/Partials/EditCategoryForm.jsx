@@ -107,7 +107,8 @@ export default function EditCategoryForm({ category, categories }) {
                         placeholder="Select Parent"
                         value={data.parent_id}
                         onChange={(e) => {
-                            setData("parent_id", e.target.value);
+                            console.log(typeof e.target.value);
+                            setData("parent_id", Number(e.target.value));
                         }}
                     >
                         {categories &&

@@ -441,7 +441,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
                             <Stack
                                 direction="row"
                                 flexWrap={"wrap"}
-                                spacing={8}
+                                spacing={4}
                             >
                                 {["unpublished", "draft", "published"].map(
                                     (item) => {
@@ -531,11 +531,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
                         )}
 
                         {selectedCategory === "Covid" && (
-                            <FormControl
-                                isInvalid={errors.link}
-                                isRequired
-                                mt={4}
-                            >
+                            <FormControl isInvalid={errors.link} mt={4}>
                                 <FormLabel htmlFor="link">
                                     External Link
                                 </FormLabel>

@@ -66,6 +66,11 @@ const MenuItems = [
         route: "admin.themes.index",
     },
     {
+        name: "Tags",
+        icon: FiCompass,
+        route: "admin.tags.index",
+    },
+    {
         name: "Categories",
         icon: FiStar,
         route: "admin.categories.index",
