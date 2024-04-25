@@ -14,7 +14,7 @@ import { GlassBox } from "@/Components/Frontend/index";
 
 const CovidArchive = ({ posts }) => {
     return (
-        <SimpleGrid columns={2} gap={2}>
+        <SimpleGrid columns={2} gap={4} rowGap={20}>
             {posts.map((post) => {
                 return (
                     <VStack

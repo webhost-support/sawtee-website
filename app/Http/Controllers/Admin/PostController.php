@@ -116,8 +116,9 @@ class PostController extends Controller
 
     public function uploadmedia(Request $request, Post $post)
     {
-        $post->addMediaFromRequest('image')->toMediaCollection('post-content-media');
-        return redirect()->back();
+        if($request->hasFile('image')){
+            $post->addMediaFromRequest('image')->toMediaCollection('post-content-media');
+            return redirect()->back();
+        }
     }
-
 }

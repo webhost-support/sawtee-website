@@ -209,6 +209,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
 
                             <ContentEditor
                                 name="content"
+                                initialValue=""
                                 id="content"
                                 onChange={(evt, editor) =>
                                     setData("content", editor.getContent())

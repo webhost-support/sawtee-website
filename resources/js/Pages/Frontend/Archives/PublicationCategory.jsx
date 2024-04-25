@@ -33,7 +33,6 @@ export default function Publications({
         "whiteAlpha.800"
     );
 
-    console.log(publications);
 
     return (
         <MainLayout>

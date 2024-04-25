@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Admin\Controllers\PostImageUploadController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\MenuItemController;
@@ -54,6 +55,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->as('admin.')->group(fu
     Route::resource('/slides', SlideController::class);
     Route::resource('/pages', PageController::class);
     Route::resource('/teams', TeamController::class);
+
+    Route::get('/upload', [PostImageUploadController::class, "upload"]);
     Route::get('/post/uploadmedia', [PostController::class, 'uploadmedia'])->name('post.upload');
     // Route::get('/menus/manage-menus/{id?}', [MenuController::class, 'manage'])->name('manage.menus');
     // Route::post('/menus/create', [MenuController::class, 'store'])->name('create.menu');
@@ -63,6 +66,9 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->as('admin.')->group(fu
     // Route::delete('/menus/delete-menu-item/{id}', [MenuController::class, 'deleteMenuItem'])->name('deleteMenuItem.menu');
     // Route::post('/menus/add-custom-link', [MenuController::class, 'addCustomLink'])->name('addCustomLink.menu');
     Route::get('/subscribers', [SubscriptionController::class, 'index'])->name('subscribers.list');
+    Route::get("/laravel-filemanager", function () {
+        \UniSharp\LaravelFilemanager\Lfm::routes();
+    });
 });
 
 Route::post('/subscribers/subscribe', [SubscriptionController::class, 'store'])->name('subscription.store');
