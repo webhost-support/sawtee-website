@@ -5,7 +5,7 @@ namespace App\Http\Admin\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class PostImageUploadController extends Controller
+class PostUploadController extends Controller
 {
     /**
      * Display a listing of the resource.

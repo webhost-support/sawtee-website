@@ -21,7 +21,7 @@ export default function ContentEditor(props) {
         editimage_cors_hosts: ["picsum.photos"],
         menubar: "file edit view insert format tools table help",
         toolbar:
-            "undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | save print | pagebreak anchor codesample | ltr rtl",
+            "blocks | forecolor backcolor removeformat | bold italic underline strikethrough | link image blockquote codesample | align bullist numlist | code | undo redo | accordion accordionremove | fontfamily fontsize | table media | lineheight outdent indent| charmap emoticons | code fullscreen preview | save print | pagebreak anchor codesample",
         autosave_ask_before_unload: true,
         autosave_interval: "30s",
         autosave_prefix: "{path}{query}-{id}-",
@@ -29,32 +29,35 @@ export default function ContentEditor(props) {
         autosave_retention: "2m",
         image_advtab: true,
         importcss_append: true,
-        path_absolute: "/",
-        relative_urls: false,
         image_title: true,
         automatic_uploads: true,
-        // images_upload_url: "/admin/upload",
-        // file_picker_types: "image",
-        // file_picker_callback: function (cb, value, meta) {
-        //     var input = document.createElement("input");
-        //     input.setAttribute("type", "file");
-        //     input.setAttribute("accept", "image/*");
-        //     input.onchange = function () {
-        //         var file = this.files[0];
+        image_class_list: [
+            { title: "img-responsive", value: "img-responsive" },
+        ],
+        images_upload_url: "/admin/post/uploadmedia",
+        images_upload_base_path: "/",
+        image_file_types: "jpg,svg,webp,png",
+        file_picker_types: "file image media",
+        file_picker_callback: function (cb, value, meta) {
+            var input = document.createElement("input");
+            input.setAttribute("type", "file");
+            input.setAttribute("accept", "image/*");
+            input.onchange = function () {
+                var file = this.files[0];
 
-        //         var reader = new FileReader();
-        //         reader.readAsDataURL(file);
-        //         reader.onload = function () {
-        //             var id = "blobid" + new Date().getTime();
-        //             var blobCache = tinymce.activeEditor.editorUpload.blobCache;
-        //             var base64 = reader.result.split(",")[1];
-        //             var blobInfo = blobCache.create(id, file, base64);
-        //             blobCache.add(blobInfo);
-        //             cb(blobInfo.blobUri(), { title: file.name });
-        //         };
-        //     };
-        //     input.click();
-        // },
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function () {
+                    var id = "blobid" + new Date().getTime();
+                    var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+                    var base64 = reader.result.split(",")[1];
+                    var blobInfo = blobCache.create(id, file, base64);
+                    blobCache.add(blobInfo);
+                    cb(blobInfo.blobUri(), { title: file.name });
+                };
+            };
+            input.click();
+        },
         // file_picker_callback: (callback, value, meta) => {
         //     /* Provide file and text for the link dialog */
         //     if (meta.filetype === "file") {
@@ -78,35 +81,6 @@ export default function ContentEditor(props) {
         //         });
         //     }
         // },
-        file_picker_callback: function (callback, value, meta) {
-            var x =
-                window.innerWidth ||
-                document.documentElement.clientWidth ||
-                document.getElementsByTagName("body")[0].clientWidth;
-            var y =
-                window.innerHeight ||
-                document.documentElement.clientHeight ||
-                document.getElementsByTagName("body")[0].clientHeight;
-
-            var cmsURL = "/laravel-filemanager?editor=" + meta.fieldname;
-            if (meta.filetype == "image") {
-                cmsURL = cmsURL + "&type=Images";
-            } else {
-                cmsURL = cmsURL + "&type=Files";
-            }
-
-            tinyMCE.activeEditor.windowManager.openUrl({
-                url: cmsURL,
-                title: "Filemanager",
-                width: x * 0.8,
-                height: y * 0.8,
-                resizable: "yes",
-                close_previous: "no",
-                onMessage: (api, message) => {
-                    callback(message.content);
-                },
-            });
-        },
 
         height: 600,
         image_caption: true,

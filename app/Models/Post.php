@@ -10,23 +10,38 @@ use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-
+use Laravel\Scout\Searchable;
+use Laravel\Scout\Attributes\SearchUsingFullText;
+use Laravel\Scout\Attributes\SearchUsingPrefix;
 class Post extends Model implements HasMedia
 {
     use InteractsWithMedia;
     use HasFactory;
+    use Searchable;
 
     protected $fillable = ['title', 'slug', 'content', 'excerpt', 'category_id', 'theme_id', 'author', 'genre', 'status', 'link', 'published_at', 'meta_title', 'meta_description'];
 
+
+
     /**
-     * Get the route key for the model.
+     * Get the indexable data array for the model.
      *
-    //  * @return string
+     * @return array<string, mixed>
      */
-    // public function getRouteKeyName()
-    // {
-    //     return 'slug';
-    // }
+
+    #[SearchUsingPrefix(['id', 'title', 'author'])]
+    #[SearchUsingFullText(['content', 'excerpt'])]
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => (int) $this->id,
+            'title' => $this->title,
+            'author' => $this->author,
+            'content' => $this->content,
+            'excerpt' => $this->excerpt,
+        ];
+    }
 
     public function registerMediaConversions(Media $media = null): void
     {

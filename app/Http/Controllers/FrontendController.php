@@ -13,6 +13,8 @@ use App\Models\Slider;
 use App\Models\Team;
 use App\Models\Theme;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
+use UniSharp\LaravelFilemanager\Lfm;
 
 /**
  * A function to retrieve posts based on category and slug.
@@ -202,4 +204,11 @@ class FrontendController extends Controller
             'srcSet' => $srcSet
         ]);
     }
+
+    public function search(Request $request)
+    {
+        return Post::search($request->search)->get();
+    }
+
+
 }
