@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
-import { useColorMode } from "@chakra-ui/react";
 
 export default function ContentEditor(props) {
     const { initialValue = "", ...rest } = props;
@@ -9,11 +8,7 @@ export default function ContentEditor(props) {
         : import.meta.env.VITE_TINYMCE_API_KEY_GITHUB;
 
     const editorRef = useRef(null);
-    const { colorMode } = useColorMode();
-
-    const [editorTheme, setEditorTheme] = React.useState(
-        colorMode === "dark" ? "oxide-dark" : "oxide"
-    );
+    const colorMode = props.colorMode;
 
     const editorConfig = {
         plugins:
@@ -30,74 +25,25 @@ export default function ContentEditor(props) {
         image_advtab: true,
         importcss_append: true,
         image_title: true,
+        image_caption: true,
         automatic_uploads: true,
         image_class_list: [
             { title: "img-responsive", value: "img-responsive" },
         ],
         images_upload_url: "/admin/post/uploadmedia",
         images_upload_base_path: "/",
-        image_file_types: "jpg,svg,webp,png",
-        file_picker_types: "file image media",
-        file_picker_callback: function (cb, value, meta) {
-            var input = document.createElement("input");
-            input.setAttribute("type", "file");
-            input.setAttribute("accept", "image/*");
-            input.onchange = function () {
-                var file = this.files[0];
-
-                var reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = function () {
-                    var id = "blobid" + new Date().getTime();
-                    var blobCache = tinymce.activeEditor.editorUpload.blobCache;
-                    var base64 = reader.result.split(",")[1];
-                    var blobInfo = blobCache.create(id, file, base64);
-                    blobCache.add(blobInfo);
-                    cb(blobInfo.blobUri(), { title: file.name });
-                };
-            };
-            input.click();
-        },
-        // file_picker_callback: (callback, value, meta) => {
-        //     /* Provide file and text for the link dialog */
-        //     if (meta.filetype === "file") {
-        //         callback("/post/uploadmedia", {
-        //             text: "My text",
-        //         });
-        //     }
-
-        //     /* Provide image and alt text for the image dialog */
-        //     if (meta.filetype === "image") {
-        //         callback("/post/uploadmedia", {
-        //             alt: "My alt text",
-        //         });
-        //     }
-
-        //     /* Provide alternative source and posted for the media dialog */
-        //     if (meta.filetype === "media") {
-        //         callback("/post/uploadmedia", {
-        //             source2: "alt.ogg",
-        //             poster: "https://www.google.com/logos/google.jpg",
-        //         });
-        //     }
-        // },
-
+        images_reuse_filename: true,
+        image_file_types: "jpeg,svg,webp,png",
+        file_picker_types: "image",
         height: 600,
-        image_caption: true,
         quickbars_selection_toolbar:
             "bold italic | quicklink h2 h3 blockquote quickimage quicktable",
         noneditable_class: "mceNonEditable",
         toolbar_mode: "sliding",
         contextmenu: "link image table",
-        skin: editorTheme,
-        content_css: colorMode === "dark" ? "dark" : "default",
         content_style:
             "body { font-family:Helvetica,Arial,sans-serif; font-size:16px }",
     };
-
-    React.useEffect(() => {
-        setEditorTheme(colorMode === "dark" ? "oxide-dark" : "oxide");
-    }, [colorMode]);
 
     return (
         <Editor
@@ -105,7 +51,13 @@ export default function ContentEditor(props) {
             apiKey={TINYMCE_API_KEY}
             initialValue={initialValue}
             onInit={(evt, editor) => (editorRef.current = editor)}
-            init={{ ...editorConfig }}
+            init={{
+                ...editorConfig,
+                ...{
+                    skin: colorMode === "dark" ? "oxide-dark" : "oxide",
+                    content_css: colorMode === "dark" ? "dark" : "default",
+                },
+            }}
             {...rest}
         />
     );

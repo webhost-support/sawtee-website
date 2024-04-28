@@ -32,7 +32,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Backend/Post/Create',[
+        return Inertia::render('Backend/Post/Create', [
             'categories' => Category::where('type', 'post')->get(),
             'themes' => Theme::all(),
             'tags' => Tag::all()
@@ -46,7 +46,8 @@ class PostController extends Controller
     {
 
         $validated = $request->validated();
-        $validated['title']=Str::of($validated['title'])->squish();
+$validated['title'] = Str::of($validated['title'])->squish();
+
         $validated['slug'] = Str::slug($validated['title'], '-');
         $validated['meta_title'] = $validated['title'];
         $post = Post::create($validated);
@@ -59,6 +60,17 @@ class PostController extends Controller
         if ($request->hasFile('file')) {
             $post->addMediaFromRequest('file')->toMediaCollection('post-files');
         }
+if ($request->hasFile('files')) {
+    dd($request);
+    $files = $request->files;
+    foreach ($files as $file) {
+        dd($file);
+        $fileName = $file->name;
+        $path = $file->storeAs('Featured_Events', $fileName, 'public');
+        return response()->json(['location' => "/storage/$path", 'text' => $fileName]);
+    }
+}
+
         return redirect()->route('admin.posts.index');
     }
 
@@ -90,9 +102,10 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
 
+
         $validated = $request->all();
         $validated['slug'] = Str::slug($validated['title'], '-');
-         if ($request->has('tags')) {
+        if ($request->has('tags')) {
             $post->tags()->sync($request->tags);
         }
         if ($request->hasFile('image')) {
@@ -101,8 +114,21 @@ class PostController extends Controller
         if ($request->hasFile('file')) {
             $post->addMediaFromRequest('file')->toMediaCollection('post-files');
         }
+
+if ($request->hasFile('files')) {
+    $files = (array) ($request->files);
+    foreach ($files as $file) {
+        $fileName = $file->originalName;
+        $path = $file->storeAs('Featured_Events', $fileName, 'public');
+        return response()->json(['location' => "/storage/$path", 'text' => $fileName]);
+    }
+}
+
         $post->update($validated);
-    return redirect()->route('admin.posts.index');
+return redirect()->route('admin.posts.index');
+
+
+
     }
 
     /**
@@ -114,11 +140,14 @@ class PostController extends Controller
         return redirect()->route('admin.posts.index');
     }
 
-    public function uploadmedia(Request $request, Post $post)
+    public function uploadmedia(Request $request)
     {
-        if($request->hasFile('image')){
-            $post->addMediaFromRequest('image')->toMediaCollection('post-content-media');
-            return redirect()->back();
+        if ($request->hasFile('file')) {
+            $fileName = $request->file('file')->getClientOriginalName();
+
+            $path = $request->file('file')->storeAs('uploads', $fileName, 'public');
+
+            return response()->json(['location' => "/storage/$path", 'text' => $fileName]);
         }
     }
 }

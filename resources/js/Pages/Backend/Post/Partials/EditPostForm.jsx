@@ -50,6 +50,7 @@ export default function EditPostForm({
 }) {
     const { data, setData, post, processing, errors } = useForm({
         title: postData.title,
+        slug: postData.slug,
         category_id: postData.category_id,
         theme_id: postData.theme_id,
         content: postData.content,
@@ -62,6 +63,7 @@ export default function EditPostForm({
         file: postData.media.filter(
             (m) => m.collection_name === "post-media"
         )[0],
+        files: postData.files,
         link: postData.link,
         genre: postData.genre,
         published_at: postData.published_at,
@@ -76,7 +78,8 @@ export default function EditPostForm({
     const [filename, setFilename] = React.useState(
         data.file ? data.file.file_name : null
     );
-    const [slug, setSlug] = React.useState(postData.slug);
+    const [files, setFiles] = React.useState([]);
+
     const [postTags, setPostTags] = React.useState(() => {
         let tagsarray = [];
         postData.tags.map((tag) => {
@@ -89,7 +92,12 @@ export default function EditPostForm({
         return tagsarray;
     });
 
-    const { onCopy, value, setValue, hasCopied } = useClipboard("");
+    const {
+        onCopy,
+        value = postData.slug,
+        setValue,
+        hasCopied,
+    } = useClipboard("");
 
     const [tagOptions, setTagOptions] = React.useState([]);
 
@@ -112,20 +120,13 @@ export default function EditPostForm({
 
     // Set Slug if title value changes
     React.useEffect(() => {
-        if (data.title) {
-            setSlug(
-                data.title
-                    .toLowerCase()
-                    .replace(/\s+/g, "-")
-                    .replaceAll(",", "")
-            );
-            setData("slug", slug);
-        }
+        const postSlug = data.title
+            .toLowerCase()
+            .replace(/\s+/g, "-")
+            .replaceAll(",", "");
+        setData("slug", postSlug);
+        setValue(postSlug);
     }, [data.title]);
-
-    React.useEffect(() => {
-        setData("slug", slug);
-    }, [slug]);
 
     React.useEffect(() => {
         if (postTags && tags) {
@@ -163,6 +164,10 @@ export default function EditPostForm({
             }
         );
     };
+
+    React.useEffect(() => {
+        files.length && setData("files", files);
+    }, [files]);
 
     return (
         <form onSubmit={submit}>
@@ -237,7 +242,7 @@ export default function EditPostForm({
                                         "blue.600",
                                         "blue.300"
                                     )}
-                                    value={slug}
+                                    value={value}
                                     display="flex"
                                     alignItems="center"
                                 />
@@ -576,37 +581,29 @@ export default function EditPostForm({
                             </FormControl>
                         )}
 
-                        {selectedCategory === "Covid" && (
-                            <FormControl
-                                isInvalid={errors.link}
-                                isRequired
-                                mt={4}
-                            >
-                                <FormLabel htmlFor="link">
-                                    External Link
-                                </FormLabel>
+                        <FormControl isInvalid={errors.link} mt={4}>
+                            <FormLabel htmlFor="link">External Link</FormLabel>
 
-                                <Input
-                                    type="text"
-                                    id="link"
-                                    name="link"
-                                    display="block"
-                                    w="full"
-                                    mt={1}
-                                    value={data.link}
-                                    autoComplete="link"
-                                    onChange={(e) =>
-                                        setData("link", e.target.value)
-                                    }
-                                />
+                            <Input
+                                type="text"
+                                id="link"
+                                name="link"
+                                display="block"
+                                w="full"
+                                mt={1}
+                                value={data.link}
+                                autoComplete="link"
+                                onChange={(e) =>
+                                    setData("link", e.target.value)
+                                }
+                            />
 
-                                {errors.link && (
-                                    <FormErrorMessage mt={2}>
-                                        {errors.link}
-                                    </FormErrorMessage>
-                                )}
-                            </FormControl>
-                        )}
+                            {errors.link && (
+                                <FormErrorMessage mt={2}>
+                                    {errors.link}
+                                </FormErrorMessage>
+                            )}
+                        </FormControl>
 
                         <FormControl mt={4}>
                             <FormLabel htmlFor="image">
@@ -718,6 +715,56 @@ export default function EditPostForm({
                                     )}
                                 </InputGroup>
                             </>
+                        </FormControl>
+
+                        <FormControl mt={4}>
+                            <FormLabel htmlFor="files">
+                                Content Files Upload
+                            </FormLabel>
+
+                            <FileUpload
+                                text="Drop files here or click to select"
+                                accept=".pdf,.doc,.docx,.ppt,.pptx"
+                            >
+                                <Input
+                                    type="file"
+                                    height="100%"
+                                    width="100%"
+                                    position="absolute"
+                                    multiple
+                                    top="0"
+                                    left="0"
+                                    opacity="0"
+                                    cursor={"pointer"}
+                                    aria-hidden="true"
+                                    accept=".pdf,.doc,.docx,.ppt,.pptx"
+                                    id="image"
+                                    name="image"
+                                    size="md"
+                                    onChange={(e) => {
+                                        setFiles(Array.from(e.target.files));
+                                    }}
+                                />
+                            </FileUpload>
+
+                            <VStack spacing={4} mt={2}>
+                                {files.length &&
+                                    files.map((file) => {
+                                        return (
+                                            <InputGroup key={file.name}>
+                                                <InputLeftAddon
+                                                    children={<FiFile />}
+                                                />
+
+                                                <Input
+                                                    size="md"
+                                                    isReadOnly
+                                                    placeholder={file.name}
+                                                />
+                                            </InputGroup>
+                                        );
+                                    })}
+                            </VStack>
                         </FormControl>
                         <PrimaryButton
                             type="submit"

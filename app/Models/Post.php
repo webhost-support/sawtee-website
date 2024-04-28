@@ -43,6 +43,11 @@ class Post extends Model implements HasMedia
         ];
     }
 
+    public function postContentFiles()
+    {
+        return $this->morphOne(File::class, 'fileable');
+    }
+
     public function registerMediaConversions(Media $media = null): void
     {
         $this

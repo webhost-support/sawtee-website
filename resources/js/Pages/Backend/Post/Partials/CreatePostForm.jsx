@@ -28,14 +28,21 @@ import {
     useColorModeValue,
     InputRightElement,
     Text,
+    useColorMode,
 } from "@chakra-ui/react";
 import FileUpload, { PreviewImage } from "@/Components/Backend/FileUpload";
 import ContentEditor from "@/Components/Backend/ContentEditor";
 import React from "react";
 import { FiFile } from "react-icons/fi";
-import { CheckIcon, CloseIcon, CopyIcon, QuestionOutlineIcon } from "@chakra-ui/icons";
+import {
+    CheckIcon,
+    CloseIcon,
+    CopyIcon,
+    QuestionOutlineIcon,
+} from "@chakra-ui/icons";
 import ControlledMultiSelect from "@/Components/Backend/MultiSelect";
 import { useClipboard } from "@chakra-ui/react";
+
 
 export default function CreatePostForm({ categories, themes, tags }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -49,6 +56,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
         status: "unpublished",
         image: "",
         file: "",
+        files: [],
         link: null,
         genre: "",
         published_at: new Date(),
@@ -57,11 +65,12 @@ export default function CreatePostForm({ categories, themes, tags }) {
     });
     const toast = useToast();
     const [filename, setFilename] = React.useState(null);
+    const [files, setFiles] = React.useState([]);
     const [image, setImage] = React.useState(null);
     const [selectedCategory, setSelectedCategory] = React.useState(null);
-    const [slug, setSlug] = React.useState("");
-    const { onCopy, value, setValue, hasCopied } = useClipboard("");
+    const { onCopy, value = data.slug, setValue, hasCopied } = useClipboard("");
     const [postTags, setPostTags] = React.useState([]);
+    const { colorMode } = useColorMode();
 
     const [tagOptions, setTagOptions] = React.useState(() => {
         let tagsarray = [];
@@ -76,15 +85,14 @@ export default function CreatePostForm({ categories, themes, tags }) {
     });
 
     // Set Slug if title value changes
-    // React.useEffect(() => {
-    //     if (data.title.length > 0) {
-    //         setSlug(data.title.toLowerCase().replace(/\s+/g, "-")).replaceAll(
-    //             ",",
-    //             ""
-    //         );
-    //         setData("slug", slug);
-    //     }
-    // }, [data.title]);
+    React.useEffect(() => {
+        const postSlug = data.title
+            .toLowerCase()
+            .replace(/\s+/g, "-")
+            .replaceAll(",", "");
+        setData("slug", postSlug);
+        setValue(postSlug);
+    }, [data.title]);
 
     function setDataTags(e) {
         let array = [];
@@ -108,7 +116,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
                 toast({
                     position: "top-right",
                     title: "Post Created.",
-                    description: `${data.title} post Successfully`,
+                    description: `${data.title} post was created successfully`,
                     status: "success",
                     duration: 6000,
                     isClosable: true,
@@ -118,6 +126,10 @@ export default function CreatePostForm({ categories, themes, tags }) {
             },
         });
     };
+
+    React.useEffect(() => {
+        files.length && setData("files", files);
+    }, [files]);
 
     return (
         <form onSubmit={submit}>
@@ -143,11 +155,6 @@ export default function CreatePostForm({ categories, themes, tags }) {
                                 autoComplete="title"
                                 onChange={(e) => {
                                     setData("title", e.target.value);
-                                    setSlug(
-                                        e.target.value
-                                            .toLowerCase()
-                                            .replace(/\s+/g, "-")
-                                    ).replaceAll(",", "");
                                 }}
                             />
 
@@ -197,7 +204,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
                                         "blue.600",
                                         "blue.300"
                                     )}
-                                    value={slug}
+                                    value={value}
                                     display="flex"
                                     alignItems="center"
                                 />
@@ -210,6 +217,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
                             <ContentEditor
                                 name="content"
                                 initialValue=""
+                                colorMode={colorMode}
                                 id="content"
                                 onChange={(evt, editor) =>
                                     setData("content", editor.getContent())
@@ -551,32 +559,28 @@ export default function CreatePostForm({ categories, themes, tags }) {
                             </FormControl>
                         )}
 
-                        {selectedCategory === "Covid" && (
-                            <FormControl isInvalid={errors.link} mt={4}>
-                                <FormLabel htmlFor="link">
-                                    External Link
-                                </FormLabel>
+                        <FormControl isInvalid={errors.link} mt={4}>
+                            <FormLabel htmlFor="link">External Link</FormLabel>
 
-                                <Input
-                                    type="text"
-                                    id="link"
-                                    name="link"
-                                    display="block"
-                                    w="full"
-                                    mt={1}
-                                    autoComplete="link"
-                                    onChange={(e) =>
-                                        setData("link", e.target.value)
-                                    }
-                                />
+                            <Input
+                                type="text"
+                                id="link"
+                                name="link"
+                                display="block"
+                                w="full"
+                                mt={1}
+                                autoComplete="link"
+                                onChange={(e) =>
+                                    setData("link", e.target.value)
+                                }
+                            />
 
-                                {errors.author && (
-                                    <FormErrorMessage mt={2}>
-                                        {errors.author}
-                                    </FormErrorMessage>
-                                )}
-                            </FormControl>
-                        )}
+                            {errors.author && (
+                                <FormErrorMessage mt={2}>
+                                    {errors.author}
+                                </FormErrorMessage>
+                            )}
+                        </FormControl>
 
                         <FormControl mt={4}>
                             <FormLabel htmlFor="image">
@@ -627,6 +631,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
                                 </FileUpload>
                             )}
                         </FormControl>
+
                         <FormControl mt={4}>
                             <FormLabel htmlFor="file">File Upload</FormLabel>
 
@@ -671,12 +676,64 @@ export default function CreatePostForm({ categories, themes, tags }) {
                                                 color={"red.500"}
                                                 onClick={() => {
                                                     setFilename(null);
+                                                    setData("file", null);
                                                 }}
                                             />
                                         }
                                     />
                                 )}
                             </InputGroup>
+                        </FormControl>
+
+                        <FormControl mt={4}>
+                            <FormLabel htmlFor="files">
+                                Content Files Upload
+                            </FormLabel>
+
+                            <FileUpload
+                                text="Drop files here or click to select"
+                                accept=".pdf,.doc,.docx,.ppt,.pptx"
+                            >
+                                <Input
+                                    type="file"
+                                    height="100%"
+                                    width="100%"
+                                    position="absolute"
+                                    multiple
+                                    top="0"
+                                    left="0"
+                                    opacity="0"
+                                    cursor={"pointer"}
+                                    aria-hidden="true"
+                                    accept=".pdf,.doc,.docx,.ppt,.pptx"
+                                    id="image"
+                                    name="image"
+                                    size="md"
+                                    onChange={(e) => {
+                                        setFiles(Array.from(e.target.files));
+                                    }}
+                                />
+                            </FileUpload>
+
+                            <VStack spacing={4} mt={2}>
+                                {files.length &&
+                                    files.map((file) => {
+                                        return (
+                                            <InputGroup key={file.name}>
+                                                <InputLeftAddon
+                                                    children={<FiFile />}
+                                                />
+
+                                                <Input
+                                                    size="md"
+                                                    isReadOnly
+                                                    placeholder={file.name}
+                                                />
+                                            </InputGroup>
+                                        );
+                                    })}
+
+                            </VStack>
                         </FormControl>
                         <PrimaryButton
                             type="submit"
