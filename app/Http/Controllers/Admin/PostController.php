@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use App\Models\Category;
+use App\Models\File;
 use App\Models\Theme;
 use App\Models\Post;
 use App\Models\Tag;
@@ -45,31 +46,46 @@ class PostController extends Controller
     public function store(PostRequest $request)
     {
 
+
         $validated = $request->validated();
-$validated['title'] = Str::of($validated['title'])->squish();
+        $validated['title'] = Str::of($validated['title'])->squish();
 
         $validated['slug'] = Str::slug($validated['title'], '-');
         $validated['meta_title'] = $validated['title'];
         $post = Post::create($validated);
+
         if ($request->has('tags')) {
             $post->tags()->attach($request->tags);
         }
+
         if ($request->hasFile('image')) {
             $post->addMediaFromRequest('image')->toMediaCollection('post-featured-image');
         }
+
         if ($request->hasFile('file')) {
             $post->addMediaFromRequest('file')->toMediaCollection('post-files');
         }
-if ($request->hasFile('files')) {
-    dd($request);
-    $files = $request->files;
-    foreach ($files as $file) {
-        dd($file);
-        $fileName = $file->name;
-        $path = $file->storeAs('Featured_Events', $fileName, 'public');
-        return response()->json(['location' => "/storage/$path", 'text' => $fileName]);
-    }
-}
+
+        if ($request->hasFile('files')) {
+            // $post->addMediaFromRequest('files')->toMediaCollection('post-');
+            if ($request->hasFile('files')) {
+                $files = $request->files;
+                foreach ($files as $key => $value) {
+                    if($key === 'files'){
+                        foreach ($value as $file)
+                        {
+                            $name = $file->getClientOriginalName();
+                            $path = $file->move(public_path('Featured_Events'), $name);
+                            $document = new File();
+                            $document->path = $path;
+                            $document->name = $name;
+                            $post->postContentFiles()->save($document);
+                            // return response()->json(['location' => "/storage/$path", 'text' => $text]);
+                        }
+                    }
+                }
+            }
+        }
 
         return redirect()->route('admin.posts.index');
     }
@@ -93,7 +109,7 @@ if ($request->hasFile('files')) {
         $themes = Theme::all();
         $featured_image = $post->getFirstMediaUrl('post_featured_image');
         $file = $post->getMedia('post-files');
-        return Inertia::render('Backend/Post/Edit', ['post' => $post->load('tags'), 'categories' => $categories, 'tags' => $tags, 'themes' => $themes, 'featured_image' => $featured_image, 'file' => $file]);
+        return Inertia::render('Backend/Post/Edit', ['post' => $post->load('tags', 'postContentFiles'), 'categories' => $categories, 'tags' => $tags, 'themes' => $themes, 'featured_image' => $featured_image, 'file' => $file]);
     }
 
     /**
@@ -115,19 +131,27 @@ if ($request->hasFile('files')) {
             $post->addMediaFromRequest('file')->toMediaCollection('post-files');
         }
 
-if ($request->hasFile('files')) {
-    $files = (array) ($request->files);
-    foreach ($files as $file) {
-        $fileName = $file->originalName;
-        $path = $file->storeAs('Featured_Events', $fileName, 'public');
-        return response()->json(['location' => "/storage/$path", 'text' => $fileName]);
-    }
-}
+        if ($request->hasFile('files')) {
+            $post->postContentFiles()->delete();
+            $files = $request->files;
+            foreach ($files as $key => $value) {
+                if($key === 'files'){
+                    foreach ($value as $file)
+                    {
+                        $name = $file->getClientOriginalName();
+                        $path = $file->move(public_path('Featured_Events'), $name);
+                        $document = new File();
+                        $document->path = $path;
+                        $document->name = $name;
+                        $post->postContentFiles()->save($document);
+                        // return response()->json(['location' => "/storage/$path", 'text' => $text]);
+                    }
+                }
+            }
+        }
 
         $post->update($validated);
-return redirect()->route('admin.posts.index');
-
-
+        return redirect()->route('admin.posts.index');
 
     }
 
@@ -144,9 +168,7 @@ return redirect()->route('admin.posts.index');
     {
         if ($request->hasFile('file')) {
             $fileName = $request->file('file')->getClientOriginalName();
-
             $path = $request->file('file')->storeAs('uploads', $fileName, 'public');
-
             return response()->json(['location' => "/storage/$path", 'text' => $fileName]);
         }
     }

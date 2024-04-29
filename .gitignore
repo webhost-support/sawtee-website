@@ -9,6 +9,7 @@
 /public/publications
 /public/publications/*
 /public/Research_Reports
+/public/Featured_Events
 /public/storage
 /storage/*.key
 /vendor

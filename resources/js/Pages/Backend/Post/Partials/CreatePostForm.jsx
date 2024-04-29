@@ -398,6 +398,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
 
                             <Input
                                 type="date"
+                                placeholder="Select Date and Time"
                                 id="published_at"
                                 name="published_at"
                                 onChange={(e) =>
@@ -732,7 +733,6 @@ export default function CreatePostForm({ categories, themes, tags }) {
                                             </InputGroup>
                                         );
                                     })}
-
                             </VStack>
                         </FormControl>
                         <PrimaryButton
