@@ -758,7 +758,7 @@ export default function EditPostForm({
                                             <InputGroup key={file.name}>
                                                 <Input
                                                     size="md"
-                                                    value={value}
+                                                    value={`/Featured_Events/${file.name}`}
                                                 />
                                             </InputGroup>
                                         );
