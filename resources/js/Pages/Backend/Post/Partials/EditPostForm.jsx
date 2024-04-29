@@ -754,44 +754,10 @@ export default function EditPostForm({
                             <VStack spacing={4} mt={2}>
                                 {files.length &&
                                     files.map((file) => {
-                                        const {
-                                            onCopy,
-                                            value = `/Featured_Events/${file.name}`,
-                                            setValue,
-                                            hasCopied,
-                                        } = useClipboard();
-
-                                        React.useEffect(() => {
-                                            setValue(value);
-                                        })
-
                                         return (
                                             <InputGroup key={file.name}>
-                                                <InputRightElement>
-                                                    <Button
-                                                        variant="ghost"
-                                                        size={"sm"}
-                                                        onClick={onCopy}
-                                                    >
-                                                        {hasCopied ? (
-                                                            <CheckIcon
-                                                                color={
-                                                                    "green.500"
-                                                                }
-                                                            />
-                                                        ) : (
-                                                            <CopyIcon
-                                                                color={
-                                                                    "gray.500"
-                                                                }
-                                                            />
-                                                        )}
-                                                    </Button>
-                                                </InputRightElement>
-
                                                 <Input
                                                     size="md"
-                                                    readOnly
                                                     value={value}
                                                 />
                                             </InputGroup>
