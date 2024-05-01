@@ -11,12 +11,10 @@ export default function Post({ post }) {
     const featured_image = post.media.filter(
         (m) => m.collection_name === "post-featured-image"
     )[0];
-    const isProgramme = category.parent
-        ? category.parent.slug
-        : category.slug === "programmes";
-
+    const isProgramme = category.parent.slug === "programme";
     const isNewsletter = category.slug === "newsletters";
     const isDefault = !isNewsletter && !isProgramme;
+
     return (
         <MainLayout>
             <WebsiteHead

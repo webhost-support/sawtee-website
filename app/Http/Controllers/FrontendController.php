@@ -162,7 +162,6 @@ class FrontendController extends Controller
         if ($subcategory && $post) {
             $slug = $segments[3];
             $post = Post::where('slug', $slug)->firstOrFail();
-            $social = SocialShare::facebook()->x()->linledin()->email()->text($post->title)->render();
             return Inertia::render('Frontend/Post', ['post' => $post->load('category', "category.parent", 'media')]);
         }
 
@@ -183,7 +182,8 @@ class FrontendController extends Controller
             if (!$category) {
                 $category = Category::with('parent')->where('slug', $segments[1])->first();
                 $post = Post::where('slug', $segments[2])->firstOrFail();
-                return Inertia::render('Frontend/Post', ['post' => $post->load('category', 'media')]);
+                // $category = Category::with('parent')->where('id', $post->category_id)->firstOrFail();
+                return Inertia::render('Frontend/Post', ['post' => $post->load('category', 'category.parent', 'media')]);
             }
 
             return Inertia::render('Frontend/Category', [
