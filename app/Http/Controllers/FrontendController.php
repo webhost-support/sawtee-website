@@ -12,6 +12,7 @@ use App\Models\Slide;
 use App\Models\Slider;
 use App\Models\Team;
 use App\Models\Theme;
+use Enflow\SocialShare\SocialShare;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use UniSharp\LaravelFilemanager\Lfm;
@@ -161,6 +162,7 @@ class FrontendController extends Controller
         if ($subcategory && $post) {
             $slug = $segments[3];
             $post = Post::where('slug', $slug)->firstOrFail();
+            $social = SocialShare::facebook()->x()->linledin()->email()->text($post->title)->render();
             return Inertia::render('Frontend/Post', ['post' => $post->load('category', "category.parent", 'media')]);
         }
 

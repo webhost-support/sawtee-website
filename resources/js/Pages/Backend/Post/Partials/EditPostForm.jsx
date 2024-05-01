@@ -258,6 +258,7 @@ export default function EditPostForm({
                                 name="content"
                                 type="classic"
                                 initialValue={postData.content}
+                                value={postData.content}
                                 onChange={(e, editor) => {
                                     setData("content", editor.getContent());
                                 }}

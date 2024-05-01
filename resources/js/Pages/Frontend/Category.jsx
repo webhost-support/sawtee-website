@@ -1,4 +1,4 @@
-import { VStack, Grid, GridItem } from "@chakra-ui/react";
+import { VStack, Grid, GridItem, Box } from "@chakra-ui/react";
 import React from "react";
 import Section from "@/Components/Frontend/styles/section";
 import SidebarWidget from "@/Components/Frontend/sidebarWidget";
@@ -25,7 +25,7 @@ export default function Category({
     featured_image,
     srcSet,
 }) {
-    const isEvent = category.slug === 'featured-events';
+    const isEvent = category.slug === "featured-events";
     const isTeam = category.slug === "team-members";
     const isInFocus = category.slug === "infocus";
     const isMedia = category.slug === "sawtee-in-media";
@@ -48,7 +48,7 @@ export default function Category({
                         ? featured_image.original_url
                         : "/assets/logo-sawtee.webp"
                 }
-            />
+            ></WebsiteHead>
             <PageLayout
                 featured_image={featured_image}
                 srcSet={srcSet}
@@ -152,7 +152,7 @@ export default function Category({
                             {showSubscriptionBox && (
                                 <GlassBox
                                     py="4"
-                                    px="8"
+                                    px="4"
                                     rounded="xl"
                                     maxW={"md"}
                                     height="max-content"

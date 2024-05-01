@@ -12,7 +12,6 @@ const DefaultArchive = ({ posts, headingColor, textColor, showFallbackImage }) =
             (media) => media.collection_name === "post-featured-image"
         )[0];
 
-        console.log(featured_image);
         return (
             <ArchivePost
                 post={post}

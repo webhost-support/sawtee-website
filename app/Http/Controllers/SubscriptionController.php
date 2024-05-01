@@ -3,65 +3,70 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SubscribeRequest;
-use App\Jobs\JoinSubscriberJob;
-use App\Mail\SubscriptionVerified;
-use App\Mail\Unsubscribed;
-use App\Mail\VerifySubscriptionMail;
-use App\Models\Subscriber;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
-
+use Spatie\Newsletter\Facades\Newsletter;
 
 class SubscriptionController extends Controller
 {
 
     public function index()
     {
-        $subscribers = Subscriber::whereNotNull('verified_at')->simplePaginate(50);
-
-        return Inertia::render("Backend/Subscriber/Index", ['subscribers' => $subscribers]);
+        // $subscribers = Subscriber::whereNotNull('verified_at')->simplePaginate(50);
+        return Inertia::render("Backend/Subscriber/Index");
     }
-    public function store(SubscribeRequest $request)
-    {
 
+
+    public function subscribe (SubscribeRequest $request)
+    {
         $validated = $request->validated();
-        $token = hash('sha256', time());
-        $subscriber = Subscriber::create([
-            'email' => $validated['email']
-        ]);
-        $subscriber->token = $token;
-        $subscriber->save();
-        Mail::to($subscriber->email)
-            ->send(new VerifySubscriptionMail($subscriber));
-
-        return redirect()->back();
+        Newsletter::subscribe($validated['email']);
     }
 
-    public function verify(string $token)
+    public function unsubscribe (string $email)
     {
-        $subscriber = Subscriber::where('token', $token)->firstOrFail();
-        Mail::to($subscriber->email)
-            ->send(new SubscriptionVerified($subscriber));
-        $subscriber->update([
-            'token' => null,
-            'verified_at' => now(),
-            'status' => 'verified'
-        ]);
-
-        return redirect('/')
-            ->with('success', 'You have successfully verified your email.');
-
+        Newsletter::unsubscribe($email);
     }
 
-    public function unsubscribe(string $email)
-    {
-        $subscriber = Subscriber::where('email', $email)->firstOrFail();
+    // public function store(SubscribeRequest $request)
+    // {
 
-        Mail::to($subscriber->email)
-            ->send(new Unsubscribed($subscriber));
-        $subscriber->delete();
-        return redirect()->back();
-    }
+    //     $validated = $request->validated();
+    //     $token = hash('sha256', time());
+    //     $subscriber = Subscriber::create([
+    //         'email' => $validated['email']
+    //     ]);
+    //     $subscriber->token = $token;
+    //     $subscriber->save();
+    //     Mail::to($subscriber->email)
+    //         ->send(new VerifySubscriptionMail($subscriber));
+
+    //     return redirect()->back();
+    // }
+
+    // public function verify(string $token)
+    // {
+    //     $subscriber = Subscriber::where('token', $token)->firstOrFail();
+    //     Mail::to($subscriber->email)
+    //         ->send(new SubscriptionVerified($subscriber));
+    //     $subscriber->update([
+    //         'token' => null,
+    //         'verified_at' => now(),
+    //         'status' => 'verified'
+    //     ]);
+
+    //     return redirect('/')
+    //         ->with('success', 'You have successfully verified your email.');
+
+    // }
+
+    // public function unsubscribe(string $email)
+    // {
+    //     $subscriber = Subscriber::where('email', $email)->firstOrFail();
+
+    //     Mail::to($subscriber->email)
+    //         ->send(new Unsubscribed($subscriber));
+    //     $subscriber->delete();
+    //     return redirect()->back();
+    // }
 
 }

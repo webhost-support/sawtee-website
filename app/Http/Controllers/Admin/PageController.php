@@ -42,7 +42,6 @@ class PageController extends Controller
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string|max:255',
         ]);
-        $validated["slug"] = Str::slug($validated['name'], '-');
         if ($request->meta_title == null) {
             $validated["meta_title"] = $validated['name'];
         }
@@ -80,12 +79,11 @@ class PageController extends Controller
     public function update(Request $request, Page $page)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255|',
+            'name' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string|max:255',
         ]);
-        $validated["slug"] = Str::slug($validated['name'], '-');
         if ($request->meta_title == null) {
             $validated["meta_title"] = $validated['name'];
         }

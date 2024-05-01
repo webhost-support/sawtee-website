@@ -50,7 +50,7 @@ class PostController extends Controller
         $validated = $request->validated();
         $validated['title'] = Str::of($validated['title'])->squish();
 
-        $validated['slug'] = Str::slug($validated['title'], '-');
+        // $validated['slug'] = Str::slug($validated['title'], '-');
         $validated['meta_title'] = $validated['title'];
         $post = Post::create($validated);
 
@@ -120,7 +120,10 @@ class PostController extends Controller
 
 
         $validated = $request->all();
-        $validated['slug'] = Str::slug($validated['title'], '-');
+        $validated['title'] = Str::of($validated['title'])->squish();
+
+        // $validated['slug'] = Str::slug($validated['title'], '-');
+        $validated['meta_title'] = $validated['title'];
         if ($request->has('tags')) {
             $post->tags()->sync($request->tags);
         }

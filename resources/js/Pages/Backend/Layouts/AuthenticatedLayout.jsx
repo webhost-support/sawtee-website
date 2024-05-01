@@ -96,12 +96,6 @@ const MenuItems = [
         icon: TbSlideshow,
         route: "admin.sliders.index",
     },
-
-    {
-        name: "Subscribers",
-        icon: FiMail,
-        route: "admin.subscribers.list",
-    },
 ];
 
 export default function Authenticated({ user, children }) {

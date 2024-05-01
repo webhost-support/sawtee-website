@@ -37,7 +37,7 @@ const SubscriptionCard = ({
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        post(route("subscription.store"), {
+        post(route("subscribe"), {
             preserveScroll: true,
             onSuccess: () => {
                 toast({

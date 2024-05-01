@@ -5,6 +5,8 @@ import Section from "@/Components/Frontend/styles/section";
 import FeaturedMedia from "@/Components/Frontend/post/featured-media";
 import { Content } from "@/Components/Frontend/index";
 import PostCategories from "@/Components/Frontend/post/post-categories";
+import SocialShare from "@/Components/Frontend/SocialShare";
+import readingDuration from "reading-duration";
 
 const PostLayout = ({
     children,
@@ -20,14 +22,21 @@ const PostLayout = ({
     // const srcSet = Object.values(
     //     featured_media.responsive_images.responsive.urls
     // );
+
+    const readingTime = readingDuration(post.content, {
+        emoji: "stopwatch",
+        wordsPerMinute: 225,
+    });
+
+    const shareUrl = isProgramPost
+        ? `/programme/${post.category.slug}/${post.slug}`
+        : `/${post.category.slug}/${post.slug}`;
+
     return (
-        <LightPatternBox showPattern={showPattern} pb={"40px"}>
+        <LightPatternBox showPattern={showPattern} pt="0" pb={"40px"}>
             {isProgramPost ? (
                 <Box pb={{ base: "2rem", lg: "50px" }} maxW="5xl" mx="auto">
-                    <Box
-                        mt={{ base: "20px", lg: "4rem" }}
-                        px={{ base: "32px", md: "3rem" }}
-                    >
+                    <Box mt={"20px"} px={{ base: "32px", md: "3rem" }}>
                         <PostCategories
                             color="black"
                             category={post.category}
@@ -48,13 +57,14 @@ const PostLayout = ({
             ) : (
                 <Box pb={{ base: "2rem", lg: "50px" }} maxW="5xl" mx="auto">
                     <PostHeader
-                        mt={{ base: "20px", lg: "4rem" }}
+                        mt={"20px"}
                         px={{ base: "32px", md: "3rem" }}
                         color={postHeaderColor}
                         categories={post.category}
                         heading={post.title}
                         author={post.author}
                         date={post.published_at}
+                        readingTime={readingTime}
                     />
                 </Box>
             )}
@@ -78,6 +88,7 @@ const PostLayout = ({
                     pb="80px"
                 >
                     {children}
+                    <SocialShare url={shareUrl} />
                 </Content>
             </Box>
         </LightPatternBox>

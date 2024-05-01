@@ -9,13 +9,27 @@ use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 class Page extends Model implements HasMedia
 {
     use HasFactory;
     use InteractsWithMedia;
-
+    use HasSlug;
     protected $fillable = ['name', 'slug', 'content', 'meta_title', 'meta_description'];
+
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug')
+            // ->skipGenerateWhen(fn () => $this->status !== "published")
+            ->startSlugSuffixFrom(2);
+    }
 
     public function sections(): HasMany
     {

@@ -13,11 +13,15 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Laravel\Scout\Searchable;
 use Laravel\Scout\Attributes\SearchUsingFullText;
 use Laravel\Scout\Attributes\SearchUsingPrefix;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 class Post extends Model implements HasMedia
 {
+
     use InteractsWithMedia;
     use HasFactory;
     use Searchable;
+    use HasSlug;
 
     protected $fillable = ['title', 'slug', 'content', 'excerpt', 'category_id', 'theme_id', 'author', 'genre', 'status', 'link', 'published_at', 'meta_title', 'meta_description'];
 
@@ -42,6 +46,28 @@ class Post extends Model implements HasMedia
             'excerpt' => $this->excerpt,
         ];
     }
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('title')
+            ->saveSlugsTo('slug')
+            // ->skipGenerateWhen(fn () => $this->status !== "published")
+            ->startSlugSuffixFrom(2);
+    }
+
+    // /**
+    //  * Get the route key for the model.
+    //  *
+    //  * @return string
+    //  */
+    // public function getRouteKeyName()
+    // {
+    //     return 'slug';
+    // }
 
     public function postContentFiles()
     {

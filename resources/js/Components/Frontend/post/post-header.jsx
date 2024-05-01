@@ -9,6 +9,7 @@ const PostHeader = ({
     description,
     author,
     date,
+    readingTime,
     ...props
 }) => (
     <Box textAlign="center" {...props}>
@@ -22,26 +23,18 @@ const PostHeader = ({
         <Heading
             as="h1"
             fontWeight="bold"
-            fontSize={{ base: "2xl", md: "4xl", lg: "6xl" }}
-            mt="30px"
+            fontSize={{ base: "xl", md: "2xl", lg: "4xl" }}
+            mt="10px"
             mb={{ base: "20px", lg: "32px" }}
             textTransform="capitalize"
             dangerouslySetInnerHTML={{ __html: heading }}
         />
+
         {description && <Text>{description}</Text>}
-        {/* Don't show the author if we're on a page type */}
-        <HStack gap="4" justify={"center"} align={"center"}>
-            {/* {author && <Text fontSize="lg">by {author}</Text>} */}
-            {/* Don't show the date if we're on a page type */}
-            {date && (
-                <Text
-                    fontSize="md"
-                    fontStyle={"italic"}
-                    fontWeight={"semibold"}
-                >
-                    Published date: {formatDate(date)}
-                </Text>
-            )}
+        <HStack gap="4" mt={4} justify={"space-evenly"} align={"center"}>
+            {readingTime && <Text>{readingTime}</Text>}
+            {author && <Text fontSize="lg">by {author}</Text>}
+            {date && <Text fontSize="sm">{formatDate(date)}</Text>}
         </HStack>
     </Box>
 );
