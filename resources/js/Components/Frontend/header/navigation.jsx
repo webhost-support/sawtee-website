@@ -95,15 +95,16 @@ const MenuItem = ({
                 href={slug}
                 preserveState
             >
-           
                 <Button
                     alignItems="center"
                     variant={active ? "solid" : "ghost"}
                     colorScheme={active ? "primary" : "gray"}
                     size="sm"
+                    fontFamily={"heading"}
+                    fontWeight={"normal"}
                     borderRadius={showIcon ? "5px 0 0 5px" : "5px"}
                     {...rest}
-                  >
+                >
                     {title}
                 </Button>
             </MenuLink>

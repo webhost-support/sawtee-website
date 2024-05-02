@@ -8,10 +8,10 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 
 const appName = import.meta.env.VITE_APP_NAME || "SAWTEE";
 const font_heading =
-    "Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif";
-const font_body = "system-ui, sans-serif";
-const font_mono =
-    "i-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono' monospace";
+    "'Roboto', 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif";
+const font_body =
+    "'Inter',  'Segoe UI', system-ui, Tahoma, Geneva, Verdana, sans-serif";
+const font_mono = "'IBM Plex Mono', Menlo, Consolas, monospace";
 const config = {
     initialColorMode: "system",
     useSystemColorMode: true,

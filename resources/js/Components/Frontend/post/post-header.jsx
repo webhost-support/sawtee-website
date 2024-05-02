@@ -1,7 +1,6 @@
-import { Box, HStack, Heading, Text } from "@chakra-ui/react";
+import { Box, Heading } from "@chakra-ui/react";
 import React from "react";
 import PostCategories from "./post-categories";
-import { formatDate } from "@/Utils/helpers";
 
 const PostHeader = ({
     heading,
@@ -12,7 +11,7 @@ const PostHeader = ({
     readingTime,
     ...props
 }) => (
-    <Box textAlign="center" {...props}>
+    <Box className="post-header" textAlign="center" {...props}>
         {categories && (
             <PostCategories
                 color="black"
@@ -30,12 +29,7 @@ const PostHeader = ({
             dangerouslySetInnerHTML={{ __html: heading }}
         />
 
-        {description && <Text>{description}</Text>}
-        <HStack gap="4" mt={4} justify={"space-evenly"} align={"center"}>
-            {readingTime && <Text>{readingTime}</Text>}
-            {author && <Text fontSize="lg">by {author}</Text>}
-            {date && <Text fontSize="sm">{formatDate(date)}</Text>}
-        </HStack>
+        {/* {description && <Text>{description}</Text>} */}
     </Box>
 );
 

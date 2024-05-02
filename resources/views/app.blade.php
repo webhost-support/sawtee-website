@@ -6,6 +6,14 @@
 
         <title inertia>{{ config('app.name', 'SAWTEE') }}</title>
         <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+
+        {{-- Loads Inter --}}
+        @googlefonts
+
+        @googlefonts('Roboto')
+
+        {{-- Loads IBM Plex Mono --}}
+        @googlefonts('code')
         <!-- Load nprogress style -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
         @routes

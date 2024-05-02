@@ -185,6 +185,10 @@ main {
 }
 
 
+.post-meta p {
+    font-size: var(--chakra-fontSizes-sm);
+    font-family: var(--chakra-fonts-mono);
+}
 
 time {
     font-family: var(--chakra-fonts-mono);

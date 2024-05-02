@@ -7,6 +7,7 @@ import { Content } from "@/Components/Frontend/index";
 import PostCategories from "@/Components/Frontend/post/post-categories";
 import SocialShare from "@/Components/Frontend/SocialShare";
 import readingDuration from "reading-duration";
+import PostMeta from "@/Components/Frontend/post/post-meta";
 
 const PostLayout = ({
     children,
@@ -35,7 +36,7 @@ const PostLayout = ({
     return (
         <LightPatternBox showPattern={showPattern} pt="0" pb={"40px"}>
             {isProgramPost ? (
-                <Box pb={{ base: "2rem", lg: "50px" }} maxW="5xl" mx="auto">
+                <Box pb="2" maxW="5xl" mx="auto">
                     <Box mt={"20px"} px={{ base: "32px", md: "3rem" }}>
                         <PostCategories
                             color="black"
@@ -55,16 +56,13 @@ const PostLayout = ({
                     </Box>
                 </Box>
             ) : (
-                <Box pb={{ base: "2rem", lg: "50px" }} maxW="5xl" mx="auto">
+                <Box pb="2" maxW="5xl" mx="auto">
                     <PostHeader
                         mt={"20px"}
                         px={{ base: "32px", md: "3rem" }}
                         color={postHeaderColor}
                         categories={post.category}
                         heading={post.title}
-                        author={post.author}
-                        date={post.published_at}
-                        readingTime={readingTime}
                     />
                 </Box>
             )}
@@ -73,7 +71,7 @@ const PostLayout = ({
 
             {/* Look at the settings to see if we should include the featured image */}
             <Box maxW={isNewsletter ? "full" : "4xl"} mx="auto">
-                {featured_media != null && (
+                {!isProgramPost && featured_media && (
                     <FeaturedMedia
                         src={featured_media.original_url}
                         rounded={"xl"}
@@ -81,11 +79,18 @@ const PostLayout = ({
                     />
                 )}
 
+                <PostMeta
+                    author={post.author}
+                    date={post.published_at}
+                    readingTime={readingTime}
+                />
+
                 <Content
                     as={Section}
                     px={{ base: "1rem", md: "2rem" }}
                     size={isNewsletter ? "full" : "lg"}
-                    pb="80px"
+                    pb="50px"
+                    className='post-content'
                 >
                     {children}
                     <SocialShare url={shareUrl} />

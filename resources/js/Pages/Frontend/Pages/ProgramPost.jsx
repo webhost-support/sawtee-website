@@ -1,26 +1,7 @@
-import { useColorModeValue, Box } from "@chakra-ui/react";
-import Section from "@/Components/Frontend/styles/section";
-import { Content } from "@/Components/Frontend/index";
+import { Box } from "@chakra-ui/react";
 
 const ProgramPost = ({ post }) => {
-    const contentColor = useColorModeValue(
-        "rgba(12, 17, 43, 0.8)",
-        "whiteAlpha.800"
-    );
-    console.log("You are viewing a programme post!");
-
-    return (
-        <Content
-            as={Section}
-            className="content"
-            px={{ base: "20px", md: "0" }}
-            size="sm"
-            // w="full"
-            color={contentColor}
-        >
-            <Box dangerouslySetInnerHTML={{ __html: post.content }} />
-        </Content>
-    );
+    return <Box dangerouslySetInnerHTML={{ __html: post.content }} />;
 };
 
 export default ProgramPost;

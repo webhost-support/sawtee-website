@@ -40,8 +40,9 @@ const FooterSectionItem = ({ children, ...rest }) => (
 const ListHeader = ({ children }) => {
     return (
         <Text
-            fontSize={{ base: "2xl", lg: "3xl" }}
+            fontSize={{ base: "xl", lg: "2xl" }}
             fontWeight={"medium"}
+            fontFamily={"heading"}
             mb={2}
         >
             {children}
