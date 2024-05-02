@@ -9,10 +9,20 @@ import {
     ListItem,
     Tooltip,
     UnorderedList,
+    VStack,
+    ListIcon,
 } from "@chakra-ui/react";
 import React from "react";
 import { SocialMenu } from "@/Components/Frontend/header/social-menu";
 import { MapModel, StyledChakraLink } from "@/Components/Frontend/index";
+import { TriangleUpIcon } from "@chakra-ui/icons";
+import {
+    MdContactMail,
+    MdLocationOn,
+    MdOutlineFax,
+    MdOutlineLocalPhone,
+    MdOutlineMarkunreadMailbox,
+} from "react-icons/md";
 
 const FooterSection = ({ children, ...rest }) => (
     <Box
@@ -50,88 +60,187 @@ const ListHeader = ({ children }) => {
     );
 };
 
-const Widget = ({ item, linkcolor }) => {
+const Widget = ({ item }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const linkcolor = useColorModeValue(
+        "var(--chakra-colors-gray-700)",
+        "var(--chakra-colors-whiteAlpha-700)"
+    );
+    const hoverColor = useColorModeValue(
+        "var(--chakra-colors-gray-900)",
+        "var(--chakra-colors-whiteAlpha-900)"
+    );
 
     if (item.title.includes("Contact")) {
         return (
             <Stack align="flex-start" id={item.title}>
                 <ListHeader>{item.title}</ListHeader>
-                <UnorderedList spacing={3}>
+                <VStack
+                    as={UnorderedList}
+                    style={{ listStyle: "none" }}
+                    align="flex-start"
+                    spacing={3}
+                >
                     {item.children &&
                         item.children.map((child_item) => {
                             const { url, title } = child_item;
-                            return (
-                                <ListItem key={title}>
-                                    {title.includes("Address") ? (
-                                        <>
-                                            <Tooltip
-                                                label={"click to view map"}
-                                                hasArrow
-                                                placement="bottom-end"
-                                                openDelay={200}
-                                                closeDelay={250}
+                            if (title.includes("Address")) {
+                                return (
+                                    <ListItem key={title}>
+                                        <ListIcon
+                                            style={{ color: linkcolor }}
+                                            _hover={{ color: hoverColor }}
+                                            as={MdLocationOn}
+                                        />
+                                        <Tooltip
+                                            label={"click to view map"}
+                                            hasArrow
+                                            placement="bottom-end"
+                                            openDelay={200}
+                                            closeDelay={250}
+                                        >
+                                            <StyledChakraLink
+                                                onClick={onOpen}
+                                                color={linkcolor}
+                                                hoverColor={hoverColor}
+                                                fontSize={"sm"}
                                             >
-                                                <StyledChakraLink
-                                                    as="p"
-                                                    onClick={onOpen}
-                                                    color={linkcolor}
-                                                    fontSize={"sm"}
-                                                >
-                                                    {title}
-                                                </StyledChakraLink>
-                                            </Tooltip>
-                                            <MapModel
-                                                isOpen={isOpen}
-                                                onClose={onClose}
-                                                mapLink={url}
-                                            />
-                                        </>
-                                    ) : (
+                                                {title}
+                                            </StyledChakraLink>
+                                        </Tooltip>
+                                        <MapModel
+                                            isOpen={isOpen}
+                                            onClose={onClose}
+                                            mapLink={url}
+                                        />
+                                    </ListItem>
+                                );
+                            }
+
+                            if (title.includes("Fax")) {
+                                return (
+                                    <ListItem>
+                                        <ListIcon
+                                            style={{ color: linkcolor }}
+                                            _hover={{ color: hoverColor }}
+                                            as={MdOutlineFax}
+                                        />
                                         <StyledChakraLink
                                             href={url ? url : null}
                                             color={linkcolor}
+                                            hoverColor={hoverColor}
                                             fontSize={"sm"}
                                         >
                                             {title}
                                         </StyledChakraLink>
-                                    )}
-                                </ListItem>
-                            );
+                                    </ListItem>
+                                );
+                            }
+                            if (title.includes("Phone")) {
+                                return (
+                                    <ListItem>
+                                        <ListIcon
+                                            style={{ color: linkcolor }}
+                                            _hover={{ color: hoverColor }}
+                                            as={MdOutlineLocalPhone}
+                                        />
+                                        <StyledChakraLink
+                                            href={url ? url : null}
+                                            color={linkcolor}
+                                            hoverColor={hoverColor}
+                                            fontSize={"sm"}
+                                        >
+                                            {title}
+                                        </StyledChakraLink>
+                                    </ListItem>
+                                );
+                            }
+                            if (title.includes("Email")) {
+                                return (
+                                    <ListItem>
+                                        <ListIcon
+                                            style={{ color: linkcolor }}
+                                            _hover={{ color: hoverColor }}
+                                            as={MdContactMail}
+                                        />
+                                        <StyledChakraLink
+                                            href={url ? url : null}
+                                            color={linkcolor}
+                                            hoverColor={hoverColor}
+                                            fontSize={"sm"}
+                                        >
+                                            {title}
+                                        </StyledChakraLink>
+                                    </ListItem>
+                                );
+                            }
+                            if (title.includes("Box")) {
+                                return (
+                                    <ListItem>
+                                        <ListIcon
+                                            style={{ color: linkcolor }}
+                                            _hover={{ color: hoverColor }}
+                                            as={MdOutlineMarkunreadMailbox}
+                                        />
+                                        <StyledChakraLink
+                                            href={url ? url : null}
+                                            color={linkcolor}
+                                            hoverColor={hoverColor}
+                                            fontSize={"sm"}
+                                        >
+                                            {title}
+                                        </StyledChakraLink>
+                                    </ListItem>
+                                );
+                            }
                         })}
-                </UnorderedList>
+                </VStack>
             </Stack>
         );
     } else {
         return (
             <Stack align="flex-start" id={item.title}>
                 <ListHeader>{item.title}</ListHeader>
-                <UnorderedList spacing={3}>
+                <VStack
+                    as={UnorderedList}
+                    style={{ listStyle: "none" }}
+                    align={"flex-start"}
+                    spacing={3}
+                >
                     {item.children &&
                         item.children.map((child_item) => {
                             const { url, title } = child_item;
 
                             return (
                                 <ListItem key={title}>
+                                    <ListIcon
+                                        as={TriangleUpIcon}
+                                        style={{
+                                            transform: "rotate(90deg)",
+                                            verticalAlign: "middle",
+                                            fontSize: "10px",
+                                            color: linkcolor,
+                                        }}
+                                        _hover={{ color: hoverColor }}
+                                    />
                                     <StyledChakraLink
                                         fontSize={"sm"}
                                         href={url}
                                         color={linkcolor}
+                                        hoverColor={hoverColor}
                                     >
                                         {title}
                                     </StyledChakraLink>
                                 </ListItem>
                             );
                         })}
-                </UnorderedList>
+                </VStack>
             </Stack>
         );
     }
 };
 
 const Footer = ({ menu = null, socialMenu = null }) => {
-    const StyledLinkColor = useColorModeValue("#232323", "#F1F1F1");
-
     return (
         <FooterSection px={{ base: 8, md: 10, lg: 16 }} pt={12} pb={6}>
             <FooterSectionGroup
@@ -149,7 +258,7 @@ const Footer = ({ menu = null, socialMenu = null }) => {
                             colSpan={{ base: 1, lg: 2 }}
                             placeSelf={{ base: "start", md: "center" }}
                         >
-                            <Widget item={item} linkcolor={StyledLinkColor} />
+                            <Widget item={item} />
                         </FooterSectionItem>
                     );
                 })}

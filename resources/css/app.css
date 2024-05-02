@@ -108,6 +108,7 @@ select {
     font: inherit;
 }
 
+
 p,
 h1,
 h2,
@@ -220,13 +221,13 @@ time {
     max-width: 100% !important;
 }
 
-/* .full-width-carousel .swiper-button-next, .full-width-carousel .swiper-button-prev {
-    border-color: var(--color-darker);
+.full-width-carousel .swiper-button-next, .full-width-carousel .swiper-button-prev {
+    border-color: var(--chakra-colors-whiteAlpha-900);
 }
 
 .full-width-carousel .swiper-button-next::after, .full-width-carousel .swiper-button-prev::after {
-    color: var(--color-darker)
-} */
+    color: var(--chakra-colors-whiteAlpha-900);
+}
 
 
 

@@ -44,7 +44,6 @@ export default function OurWork({ themes, sections }) {
             <Heading
                 as={"h2"}
                 fontSize={{ base: "xl", md: "2xl" }}
-                fontWeight="bold"
                 mb={12}
                 textAlign="center"
             >
@@ -94,6 +93,7 @@ export default function OurWork({ themes, sections }) {
                             <Button
                                 size="sm"
                                 onClick={handleToggle}
+                                colorScheme="accent"
                                 variant={"link"}
                             >
                                 Show {show ? "Less" : "More"}

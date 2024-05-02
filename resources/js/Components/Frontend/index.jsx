@@ -60,7 +60,8 @@ export const Content = styled(Box)`
     line-height: var(--chakra-lineHeights-taller);
 
     p {
-        margin-block: 1rem;
+        margin-top: 1.5rem;
+        padding-bottom: 10px;
         font-size: var(--chakra-fontSizes-md);
         line-height: var(--chakra-lineHeights-taller);
     }
@@ -74,14 +75,27 @@ export const Content = styled(Box)`
         padding: 0;
         margin: 0;
         margin-left: 1rem;
-
         & p,
         li {
             margin-top: 1rem;
-            font-size: inherit;
+            font-size: var(--chakra-fontSizes-md);
         }
     }
 
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+
+    h1,
+    h2, h3 {
+        color: #204754;
+    }
     h1 {
         font-size: var(--chakra-fontSizes-4xl);
     }
@@ -260,30 +274,31 @@ export const MapModel = ({ isOpen, onClose, mapLink }) => {
             isOpen={isOpen}
             motionPreset="slideInBottom"
             closeOnOverlayClick={true}
-            blockScrollOnMount={true}
+            scrollBehavior="inside"
+            size={"xl"}
         >
             <ModalOverlay />
-            <ModalContent bg={modalContentColor} maxW={"3xl"}>
+            <ModalContent bg={modalContentColor}>
                 <ModalHeader color={modelHeaderColor}>Our Location</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody margin={"0 auto"}>
                     <Image
-                        w="100%"
-                        height={"500px"}
                         objectFit={"cover"}
                         src={"/assets/location-map-resized.webp"}
                     />
                 </ModalBody>
 
                 <ModalFooter>
-                    <Button variant="solid" colorScheme={"primary"}>
-                        <ChakraLink
-                            href="https://goo.gl/maps/fwZuwNSbjN5jwZia7"
-                            target="_blank"
-                            onClick={onClose}
-                        >
-                            View in Google Map
-                        </ChakraLink>
+                    <Button
+                        as={ChakraLink}
+                        size="sm"
+                        variant="solid"
+                        colorScheme={"primary"}
+                        href="https://goo.gl/maps/fwZuwNSbjN5jwZia7"
+                        target="_blank"
+                        onClick={onClose}
+                    >
+                        Open in Google Map
                     </Button>
                 </ModalFooter>
             </ModalContent>
@@ -370,14 +385,15 @@ export const StyledChakraLink = styled(InertiaChakraLink)`
         props.fontSize
             ? `var(--chakra-fontSizes-${props.fontSize})`
             : "var(--chakra-fontSizes-md)"};
-    color: ${(props) => (props.color ? props.color : "inherit")};
+    color: ${(props) =>
+        props.color ? props.color : "var(--chakra-colors-gray-700)"};
 
     &::after {
         content: "";
         width: 0%;
-        height: 1px;
+        height: 2px;
         position: absolute;
-        bottom: 0;
+        bottom: -2px;
         left: 0;
         margin: 0;
 
@@ -388,6 +404,10 @@ export const StyledChakraLink = styled(InertiaChakraLink)`
 
     &:hover {
         text-decoration: none;
+        color: ${(props) =>
+            props.hoverColor
+                ? props.hoverColor
+                : "var(--chakra-colors-whiteAlpha-700)"};
         &::after {
             width: 100%;
             opacity: 1;

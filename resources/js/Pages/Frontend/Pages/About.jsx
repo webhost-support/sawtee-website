@@ -161,7 +161,7 @@ export const Members = ({ memberInstitutions }) => {
     return (
         <Box>
             <Heading
-                as="h2"
+                as="h3"
                 fontSize={["xl", "2xl", "3xl"]}
                 py={"4"}
                 mb="4"
@@ -178,9 +178,9 @@ export const Members = ({ memberInstitutions }) => {
                         <AccordionItem key={id} border="none">
                             <AccordionButton size="md" py="4">
                                 <Heading
-                                    as="h3"
+                                    as="h5"
                                     flex="1"
-                                    fontSize={["md", "lg", "xl"]}
+                                    // fontSize={["md", "lg", "xl"]}
                                     fontFamily={"heading"}
                                     textAlign="left"
                                     color={headingColor}
@@ -222,9 +222,6 @@ export const Members = ({ memberInstitutions }) => {
                                                             href={
                                                                 member_website_link
                                                             }
-                                                            _hover={{
-                                                                color: "var(--chakra-colors-linkColor)",
-                                                            }}
                                                             onMouseEnter={() => {
                                                                 array[id][
                                                                     country
@@ -304,7 +301,7 @@ export const PageSection = ({ section, sections }) => {
     return (
         <Box id={"#" + sectionID}>
             <Heading
-                as="h2"
+                as="h3"
                 fontSize={["lg", "xl", "2xl", "4xl"]}
                 py={"4"}
                 mb="4"
@@ -320,9 +317,8 @@ export const PageSection = ({ section, sections }) => {
                         <TabList>
                             {childSections.map(({ title }) => (
                                 <Tab
-                                    as="h3"
+                                    as="h5"
                                     key={title}
-                                    fontSize={"lg"}
                                     fontWeight={"semibold"}
                                     fontFamily={"heading"}
                                     _selected={{
@@ -380,9 +376,8 @@ export const PageSection = ({ section, sections }) => {
                                     }}
                                 >
                                     <Heading
-                                        as="h3"
+                                        as="h5"
                                         flex="1"
-                                        fontSize={{ base: "md", lg: "lg" }}
                                         fontFamily={"heading"}
                                         textAlign="left"
                                         color={headingColor}
@@ -410,7 +405,6 @@ export const PageSection = ({ section, sections }) => {
             {isDefault && (
                 <Box color={contentColor}>
                     <Box
-                        fontSize={{ base: "md", lg: "lg" }}
                         dangerouslySetInnerHTML={{
                             __html: description,
                         }}
