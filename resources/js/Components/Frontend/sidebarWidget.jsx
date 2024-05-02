@@ -83,8 +83,11 @@ const SidebarWidget = ({ array, title, link, ...rest }) => {
                                 <Heading
                                     as="h4"
                                     className="title"
-                                    fontSize={{ base: "xs", md: "sm" }}
-                                    mb="2"
+                                    fontSize={{
+                                        base: "sm",
+                                        md: "md",
+                                        lg: "lg",
+                                    }}
                                     color={HeadingColor}
                                     fontWeight="semibold"
                                 >
@@ -98,7 +101,7 @@ const SidebarWidget = ({ array, title, link, ...rest }) => {
                                 </Heading>
                                 <Box
                                     as="time"
-                                    fontSize={"xs"}
+                                    fontSize={"sm"}
                                     dateTime={new Date(
                                         post.publishDate
                                     ).toLocaleDateString()}

@@ -90,6 +90,7 @@ export const Content = styled(Box)`
     h6 {
         overflow-wrap: break-word;
         word-break: break-word;
+        margin-bottom: 1em;
     }
 
     h1,
@@ -249,7 +250,7 @@ export const FancyTitle = ({ title, ...rest }) => {
             >
                 <Heading
                     as="h3"
-                    fontSize={{ base: "md", md: "lg", lg: "2xl" }}
+                    fontSize={{ base: "xl", md: "2xl", lg: "4xl" }}
                     fontWeight="bold"
                     textAlign="center"
                     w="max-content"
@@ -337,8 +338,8 @@ export const ExploreButton = ({ text = "Explore All", ...rest }) => {
             onMouseLeave={() => setHovered(!hovered)}
             rightIcon={hovered ? <HiArrowRight /> : <HiChevronRight />}
             maxW="md"
-            fontFamily={"mono"}
-            fontWeight={"normal"}
+            fontFamily={"body"}
+            fontWeight={"semibold"}
             {...rest}
         >
             {text}

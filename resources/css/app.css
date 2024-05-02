@@ -119,8 +119,11 @@ select {
 
 .chakra-ui-dark .post-content h1,
 .chakra-ui-dark .post-content h2,
-.chakra-ui-dark .post-content h3 {
-    color: var(--chakra-colors-accent-400);
+.chakra-ui-dark .post-content h3,
+.chakra-ui-dark .page-content h1,
+.chakra-ui-dark .page-content h2,
+.chakra-ui-dark .page-content h3  {
+    color: var(--chakra-colors-primary-300);
 }
 
 .primary-link {

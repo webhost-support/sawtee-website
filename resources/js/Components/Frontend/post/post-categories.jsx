@@ -54,7 +54,7 @@ export const PostCategories = ({
             >
                 <PostCategory
                     colorScheme={colorScheme}
-                    size={"sm"}
+                    size={size}
                     mr="6px"
                     mb="6px"
                 >

@@ -58,7 +58,7 @@ export default function Category({
                 <Section
                     pb="80px"
                     py={{ base: "24px", lg: "80px" }}
-                    px={{ base: "16px", lg: "40px" }}
+                    px={{ base: "16px", lg: "80px" }}
                     size="full"
                     mx="auto"
                     pt="50px"
@@ -120,7 +120,7 @@ export default function Category({
                                     array={sawteeInMedia}
                                     title={"Sawtee in Media"}
                                     link={"/category/sawtee-in-media"}
-                                    maxW={"md"}
+                                    maxW={"xl"}
                                 />
                             )}
                             {isInFocus && events && (
@@ -129,7 +129,7 @@ export default function Category({
                                     title={"Featured Events"}
                                     link={"/category/featured-events"}
                                     mt={12}
-                                    maxW={"md"}
+                                    maxW={"xl"}
                                 />
                             )}
                             {isMedia && events && (
@@ -137,7 +137,7 @@ export default function Category({
                                     array={events}
                                     title={"Featured Events"}
                                     link={"/category/featured-events"}
-                                    maxW={"md"}
+                                    maxW={"xl"}
                                 />
                             )}
                             {!isInFocus && infocus && (
@@ -145,7 +145,7 @@ export default function Category({
                                     array={infocus}
                                     link={"/category/infocus"}
                                     title={"InFocus"}
-                                    maxW={"md"}
+                                    maxW={"xl"}
                                 />
                             )}
 
@@ -154,7 +154,7 @@ export default function Category({
                                     py="4"
                                     px="4"
                                     rounded="xl"
-                                    maxW={"md"}
+                                    maxW={"xl"}
                                     height="max-content"
                                 >
                                     <SubscriptionCard />

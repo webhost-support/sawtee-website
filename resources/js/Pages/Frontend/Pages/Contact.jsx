@@ -32,7 +32,7 @@ const Contact = () => {
     const headingColor = useColorModeValue("gray.900, whiteAlpha.900");
     const contentColor = useColorModeValue("gray.800", "whiteAlpha.800");
     const data = {
-        opening_hours: "Monday-Friday 9:00 AM – 5:30 PM",
+        opening_hours: "9:00 AM – 5:30 PM",
         phone_numbers: ["+977 1 4544438"],
         fax: "+977 1 4544570",
         email: "sawtee@sawtee.org",
@@ -66,6 +66,7 @@ const Contact = () => {
             size="md"
             paddingBlock="50px"
             fontSize={["sm", "md"]}
+            className={"contact-page-content"}
         >
             <Box
                 p={{ sm: 5, md: 5 }}
@@ -86,16 +87,19 @@ const Contact = () => {
                                 textTransform={"uppercase"}
                                 pb="0.75rem"
                             >
-                                Contact Details
+                                <Text as="span" fontWeight={"semibold"}>
+                                    Working days:{" " + "Monday-Friday"}
+                                </Text>
+                                <Text as="span" fontWeight={"semibold"}></Text>
+                                <br />
+                                <Text
+                                    as="span"
+                                    fontWeight={"semibold"}
+                                    fontSize={"md"}
+                                >
+                                    Office hours:{" " + data.opening_hours}
+                                </Text>
                             </Heading>
-                            <Text
-                                color={contentColor}
-                                fontSize={{ base: "md", md: "lg" }}
-                                pb="0.5em"
-                            >
-                                <b>Opening Hours: </b>
-                                <i>{data.opening_hours}</i>
-                            </Text>
                             <VStack
                                 py={{ base: 3, md: 6, lg: 8 }}
                                 spacing={3}
@@ -112,7 +116,14 @@ const Contact = () => {
                                             color={contentColor}
                                             leftIcon={<FiPhone size="20px" />}
                                         >
-                                            <Link as="a" href={`tel:${number}`}>
+                                            <Link
+                                                as="a"
+                                                _hover={{
+                                                    textDecoration: "none",
+                                                }}
+                                                textDecoration={"none"}
+                                                href={`tel:${number}`}
+                                            >
                                                 {number}
                                             </Link>
                                         </Button>
@@ -124,7 +135,14 @@ const Contact = () => {
                                     variant="ghost"
                                     leftIcon={<MdOutlineFax size="20px" />}
                                 >
-                                    <Link href={`fax:${data.fax}`}>
+                                    <Link
+                                        as="a"
+                                        _hover={{
+                                            textDecoration: "none",
+                                        }}
+                                        textDecoration={"none"}
+                                        href={`fax:${data.fax}`}
+                                    >
                                         {data.fax}
                                     </Link>
                                 </Button>
@@ -135,7 +153,14 @@ const Contact = () => {
                                     color={contentColor}
                                     leftIcon={<FiMail size="20px" />}
                                 >
-                                    <Link href={`mailto:${data.email}`}>
+                                    <Link
+                                        as="a"
+                                        _hover={{
+                                            textDecoration: "none",
+                                        }}
+                                        textDecoration={"none"}
+                                        href={`mailto:${data.email}`}
+                                    >
                                         {data.email}
                                     </Link>
                                 </Button>
@@ -165,6 +190,12 @@ const Contact = () => {
                                                 href={link}
                                                 key={name}
                                                 title={name.toUpperCase()}
+                                                as="a"
+                                                _hover={{
+                                                    textDecoration: "none",
+                                                }}
+                                                textDecoration={"none"}
+                                                target="_blank"
                                             >
                                                 <IconButton
                                                     aria-label={name}
@@ -186,6 +217,12 @@ const Contact = () => {
                                                 href={link}
                                                 key={name}
                                                 title={name.toUpperCase()}
+                                                as="a"
+                                                _hover={{
+                                                    textDecoration: "none",
+                                                }}
+                                                textDecoration={"none"}
+                                                target="_blank"
                                             >
                                                 <IconButton
                                                     aria-label={name}
@@ -207,6 +244,12 @@ const Contact = () => {
                                                 href={link}
                                                 key={name}
                                                 title={name.toUpperCase()}
+                                                as="a"
+                                                _hover={{
+                                                    textDecoration: "none",
+                                                }}
+                                                textDecoration={"none"}
+                                                target="_blank"
                                             >
                                                 <IconButton
                                                     aria-label={name}
@@ -228,6 +271,12 @@ const Contact = () => {
                                                 href={link}
                                                 key={name}
                                                 title={name.toUpperCase()}
+                                                as="a"
+                                                _hover={{
+                                                    textDecoration: "none",
+                                                }}
+                                                textDecoration={"none"}
+                                                target="_blank"
                                             >
                                                 <IconButton
                                                     aria-label={name}

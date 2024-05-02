@@ -102,6 +102,7 @@ const MenuItem = ({
                     size="sm"
                     fontFamily={"heading"}
                     fontWeight={"normal"}
+                    fontSize={"md"}
                     borderRadius={showIcon ? "5px 0 0 5px" : "5px"}
                     {...rest}
                 >

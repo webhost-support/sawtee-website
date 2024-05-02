@@ -63,6 +63,10 @@ export const PostImageWithOverlay = ({ src, srcSet, alt, borderRadius, ...props 
             srcSet={srcSet}
             alt={alt}
             borderRadius={borderRadius}
+            _groupHover={{
+                transition: "transform ease-in 0.4s",
+                transform: "scale(1.04)",
+            }}
         />
     </Box>
 );

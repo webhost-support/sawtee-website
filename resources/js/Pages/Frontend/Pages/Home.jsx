@@ -158,13 +158,8 @@ const CarouselSection = ({ slides, books }) => {
                     </VStack>
                 </SimpleGrid>
                 <Spacer h="60px" />
-                <Flex
-                    justifyContent="center"
-                    alignItems="center"
-                    w="sm"
-                    mx="auto"
-                >
-                    <LinkBox shadow={"xl"} rounded="xl" w="sm">
+                <Flex justifyContent="center" alignItems="center" mx="auto">
+                    <LinkBox shadow={"xl"} rounded="xl" maxW="2xl">
                         <InertiaChakraLink
                             href="/reform-monitoring-platform"
                             role="banner"
@@ -188,7 +183,7 @@ const CarouselSection = ({ slides, books }) => {
 const AboutSection = ({ intro, image }) => {
     return (
         <Box>
-            <Box
+            {/* <Box
                 width="full"
                 pos={"relative"}
                 id="about-section"
@@ -229,83 +224,61 @@ const AboutSection = ({ intro, image }) => {
                         </Text>
                     )}
                 </Box>
-            </Box>
+            </Box> */}
             <SimpleGrid
                 px={10}
                 py={16}
-                columns={{ base: 1, md: 3 }}
-                spacing={6}
+                minChildWidth={"200px"}
+                spacing={16}
+                alignItems="center"
             >
-                <Flex
-                    direction="column"
-                    justifyContent="center"
-                    alignItems="center"
-                    w="sm"
-                    mx="auto"
-                >
-                    <LinkBox shadow={"xl"} rounded="xl">
-                        <InertiaChakraLink
-                            href="/media-fellowship"
-                            role="banner"
-                            aria-labelledby="Media Fellowship"
-                            title="Media Fellowship"
-                        >
-                            <Image
-                                src="/assets/Media-Fellowship-banner.webp"
-                                alt="Media Fellowship"
-                                fit="cover"
-                                rounded="xl"
-                            />
-                        </InertiaChakraLink>
-                    </LinkBox>
-                </Flex>
+                <LinkBox mx="auto" shadow={"xl"} rounded="xl">
+                    <InertiaChakraLink
+                        href="/media-fellowship"
+                        role="banner"
+                        aria-labelledby="Media Fellowship"
+                        title="Media Fellowship"
+                    >
+                        <Image
+                            src="/assets/Media-Fellowship-banner.webp"
+                            alt="Media Fellowship"
+                            fit="cover"
+                            rounded="xl"
+                        />
+                    </InertiaChakraLink>
+                </LinkBox>
 
-                <Flex
-                    direction="column"
-                    justifyContent="center"
-                    alignItems="center"
-                    w="sm"
-                    mx="auto"
-                >
-                    <LinkBox shadow={"xl"} rounded="xl">
-                        <InertiaChakraLink
-                            href="/category/covid"
-                            role="banner"
-                            aria-labelledby="SAWTEE's Response to Covid-19"
-                            title="SAWTEE's Response to Covid-19"
-                        >
-                            <Image
-                                src="/assets/COVID-19-South-Asia-and-LDCs.webp"
-                                alt="SAWTEE's Response to Covid-19"
-                                fit="cover"
-                                rounded="xl"
-                            />
-                        </InertiaChakraLink>
-                    </LinkBox>
-                </Flex>
-                <Flex
-                    direction="column"
-                    justifyContent="center"
-                    alignItems="center"
-                    w="sm"
-                    mx="auto"
-                >
-                    <LinkBox shadow={"xl"} rounded="xl">
-                        <InertiaChakraLink
-                            href="/advancing-ldcs’-interests-in-the-wto-strengthening-participation,-securing-priorities"
-                            role="banner"
-                            aria-labelledby="Advancing LDC's Trade Interests"
-                            title="Advancing LDC's Trade Interests"
-                        >
-                            <Image
-                                src="/assets/advancing-ldc_upscaled.webp"
-                                alt="Advancing LDC's Trade Interests"
-                                fit="cover"
-                                rounded="xl"
-                            />
-                        </InertiaChakraLink>
-                    </LinkBox>
-                </Flex>
+                <LinkBox mx="auto" shadow={"xl"} rounded="xl">
+                    <InertiaChakraLink
+                        href="/category/covid"
+                        role="banner"
+                        aria-labelledby="SAWTEE's Response to Covid-19"
+                        title="SAWTEE's Response to Covid-19"
+                    >
+                        <Image
+                            src="/assets/COVID-19-South-Asia-and-LDCs.webp"
+                            alt="SAWTEE's Response to Covid-19"
+                            fit="cover"
+                            rounded="xl"
+                        />
+                    </InertiaChakraLink>
+                </LinkBox>
+
+                <LinkBox mx="auto" shadow={"xl"} rounded="xl">
+                    <InertiaChakraLink
+                        href="/advancing-ldcs’-interests-in-the-wto-strengthening-participation,-securing-priorities"
+                        role="banner"
+                        aria-labelledby="Advancing LDC's Trade Interests"
+                        title="Advancing LDC's Trade Interests"
+                    >
+                        <Image
+                            src="/assets/advancing-ldc_upscaled.webp"
+                            alt="Advancing LDC's Trade Interests"
+                            fit="cover"
+                            rounded="xl"
+                        />
+                    </InertiaChakraLink>
+                </LinkBox>
             </SimpleGrid>
         </Box>
     );
@@ -315,7 +288,7 @@ const InfocusSection = ({ infocus, link }) => {
     const itemBG = useColorModeValue("blackAlpha.200", "blackAlpha.300");
     return (
         <Section
-            title={"In Foucs"}
+            title={"In Focus"}
             bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
         >
             <Container maxW="8xl" centerContent px={6}>
@@ -348,7 +321,11 @@ const InfocusSection = ({ infocus, link }) => {
                                         as="h3"
                                         fontFamily={"heading"}
                                         fontWeight="bold"
-                                        fontSize={{ base: "md", lg: "lg" }}
+                                        fontSize={{
+                                            base: "md",
+                                            md: "lg",
+                                            lg: "2xl",
+                                        }}
                                         pl={"20px"}
                                     >
                                         <InertiaChakraLinkOverlay
@@ -373,7 +350,8 @@ const InfocusSection = ({ infocus, link }) => {
                                             pl="20px"
                                             fontSize={{
                                                 base: "sm",
-                                                lg: "md",
+                                                md: "md",
+                                                lg: "lg",
                                             }}
                                         >
                                             {article.excerpt}
@@ -387,8 +365,7 @@ const InfocusSection = ({ infocus, link }) => {
                                         base: "start",
                                         md: "flex-end",
                                     }}
-                                    fontFamily={"mono"}
-                                    fontSize="xs"
+                                    fontSize={["xs", "sm", "md"]}
                                     color={"gray.600"}
                                     _dark={{
                                         color: "gray.300",
@@ -499,7 +476,7 @@ const BlogSection = ({ events }) => {
                                     >
                                         <PostCard
                                             post={article}
-                                            headingSize={"2xl"}
+                                            headingSize={"3xl"}
                                         />
                                     </GridItem>
                                 );
@@ -513,6 +490,7 @@ const BlogSection = ({ events }) => {
                                         <PostCard
                                             post={article}
                                             showDescription={false}
+                                            aspect={"3/2"}
                                         />
                                     </GridItem>
                                 );
@@ -583,6 +561,7 @@ const PublicationSection = ({ publications, showPublication }) => {
                     itemsToShow={showPublication}
                     spacing={90}
                     my={20}
+                    showTitle={true}
                 >
                     <Show above="sm">
                         <InertiaChakraLink

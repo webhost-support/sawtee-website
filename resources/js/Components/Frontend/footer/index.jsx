@@ -38,7 +38,7 @@ const FooterSection = ({ children, ...rest }) => (
 );
 
 const FooterSectionGroup = ({ children, ...rest }) => (
-    <Grid maxWidth="6xl" mx="auto" width="100%" gap={8} {...rest}>
+    <Grid maxWidth="7xl" mx="auto" width="100%" gap={8} {...rest}>
         {children}
     </Grid>
 );
@@ -77,7 +77,7 @@ const Widget = ({ item }) => {
                 <ListHeader>{item.title}</ListHeader>
                 <VStack
                     as={UnorderedList}
-                    style={{ listStyle: "none" }}
+                    style={{ listStyle: "none", margin: 0 }}
                     align="flex-start"
                     spacing={3}
                 >
@@ -106,7 +106,7 @@ const Widget = ({ item }) => {
                                                 onClick={onOpen}
                                                 color={linkcolor}
                                                 hoverColor={hoverColor}
-                                                fontSize={"sm"}
+                                                fontSize={"md"}
                                             >
                                                 {title}
                                             </StyledChakraLink>
@@ -135,7 +135,7 @@ const Widget = ({ item }) => {
                                             href={url ? url : null}
                                             color={linkcolor}
                                             hoverColor={hoverColor}
-                                            fontSize={"sm"}
+                                            fontSize={"md"}
                                         >
                                             {title}
                                         </StyledChakraLink>
@@ -157,7 +157,7 @@ const Widget = ({ item }) => {
                                             href={url ? url : null}
                                             color={linkcolor}
                                             hoverColor={hoverColor}
-                                            fontSize={"sm"}
+                                            fontSize={"md"}
                                         >
                                             {title}
                                         </StyledChakraLink>
@@ -179,7 +179,7 @@ const Widget = ({ item }) => {
                                             href={url ? url : null}
                                             color={linkcolor}
                                             hoverColor={hoverColor}
-                                            fontSize={"sm"}
+                                            fontSize={"md"}
                                         >
                                             {title}
                                         </StyledChakraLink>
@@ -201,7 +201,7 @@ const Widget = ({ item }) => {
                                             href={url ? url : null}
                                             color={linkcolor}
                                             hoverColor={hoverColor}
-                                            fontSize={"sm"}
+                                            fontSize={"md"}
                                         >
                                             {title}
                                         </StyledChakraLink>
@@ -218,7 +218,7 @@ const Widget = ({ item }) => {
                 <ListHeader>{item.title}</ListHeader>
                 <VStack
                     as={UnorderedList}
-                    style={{ listStyle: "none" }}
+                    style={{ listStyle: "none", margin: 0 }}
                     align={"flex-start"}
                     spacing={3}
                 >
@@ -239,7 +239,7 @@ const Widget = ({ item }) => {
                                         _hover={{ color: hoverColor }}
                                     />
                                     <StyledChakraLink
-                                        fontSize={"sm"}
+                                        fontSize={"md"}
                                         href={url}
                                         color={linkcolor}
                                         hoverColor={hoverColor}

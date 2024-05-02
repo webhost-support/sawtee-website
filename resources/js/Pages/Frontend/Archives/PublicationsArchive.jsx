@@ -11,7 +11,6 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "@inertiajs/react";
 import React from "react";
-import CategoryLayout from "../Layout/CategoryLayout";
 import Section from "@/Components/Frontend/styles/section";
 import SidebarWidget from "@/Components/Frontend/sidebarWidget";
 import MainLayout from "../Layout/MainLayout";
@@ -62,19 +61,19 @@ export default function PublicationsArchive({
                 <Section
                     pb="80px"
                     py={{ base: "24px", lg: "80px" }}
-                    px={{ base: "16px", lg: "40px" }}
+                    px={{ base: "16px", lg: "80px" }}
                     size={"full"}
                     mx="auto"
                     fontSize={["md", "lg", "xl", "huge"]}
                     color={contentColor}
                 >
                     <Grid
-                        templateColumns={{ base: "1fr", xl: "repeat(5, 1fr)" }}
+                        templateColumns={{ base: "1fr", xl: "repeat(6, 1fr)" }}
                         gap={10}
                         pos={"relative"}
                         placeContent={"center"}
                     >
-                        <GridItem colSpan={{ base: 1, xl: 3 }} px={4}>
+                        <GridItem colSpan={{ base: 1, xl: 4 }} px={4}>
                             {category.children && (
                                 <PublicationSliders
                                     category={category}
@@ -95,6 +94,7 @@ export default function PublicationsArchive({
                                     array={sawteeInMedia}
                                     title={"SAWTEE in Media"}
                                     link={"/category/sawtee-in-media"}
+                                    maxW={"lg"}
                                 />
                             )}
                             {infocus && (
@@ -102,6 +102,7 @@ export default function PublicationsArchive({
                                     array={infocus}
                                     title={"Infocus"}
                                     link={"/category/infocus"}
+                                    maxW={"lg"}
                                 />
                             )}
 

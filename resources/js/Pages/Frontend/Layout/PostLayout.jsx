@@ -35,7 +35,7 @@ const PostLayout = ({
 
     return (
         <LightPatternBox showPattern={showPattern} pt="10px" pb={"40px"}>
-            <Box pb="2" maxW="5xl" mx="auto">
+            <Box pb="2" maxW="6xl" mx="auto">
                 <PostHeader
                     mt={"20px"}
                     px={{ base: "32px", md: "3rem" }}

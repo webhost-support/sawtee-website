@@ -23,8 +23,8 @@ const PostHeader = ({
         <Heading
             as="h1"
             fontWeight="bold"
-            fontSize={{ base: "xl", md: "2xl", lg: "4xl" }}
-            color={useColorModeValue("gray.600", "whiteAlpha.800")}
+            fontSize={{ base: "2xl", md: "3xl", lg: "5xl" }}
+            color={useColorModeValue("gray.700", "whiteAlpha.800")}
             mt="10px"
             mb={{ base: "20px", lg: "32px" }}
             textTransform="capitalize"

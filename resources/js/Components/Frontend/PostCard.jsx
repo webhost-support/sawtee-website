@@ -6,71 +6,85 @@ import {
     Heading,
     Text,
     Image,
-    AspectRatio,
     HStack,
     useColorModeValue,
-
 } from "@chakra-ui/react";
 import { formatDate } from "@/Utils/helpers";
 import { Link } from "@inertiajs/react";
 import InertiaChakraLink from "./styles/inertia-chakra-link";
 import InertiaChakraLinkOverlay from "./styles/inertia-chakra-link-overlay";
 
-function PostCard({
-    post,
-    showImage = "true",
-    showDescription = "true",
-    headingSize = "md",
-    showTags = false,
-    imageHeadgingGap = "20px",
-    showDate = false,
-    ...rest
-}) {
+function PostCard({ post, ...rest }) {
+    const {
+        headingSize,
+        showDate,
+        showDescription,
+        showImage = true,
+        showTags,
+        imageHeadgingGap,
+        aspect,
+    } = { ...rest };
     const color = useColorModeValue("var(--color-dark", "var(--color-light)");
     const featured_image =
         post.media.length > 0
             ? post.media.filter(
-                (item) => item.collection_name === "post-featured-image"
-            )[0]
+                  (item) => item.collection_name === "post-featured-image"
+              )[0]
             : null;
     const srcSet = featured_image
         ? featured_image.responsive_images.responsive.urls
-        : [];
-
-
+        : null;
     return (
         <Box>
-            <LinkBox as="article" {...rest} role="group">
+            <LinkBox as="article" role="group">
                 {showImage && (
-                    <Box as="figure" mb={imageHeadgingGap}>
-                        <AspectRatio maxW="full" ratio={3 / 2}>
-                            <Image
-                                width={"100%"}
-                                height="auto"
-                                fit={"cover"}
-                                alt={post.title}
-                                src={
-                                    featured_image
-                                        ? featured_image.original_url
-                                        : "/assets/SM-placeholder-150x150.png"
-                                }
-                                // srcSet={srcSet ? srcSet : ""}
-                            />
-                        </AspectRatio>
+                    <Box
+                        as="figure"
+                        pos={"relative"}
+                        mb={imageHeadgingGap ? imageHeadgingGap : "20px"}
+                    >
+                        <Image
+                            width={"100%"}
+                            height="auto"
+                            fit={"cover"}
+                            alt={post.title}
+                            aspectRatio={aspect ? aspect : "unset"}
+                            src={
+                                featured_image
+                                    ? featured_image.original_url
+                                    : "/assets/SM-placeholder-150x150.png"
+                            }
+                            style={srcSet ? { srcSet: srcSet } : null}
+                        />
                         <Box
                             as="span"
                             pos={"absolute"}
                             inset="0"
+                            zIndex={"80"}
                             width="full"
                             _groupHover={{
                                 borderTop: "5px solid",
-                                borderColor: "primary.500",
+                                borderColor: useColorModeValue(
+                                    "primary.700",
+                                    "primary.300"
+                                ),
+                            }}
+                        />
+                        <Box
+                            pos={"absolute"}
+                            inset="0"
+                            zIndex={"70"}
+                            _groupHover={{
+                                bg: "blackAlpha.500",
                             }}
                         />
                     </Box>
                 )}
                 <Flex flexGrow="1" direction="column" gap={4}>
-                    <Heading fontSize={headingSize} as="h3">
+                    <Heading
+                        fontSize={headingSize ? headingSize : "lg"}
+                        as="h3"
+                    >
                         <InertiaChakraLinkOverlay
                             as={Link}
                             className="primary-link"

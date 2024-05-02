@@ -73,6 +73,7 @@ import { Box, Heading, Image, useColorModeValue } from "@chakra-ui/react";
                      left="15%"
                  >
                      <Heading
+                         as="h1"
                          fontSize={{ base: "2xl", md: "4xl", lg: "6xl" }}
                          mt="30px"
                          mb={{ base: "20px", lg: "32px" }}

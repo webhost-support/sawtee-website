@@ -35,12 +35,16 @@ const MultiItemCarousel = ({
                     return (
                         <SwiperSlide
                             className="swiper-slide"
-                            maxW="140px"
+                            maxW={{ base: "180px", md: "180px", lg: "220px" }}
                             key={slide.id}
                         >
                             <LinkBox
                                 as="article"
-                                maxW="140px"
+                                maxW={{
+                                    base: "180px",
+                                    md: "180px",
+                                    lg: "220px",
+                                }}
                                 mx="auto"
                                 _before={{
                                     content: `''`,
@@ -75,7 +79,11 @@ const MultiItemCarousel = ({
                                         title={slide.title}
                                         rounded="md"
                                         objectFit="cover"
-                                        w="140px"
+                                        w={{
+                                            base: "180px",
+                                            md: "180px",
+                                            lg: "220px",
+                                        }}
                                         fallbackSrc="/assets/SM-placeholder-150x150.png"
                                         aspectRatio={3 / 4}
                                     />
@@ -115,8 +123,9 @@ const MultiItemCarousel = ({
                                 rounded="md"
                                 startColor="gray.300"
                                 endColor="gray.400"
-                                w="140px"
-                                h="200px"
+                                w={{ base: "180px", md: "180px", lg: "240px" }}
+                                aspectRatio={3 / 4}
+                                // h={{ base: "200px", lg: "320px" }}
                                 mx="auto"
                             />
                         </Box>

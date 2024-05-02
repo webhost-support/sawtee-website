@@ -123,7 +123,7 @@ export default function About({ sections }) {
 
     return (
         <Content
-            className="page_content"
+            className="page-content"
             px={{ base: "32px", md: "0" }}
             mx="auto"
             py={"80px"}

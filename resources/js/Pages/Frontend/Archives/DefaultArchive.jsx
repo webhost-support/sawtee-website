@@ -34,8 +34,8 @@ const ArchivePost = ({ post, featured_image, showFallbackImage, rest }) => {
             as="article"
             spacing={4}
             role="group"
-            w='full'
-            maxW="2xl"
+            w="full"
+            maxW="3xl"
             {...rest}
         >
             <LinkBox>
@@ -49,7 +49,8 @@ const ArchivePost = ({ post, featured_image, showFallbackImage, rest }) => {
                             overflow="hidden"
                             _groupHover={{
                                 transition: "transform 0.4s ease-in-out",
-                                borderRadius: "var(--chakra-radii-md) var(--chakra-radii-md) 0 0",
+                                borderRadius:
+                                    "var(--chakra-radii-md) var(--chakra-radii-md) 0 0",
                                 cusrsor: "pointer",
                             }}
                             src={featured_image && featured_image.original_url}
@@ -68,16 +69,23 @@ const ArchivePost = ({ post, featured_image, showFallbackImage, rest }) => {
                         <Box>
                             <Heading
                                 as="h3"
-                                fontSize={"md"}
+                                fontSize={["md", "md", "xl"]}
                                 fontWeight="semibold"
                                 mb={4}
+                                textDecoration="underline"
+                                textUnderlineOffset="3px"
+                                textDecorationThickness={"2px"}
+                                _groupHover={{
+                                    textDecoration: "none",
+                                }}
                             >
                                 <InertiaChakraLink
                                     as={Link}
                                     href={`/category/${post.category.slug}/${post.slug}`}
                                     _groupHover={{
                                         textDecoration: "underline",
-                                        textUnderlineOffset: "3px",
+                                        textDecorationThickness: "2px",
+                                        textUnderlineOffset: "6px",
                                         transition: "all 200ms ease-in",
                                     }}
                                     className="primary-link"
@@ -86,22 +94,20 @@ const ArchivePost = ({ post, featured_image, showFallbackImage, rest }) => {
                                 </InertiaChakraLink>
                             </Heading>
 
-                            <Text fontSize={"sm"} noOfLines={3}>
+                            <Text fontSize={["xs", "md", "md"]} noOfLines={3}>
                                 {post.excerpt}
                             </Text>
                         </Box>
                         <Box mt="4">
                             <Stack
                                 justify="space-between"
-                                direction={{
-                                    base: "column",
-                                    sm: "row",
-                                }}
+                                direction={"row"}
+                                flexWrap={"wrap"}
                                 alignItems={"center"}
                             >
                                 <Text
                                     as="time"
-                                    fontSize={"xs"}
+                                    fontSize={"sm"}
                                     dangerouslySetInnerHTML={{
                                         __html: formatDate(post.published_at),
                                     }}
@@ -111,7 +117,7 @@ const ArchivePost = ({ post, featured_image, showFallbackImage, rest }) => {
                                     href={`/category/${post.category.slug}/${post.slug}`}
                                 >
                                     <ExploreButton
-                                        size="xs"
+                                        size="sm"
                                         text="Read more"
                                         aria-label={"Read More"}
                                         colorScheme={"gray"}
