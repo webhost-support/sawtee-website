@@ -34,38 +34,16 @@ const PostLayout = ({
         : `/${post.category.slug}/${post.slug}`;
 
     return (
-        <LightPatternBox showPattern={showPattern} pt="0" pb={"40px"}>
-            {isProgramPost ? (
-                <Box pb="2" maxW="5xl" mx="auto">
-                    <Box mt={"20px"} px={{ base: "32px", md: "3rem" }}>
-                        <PostCategories
-                            color="black"
-                            category={post.category}
-                            justifyContent="center"
-                        />
-
-                        <Heading
-                            fontWeight="bold"
-                            size={"2xl"}
-                            mt="30px"
-                            mb={{ base: "20px", lg: "32px" }}
-                            textTransform="uppercase"
-                            textAlign="center"
-                            dangerouslySetInnerHTML={{ __html: post.title }}
-                        />
-                    </Box>
-                </Box>
-            ) : (
-                <Box pb="2" maxW="5xl" mx="auto">
-                    <PostHeader
-                        mt={"20px"}
-                        px={{ base: "32px", md: "3rem" }}
-                        color={postHeaderColor}
-                        categories={post.category}
-                        heading={post.title}
-                    />
-                </Box>
-            )}
+        <LightPatternBox showPattern={showPattern} pt="10px" pb={"40px"}>
+            <Box pb="2" maxW="5xl" mx="auto">
+                <PostHeader
+                    mt={"20px"}
+                    px={{ base: "32px", md: "3rem" }}
+                    color={postHeaderColor}
+                    categories={post.category}
+                    heading={post.title}
+                />
+            </Box>
 
             {/* <PostProgressBar value={scroll} /> */}
 
@@ -90,7 +68,7 @@ const PostLayout = ({
                     px={{ base: "1rem", md: "2rem" }}
                     size={isNewsletter ? "full" : "lg"}
                     pb="50px"
-                    className='post-content'
+                    className="post-content"
                 >
                     {children}
                     <SocialShare url={shareUrl} />

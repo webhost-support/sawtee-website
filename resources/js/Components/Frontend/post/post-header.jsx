@@ -1,4 +1,4 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Heading, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
 import PostCategories from "./post-categories";
 
@@ -14,15 +14,17 @@ const PostHeader = ({
     <Box className="post-header" textAlign="center" {...props}>
         {categories && (
             <PostCategories
-                color="black"
+                colorScheme="accent"
                 category={categories}
                 justifyContent="center"
+                size={"xs"}
             />
         )}
         <Heading
             as="h1"
             fontWeight="bold"
             fontSize={{ base: "xl", md: "2xl", lg: "4xl" }}
+            color={useColorModeValue("gray.600", "whiteAlpha.800")}
             mt="10px"
             mb={{ base: "20px", lg: "32px" }}
             textTransform="capitalize"

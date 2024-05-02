@@ -88,7 +88,10 @@ const Widget = ({ item }) => {
                                 return (
                                     <ListItem key={title}>
                                         <ListIcon
-                                            style={{ color: linkcolor }}
+                                            style={{
+                                                color: linkcolor,
+                                                verticalAlign: "middle",
+                                            }}
                                             _hover={{ color: hoverColor }}
                                             as={MdLocationOn}
                                         />
@@ -121,7 +124,10 @@ const Widget = ({ item }) => {
                                 return (
                                     <ListItem>
                                         <ListIcon
-                                            style={{ color: linkcolor }}
+                                            style={{
+                                                color: linkcolor,
+                                                verticalAlign: "middle",
+                                            }}
                                             _hover={{ color: hoverColor }}
                                             as={MdOutlineFax}
                                         />
@@ -140,7 +146,10 @@ const Widget = ({ item }) => {
                                 return (
                                     <ListItem>
                                         <ListIcon
-                                            style={{ color: linkcolor }}
+                                            style={{
+                                                color: linkcolor,
+                                                verticalAlign: "middle",
+                                            }}
                                             _hover={{ color: hoverColor }}
                                             as={MdOutlineLocalPhone}
                                         />
@@ -159,7 +168,10 @@ const Widget = ({ item }) => {
                                 return (
                                     <ListItem>
                                         <ListIcon
-                                            style={{ color: linkcolor }}
+                                            style={{
+                                                color: linkcolor,
+                                                verticalAlign: "middle",
+                                            }}
                                             _hover={{ color: hoverColor }}
                                             as={MdContactMail}
                                         />
@@ -178,7 +190,10 @@ const Widget = ({ item }) => {
                                 return (
                                     <ListItem>
                                         <ListIcon
-                                            style={{ color: linkcolor }}
+                                            style={{
+                                                color: linkcolor,
+                                                verticalAlign: "middle",
+                                            }}
                                             _hover={{ color: hoverColor }}
                                             as={MdOutlineMarkunreadMailbox}
                                         />

@@ -87,11 +87,6 @@ body::-webkit-scrollbar-thumb {
     border: 3px solid var(--scrollbarBG);
 }
 
-/* body p {
-    font-family: "Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, system-ui, sans-serif";
-    font-weight: normal;
-} */
-
 img,
 picture,
 video,
@@ -108,15 +103,24 @@ select {
     font: inherit;
 }
 
+.chakra-ui-dark .post-content  a {
+    background-image: linear-gradient(
+        #232323 50%,
+        var(--chakra-colors-primary-300) 50%
+    );
+    transition: background 0.5s;
+    background-size: auto 175%;
+}
 
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    overflow-wrap: break-word;
+.chakra-ui-dark .post-content  a:hover {
+    background-position-y: 100%;
+    text-decoration: none;
+}
+
+.chakra-ui-dark .post-content h1,
+.chakra-ui-dark .post-content h2,
+.chakra-ui-dark .post-content h3 {
+    color: var(--chakra-colors-accent-400);
 }
 
 .primary-link {

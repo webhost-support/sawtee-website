@@ -93,9 +93,11 @@ export const Content = styled(Box)`
     }
 
     h1,
-    h2, h3 {
+    h2,
+    h3 {
         color: #204754;
     }
+
     h1 {
         font-size: var(--chakra-fontSizes-4xl);
     }
@@ -144,7 +146,7 @@ export const Content = styled(Box)`
             var(--chakra-colors-primary-300) 50%
         );
         transition: background 0.5s;
-        background-size: auto 185%;
+        background-size: auto 175%;
 
         &:hover {
             background-position-y: 100%;

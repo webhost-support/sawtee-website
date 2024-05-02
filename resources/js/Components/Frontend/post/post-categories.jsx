@@ -17,7 +17,12 @@ export const PostCategory = (props) => (
     />
 );
 
-export const PostCategories = ({ category, color = "white", ...props }) => {
+export const PostCategories = ({
+    category,
+    colorScheme = "gray",
+    size = "xs",
+    ...props
+}) => {
     const ParentCategory = category.parent;
     return (
         <Flex className="post-categories" flexWrap="wrap" gap={4} {...props}>
@@ -27,7 +32,13 @@ export const PostCategories = ({ category, color = "white", ...props }) => {
                     href={`/category/${ParentCategory.slug}`}
                     _hover={{ textDecor: "underline" }}
                 >
-                    <PostCategory size={"sm"} mr="6px" mb="6px">
+                    <PostCategory
+                        colorScheme={colorScheme}
+                        size={size}
+                        fontSize={size}
+                        mr="6px"
+                        mb="6px"
+                    >
                         {ParentCategory.name}
                     </PostCategory>
                 </InertiaChakraLink>
@@ -41,7 +52,12 @@ export const PostCategories = ({ category, color = "white", ...props }) => {
                 }
                 _hover={{ textDecor: "underline" }}
             >
-                <PostCategory size={"sm"} mr="6px" mb="6px">
+                <PostCategory
+                    colorScheme={colorScheme}
+                    size={"sm"}
+                    mr="6px"
+                    mb="6px"
+                >
                     {category.name}
                 </PostCategory>
             </Link>
