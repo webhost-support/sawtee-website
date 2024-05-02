@@ -32,8 +32,8 @@
 
 @font-face {
     font-family: 'kantipur';
-    src: url('kantipur_regular-webfont.woff2') format('woff2'),
-         url('kantipur_regular-webfont.woff') format('woff'),
+    src: url('/assets/kantipur_regular-webfont.woff2') format('woff2'),
+         url('/assets/kantipur_regular-webfont.woff') format('woff'),
          url('/assets/fonts/kantipur_regular.otf') format('otf');
     font-weight: normal;
     font-style: normal;
