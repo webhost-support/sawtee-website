@@ -6,12 +6,10 @@ const PostHeader = ({
     heading,
     categories = null,
     description,
-    author,
-    date,
-    readingTime,
-    ...props
+    color,
+    ...rest
 }) => (
-    <Box className="post-header" textAlign="center" {...props}>
+    <Box className="post-header" textAlign="center" {...rest}>
         {categories && (
             <PostCategories
                 colorScheme="accent"
@@ -24,7 +22,7 @@ const PostHeader = ({
             as="h1"
             fontWeight="bold"
             fontSize={{ base: "2xl", md: "3xl", lg: "5xl" }}
-            color={useColorModeValue("gray.700", "whiteAlpha.800")}
+            color={color}
             mt="10px"
             mb={{ base: "20px", lg: "32px" }}
             textTransform="capitalize"

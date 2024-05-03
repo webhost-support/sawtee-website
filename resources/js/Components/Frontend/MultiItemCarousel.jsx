@@ -2,7 +2,6 @@ import { Image, Box, LinkBox, Skeleton, Text } from "@chakra-ui/react";
 import InertiaChakraLinkOverlay from "./styles/inertia-chakra-link-overlay";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation, Keyboard } from "swiper/modules";
-import { Link } from "@inertiajs/react";
 
 // Import Swiper styles
 import "swiper/css";
@@ -35,15 +34,15 @@ const MultiItemCarousel = ({
                     return (
                         <SwiperSlide
                             className="swiper-slide"
-                            maxW={{ base: "180px", md: "180px", lg: "220px" }}
+                            maxW={{ base: "160px", md: "180px", lg: "180px" }}
                             key={slide.id}
                         >
                             <LinkBox
                                 as="article"
                                 maxW={{
-                                    base: "180px",
+                                    base: "160px",
                                     md: "180px",
-                                    lg: "220px",
+                                    lg: "180px",
                                 }}
                                 mx="auto"
                                 _before={{
@@ -80,9 +79,9 @@ const MultiItemCarousel = ({
                                         rounded="md"
                                         objectFit="cover"
                                         w={{
-                                            base: "180px",
+                                            base: "160px",
                                             md: "180px",
-                                            lg: "220px",
+                                            lg: "180px",
                                         }}
                                         fallbackSrc="/assets/SM-placeholder-150x150.png"
                                         aspectRatio={3 / 4}
@@ -123,9 +122,8 @@ const MultiItemCarousel = ({
                                 rounded="md"
                                 startColor="gray.300"
                                 endColor="gray.400"
-                                w={{ base: "180px", md: "180px", lg: "240px" }}
+                                w={{ base: "160px", md: "180px", lg: "180px" }}
                                 aspectRatio={3 / 4}
-                                // h={{ base: "200px", lg: "320px" }}
                                 mx="auto"
                             />
                         </Box>

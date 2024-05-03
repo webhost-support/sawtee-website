@@ -19,7 +19,14 @@ class SubscriptionController extends Controller
     public function subscribe (SubscribeRequest $request)
     {
         $validated = $request->validated();
-        Newsletter::subscribe($validated['email']);
+        $isSubscribed = Newsletter::isSubscribed($validated['email']);
+        if(!$isSubscribed){
+            Newsletter::subscribe($validated['email']);
+            return redirect()->back()->with('You have subscribed successfully.');
+        }else {
+            return redirect()->back()->with('You are already subscribed.');
+        }
+
     }
 
     public function unsubscribe (string $email)

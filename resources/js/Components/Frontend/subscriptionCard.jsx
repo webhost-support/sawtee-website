@@ -12,7 +12,7 @@ import {
     HStack,
     Button,
     useColorModeValue,
-    useToast,
+    FormHelperText,
 } from "@chakra-ui/react";
 import { useForm } from "@inertiajs/react";
 
@@ -33,33 +33,22 @@ const SubscriptionCard = ({
     const { data, setData, post, processing, errors, reset } = useForm({
         email: "",
     });
-    const toast = useToast();
+    const [message, setMessage] = React.useState(null);
+
     const handleSubmit = (e) => {
         e.preventDefault();
-
         post(route("subscribe"), {
             preserveScroll: true,
+            preserveState: true,
             onSuccess: () => {
-                toast({
-                    position: "top-right",
-                    title: "Please verify subscription.",
-                    description: `Please check your email "${data.email}" to verify your subscription.`,
-                    status: "success",
-                    duration: null,
-                    isClosable: true,
-                });
+                setMessage(`${data.email} has subscribed successfully.`);
+                setTimeout(() => {
+                    setMessage(null);
+                }, 5000);
                 reset("email");
             },
-            onError: () => {
-                toast({
-                    position: "top-right",
-                    title: "Something went wrong.",
-                    description: `Error: ${errors.email}`,
-                    status: "error",
-                    duration: null,
-                    isClosable: true,
-                });
-                reset("email");
+            onError: (errors) => {
+                console.log(errors);
             },
         });
     };
@@ -129,12 +118,16 @@ const SubscriptionCard = ({
                             "var(--color-grey-lighter)"
                         )}
                         onChange={(e) => setData("email", e.target.value)}
-                        focusBorderColor="blackAlpha.300"
                     />
                     {errors.email && (
                         <FormErrorMessage mt={2}>
                             {errors.email}
                         </FormErrorMessage>
+                    )}
+                    {message && (
+                        <FormHelperText color={"green.500"}>
+                            {message}
+                        </FormHelperText>
                     )}
                 </FormControl>
                 <Button

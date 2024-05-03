@@ -65,7 +65,7 @@ function PostCard({ post, ...rest }) {
                             _groupHover={{
                                 borderTop: "5px solid",
                                 borderColor: useColorModeValue(
-                                    "primary.700",
+                                    "primary.500",
                                     "primary.300"
                                 ),
                             }}
@@ -82,8 +82,9 @@ function PostCard({ post, ...rest }) {
                 )}
                 <Flex flexGrow="1" direction="column" gap={4}>
                     <Heading
-                        fontSize={headingSize ? headingSize : "lg"}
+                        fontSize={headingSize ? headingSize : "md"}
                         as="h3"
+                        // noOfLines={2}
                     >
                         <InertiaChakraLinkOverlay
                             as={Link}

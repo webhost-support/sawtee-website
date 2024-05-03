@@ -18,7 +18,7 @@ import {
     SimpleGrid,
     Show,
 } from "@chakra-ui/react";
-import { Title, FancyTitle, ExploreButton } from "@/Components/Frontend/index";
+import { FancyTitle, ExploreButton } from "@/Components/Frontend/index";
 import FullWidthCarousel from "@/Components/Frontend/FullWidthCarousel";
 import { formatDate } from "@/Utils/helpers";
 import MainLayout from "../Layout/MainLayout";
@@ -324,9 +324,9 @@ const InfocusSection = ({ infocus, link }) => {
                                         fontSize={{
                                             base: "md",
                                             md: "lg",
-                                            lg: "2xl",
+                                            lg: "xl",
                                         }}
-                                        pl={"20px"}
+                                        // pl={"20px"}
                                     >
                                         <InertiaChakraLinkOverlay
                                             as={Link}
@@ -351,7 +351,7 @@ const InfocusSection = ({ infocus, link }) => {
                                             fontSize={{
                                                 base: "sm",
                                                 md: "md",
-                                                lg: "lg",
+                                                lg: "md",
                                             }}
                                         >
                                             {article.excerpt}
@@ -365,7 +365,7 @@ const InfocusSection = ({ infocus, link }) => {
                                         base: "start",
                                         md: "flex-end",
                                     }}
-                                    fontSize={["xs", "sm", "md"]}
+                                    fontSize={["xs", "sm", "sm"]}
                                     color={"gray.600"}
                                     _dark={{
                                         color: "gray.300",
@@ -458,7 +458,7 @@ const BlogSection = ({ events }) => {
                     gridTemplateColumns={{
                         base: "1fr",
                         md: "1fr 1fr",
-                        lg: "auto repeat(2, 220px);",
+                        lg: "auto repeat(2, 260px);",
                     }}
                     gridTemplateRows={"auto"}
                     gap={8}
@@ -560,7 +560,7 @@ const PublicationSection = ({ publications, showPublication }) => {
                     slides={publications}
                     itemsToShow={showPublication}
                     spacing={90}
-                    my={20}
+                    mt={20}
                     showTitle={true}
                 >
                     <Show above="sm">

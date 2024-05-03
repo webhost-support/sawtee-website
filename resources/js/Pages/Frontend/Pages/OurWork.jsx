@@ -113,7 +113,6 @@ export default function OurWork({ themes, sections }) {
             >
                 {sectors &&
                     sectors.map(({ id, title, description, media, link }) => {
-                        console.log(media);
                         return (
                             <LinkBox
                                 className="cards"
@@ -121,21 +120,18 @@ export default function OurWork({ themes, sections }) {
                                 boxShadow={"lg"}
                                 shadow={"md"}
                                 rounded="xl"
-                                maxW="full"
                                 overflow={"hidden"}
                                 position="relative"
-                                aspectRatio={"3/4"}
                                 role="group"
                             >
                                 <Image
                                     objectFit={"cover"}
                                     aspectRatio={"3/4"}
-                                    w="full"
-                                    h="100%"
+                                    w={["xs", "sm"]}
                                     src={
                                         media[0]
                                             ? media[0].original_url
-                                            : "/assets/SM-placeholder-1024x512.png"
+                                            : "/assets/SM-placeholder-300x150.png"
                                     }
                                 />
                                 <Box

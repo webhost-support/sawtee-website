@@ -1,4 +1,4 @@
-import { VStack, Grid, GridItem, Box } from "@chakra-ui/react";
+import { VStack, Grid, GridItem } from "@chakra-ui/react";
 import React from "react";
 import Section from "@/Components/Frontend/styles/section";
 import SidebarWidget from "@/Components/Frontend/sidebarWidget";

@@ -3,7 +3,6 @@ import {
     Box,
     Heading,
     useColorModeValue,
-    SlideFade,
     Divider,
     Tabs,
     TabList,
@@ -17,110 +16,13 @@ import {
     AccordionIcon,
     AccordionPanel,
     ListItem,
-    HStack,
     OrderedList,
 } from "@chakra-ui/react";
 import React from "react";
-import { HiOutlineExternalLink } from "react-icons/hi";
 import { convertToSlug } from "@/Utils/helpers";
+import { memberInstitutions } from "@/Utils/data";
 
 export default function About({ sections }) {
-    const memberInstitutions = [
-        {
-            id: 1,
-            country: "Bangladesh",
-            institutes: [
-                {
-                    id: 1,
-                    member_name:
-                        "Bangladesh Environmental Lawyers’ Association (BELA), Dhaka",
-                    member_website_link: "https://www.belabangla.org/",
-                },
-                {
-                    id: 2,
-                    member_name: "Unnayan Shamannay, Dhaka",
-                    member_website_link: "https://www.unsy.org/",
-                },
-            ],
-        },
-        {
-            id: 2,
-            country: "India",
-            institutes: [
-                {
-                    id: 1,
-                    member_name:
-                        "Citizen consumer and civic Action Group (CAG), Chennai",
-                    member_website_link: "https://www.cag.org.in/",
-                },
-                {
-                    id: 2,
-                    member_name:
-                        "Consumer Unity & Trust Society (CUTS), Jaipur",
-                    member_website_link: "https://cuts-international.org/",
-                },
-                {
-                    id: 3,
-                    member_name:
-                        "Development Research and Action Group (DRAG), New Delhi",
-                    member_website_link: "https://dragindia.org/",
-                },
-            ],
-        },
-        {
-            id: 3,
-            country: "Nepal",
-            institutes: [
-                {
-                    id: 1,
-                    member_name:
-                        "Society for Legal and Environmental Analysis and Development Research (LEADERS), Kathmandu",
-                    member_website_link: "https://leadersnepal.org.np/",
-                },
-                {
-                    id: 2,
-                    member_name:
-                        "Forum for Protection of Public Interest (Pro Public), Kathmandu",
-                    member_website_link: "http://propublic.org/",
-                },
-            ],
-        },
-        {
-            id: 4,
-            country: "Pakistan",
-            institutes: [
-                {
-                    id: 1,
-                    member_name:
-                        "Journalists for Democracy and Human Rights (JDHR), Islamabad",
-                    member_website_link: "http://www.jdhr.org/",
-                },
-                {
-                    id: 2,
-                    member_name:
-                        "Sustainable Development Policy Institute (SDPI), Islamabad",
-                    member_website_link: "https://sdpi.org/",
-                },
-            ],
-        },
-        {
-            id: 5,
-            country: "Sri Lanka",
-            institutes: [
-                {
-                    id: 1,
-                    member_name: "Institute of Policy Studies (IPS), Colombo",
-                    member_website_link: "https://www.ips.lk/",
-                },
-                {
-                    id: 2,
-                    member_name: "Law & Society Trust (LST), Colombo",
-                    member_website_link: "https://www.lstlanka.org/",
-                },
-            ],
-        },
-    ];
-
     return (
         <Content
             className="page-content"
@@ -150,14 +52,8 @@ export default function About({ sections }) {
 }
 
 export const Members = ({ memberInstitutions }) => {
-    const [hovered, setHovered] = React.useState([]);
     const headingColor = useColorModeValue("gray.900, whiteAlpha.900");
-    React.useEffect(() => {
-        memberInstitutions.map(({ country, institutes }) => {
-            let array = institutes.map((_) => false);
-            setHovered((prev) => [...prev, { [`${country}`]: [...array] }]);
-        });
-    }, [memberInstitutions]);
+
     return (
         <Box>
             <Heading
@@ -172,18 +68,16 @@ export const Members = ({ memberInstitutions }) => {
 
             <Accordion allowToggle>
                 {memberInstitutions?.map(({ country, institutes }, id) => {
-                    let array = [...hovered];
-
                     return (
                         <AccordionItem key={id} border="none">
                             <AccordionButton size="md" py="4">
                                 <Heading
                                     as="h5"
                                     flex="1"
-                                    // fontSize={["md", "lg", "xl"]}
                                     fontFamily={"heading"}
                                     textAlign="left"
                                     color={headingColor}
+                                    style={{ marginBottom: "0" }}
                                 >
                                     {country}
                                 </Heading>
@@ -192,13 +86,10 @@ export const Members = ({ memberInstitutions }) => {
                             <AccordionPanel px={["5", "10"]}>
                                 <OrderedList spacing="3">
                                     {institutes.map(
-                                        (
-                                            {
-                                                member_name,
-                                                member_website_link,
-                                            },
-                                            idx
-                                        ) => {
+                                        ({
+                                            member_name,
+                                            member_website_link,
+                                        }) => {
                                             return (
                                                 <ListItem
                                                     key={member_name}
@@ -209,62 +100,16 @@ export const Members = ({ memberInstitutions }) => {
                                                         lg: "lg",
                                                     }}
                                                 >
-                                                    <HStack
-                                                        spacing="3"
-                                                        align={"center"}
+                                                    <Link
+                                                        target="_blank"
+                                                        title={member_name}
+                                                        aria-label={member_name}
+                                                        href={
+                                                            member_website_link
+                                                        }
                                                     >
-                                                        <Link
-                                                            target="_blank"
-                                                            title={member_name}
-                                                            aria-label={
-                                                                member_name
-                                                            }
-                                                            href={
-                                                                member_website_link
-                                                            }
-                                                            onMouseEnter={() => {
-                                                                array[id][
-                                                                    country
-                                                                ][idx] = true;
-                                                                setHovered([
-                                                                    ...array,
-                                                                ]);
-                                                            }}
-                                                            onMouseLeave={() => {
-                                                                array[id][
-                                                                    country
-                                                                ][idx] = false;
-                                                                setHovered([
-                                                                    ...array,
-                                                                ]);
-                                                            }}
-                                                        >
-                                                            {member_name}
-                                                        </Link>
-                                                        {hovered.length > 0 &&
-                                                            hovered[id][
-                                                                country
-                                                            ][idx] && (
-                                                                <SlideFade
-                                                                    direction="bottom"
-                                                                    in={
-                                                                        hovered[
-                                                                            id
-                                                                        ][
-                                                                            country
-                                                                        ][idx]
-                                                                    }
-                                                                    offsetY="20px"
-                                                                >
-                                                                    <HiOutlineExternalLink
-                                                                        color={useColorModeValue(
-                                                                            "blackAlpha.100",
-                                                                            "blackAlpha.600"
-                                                                        )}
-                                                                    />
-                                                                </SlideFade>
-                                                            )}
-                                                    </HStack>
+                                                        {member_name}
+                                                    </Link>
                                                 </ListItem>
                                             );
                                         }
@@ -321,6 +166,7 @@ export const PageSection = ({ section, sections }) => {
                                     key={title}
                                     fontWeight={"semibold"}
                                     fontFamily={"heading"}
+                                    style={{ marginBottom: "0" }}
                                     _selected={{
                                         borderColor: useColorModeValue(
                                             "gray.700",
@@ -381,6 +227,7 @@ export const PageSection = ({ section, sections }) => {
                                         fontFamily={"heading"}
                                         textAlign="left"
                                         color={headingColor}
+                                        style={{ marginBottom: "0" }}
                                     >
                                         {title}
                                     </Heading>

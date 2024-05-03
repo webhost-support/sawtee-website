@@ -10,6 +10,8 @@ export const PageLayout = ({
     srcSet,
     children,
 }) => {
+
+    const hasFeaturedImage = featured_image && featured_image !== "";
     const headingColor = useColorModeValue(
         "var(--color-dark)",
         "var(--color-light)"
@@ -17,7 +19,7 @@ export const PageLayout = ({
     return (
         <LightPatternBox showPattern={showBackgroundPattern} pt="0">
             <Box pos="relative">
-                {featured_image && featured_image !== "" ? (
+                {hasFeaturedImage ? (
                     <FeaturedMedia
                         mt="0"
                         height={"350px"}
@@ -65,7 +67,7 @@ export const PageLayout = ({
                 )}
                 <PostHeader
                     px={10}
-                    color={featured_image ? "gray.100" : headingColor}
+                    color={hasFeaturedImage ? "gray.100" : headingColor}
                     heading={title}
                     position="absolute"
                     bottom="1rem"
