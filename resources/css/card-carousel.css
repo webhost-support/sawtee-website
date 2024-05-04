@@ -1,6 +1,6 @@
 .card-swiper {
-  width: var(--chakra-sizes-xs) !important;
-  max-width: var(--chakra-sizes-sm) !important;
+  width: 240px !important;
+  max-width: var(--chakra-sizes-xs) !important;
 }
 
 .card-swiper-slide {

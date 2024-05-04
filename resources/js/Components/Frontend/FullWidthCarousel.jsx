@@ -20,13 +20,7 @@ const FullWidthCarousel = ({
     pagination,
     paginationType,
 }) => {
-    const paginationBullet = {
-        clickable: true,
-        dynamicBullets: true,
-        renderBullet: function (index, className) {
-            return '<span className="' + className + '">' + "</span>";
-        },
-    };
+
 
     const creativeEffect = {
         prev: {
@@ -47,13 +41,11 @@ const FullWidthCarousel = ({
                 disableOnInteraction: false,
             }}
             pagination={
-                paginationType
+                pagination
                     ? {
-                          type: paginationType,
+                          type: paginationType ? paginationType : "bullets",
                       }
-                    : pagination
-                    ? paginationBullet
-                    : pagination
+                    : false
             }
             navigation={true}
             modules={[Autoplay, Pagination, Navigation, EffectCreative]}
@@ -63,39 +55,33 @@ const FullWidthCarousel = ({
             creativeEffect={creativeEffect}
             className="full-width-carousel"
         >
-            {slides &&
-                slides.length > 0 &&
-                slides.map((slide) => (
-                    <SwiperSlide className="swiper-slide" key={slide.id}>
-                        <Box
-                            w="full"
-                            h="full"
-                            backgroundColor="rgba(0,0,0,0.2)"
+            {slides.map((slide) => (
+                <SwiperSlide className="swiper-slide" key={slide.id}>
+                    <Box w="full" h="full" backgroundColor="rgba(0,0,0,0.2)">
+                        <Image
+                            src={`${slide.media[0].original_url}`}
+                            alt={slide.title}
+                            objectFit={"cover"}
+                            mixBlendMode="darken"
+                        />
+                        <Stack
+                            pos="absolute"
+                            bottom="0px"
+                            color="whiteAlpha.800"
+                            bg={"blackAlpha.500"}
+                            p={2}
+                            px={6}
                         >
-                            <Image
-                                src={`${slide.media[0].original_url}`}
-                                alt={slide.title}
-                                objectFit={"cover"}
-                                mixBlendMode="darken"
-                            />
-                            <Stack
-                                pos="absolute"
-                                bottom="0px"
-                                color="whiteAlpha.800"
-                                bg={"blackAlpha.500"}
-                                p={2}
-                                px={6}
-                            >
-                                <Text fontSize={{ base: "md", md: "3xl" }}>
-                                    {slide.title}
-                                </Text>
-                                <Text fontSize={{ base: "xs", md: "sm" }}>
-                                    {slide.subtitle}
-                                </Text>
-                            </Stack>
-                        </Box>
-                    </SwiperSlide>
-                ))}
+                            <Text fontSize={{ base: "md", md: "3xl" }}>
+                                {slide.title}
+                            </Text>
+                            <Text fontSize={{ base: "xs", md: "sm" }}>
+                                {slide.subtitle}
+                            </Text>
+                        </Stack>
+                    </Box>
+                </SwiperSlide>
+            ))}
         </Swiper>
     );
 };

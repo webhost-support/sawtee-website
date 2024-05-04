@@ -63,9 +63,25 @@ const Home = ({
             />
 
             <CarouselSection slides={slides} books={books} />
-            <AboutSection intro={introText} image={introImage} />
 
-            <InfocusSection infocus={infocus} link={"/category/infocus"} />
+            <Grid
+                templateColumns={{
+                    base: "1fr",
+                    lg: "repeat(6, 1fr)",
+                }}
+                gap={8}
+                bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
+            >
+                <GridItem colSpan={{ base: 1, md: 2 }}>
+                    <AboutSection intro={introText} image={introImage} />
+                </GridItem>
+                <GridItem colSpan={{ base: 1, md: 4 }}>
+                    <InfocusSection
+                        infocus={infocus}
+                        link={"/category/infocus"}
+                    />
+                </GridItem>
+            </Grid>
 
             <PublicationSection
                 publications={[...tradeInsights, ...books]}
@@ -97,15 +113,21 @@ const CarouselSection = ({ slides, books }) => {
             }}
             id="carousel-section"
         >
-            <GridItem colSpan={{ base: 1, md: 5 }} overflow={"hidden"}>
-                <FullWidthCarousel
-                    slides={slides}
-                    loop={true}
-                    rewind={true}
-                    pagination={true}
-                    paginationType={"fraction"}
-                />
-            </GridItem>
+            {slides && slides.length > 0 && (
+                <GridItem
+                    colSpan={{ base: 1, md: 5 }}
+                    overflow={"hidden"}
+                    maxH={"calc(100dvh - 7rem)"}
+                >
+                    <FullWidthCarousel
+                        slides={slides}
+                        loop={true}
+                        rewind={true}
+                        pagination={true}
+                        paginationType={"fraction"}
+                    />
+                </GridItem>
+            )}
             <GridItem
                 colSpan={{ base: 1, md: 2 }}
                 alignSelf={"center"}
@@ -182,10 +204,10 @@ const AboutSection = ({ intro, image }) => {
                     )}
                 </Box>
             </Box> */}
-            <SimpleGrid
+            <VStack
                 px={10}
                 py={16}
-                minChildWidth={"200px"}
+                // minChildWidth={"200px"}
                 spacing={16}
                 alignItems="center"
             >
@@ -236,7 +258,7 @@ const AboutSection = ({ intro, image }) => {
                         />
                     </InertiaChakraLink>
                 </LinkBox>
-            </SimpleGrid>
+            </VStack>
         </Box>
     );
 };
@@ -244,11 +266,14 @@ const AboutSection = ({ intro, image }) => {
 const InfocusSection = ({ infocus, link }) => {
     const itemBG = useColorModeValue("blackAlpha.200", "blackAlpha.300");
     return (
-        <Section
-            title={"In Focus"}
-            bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
-        >
-            <Container maxW="8xl" centerContent px={6}>
+        <Section title={"In Focus"}>
+            <Container
+                maxW="8xl"
+                centerContent
+                px={6}
+                maxH="600px"
+                overflowY={"scroll"}
+            >
                 {infocus.map((article) => {
                     return (
                         <LinkBox key={article.id} w="full">
@@ -509,7 +534,7 @@ const NewsletterSection = () => {
 const PublicationSection = ({ publications, showPublication }) => {
     return (
         <Section
-            title={"Latest Publications"}
+            title={" Publications"}
             bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
         >
             <Container maxW="8xl" centerContent px={6}>

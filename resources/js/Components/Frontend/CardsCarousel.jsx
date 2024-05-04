@@ -71,6 +71,11 @@ const CardsCarousel = ({ slides, navigation }) => {
                                         target="_blank"
                                         fontWeight="semibold"
                                         fontSize="sm"
+                                        noOfLines={1}
+                                        textDecor={"underline"}
+                                        _hover={{
+                                            textUnderlineOffset: "3px",
+                                        }}
                                     >
                                         {slide.title + " " + slide.subtitle}
                                     </InertiaChakraLink>
