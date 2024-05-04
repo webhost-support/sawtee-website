@@ -1,7 +1,7 @@
 import React from "react";
-import { Image } from "@chakra-ui/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Keyboard, Navigation, EffectCards } from "swiper/modules";
+import { Box, Image, Flex, useColorModeValue } from "@chakra-ui/react";
 
 // Import Swiper styles
 import "swiper/css";
@@ -9,6 +9,7 @@ import "swiper/css";
 import "swiper/css/effect-cards";
 import "swiper/css/navigation";
 import "../../../css/card-carousel.css";
+import InertiaChakraLink from "./styles/inertia-chakra-link";
 
 const CardsCarousel = ({ slides, navigation }) => {
     return (
@@ -30,12 +31,51 @@ const CardsCarousel = ({ slides, navigation }) => {
                             key={slide.id}
                             className="card-swiper-slide"
                         >
-                            <Image
-                                src={slide.media[0].original_url}
-                                alt={slide.title + slide.subtitle}
-                                rounded={"md"}
-                                objectFit="cover"
-                            />
+                            <Box
+                                rounded={"sm"}
+                                overflow={"hidden"}
+                                bg={useColorModeValue(
+                                    "white",
+                                    "var(--color-darker)"
+                                )}
+                                border={"1px"}
+                                borderColor="black"
+                            >
+                                <Box
+                                    aspectRatio={3 / 4}
+                                    borderBottom={"2px"}
+                                    borderColor="black"
+                                >
+                                    <Image
+                                        src={slide.media[0].original_url}
+                                        alt={slide.title + slide.subtitle}
+                                        roundedTop={"sm"}
+                                        objectFit="cover"
+                                    />
+                                </Box>
+                                <Flex
+                                    p={4}
+                                    alignItems="center"
+                                    justifyContent={"space-between"}
+                                    roundedBottom={"sm"}
+                                    cursor={"pointer"}
+                                    w="full"
+                                    borderTop={"1px"}
+                                    color="gray.700"
+                                    _dark={{
+                                        color: "gray.300",
+                                    }}
+                                >
+                                    <InertiaChakraLink
+                                        href={`/publications/${slide.file.name}`}
+                                        target="_blank"
+                                        fontWeight="semibold"
+                                        fontSize="sm"
+                                    >
+                                        {slide.title + " " + slide.subtitle}
+                                    </InertiaChakraLink>
+                                </Flex>
+                            </Box>
                         </SwiperSlide>
                     );
                 })}

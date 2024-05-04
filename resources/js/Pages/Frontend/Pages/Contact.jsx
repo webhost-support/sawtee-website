@@ -1,4 +1,3 @@
-import { Content } from "@/Components/Frontend/index";
 import Section from "@/Components/Frontend/styles/section";
 import {
     Box,
@@ -11,7 +10,6 @@ import {
     SimpleGrid,
     Text,
     VStack,
-    useColorModeValue,
     AspectRatio,
 } from "@chakra-ui/react";
 import Zoom from "react-medium-image-zoom";
@@ -27,53 +25,18 @@ import {
     FiYoutube,
 } from "react-icons/fi";
 import { MdOutlineFax } from "react-icons/md";
+import { contactPageData } from "@/Utils/data";
 
 const Contact = () => {
-    const headingColor = useColorModeValue("gray.900, whiteAlpha.900");
-    const contentColor = useColorModeValue("gray.800", "whiteAlpha.800");
-    const data = {
-        opening_hours: "9:00 AM – 5:30 PM",
-        phone_numbers: ["+977 1 4544438"],
-        fax: "+977 1 4544570",
-        email: "sawtee@sawtee.org",
-        address: "Tukucha Marg, Baluwatar, Kathmandu, Nepal",
-        social_menus: [
-            {
-                name: "twitter",
-                link: "https://www.twitter.com/SAWTEENP/",
-            },
-            {
-                name: "facebook",
-                link: "https://www.facebook.com/sawteenp/",
-            },
-            {
-                name: "linkedin",
-                link: "https://www.linkedin.com/sawteenp/",
-            },
-            {
-                name: "youtube",
-                link: "https://www.youtube.com/@sawteenp/",
-            },
-        ],
-    };
-
     return (
-        <Content
-            as={Section}
+        <Section
             px={["4", "8"]}
             py="80px"
             maxW="5xl"
-            size="md"
             paddingBlock="50px"
-            fontSize={["sm", "md"]}
             className={"contact-page-content"}
         >
-            <Box
-                p={{ sm: 5, md: 5 }}
-                borderRadius="xl"
-                color={headingColor}
-                boxShadow="lg"
-            >
+            <Box p={{ sm: 5, md: 5 }} borderRadius="xl" boxShadow="lg">
                 <Box p={4}>
                     <SimpleGrid
                         columns={{ base: 1, lg: 2 }}
@@ -83,7 +46,7 @@ const Contact = () => {
                             <Heading
                                 as="h4"
                                 fontSize={{ base: "xl", md: "2xl" }}
-                                color={headingColor}
+                                // color={headingColor}
                                 textTransform={"uppercase"}
                                 pb="0.75rem"
                             >
@@ -97,7 +60,8 @@ const Contact = () => {
                                     fontWeight={"semibold"}
                                     fontSize={"md"}
                                 >
-                                    Office hours:{" " + data.opening_hours}
+                                    Office hours:
+                                    {" " + contactPageData.opening_hours}
                                 </Text>
                             </Heading>
                             <VStack
@@ -108,12 +72,11 @@ const Contact = () => {
                                     lg: "start",
                                 }}
                             >
-                                {data.phone_numbers.map((number) => {
+                                {contactPageData.phone_numbers.map((number) => {
                                     return (
                                         <Button
                                             key={number}
                                             variant="ghost"
-                                            color={contentColor}
                                             leftIcon={<FiPhone size="20px" />}
                                         >
                                             <Link
@@ -141,16 +104,15 @@ const Contact = () => {
                                             textDecoration: "none",
                                         }}
                                         textDecoration={"none"}
-                                        href={`fax:${data.fax}`}
+                                        href={`fax:${contactPageData.fax}`}
                                     >
-                                        {data.fax}
+                                        {contactPageData.fax}
                                     </Link>
                                 </Button>
                                 <Button
                                     size="md"
                                     height="48px"
                                     variant="ghost"
-                                    color={contentColor}
                                     leftIcon={<FiMail size="20px" />}
                                 >
                                     <Link
@@ -159,19 +121,18 @@ const Contact = () => {
                                             textDecoration: "none",
                                         }}
                                         textDecoration={"none"}
-                                        href={`mailto:${data.email}`}
+                                        href={`mailto:${contactPageData.email}`}
                                     >
-                                        {data.email}
+                                        {contactPageData.email}
                                     </Link>
                                 </Button>
                                 <Button
                                     size="md"
                                     height="48px"
                                     variant="ghost"
-                                    color={contentColor}
                                     leftIcon={<FiMap size="20px" />}
                                 >
-                                    {data.address}
+                                    {contactPageData.address}
                                 </Button>
                             </VStack>
                             <HStack
@@ -183,115 +144,119 @@ const Contact = () => {
                                     lg: "flex-start",
                                 }}
                             >
-                                {data.social_menus.map(({ name, link }) => {
-                                    if (name === "facebook") {
-                                        return (
-                                            <Link
-                                                href={link}
-                                                key={name}
-                                                title={name.toUpperCase()}
-                                                as="a"
-                                                _hover={{
-                                                    textDecoration: "none",
-                                                }}
-                                                textDecoration={"none"}
-                                                target="_blank"
-                                            >
-                                                <IconButton
-                                                    aria-label={name}
-                                                    variant="ghost"
-                                                    size="lg"
-                                                    isRound={true}
+                                {contactPageData.social_menus.map(
+                                    ({ name, link }) => {
+                                        if (name === "facebook") {
+                                            return (
+                                                <Link
+                                                    href={link}
+                                                    key={name}
+                                                    title={name.toUpperCase()}
+                                                    as="a"
                                                     _hover={{
-                                                        bg: `${name}.600`,
+                                                        textDecoration: "none",
                                                     }}
-                                                    icon={
-                                                        <FiFacebook size="28px" />
-                                                    }
-                                                />
-                                            </Link>
-                                        );
-                                    } else if (name === "twitter") {
-                                        return (
-                                            <Link
-                                                href={link}
-                                                key={name}
-                                                title={name.toUpperCase()}
-                                                as="a"
-                                                _hover={{
-                                                    textDecoration: "none",
-                                                }}
-                                                textDecoration={"none"}
-                                                target="_blank"
-                                            >
-                                                <IconButton
-                                                    aria-label={name}
-                                                    variant="ghost"
-                                                    size="lg"
-                                                    isRound={true}
+                                                    textDecoration={"none"}
+                                                    target="_blank"
+                                                >
+                                                    <IconButton
+                                                        aria-label={name}
+                                                        variant="ghost"
+                                                        size="lg"
+                                                        isRound={true}
+                                                        _hover={{
+                                                            bg: `${name}.600`,
+                                                        }}
+                                                        icon={
+                                                            <FiFacebook size="28px" />
+                                                        }
+                                                    />
+                                                </Link>
+                                            );
+                                        } else if (name === "twitter") {
+                                            return (
+                                                <Link
+                                                    href={link}
+                                                    key={name}
+                                                    title={name.toUpperCase()}
+                                                    as="a"
                                                     _hover={{
-                                                        bg: `${name}.600`,
+                                                        textDecoration: "none",
                                                     }}
-                                                    icon={
-                                                        <FiTwitter size="28px" />
-                                                    }
-                                                />
-                                            </Link>
-                                        );
-                                    } else if (name === "linkedin") {
-                                        return (
-                                            <Link
-                                                href={link}
-                                                key={name}
-                                                title={name.toUpperCase()}
-                                                as="a"
-                                                _hover={{
-                                                    textDecoration: "none",
-                                                }}
-                                                textDecoration={"none"}
-                                                target="_blank"
-                                            >
-                                                <IconButton
-                                                    aria-label={name}
-                                                    variant="ghost"
-                                                    size="lg"
-                                                    isRound={true}
+                                                    textDecoration={"none"}
+                                                    target="_blank"
+                                                >
+                                                    <IconButton
+                                                        aria-label={name}
+                                                        variant="ghost"
+                                                        size="lg"
+                                                        isRound={true}
+                                                        _hover={{
+                                                            bg: `${name}.600`,
+                                                        }}
+                                                        icon={
+                                                            <FiTwitter size="28px" />
+                                                        }
+                                                    />
+                                                </Link>
+                                            );
+                                        } else if (name === "linkedin") {
+                                            return (
+                                                <Link
+                                                    href={link}
+                                                    key={name}
+                                                    title={name.toUpperCase()}
+                                                    as="a"
                                                     _hover={{
-                                                        bg: `${name}.600`,
+                                                        textDecoration: "none",
                                                     }}
-                                                    icon={
-                                                        <FiLinkedin size="28px" />
-                                                    }
-                                                />
-                                            </Link>
-                                        );
-                                    } else {
-                                        return (
-                                            <Link
-                                                href={link}
-                                                key={name}
-                                                title={name.toUpperCase()}
-                                                as="a"
-                                                _hover={{
-                                                    textDecoration: "none",
-                                                }}
-                                                textDecoration={"none"}
-                                                target="_blank"
-                                            >
-                                                <IconButton
-                                                    aria-label={name}
-                                                    variant="ghost"
-                                                    size="lg"
-                                                    isRound={true}
-                                                    _hover={{ bg: `red.600` }}
-                                                    icon={
-                                                        <FiYoutube size="28px" />
-                                                    }
-                                                />
-                                            </Link>
-                                        );
+                                                    textDecoration={"none"}
+                                                    target="_blank"
+                                                >
+                                                    <IconButton
+                                                        aria-label={name}
+                                                        variant="ghost"
+                                                        size="lg"
+                                                        isRound={true}
+                                                        _hover={{
+                                                            bg: `${name}.600`,
+                                                        }}
+                                                        icon={
+                                                            <FiLinkedin size="28px" />
+                                                        }
+                                                    />
+                                                </Link>
+                                            );
+                                        } else {
+                                            return (
+                                                <Link
+                                                    href={link}
+                                                    key={name}
+                                                    title={name.toUpperCase()}
+                                                    as="a"
+                                                    _hover={{
+                                                        textDecoration: "none",
+                                                    }}
+                                                    textDecoration={"none"}
+                                                    target="_blank"
+                                                >
+                                                    <IconButton
+                                                        aria-label={name}
+                                                        variant="ghost"
+                                                        size="lg"
+                                                        isRound={true}
+                                                        _hover={{
+                                                            bg: `red.600`,
+                                                        }}
+                                                        icon={
+                                                            <FiYoutube size="28px" />
+                                                        }
+                                                    />
+                                                </Link>
+                                            );
+                                        }
                                     }
-                                })}
+                                )}
                             </HStack>
                         </Box>
 
@@ -317,7 +282,7 @@ const Contact = () => {
                     </AspectRatio>
                 </Box>
             </Box>
-        </Content>
+        </Section>
     );
 };
 

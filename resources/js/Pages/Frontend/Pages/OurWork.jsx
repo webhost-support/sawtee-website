@@ -53,7 +53,6 @@ export default function OurWork({ themes, sections }) {
             {intro && (
                 <Box
                     textAlign="center"
-                    fontSize={["sm", "md"]}
                     mb={20}
                     dangerouslySetInnerHTML={{ __html: intro.description }}
                 />

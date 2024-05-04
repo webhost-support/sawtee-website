@@ -153,11 +153,11 @@ export default function MediaFellows({ content }) {
 
     return (
         <Content
-            className="page_content"
+            className="page-content"
             px={{ base: "32px", md: "0" }}
             mx="auto"
             py={"80px"}
-            maxW={"3xl"}
+            maxW={"4xl"}
             fontSize={{ base: "md", lg: "lg" }}
         >
             <Box dangerouslySetInnerHTML={{ __html: content }} />
@@ -197,14 +197,16 @@ export const Fellows = ({ mediaFellow, i }) => {
                     <Box ml={6}>
                         <Heading
                             as="h2"
-                            m="0"
-                            p="0"
-                            fontSize={["lg", "xl", "2xl", "4xl"]}
                             fontFamily="heading"
+                            style={{ marginBlock: "0" }}
                         >
                             {name}
                         </Heading>
-                        <Text fontSize="sm" fontWeight="semibold">
+                        <Text
+                            fontSize="sm"
+                            fontWeight="semibold"
+                            style={{ margin: "0" }}
+                        >
                             {designation}
                         </Text>
                     </Box>
@@ -216,11 +218,11 @@ export const Fellows = ({ mediaFellow, i }) => {
                     <AccordionItem>
                         <AccordionButton py="4">
                             <Heading
-                                as="h3"
+                                as="h4"
                                 flex="1"
-                                fontSize={{ base: "md", lg: "lg" }}
                                 fontFamily={"heading"}
                                 textAlign="left"
+                                style={{ marginBlock: "0" }}
                             >
                                 {"Published Stories"}
                             </Heading>
@@ -269,11 +271,11 @@ export const Fellows = ({ mediaFellow, i }) => {
                     <AccordionItem>
                         <AccordionButton py="4">
                             <Heading
-                                as="h3"
+                                as="h4"
                                 flex="1"
-                                fontSize={{ base: "md", lg: "lg" }}
                                 fontFamily={"heading"}
                                 textAlign="left"
+                                style={{ marginBlock: "0" }}
                             >
                                 {"Experience with the Fellowship"}
                             </Heading>

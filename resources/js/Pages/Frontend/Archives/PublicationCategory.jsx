@@ -53,11 +53,10 @@ export default function Publications({
             >
                 <Section
                     pb="80px"
-                    px={{ base: "24px", md: "40px" }}
+                    py={{ base: "24px", lg: "80px" }}
+                    px={{ base: "32px", lg: "80px" }}
                     size={"full"}
                     mx="auto"
-                    pt="50px"
-                    color={contentColor}
                 >
                     <Grid
                         templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
@@ -154,11 +153,19 @@ export default function Publications({
                                             return (
                                                 <Box
                                                     key={`100 + ${item.toString()}`}
+                                                    cursor="pointer"
                                                 >
                                                     <Skeleton
-                                                        height="200px"
-                                                        width="140px"
-                                                        rounded={"md"}
+                                                        rounded="md"
+                                                        startColor="gray.300"
+                                                        endColor="gray.400"
+                                                        w={{
+                                                            base: "160px",
+                                                            md: "180px",
+                                                            lg: "180px",
+                                                        }}
+                                                        aspectRatio={3 / 4}
+                                                        mx="auto"
                                                     />
                                                 </Box>
                                             );
@@ -191,7 +198,7 @@ export default function Publications({
                                     array={sawteeInMedia}
                                     title={"SAWTEE in Media"}
                                     link={"/category/sawtee-in-media"}
-                                    maxW={"md"}
+                                    maxW={["md", "lg", "xl"]}
                                     mt={12}
                                 />
                             )}
@@ -200,7 +207,7 @@ export default function Publications({
                                     array={infocus}
                                     title={"Infocus"}
                                     link={"/category/infocus"}
-                                    maxW={"md"}
+                                    maxW={["md", "lg", "xl"]}
                                     mt={12}
                                     position={"sticky"}
                                     top={"8.5rem"}

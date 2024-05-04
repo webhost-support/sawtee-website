@@ -77,7 +77,7 @@ export const Members = ({ memberInstitutions }) => {
                                     fontFamily={"heading"}
                                     textAlign="left"
                                     color={headingColor}
-                                    style={{ marginBottom: "0" }}
+                                    style={{ marginBlock: "0" }}
                                 >
                                     {country}
                                 </Heading>
@@ -166,7 +166,7 @@ export const PageSection = ({ section, sections }) => {
                                     key={title}
                                     fontWeight={"semibold"}
                                     fontFamily={"heading"}
-                                    style={{ marginBottom: "0" }}
+                                    style={{ marginBlock: "0" }}
                                     _selected={{
                                         borderColor: useColorModeValue(
                                             "gray.700",
@@ -227,7 +227,7 @@ export const PageSection = ({ section, sections }) => {
                                         fontFamily={"heading"}
                                         textAlign="left"
                                         color={headingColor}
-                                        style={{ marginBottom: "0" }}
+                                        style={{ marginBlock: "0" }}
                                     >
                                         {title}
                                     </Heading>

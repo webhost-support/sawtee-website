@@ -72,7 +72,11 @@ export default function CreateTeamForm({}) {
                         required
                     />
 
-                    <FormErrorMessage message={errors.name} mt={2} />
+                    {errors.name && (
+                        <FormErrorMessage mt={2}>
+                            {errors.name}
+                        </FormErrorMessage>
+                    )}
                 </FormControl>
 
                 <FormControl isInvalid={errors.email}>
@@ -86,34 +90,9 @@ export default function CreateTeamForm({}) {
                         onChange={(e) => setData("email", e.target.value)}
                     />
 
-                    <FormErrorMessage message={errors.email} />
-                </FormControl>
-
-                <FormControl isRequired>
-                    <FormLabel htmlFor="designation">Designation</FormLabel>
-                    <Input
-                        id="designation"
-                        name="designation"
-                        placeholder="enter member designation"
-                        onChange={(e) => setData("designation", e.target.value)}
-                    />
-                    <FormErrorMessage message={errors.designation} />
-                </FormControl>
-                <FormControl isRequired isInvalid={errors.order}>
-                    <FormLabel htmlFor="order">Order</FormLabel>
-                    <NumberInput
-                        id="order"
-                        name="order"
-                        defaultValue={data.order}
-                        onChange={(e) => setData("order", e.target.value)}
-                    >
-                        <NumberInputField />
-                        <NumberInputStepper>
-                            <NumberIncrementStepper />
-                            <NumberDecrementStepper />
-                        </NumberInputStepper>
-                    </NumberInput>
-                    <FormErrorMessage message={errors.order} />
+                    {errors.email && (
+                        <FormErrorMessage>{errors.email}</FormErrorMessage>
+                    )}
                 </FormControl>
             </HStack>
             <HStack
@@ -122,20 +101,77 @@ export default function CreateTeamForm({}) {
                 justifyContent="space-between"
                 alignItems="center"
             >
-                <FormControl>
-                    <FormLabel htmlFor="bio">Bio</FormLabel>
-                    <Textarea
-                        id="bio"
-                        name="bio"
-                        placeholder="enter member bio"
-                        rows={10}
-                        resize={"vertical"}
-                        onChange={(e) => setData("bio", e.target.value)}
-                    />
-                    <FormErrorMessage message={errors.bio} mt={2} />
-                </FormControl>
+                <VStack w="full" gap="6" alignItems={"start"}>
+                    <HStack
+                        w="full"
+                        gap={8}
+                        justifyContent="space-evenly"
+                        alignItems="center"
+                    >
+                        <FormControl isInvalid={errors.designation} isRequired>
+                            <FormLabel htmlFor="designation">
+                                Designation
+                            </FormLabel>
+                            <Input
+                                id="designation"
+                                name="designation"
+                                placeholder="enter member designation"
+                                onChange={(e) =>
+                                    setData("designation", e.target.value)
+                                }
+                            />
+                            {errors.designation && (
+                                <FormErrorMessage mt={2}>
+                                    {errors.designation}
+                                </FormErrorMessage>
+                            )}
+                        </FormControl>
+                        <FormControl
+                            maxW="64"
+                            isRequired
+                            isInvalid={errors.order}
+                        >
+                            <FormLabel htmlFor="order">Order</FormLabel>
+                            <NumberInput
+                                id="order"
+                                name="order"
+                                defaultValue={data.order}
+                                onChange={(e) =>
+                                    setData("order", e.target.value)
+                                }
+                            >
+                                <NumberInputField />
+                                <NumberInputStepper>
+                                    <NumberIncrementStepper />
+                                    <NumberDecrementStepper />
+                                </NumberInputStepper>
+                            </NumberInput>
+                            {errors.order && (
+                                <FormErrorMessage mt={2}>
+                                    {errors.order}
+                                </FormErrorMessage>
+                            )}
+                        </FormControl>
+                    </HStack>
+                    <FormControl>
+                        <FormLabel htmlFor="bio">Bio</FormLabel>
+                        <Textarea
+                            id="bio"
+                            name="bio"
+                            placeholder="enter member bio"
+                            rows={10}
+                            resize={"vertical"}
+                            onChange={(e) => setData("bio", e.target.value)}
+                        />
+                        {errors.bio && (
+                            <FormErrorMessage mt={2}>
+                                {errors.bio}
+                            </FormErrorMessage>
+                        )}
+                    </FormControl>
+                </VStack>
 
-                <FormControl mt={4}>
+                <FormControl isInvalid={errors.image} maxW="lg">
                     <FormLabel htmlFor="image">Image</FormLabel>
 
                     {image && (

@@ -58,7 +58,7 @@ export default function Category({
                 <Section
                     pb="80px"
                     py={{ base: "24px", lg: "80px" }}
-                    px={{ base: "16px", lg: "80px" }}
+                    px={{ base: "32px", lg: "80px" }}
                     size="full"
                     mx="auto"
                     pt="50px"
@@ -68,7 +68,7 @@ export default function Category({
                             base: "1fr",
                             md: "1fr",
                             lg: "1fr 1fr",
-                            xl: "var(--chakra-sizes-3xl) minmax(var(--chakra-sizes-lg), var(--chakra-sizes-xl))",
+                            xl: "var(--chakra-sizes-4xl) minmax(var(--chakra-sizes-lg), var(--chakra-sizes-xl))",
                         }}
                         gap={10}
                         pos={"relative"}
@@ -120,7 +120,7 @@ export default function Category({
                                     array={sawteeInMedia}
                                     title={"Sawtee in Media"}
                                     link={"/category/sawtee-in-media"}
-                                    maxW={"xl"}
+                                    maxW={["md", "lg", "xl"]}
                                 />
                             )}
                             {isInFocus && events && (
@@ -129,7 +129,7 @@ export default function Category({
                                     title={"Featured Events"}
                                     link={"/category/featured-events"}
                                     mt={12}
-                                    maxW={"xl"}
+                                    maxW={["md", "lg", "xl"]}
                                 />
                             )}
                             {isMedia && events && (
@@ -137,7 +137,7 @@ export default function Category({
                                     array={events}
                                     title={"Featured Events"}
                                     link={"/category/featured-events"}
-                                    maxW={"xl"}
+                                    maxW={["md", "lg", "xl"]}
                                 />
                             )}
                             {!isInFocus && infocus && (
@@ -145,7 +145,7 @@ export default function Category({
                                     array={infocus}
                                     link={"/category/infocus"}
                                     title={"InFocus"}
-                                    maxW={"xl"}
+                                    maxW={["md", "lg", "xl"]}
                                 />
                             )}
 
@@ -154,7 +154,7 @@ export default function Category({
                                     py="4"
                                     px="4"
                                     rounded="xl"
-                                    maxW={"xl"}
+                                    maxW={["md", "lg", "xl"]}
                                     height="max-content"
                                 >
                                     <SubscriptionCard />

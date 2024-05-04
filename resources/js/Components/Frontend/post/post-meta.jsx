@@ -3,8 +3,15 @@ import React from "react";
 import { formatDate } from "@/Utils/helpers";
 
 const PostMeta = ({ author, date, readingTime, ...props }) => (
-    <Box ml={{ base: "1rem", md: "2rem" }} className="post-meta" {...props}>
-        <HStack gap="8" mt={4} justify={"start"} align={"center"}>
+    <Box ml={{ base: "1.5rem", md: "3rem" }} className="post-meta" {...props}>
+        <HStack
+            rowGap="2"
+            columnGap="8"
+            mt={4}
+            justify={"start"}
+            align={"center"}
+            flexWrap={"wrap"}
+        >
             {readingTime && <Text>Reading Time: {readingTime}</Text>}
             {author && <Text>Author: {author}</Text>}
             {date && (

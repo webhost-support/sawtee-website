@@ -1,4 +1,4 @@
-import { Box, VStack } from "@chakra-ui/react";
+import { Box, Text, VStack } from "@chakra-ui/react";
 import React from "react";
 import MainLayout from "./Layout/MainLayout";
 import ProgramPost from "./Pages/ProgramPost";
@@ -37,14 +37,12 @@ export default function Post({ post }) {
 
                 {isDefault && (
                     <Box className="default_post_content" mt={6}>
-                        <VStack align={"start"} spacing={4}>
-                            <Box
-                                mt={6}
-                                dangerouslySetInnerHTML={{
-                                    __html: content,
-                                }}
-                            />
-                        </VStack>
+                        <Text
+                            mt={6}
+                            dangerouslySetInnerHTML={{
+                                __html: content,
+                            }}
+                        />
                     </Box>
                 )}
             </PostLayout>

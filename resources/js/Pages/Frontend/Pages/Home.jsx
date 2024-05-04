@@ -97,7 +97,7 @@ const CarouselSection = ({ slides, books }) => {
             }}
             id="carousel-section"
         >
-            <GridItem colSpan={{ base: 1, md: 4 }} overflow={"hidden"}>
+            <GridItem colSpan={{ base: 1, md: 5 }} overflow={"hidden"}>
                 <FullWidthCarousel
                     slides={slides}
                     loop={true}
@@ -107,56 +107,13 @@ const CarouselSection = ({ slides, books }) => {
                 />
             </GridItem>
             <GridItem
-                colSpan={{ base: 1, md: 3 }}
+                colSpan={{ base: 1, md: 2 }}
                 alignSelf={"center"}
                 px={10}
                 py={6}
             >
-                <SimpleGrid columns={2} spacing="4">
-                    <CardsCarousel slides={books} />
+                <CardsCarousel slides={books} />
 
-                    <VStack
-                        spacing={5}
-                        alignItems="center"
-                        justify="center"
-                        maxW="300px"
-                    >
-                        {books &&
-                            books.length > 0 &&
-                            books.map((slide, i) => {
-                                return (
-                                    <Box key={slide.id}>
-                                        <HStack spacing={4}>
-                                            <Text
-                                                fontWeight="bold"
-                                                boxShadow="md"
-                                                color="white"
-                                                bg="primary.400"
-                                                rounded="md"
-                                                px="2"
-                                            >
-                                                {i + 1}
-                                            </Text>
-                                            <InertiaChakraLink
-                                                href={`/publications/${slide.file.name}`}
-                                                target="_blank"
-                                                fontWeight="semibold"
-                                                fontSize="md"
-                                                color="gray.700"
-                                                _dark={{
-                                                    color: "gray.400",
-                                                }}
-                                            >
-                                                {slide.title +
-                                                    " " +
-                                                    slide.subtitle}
-                                            </InertiaChakraLink>
-                                        </HStack>
-                                    </Box>
-                                );
-                            })}
-                    </VStack>
-                </SimpleGrid>
                 <Spacer h="60px" />
                 <Flex justifyContent="center" alignItems="center" mx="auto">
                     <LinkBox shadow={"xl"} rounded="xl" maxW="2xl">

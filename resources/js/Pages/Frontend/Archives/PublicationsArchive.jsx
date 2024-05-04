@@ -29,14 +29,12 @@ export default function PublicationsArchive({
     featured_image,
     srcSet,
 }) {
-    const contentColor = useColorModeValue(
-        "rgba(12, 17, 43, 0.8)",
-        "whiteAlpha.800"
-    );
+
     const show = useBreakpointValue({
         base: 1,
         md: 2,
         lg: 3,
+        xl: 4,
     });
 
     return (
@@ -61,11 +59,9 @@ export default function PublicationsArchive({
                 <Section
                     pb="80px"
                     py={{ base: "24px", lg: "80px" }}
-                    px={{ base: "16px", lg: "80px" }}
+                    px={{ base: "32px", lg: "80px" }}
                     size={"full"}
                     mx="auto"
-                    fontSize={["md", "lg", "xl", "huge"]}
-                    color={contentColor}
                 >
                     <Grid
                         templateColumns={{ base: "1fr", xl: "repeat(6, 1fr)" }}
@@ -94,7 +90,7 @@ export default function PublicationsArchive({
                                     array={sawteeInMedia}
                                     title={"SAWTEE in Media"}
                                     link={"/category/sawtee-in-media"}
-                                    maxW={"lg"}
+                                    maxW={["md", "lg", "xl"]}
                                 />
                             )}
                             {infocus && (
@@ -102,12 +98,17 @@ export default function PublicationsArchive({
                                     array={infocus}
                                     title={"Infocus"}
                                     link={"/category/infocus"}
-                                    maxW={"lg"}
+                                    maxW={["md", "lg", "xl"]}
                                 />
                             )}
 
                             {showSubscriptionBox && (
-                                <GlassBox py="4" px="8" rounded="xl">
+                                <GlassBox
+                                    maxW={["md", "lg", "xl"]}
+                                    py="4"
+                                    px="8"
+                                    rounded="xl"
+                                >
                                     <SubscriptionCard />
                                 </GlassBox>
                             )}

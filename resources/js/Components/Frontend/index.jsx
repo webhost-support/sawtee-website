@@ -62,7 +62,7 @@ export const Content = styled(Box)`
     p {
         margin-top: 1.5rem;
         padding-bottom: 10px;
-        font-size: var(--chakra-fontSizes-md);
+        font-size: 18px;
         line-height: var(--chakra-lineHeights-taller);
     }
 
@@ -73,13 +73,7 @@ export const Content = styled(Box)`
     ul,
     ol {
         padding: 0;
-        margin: 0;
         margin-left: 1rem;
-        & p,
-        li {
-            margin-top: 1rem;
-            font-size: var(--chakra-fontSizes-md);
-        }
     }
 
     h1,
@@ -90,7 +84,6 @@ export const Content = styled(Box)`
     h6 {
         overflow-wrap: break-word;
         word-break: break-word;
-        margin-bottom: 1em;
     }
 
     h1,
@@ -101,26 +94,32 @@ export const Content = styled(Box)`
 
     h1 {
         font-size: var(--chakra-fontSizes-4xl);
+        margin-block: 35px;
     }
 
     h2 {
         font-size: var(--chakra-fontSizes-3xl);
+        margin-block: 30px;
     }
 
     h3 {
         font-size: var(--chakra-fontSizes-2xl);
+        margin-block: 25px;
     }
 
     h4 {
         font-size: var(--chakra-fontSizes-xl);
+        margin-block: 20px;
     }
 
     h5 {
         font-size: var(--chakra-fontSizes-lg);
+        margin-block: 15px;
     }
 
     h6 {
         font-size: var(--chakra-fontSizes-md);
+        margin-block: 10px;
     }
 
     img {

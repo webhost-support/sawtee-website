@@ -14,7 +14,7 @@ import { GlassBox } from "@/Components/Frontend/index";
 
 const CovidArchive = ({ posts }) => {
     return (
-        <SimpleGrid columns={2} gap={4} rowGap={20}>
+        <SimpleGrid columns={{ base: 1, md: 2 }} gap={4} rowGap={20}>
             {posts.map((post) => {
                 return (
                     <VStack
@@ -31,6 +31,8 @@ const CovidArchive = ({ posts }) => {
                             shadow: "dark-lg",
                             transform: "scale(1.02)",
                         }}
+                        w="4xl"
+                        maxW="4xl"
                     >
                         <HStack w="full" justify="space-between">
                             {post.genre && (

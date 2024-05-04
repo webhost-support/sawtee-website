@@ -24,10 +24,12 @@ const PostLayout = ({
     //     featured_media.responsive_images.responsive.urls
     // );
 
-    const readingTime = readingDuration(post.content, {
-        emoji: "stopwatch",
-        wordsPerMinute: 225,
-    });
+    const readingTime = post.content
+        ? readingDuration(post.content, {
+              emoji: "stopwatch",
+              wordsPerMinute: 225,
+          })
+        : null;
 
     const shareUrl = isProgramPost
         ? `/programme/${post.category.slug}/${post.slug}`
@@ -35,7 +37,7 @@ const PostLayout = ({
 
     return (
         <LightPatternBox showPattern={showPattern} pt="10px" pb={"40px"}>
-            <Box pb="2" maxW="6xl" mx="auto">
+            <Box maxW="6xl" mx="auto">
                 <PostHeader
                     mt={"20px"}
                     px={{ base: "32px", md: "3rem" }}
@@ -48,7 +50,7 @@ const PostLayout = ({
             {/* <PostProgressBar value={scroll} /> */}
 
             {/* Look at the settings to see if we should include the featured image */}
-            <Box maxW={isNewsletter ? "full" : "4xl"} mx="auto">
+            <Box maxW={isNewsletter ? "full" : "4xl"} mx="auto" px={4}>
                 {!isProgramPost && featured_media && (
                     <FeaturedMedia
                         src={featured_media.original_url}
@@ -65,7 +67,7 @@ const PostLayout = ({
 
                 <Content
                     as={Section}
-                    px={{ base: "1rem", md: "2rem" }}
+                    px={{ base: "1.5rem", md: "3rem" }}
                     size={isNewsletter ? "full" : "lg"}
                     pb="50px"
                     className="post-content"

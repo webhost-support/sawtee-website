@@ -64,7 +64,7 @@ body {
     color: var(--color-text);
     font-family: "-apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif";
     font-weight: normal;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1.5;
     word-break: break-word;
     text-rendering: optimizeLegibility;
@@ -340,6 +340,50 @@ time {
         animation-duration: 0s !important;
         transition-duration: 0s !important;
     }
+}
+
+.our-team .social{
+    padding: 10px 0 0 0;
+    margin: 0;
+    list-style: none;
+    position: absolute;
+    top: 40px;
+    left: -27px;
+    background: #3b336a;
+    text-align: center;
+    transform: translate(25px, 0px) rotateY(90deg);
+    transition: all 0.5s ease 0s;
+}
+.our-team:hover .social{
+    transform: translate(0px, 0px) rotateY(0deg);
+}
+.our-team .social li{
+    display: block;
+    margin-bottom: 10px;
+}
+.our-team .social li a{
+    display: block;
+    width: 40px;
+    height: 35px;
+    font-size: 17px;
+    color: #fff;
+    line-height: 30px;
+    transition: all 0.5s ease 0s;
+}
+.our-team .social li a:hover{
+    background: #bc3fbf;
+}
+
+
+
+@media only screen and (max-width: 990px){
+    .our-team{ margin-bottom: 30px; }
+}
+@media only screen and (max-width: 767px){
+    .our-team .social{ left: -20px; }
+}
+@media only screen and (max-width: 480px){
+    .our-team .social{ left: -20px; }
 }
 
 /* backend react-datepicker styles */

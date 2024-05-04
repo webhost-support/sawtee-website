@@ -9,7 +9,11 @@ const PostHeader = ({
     color,
     ...rest
 }) => (
-    <Box className="post-header" textAlign="center" {...rest}>
+    <Box
+        className="post-header"
+        textAlign={{ base: "left", md: "center" }}
+        {...rest}
+    >
         {categories && (
             <PostCategories
                 colorScheme="accent"
@@ -20,11 +24,9 @@ const PostHeader = ({
         )}
         <Heading
             as="h1"
-            fontWeight="bold"
             fontSize={{ base: "2xl", md: "3xl", lg: "5xl" }}
             color={color}
-            mt="10px"
-            mb={{ base: "20px", lg: "32px" }}
+            my={{ base: "16px", lg: "32px" }}
             textTransform="capitalize"
             dangerouslySetInnerHTML={{ __html: heading }}
         />

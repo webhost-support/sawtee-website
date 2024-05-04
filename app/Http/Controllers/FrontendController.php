@@ -157,6 +157,18 @@ class FrontendController extends Controller
             ]);
         }
 
+        if ($slug === 'teams' && !$subcategory) {
+                $teams = Team::with('media')->orderByDesc('id')->simplePaginate(12);
+                return Inertia::render('Frontend/Archives/TeamsArchive', [
+                    'category' => $category,
+                    'teams' => $teams,
+                    'infocus' => $infocus,
+                    'sawteeInMedia' => $sawteeInMedia,
+                    'featured_image' => $featured_image,
+                    'srcSet' => $srcSet
+                ]);
+            }
+
 
         // if route is for category/subcategory/post eg: sawtee.org/programmes/ongoing-programmes/post-slug
         if ($subcategory && $post) {
@@ -179,6 +191,7 @@ class FrontendController extends Controller
                     'srcSet' => $srcSet
                 ]);
             }
+
             if (!$category) {
                 $category = Category::with('parent')->where('slug', $segments[1])->first();
                 $post = Post::where('slug', $segments[2])->firstOrFail();

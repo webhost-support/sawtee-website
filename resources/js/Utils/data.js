@@ -431,3 +431,29 @@ export const socialMenu = [
         link: "https://www.youtube.com/@sawteenp/",
     },
 ];
+
+export const contactPageData = {
+    opening_hours: "9:00 AM – 5:30 PM",
+    phone_numbers: ["+977 1 4544438"],
+    fax: "+977 1 4544570",
+    email: "sawtee@sawtee.org",
+    address: "Tukucha Marg, Baluwatar, Kathmandu, Nepal",
+    social_menus: [
+        {
+            name: "twitter",
+            link: "https://www.twitter.com/SAWTEENP/",
+        },
+        {
+            name: "facebook",
+            link: "https://www.facebook.com/sawteenp/",
+        },
+        {
+            name: "linkedin",
+            link: "https://www.linkedin.com/sawteenp/",
+        },
+        {
+            name: "youtube",
+            link: "https://www.youtube.com/@sawteenp/",
+        },
+    ],
+};
