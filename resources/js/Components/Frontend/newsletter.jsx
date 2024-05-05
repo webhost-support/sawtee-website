@@ -62,7 +62,7 @@ export const Newsletter = (props) => {
                 <Heading color="var(--color-text)" textTransform="uppercase">
                     Never miss an update!
                 </Heading>
-                <Text mt={4} fontSize="xl" color="accent.400">
+                <Text mt={4} fontSize="xl" color="primary.500">
                     Receive the latest publication releases, update and monthly
                     newsletter.
                 </Text>

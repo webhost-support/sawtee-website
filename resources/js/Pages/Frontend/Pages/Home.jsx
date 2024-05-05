@@ -30,6 +30,7 @@ import InertiaChakraLinkOverlay from "@/Components/Frontend/styles/inertia-chakr
 import { Newsletter } from "@/Components/Frontend/newsletter";
 import WebsiteHead from "@/Components/Frontend/Head";
 import CardsCarousel from "@/Components/Frontend/CardsCarousel";
+import { info } from "autoprefixer";
 // import { Barchart, TreemapChart } from "@/Components/Frontend/Charts";
 
 const Home = ({
@@ -62,26 +63,29 @@ const Home = ({
                 image={"/assets/logo-sawtee.webp"}
             />
 
-            <CarouselSection slides={slides} books={books} />
+            <CarouselSection slides={slides} books={books} infocus={infocus} />
+            <AboutSection intro={introText} image={introImage} />
 
-            <Grid
+            {/* <Grid
                 templateColumns={{
                     base: "1fr",
                     lg: "repeat(6, 1fr)",
                 }}
                 gap={8}
-                bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
+                // bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
+                backgroundColor={useColorModeValue(
+                    "blackAlpha.50",
+                    "var(--color-darker)"
+                )}
+                // color={useColorModeValue("gray.400", "gray.100")}
+                bgImage={useColorModeValue(
+                    "none",
+                    "url(/assets/graph-paper.svg)"
+                )}
             >
-                <GridItem colSpan={{ base: 1, md: 2 }}>
-                    <AboutSection intro={introText} image={introImage} />
-                </GridItem>
-                <GridItem colSpan={{ base: 1, md: 4 }}>
-                    <InfocusSection
-                        infocus={infocus}
-                        link={"/category/infocus"}
-                    />
-                </GridItem>
-            </Grid>
+                <GridItem colSpan={{ base: 1, md: 2 }}></GridItem>
+                <GridItem colSpan={{ base: 1, md: 4 }}></GridItem>
+            </Grid> */}
 
             <PublicationSection
                 publications={[...tradeInsights, ...books]}
@@ -104,7 +108,7 @@ const Home = ({
 
 export default Home;
 
-const CarouselSection = ({ slides, books }) => {
+const CarouselSection = ({ slides, books, infocus }) => {
     return (
         <Grid
             templateColumns={{
@@ -115,9 +119,9 @@ const CarouselSection = ({ slides, books }) => {
         >
             {slides && slides.length > 0 && (
                 <GridItem
-                    colSpan={{ base: 1, md: 5 }}
+                    colSpan={{ base: 1, md: 4 }}
                     overflow={"hidden"}
-                    maxH={"calc(100dvh - 7rem)"}
+                    maxH={{ base: "auto", md: "calc(100dvh - 15rem)" }}
                 >
                     <FullWidthCarousel
                         slides={slides}
@@ -129,31 +133,15 @@ const CarouselSection = ({ slides, books }) => {
                 </GridItem>
             )}
             <GridItem
-                colSpan={{ base: 1, md: 2 }}
+                colSpan={{ base: 1, md: 3 }}
                 alignSelf={"center"}
-                px={10}
-                py={6}
+                px={2}
+                py={2}
             >
-                <CardsCarousel slides={books} />
+                <InfocusSection infocus={infocus} link={"/category/infocus"} />
+                {/* <CardsCarousel slides={books} /> */}
 
-                <Spacer h="60px" />
-                <Flex justifyContent="center" alignItems="center" mx="auto">
-                    <LinkBox shadow={"xl"} rounded="xl" maxW="2xl">
-                        <InertiaChakraLink
-                            href="/reform-monitoring-platform"
-                            role="banner"
-                            aria-labelledby="Reform monitoring Platform"
-                            title="Reform monitoring Platform"
-                        >
-                            <Image
-                                src="/assets/Policy-Reform-Banner-green-sized.webp"
-                                alt="Reform monitoring Platform"
-                                fit="cover"
-                                rounded="xl"
-                            />
-                        </InertiaChakraLink>
-                    </LinkBox>
-                </Flex>
+                {/* <Spacer h="60px" /> */}
             </GridItem>
         </Grid>
     );
@@ -204,13 +192,30 @@ const AboutSection = ({ intro, image }) => {
                     )}
                 </Box>
             </Box> */}
-            <VStack
+            <SimpleGrid
                 px={10}
                 py={16}
-                // minChildWidth={"200px"}
+                minChildWidth={"200px"}
                 spacing={16}
                 alignItems="center"
             >
+                <Flex justifyContent="center" alignItems="center" mx="auto">
+                    <LinkBox shadow={"xl"} rounded="xl" maxW="2xl">
+                        <InertiaChakraLink
+                            href="/reform-monitoring-platform"
+                            role="banner"
+                            aria-labelledby="Reform monitoring Platform"
+                            title="Reform monitoring Platform"
+                        >
+                            <Image
+                                src="/assets/Policy-Reform-Banner-green-sized.webp"
+                                alt="Reform monitoring Platform"
+                                fit="cover"
+                                rounded="xl"
+                            />
+                        </InertiaChakraLink>
+                    </LinkBox>
+                </Flex>
                 <LinkBox mx="auto" shadow={"xl"} rounded="xl">
                     <InertiaChakraLink
                         href="/media-fellowship"
@@ -258,7 +263,7 @@ const AboutSection = ({ intro, image }) => {
                         />
                     </InertiaChakraLink>
                 </LinkBox>
-            </VStack>
+            </SimpleGrid>
         </Box>
     );
 };
@@ -266,115 +271,112 @@ const AboutSection = ({ intro, image }) => {
 const InfocusSection = ({ infocus, link }) => {
     const itemBG = useColorModeValue("blackAlpha.200", "blackAlpha.300");
     return (
-        <Section title={"In Focus"}>
-            <Container
-                maxW="8xl"
-                centerContent
-                px={6}
-                maxH="600px"
-                overflowY={"scroll"}
-            >
-                {infocus.map((article) => {
-                    return (
-                        <LinkBox key={article.id} w="full">
-                            <Grid
-                                templateRows={{
-                                    base: "auto auto auto",
-                                    md: "auto",
+        <Container
+            maxW="8xl"
+            centerContent
+            p={4}
+            maxH={{ base: "auto", md: "calc(100dvh - 15rem)" }}
+            overflowY={"scroll"}
+        >
+            {infocus.map((article) => {
+                return (
+                    <LinkBox key={article.id} w="full">
+                        <Grid
+                            templateRows={{
+                                base: "auto auto auto",
+                                md: "auto",
+                            }}
+                            w="100%"
+                            templateColumns={{
+                                base: "1fr",
+                                md: "4fr 2fr",
+                            }}
+                            p={{ base: 4, sm: 6 }}
+                            alignItems="center"
+                            _hover={{ bg: itemBG }}
+                            rowGap={3}
+                            m={0}
+                        >
+                            <Box
+                                gridColumnEnd={{
+                                    base: "span 2",
+                                    md: "unset",
                                 }}
-                                w="100%"
-                                templateColumns={{
-                                    base: "1fr",
-                                    md: "4fr 2fr",
-                                }}
-                                p={{ base: 4, sm: 6 }}
-                                alignItems="center"
-                                _hover={{ bg: itemBG }}
-                                rowGap={3}
-                                m={0}
                             >
-                                <Box
-                                    gridColumnEnd={{
-                                        base: "span 2",
-                                        md: "unset",
+                                <Heading
+                                    as="h3"
+                                    fontFamily={"heading"}
+                                    fontWeight="bold"
+                                    fontSize={{
+                                        base: "md",
+                                        md: "lg",
+                                        lg: "xl",
                                     }}
+                                    // pl={"20px"}
                                 >
-                                    <Heading
-                                        as="h3"
-                                        fontFamily={"heading"}
-                                        fontWeight="bold"
-                                        fontSize={{
-                                            base: "md",
-                                            md: "lg",
-                                            lg: "xl",
-                                        }}
-                                        // pl={"20px"}
+                                    <InertiaChakraLinkOverlay
+                                        as={Link}
+                                        href={`/category/${article.category.slug}/${article.slug}`}
                                     >
-                                        <InertiaChakraLinkOverlay
-                                            as={Link}
-                                            href={`/category/${article.category.slug}/${article.slug}`}
-                                        >
-                                            {article.title}
-                                        </InertiaChakraLinkOverlay>
-                                    </Heading>
-                                    <HStack pos="relative" mt="20px">
-                                        <Text
-                                            as="span"
-                                            w="5px"
-                                            h="full"
-                                            bg="primary.400"
-                                            rounded="lg"
-                                            pos={"absolute"}
-                                        />
+                                        {article.title}
+                                    </InertiaChakraLinkOverlay>
+                                </Heading>
+                                <HStack pos="relative" mt="20px">
+                                    <Text
+                                        as="span"
+                                        w="5px"
+                                        h="full"
+                                        bg="primary.400"
+                                        rounded="lg"
+                                        pos={"absolute"}
+                                    />
 
-                                        <Text
-                                            noOfLines={3}
-                                            pl="20px"
-                                            fontSize={{
-                                                base: "sm",
-                                                md: "md",
-                                                lg: "md",
-                                            }}
-                                        >
-                                            {article.excerpt}
-                                        </Text>
-                                    </HStack>
-                                </Box>
+                                    <Text
+                                        noOfLines={3}
+                                        pl="20px"
+                                        fontSize={{
+                                            base: "sm",
+                                            md: "md",
+                                            lg: "md",
+                                        }}
+                                    >
+                                        {article.excerpt}
+                                    </Text>
+                                </HStack>
+                            </Box>
 
-                                <Text
-                                    as="time"
-                                    justifySelf={{
-                                        base: "start",
-                                        md: "flex-end",
-                                    }}
-                                    fontSize={["xs", "sm", "sm"]}
-                                    color={"gray.600"}
-                                    _dark={{
-                                        color: "gray.300",
-                                    }}
-                                    mt={{ base: "4", md: 0 }}
-                                    pl={"20px"}
-                                >
-                                    {formatDate(
-                                        article.published_at ||
-                                            article.created_at
-                                    )}
-                                </Text>
-                            </Grid>
-                            <Divider m={0} />
-                        </LinkBox>
-                    );
-                })}
-                <InertiaChakraLink as={Link} mt={12} href={link}>
-                    <ExploreButton
-                        size="md"
-                        text="Explore All "
-                        variant="outline"
-                        px={10}
-                    />
-                </InertiaChakraLink>
-            </Container>
-        </Section>
+                            <Text
+                                as="time"
+                                justifySelf={{
+                                    base: "start",
+                                    md: "flex-end",
+                                }}
+                                fontSize={["xs", "sm", "sm"]}
+                                color={"gray.600"}
+                                _dark={{
+                                    color: "gray.300",
+                                }}
+                                mt={{ base: "4", md: 0 }}
+                                pl={"20px"}
+                            >
+                                {formatDate(
+                                    article.published_at || article.created_at
+                                )}
+                            </Text>
+                        </Grid>
+                        <Divider m={0} />
+                    </LinkBox>
+                );
+            })}
+            <InertiaChakraLink as={Link} my={6} href={link}>
+                <ExploreButton
+                    size="md"
+                    text="Explore All "
+                    variant="outline"
+                    px={10}
+                />
+            </InertiaChakraLink>
+        </Container>
     );
 };
 

@@ -20,11 +20,15 @@ class SubscriptionController extends Controller
     {
         $validated = $request->validated();
         $isSubscribed = Newsletter::isSubscribed($validated['email']);
-        if(!$isSubscribed){
+      
+
+        try {
+            if(!$isSubscribed){
             Newsletter::subscribe($validated['email']);
             return redirect()->back()->with('You have subscribed successfully.');
-        }else {
-            return redirect()->back()->with('You are already subscribed.');
+        }
+        } catch (\Throwable $th) {
+            throw $th;
         }
 
     }

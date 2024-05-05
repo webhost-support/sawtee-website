@@ -73,7 +73,7 @@ const PageContent = ({ slug, themes, sections, content }) => {
         case "contact":
             return <Contact content={content} />;
 
-        case "media-fellowship":
+        case "media-fellows":
             return <MediaFellows content={content} />;
 
         default:
