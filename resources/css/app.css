@@ -117,13 +117,15 @@ select {
     text-decoration: none;
 }
 
-.chakra-ui-dark .post-content h1,
-.chakra-ui-dark .post-content h2,
-.chakra-ui-dark .post-content h3,
-.chakra-ui-dark .page-content h1,
-.chakra-ui-dark .page-content h2,
-.chakra-ui-dark .page-content h3  {
-    color: var(--chakra-colors-primary-300);
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.page-content h1,
+.page-content h2,
+.page-content h3  {
+    background-image: linear-gradient(to bottom left, #228be6, #15aabf);
+    background-clip: text;
+
 }
 
 .primary-link {
@@ -273,13 +275,12 @@ time {
 .full-width-carousel .swiper-button-next,
 .full-width-carousel .swiper-button-prev {
 
-    width: 4.5rem !important;
-    height: 4.5rem !important;
-    margin-inline: 10px;
+    width: 3rem !important;
+    height: 3rem !important;
 }
 
 .full-width-carousel > .swiper-button-prev {
-        right: var(--swiper-navigation-sides-offset, 90px) !important;
+        right: var(--swiper-navigation-sides-offset, 70px) !important;
         left: auto !important;
     }
 
@@ -409,7 +410,7 @@ time {
     .our-team{ margin-bottom: 30px; }
     .full-width-carousel > .swiper-button-prev,
     .full-width-carousel > .swiper-button-prev {
-        right: var(--swiper-navigation-sides-offset, 90px) !important;
+        right: var(--swiper-navigation-sides-offset, 70px) !important;
     }
     .full-width-carousel .swiper-pagination-fraction span {
         font-size: 24px !important;
@@ -438,17 +439,17 @@ time {
     .full-width-carousel .swiper-button-prev::after {
         font-size: 0.5rem !important;
     }
+    .full-width-carousel > .swiper-button-prev,
+    .full-width-carousel > .swiper-button-prev {
+        right: var(--swiper-navigation-sides-offset, 50px) !important;
+    }
     .full-width-carousel .swiper-button-next,
     .full-width-carousel .swiper-button-prev {
 
-        width: 1.5rem !important;
-        height: 1.5rem !important;
-        /* margin-inline: 10px; */
+        width: 2rem !important;
+        height: 2rem !important;
     }
-    .full-width-carousel > .swiper-button-prev,
-    .full-width-carousel > .swiper-button-prev {
-        right: var(--swiper-navigation-sides-offset, 40px) !important;
-    }
+
 }
 
 /* backend react-datepicker styles */

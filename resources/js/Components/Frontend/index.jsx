@@ -86,11 +86,11 @@ export const Content = styled(Box)`
         word-break: break-word;
     }
 
-    h1,
-    h2,
-    h3 {
-        color: #204754;
-    }
+    // h1,
+    // h2,
+    // h3 {
+    //     color: #204754;
+    // }
 
     h1 {
         font-size: var(--chakra-fontSizes-4xl);
@@ -312,8 +312,6 @@ export const Title = ({ text, color, ...rest }) => {
     return (
         <Text
             as="h3"
-            m="0"
-            fontSize={{ base: "xl", md: "2xl" }}
             fontFamily="heading"
             color={
                 color ? color : useColorModeValue("gray.800", "whiteAlpha.800")

@@ -27,7 +27,7 @@ use UniSharp\LaravelFilemanager\Lfm;
 function getPosts($category, $slug)
 {
     $subcategory_ids = $category->children->pluck('id')->toArray();
-    $parent_and_subcategory_ids = array_merge(array($slug === 'programmes' ? null : $category->id), $subcategory_ids);
+    $parent_and_subcategory_ids = array_merge(array($slug === 'programme' ? null : $category->id), $subcategory_ids);
     $posts = Post::query()
         ->with('category', 'category.parent', 'media')
         ->whereIn('category_id', $parent_and_subcategory_ids)
@@ -59,6 +59,29 @@ class FrontendController extends Controller
      */
     public function index()
     {
+
+        $subcategorySlugs = ["trade-insight", "books", "issue-paper", "policy-brief"];
+        $publications = [];
+
+        // Retrieve the category named "publication" along with its subcategories
+        $category = Category::where('slug', 'publications')
+            ->with(['children' => function ($query) use ($subcategorySlugs) {
+                // Filter subcategories by the provided slugs
+                $query->whereIn('slug', $subcategorySlugs);
+            }])
+            ->first();
+
+        // Loop through each subcategory and retrieve 2 posts per subcategory
+        foreach ($category->children as $subcategory) {
+            // Retrieve 2 posts per subcategory
+            $subcategoryPosts = Publication::with(['media', 'file', 'category'])->where('category_id', $subcategory->id)
+                ->limit(2)
+                ->get();
+
+            // Merge posts into the main array
+            $publications = array_merge($publications, $subcategoryPosts->toArray());
+        }
+
         $infocusId = Category::where('slug', 'infocus')->first()->id;
         $sawteeInMediaId = Category::where('slug', 'sawtee-in-media')->first()->id;
         $eventsId = Category::where('slug', 'featured-events')->first()->id;
@@ -67,15 +90,12 @@ class FrontendController extends Controller
         $infocus = Post::where('category_id', strval($infocusId))->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
         $sawteeInMedia = Post::where('category_id', strval($sawteeInMediaId))->where('status', 'published')->orderBy('id', 'DESC')->take(6)->get();
         $events = Post::where('category_id', strval($eventsId))->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
-        $books = Publication::where('category_id', strval(Category::where('slug', 'books')->first()->id))->orderBy('id', 'DESC')->take(3)->get();
-        $trade_insights = Publication::where('category_id', strval(Category::where('slug', 'trade-insight')->first()->id))->orderBy('id', 'DESC')->take(3)->get();
         return Inertia::render('Frontend/Pages/Home', [
             'slides' => $slides->load(['media']),
             'infocus' => $infocus->load(['category']),
             'sawteeInMedia' => $sawteeInMedia->load('category'),
             'events' => $events->load(['category', 'media', 'tags']),
-            'books' => $books,
-            'tradeInsights' => $trade_insights
+            'publications' => $publications,
         ]);
     }
 
@@ -162,8 +182,6 @@ class FrontendController extends Controller
                 return Inertia::render('Frontend/Archives/TeamsArchive', [
                     'category' => $category,
                     'teams' => $teams,
-                    'infocus' => $infocus,
-                    'sawteeInMedia' => $sawteeInMedia,
                     'featured_image' => $featured_image,
                     'srcSet' => $srcSet
                 ]);

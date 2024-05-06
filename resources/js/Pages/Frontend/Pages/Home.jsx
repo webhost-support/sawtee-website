@@ -17,8 +17,9 @@ import {
     Spacer,
     SimpleGrid,
     Show,
+    Tag,
 } from "@chakra-ui/react";
-import { FancyTitle, ExploreButton } from "@/Components/Frontend/index";
+import { FancyTitle, ExploreButton, Title } from "@/Components/Frontend/index";
 import FullWidthCarousel from "@/Components/Frontend/FullWidthCarousel";
 import { formatDate } from "@/Utils/helpers";
 import MainLayout from "../Layout/MainLayout";
@@ -30,20 +31,22 @@ import InertiaChakraLinkOverlay from "@/Components/Frontend/styles/inertia-chakr
 import { Newsletter } from "@/Components/Frontend/newsletter";
 import WebsiteHead from "@/Components/Frontend/Head";
 import CardsCarousel from "@/Components/Frontend/CardsCarousel";
-import { info } from "autoprefixer";
+import Feature from "@/Components/Frontend/feature";
+import DottedBox from "../DottedBox";
+import styled from "@emotion/styled";
+import { MotionBox } from "../MotionBox";
 // import { Barchart, TreemapChart } from "@/Components/Frontend/Charts";
 
-const Home = ({
-    infocus,
-    slides,
-    events,
-    books,
-    tradeInsights,
-    sawteeInMedia,
-}) => {
+const Home = ({ infocus, slides, events, publications, sawteeInMedia }) => {
     const introText =
         "Dedicated to fair, equitable, inclusive, and sustainable growth and development in South Asia, SAWTEE is working towards poverty reduction, food and livelihood security, gender equity, and biodiversity conservation and environmental sustainability.";
     const introImage = "/assets/hero-image.webp";
+
+    const feature = {
+        name: "Reform Monitoring Platform",
+        image: "/assets/Policy-Reform-Banner-green-sized.webp",
+        link: "/reform-monitoring-platform",
+    };
     const showPublication = useBreakpointValue({
         base: 1,
         md: 2,
@@ -63,32 +66,12 @@ const Home = ({
                 image={"/assets/logo-sawtee.webp"}
             />
 
-            <CarouselSection slides={slides} books={books} infocus={infocus} />
+            <CarouselSection slides={slides} infocus={infocus} />
+            <Feature feature={feature} />
             <AboutSection intro={introText} image={introImage} />
 
-            {/* <Grid
-                templateColumns={{
-                    base: "1fr",
-                    lg: "repeat(6, 1fr)",
-                }}
-                gap={8}
-                // bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
-                backgroundColor={useColorModeValue(
-                    "blackAlpha.50",
-                    "var(--color-darker)"
-                )}
-                // color={useColorModeValue("gray.400", "gray.100")}
-                bgImage={useColorModeValue(
-                    "none",
-                    "url(/assets/graph-paper.svg)"
-                )}
-            >
-                <GridItem colSpan={{ base: 1, md: 2 }}></GridItem>
-                <GridItem colSpan={{ base: 1, md: 4 }}></GridItem>
-            </Grid> */}
-
             <PublicationSection
-                publications={[...tradeInsights, ...books]}
+                publications={publications}
                 showPublication={showPublication}
             />
 
@@ -108,7 +91,7 @@ const Home = ({
 
 export default Home;
 
-const CarouselSection = ({ slides, books, infocus }) => {
+const CarouselSection = ({ slides, infocus }) => {
     return (
         <Grid
             templateColumns={{
@@ -149,7 +132,7 @@ const CarouselSection = ({ slides, books, infocus }) => {
 
 const AboutSection = ({ intro, image }) => {
     return (
-        <Box>
+        <Box maxW={"7xl"} mx="auto">
             {/* <Box
                 width="full"
                 pos={"relative"}
@@ -199,70 +182,60 @@ const AboutSection = ({ intro, image }) => {
                 spacing={16}
                 alignItems="center"
             >
-                <Flex justifyContent="center" alignItems="center" mx="auto">
-                    <LinkBox shadow={"xl"} rounded="xl" maxW="2xl">
+                <Box ml={{ base: 0, md: 5 }} pos="relative">
+                    <DottedBox />
+                    <LinkBox mx="auto" shadow={"xl"} rounded="xl">
                         <InertiaChakraLink
-                            href="/reform-monitoring-platform"
+                            href="/media-fellowship"
                             role="banner"
-                            aria-labelledby="Reform monitoring Platform"
-                            title="Reform monitoring Platform"
+                            aria-labelledby="Media Fellowship"
+                            title="Media Fellowship"
                         >
                             <Image
-                                src="/assets/Policy-Reform-Banner-green-sized.webp"
-                                alt="Reform monitoring Platform"
+                                src="/assets/Media-Fellowship-banner.webp"
+                                alt="Media Fellowship"
                                 fit="cover"
                                 rounded="xl"
                             />
                         </InertiaChakraLink>
                     </LinkBox>
-                </Flex>
-                <LinkBox mx="auto" shadow={"xl"} rounded="xl">
-                    <InertiaChakraLink
-                        href="/media-fellowship"
-                        role="banner"
-                        aria-labelledby="Media Fellowship"
-                        title="Media Fellowship"
-                    >
-                        <Image
-                            src="/assets/Media-Fellowship-banner.webp"
-                            alt="Media Fellowship"
-                            fit="cover"
-                            rounded="xl"
-                        />
-                    </InertiaChakraLink>
-                </LinkBox>
-
-                <LinkBox mx="auto" shadow={"xl"} rounded="xl">
-                    <InertiaChakraLink
-                        href="/category/covid"
-                        role="banner"
-                        aria-labelledby="SAWTEE's Response to Covid-19"
-                        title="SAWTEE's Response to Covid-19"
-                    >
-                        <Image
-                            src="/assets/COVID-19-South-Asia-and-LDCs.webp"
-                            alt="SAWTEE's Response to Covid-19"
-                            fit="cover"
-                            rounded="xl"
-                        />
-                    </InertiaChakraLink>
-                </LinkBox>
-
-                <LinkBox mx="auto" shadow={"xl"} rounded="xl">
-                    <InertiaChakraLink
-                        href="/advancing-ldcs’-interests-in-the-wto-strengthening-participation,-securing-priorities"
-                        role="banner"
-                        aria-labelledby="Advancing LDC's Trade Interests"
-                        title="Advancing LDC's Trade Interests"
-                    >
-                        <Image
-                            src="/assets/advancing-ldc_upscaled.webp"
-                            alt="Advancing LDC's Trade Interests"
-                            fit="cover"
-                            rounded="xl"
-                        />
-                    </InertiaChakraLink>
-                </LinkBox>
+                </Box>
+                <Box ml={{ base: 0, md: 5 }} pos="relative">
+                    <DottedBox />
+                    <LinkBox mx="auto" shadow={"xl"} rounded="xl">
+                        <InertiaChakraLink
+                            href="/category/covid"
+                            role="banner"
+                            aria-labelledby="SAWTEE's Response to Covid-19"
+                            title="SAWTEE's Response to Covid-19"
+                        >
+                            <Image
+                                src="/assets/COVID-19-South-Asia-and-LDCs.webp"
+                                alt="SAWTEE's Response to Covid-19"
+                                fit="cover"
+                                rounded="xl"
+                            />
+                        </InertiaChakraLink>
+                    </LinkBox>
+                </Box>
+                {/* <Box ml={{ base: 0, md: 5 }} pos="relative">
+                    <DottedBox />
+                    <LinkBox mx="auto" shadow={"xl"} rounded="xl">
+                        <InertiaChakraLink
+                            href="/advancing-ldcs’-interests-in-the-wto-strengthening-participation,-securing-priorities"
+                            role="banner"
+                            aria-labelledby="Advancing LDC's Trade Interests"
+                            title="Advancing LDC's Trade Interests"
+                        >
+                            <Image
+                                src="/assets/advancing-ldc_upscaled.webp"
+                                alt="Advancing LDC's Trade Interests"
+                                fit="cover"
+                                rounded="xl"
+                            />
+                        </InertiaChakraLink>
+                    </LinkBox>
+                </Box> */}
             </SimpleGrid>
         </Box>
     );
@@ -274,10 +247,18 @@ const InfocusSection = ({ infocus, link }) => {
         <Container
             maxW="8xl"
             centerContent
-            p={4}
+            px={4}
             maxH={{ base: "auto", md: "calc(100dvh - 15rem)" }}
             overflowY={"scroll"}
         >
+            <Title
+                text={"In Focus"}
+                my={{ base: "4", md: "6", lg: "0" }}
+                fontWeight="bold"
+                fontSize={{ base: "3xl", md: "5xl", lg: "4xl" }}
+                bgGradient="linear(to-br, #228be6, #15aabf)"
+                bgClip="text"
+            />
             {infocus.map((article) => {
                 return (
                     <LinkBox key={article.id} w="full">
@@ -291,7 +272,8 @@ const InfocusSection = ({ infocus, link }) => {
                                 base: "1fr",
                                 md: "4fr 2fr",
                             }}
-                            p={{ base: 4, sm: 6 }}
+                            px={{ base: 4, sm: 6 }}
+                            py={{ base: 2, sm: 3 }}
                             alignItems="center"
                             _hover={{ bg: itemBG }}
                             rowGap={3}
@@ -308,11 +290,9 @@ const InfocusSection = ({ infocus, link }) => {
                                     fontFamily={"heading"}
                                     fontWeight="bold"
                                     fontSize={{
-                                        base: "md",
-                                        md: "lg",
-                                        lg: "xl",
+                                        base: "sm",
+                                        md: "md",
                                     }}
-                                    // pl={"20px"}
                                 >
                                     <InertiaChakraLinkOverlay
                                         as={Link}
@@ -335,9 +315,7 @@ const InfocusSection = ({ infocus, link }) => {
                                         noOfLines={3}
                                         pl="20px"
                                         fontSize={{
-                                            base: "sm",
-                                            md: "md",
-                                            lg: "md",
+                                            base: "xs",
                                         }}
                                     >
                                         {article.excerpt}
@@ -351,7 +329,7 @@ const InfocusSection = ({ infocus, link }) => {
                                     base: "start",
                                     md: "flex-end",
                                 }}
-                                fontSize={["xs", "sm", "sm"]}
+                                fontSize={"xs"}
                                 color={"gray.600"}
                                 _dark={{
                                     color: "gray.300",
@@ -370,7 +348,7 @@ const InfocusSection = ({ infocus, link }) => {
             })}
             <InertiaChakraLink as={Link} my={6} href={link}>
                 <ExploreButton
-                    size="md"
+                    size="xs"
                     text="Explore All "
                     variant="outline"
                     px={10}
@@ -534,51 +512,133 @@ const NewsletterSection = () => {
 };
 
 const PublicationSection = ({ publications, showPublication }) => {
+    const linkColor = "blue.400";
+    const textColor = useColorModeValue("gray.500", "gray.200");
     return (
-        <Section
-            title={" Publications"}
-            bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
+        // <Section
+        //     title={" Publications"}
+        //     bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
+        // >
+        <SimpleGrid
+            columns={{ base: 1, md: 2 }}
+            gap={8}
+            // bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
+            backgroundColor={useColorModeValue(
+                "blackAlpha.50",
+                "var(--color-darker)"
+            )}
+            // color={useColorModeValue("gray.400", "gray.100")}
+            bgImage={useColorModeValue("none", "url(/assets/graph-paper.svg)")}
+            maxW={"7xl"}
+            mx="auto"
         >
-            <Container maxW="8xl" centerContent px={6}>
-                <MultiItemCarousel
-                    slides={publications}
-                    itemsToShow={showPublication}
-                    spacing={90}
-                    mt={20}
-                    showTitle={true}
+            <Container maxW="5xl" centerContent p={6}>
+                <Title
+                    text={"Latest Publications"}
+                    my={{ base: "4", md: "6" }}
+                    fontWeight="bold"
+                    fontSize={{ base: "3xl", md: "5xl", lg: "4xl" }}
+                    bgGradient="linear(to-br, #228be6, #15aabf)"
+                    bgClip="text"
+                />
+                <SimpleGrid columns={1} spacing={4} w="100%">
+                    {publications &&
+                        publications.map(
+                            ({ title, subtitle, file, media, category }, i) => (
+                                console.log(media),
+                                (
+                                    <MotionBox whileHover={{ y: -5 }} key={i}>
+                                        <VStack
+                                            spacing={1}
+                                            p={4}
+                                            _hover={{
+                                                shadow: "md",
+                                                textDecoration: "none",
+                                            }}
+                                            borderWidth="1px"
+                                            position="relative"
+                                            rounded="md"
+                                            bg={useColorModeValue(
+                                                "white",
+                                                "gray.800"
+                                            )}
+                                            align="left"
+                                        >
+                                            <HStack justifyContent="space-between">
+                                                <Box>
+                                                    <Tag
+                                                        colorScheme="blue"
+                                                        mb={3}
+                                                    >
+                                                        {category.name}
+                                                    </Tag>
+                                                    <Heading
+                                                        fontSize="lg"
+                                                        align="left"
+                                                        mt={0}
+                                                    >
+                                                        <InertiaChakraLink
+                                                            href={`/publications/${file.name}`}
+                                                        >
+                                                            <Text
+                                                                as={Link}
+                                                                color={
+                                                                    linkColor
+                                                                }
+                                                            >
+                                                                {title}
+                                                            </Text>
+                                                        </InertiaChakraLink>
+                                                    </Heading>
+                                                    <Text
+                                                        align="left"
+                                                        fontSize="md"
+                                                        noOfLines={1}
+                                                        color={textColor}
+                                                    >
+                                                        {subtitle}
+                                                    </Text>
+                                                </Box>
+                                                <Box>
+                                                    <Image
+                                                        src={
+                                                            media.length
+                                                                ? media.filter(
+                                                                      (media) =>
+                                                                          media.collection_name ===
+                                                                          "publication_featured_image"
+                                                                  )[0]
+                                                                      .original_url
+                                                                : "/assets/SM-placeholder-150x150.png"
+                                                        }
+                                                        alt={title}
+                                                        w="70px"
+                                                        aspectRatio={3 / 4}
+                                                        // h="190px"
+                                                    />
+                                                </Box>
+                                            </HStack>
+                                        </VStack>
+                                    </MotionBox>
+                                )
+                            )
+                        )}
+                </SimpleGrid>
+                <InertiaChakraLink
+                    href="/category/publications"
+                    textAlign={"center"}
+                    mt={6}
                 >
-                    <Show above="sm">
-                        <InertiaChakraLink
-                            href="/category/publications"
-                            textAlign={"center"}
-                            pos={"absolute"}
-                            top={"10px"}
-                            zIndex={1020}
-                        >
-                            <ExploreButton
-                                size="md"
-                                text="Explore All"
-                                variant="outline"
-                                px={10}
-                            />
-                        </InertiaChakraLink>
-                    </Show>
-                </MultiItemCarousel>
-                <Show below="sm">
-                    <InertiaChakraLink
-                        href="/category/publications"
-                        textAlign={"center"}
-                    >
-                        <ExploreButton
-                            size="md"
-                            text="Explore All"
-                            variant="outline"
-                            px={10}
-                        />
-                    </InertiaChakraLink>
-                </Show>
+                    <ExploreButton
+                        size="md"
+                        text="Explore All"
+                        variant="outline"
+                        px={10}
+                    />
+                </InertiaChakraLink>
             </Container>
-        </Section>
+        </SimpleGrid>
+        // </Section>
     );
 };
 
@@ -598,3 +658,5 @@ const Section = ({ children, title = null, ...rest }) => {
         </Box>
     );
 };
+
+

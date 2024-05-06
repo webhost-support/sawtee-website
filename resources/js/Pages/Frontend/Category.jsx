@@ -26,15 +26,13 @@ export default function Category({
     srcSet,
 }) {
     const isEvent = category.slug === "featured-events";
-    const isTeam = category.slug === "team-members";
     const isInFocus = category.slug === "infocus";
     const isMedia = category.slug === "sawtee-in-media";
     const isNewsletter = category.slug === "newsletters";
     const isBlog = category.slug === "blog";
     const isCovid = category.slug === "covid";
     const isResearch = category.slug === "research";
-    const isDefault =
-        !isNewsletter && !isBlog && !isTeam && !isResearch && !isCovid;
+    const isDefault = !isNewsletter && !isBlog && !isResearch && !isCovid;
 
     return (
         <MainLayout>
@@ -87,8 +85,6 @@ export default function Category({
                                 />
                             )}
                             {isCovid && <CovidArchive posts={posts.data} />}
-
-                            {isTeam && <TeamsArchive posts={posts} />}
 
                             {isResearch && <ResearchArchive posts={posts} />}
 
