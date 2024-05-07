@@ -144,7 +144,7 @@ export const PageSection = ({ section, sections }) => {
     );
     // Get the html2react component.
     return (
-        <Box id={"#" + sectionID}>
+        <Box id={sectionID}>
             <Heading
                 as="h3"
                 fontSize={["lg", "xl", "2xl", "4xl"]}

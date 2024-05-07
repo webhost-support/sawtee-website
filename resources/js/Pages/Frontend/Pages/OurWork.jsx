@@ -9,8 +9,6 @@ import {
     Image,
     LinkBox,
     useColorModeValue,
-    Collapse,
-    Button,
 } from "@chakra-ui/react";
 import InertiaChakraLinkOverlay from "@/Components/Frontend/styles/inertia-chakra-link-overlay";
 
@@ -65,9 +63,7 @@ export default function OurWork({ themes, sections }) {
                 mb={4}
                 px={8}
             >
-                {themes.map((theme) => {
-                    const [show, setShow] = useState(false);
-                    const handleToggle = () => setShow(!show);
+                {themes.map((theme, index) => {
                     return (
                         <Box
                             key={theme.title}
@@ -77,6 +73,7 @@ export default function OurWork({ themes, sections }) {
                             pos="relative"
                             role="group"
                             cursor={"pointer"}
+                            id={"theme" + (index + 1)}
                         >
                             <Heading
                                 as="h3"
@@ -86,17 +83,10 @@ export default function OurWork({ themes, sections }) {
                             >
                                 {theme.title}
                             </Heading>
-                            <Collapse startingHeight={50} in={show}>
+
+                            <Text mt={1} fontSize={"sm"}>
                                 {theme.description}
-                            </Collapse>
-                            <Button
-                                size="sm"
-                                onClick={handleToggle}
-                                colorScheme="accent"
-                                variant={"link"}
-                            >
-                                Show {show ? "Less" : "More"}
-                            </Button>
+                            </Text>
                         </Box>
                     );
                 })}

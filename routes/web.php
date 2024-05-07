@@ -78,7 +78,7 @@ Route::get('/', [FrontendController::class, 'index'])->name('home');
 Route::get('/{pages:slug}', [FrontendController::class, 'page'])->name('page.show');
 Route::get('/category/{categories:slug}/{subcategory?}/{post?}', [FrontendController::class, 'category'])->name('category.show');
 
-Route::get('/search', [FrontendController::class, 'search'])->name('search');
+Route::get('/search/{query?}', [FrontendController::class, 'search'])->name('search');
 
 
 require __DIR__ . '/auth.php';

@@ -1,10 +1,24 @@
 import { Flex, Icon, Input } from "@chakra-ui/react";
+import { useForm } from "@inertiajs/react";
 import React from "react";
-// import useSearch from "@/Utils/hooks/useSearch";
 
 // A11y: Add a hidden search button
 const SearchForm = (props) => {
-    // const { form, input } = useSearch(props);
+    const { data, get, setData, errors } = useForm({
+        query: "",
+    });
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        get(route("search", data.query), {
+            preserveScroll: true,
+            preserveState: true,
+            onSuccess: () => console.log(data.query),
+            onError: (errors) => {
+                console.log(errors);
+            },
+        });
+    }
     return (
         <Flex
             as="form"
@@ -15,6 +29,7 @@ const SearchForm = (props) => {
             height="100%"
             justifyContent="center"
             alignItems="center"
+            onSubmit={handleSubmit}
             // {...form}
         >
             <Input
@@ -25,6 +40,7 @@ const SearchForm = (props) => {
                 height="auto"
                 focusBorderColor="primary.400"
                 py={{ base: 1, md: 3 }}
+                onChange={(e) => setData("query", e.target.value)}
                 // {...input}
             />
             <Icon
