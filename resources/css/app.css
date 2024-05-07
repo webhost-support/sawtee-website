@@ -112,27 +112,16 @@ select {
     background-size: auto 175%;
 }
 
-.chakra-ui-dark .post-content  a:hover {
+.chakra-ui-dark .post-content  a:hover, .chakra-ui-dark .page-content  a:hover {
     background-position-y: 100%;
     text-decoration: none;
 }
 
-.post-content h1,
-.post-content h2,
-.post-content h3,
-.page-content h1,
-.page-content h2,
-.page-content h3  {
-    background-image: linear-gradient(to bottom left, #228be6, #15aabf);
-    background-clip: text;
+.primary-link, a {
+    text-decoration: underline;
 
 }
-
-.primary-link {
-    text-decoration: inherit;
-
-}
-.primary-link:hover {
+.primary-link:hover, a {
     text-decoration: underline;
     text-underline-offset: 3px;
     text-decoration-color: var(--linkcolor) !important;

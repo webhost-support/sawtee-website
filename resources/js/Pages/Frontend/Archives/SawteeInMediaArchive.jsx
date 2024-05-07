@@ -9,10 +9,10 @@ const SawteeInMediaArchive = ({ posts, headingColor, textColor }) => {
         return (
             <GlassBox
                 as={motion.div}
-                p="40px"
                 whileHover={{ y: "-10px" }}
-                boxShadow="none"
                 _hover={{ boxShadow: "xl" }}
+                p="40px"
+                boxShadow="none"
                 role="group"
                 maxW="xl"
             >

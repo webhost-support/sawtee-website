@@ -66,7 +66,7 @@ export default function Category({
                             base: "1fr",
                             md: "1fr",
                             lg: "1fr 1fr",
-                            xl: "var(--chakra-sizes-4xl) minmax(var(--chakra-sizes-lg), var(--chakra-sizes-xl))",
+                            xl: "var(--chakra-sizes-3xl) minmax(var(--chakra-sizes-md), var(--chakra-sizes-lg))",
                         }}
                         gap={10}
                         pos={"relative"}

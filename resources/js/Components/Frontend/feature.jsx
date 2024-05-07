@@ -22,6 +22,7 @@ export default function Feature({ feature, ...rest }) {
                 align={"center"}
                 spacing={{ base: 8, md: 10 }}
                 py={{ base: 20, md: 28 }}
+                px={{ base: 6, md: 10 }}
                 direction={{ base: "column", md: "row" }}
             >
                 <Stack flex={1} spacing={{ base: 5, md: 10 }}>
@@ -40,7 +41,7 @@ export default function Feature({ feature, ...rest }) {
                                 position: "absolute",
                                 bottom: 1,
                                 left: 0,
-                                bg: "red.400",
+                                bg: "primary.400",
                                 zIndex: -1,
                             }}
                         >
@@ -73,7 +74,7 @@ export default function Feature({ feature, ...rest }) {
                         top={"-20%"}
                         left={0}
                         zIndex={-1}
-                        color={useColorModeValue("red.50", "red.400")}
+                        color={useColorModeValue("primary.50", "primary.400")}
                     />
 
                     <LinkBox

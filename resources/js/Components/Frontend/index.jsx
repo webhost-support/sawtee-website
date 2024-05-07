@@ -404,10 +404,7 @@ export const StyledChakraLink = styled(InertiaChakraLink)`
 
     &:hover {
         text-decoration: none;
-        color: ${(props) =>
-            props.hoverColor
-                ? props.hoverColor
-                : "var(--chakra-colors-whiteAlpha-700)"};
+
         &::after {
             width: 100%;
             opacity: 1;

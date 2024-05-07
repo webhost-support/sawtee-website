@@ -11,10 +11,11 @@ const DottedBox = () => {
         >
             <svg
                 color={useColorModeValue(
-                    "rgba(55,65,81, 0.1)",
-                    "rgba(55,65,81, 0.7)"
+                    "rgba(55,65,81, 0.2)",
+                    "rgba(255,255,255, 0.5)"
                 )}
                 width="inherit"
+                height="100%"
                 fill="none"
             >
                 <defs>

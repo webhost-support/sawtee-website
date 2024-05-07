@@ -15,6 +15,7 @@ use App\Models\Theme;
 use Enflow\SocialShare\SocialShare;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Spatie\Newsletter\Facades\Newsletter;
 use UniSharp\LaravelFilemanager\Lfm;
 
 /**
@@ -75,6 +76,7 @@ class FrontendController extends Controller
         foreach ($category->children as $subcategory) {
             // Retrieve 2 posts per subcategory
             $subcategoryPosts = Publication::with(['media', 'file', 'category'])->where('category_id', $subcategory->id)
+                ->orderBy('id', "DESC")
                 ->limit(2)
                 ->get();
 
@@ -85,17 +87,20 @@ class FrontendController extends Controller
         $infocusId = Category::where('slug', 'infocus')->first()->id;
         $sawteeInMediaId = Category::where('slug', 'sawtee-in-media')->first()->id;
         $eventsId = Category::where('slug', 'featured-events')->first()->id;
+        $newsletterCategoryId = Category::where('slug', 'newsletters')->first()->id;
         $slider = Slider::first();
         $slides = Slide::where('slider_id', $slider->id)->get();
         $infocus = Post::where('category_id', strval($infocusId))->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
         $sawteeInMedia = Post::where('category_id', strval($sawteeInMediaId))->where('status', 'published')->orderBy('id', 'DESC')->take(6)->get();
         $events = Post::where('category_id', strval($eventsId))->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
+        $newsletters = Post::where('category_id', strval($newsletterCategoryId))->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
         return Inertia::render('Frontend/Pages/Home', [
             'slides' => $slides->load(['media']),
             'infocus' => $infocus->load(['category']),
             'sawteeInMedia' => $sawteeInMedia->load('category'),
             'events' => $events->load(['category', 'media', 'tags']),
             'publications' => $publications,
+            'newsletters' => $newsletters,
         ]);
     }
 

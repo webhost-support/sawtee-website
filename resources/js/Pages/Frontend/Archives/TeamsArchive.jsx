@@ -46,7 +46,7 @@ const TeamsArchive = ({ category, teams, featured_image, srcSet }) => {
                     size={"full"}
                     mx="auto"
                 >
-                    <Container maxW="7xl" p={{ base: 5, md: 10 }}>
+                    <Container maxW="5xl" p={{ base: 5, md: 10 }}>
                         <Flex justifyContent="center" mb={8}>
                             <Heading
                                 as="h3"
@@ -59,15 +59,21 @@ const TeamsArchive = ({ category, teams, featured_image, srcSet }) => {
                             </Heading>
                         </Flex>
 
-                        {!teams.data || teams.data.length <= 0
-                            ? "No posts found"
-                            : teams.data.map((post) => {
-                                  return (
-                                      <Fragment key={post.id}>
-                                          <TeamMember member={post} />
-                                      </Fragment>
-                                  );
-                              })}
+                        {!teams.data || teams.data.length <= 0 ? (
+                            <Center>
+                                <Text fontSize={["2xl", "4xl"]}>
+                                    "No posts found"
+                                </Text>
+                            </Center>
+                        ) : (
+                            teams.data.map((post) => {
+                                return (
+                                    <Fragment key={post.id}>
+                                        <TeamMember member={post} />
+                                    </Fragment>
+                                );
+                            })
+                        )}
                     </Container>
                 </Section>
             </PageLayout>

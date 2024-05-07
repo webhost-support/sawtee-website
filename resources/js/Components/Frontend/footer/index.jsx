@@ -92,7 +92,6 @@ const Widget = ({ item }) => {
                                                 color: linkcolor,
                                                 verticalAlign: "middle",
                                             }}
-                                            _hover={{ color: hoverColor }}
                                             as={MdLocationOn}
                                         />
                                         <Tooltip
@@ -122,13 +121,12 @@ const Widget = ({ item }) => {
 
                             if (title.includes("Fax")) {
                                 return (
-                                    <ListItem>
+                                    <ListItem key={title}>
                                         <ListIcon
                                             style={{
                                                 color: linkcolor,
                                                 verticalAlign: "middle",
                                             }}
-                                            _hover={{ color: hoverColor }}
                                             as={MdOutlineFax}
                                         />
                                         <StyledChakraLink
@@ -144,13 +142,12 @@ const Widget = ({ item }) => {
                             }
                             if (title.includes("Phone")) {
                                 return (
-                                    <ListItem>
+                                    <ListItem key={title}>
                                         <ListIcon
                                             style={{
                                                 color: linkcolor,
                                                 verticalAlign: "middle",
                                             }}
-                                            _hover={{ color: hoverColor }}
                                             as={MdOutlineLocalPhone}
                                         />
                                         <StyledChakraLink
@@ -166,13 +163,12 @@ const Widget = ({ item }) => {
                             }
                             if (title.includes("Email")) {
                                 return (
-                                    <ListItem>
+                                    <ListItem key={title}>
                                         <ListIcon
                                             style={{
                                                 color: linkcolor,
                                                 verticalAlign: "middle",
                                             }}
-                                            _hover={{ color: hoverColor }}
                                             as={MdContactMail}
                                         />
                                         <StyledChakraLink
@@ -188,13 +184,12 @@ const Widget = ({ item }) => {
                             }
                             if (title.includes("Box")) {
                                 return (
-                                    <ListItem>
+                                    <ListItem key={title}>
                                         <ListIcon
                                             style={{
                                                 color: linkcolor,
                                                 verticalAlign: "middle",
                                             }}
-                                            _hover={{ color: hoverColor }}
                                             as={MdOutlineMarkunreadMailbox}
                                         />
                                         <StyledChakraLink
@@ -236,7 +231,7 @@ const Widget = ({ item }) => {
                                             fontSize: "10px",
                                             color: linkcolor,
                                         }}
-                                        _hover={{ color: hoverColor }}
+
                                     />
                                     <StyledChakraLink
                                         fontSize={"md"}

@@ -4,8 +4,14 @@ import { formatDate } from "@/Utils/helpers";
 import { PostImageWithOverlay } from "@/Components/Frontend/featured-post/components";
 import { Link } from "@inertiajs/react";
 import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
+import { motion } from "framer-motion";
 
-const DefaultArchive = ({ posts, headingColor, textColor, showFallbackImage }) => {
+const DefaultArchive = ({
+    posts,
+    headingColor,
+    textColor,
+    showFallbackImage,
+}) => {
     if (!posts || posts.length <= 0) return "No posts found";
     return posts.map((post) => {
         const featured_image = post.media.filter(
@@ -19,7 +25,6 @@ const DefaultArchive = ({ posts, headingColor, textColor, showFallbackImage }) =
                 headingColor={headingColor}
                 textColor={textColor}
                 showFallbackImage={showFallbackImage}
-
             />
         );
     });
@@ -31,11 +36,13 @@ const ArchivePost = ({ post, featured_image, showFallbackImage, rest }) => {
     return (
         <GlassBox
             key={post.id}
-            as="article"
             spacing={4}
             role="group"
             w="full"
-            maxW="3xl"
+            maxW="2xl"
+            as={motion.article}
+            whileHover={{ y: "-10px" }}
+            _hover={{ boxShadow: "xl" }}
             {...rest}
         >
             <LinkBox>

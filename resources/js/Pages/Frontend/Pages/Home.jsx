@@ -14,30 +14,35 @@ import {
     useBreakpointValue,
     useColorModeValue,
     Flex,
-    Spacer,
     SimpleGrid,
     Show,
     Tag,
+
 } from "@chakra-ui/react";
 import { FancyTitle, ExploreButton, Title } from "@/Components/Frontend/index";
 import FullWidthCarousel from "@/Components/Frontend/FullWidthCarousel";
 import { formatDate } from "@/Utils/helpers";
 import MainLayout from "../Layout/MainLayout";
-import MultiItemCarousel from "@/Components/Frontend/MultiItemCarousel";
 import MultiPostsCarousel from "@/Components/Frontend/MultiPostsSlider";
 import PostCard from "@/Components/Frontend/PostCard";
 import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
 import InertiaChakraLinkOverlay from "@/Components/Frontend/styles/inertia-chakra-link-overlay";
 import { Newsletter } from "@/Components/Frontend/newsletter";
 import WebsiteHead from "@/Components/Frontend/Head";
-import CardsCarousel from "@/Components/Frontend/CardsCarousel";
+// import CardsCarousel from "@/Components/Frontend/CardsCarousel";
 import Feature from "@/Components/Frontend/feature";
 import DottedBox from "../DottedBox";
-import styled from "@emotion/styled";
-import { MotionBox } from "../MotionBox";
+import { Fragment } from "react";
 // import { Barchart, TreemapChart } from "@/Components/Frontend/Charts";
 
-const Home = ({ infocus, slides, events, publications, sawteeInMedia }) => {
+const Home = ({
+    infocus,
+    slides,
+    events,
+    publications,
+    sawteeInMedia,
+    newsletters,
+}) => {
     const introText =
         "Dedicated to fair, equitable, inclusive, and sustainable growth and development in South Asia, SAWTEE is working towards poverty reduction, food and livelihood security, gender equity, and biodiversity conservation and environmental sustainability.";
     const introImage = "/assets/hero-image.webp";
@@ -73,6 +78,7 @@ const Home = ({ infocus, slides, events, publications, sawteeInMedia }) => {
             <PublicationSection
                 publications={publications}
                 showPublication={showPublication}
+                newsletters={newsletters}
             />
 
             {events && <BlogSection events={events} />}
@@ -120,61 +126,20 @@ const CarouselSection = ({ slides, infocus }) => {
                 alignSelf={"center"}
                 px={2}
                 py={2}
+                maxH={{ base: "auto", md: "calc(100dvh - 15rem)" }}
+                overflowY={"scroll"}
             >
                 <InfocusSection infocus={infocus} link={"/category/infocus"} />
                 {/* <CardsCarousel slides={books} /> */}
 
-                {/* <Spacer h="60px" /> */}
             </GridItem>
         </Grid>
     );
 };
 
-const AboutSection = ({ intro, image }) => {
+const AboutSection = ({}) => {
     return (
         <Box maxW={"7xl"} mx="auto">
-            {/* <Box
-                width="full"
-                pos={"relative"}
-                id="about-section"
-                overflow="hidden"
-                backgroundImage={`url(${image})`}
-                bgRepeat={"no-repeat"}
-                backgroundPosition={"center center"}
-                backgroundSize="cover"
-                minH={"500px"}
-                className="section"
-            >
-                <Box
-                    w="full"
-                    display="flex"
-                    flexDir="column"
-                    gap={8}
-                    justifyContent="center"
-                    alignItems="center"
-                    position="relative"
-                    backgroundColor={"rgba(0,0,0,0.6)"}
-                    backgroundBlendMode={"multiply"}
-                    backdropFilter="blur(5px)"
-                    pos={"absolute"}
-                    inset={0}
-                    h="full"
-                >
-                    {intro && (
-                        <Text
-                            as="blockquote"
-                            className="blockquote"
-                            m="0"
-                            fontSize={{ base: "1em", md: "1.8em" }}
-                            alignSelf={"center"}
-                            zIndex={10}
-                            maxW="6xl"
-                        >
-                            {intro}
-                        </Text>
-                    )}
-                </Box>
-            </Box> */}
             <SimpleGrid
                 px={10}
                 py={16}
@@ -218,7 +183,7 @@ const AboutSection = ({ intro, image }) => {
                         </InertiaChakraLink>
                     </LinkBox>
                 </Box>
-                {/* <Box ml={{ base: 0, md: 5 }} pos="relative">
+                <Box ml={{ base: 0, md: 5 }} pos="relative">
                     <DottedBox />
                     <LinkBox mx="auto" shadow={"xl"} rounded="xl">
                         <InertiaChakraLink
@@ -235,7 +200,7 @@ const AboutSection = ({ intro, image }) => {
                             />
                         </InertiaChakraLink>
                     </LinkBox>
-                </Box> */}
+                </Box>
             </SimpleGrid>
         </Box>
     );
@@ -244,21 +209,25 @@ const AboutSection = ({ intro, image }) => {
 const InfocusSection = ({ infocus, link }) => {
     const itemBG = useColorModeValue("blackAlpha.200", "blackAlpha.300");
     return (
-        <Container
-            maxW="8xl"
-            centerContent
-            px={4}
-            maxH={{ base: "auto", md: "calc(100dvh - 15rem)" }}
-            overflowY={"scroll"}
-        >
-            <Title
+        <Container maxW="8xl" centerContent px={4}>
+            {/* <Title
                 text={"In Focus"}
                 my={{ base: "4", md: "6", lg: "0" }}
                 fontWeight="bold"
                 fontSize={{ base: "3xl", md: "5xl", lg: "4xl" }}
                 bgGradient="linear(to-br, #228be6, #15aabf)"
                 bgClip="text"
-            />
+            /> */}
+            <InertiaChakraLink as={Link} my={3} href={link}>
+                <ExploreButton
+                    size="md"
+                    text="In Focus"
+                    variant="outline"
+                    fontSize="2xl"
+                    px={10}
+                    w="full"
+                />
+            </InertiaChakraLink>
             {infocus.map((article) => {
                 return (
                     <LinkBox key={article.id} w="full">
@@ -301,6 +270,7 @@ const InfocusSection = ({ infocus, link }) => {
                                         {article.title}
                                     </InertiaChakraLinkOverlay>
                                 </Heading>
+
                                 <HStack pos="relative" mt="20px">
                                     <Text
                                         as="span"
@@ -346,14 +316,6 @@ const InfocusSection = ({ infocus, link }) => {
                     </LinkBox>
                 );
             })}
-            <InertiaChakraLink as={Link} my={6} href={link}>
-                <ExploreButton
-                    size="xs"
-                    text="Explore All "
-                    variant="outline"
-                    px={10}
-                />
-            </InertiaChakraLink>
         </Container>
     );
 };
@@ -511,95 +473,167 @@ const NewsletterSection = () => {
     );
 };
 
-const PublicationSection = ({ publications, showPublication }) => {
-    const linkColor = "blue.400";
-    const textColor = useColorModeValue("gray.500", "gray.200");
+const PublicationSection = ({ publications, showPublication, newsletters }) => {
     return (
-        // <Section
-        //     title={" Publications"}
-        //     bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
-        // >
-        <SimpleGrid
-            columns={{ base: 1, md: 2 }}
-            gap={8}
-            // bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
-            backgroundColor={useColorModeValue(
-                "blackAlpha.50",
-                "var(--color-darker)"
-            )}
-            // color={useColorModeValue("gray.400", "gray.100")}
-            bgImage={useColorModeValue("none", "url(/assets/graph-paper.svg)")}
-            maxW={"7xl"}
-            mx="auto"
-        >
-            <Container maxW="5xl" centerContent p={6}>
-                <Title
-                    text={"Latest Publications"}
-                    my={{ base: "4", md: "6" }}
-                    fontWeight="bold"
-                    fontSize={{ base: "3xl", md: "5xl", lg: "4xl" }}
-                    bgGradient="linear(to-br, #228be6, #15aabf)"
-                    bgClip="text"
-                />
-                <SimpleGrid columns={1} spacing={4} w="100%">
-                    {publications &&
-                        publications.map(
-                            ({ title, subtitle, file, media, category }, i) => (
-                                console.log(media),
-                                (
-                                    <MotionBox whileHover={{ y: -5 }} key={i}>
-                                        <VStack
-                                            spacing={1}
-                                            p={4}
-                                            _hover={{
-                                                shadow: "md",
-                                                textDecoration: "none",
-                                            }}
-                                            borderWidth="1px"
-                                            position="relative"
-                                            rounded="md"
-                                            bg={useColorModeValue(
-                                                "white",
-                                                "gray.800"
-                                            )}
-                                            align="left"
+        <Section bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}>
+            <SimpleGrid
+                columns={{ base: 1, md: 2, lg: 2 }}
+                gap={8}
+                maxW={"7xl"}
+                mx="auto"
+            >
+                <Container maxW="5xl" p={{ base: 5, md: 10 }}>
+                    <Flex justify={"center"} mb={3}>
+                        <InertiaChakraLink
+                            href="/category/publications"
+                            textAlign={"center"}
+                            my={6}
+                        >
+                            <ExploreButton
+                                size="md"
+                                text="Newsletters"
+                                variant="outline"
+                                px={10}
+                            />
+                        </InertiaChakraLink>
+                    </Flex>
+                    <VStack
+                        border="1px solid"
+                        borderColor="gray.400"
+                        rounded="md"
+                        overflow="hidden"
+                        spacing={0}
+                        align={"space-between"}
+                    >
+                        {newsletters &&
+                            newsletters.map(({ id, title, slug }, i) => (
+                                <Fragment key={id}>
+                                    <Heading
+                                        as={"h4"}
+                                        fontWeight="bold"
+                                        fontSize="md"
+                                        p={6}
+                                    >
+                                        <InertiaChakraLink
+                                            href={`/category/newsletters/${slug}`}
                                         >
-                                            <HStack justifyContent="space-between">
-                                                <Box>
-                                                    <Tag
-                                                        colorScheme="blue"
-                                                        mb={3}
-                                                    >
-                                                        {category.name}
-                                                    </Tag>
+                                            {title}
+                                        </InertiaChakraLink>
+                                    </Heading>
+                                    {newsletters.length - 1 !== i && (
+                                        <Divider m={0} />
+                                    )}
+                                </Fragment>
+                            ))}
+                    </VStack>
+                </Container>
+
+                <Container maxW="5xl" p={{ base: 5, md: 10 }}>
+                    <Flex justify={"center"} mb={3}>
+                        <InertiaChakraLink
+                            href="/category/publications"
+                            textAlign={"center"}
+                            my={6}
+                        >
+                            <ExploreButton
+                                size="md"
+                                text="Latest Publications"
+                                variant="outline"
+                                px={10}
+                            />
+                        </InertiaChakraLink>
+                    </Flex>
+                    <VStack
+                        border="1px solid"
+                        borderColor="gray.400"
+                        rounded="md"
+                        spacing={0}
+                        align={"space-between"}
+                    >
+                        {publications &&
+                            publications.map(
+                                (
+                                    {
+                                        id,
+                                        title,
+                                        subtitle,
+                                        file,
+                                        media,
+                                        category,
+                                    },
+                                    i
+                                ) => (
+                                    <Fragment key={id}>
+                                        <Grid
+                                            templateRows={{
+                                                base: "auto auto",
+                                                md: "auto",
+                                            }}
+                                            templateColumns={{
+                                                base: "4fr",
+                                                md: "4fr 2fr",
+                                            }}
+                                            p={{ base: 3, sm: 6 }}
+                                            gap={3}
+                                            _hover={{
+                                                bg: useColorModeValue(
+                                                    "gray.200",
+                                                    "var(--color-darker)"
+                                                ),
+                                            }}
+                                        >
+                                            <GridItem
+                                                gridTemplateColumns={{
+                                                    base: "span 3",
+                                                    md: "span 4",
+                                                }}
+                                            >
+                                                <Tag
+                                                    w="max-content"
+                                                    colorScheme="primary"
+                                                    mb={2}
+                                                >
+                                                    {category.name}
+                                                </Tag>
+
+                                                <InertiaChakraLink
+                                                    href={`publication/${file.name}`}
+                                                >
                                                     <Heading
-                                                        fontSize="lg"
-                                                        align="left"
-                                                        mt={0}
-                                                    >
-                                                        <InertiaChakraLink
-                                                            href={`/publications/${file.name}`}
-                                                        >
-                                                            <Text
-                                                                as={Link}
-                                                                color={
-                                                                    linkColor
-                                                                }
-                                                            >
-                                                                {title}
-                                                            </Text>
-                                                        </InertiaChakraLink>
-                                                    </Heading>
-                                                    <Text
-                                                        align="left"
+                                                        as="h3"
+                                                        fontWeight="bold"
                                                         fontSize="md"
-                                                        noOfLines={1}
-                                                        color={textColor}
+                                                        m="0"
                                                     >
-                                                        {subtitle}
-                                                    </Text>
-                                                </Box>
-                                                <Box>
+                                                        {title}
+                                                    </Heading>
+                                                    {subtitle && (
+                                                        <Text
+                                                            as="span"
+                                                            fontWeight="medium"
+                                                            fontSize="xs"
+                                                            color={useColorModeValue(
+                                                                "gray.600",
+                                                                "gray.300"
+                                                            )}
+                                                        >
+                                                            {" " + subtitle}
+                                                        </Text>
+                                                    )}
+                                                </InertiaChakraLink>
+                                            </GridItem>
+
+                                            <GridItem
+                                                gridTemplateColumns={{
+                                                    base: "span 1",
+                                                    md: "span 2",
+                                                }}
+                                                justifySelf={"flex-end"}
+                                                alignSelf="start"
+                                            >
+                                                <InertiaChakraLink
+                                                    href={`/publicaitons/${file.name}`}
+                                                >
                                                     <Image
                                                         src={
                                                             media.length
@@ -612,33 +646,23 @@ const PublicationSection = ({ publications, showPublication }) => {
                                                                 : "/assets/SM-placeholder-150x150.png"
                                                         }
                                                         alt={title}
-                                                        w="70px"
+                                                        w="60px"
                                                         aspectRatio={3 / 4}
                                                         // h="190px"
                                                     />
-                                                </Box>
-                                            </HStack>
-                                        </VStack>
-                                    </MotionBox>
+                                                </InertiaChakraLink>
+                                            </GridItem>
+                                        </Grid>
+                                        {publications.length - 1 !== i && (
+                                            <Divider m={0} />
+                                        )}
+                                    </Fragment>
                                 )
-                            )
-                        )}
-                </SimpleGrid>
-                <InertiaChakraLink
-                    href="/category/publications"
-                    textAlign={"center"}
-                    mt={6}
-                >
-                    <ExploreButton
-                        size="md"
-                        text="Explore All"
-                        variant="outline"
-                        px={10}
-                    />
-                </InertiaChakraLink>
-            </Container>
-        </SimpleGrid>
-        // </Section>
+                            )}
+                    </VStack>
+                </Container>
+            </SimpleGrid>
+        </Section>
     );
 };
 
