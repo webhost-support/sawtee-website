@@ -1,12 +1,4 @@
-import {
-    Box,
-    Flex,
-    Divider,
-    Heading,
-    Skeleton,
-    Stack,
-    useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, Flex, Divider, Heading, Skeleton, Stack } from "@chakra-ui/react";
 import React from "react";
 import { formatDate } from "@/Utils/helpers";
 import { GlassBox } from "@/Components/Frontend/index";
@@ -21,26 +13,24 @@ const ListHeading = ({ title, link }) => {
             px={6}
             py={3}
         >
-            <Flex justify={"space-between"} align="center" wrap={"wrap"} p="3">
-                <Heading
-                    as="h3"
-                    color={"#fff"}
-                    fontSize={{ base: "md", md: "lg" }}
-                >
+            <Flex
+                justify={"space-between"}
+                align="center"
+                wrap={"wrap"}
+                p="3"
+                color={"whiteAlpha.900"}
+            >
+                <Heading as="h3" fontSize={{ base: "md", md: "lg" }}>
                     {title}
                 </Heading>
                 <ChakraLink
                     as={Link}
                     href={link}
                     fontSize="xs"
-                    color="#fff"
                     textDecor={"underline"}
                     textUnderlineOffset={"2px"}
-                    transition={"all 0.2s linear"}
                     _hover={{
                         textDecor: "underline",
-                        color: "primary.300",
-                        textUnderlineOffset: "3px",
                     }}
                     fontWeight="medium"
                 >
@@ -52,11 +42,6 @@ const ListHeading = ({ title, link }) => {
 };
 
 const SidebarWidget = ({ array, title, link, ...rest }) => {
-    const HeadingColor = useColorModeValue(
-        "var(--color-dark)",
-        "var(--color-light)"
-    );
-
     return (
         <GlassBox
             className="sidebar_widget"
@@ -87,7 +72,6 @@ const SidebarWidget = ({ array, title, link, ...rest }) => {
                                         base: "sm",
                                         md: "md",
                                     }}
-                                    color={HeadingColor}
                                     fontWeight="semibold"
                                 >
                                     <ChakraLink

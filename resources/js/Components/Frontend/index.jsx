@@ -62,7 +62,7 @@ export const Content = styled(Box)`
     p {
         padding-block: 10px;
         font-size: 18px;
-        line-height: var(--chakra-lineHeights-taller);
+        line-height: var(--chakra-lineHeights-tall);
     }
 
     * {
@@ -84,12 +84,6 @@ export const Content = styled(Box)`
         overflow-wrap: break-word;
         word-break: break-word;
     }
-
-    // h1,
-    // h2,
-    // h3 {
-    //     color: #204754;
-    // }
 
     h1 {
         font-size: var(--chakra-fontSizes-4xl);
@@ -139,20 +133,7 @@ export const Content = styled(Box)`
         margin: auto;
     }
 
-    a {
-        background-image: linear-gradient(
-            white 50%,
-            var(--chakra-colors-primary-300) 50%
-        );
-        transition: background 0.5s;
-        background-size: auto 175%;
-
-        &:hover {
-            background-position-y: 100%;
-            text-decoration: none;
-            // color: #f1f1f1;
-        }
-    }
+    
 `;
 
 export const GlassBox = ({ children, ...rest }) => {

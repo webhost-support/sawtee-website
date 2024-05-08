@@ -104,7 +104,9 @@ const Widget = ({ item }) => {
                                             <StyledChakraLink
                                                 onClick={onOpen}
                                                 color={linkcolor}
-                                                hoverColor={hoverColor}
+                                                _hover={{
+                                                    color: hoverColor,
+                                                }}
                                                 fontSize={"md"}
                                             >
                                                 {title}
@@ -132,7 +134,9 @@ const Widget = ({ item }) => {
                                         <StyledChakraLink
                                             href={url ? url : null}
                                             color={linkcolor}
-                                            hoverColor={hoverColor}
+                                            _hover={{
+                                                color: hoverColor,
+                                            }}
                                             fontSize={"md"}
                                         >
                                             {title}
@@ -153,7 +157,9 @@ const Widget = ({ item }) => {
                                         <StyledChakraLink
                                             href={url ? url : null}
                                             color={linkcolor}
-                                            hoverColor={hoverColor}
+                                            _hover={{
+                                                color: hoverColor,
+                                            }}
                                             fontSize={"md"}
                                         >
                                             {title}
@@ -174,7 +180,9 @@ const Widget = ({ item }) => {
                                         <StyledChakraLink
                                             href={url ? url : null}
                                             color={linkcolor}
-                                            hoverColor={hoverColor}
+                                            _hover={{
+                                                color: hoverColor,
+                                            }}
                                             fontSize={"md"}
                                         >
                                             {title}
@@ -195,7 +203,9 @@ const Widget = ({ item }) => {
                                         <StyledChakraLink
                                             href={url ? url : null}
                                             color={linkcolor}
-                                            hoverColor={hoverColor}
+                                            _hover={{
+                                                color: hoverColor,
+                                            }}
                                             fontSize={"md"}
                                         >
                                             {title}
@@ -231,13 +241,14 @@ const Widget = ({ item }) => {
                                             fontSize: "10px",
                                             color: linkcolor,
                                         }}
-
                                     />
                                     <StyledChakraLink
                                         fontSize={"md"}
                                         href={url}
                                         color={linkcolor}
-                                        hoverColor={hoverColor}
+                                        _hover={{
+                                            color: hoverColor,
+                                        }}
                                     >
                                         {title}
                                     </StyledChakraLink>

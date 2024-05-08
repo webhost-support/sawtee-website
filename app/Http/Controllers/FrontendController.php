@@ -216,7 +216,6 @@ class FrontendController extends Controller
             if (!$category) {
                 $category = Category::with('parent')->where('slug', $segments[1])->first();
                 $post = Post::where('slug', $segments[2])->firstOrFail();
-                // $category = Category::with('parent')->where('id', $post->category_id)->firstOrFail();
                 return Inertia::render('Frontend/Post', ['post' => $post->load('category', 'category.parent', 'media')]);
             }
 
@@ -246,10 +245,8 @@ class FrontendController extends Controller
 
         // $publications = Publication::search($request->search)->get();
         // $research = Research::search($request->search)->get();
-        $posts = Post::search($request->search)->get();
-        return to_route('home')->withViewData([
-            'posts' => $posts
-        ]) ;
+        $posts = Post::search($request->search)->take(10)->get();
+        return response()->json($posts);
     }
 
 

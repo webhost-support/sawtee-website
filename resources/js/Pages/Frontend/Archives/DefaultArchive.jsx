@@ -46,95 +46,83 @@ const ArchivePost = ({ post, featured_image, showFallbackImage, rest }) => {
             {...rest}
         >
             <LinkBox>
-                <LinkOverlay
-                    href={`/category/${post.category.slug}/${post.slug}`}
-                >
-                    {showFallbackImage && (
-                        <PostImageWithOverlay
-                            height="250px"
-                            borderRadius="var(--chakra-radii-md) var(--chakra-radii-md) 0 0"
-                            overflow="hidden"
-                            _groupHover={{
-                                transition: "transform 0.4s ease-in-out",
-                                borderRadius:
-                                    "var(--chakra-radii-md) var(--chakra-radii-md) 0 0",
-                                cusrsor: "pointer",
-                            }}
-                            src={featured_image && featured_image.original_url}
-                            srcSet={
-                                featured_image
-                                    ? ""
-                                    : `/assets/SM-placeholder.png,
+                {showFallbackImage && (
+                    <PostImageWithOverlay
+                        height="250px"
+                        borderRadius="var(--chakra-radii-md) var(--chakra-radii-md) 0 0"
+                        overflow="hidden"
+                        _groupHover={{
+                            transition: "transform 0.4s ease-in-out",
+                            borderRadius:
+                                "var(--chakra-radii-md) var(--chakra-radii-md) 0 0",
+                            cusrsor: "pointer",
+                        }}
+                        src={featured_image && featured_image.original_url}
+                        srcSet={
+                            featured_image
+                                ? ""
+                                : `/assets/SM-placeholder.png,
                                         /assets/SM-placeholder-1024x512.png
                                         /assets/SM-placeholder-300x150.png,
                                         /assets/SM-placeholder-150x150.png,
                                             `
-                            }
-                        />
-                    )}
-                    <Box p={[4, 8]}>
-                        <Box>
+                        }
+                    />
+                )}
+                <Box p={[4, 8]}>
+                    <Box>
+                        <LinkOverlay
+                            href={`/category/${post.category.slug}/${post.slug}`}
+                        >
                             <Heading
                                 as="h3"
                                 fontSize={["md", "md", "xl"]}
                                 fontWeight="semibold"
                                 mb={4}
-                                textDecoration="underline"
-                                textUnderlineOffset="3px"
-                                textDecorationThickness={"2px"}
-                                _groupHover={{
-                                    textDecoration: "none",
-                                }}
                             >
                                 <InertiaChakraLink
                                     as={Link}
                                     href={`/category/${post.category.slug}/${post.slug}`}
-                                    _groupHover={{
-                                        textDecoration: "underline",
-                                        textDecorationThickness: "2px",
-                                        textUnderlineOffset: "6px",
-                                        transition: "all 200ms ease-in",
-                                    }}
                                     className="primary-link"
                                 >
                                     {post.title}
                                 </InertiaChakraLink>
                             </Heading>
-
-                            <Text fontSize={["xs", "md", "md"]} noOfLines={3}>
-                                {post.excerpt}
-                            </Text>
-                        </Box>
-                        <Box mt="4">
-                            <Stack
-                                justify="space-between"
-                                direction={"row"}
-                                flexWrap={"wrap"}
-                                alignItems={"center"}
-                            >
-                                <Text
-                                    as="time"
-                                    fontSize={"sm"}
-                                    dangerouslySetInnerHTML={{
-                                        __html: formatDate(post.published_at),
-                                    }}
-                                />
-
-                                <Link
-                                    href={`/category/${post.category.slug}/${post.slug}`}
-                                >
-                                    <ExploreButton
-                                        size="sm"
-                                        text="Read more"
-                                        aria-label={"Read More"}
-                                        colorScheme={"gray"}
-                                        w="full"
-                                    />
-                                </Link>
-                            </Stack>
-                        </Box>
+                        </LinkOverlay>
+                        <Text fontSize={["xs", "md", "md"]} noOfLines={3}>
+                            {post.excerpt}
+                        </Text>
                     </Box>
-                </LinkOverlay>
+
+                    <Box mt="4">
+                        <Stack
+                            justify="space-between"
+                            direction={"row"}
+                            flexWrap={"wrap"}
+                            alignItems={"center"}
+                        >
+                            <Text
+                                as="time"
+                                fontSize={"sm"}
+                                dangerouslySetInnerHTML={{
+                                    __html: formatDate(post.published_at),
+                                }}
+                            />
+
+                            <Link
+                                href={`/category/${post.category.slug}/${post.slug}`}
+                            >
+                                <ExploreButton
+                                    size="sm"
+                                    text="Read more"
+                                    aria-label={"Read More"}
+                                    colorScheme={"gray"}
+                                    w="full"
+                                />
+                            </Link>
+                        </Stack>
+                    </Box>
+                </Box>
             </LinkBox>
         </GlassBox>
     );

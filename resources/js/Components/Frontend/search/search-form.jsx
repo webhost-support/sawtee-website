@@ -1,24 +1,20 @@
 import { Flex, Icon, Input } from "@chakra-ui/react";
-import { useForm } from "@inertiajs/react";
 import React from "react";
 
 // A11y: Add a hidden search button
-const SearchForm = (props) => {
-    const { data, get, setData, errors } = useForm({
-        query: "",
-    });
-
+const SearchForm = ({ setData }) => {
     function handleSubmit(e) {
         e.preventDefault();
-        get(route("search"), {
-            preserveScroll: true,
-            preserveState: true,
-            onSuccess: () => console.log(data.query),
-            onError: (errors) => {
-                console.log(errors);
-            },
-        });
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "/search");
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                setData(JSON.parse(xhr.responseText));
+            }
+        };
+        xhr.send();
     }
+
     return (
         <Flex
             as="form"
@@ -30,6 +26,7 @@ const SearchForm = (props) => {
             justifyContent="center"
             alignItems="center"
             onSubmit={handleSubmit}
+            mb={10}
             // {...form}
         >
             <Input
@@ -40,7 +37,6 @@ const SearchForm = (props) => {
                 height="auto"
                 focusBorderColor="primary.400"
                 py={{ base: 1, md: 3 }}
-                onChange={(e) => setData("query", e.target.value)}
                 // {...input}
             />
             <Icon

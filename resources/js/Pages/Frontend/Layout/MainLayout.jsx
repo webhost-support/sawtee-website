@@ -28,10 +28,6 @@ export default function MainLayout({ children, ...rest }) {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
-    const { props } = usePage();
-
-    console.log(props);
-
     return (
         <>
             <SkipLink

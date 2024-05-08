@@ -1,4 +1,4 @@
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import {
     Text,
     Box,
@@ -17,7 +17,6 @@ import {
     SimpleGrid,
     Show,
     Tag,
-
 } from "@chakra-ui/react";
 import { FancyTitle, ExploreButton, Title } from "@/Components/Frontend/index";
 import FullWidthCarousel from "@/Components/Frontend/FullWidthCarousel";
@@ -42,7 +41,6 @@ const Home = ({
     publications,
     sawteeInMedia,
     newsletters,
-    posts,
 }) => {
     const introText =
         "Dedicated to fair, equitable, inclusive, and sustainable growth and development in South Asia, SAWTEE is working towards poverty reduction, food and livelihood security, gender equity, and biodiversity conservation and environmental sustainability.";
@@ -65,7 +63,8 @@ const Home = ({
         lg: 3,
     });
 
-    console.log(posts);
+    const pageData = usePage();
+    console.log(pageData);
     return (
         <MainLayout>
             <WebsiteHead
@@ -134,7 +133,6 @@ const CarouselSection = ({ slides, infocus }) => {
             >
                 <InfocusSection infocus={infocus} link={"/category/infocus"} />
                 {/* <CardsCarousel slides={books} /> */}
-
             </GridItem>
         </Grid>
     );
@@ -685,5 +683,3 @@ const Section = ({ children, title = null, ...rest }) => {
         </Box>
     );
 };
-
-
