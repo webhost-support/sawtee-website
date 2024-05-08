@@ -294,7 +294,7 @@ export default function EditPublicationForm({ publication, categories }) {
                         </FormControl>
                         <PrimaryButton
                             type="submit"
-                            disabled={processing}
+                            isLoading={processing}
                             mt={4}
                             w="64"
                         >

@@ -60,8 +60,7 @@ export const Content = styled(Box)`
     line-height: var(--chakra-lineHeights-taller);
 
     p {
-        margin-top: 1.5rem;
-        padding-bottom: 10px;
+        padding-block: 10px;
         font-size: 18px;
         line-height: var(--chakra-lineHeights-taller);
     }

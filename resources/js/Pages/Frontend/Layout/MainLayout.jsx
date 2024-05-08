@@ -7,9 +7,8 @@ import { usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import { primarMmenu, footerMenu, socialMenu } from "@/Utils/data";
 
-export default function MainLayout(props) {
+export default function MainLayout({ children, ...rest }) {
     const { experts, url } = usePage();
-    const { children, ...rest } = props;
     const [visible, setVisible] = useState(false);
     const toggleVisibility = () => {
         if (window.pageYOffset > 570) {
@@ -28,6 +27,10 @@ export default function MainLayout(props) {
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
+
+    const { props } = usePage();
+
+    console.log(props);
 
     return (
         <>

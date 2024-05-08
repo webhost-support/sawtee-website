@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Laravel\Scout\Attributes\SearchUsingFullText;
+use Laravel\Scout\Attributes\SearchUsingPrefix;
+use Laravel\Scout\Searchable;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -14,7 +17,29 @@ class Research extends Model implements HasMedia
 {
     use HasFactory;
     use InteractsWithMedia;
+    use Searchable;
+
     protected $fillable = ['title', 'subtitle', 'description', 'year', 'link', 'meta_title', 'meta_description'];
+
+
+      /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string, mixed>
+     */
+
+    #[SearchUsingPrefix(['title', 'subtitle'])]
+    #[SearchUsingFullText(['description'])]
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'title' => $this->title,
+            'subtitle' => $this->subtitle,
+            'description' => $this->description,
+        ];
+    }
+
 
     public function registerMediaConversions(Media $media = null): void
     {

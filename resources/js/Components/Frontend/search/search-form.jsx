@@ -10,7 +10,7 @@ const SearchForm = (props) => {
 
     function handleSubmit(e) {
         e.preventDefault();
-        get(route("search", data.query), {
+        get(route("search"), {
             preserveScroll: true,
             preserveState: true,
             onSuccess: () => console.log(data.query),

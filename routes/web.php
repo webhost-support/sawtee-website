@@ -69,6 +69,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->as('admin.')->group(fu
 
 Route::post('/subscribe', [SubscriptionController::class, 'subscribe'])->name('subscribe');
 Route::get('/unsubscribe/{email}', [SubscriptionController::class, 'unsubscribe'])->name('unsubscribe');
+Route::get('/search', [FrontendController::class, 'search'])->name('search');
 
 // Route::post('/subscribers/subscribe', [SubscriptionController::class, 'store'])->name('subscription.store');
 // Route::get('/subscribers/verify/{token}', [SubscriptionController::class, 'verify'])->name('subscription.verify');
@@ -78,7 +79,6 @@ Route::get('/', [FrontendController::class, 'index'])->name('home');
 Route::get('/{pages:slug}', [FrontendController::class, 'page'])->name('page.show');
 Route::get('/category/{categories:slug}/{subcategory?}/{post?}', [FrontendController::class, 'category'])->name('category.show');
 
-Route::get('/search/{query?}', [FrontendController::class, 'search'])->name('search');
 
 
 require __DIR__ . '/auth.php';

@@ -9,8 +9,8 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-const SearchModal = (props) => (
-    <Modal isCentered size={"3xl"} preserveScrollBarGap {...props}>
+const SearchModal = ({ posts, children, ...rest }) => (
+    <Modal isCentered size={"3xl"} preserveScrollBarGap {...rest}>
         <ModalOverlay
             bg="blackAlpha.300"
             backdropFilter="blur(8px) hue-rotate(90deg)"
@@ -22,7 +22,7 @@ const SearchModal = (props) => (
             bg={useColorModeValue("gray.100", "var(--color-darker)")}
         >
             <ModalHeader>Search</ModalHeader>
-            <ModalBody>{props.children}</ModalBody>
+            <ModalBody>{children}</ModalBody>
             <ModalCloseButton size="lg" rounded="full" />
         </ModalContent>
     </Modal>

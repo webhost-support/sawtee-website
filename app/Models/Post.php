@@ -48,6 +48,14 @@ class Post extends Model implements HasMedia
     }
 
     /**
+     * Determine if the model should be searchable.
+     */
+    public function shouldBeSearchable(): bool
+    {
+        return $this->isPublished();
+    }
+
+    /**
      * Get the options for generating the slug.
      */
     public function getSlugOptions() : SlugOptions

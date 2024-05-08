@@ -42,6 +42,7 @@ const Home = ({
     publications,
     sawteeInMedia,
     newsletters,
+    posts,
 }) => {
     const introText =
         "Dedicated to fair, equitable, inclusive, and sustainable growth and development in South Asia, SAWTEE is working towards poverty reduction, food and livelihood security, gender equity, and biodiversity conservation and environmental sustainability.";
@@ -63,6 +64,8 @@ const Home = ({
         md: 2,
         lg: 3,
     });
+
+    console.log(posts);
     return (
         <MainLayout>
             <WebsiteHead

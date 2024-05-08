@@ -118,7 +118,7 @@ select {
 }
 
 .primary-link, a {
-    text-decoration: underline;
+    text-decoration: unset;
 
 }
 .primary-link:hover, a {

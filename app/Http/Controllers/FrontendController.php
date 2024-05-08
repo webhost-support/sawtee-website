@@ -12,11 +12,9 @@ use App\Models\Slide;
 use App\Models\Slider;
 use App\Models\Team;
 use App\Models\Theme;
-use Enflow\SocialShare\SocialShare;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Spatie\Newsletter\Facades\Newsletter;
-use UniSharp\LaravelFilemanager\Lfm;
 
 /**
  * A function to retrieve posts based on category and slug.
@@ -245,7 +243,13 @@ class FrontendController extends Controller
 
     public function search(Request $request)
     {
-        return Post::search($request->search)->get();
+
+        // $publications = Publication::search($request->search)->get();
+        // $research = Research::search($request->search)->get();
+        $posts = Post::search($request->search)->get();
+        return to_route('home')->withViewData([
+            'posts' => $posts
+        ]) ;
     }
 
 

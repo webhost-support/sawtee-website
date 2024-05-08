@@ -1,6 +1,7 @@
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Box, Heading, Icon, Text } from "@chakra-ui/react";
 import InertiaChakraLink from "./styles/inertia-chakra-link";
 import PrimaryButton from "../Backend/PrimaryButton";
+import { ArrowBackIcon } from "@chakra-ui/icons";
 
 const Page404 = ({ status, message }) => (
     <Box textAlign="center" py={10} px={6}>
@@ -19,15 +20,19 @@ const Page404 = ({ status, message }) => (
         <Text color={"gray.500"} mb={6}>
             The page you&apos;re looking for does not seem to exist
         </Text>
-
-        <PrimaryButton
-            as={InertiaChakraLink}
-            bgGradient="linear(to-r, primary.400, primary.500, teal.600)"
-            color="white"
-            variant="solid"
-        >
-            Go to Home
-        </PrimaryButton>
+        <InertiaChakraLink href="/">
+            <PrimaryButton
+                bgGradient="linear(to-r, primary.400, primary.500, teal.600)"
+                color="white"
+                variant="solid"
+                _hover={{
+                    bgGradient:
+                        "linear(to-r, primary.400, primary.500, teal.600)",
+                }}
+            >
+                <Icon as={ArrowBackIcon} mr={2} /> {"Go back Home"}
+            </PrimaryButton>
+        </InertiaChakraLink>
     </Box>
 );
 
