@@ -31,8 +31,7 @@ const CovidArchive = ({ posts }) => {
                             shadow: "dark-lg",
                             transform: "scale(1.02)",
                         }}
-                        w="4xl"
-                        maxW="4xl"
+
                     >
                         <HStack w="full" justify="space-between">
                             {post.genre && (

@@ -71,10 +71,6 @@ Route::post('/subscribe', [SubscriptionController::class, 'subscribe'])->name('s
 Route::get('/unsubscribe/{email}', [SubscriptionController::class, 'unsubscribe'])->name('unsubscribe');
 Route::get('/search', [FrontendController::class, 'search'])->name('search');
 
-// Route::post('/subscribers/subscribe', [SubscriptionController::class, 'store'])->name('subscription.store');
-// Route::get('/subscribers/verify/{token}', [SubscriptionController::class, 'verify'])->name('subscription.verify');
-// Route::get('/unsubscribe/{email}', [SubscriptionController::class, 'unsubscribe'])->name('unsubscribe');
-
 Route::get('/', [FrontendController::class, 'index'])->name('home');
 Route::get('/{pages:slug}', [FrontendController::class, 'page'])->name('page.show');
 Route::get('/category/{categories:slug}/{subcategory?}/{post?}', [FrontendController::class, 'category'])->name('category.show');

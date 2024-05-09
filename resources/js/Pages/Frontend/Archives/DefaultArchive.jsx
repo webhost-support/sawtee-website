@@ -41,7 +41,10 @@ const ArchivePost = ({ post, featured_image, showFallbackImage, rest }) => {
             w="full"
             maxW="2xl"
             as={motion.article}
-            whileHover={{ y: "-10px" }}
+            initial={{ y: 100 }}
+            whileInView={{ y: 0 }}
+            transitionDuration="200ms"
+            // viewport={{ once: true }}
             _hover={{ boxShadow: "xl" }}
             {...rest}
         >

@@ -1,3 +1,9 @@
+export const feature = {
+    name: "Reform Monitoring Platform",
+    image: "/assets/Policy-Reform-Banner-green-sized.webp",
+    link: "/reform-monitoring-platform",
+};
+
 const font_heading =
     "'Roboto', 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif";
 const font_body =

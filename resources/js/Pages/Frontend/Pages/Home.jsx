@@ -18,7 +18,12 @@ import {
     Show,
     Tag,
 } from "@chakra-ui/react";
-import { FancyTitle, ExploreButton, Title } from "@/Components/Frontend/index";
+import {
+    FancyTitle,
+    ExploreButton,
+    Title,
+    GlassBox,
+} from "@/Components/Frontend/index";
 import FullWidthCarousel from "@/Components/Frontend/FullWidthCarousel";
 import { formatDate } from "@/Utils/helpers";
 import MainLayout from "../Layout/MainLayout";
@@ -32,8 +37,34 @@ import WebsiteHead from "@/Components/Frontend/Head";
 import Feature from "@/Components/Frontend/feature";
 import DottedBox from "../DottedBox";
 import { Fragment } from "react";
+import { feature } from "@/Utils/data";
+import { motion } from "framer-motion";
 // import { Barchart, TreemapChart } from "@/Components/Frontend/Charts";
+const ListItemVariant = {
+    initial: {
+        y: 50,
+        // opacity: 0,
+        transition: {
+            y: { stiffness: 1000 },
+        },
+    },
+    whileInView: {
+        y: 0,
+        // opacity: 1,
+        transition: {
+            y: { stiffness: 1000, velocity: -100 },
+        },
+    },
+};
 
+const ListVariant = {
+    initial: {
+        transition: { staggerChildren: 0.05, staggerDirection: -1 },
+    },
+    whileInView: {
+        transition: { staggerChildren: 0.07, delayChildren: 0.2 },
+    },
+};
 const Home = ({
     infocus,
     slides,
@@ -42,15 +73,6 @@ const Home = ({
     sawteeInMedia,
     newsletters,
 }) => {
-    const introText =
-        "Dedicated to fair, equitable, inclusive, and sustainable growth and development in South Asia, SAWTEE is working towards poverty reduction, food and livelihood security, gender equity, and biodiversity conservation and environmental sustainability.";
-    const introImage = "/assets/hero-image.webp";
-
-    const feature = {
-        name: "Reform Monitoring Platform",
-        image: "/assets/Policy-Reform-Banner-green-sized.webp",
-        link: "/reform-monitoring-platform",
-    };
     const showPublication = useBreakpointValue({
         base: 1,
         md: 2,
@@ -73,7 +95,7 @@ const Home = ({
 
             <CarouselSection slides={slides} infocus={infocus} />
             <Feature feature={feature} />
-            <AboutSection intro={introText} image={introImage} />
+            <AboutSection />
 
             <PublicationSection
                 publications={publications}
@@ -110,7 +132,7 @@ const CarouselSection = ({ slides, infocus }) => {
                 <GridItem
                     colSpan={{ base: 1, md: 4 }}
                     overflow={"hidden"}
-                    maxH={{ base: "auto", md: "calc(100dvh - 15rem)" }}
+                    maxH={{ base: "auto", md: "calc(100dvh - 10rem)" }}
                 >
                     <FullWidthCarousel
                         slides={slides}
@@ -126,10 +148,21 @@ const CarouselSection = ({ slides, infocus }) => {
                 alignSelf={"center"}
                 px={2}
                 py={2}
-                maxH={{ base: "auto", md: "calc(100dvh - 15rem)" }}
-                overflowY={"scroll"}
             >
-                <InfocusSection infocus={infocus} link={"/category/infocus"} />
+                <GlassBox
+                    overflowY={"scroll"}
+                    bg="transparent"
+                    shadow="none"
+                    boxShadow="none"
+                    rounded="none"
+                    border="none"
+                    maxH={{ base: "auto", md: "calc(100dvh - 10rem)" }}
+                >
+                    <InfocusSection
+                        infocus={infocus}
+                        link={"/category/infocus"}
+                    />
+                </GlassBox>
                 {/* <CardsCarousel slides={books} /> */}
             </GridItem>
         </Grid>
@@ -150,7 +183,7 @@ const AboutSection = ({}) => {
                     <DottedBox />
                     <LinkBox mx="auto" shadow={"xl"} rounded="xl">
                         <InertiaChakraLink
-                            href="/media-fellowship"
+                            href="/media-fellows"
                             role="banner"
                             aria-labelledby="Media Fellowship"
                             title="Media Fellowship"
@@ -182,7 +215,7 @@ const AboutSection = ({}) => {
                         </InertiaChakraLink>
                     </LinkBox>
                 </Box>
-                <Box ml={{ base: 0, md: 5 }} pos="relative">
+                {/* <Box ml={{ base: 0, md: 5 }} pos="relative">
                     <DottedBox />
                     <LinkBox mx="auto" shadow={"xl"} rounded="xl">
                         <InertiaChakraLink
@@ -199,7 +232,7 @@ const AboutSection = ({}) => {
                             />
                         </InertiaChakraLink>
                     </LinkBox>
-                </Box>
+                </Box> */}
             </SimpleGrid>
         </Box>
     );
@@ -208,7 +241,7 @@ const AboutSection = ({}) => {
 const InfocusSection = ({ infocus, link }) => {
     const itemBG = useColorModeValue("blackAlpha.200", "blackAlpha.300");
     return (
-        <Container maxW="8xl" px={4}>
+        <Container maxW="8xl" px={4} mb="2">
             <InertiaChakraLink as={Link} href={link}>
                 <Title
                     text={"In Focus"}
@@ -216,8 +249,6 @@ const InfocusSection = ({ infocus, link }) => {
                     px={{ base: 4, sm: 6 }}
                     fontWeight="bold"
                     fontSize={{ base: "3xl", md: "5xl", lg: "4xl" }}
-                    // bgGradient="linear(to-br, #228be6, #15aabf)"
-                    // bgClip="text"
                     color="primary.500"
                     textAlign="left"
                     w="max-content"
@@ -493,6 +524,12 @@ const PublicationSection = ({ publications, showPublication, newsletters }) => {
                         </InertiaChakraLink>
                     </Flex>
                     <VStack
+                        as={motion.ul}
+                        initial={"initial"}
+                        onViewportLeave={"initial"}
+                        variants={ListVariant}
+                        onViewportEnter={"whileInView"}
+                        viewport={{ once: true }}
                         border="1px solid"
                         borderColor="gray.400"
                         rounded="md"
@@ -502,7 +539,15 @@ const PublicationSection = ({ publications, showPublication, newsletters }) => {
                     >
                         {newsletters &&
                             newsletters.map(({ id, title, slug }, i) => (
-                                <Fragment key={id}>
+                                <Box
+                                    as={motion.li}
+                                    initial={"initial"}
+                                    whileInView={"whileInView"}
+                                    variants={ListItemVariant}
+                                    transitionDuration={"400ms"}
+                                    // viewport={{ once: true }}
+                                    key={id}
+                                >
                                     <Heading
                                         as={"h4"}
                                         fontWeight="bold"
@@ -518,7 +563,7 @@ const PublicationSection = ({ publications, showPublication, newsletters }) => {
                                     {newsletters.length - 1 !== i && (
                                         <Divider m={0} />
                                     )}
-                                </Fragment>
+                                </Box>
                             ))}
                     </VStack>
                 </Container>
@@ -544,6 +589,13 @@ const PublicationSection = ({ publications, showPublication, newsletters }) => {
                         rounded="md"
                         spacing={0}
                         align={"space-between"}
+                        as={motion.ul}
+                        style={{ listStyle: "none" }}
+                        initial={"initial"}
+                        onViewportLeave={"initial"}
+                        variants={ListVariant}
+                        onViewportEnter={"whileInView"}
+                        // viewport={{ once: true }}
                     >
                         {publications &&
                             publications.map(
@@ -558,7 +610,14 @@ const PublicationSection = ({ publications, showPublication, newsletters }) => {
                                     },
                                     i
                                 ) => (
-                                    <Fragment key={id}>
+                                    <Box
+                                        key={id}
+                                        as={motion.li}
+                                        initial={"initial"}
+                                        whileInView={"whileInView"}
+                                        variants={ListItemVariant}
+                                        // viewport={{ once: true }}
+                                    >
                                         <Grid
                                             templateRows={{
                                                 base: "auto auto",
@@ -572,8 +631,8 @@ const PublicationSection = ({ publications, showPublication, newsletters }) => {
                                             gap={3}
                                             _hover={{
                                                 bg: useColorModeValue(
-                                                    "gray.200",
-                                                    "var(--color-darker)"
+                                                    "blackAlpha.50",
+                                                    "blackAlpha.300"
                                                 ),
                                             }}
                                         >
@@ -651,7 +710,7 @@ const PublicationSection = ({ publications, showPublication, newsletters }) => {
                                         {publications.length - 1 !== i && (
                                             <Divider m={0} />
                                         )}
-                                    </Fragment>
+                                    </Box>
                                 )
                             )}
                     </VStack>

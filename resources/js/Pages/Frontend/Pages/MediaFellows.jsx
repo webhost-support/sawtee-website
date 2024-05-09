@@ -284,7 +284,14 @@ export const Fellows = ({ mediaFellow, i }) => {
                         <AccordionPanel px={["5", "10"]}>
                             {experience.length > 0 &&
                                 experience.map((exp) => {
-                                    return <Text my={2}>{exp}</Text>;
+                                    return (
+                                        <Text
+                                            my={2}
+                                            dangerouslySetInnerHTML={{
+                                                __html: exp,
+                                            }}
+                                        />
+                                    );
                                 })}
                         </AccordionPanel>
                     </AccordionItem>
