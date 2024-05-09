@@ -1,18 +1,33 @@
+import { SearchIcon } from "@chakra-ui/icons";
 import { Flex, Icon, Input } from "@chakra-ui/react";
+import { useForm } from "@inertiajs/react";
 import React from "react";
 
 // A11y: Add a hidden search button
-const SearchForm = ({ setData }) => {
+const SearchForm = () => {
+    const { data, setData, get } = useForm({
+        query: "",
+    });
     function handleSubmit(e) {
         e.preventDefault();
-        const xhr = new XMLHttpRequest();
-        xhr.open("GET", "/search");
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                setData(JSON.parse(xhr.responseText));
-            }
-        };
-        xhr.send();
+        // const URL = `/search`;
+        // const xhr = new XMLHttpRequest();
+        // xhr.open("GET", URL);
+        // xhr.onload = function () {
+        //     if (xhr.status === 200) {
+        //         setPosts(JSON.parse(xhr.responseText));
+        //     }
+        // };
+        // xhr.send();
+
+        get(route("search"), {
+            preserveScroll: true,
+            preserveState: true,
+            onSuccess: () => console.log("searching"),
+            onError: (errors) => {
+                console.log(errors);
+            },
+        });
     }
 
     return (
@@ -30,17 +45,20 @@ const SearchForm = ({ setData }) => {
             // {...form}
         >
             <Input
-                placeholder="Type and Hit Enter"
+                placeholder="Type search query and Hit Enter"
                 variant="flushed"
+                name="search"
+                id="search"
                 size="lg"
-                fontSize={{ base: "24px", md: "32px" }}
+                fontSize={{ base: "16px", md: "24px" }}
                 height="auto"
                 focusBorderColor="primary.400"
-                py={{ base: 1, md: 3 }}
+                py={{ base: 1, md: 2 }}
+                onChange={(e) => setData("query", e.target.value)}
                 // {...input}
             />
             <Icon
-                name="search"
+                as={SearchIcon}
                 size="1.5rem"
                 color="gray.400"
                 position="absolute"

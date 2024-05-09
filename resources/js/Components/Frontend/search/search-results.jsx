@@ -1,9 +1,21 @@
-import { Box, Button, Heading, Input, Text, Stack } from "@chakra-ui/react";
-import { connect } from "frontity";
+import {
+    Box,
+    Button,
+    Heading,
+    Input,
+    Text,
+    Stack,
+    LinkBox,
+    Flex,
+    SimpleGrid,
+    useColorModeValue,
+} from "@chakra-ui/react";
 import React from "react";
-import Archive from "@/Components/archive";
-import { PatternBox, PatternBoxInner } from "@/Components/atoms/newsletter";
-import useSearch from "@/Utils/useSearch";
+import { PatternBox, PatternBoxInner } from "../styles/pattern-box";
+import { GlassBox } from "..";
+import InertiaChakraLinkOverlay from "../styles/inertia-chakra-link-overlay";
+import { Link } from "@inertiajs/react";
+import { SearchForm } from ".";
 
 const SearchHeader = ({ label, title, ...props }) => (
     <Box {...props}>
@@ -48,61 +60,100 @@ const NoResultContent = (props) => (
         position="relative"
         mx="auto"
         mt="-60px"
-        bg="white"
+        bg={useColorModeValue("gray.50", "var(--color-darker)")}
         width="92%"
         {...props}
     />
 );
 
-const SearchForm = connect((props) => {
-    const { form, input } = useSearch(props);
-    return (
-        <Stack mt="40px" as="form" direction="row" align="stretch" {...form}>
-            <Input
-                focusBorderColor="accent.400"
-                placeholder="Search..."
-                size="lg"
-                rounded="0"
-                {...input}
-            />
-            <Button type="submit" rounded="0" colorScheme="accent" size="lg">
-                Search
-            </Button>
-        </Stack>
-    );
-});
-
-export const SearchResults = ({ state }) => {
-    const data = state.source.get(state.router.link);
-
+export const SearchResults = ({ data, query }) => {
     // Get the total pages that match the current path/url
-    const isEmpty = data.total === 0;
+    const isEmpty = data.length === 0;
 
     return (
         <Box bg="primary.100">
             <PatternBox
-                showPattern={state.theme.showBackgroundPattern}
+                showPattern={false}
                 pb="60px"
                 mb="-60px"
+                border={"none"}
             >
                 <PatternBoxInner>
                     {isEmpty ? (
-                        <NoResultTitle
-                            query={data.searchQuery.replace(/\+/g, " ")}
-                        />
+                        <NoResultTitle query={query.replace(/\+/g, " ")} />
                     ) : (
                         <SearchResultTitle
-                            query={data.searchQuery.replace(/\+/g, " ")}
-                            resultCount={data.total}
+                            query={query.replace(/\+/g, " ")}
+                            resultCount={data.length}
                         />
                     )}
                 </PatternBoxInner>
+                <SimpleGrid
+                    columns={{ base: 1, md: 2 }}
+                    maxW={"5xl"}
+                    spacing={10}
+                    px={{ base: "24px", md: "80px" }}
+                >
+                    {data &&
+                        data.map((post) => {
+                            return (
+                                <LinkBox
+                                    as={GlassBox}
+                                    role="group"
+                                    shadow="md"
+                                    rounded="xl"
+                                    p={6}
+                                    mb={4}
+                                >
+                                    <Flex
+                                        gap={6}
+                                        justify={"center"}
+                                        direction="column"
+                                    >
+                                        <InertiaChakraLinkOverlay
+                                            as={Link}
+                                            // href={`/category/${category.slug}/${slug}`}
+                                            _groupHover={{
+                                                textDecoration: "underline",
+                                                textUnderlineOffset: "3px",
+                                            }}
+                                        >
+                                            <Heading
+                                                fontSize={{
+                                                    base: "lg",
+                                                    lg: "xl",
+                                                }}
+                                                as="h4"
+                                            >
+                                                {post.title}
+                                            </Heading>
+                                        </InertiaChakraLinkOverlay>
+
+                                        <Text
+                                            fontSize={{ base: "sm", lg: "md" }}
+                                            overflow="hidden"
+                                            textOverflow="ellipsis"
+                                            display="-webkit-box"
+                                            noOfLines="3"
+                                            sx={{
+                                                webkitLineClamp: "3",
+                                                webkitBoxOrient: "vertical",
+                                            }}
+                                            dangerouslySetInnerHTML={{
+                                                __html: post.excerpt,
+                                            }}
+                                        />
+                                    </Flex>
+                                </LinkBox>
+                            );
+                        })}
+                </SimpleGrid>
             </PatternBox>
 
-            {isEmpty ? (
+            {isEmpty && (
                 <NoResultContent>
                     <Box maxW="600px" mx="auto">
-                        <Text fontSize="xl" textAlign="center">
+                        <Text fontSize="xl" textAlign="center" mb={6}>
                             We could not find any results for your search. You
                             can give it another try through the search form
                             below.
@@ -110,11 +161,9 @@ export const SearchResults = ({ state }) => {
                         <SearchForm />
                     </Box>
                 </NoResultContent>
-            ) : (
-                <Archive />
             )}
         </Box>
     );
 };
 
-export default connect(SearchResults);
+export default SearchResults;

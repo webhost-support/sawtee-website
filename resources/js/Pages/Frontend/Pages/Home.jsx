@@ -1,4 +1,4 @@
-import { Link, usePage } from "@inertiajs/react";
+import { Link } from "@inertiajs/react";
 import {
     Text,
     Box,
@@ -63,8 +63,6 @@ const Home = ({
         lg: 3,
     });
 
-    const pageData = usePage();
-    console.log(pageData);
     return (
         <MainLayout>
             <WebsiteHead
@@ -210,23 +208,19 @@ const AboutSection = ({}) => {
 const InfocusSection = ({ infocus, link }) => {
     const itemBG = useColorModeValue("blackAlpha.200", "blackAlpha.300");
     return (
-        <Container maxW="8xl" centerContent px={4}>
-            {/* <Title
-                text={"In Focus"}
-                my={{ base: "4", md: "6", lg: "0" }}
-                fontWeight="bold"
-                fontSize={{ base: "3xl", md: "5xl", lg: "4xl" }}
-                bgGradient="linear(to-br, #228be6, #15aabf)"
-                bgClip="text"
-            /> */}
-            <InertiaChakraLink as={Link} my={3} href={link}>
-                <ExploreButton
-                    size="md"
-                    text="In Focus"
-                    variant="outline"
-                    fontSize="2xl"
-                    px={10}
-                    w="full"
+        <Container maxW="8xl" px={4}>
+            <InertiaChakraLink as={Link} href={link}>
+                <Title
+                    text={"In Focus"}
+                    my={{ base: "4", md: "6", lg: "0" }}
+                    px={{ base: 4, sm: 6 }}
+                    fontWeight="bold"
+                    fontSize={{ base: "3xl", md: "5xl", lg: "4xl" }}
+                    // bgGradient="linear(to-br, #228be6, #15aabf)"
+                    // bgClip="text"
+                    color="primary.500"
+                    textAlign="left"
+                    w="max-content"
                 />
             </InertiaChakraLink>
             {infocus.map((article) => {

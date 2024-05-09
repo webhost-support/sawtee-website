@@ -12,8 +12,8 @@ use App\Models\Slide;
 use App\Models\Slider;
 use App\Models\Team;
 use App\Models\Theme;
-use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 use Spatie\Newsletter\Facades\Newsletter;
 
 /**
@@ -239,14 +239,17 @@ class FrontendController extends Controller
             'srcSet' => $srcSet
         ]);
     }
-
+ 
     public function search(Request $request)
     {
 
         // $publications = Publication::search($request->search)->get();
         // $research = Research::search($request->search)->get();
-        $posts = Post::search($request->search)->take(10)->get();
-        return response()->json($posts);
+        $query = $request->query();
+        // dd($request->has('query'));
+        $posts = Post::search($query['query'])->get();
+        return Inertia::render('Frontend/Search/SearchResult', ['posts' => $posts, 'query'=>$query['query']]);
+        // return response()->json($posts);
     }
 
 

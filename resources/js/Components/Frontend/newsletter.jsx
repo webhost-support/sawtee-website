@@ -22,7 +22,7 @@ export const PatternBox = ({ showPattern = false, ...props }) => (
         as="section"
         bg={useColorModeValue("primary.50", "primary.700")}
         borderTop="10px solid"
-        borderColor={useColorModeValue("accent.400", "accent.100")}
+        borderColor={"primary.500"}
         {...(showPattern && {
             bgImage: `url(/assets/pattern-tile-green.svg)`,
             bgSize: "1018px",

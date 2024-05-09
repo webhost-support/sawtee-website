@@ -33,16 +33,13 @@ class Post extends Model implements HasMedia
      * @return array<string, mixed>
      */
 
-    #[SearchUsingPrefix(['id', 'title', 'author'])]
-    #[SearchUsingFullText(['content', 'excerpt'])]
+    #[SearchUsingPrefix([ 'title', 'author'])]
 
     public function toSearchableArray(): array
     {
         return [
-            'id' => (int) $this->id,
             'title' => $this->title,
             'author' => $this->author,
-            'content' => $this->content,
             'excerpt' => $this->excerpt,
         ];
     }

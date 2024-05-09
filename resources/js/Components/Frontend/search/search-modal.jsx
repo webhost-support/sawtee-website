@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-const SearchModal = ({ setData, children, ...rest }) => (
+const SearchModal = ({ children, ...rest }) => (
     <Modal
         isCentered
         size={{ base: "lg", md: "xl", lg: "3xl" }}
@@ -28,11 +28,7 @@ const SearchModal = ({ setData, children, ...rest }) => (
         >
             <ModalHeader>Search</ModalHeader>
             <ModalBody>{children}</ModalBody>
-            <ModalCloseButton
-                size="lg"
-                onClick={() => setData(null)}
-                rounded="full"
-            />
+            <ModalCloseButton size="lg" rounded="full" />
         </ModalContent>
     </Modal>
 );

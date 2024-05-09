@@ -103,31 +103,7 @@ select {
     font: inherit;
 }
 
-.chakra-ui-dark .post-content  a, .chakra-ui-dark .page-content a {
-    background-image: linear-gradient(
-        #232323 50%,
-        var(--chakra-colors-primary-300) 50%
-    );
-    transition: background 0.5s;
-    background-size: auto 175%;
-}
 
-.chakra-ui-dark .post-content  a:hover, .chakra-ui-dark .page-content  a:hover {
-    background-position-y: 100%;
-    text-decoration: none !important;
-    color: #fff !important;
-}
-
-.post-content  a, .page-content a  {
-        background-image: linear-gradient(
-            white 50%,
-            var(--chakra-colors-primary-300) 50%
-        );
-        transition: background 0.5s;
-        background-size: auto 175%;
-
-
-    }
 
  main .primary-link, main a {
     text-decoration: unset;
@@ -195,7 +171,35 @@ main {
     scrollbar-width: none;
 }
 
+.chakra-ui-dark .post-content  a, .chakra-ui-dark .page-content a {
+    background-image: linear-gradient(
+        #232323 50%,
+        var(--chakra-colors-primary-300) 50%
+    ) !important;
+    transition: background 0.5s;
+    background-size: auto 175%;
+}
 
+.chakra-ui-dark .post-content  a:hover, .chakra-ui-dark .page-content  a:hover {
+    background-position-y: 100%;
+    text-decoration: none !important;
+    color: #fff !important;
+}
+
+.post-content  a, .page-content a  {
+    background-image: linear-gradient(
+        white 50%,
+        var(--chakra-colors-primary-300) 50%
+    );
+    transition: background 0.5s;
+    background-size: auto 175%;
+}
+
+.post-content  a:hover, .page-content a:hover {
+    background-position-y: 100%;
+    text-decoration: none !important;
+    color: #fff !important;
+}
 .post-meta p {
     font-size: var(--chakra-fontSizes-sm);
     font-family: var(--chakra-fonts-mono);

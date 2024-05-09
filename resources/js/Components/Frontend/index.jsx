@@ -133,7 +133,7 @@ export const Content = styled(Box)`
         margin: auto;
     }
 
-    
+
 `;
 
 export const GlassBox = ({ children, ...rest }) => {
