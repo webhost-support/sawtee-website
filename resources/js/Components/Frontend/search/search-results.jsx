@@ -75,7 +75,6 @@ export const SearchResults = ({ data, query }) => {
             <PatternBox
                 showPattern={false}
                 pb="60px"
-                mb="-60px"
                 border={"none"}
             >
                 <PatternBoxInner>
@@ -90,12 +89,14 @@ export const SearchResults = ({ data, query }) => {
                 </PatternBoxInner>
                 <SimpleGrid
                     columns={{ base: 1, md: 2 }}
-                    maxW={"5xl"}
+                    maxW={"7xl"}
                     spacing={10}
+                    mx="auto"
                     px={{ base: "24px", md: "80px" }}
                 >
                     {data &&
                         data.map((post) => {
+                            console.log(post);
                             return (
                                 <LinkBox
                                     as={GlassBox}
@@ -112,7 +113,7 @@ export const SearchResults = ({ data, query }) => {
                                     >
                                         <InertiaChakraLinkOverlay
                                             as={Link}
-                                            // href={`/category/${category.slug}/${slug}`}
+                                            href={`/category/${post.category.slug}/${post.slug}`}
                                             _groupHover={{
                                                 textDecoration: "underline",
                                                 textUnderlineOffset: "3px",

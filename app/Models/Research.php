@@ -28,8 +28,7 @@ class Research extends Model implements HasMedia
      * @return array<string, mixed>
      */
 
-    #[SearchUsingPrefix(['title', 'subtitle'])]
-    #[SearchUsingFullText(['description'])]
+    #[SearchUsingPrefix(['title', 'subtitle', 'description'])]
 
     public function toSearchableArray(): array
     {
