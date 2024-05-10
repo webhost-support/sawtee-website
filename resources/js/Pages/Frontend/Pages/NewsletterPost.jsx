@@ -19,15 +19,15 @@ const NewsletterPost = ({ post }) => {
             : import.meta.env.VITE_PROD_ENV_ADOBE_PDF_EMBED_API_2;
 
     const pdf = post.media.filter((m) => m.collection_name === "post-files")[0];
-    console.log(Adobe_PDF_API);
+
     useEffect(() => {
         document.addEventListener("adobe_dc_view_sdk.ready", function () {
             /* Initialize the AdobeDC View object */
             // const adobeDCView = new AdobeDC.View({
             const adobeDCView = new AdobeDC.View({
-                clientId: Adobe_PDF_API,
-                // "a216d6a763e14deda203664862f3dead" ||
-                // "a0b938dc0dda4ceba3ce648ec3caeb6a",
+                clientId:
+                    "a216d6a763e14deda203664862f3dead" ||
+                    "a0b938dc0dda4ceba3ce648ec3caeb6a",
                 divId: "adobe-dc-view",
             });
             adobeDCView.previewFile(
@@ -44,6 +44,8 @@ const NewsletterPost = ({ post }) => {
                 viewerConfig
             );
         });
+
+        () => document.removeEventListener("adobe_dc_view_sdk.ready");
     }, []);
     return (
         <Box pt="40px">
