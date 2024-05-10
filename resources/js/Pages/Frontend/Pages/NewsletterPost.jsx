@@ -10,14 +10,24 @@ const NewsletterPost = ({ post }) => {
         showDownloadPDF: true,
         showPrintPDF: true,
     };
+
+    const ENV = import.meta.env.VITE_APP_ENV;
+
+    const Adobe_PDF_API =
+        ENV === "developement"
+            ? import.meta.env.VITE_DEV_ENV_ADOBE_PDF_EMBED_API
+            : import.meta.env.VITE_PROD_ENV_ADOBE_PDF_EMBED_API;
+
     const pdf = post.media.filter((m) => m.collection_name === "post-files")[0];
+
     useEffect(() => {
         document.addEventListener("adobe_dc_view_sdk.ready", function () {
             /* Initialize the AdobeDC View object */
             // const adobeDCView = new AdobeDC.View({
             const adobeDCView = new AdobeDC.View({
-                // clientId: "a0b938dc0dda4ceba3ce648ec3caeb6a",
-                clientId: "a216d6a763e14deda203664862f3dead",
+                clientId: Adobe_PDF_API,
+                // "a216d6a763e14deda203664862f3dead" ||
+                // "a0b938dc0dda4ceba3ce648ec3caeb6a",
                 divId: "adobe-dc-view",
             });
             adobeDCView.previewFile(
@@ -44,7 +54,7 @@ const NewsletterPost = ({ post }) => {
                 />
             </Head>
 
-            {post.content !== "" ? (
+            {post.content ? (
                 <Container centerContent maxW="7xl">
                     <Box
                         className="newsletter-html"
@@ -61,7 +71,6 @@ const NewsletterPost = ({ post }) => {
                     style={{ width: "100%", margin: "0 auto" }}
                 ></Box>
             )}
-
         </Box>
     );
 };
