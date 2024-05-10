@@ -730,6 +730,34 @@ export default function CreatePostForm({ categories, themes, tags }) {
                                                     isReadOnly
                                                     placeholder={file.name}
                                                 />
+                                                {file.name && (
+                                                    <InputRightAddon
+                                                        children={
+                                                            <IconButton
+                                                                icon={
+                                                                    <CloseIcon />
+                                                                }
+                                                                color={
+                                                                    "red.500"
+                                                                }
+                                                                onClick={() => {
+                                                                    const newfiles =
+                                                                        files.filter(
+                                                                            (
+                                                                                prevfile
+                                                                            ) =>
+                                                                                prevfile.name !==
+                                                                                file.name
+                                                                        );
+
+                                                                    setFiles(
+                                                                        newfiles
+                                                                    );
+                                                                }}
+                                                            />
+                                                        }
+                                                    />
+                                                )}
                                             </InputGroup>
                                         );
                                     })}

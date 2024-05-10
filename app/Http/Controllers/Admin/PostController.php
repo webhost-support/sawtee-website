@@ -135,7 +135,7 @@ class PostController extends Controller
         }
 
         if ($request->hasFile('files')) {
-            $post->postContentFiles()->delete();
+            // $post->postContentFiles()->delete();
             $files = $request->files;
             foreach ($files as $key => $value) {
                 if($key === 'files'){

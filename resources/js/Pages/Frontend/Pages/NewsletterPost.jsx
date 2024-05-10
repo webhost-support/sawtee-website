@@ -1,6 +1,7 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Button, Container } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { Head } from "@inertiajs/react";
+import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
 
 const NewsletterPost = ({ post }) => {
     const viewerConfig = {
@@ -35,28 +36,34 @@ const NewsletterPost = ({ post }) => {
         });
     }, []);
     return (
-        <div pt="0px">
+        <Box pt="40px">
             <Head>
                 <script
                     src="https://acrobatservices.adobe.com/view-sdk/viewer.js"
                     defer
                 />
             </Head>
-            <Box
-                id="adobe-dc-view"
-                className="full-window-div"
-                style={{ width: "100%", margin: "0 auto" }}
-            ></Box>
-            {/* <iframe
-                src={pdf ? pdf.original_url : null}
-                width="100%"
-                height="800px"
-                title={post.title}
-            ></iframe> */}
-        </div>
+
+            {post.content !== "" ? (
+                <Container centerContent maxW="7xl">
+                    <Box
+                        className="newsletter-html"
+                        dangerouslySetInnerHTML={{ __html: post.content }}
+                    />
+                    <InertiaChakraLink href={pdf.original_url}>
+                        <Button colorScheme="primary">View PDF</Button>
+                    </InertiaChakraLink>
+                </Container>
+            ) : (
+                <Box
+                    id="adobe-dc-view"
+                    className="full-window-div"
+                    style={{ width: "100%", margin: "0 auto" }}
+                ></Box>
+            )}
+
+        </Box>
     );
 };
 
 export default NewsletterPost;
-
-

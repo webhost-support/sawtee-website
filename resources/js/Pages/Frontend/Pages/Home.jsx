@@ -17,12 +17,15 @@ import {
     SimpleGrid,
     Show,
     Tag,
+    IconButton,
+    LinkOverlay,
 } from "@chakra-ui/react";
 import {
     FancyTitle,
     ExploreButton,
     Title,
     GlassBox,
+    PlayIcon,
 } from "@/Components/Frontend/index";
 import FullWidthCarousel from "@/Components/Frontend/FullWidthCarousel";
 import { formatDate } from "@/Utils/helpers";
@@ -39,6 +42,7 @@ import DottedBox from "../DottedBox";
 import { Fragment } from "react";
 import { feature } from "@/Utils/data";
 import { motion } from "framer-motion";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 // import { Barchart, TreemapChart } from "@/Components/Frontend/Charts";
 const ListItemVariant = {
     initial: {
@@ -85,6 +89,21 @@ const Home = ({
         lg: 3,
     });
 
+    const AboutSectionData = [
+        {
+            id: "1",
+            title: "Media Fellowship",
+            image_src: "/assets/Media-Fellowship-banner.webp",
+            link: "/media-fellows",
+        },
+        {
+            id: "2",
+            title: "SAWTEE's Response to Covid-19",
+            image_src: "/assets/COVID-19-South-Asia-and-LDCs.webp",
+            link: "/category/covid",
+        },
+    ];
+
     return (
         <MainLayout>
             <WebsiteHead
@@ -94,9 +113,8 @@ const Home = ({
             />
 
             <CarouselSection slides={slides} infocus={infocus} />
-            <Feature feature={feature} />
-            <AboutSection />
-
+            {feature && <ReformMonitorSection feature={feature} />}
+            <AboutSection data={AboutSectionData} />
             <PublicationSection
                 publications={publications}
                 showPublication={showPublication}
@@ -131,7 +149,6 @@ const CarouselSection = ({ slides, infocus }) => {
             {slides && slides.length > 0 && (
                 <GridItem
                     colSpan={{ base: 1, md: 4 }}
-                    overflow={"hidden"}
                     maxH={{ base: "auto", md: "calc(100dvh - 10rem)" }}
                 >
                     <FullWidthCarousel
@@ -163,58 +180,62 @@ const CarouselSection = ({ slides, infocus }) => {
                         link={"/category/infocus"}
                     />
                 </GlassBox>
-                {/* <CardsCarousel slides={books} /> */}
             </GridItem>
         </Grid>
     );
 };
 
-const AboutSection = ({}) => {
+const AboutSection = ({ data }) => {
     return (
-        <Box maxW={"7xl"} mx="auto">
+        <Section maxW={"7xl"} mx="auto">
             <SimpleGrid
-                px={10}
-                py={16}
                 minChildWidth={"200px"}
                 spacing={16}
                 alignItems="center"
             >
-                <Box ml={{ base: 0, md: 5 }} pos="relative">
-                    <DottedBox />
-                    <LinkBox mx="auto" shadow={"xl"} rounded="xl">
-                        <InertiaChakraLink
-                            href="/media-fellows"
-                            role="banner"
-                            aria-labelledby="Media Fellowship"
-                            title="Media Fellowship"
-                        >
-                            <Image
-                                src="/assets/Media-Fellowship-banner.webp"
-                                alt="Media Fellowship"
-                                fit="cover"
-                                rounded="xl"
-                            />
-                        </InertiaChakraLink>
-                    </LinkBox>
-                </Box>
-                <Box ml={{ base: 0, md: 5 }} pos="relative">
-                    <DottedBox />
-                    <LinkBox mx="auto" shadow={"xl"} rounded="xl">
-                        <InertiaChakraLink
-                            href="/category/covid"
-                            role="banner"
-                            aria-labelledby="SAWTEE's Response to Covid-19"
-                            title="SAWTEE's Response to Covid-19"
-                        >
-                            <Image
-                                src="/assets/COVID-19-South-Asia-and-LDCs.webp"
-                                alt="SAWTEE's Response to Covid-19"
-                                fit="cover"
-                                rounded="xl"
-                            />
-                        </InertiaChakraLink>
-                    </LinkBox>
-                </Box>
+                {data.map((item) => {
+                    return (
+                        <Box ml={{ base: 0, md: 5 }} pos="relative">
+                            <DottedBox />
+                            <LinkBox
+                                position={"relative"}
+                                rounded={"2xl"}
+                                boxShadow={"2xl"}
+                                width={"full"}
+                                overflow={"hidden"}
+                                role="group"
+                            >
+                                <IconButton
+                                    aria-label={"Play Button"}
+                                    variant={"ghost"}
+                                    _groupHover={{ color: "white" }}
+                                    icon={<PlayIcon w={12} h={12} />}
+                                    size={"lg"}
+                                    color={"whiteAlpha.700"}
+                                    position={"absolute"}
+                                    left={"50%"}
+                                    top={"50%"}
+                                    transform={
+                                        "translateX(-50%) translateY(-50%)"
+                                    }
+                                />
+
+                                <LinkOverlay href={item.link}>
+                                    <Image
+                                        src={item.image_src}
+                                        alt={item.title}
+                                        fit="cover"
+                                        rounded="xl"
+                                        align={"center"}
+                                        w={"100%"}
+                                        h={"100%"}
+                                    />
+                                </LinkOverlay>
+                            </LinkBox>
+                        </Box>
+                    );
+                })}
+
                 {/* <Box ml={{ base: 0, md: 5 }} pos="relative">
                     <DottedBox />
                     <LinkBox mx="auto" shadow={"xl"} rounded="xl">
@@ -234,14 +255,14 @@ const AboutSection = ({}) => {
                     </LinkBox>
                 </Box> */}
             </SimpleGrid>
-        </Box>
+        </Section>
     );
 };
 
 const InfocusSection = ({ infocus, link }) => {
     const itemBG = useColorModeValue("blackAlpha.200", "blackAlpha.300");
     return (
-        <Container maxW="8xl" px={4} mb="2">
+        <>
             <InertiaChakraLink as={Link} href={link}>
                 <Title
                     text={"In Focus"}
@@ -342,7 +363,7 @@ const InfocusSection = ({ infocus, link }) => {
                     </LinkBox>
                 );
             })}
-        </Container>
+        </>
     );
 };
 
@@ -450,7 +471,7 @@ const BlogSection = ({ events }) => {
                 <InertiaChakraLink
                     as={Link}
                     href={`/category/featured-events`}
-                    mt={12}
+                    mt={6}
                 >
                     <ExploreButton
                         size="md"
@@ -489,13 +510,21 @@ const InfoSection = () => {
 
 const NewsletterSection = () => {
     return (
-        <Box
+        <Section
             py={{ base: "6", md: "12", lg: "16" }}
             px={{ base: "10", md: "16", lg: "20" }}
             className="section"
         >
             <Newsletter />
-        </Box>
+        </Section>
+    );
+};
+
+const ReformMonitorSection = ({ feature }) => {
+    return (
+        <Section>
+            <Feature feature={feature} />
+        </Section>
     );
 };
 
@@ -508,7 +537,7 @@ const PublicationSection = ({ publications, showPublication, newsletters }) => {
                 maxW={"7xl"}
                 mx="auto"
             >
-                <Container maxW="5xl" p={{ base: 5, md: 10 }}>
+                <Container>
                     <Flex justify={"center"} mb={3}>
                         <InertiaChakraLink
                             href="/category/publications"
@@ -568,7 +597,7 @@ const PublicationSection = ({ publications, showPublication, newsletters }) => {
                     </VStack>
                 </Container>
 
-                <Container maxW="5xl" p={{ base: 5, md: 10 }}>
+                <Container>
                     <Flex justify={"center"} mb={3}>
                         <InertiaChakraLink
                             href="/category/publications"
@@ -723,11 +752,11 @@ const PublicationSection = ({ publications, showPublication, newsletters }) => {
 const Section = ({ children, title = null, ...rest }) => {
     return (
         <Box
-            maxW="full"
-            w="9xl"
+            as="section"
+            maxW="9xl"
             mx="auto"
-            py={6}
-            px={{ base: "6", md: "24" }}
+            py={{ base: "6", md: "12", lg: "16" }}
+            px={{ base: "24px", md: "80px" }}
             className="section"
             {...rest}
         >

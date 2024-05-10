@@ -37,7 +37,7 @@ const PostLayout = ({
 
     return (
         <LightPatternBox showPattern={showPattern} pt="10px" pb={"40px"}>
-            <Box maxW="6xl" mx="auto">
+            <Box maxW="7xl" mx="auto">
                 <PostHeader
                     mt={"20px"}
                     px={{ base: "32px", md: "3rem" }}
@@ -50,7 +50,7 @@ const PostLayout = ({
             {/* <PostProgressBar value={scroll} /> */}
 
             {/* Look at the settings to see if we should include the featured image */}
-            <Box maxW={isNewsletter ? "full" : "4xl"} mx="auto" px={4}>
+            <Box maxW={"4xl"} mx="auto" px={4}>
                 {!isProgramPost && featured_media && (
                     <FeaturedMedia
                         src={featured_media.original_url}
@@ -65,16 +65,23 @@ const PostLayout = ({
                     readingTime={readingTime}
                 />
 
-                <Content
-                    as={Section}
-                    px={{ base: "1.5rem", md: "3rem" }}
-                    size={isNewsletter ? "full" : "lg"}
-                    pb="50px"
-                    className="post-content"
-                >
-                    {children}
-                    <SocialShare url={shareUrl} />
-                </Content>
+                {isNewsletter ? (
+                    <Box>
+                        {children}
+                        <SocialShare url={shareUrl} />
+                    </Box>
+                ) : (
+                    <Content
+                        as={Section}
+                        px={{ base: "1.5rem", md: "3rem" }}
+                        size={"lg"}
+                        pb="50px"
+                        className="post-content"
+                    >
+                        {children}
+                        <SocialShare url={shareUrl} />
+                    </Content>
+                )}
             </Box>
         </LightPatternBox>
     );

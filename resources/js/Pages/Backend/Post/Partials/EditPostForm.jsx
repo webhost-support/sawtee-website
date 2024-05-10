@@ -27,6 +27,7 @@ import {
     AccordionPanel,
     AccordionIcon,
     Text,
+    IconButton,
 } from "@chakra-ui/react";
 import FileUpload, { PreviewImage } from "@/Components/Backend/FileUpload";
 import React from "react";
@@ -61,14 +62,17 @@ export default function EditPostForm({
             (m) => m.collection_name === "post-featured-image"
         )[0],
         file: postData.media.filter(
-            (m) => m.collection_name === "post-media"
+            (m) => m.collection_name === "post-files"
         )[0],
+        files: [],
         link: postData.link,
         genre: postData.genre,
         published_at: postData.published_at,
         meta_title: postData.meta_title,
         meta_description: postData.meta_description,
     });
+
+    console.log(data.file);
 
     const toast = useToast();
     const [imageUrl, setImageUrl] = React.useState(
@@ -77,8 +81,7 @@ export default function EditPostForm({
     const [filename, setFilename] = React.useState(
         data.file ? data.file.file_name : null
     );
-    const [files, setFiles] = React.useState([...postData.post_content_files]);
-    const [filesButtonClicked, setFilesButtonClick] = React.useState(false);
+    const [files, setFiles] = React.useState(postData.post_content_files);
     const [postTags, setPostTags] = React.useState(() => {
         let tagsarray = [];
         postData.tags.map((tag) => {
@@ -90,8 +93,6 @@ export default function EditPostForm({
 
         return tagsarray;
     });
-
-    const postContentFiles = postData.post_content_files;
 
     const {
         onCopy,
@@ -743,11 +744,12 @@ export default function EditPostForm({
                                     id="image"
                                     name="image"
                                     size="md"
-                                    onClick={() =>
-                                        setFilesButtonClick(!filesButtonClicked)
-                                    }
                                     onChange={(e) => {
-                                        setFiles(Array.from(e.target.files));
+                                        const newFiles = [
+                                            ...files,
+                                            ...e.target.files,
+                                        ];
+                                        setFiles(newFiles);
                                     }}
                                 />
                             </Box>
@@ -758,9 +760,38 @@ export default function EditPostForm({
                                         return (
                                             <InputGroup key={file.name}>
                                                 <Input
+                                                    isReadOnly
                                                     size="md"
-                                                    value={`/Featured_Events/${file.name}`}
+                                                    placeholder={`/Featured_Events/${file.name}`}
                                                 />
+                                                {file.name && (
+                                                    <InputRightAddon
+                                                        children={
+                                                            <IconButton
+                                                                icon={
+                                                                    <CloseIcon />
+                                                                }
+                                                                color={
+                                                                    "red.500"
+                                                                }
+                                                                onClick={() => {
+                                                                    const newfiles =
+                                                                        files.filter(
+                                                                            (
+                                                                                prevfile
+                                                                            ) =>
+                                                                                prevfile.name !==
+                                                                                file.name
+                                                                        );
+
+                                                                    setFiles(
+                                                                        newfiles
+                                                                    );
+                                                                }}
+                                                            />
+                                                        }
+                                                    />
+                                                )}
                                             </InputGroup>
                                         );
                                     })}

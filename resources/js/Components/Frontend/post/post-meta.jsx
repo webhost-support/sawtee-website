@@ -8,7 +8,7 @@ const PostMeta = ({ author, date, readingTime, ...props }) => (
             rowGap="2"
             columnGap="8"
             mt={4}
-            justify={"start"}
+            justify={"center"}
             align={"center"}
             flexWrap={"wrap"}
         >

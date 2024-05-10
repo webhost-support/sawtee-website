@@ -49,7 +49,7 @@ class Post extends Model implements HasMedia
      */
     public function shouldBeSearchable(): bool
     {
-        return $this->isPublished();
+        return $this->status === "published";
     }
 
     /**
