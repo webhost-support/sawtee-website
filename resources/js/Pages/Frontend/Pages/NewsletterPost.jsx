@@ -16,10 +16,10 @@ const NewsletterPost = ({ post }) => {
     const Adobe_PDF_API =
         ENV === "developement"
             ? import.meta.env.VITE_DEV_ENV_ADOBE_PDF_EMBED_API
-            : import.meta.env.VITE_PROD_ENV_ADOBE_PDF_EMBED_API;
+            : import.meta.env.VITE_PROD_ENV_ADOBE_PDF_EMBED_API_2;
 
     const pdf = post.media.filter((m) => m.collection_name === "post-files")[0];
-
+    console.log(Adobe_PDF_API);
     useEffect(() => {
         document.addEventListener("adobe_dc_view_sdk.ready", function () {
             /* Initialize the AdobeDC View object */
