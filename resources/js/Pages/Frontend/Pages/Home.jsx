@@ -581,7 +581,7 @@ const PublicationSection = ({ publications, showPublication, newsletters }) => {
                                         as={"h4"}
                                         fontWeight="bold"
                                         fontSize="md"
-                                        p={6}
+                                        p={8}
                                     >
                                         <InertiaChakraLink
                                             href={`/category/newsletters/${slug}`}
@@ -656,7 +656,7 @@ const PublicationSection = ({ publications, showPublication, newsletters }) => {
                                                 base: "4fr",
                                                 md: "4fr 2fr",
                                             }}
-                                            p={{ base: 3, sm: 6 }}
+                                            p={3}
                                             gap={3}
                                             _hover={{
                                                 bg: useColorModeValue(
@@ -730,6 +730,7 @@ const PublicationSection = ({ publications, showPublication, newsletters }) => {
                                                         }
                                                         alt={title}
                                                         w="60px"
+                                                        rounded="sm"
                                                         aspectRatio={3 / 4}
                                                         // h="190px"
                                                     />
