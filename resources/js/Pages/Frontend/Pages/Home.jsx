@@ -19,6 +19,7 @@ import {
     Tag,
     IconButton,
     LinkOverlay,
+    chakra,
 } from "@chakra-ui/react";
 import {
     FancyTitle,
@@ -130,7 +131,7 @@ const Home = ({
                 />
             )}
             {/* <InfoSection /> */}
-            <NewsletterSection />
+            <SubscribeSection />
         </MainLayout>
     );
 };
@@ -187,7 +188,7 @@ const CarouselSection = ({ slides, infocus }) => {
 
 const AboutSection = ({ data }) => {
     return (
-        <Section maxW={"7xl"} mx="auto">
+        <Section maxW={"8xl"} mx="auto">
             <SimpleGrid
                 minChildWidth={"200px"}
                 spacing={16}
@@ -508,7 +509,7 @@ const InfoSection = () => {
     );
 };
 
-const NewsletterSection = () => {
+const SubscribeSection = () => {
     return (
         <Section
             py={{ base: "6", md: "12", lg: "16" }}
@@ -534,10 +535,10 @@ const PublicationSection = ({ publications, showPublication, newsletters }) => {
             <SimpleGrid
                 columns={{ base: 1, md: 2, lg: 2 }}
                 gap={8}
-                maxW={"7xl"}
+                maxW={"8xl"}
                 mx="auto"
             >
-                <Container>
+                {/* <Container>
                     <Flex justify={"center"} mb={3}>
                         <InertiaChakraLink
                             href="/category/publications"
@@ -595,7 +596,8 @@ const PublicationSection = ({ publications, showPublication, newsletters }) => {
                                 </Box>
                             ))}
                     </VStack>
-                </Container>
+                </Container> */}
+                <NewsletterSection newsletters={newsletters} />
 
                 <Container>
                     <Flex justify={"center"} mb={3}>
@@ -766,3 +768,167 @@ const Section = ({ children, title = null, ...rest }) => {
         </Box>
     );
 };
+
+const NewsletterSection = ({ newsletters }) => {
+    const isMobile = useBreakpointValue({ base: true, md: false });
+    const isDesktop = useBreakpointValue({ base: false, md: true });
+
+    return (
+        <Container>
+            <Flex justify={"center"} mb={3}>
+                <InertiaChakraLink
+                    href="/category/newsletters"
+                    textAlign={"center"}
+                    my={6}
+                >
+                    <ExploreButton
+                        size="md"
+                        text="Newsletters"
+                        variant="outline"
+                        px={10}
+                    />
+                </InertiaChakraLink>
+            </Flex>
+            {newsletters.map((newsletter, index) => (
+                <Flex key={newsletter.id} mb="10px">
+                    {/* Desktop view(left card) */}
+                    {isDesktop && index % 2 === 0 && (
+                        <>
+                            <EmptyCard />
+                            <LineWithDot />
+                            <Card {...newsletter} index={index} />
+                        </>
+                    )}
+
+                    {/* Mobile view */}
+                    {isMobile && (
+                        <>
+                            <LineWithDot />
+                            <Card {...newsletter} index={index} />
+                        </>
+                    )}
+
+                    {/* Desktop view(right card) */}
+                    {isDesktop && index % 2 !== 0 && (
+                        <>
+                            <Card {...newsletter} index={index} />
+
+                            <LineWithDot />
+                            <EmptyCard />
+                        </>
+                    )}
+                </Flex>
+            ))}
+        </Container>
+    );
+};
+
+const Card = ({ index, title, excerpt, published_at }) => {
+    // For even id show card on left side
+    // For odd id show card on right side
+    const isEvenId = index % 2 == 0;
+    let borderWidthValue = isEvenId ? "15px 15px 15px 0" : "15px 0 15px 15px";
+    let leftValue = isEvenId ? "-15px" : "unset";
+    let rightValue = isEvenId ? "unset" : "-15px";
+
+    const isMobile = useBreakpointValue({ base: true, md: false });
+    if (isMobile) {
+        leftValue = "-15px";
+        rightValue = "unset";
+        borderWidthValue = "15px 15px 15px 0";
+    }
+
+    return (
+        <HStack
+            flex={1}
+            p={{ base: 3, sm: 6 }}
+            bg={useColorModeValue("gray.50", "blackAlpha.300")}
+            spacing={5}
+            rounded="lg"
+            alignItems="center"
+            pos="relative"
+            _before={{
+                content: `""`,
+                w: "0",
+                h: "0",
+                borderColor: `transparent ${useColorModeValue(
+                    "var(--chakra-colors-gray-50)",
+                    "var(--chakra-colors-blackAlpha-300)"
+                )} transparent`,
+                borderStyle: "solid",
+                borderWidth: borderWidthValue,
+                position: "absolute",
+                left: leftValue,
+                right: rightValue,
+                display: "block",
+            }}
+        >
+            <Box>
+                <Text fontSize="sm" color={"primary.500"} mb={2}>
+                    {formatDate(published_at)}
+                </Text>
+
+                <VStack spacing={2} mb={3} textAlign="left">
+                    <Heading
+                        as="h3"
+                        fontSize="lg"
+                        lineHeight={1.2}
+                        fontWeight="bold"
+                        w="100%"
+                    >
+                        {title}
+                    </Heading>
+                </VStack>
+            </Box>
+        </HStack>
+    );
+};
+
+const LineWithDot = () => {
+    return (
+        <Flex
+            pos="relative"
+            alignItems="center"
+            mr={{ base: "40px", md: "40px" }}
+            ml={{ base: "0", md: "40px" }}
+        >
+            <chakra.span
+                position="absolute"
+                left="50%"
+                height="calc(100% + 10px)"
+                border="1px solid"
+                borderColor={useColorModeValue("gray.200", "gray.700")}
+                top="0px"
+            ></chakra.span>
+            <Box pos="relative" p="10px">
+                <Box
+                    pos="absolute"
+                    top="0"
+                    left="0"
+                    bottom="0"
+                    right="0"
+                    width="100%"
+                    height="100%"
+                    backgroundSize="cover"
+                    backgroundRepeat="no-repeat"
+                    backgroundPosition="center center"
+                    bg={useColorModeValue("gray.600", "gray.200")}
+                    borderRadius="100px"
+                    backgroundImage="none"
+                    opacity={1}
+                ></Box>
+            </Box>
+        </Flex>
+    );
+};
+
+const EmptyCard = () => {
+    return (
+        <Box
+            flex={{ base: 0, md: 1 }}
+            p={{ base: 0, md: 6 }}
+            bg="transparent"
+        ></Box>
+    );
+};
+
