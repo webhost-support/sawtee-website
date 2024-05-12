@@ -11,8 +11,6 @@ import "swiper/css/scrollbar";
 
 const MultiPostsCarousel = ({
     posts,
-    itemsToShow = 3,
-    itemsToSlide = itemsToShow,
     spacing,
     pagination,
     scrollbar,
@@ -23,20 +21,29 @@ const MultiPostsCarousel = ({
 }) => {
     return (
         <Swiper
-            slidesPerView={itemsToShow}
+            slidesPerView={1}
+            breakpoints={{
+                640: {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 40,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 50,
+                },
+            }}
             spaceBetween={spacing}
             navigation={true}
             pagination={pagination}
-            slidesPerGroup={itemsToSlide}
             keyboard={true}
             modules={[Pagination, Navigation, Keyboard, Scrollbar]}
-            scrollbar={
-                scrollbar
-                    ? {
-                          hide: false,
-                      }
-                    : null
-            }
+            scrollbar={{
+                hide: scrollbar ? false : true,
+            }}
             direction={direction ? direction : "horizontal"}
             className={"multi-post-carousel"}
         >
@@ -49,6 +56,7 @@ const MultiPostsCarousel = ({
                                 post={article}
                                 showImage={false}
                                 showCategoryTag={showCategoryTag}
+                                maxW="md"
                             />
                         </Flex>
                     </SwiperSlide>

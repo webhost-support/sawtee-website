@@ -12,7 +12,6 @@ import InertiaChakraLink from "./styles/inertia-chakra-link";
 const MultiItemCarousel = ({
     slides,
     className,
-    itemsToShow = 3,
     showTitle = false,
     spacing = 30,
     children,
@@ -20,11 +19,24 @@ const MultiItemCarousel = ({
 }) => {
     return (
         <Swiper
-            slidesPerView={itemsToShow}
+            slidesPerView={1}
             spaceBetween={spacing}
             navigation={true}
-            slidesPerGroup={itemsToShow}
             keyboard={true}
+            breakpoints={{
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                },
+                768: {
+                    slidesPerView: 3,
+                    spaceBetween: 40,
+                },
+                1024: {
+                    slidesPerView: 4,
+                    spaceBetween: 50,
+                },
+            }}
             modules={[Navigation, Pagination, Keyboard]}
             className={"multi-item-carousel " + className}
         >

@@ -21,17 +21,7 @@ const Home = ({
     sawteeInMedia,
     newsletters,
 }) => {
-    const showPublication = useBreakpointValue({
-        base: 1,
-        md: 2,
-        lg: 3,
-        xl: 4,
-    });
-    const show = useBreakpointValue({
-        base: 1,
-        md: 2,
-        lg: 3,
-    });
+
 
     const AboutSectionData = [
         {
@@ -61,7 +51,6 @@ const Home = ({
             <AboutSection data={AboutSectionData} />
             <PublicationSection
                 publications={publications}
-                showPublication={showPublication}
                 newsletters={newsletters}
             />
 
@@ -69,7 +58,6 @@ const Home = ({
             {sawteeInMedia && (
                 <SawteeInMediaSection
                     articles={sawteeInMedia}
-                    show={show}
                     link={"/category/sawtee-in-media"}
                 />
             )}

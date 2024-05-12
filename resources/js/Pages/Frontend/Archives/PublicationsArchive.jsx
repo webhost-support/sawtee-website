@@ -4,8 +4,6 @@ import {
     Stack,
     Text,
     StackDivider,
-    useBreakpointValue,
-    useColorModeValue,
     VStack,
     Box,
 } from "@chakra-ui/react";
@@ -29,14 +27,6 @@ export default function PublicationsArchive({
     featured_image,
     srcSet,
 }) {
-
-    const show = useBreakpointValue({
-        base: 1,
-        md: 2,
-        lg: 3,
-        xl: 4,
-    });
-
     return (
         <MainLayout>
             <WebsiteHead
@@ -74,7 +64,6 @@ export default function PublicationsArchive({
                                 <PublicationSliders
                                     category={category}
                                     publications={publications}
-                                    show={show}
                                 />
                             )}
                         </GridItem>
@@ -120,7 +109,7 @@ export default function PublicationsArchive({
     );
 }
 
-const PublicationSliders = ({ category, publications, show = 3 }) => {
+const PublicationSliders = ({ category, publications }) => {
     return (
         <Stack
             divider={<StackDivider borderColor="gray.200" />}
@@ -131,7 +120,8 @@ const PublicationSliders = ({ category, publications, show = 3 }) => {
                     <Box key={item.name} spacing="4">
                         <MultiItemCarousel
                             slides={publications[item.slug]}
-                            itemsToShow={show}
+                            itemsToShow={1}
+                            
                             showTitle={true}
                             mt={16}
                         >

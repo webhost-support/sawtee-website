@@ -302,7 +302,7 @@ export const InfocusSection = ({ infocus, link }) => {
     );
 };
 
-export const SawteeInMediaSection = ({ articles, link, show }) => {
+export const SawteeInMediaSection = ({ articles, link }) => {
     return (
         <Section
             title={"Sawtee in Media"}
@@ -311,8 +311,6 @@ export const SawteeInMediaSection = ({ articles, link, show }) => {
             <Container maxW="8xl" centerContent px={6}>
                 <MultiPostsCarousel
                     posts={articles}
-                    itemsToShow={show}
-                    itemsToSlide={1}
                     spacing={30}
                     pagination={false}
                     showCategoryTag={true}
@@ -463,15 +461,11 @@ export const ReformMonitorSection = ({ feature }) => {
     );
 };
 
-export const PublicationSection = ({
-    publications,
-    showPublication,
-    newsletters,
-}) => {
+export const PublicationSection = ({ publications, newsletters }) => {
     return (
         <Section bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}>
             <SimpleGrid
-                columns={{ base: 1, md: 2, lg: 2 }}
+                columns={{ base: 1, md: 1, lg: 2 }}
                 gap={8}
                 maxW={"8xl"}
                 mx="auto"
