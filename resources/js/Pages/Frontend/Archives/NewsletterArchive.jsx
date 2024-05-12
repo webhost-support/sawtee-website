@@ -55,6 +55,7 @@ const NewsletterArchive = ({ posts }) => {
                         transitionDuration={"400ms"}
                         key={post.id}
                         mb="20px"
+                        w="full"
                     >
                         <LineWithDot />
                         <Card {...post} />

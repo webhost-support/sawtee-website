@@ -670,6 +670,9 @@ export const PublicationSection = ({
                                                         }
                                                         alt={title}
                                                         w="60px"
+                                                        border="1px solid"
+                                                        borderColor={"gray.400"}
+                                                        p={1}
                                                         rounded="sm"
                                                         aspectRatio={3 / 4}
                                                         // h="190px"
