@@ -55,7 +55,6 @@ const NewsletterArchive = ({ posts }) => {
                         transitionDuration={"400ms"}
                         key={post.id}
                         mb="20px"
-                        w="full"
                     >
                         <LineWithDot />
                         <Card {...post} />
@@ -78,6 +77,7 @@ const Card = ({ title, category, excerpt, published_at, media }) => {
             rounded="lg"
             alignItems="center"
             pos="relative"
+            w="full"
             _before={{
                 content: `""`,
                 w: "0",
