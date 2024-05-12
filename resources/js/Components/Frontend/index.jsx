@@ -46,7 +46,7 @@ import Feature from "@/Components/Frontend/feature";
 import { motion } from "framer-motion";
 import DottedBox from "@/Pages/Frontend/DottedBox";
 // import { Barchart, TreemapChart } from "@/Components/Frontend/Charts";
-const ListItemVariant = {
+export const ListItemVariant = {
     initial: {
         y: 50,
         // opacity: 0,
@@ -63,7 +63,7 @@ const ListItemVariant = {
     },
 };
 
-const ListVariant = {
+export const ListVariant = {
     initial: {
         transition: { staggerChildren: 0.05, staggerDirection: -1 },
     },
@@ -833,6 +833,41 @@ export const NewsletterCard = ({ index, title, excerpt, published_at }) => {
 
     return (
         <HStack
+            as={motion.article}
+            initial={
+                isEvenId
+                    ? {
+                          x: 50,
+                          opacity: 0,
+                          transition: {
+                              y: { stiffness: 1000 },
+                          },
+                      }
+                    : {
+                          x: -50,
+                          opacity: 0,
+                          transition: {
+                              y: { stiffness: 1000 },
+                          },
+                      }
+            }
+            whileInView={
+                isEvenId
+                    ? {
+                          x: 0,
+                          opacity: 1,
+                          transition: {
+                              y: { stiffness: 1000, velocity: -100 },
+                          },
+                      }
+                    : {
+                          x: 0,
+                          opacity: 1,
+                          transition: {
+                              y: { stiffness: 1000, velocity: -100 },
+                          },
+                      }
+            }
             flex={1}
             p={{ base: 3, sm: 6 }}
             bg={useColorModeValue("blackAlpha.50", "blackAlpha.300")}
@@ -845,7 +880,7 @@ export const NewsletterCard = ({ index, title, excerpt, published_at }) => {
                 w: "0",
                 h: "0",
                 borderColor: `transparent ${useColorModeValue(
-                    "var(--chakra-colors-gray-50)",
+                    "var(--chakra-colors-blackAlpha-50)",
                     "var(--chakra-colors-blackAlpha-300)"
                 )} transparent`,
                 borderStyle: "solid",

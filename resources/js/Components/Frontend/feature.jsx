@@ -24,7 +24,7 @@ export default function Feature({ feature, ...rest }) {
             >
                 <Stack flex={1} spacing={{ base: 5, md: 10 }}>
                     <Heading
-                        lineHeight={1.1}
+                        lineHeight={1.2}
                         fontWeight={600}
                         fontSize={{ base: "3xl", sm: "4xl", lg: "6xl" }}
                     >

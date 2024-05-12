@@ -1,10 +1,9 @@
-import { GlassBox } from "@/Components/Frontend";
+import { GlassBox, ListItemVariant } from "@/Components/Frontend";
 import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
 import { formatDate } from "@/Utils/helpers";
 import {
     Text,
     HStack,
-    Image,
     Box,
     Heading,
     chakra,
@@ -15,6 +14,7 @@ import {
     useColorModeValue,
 } from "@chakra-ui/react";
 import { Link } from "@inertiajs/react";
+import { motion } from "framer-motion";
 import React from "react";
 // Here we have used react-icons package for the icons
 import { FaRegNewspaper } from "react-icons/fa";
@@ -23,24 +23,39 @@ const NewsletterArchive = ({ posts }) => {
     if (!posts || posts.length <= 0) return "No posts found";
 
     return (
-        <Container
-            as="section"
-            role="group"
-            maxWidth="4xl"
-            p={{ base: 2, sm: 10 }}
-        >
+        <Container as="section" role="group" maxWidth="4xl">
             <Heading
                 as="h2"
-                fontSize="4xl"
-                fontWeight="bold"
-                mb={18}
+                mb={"12"}
+                fontSize={{ base: "2xl", sm: "3xl", md: "4xl", lg: "5xl" }}
+                lineHeight={1}
                 textAlign="center"
             >
-                Trade, Climate Change and Development Monitor
+                <Text
+                    as={"span"}
+                    display={"block"}
+                    position={"relative"}
+                    bgGradient="linear(to-br, #228be6, #15aabf)"
+                    bgClip="text"
+                >
+                    Trade, Climate Change and Development Monitor
+                </Text>
+                <Text as={"span"} fontSize={"lg"}>
+                    Monthly E-Newsletter of South Asia Watch on Trade, Economics
+                    and Environment
+                </Text>
             </Heading>
             {posts.map((post) => {
                 return (
-                    <Flex key={post.id} mb="20px">
+                    <Flex
+                        as={motion.article}
+                        initial={"initial"}
+                        whileInView={"whileInView"}
+                        variants={ListItemVariant}
+                        transitionDuration={"400ms"}
+                        key={post.id}
+                        mb="20px"
+                    >
                         <LineWithDot />
                         <Card {...post} />
                     </Flex>
@@ -114,7 +129,7 @@ const LineWithDot = () => {
             <chakra.span
                 position="absolute"
                 left="50%"
-                height="calc(100% + 10px)"
+                height="calc(100% + 20px)"
                 border="1px solid"
                 borderColor={useColorModeValue("gray.200", "gray.700")}
                 top="0px"
@@ -144,4 +159,3 @@ const LineWithDot = () => {
         </Flex>
     );
 };
-
