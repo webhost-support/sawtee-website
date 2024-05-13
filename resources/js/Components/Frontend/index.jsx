@@ -122,11 +122,12 @@ export const CarouselSection = ({ slides, infocus }) => {
 
 export const AboutSection = ({ data }) => {
     return (
-        <Section maxW={"8xl"} mx="auto">
+        <Section mx="auto">
             <SimpleGrid
                 minChildWidth={"200px"}
                 spacing={16}
                 alignItems="center"
+                maxW={"8xl"}
             >
                 {data.map((item) => {
                     return (
