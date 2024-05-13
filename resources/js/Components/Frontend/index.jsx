@@ -122,12 +122,13 @@ export const CarouselSection = ({ slides, infocus }) => {
 
 export const AboutSection = ({ data }) => {
     return (
-        <Section mx="auto">
+        <Section>
             <SimpleGrid
                 minChildWidth={"200px"}
                 spacing={16}
                 alignItems="center"
-                maxW={"8xl"}
+                maxW={"7xl"}
+                mx="auto"
             >
                 {data.map((item) => {
                     return (
@@ -465,8 +466,8 @@ export const ReformMonitorSection = ({ feature }) => {
 export const PublicationSection = ({ publications, newsletters }) => {
     return (
         <Section bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}>
-            <SimpleGrid
-                columns={{ base: 1, md: 1, lg: 2 }}
+            <Grid
+                gridTemplateColumns={{ base: "1fr", md: "repeat(7, 1fr)" }}
                 gap={8}
                 maxW={"8xl"}
                 mx="auto"
@@ -530,160 +531,167 @@ export const PublicationSection = ({ publications, newsletters }) => {
                             ))}
                     </VStack>
                 </Container> */}
-                <NewsletterSection newsletters={newsletters} />
-
-                <Container>
-                    <Flex justify={"center"} mb={3}>
-                        <InertiaChakraLink
-                            href="/category/publications"
-                            textAlign={"center"}
-                            my={6}
+                <GridItem colSpan={{ base: 1, md: 4, lg: 4 }}>
+                    <NewsletterSection newsletters={newsletters} />
+                </GridItem>
+                <GridItem colSpan={{ base: 1, md: 3, lg: 3 }}>
+                    <Container>
+                        <Flex justify={"center"} mb={3}>
+                            <InertiaChakraLink
+                                href="/category/publications"
+                                textAlign={"center"}
+                                my={6}
+                            >
+                                <ExploreButton
+                                    size="md"
+                                    text="Latest Publications"
+                                    variant="outline"
+                                    px={10}
+                                />
+                            </InertiaChakraLink>
+                        </Flex>
+                        <VStack
+                            border="1px solid"
+                            borderColor="gray.400"
+                            rounded="md"
+                            spacing={0}
+                            align={"space-between"}
+                            as={motion.ul}
+                            style={{ listStyle: "none" }}
+                            initial={"initial"}
+                            onViewportLeave={"initial"}
+                            variants={ListVariant}
+                            onViewportEnter={"whileInView"}
+                            // viewport={{ once: true }}
                         >
-                            <ExploreButton
-                                size="md"
-                                text="Latest Publications"
-                                variant="outline"
-                                px={10}
-                            />
-                        </InertiaChakraLink>
-                    </Flex>
-                    <VStack
-                        border="1px solid"
-                        borderColor="gray.400"
-                        rounded="md"
-                        spacing={0}
-                        align={"space-between"}
-                        as={motion.ul}
-                        style={{ listStyle: "none" }}
-                        initial={"initial"}
-                        onViewportLeave={"initial"}
-                        variants={ListVariant}
-                        onViewportEnter={"whileInView"}
-                        // viewport={{ once: true }}
-                    >
-                        {publications &&
-                            publications.map(
-                                (
-                                    {
-                                        id,
-                                        title,
-                                        subtitle,
-                                        file,
-                                        media,
-                                        category,
-                                    },
-                                    i
-                                ) => (
-                                    <Box
-                                        key={id}
-                                        as={motion.li}
-                                        initial={"initial"}
-                                        whileInView={"whileInView"}
-                                        variants={ListItemVariant}
-                                        // viewport={{ once: true }}
-                                    >
-                                        <Grid
-                                            templateRows={{
-                                                base: "auto auto",
-                                                md: "auto",
-                                            }}
-                                            templateColumns={{
-                                                base: "4fr",
-                                                md: "4fr 2fr",
-                                            }}
-                                            p={{ base: 3, md: 8 }}
-                                            gap={3}
-                                            _hover={{
-                                                bg: useColorModeValue(
-                                                    "blackAlpha.50",
-                                                    "blackAlpha.300"
-                                                ),
-                                            }}
+                            {publications &&
+                                publications.map(
+                                    (
+                                        {
+                                            id,
+                                            title,
+                                            subtitle,
+                                            file,
+                                            media,
+                                            category,
+                                        },
+                                        i
+                                    ) => (
+                                        <Box
+                                            key={id}
+                                            as={motion.li}
+                                            initial={"initial"}
+                                            whileInView={"whileInView"}
+                                            variants={ListItemVariant}
+                                            // viewport={{ once: true }}
                                         >
-                                            <GridItem
-                                                gridTemplateColumns={{
-                                                    base: "span 3",
-                                                    md: "span 4",
+                                            <Grid
+                                                templateRows={{
+                                                    base: "auto auto",
+                                                    md: "auto",
+                                                }}
+                                                templateColumns={{
+                                                    base: "4fr",
+                                                    md: "4fr 2fr",
+                                                }}
+                                                p={{ base: 3, md: 8 }}
+                                                gap={3}
+                                                _hover={{
+                                                    bg: useColorModeValue(
+                                                        "blackAlpha.50",
+                                                        "blackAlpha.300"
+                                                    ),
                                                 }}
                                             >
-                                                <Tag
-                                                    w="max-content"
-                                                    colorScheme="primary"
-                                                    mb={2}
+                                                <GridItem
+                                                    gridTemplateColumns={{
+                                                        base: "span 3",
+                                                        md: "span 4",
+                                                    }}
                                                 >
-                                                    {category.name}
-                                                </Tag>
-
-                                                <InertiaChakraLink
-                                                    href={`publication/${file.name}`}
-                                                >
-                                                    <Heading
-                                                        as="h3"
-                                                        fontWeight="bold"
-                                                        fontSize="md"
-                                                        m="0"
+                                                    <Tag
+                                                        w="max-content"
+                                                        colorScheme="primary"
+                                                        mb={2}
                                                     >
-                                                        {title}
-                                                    </Heading>
-                                                    {subtitle && (
-                                                        <Text
-                                                            as="span"
-                                                            fontWeight="medium"
-                                                            fontSize="xs"
-                                                            color={useColorModeValue(
-                                                                "gray.600",
-                                                                "gray.300"
-                                                            )}
-                                                        >
-                                                            {" " + subtitle}
-                                                        </Text>
-                                                    )}
-                                                </InertiaChakraLink>
-                                            </GridItem>
+                                                        {category.name}
+                                                    </Tag>
 
-                                            <GridItem
-                                                gridTemplateColumns={{
-                                                    base: "span 1",
-                                                    md: "span 2",
-                                                }}
-                                                justifySelf={"flex-end"}
-                                                alignSelf="start"
-                                            >
-                                                <InertiaChakraLink
-                                                    href={`/publicaitons/${file.name}`}
+                                                    <InertiaChakraLink
+                                                        href={`publication/${file.name}`}
+                                                    >
+                                                        <Heading
+                                                            as="h3"
+                                                            fontWeight="bold"
+                                                            fontSize="md"
+                                                            m="0"
+                                                        >
+                                                            {title}
+                                                        </Heading>
+                                                        {subtitle && (
+                                                            <Text
+                                                                as="span"
+                                                                fontWeight="medium"
+                                                                fontSize="xs"
+                                                                color={useColorModeValue(
+                                                                    "gray.600",
+                                                                    "gray.300"
+                                                                )}
+                                                            >
+                                                                {" " + subtitle}
+                                                            </Text>
+                                                        )}
+                                                    </InertiaChakraLink>
+                                                </GridItem>
+
+                                                <GridItem
+                                                    gridTemplateColumns={{
+                                                        base: "span 1",
+                                                        md: "span 2",
+                                                    }}
+                                                    justifySelf={"flex-end"}
+                                                    alignSelf="start"
                                                 >
-                                                    <Image
-                                                        src={
-                                                            media.length
-                                                                ? media.filter(
-                                                                      (media) =>
-                                                                          media.collection_name ===
-                                                                          "publication_featured_image"
-                                                                  )[0]
-                                                                      .original_url
-                                                                : "/assets/SM-placeholder-150x150.png"
-                                                        }
-                                                        alt={title}
-                                                        w="60px"
-                                                        border="1px solid"
-                                                        borderColor={"gray.400"}
-                                                        p={1}
-                                                        rounded="sm"
-                                                        aspectRatio={3 / 4}
-                                                        // h="190px"
-                                                    />
-                                                </InertiaChakraLink>
-                                            </GridItem>
-                                        </Grid>
-                                        {publications.length - 1 !== i && (
-                                            <Divider m={0} />
-                                        )}
-                                    </Box>
-                                )
-                            )}
-                    </VStack>
-                </Container>
-            </SimpleGrid>
+                                                    <InertiaChakraLink
+                                                        href={`/publicaitons/${file.name}`}
+                                                    >
+                                                        <Image
+                                                            src={
+                                                                media.length
+                                                                    ? media.filter(
+                                                                          (
+                                                                              media
+                                                                          ) =>
+                                                                              media.collection_name ===
+                                                                              "publication_featured_image"
+                                                                      )[0]
+                                                                          .original_url
+                                                                    : "/assets/SM-placeholder-150x150.png"
+                                                            }
+                                                            alt={title}
+                                                            w="60px"
+                                                            border="1px solid"
+                                                            borderColor={
+                                                                "gray.400"
+                                                            }
+                                                            p={1}
+                                                            rounded="sm"
+                                                            aspectRatio={3 / 4}
+                                                            // h="190px"
+                                                        />
+                                                    </InertiaChakraLink>
+                                                </GridItem>
+                                            </Grid>
+                                            {publications.length - 1 !== i && (
+                                                <Divider m={0} />
+                                            )}
+                                        </Box>
+                                    )
+                                )}
+                        </VStack>
+                    </Container>
+                </GridItem>
+            </Grid>
         </Section>
     );
 };
@@ -710,8 +718,8 @@ export const NewsletterSection = ({ newsletters }) => {
     const isDesktop = useBreakpointValue({ base: false, md: true });
 
     return (
-        <Container>
-            <Flex justify={"center"} mb={3}>
+        <Container maxW="full" centerContent>
+            <Flex justify={"center"} w="full" mb={3}>
                 <InertiaChakraLink
                     href="/category/newsletters"
                     textAlign={"center"}
@@ -726,7 +734,7 @@ export const NewsletterSection = ({ newsletters }) => {
                 </InertiaChakraLink>
             </Flex>
             {newsletters.map((newsletter, index) => (
-                <Flex key={newsletter.id}>
+                <Flex key={newsletter.id} w="full">
                     {/* Desktop view(left card) */}
                     {isDesktop && index % 2 === 0 && (
                         <>
