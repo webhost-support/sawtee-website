@@ -49,9 +49,8 @@ class PostController extends Controller
 
         $validated = $request->validated();
         $validated['title'] = Str::of($validated['title'])->squish();
-
-        // $validated['slug'] = Str::slug($validated['title'], '-');
         $validated['meta_title'] = $validated['title'];
+
         $post = Post::create($validated);
 
         if ($request->has('tags')) {
@@ -115,14 +114,12 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(PostRequest $request, Post $post)
     {
 
 
-        $validated = $request->all();
+        $validated = $request->validated();
         $validated['title'] = Str::of($validated['title'])->squish();
-
-        // $validated['slug'] = Str::slug($validated['title'], '-');
         $validated['meta_title'] = $validated['title'];
         if ($request->has('tags')) {
             $post->tags()->sync($request->tags);

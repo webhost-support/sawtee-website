@@ -56,7 +56,6 @@ html {
 
 body {
     height: 100%;
-
     position: relative;
     background-color: var(--color-body-bg);
     color: var(--color-text);
@@ -116,7 +115,7 @@ main .primary-link:hover, main a:hover {
     text-underline-offset: 3px;
     text-decoration-color: var(--chakra-colors-primary-500) !important;
     color: var(--chakra-colors-primary-500) !important;
-    transition: all 200ms ease-in;
+    /* transition: all 200ms ease-in; */
 }
 .swiper-button-prev,
 .swiper-button-next {
@@ -131,7 +130,6 @@ main .primary-link:hover, main a:hover {
 
 main {
     background-color: var(--color-body-bg);
-    color: var(--color-text);
 }
 
 .skip-link {

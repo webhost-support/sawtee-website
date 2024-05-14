@@ -35,13 +35,10 @@ import ContentEditor from "@/Components/Backend/ContentEditor";
 import React from "react";
 import { FiFile } from "react-icons/fi";
 import {
-    CheckIcon,
     CloseIcon,
-    CopyIcon,
     QuestionOutlineIcon,
 } from "@chakra-ui/icons";
 import ControlledMultiSelect from "@/Components/Backend/MultiSelect";
-import { useClipboard } from "@chakra-ui/react";
 
 
 export default function CreatePostForm({ categories, themes, tags }) {
@@ -68,7 +65,6 @@ export default function CreatePostForm({ categories, themes, tags }) {
     const [files, setFiles] = React.useState([]);
     const [image, setImage] = React.useState(null);
     const [selectedCategory, setSelectedCategory] = React.useState(null);
-    const { onCopy, value = data.slug, setValue, hasCopied } = useClipboard("");
     const [postTags, setPostTags] = React.useState([]);
     const { colorMode } = useColorMode();
 
@@ -85,14 +81,14 @@ export default function CreatePostForm({ categories, themes, tags }) {
     });
 
     // Set Slug if title value changes
-    React.useEffect(() => {
-        const postSlug = data.title
-            .toLowerCase()
-            .replace(/\s+/g, "-")
-            .replaceAll(",", "");
-        setData("slug", postSlug);
-        setValue(postSlug);
-    }, [data.title]);
+    // React.useEffect(() => {
+    //     const postSlug = data.title
+    //         .toLowerCase()
+    //         .replace(/\s+/g, "-")
+    //         .replaceAll(",", "");
+    //     setData("slug", postSlug);
+    //     setValue(postSlug);
+    // }, [data.title]);
 
     function setDataTags(e) {
         let array = [];
@@ -165,59 +161,13 @@ export default function CreatePostForm({ categories, themes, tags }) {
                             )}
                         </FormControl>
 
-                        <FormControl>
-                            <Stack
-                                flexDir={"row"}
-                                align="center"
-                                justify="space-between"
-                            >
-                                <FormLabel htmlFor="slug">Slug</FormLabel>
-                                <Text
-                                    as="span"
-                                    fontSize="xs"
-                                    fontStyle="italic"
-                                >
-                                    Click to copy
-                                </Text>
-                            </Stack>
-
-                            <InputGroup>
-                                <InputRightElement>
-                                    <Button
-                                        variant="ghost"
-                                        size={"sm"}
-                                        onClick={onCopy}
-                                    >
-                                        {hasCopied ? (
-                                            <CheckIcon color={"green.500"} />
-                                        ) : (
-                                            <CopyIcon color={"gray.500"} />
-                                        )}
-                                    </Button>
-                                </InputRightElement>
-                                <Input
-                                    type="text"
-                                    id="slug"
-                                    isReadOnly
-                                    name="slug"
-                                    color={useColorModeValue(
-                                        "blue.600",
-                                        "blue.300"
-                                    )}
-                                    value={value}
-                                    display="flex"
-                                    alignItems="center"
-                                />
-                            </InputGroup>
-                        </FormControl>
-
                         <FormControl mt={4} isInvalid={errors.content}>
                             <FormLabel htmlFor="content">Content</FormLabel>
 
                             <ContentEditor
+                                // type="classic"
                                 name="content"
                                 initialValue=""
-                                colorMode={colorMode}
                                 id="content"
                                 onChange={(evt, editor) =>
                                     setData("content", editor.getContent())

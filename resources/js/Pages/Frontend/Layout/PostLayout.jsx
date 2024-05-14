@@ -1,10 +1,9 @@
-import { Box, Heading, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { LightPatternBox } from "@/Components/Frontend/styles/pattern-box";
 import PostHeader from "@/Components/Frontend/post/post-header";
 import Section from "@/Components/Frontend/styles/section";
 import FeaturedMedia from "@/Components/Frontend/post/featured-media";
 import { Content } from "@/Components/Frontend/index";
-import PostCategories from "@/Components/Frontend/post/post-categories";
 import SocialShare from "@/Components/Frontend/SocialShare";
 import readingDuration from "reading-duration";
 import PostMeta from "@/Components/Frontend/post/post-meta";
@@ -16,7 +15,7 @@ const PostLayout = ({
     isNewsletter,
     post,
 }) => {
-    const postHeaderColor = useColorModeValue("gray.600", "whiteAlpha.600");
+    const postHeaderColor = "var(--color-text)";
     const featured_media = post.media.filter(
         (m) => m.collection_name === "post-featured-image"
     )[0];
@@ -37,7 +36,7 @@ const PostLayout = ({
 
     return (
         <LightPatternBox showPattern={showPattern} pt="10px" pb={"40px"}>
-            <Box maxW="7xl" mx="auto">
+            <Box maxW="5xl" mx="auto">
                 <PostHeader
                     mt={"20px"}
                     px={{ base: "32px", md: "3rem" }}

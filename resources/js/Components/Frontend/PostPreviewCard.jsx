@@ -22,7 +22,7 @@ const PostPreviewCard = ({
     ...rest
 }) => {
     const { title, slug, excerpt, media, category, created_at } = post;
-    const color = useColorModeValue("var(--color-dark", "var(--color-light)");
+    const color = useColorModeValue("gray.600", "gray.300");
     const featured_image = media
         ? media.filter(
               (item) => item.collection_name === "post-featured-image"

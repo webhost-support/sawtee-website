@@ -19,21 +19,26 @@ export default function Feature({ feature, ...rest }) {
                 align={"center"}
                 spacing={{ base: 8, md: 10 }}
                 py={{ base: 20, md: 28 }}
-                // px={{ base: 6, md: 10 }}
+                px={{ base: 6, md: 10 }}
                 direction={{ base: "column", md: "row" }}
             >
                 <Stack flex={1} spacing={{ base: 5, md: 10 }}>
                     <Heading
                         lineHeight={1.2}
                         fontWeight={600}
-                        fontSize={{ base: "3xl", sm: "4xl", lg: "6xl" }}
+                        fontSize={{
+                            base: "2xl",
+                            sm: "3xl",
+                            md: "4xl",
+                            lg: "6xl",
+                        }}
                     >
                         <Text
                             as={"span"}
                             position={"relative"}
                             _after={{
                                 content: "''",
-                                width: "full",
+                                width: "100%",
                                 height: "30%",
                                 position: "absolute",
                                 bottom: 1,
@@ -49,7 +54,10 @@ export default function Feature({ feature, ...rest }) {
                             use subtitle!
                         </Text> */}
                     </Heading>
-                    <Text color={"gray.500"}>
+                    <Text
+                        color={useColorModeValue("gray.600", "gray.300")}
+                        fontSize={{ base: "sm", md: "md", lg: "lg" }}
+                    >
                         Some text about reform monitoring platform. Snippy is a
                         rich coding snippets app that lets you create your own
                         code snippets, categorize them, and even sync them in

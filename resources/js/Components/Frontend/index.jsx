@@ -80,11 +80,12 @@ export const CarouselSection = ({ slides, infocus }) => {
                 lg: "repeat(7, 1fr)",
             }}
             id="carousel-section"
+            gap={4}
         >
             {slides && slides.length > 0 && (
                 <GridItem
                     colSpan={{ base: 1, md: 4 }}
-                    maxH={{ base: "auto", md: "calc(100dvh - 10rem)" }}
+                    maxH={{ base: "auto", md: "500px" }}
                 >
                     <FullWidthCarousel
                         slides={slides}
@@ -98,23 +99,11 @@ export const CarouselSection = ({ slides, infocus }) => {
             <GridItem
                 colSpan={{ base: 1, md: 3 }}
                 alignSelf={"center"}
-                px={2}
                 py={2}
+                maxH={{ base: "auto", md: "500px" }}
+                overflowY={"scroll"}
             >
-                <GlassBox
-                    overflowY={"scroll"}
-                    bg="transparent"
-                    shadow="none"
-                    boxShadow="none"
-                    rounded="none"
-                    border="none"
-                    maxH={{ base: "auto", md: "calc(100dvh - 10rem)" }}
-                >
-                    <InfocusSection
-                        infocus={infocus}
-                        link={"/category/infocus"}
-                    />
-                </GlassBox>
+                <InfocusSection infocus={infocus} link={"/category/infocus"} />
             </GridItem>
         </Grid>
     );
@@ -128,6 +117,7 @@ export const AboutSection = ({ data }) => {
                 spacing={16}
                 alignItems="center"
                 maxW={"7xl"}
+                px={{ base: 6, md: 10 }}
                 mx="auto"
             >
                 {data.map((item) => {
@@ -199,7 +189,15 @@ export const AboutSection = ({ data }) => {
 export const InfocusSection = ({ infocus, link }) => {
     const itemBG = useColorModeValue("blackAlpha.200", "blackAlpha.300");
     return (
-        <>
+        <GlassBox
+            bg="transparent"
+            shadow="none"
+            boxShadow="none"
+            rounded="none"
+            border="none"
+            px={{ base: 4, sm: 10 }}
+            mx="auto"
+        >
             <InertiaChakraLink as={Link} href={link}>
                 <Title
                     text={"In Focus"}
@@ -214,30 +212,14 @@ export const InfocusSection = ({ infocus, link }) => {
             </InertiaChakraLink>
             {infocus.map((article) => {
                 return (
-                    <LinkBox key={article.id}>
-                        <Grid
-                            templateRows={{
-                                base: "auto auto auto",
-                                md: "auto",
-                            }}
-                            w="100%"
-                            templateColumns={{
-                                base: "1fr",
-                                md: "4fr 2fr",
-                            }}
+                    <Box>
+                        <LinkBox
+                            key={article.id}
                             px={{ base: 4, sm: 6 }}
                             py={{ base: 2, sm: 3 }}
-                            alignItems="center"
                             _hover={{ bg: itemBG }}
-                            rowGap={3}
-                            m={0}
                         >
-                            <Box
-                                gridColumnEnd={{
-                                    base: "span 2",
-                                    md: "unset",
-                                }}
-                            >
+                            <Box>
                                 <Heading
                                     as="h3"
                                     fontFamily={"heading"}
@@ -266,7 +248,6 @@ export const InfocusSection = ({ infocus, link }) => {
                                     />
 
                                     <Text
-                                        noOfLines={3}
                                         pl="20px"
                                         fontSize={{
                                             base: "xs",
@@ -276,31 +257,12 @@ export const InfocusSection = ({ infocus, link }) => {
                                     </Text>
                                 </HStack>
                             </Box>
-
-                            <Text
-                                as="time"
-                                justifySelf={{
-                                    base: "start",
-                                    md: "flex-end",
-                                }}
-                                fontSize={"xs"}
-                                color={"gray.600"}
-                                _dark={{
-                                    color: "gray.300",
-                                }}
-                                mt={{ base: "4", md: 0 }}
-                                pl={"20px"}
-                            >
-                                {formatDate(
-                                    article.published_at || article.created_at
-                                )}
-                            </Text>
-                        </Grid>
+                        </LinkBox>
                         <Divider m={0} />
-                    </LinkBox>
+                    </Box>
                 );
             })}
-        </>
+        </GlassBox>
     );
 };
 

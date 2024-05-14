@@ -1,14 +1,23 @@
 import React, { useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
+import { useColorMode } from "@chakra-ui/react";
 
 export default function ContentEditor(props) {
-    const { initialValue = "", ...rest } = props;
+    const { initialValue, ...rest } = props;
     const TINYMCE_API_KEY = import.meta.env.VITE_TINYMCE_API_KEY_GOOGLE
         ? import.meta.env.VITE_TINYMCE_API_KEY_GOOGLE
         : import.meta.env.VITE_TINYMCE_API_KEY_GITHUB;
-
     const editorRef = useRef(null);
-    const colorMode = props.colorMode;
+
+    const { colorMode } = useColorMode();
+
+    const [editorTheme, setEditorTheme] = React.useState(
+        colorMode === "dark" ? "oxide-dark" : "oxide"
+    );
+
+    React.useEffect(() => {
+        setEditorTheme(colorMode === "dark" ? "oxide-dark" : "oxide");
+    }, [colorMode]);
 
     const editorConfig = {
         plugins:
@@ -43,20 +52,20 @@ export default function ContentEditor(props) {
         contextmenu: "link image table",
         content_style:
             "body { font-family:Helvetica,Arial,sans-serif; font-size:16px }",
+        skin: editorTheme,
+        content_css: colorMode === "dark" ? "dark" : "default",
+        content_style:
+            "body { font-family:Helvetica,Arial,sans-serif; font-size:16px }",
     };
 
     return (
         <Editor
             ref={editorRef}
             apiKey={TINYMCE_API_KEY}
-            initialValue={initialValue}
+            initialValue={initialValue || ""}
             onInit={(evt, editor) => (editorRef.current = editor)}
             init={{
                 ...editorConfig,
-                ...{
-                    skin: colorMode === "dark" ? "oxide-dark" : "oxide",
-                    content_css: colorMode === "dark" ? "dark" : "default",
-                },
             }}
             {...rest}
         />

@@ -12,13 +12,11 @@ import {
     InputGroup,
     InputLeftAddon,
     InputRightAddon,
-    InputRightElement,
     Radio,
     Select,
     Stack,
     Textarea,
     VStack,
-    useColorModeValue,
     useToast,
     Tooltip,
     Accordion,
@@ -26,7 +24,6 @@ import {
     AccordionButton,
     AccordionPanel,
     AccordionIcon,
-    Text,
     IconButton,
 } from "@chakra-ui/react";
 import FileUpload, { PreviewImage } from "@/Components/Backend/FileUpload";
@@ -35,13 +32,10 @@ import ContentEditor from "@/Components/Backend/ContentEditor";
 import ControlledMultiSelect from "@/Components/Backend/MultiSelect";
 import { filterByReference } from "@/Utils";
 import {
-    CheckIcon,
     CloseIcon,
-    CopyIcon,
     QuestionOutlineIcon,
 } from "@chakra-ui/icons";
 import { FiFile } from "react-icons/fi";
-import { useClipboard } from "@chakra-ui/react";
 
 export default function EditPostForm({
     post: postData,
@@ -72,7 +66,6 @@ export default function EditPostForm({
         meta_description: postData.meta_description,
     });
 
-    console.log(data.file);
 
     const toast = useToast();
     const [imageUrl, setImageUrl] = React.useState(
@@ -94,12 +87,7 @@ export default function EditPostForm({
         return tagsarray;
     });
 
-    const {
-        onCopy,
-        value = postData.slug,
-        setValue,
-        hasCopied,
-    } = useClipboard("");
+
 
     const [tagOptions, setTagOptions] = React.useState([]);
 
@@ -120,15 +108,7 @@ export default function EditPostForm({
         categories.filter((cat) => cat.id == data.category_id)[0].name
     );
 
-    // Set Slug if title value changes
-    React.useEffect(() => {
-        const postSlug = data.title
-            .toLowerCase()
-            .replace(/\s+/g, "-")
-            .replaceAll(",", "");
-        setData("slug", postSlug);
-        setValue(postSlug);
-    }, [data.title]);
+
 
     React.useEffect(() => {
         if (postTags && tags) {
@@ -205,61 +185,17 @@ export default function EditPostForm({
                             )}
                         </FormControl>
 
-                        <FormControl>
-                            <Stack
-                                flexDir={"row"}
-                                align="center"
-                                justify="space-between"
-                            >
-                                <FormLabel htmlFor="slug">Slug</FormLabel>
-                                <Text
-                                    as="span"
-                                    fontSize="xs"
-                                    fontStyle="italic"
-                                >
-                                    Click to copy
-                                </Text>
-                            </Stack>
-
-                            <InputGroup>
-                                <InputRightElement>
-                                    <Button
-                                        variant="ghost"
-                                        size={"sm"}
-                                        onClick={onCopy}
-                                    >
-                                        {hasCopied ? (
-                                            <CheckIcon color={"green.500"} />
-                                        ) : (
-                                            <CopyIcon color={"gray.500"} />
-                                        )}
-                                    </Button>
-                                </InputRightElement>
-                                <Input
-                                    type="text"
-                                    id="slug"
-                                    isReadOnly
-                                    name="slug"
-                                    color={useColorModeValue(
-                                        "blue.600",
-                                        "blue.300"
-                                    )}
-                                    value={value}
-                                    display="flex"
-                                    alignItems="center"
-                                />
-                            </InputGroup>
-                        </FormControl>
-
                         <FormControl mt={4} isInvalid={errors.content}>
                             <FormLabel htmlFor="content">Content</FormLabel>
 
                             <ContentEditor
                                 id="content"
                                 name="content"
-                                type="classic"
-                                initialValue={postData.content}
-                                value={postData.content}
+                                initialValue={
+                                    postData.content !== null
+                                        ? postData.content
+                                        : ""
+                                }
                                 onChange={(e, editor) => {
                                     setData("content", editor.getContent());
                                 }}

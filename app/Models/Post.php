@@ -60,7 +60,7 @@ class Post extends Model implements HasMedia
         return SlugOptions::create()
             ->generateSlugsFrom('title')
             ->saveSlugsTo('slug')
-            // ->skipGenerateWhen(fn () => $this->status !== "published")
+            ->skipGenerateWhen(fn () => $this->status !== "published")
             ->startSlugSuffixFrom(2);
     }
 

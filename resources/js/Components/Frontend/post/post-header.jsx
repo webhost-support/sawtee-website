@@ -24,7 +24,7 @@ const PostHeader = ({
         )}
         <Heading
             as="h1"
-            fontSize={{ base: "2xl", md: "3xl", lg: "5xl" }}
+            fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
             color={color}
             my={{ base: "16px", lg: "32px" }}
             textTransform="capitalize"
