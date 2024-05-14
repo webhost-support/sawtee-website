@@ -1,10 +1,8 @@
 import { Box, Stack, Text, Image } from "@chakra-ui/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/effect-creative";
+import "swiper/css/bundle";
+
 import {
     Autoplay,
     Pagination,
@@ -20,8 +18,6 @@ const FullWidthCarousel = ({
     pagination,
     paginationType,
 }) => {
-
-
     const creativeEffect = {
         prev: {
             shadow: true,
@@ -50,19 +46,20 @@ const FullWidthCarousel = ({
             navigation={true}
             modules={[Autoplay, Pagination, Navigation, EffectCreative]}
             effect="creative"
-            loop={loop}
+            loop={false}
             rewind={rewind}
             creativeEffect={creativeEffect}
             className="full-width-carousel"
         >
             {slides.map((slide) => (
                 <SwiperSlide className="swiper-slide" key={slide.id}>
-                    <Box w="full" h="full" backgroundColor="rgba(0,0,0,0.2)">
+                    <Box backgroundColor="rgba(0,0,0,0.2)">
                         <Image
                             src={`${slide.media[0].original_url}`}
                             alt={slide.title}
                             objectFit={"cover"}
                             mixBlendMode="darken"
+                            aspectRatio={16 / 9}
                         />
                         <Stack
                             pos="absolute"

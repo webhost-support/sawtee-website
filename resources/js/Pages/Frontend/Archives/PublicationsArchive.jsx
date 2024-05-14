@@ -59,7 +59,13 @@ export default function PublicationsArchive({
                         pos={"relative"}
                         placeContent={"center"}
                     >
-                        <GridItem colSpan={{ base: 1, xl: 4 }} px={4}>
+                        <GridItem
+                            colSpan={{ base: 1, xl: 4 }}
+                            px={4}
+                            className="publication-slider-wrapper"
+                            w="full"
+                            maxW="5xl"
+                        >
                             {category.children && (
                                 <PublicationSliders
                                     category={category}
@@ -117,11 +123,9 @@ const PublicationSliders = ({ category, publications }) => {
         >
             {category.children.map((item) => {
                 return (
-                    <Box key={item.name} spacing="4">
+                    <Box key={item.name}>
                         <MultiItemCarousel
                             slides={publications[item.slug]}
-                            itemsToShow={1}
-                            
                             showTitle={true}
                             mt={16}
                         >

@@ -50,7 +50,10 @@ const MultiPostsCarousel = ({
             {children}
             {posts.map((article) => {
                 return (
-                    <SwiperSlide key={article.id} className="post-slide">
+                    <SwiperSlide
+                        key={article.id}
+                        className="swiper-slide post-slide"
+                    >
                         <Flex {...rest}>
                             <PostPreviewCard
                                 post={article}

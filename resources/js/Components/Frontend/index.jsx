@@ -74,38 +74,43 @@ export const ListVariant = {
 
 export const CarouselSection = ({ slides, infocus }) => {
     return (
-        <Grid
-            templateColumns={{
-                base: "1fr",
-                lg: "repeat(7, 1fr)",
-            }}
-            id="carousel-section"
-            gap={4}
-        >
-            {slides && slides.length > 0 && (
+        <Section px="0" className="carousel-section">
+            <Grid
+                templateColumns={{
+                    base: "1fr",
+                    lg: "repeat(7, 1fr)",
+                }}
+                id="carousel-section"
+                gap={4}
+            >
+                {slides && slides.length > 0 && (
+                    <GridItem
+                        colSpan={{ base: 1, md: 4 }}
+                        maxH={{ base: "auto", md: "500px" }}
+                    >
+                        <FullWidthCarousel
+                            slides={slides}
+                            loop={true}
+                            rewind={true}
+                            pagination={true}
+                            paginationType={"fraction"}
+                        />
+                    </GridItem>
+                )}
                 <GridItem
-                    colSpan={{ base: 1, md: 4 }}
+                    colSpan={{ base: 1, md: 3 }}
+                    alignSelf={"center"}
+                    py={2}
                     maxH={{ base: "auto", md: "500px" }}
+                    overflowY={"scroll"}
                 >
-                    <FullWidthCarousel
-                        slides={slides}
-                        loop={true}
-                        rewind={true}
-                        pagination={true}
-                        paginationType={"fraction"}
+                    <InfocusSection
+                        infocus={infocus}
+                        link={"/category/infocus"}
                     />
                 </GridItem>
-            )}
-            <GridItem
-                colSpan={{ base: 1, md: 3 }}
-                alignSelf={"center"}
-                py={2}
-                maxH={{ base: "auto", md: "500px" }}
-                overflowY={"scroll"}
-            >
-                <InfocusSection infocus={infocus} link={"/category/infocus"} />
-            </GridItem>
-        </Grid>
+            </Grid>
+        </Section>
     );
 };
 
@@ -113,11 +118,12 @@ export const AboutSection = ({ data }) => {
     return (
         <Section>
             <SimpleGrid
-                minChildWidth={"200px"}
+                minChildWidth={"minmax(auto, 320px)"}
                 spacing={16}
                 alignItems="center"
                 maxW={"7xl"}
-                px={{ base: 6, md: 10 }}
+                py={{ base: 10, lg: 16 }}
+                px={{ base: 6, lg: 10 }}
                 mx="auto"
             >
                 {data.map((item) => {
@@ -128,8 +134,6 @@ export const AboutSection = ({ data }) => {
                                 position={"relative"}
                                 rounded={"2xl"}
                                 boxShadow={"2xl"}
-                                width={"full"}
-                                overflow={"hidden"}
                                 role="group"
                             >
                                 <IconButton
@@ -154,8 +158,6 @@ export const AboutSection = ({ data }) => {
                                         fit="cover"
                                         rounded="xl"
                                         align={"center"}
-                                        w={"100%"}
-                                        h={"100%"}
                                     />
                                 </LinkOverlay>
                             </LinkBox>
@@ -271,6 +273,7 @@ export const SawteeInMediaSection = ({ articles, link }) => {
         <Section
             title={"Sawtee in Media"}
             bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
+            py={{ base: 12, md: 20 }}
         >
             <Container maxW="8xl" centerContent px={6}>
                 <MultiPostsCarousel
@@ -427,76 +430,20 @@ export const ReformMonitorSection = ({ feature }) => {
 
 export const PublicationSection = ({ publications, newsletters }) => {
     return (
-        <Section bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}>
+        <Section
+            bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
+            py={{ base: 12, md: 20 }}
+        >
             <Grid
-                gridTemplateColumns={{ base: "1fr", md: "repeat(7, 1fr)" }}
+                gridTemplateColumns={{ base: "1fr", lg: "repeat(7, 1fr)" }}
                 gap={8}
                 maxW={"8xl"}
                 mx="auto"
             >
-                {/* <Container>
-                    <Flex justify={"center"} mb={3}>
-                        <InertiaChakraLink
-                            href="/category/publications"
-                            textAlign={"center"}
-                            my={6}
-                        >
-                            <ExploreButton
-                                size="md"
-                                text="Newsletters"
-                                variant="outline"
-                                px={10}
-                            />
-                        </InertiaChakraLink>
-                    </Flex>
-                    <VStack
-                        as={motion.ul}
-                        initial={"initial"}
-                        onViewportLeave={"initial"}
-                        variants={ListVariant}
-                        onViewportEnter={"whileInView"}
-                        viewport={{ once: true }}
-                        border="1px solid"
-                        borderColor="gray.400"
-                        rounded="md"
-                        overflow="hidden"
-                        spacing={0}
-                        align={"space-between"}
-                    >
-                        {newsletters &&
-                            newsletters.map(({ id, title, slug }, i) => (
-                                <Box
-                                    as={motion.li}
-                                    initial={"initial"}
-                                    whileInView={"whileInView"}
-                                    variants={ListItemVariant}
-                                    transitionDuration={"400ms"}
-                                    // viewport={{ once: true }}
-                                    key={id}
-                                >
-                                    <Heading
-                                        as={"h4"}
-                                        fontWeight="bold"
-                                        fontSize="md"
-                                        p={8}
-                                    >
-                                        <InertiaChakraLink
-                                            href={`/category/newsletters/${slug}`}
-                                        >
-                                            {title}
-                                        </InertiaChakraLink>
-                                    </Heading>
-                                    {newsletters.length - 1 !== i && (
-                                        <Divider m={0} />
-                                    )}
-                                </Box>
-                            ))}
-                    </VStack>
-                </Container> */}
-                <GridItem colSpan={{ base: 1, md: 4, lg: 4 }}>
+                <GridItem colSpan={{ base: 1, lg: 4 }}>
                     <NewsletterSection newsletters={newsletters} />
                 </GridItem>
-                <GridItem colSpan={{ base: 1, md: 3, lg: 3 }}>
+                <GridItem colSpan={{ base: 1, lg: 3 }}>
                     <Container>
                         <Flex justify={"center"} mb={3}>
                             <InertiaChakraLink
@@ -662,9 +609,8 @@ export const Section = ({ children, title = null, ...rest }) => {
     return (
         <Box
             as="section"
-            maxW="full"
             mx="auto"
-            py={{ base: "6", md: "12", lg: "16" }}
+            pb={{ base: 20, md: 28 }}
             px={{ base: "24px", md: "80px" }}
             className="section"
             {...rest}

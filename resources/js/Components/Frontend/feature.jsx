@@ -18,9 +18,8 @@ export default function Feature({ feature, ...rest }) {
             <Stack
                 align={"center"}
                 spacing={{ base: 8, md: 10 }}
-                py={{ base: 20, md: 28 }}
                 px={{ base: 6, md: 10 }}
-                direction={{ base: "column", md: "row" }}
+                direction={{ base: "column", lg: "row" }}
             >
                 <Stack flex={1} spacing={{ base: 5, md: 10 }}>
                     <Heading
