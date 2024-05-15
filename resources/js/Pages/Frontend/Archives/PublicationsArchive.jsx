@@ -6,17 +6,21 @@ import {
     StackDivider,
     VStack,
     Box,
+    SimpleGrid,
+    LinkBox,
+    Image,
 } from "@chakra-ui/react";
 import { Link } from "@inertiajs/react";
 import React from "react";
 import Section from "@/Components/Frontend/styles/section";
 import SidebarWidget from "@/Components/Frontend/sidebarWidget";
 import MainLayout from "../Layout/MainLayout";
-import MultiItemCarousel from "@/Components/Frontend/MultiItemCarousel";
 import { GlassBox } from "@/Components/Frontend";
 import SubscriptionCard from "@/Components/Frontend/subscriptionCard";
 import WebsiteHead from "@/Components/Frontend/Head";
 import { PageLayout } from "../Layout/PageLayout";
+import InertiaChakraLinkOverlay from "@/Components/Frontend/styles/inertia-chakra-link-overlay";
+import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
 
 export default function PublicationsArchive({
     category,
@@ -63,8 +67,6 @@ export default function PublicationsArchive({
                             colSpan={{ base: 1, xl: 4 }}
                             px={4}
                             className="publication-slider-wrapper"
-                            w="full"
-                            maxW="5xl"
                         >
                             {category.children && (
                                 <PublicationSliders
@@ -122,19 +124,12 @@ const PublicationSliders = ({ category, publications }) => {
             spacing={"40px"}
         >
             {category.children.map((item) => {
-                return (
-                    <Box key={item.name}>
-                        <MultiItemCarousel
-                            slides={publications[item.slug]}
-                            showTitle={true}
-                            mt={16}
-                        >
+                if (publications[item.slug].length > 0)
+                    return (
+                        <Box key={item.name}>
                             <Text
                                 as="h3"
                                 id={`#${item.name}`}
-                                pos={"absolute"}
-                                top={0}
-                                zIndex={1020}
                                 fontSize={{ base: "xl", lg: "2xl" }}
                                 fontFamily="heading"
                                 fontWeight={"bold"}
@@ -149,9 +144,91 @@ const PublicationSliders = ({ category, publications }) => {
                                     </Link>
                                 }
                             </Text>
-                        </MultiItemCarousel>
-                    </Box>
-                );
+
+                            <SimpleGrid minChildWidth={"140px"}>
+                                {publications[item.slug].map((publication) => {
+                                    return (
+                                        <Box>
+                                            <LinkBox
+                                                as="article"
+                                                maxW={"140px"}
+                                                mx="auto"
+                                                _before={{
+                                                    content: `''`,
+                                                    position: "absolute",
+                                                    top: 0,
+                                                    left: 0,
+                                                    width: `100%`,
+                                                    height: "100%",
+                                                    borderRadius:
+                                                        "var(--chakra-radii-md)",
+                                                    background:
+                                                        "rgba(0,0,0,0.1)",
+                                                    backgroundBlendMode:
+                                                        "overlay",
+                                                }}
+                                                _hover={{
+                                                    _before: {
+                                                        background:
+                                                            "transparent",
+                                                    },
+                                                }}
+                                            >
+                                                <InertiaChakraLinkOverlay
+                                                    title={publication.title}
+                                                    href={
+                                                        publication.file
+                                                            ? `/publications/${publication.file.name}`
+                                                            : "#"
+                                                    }
+                                                    target="_blank"
+                                                >
+                                                    <Image
+                                                        src={`${publication.media[0]?.original_url}`}
+                                                        alt={publication.title}
+                                                        title={
+                                                            publication.title
+                                                        }
+                                                        rounded="md"
+                                                        objectFit="cover"
+                                                        w={"140px"}
+                                                        aspectRatio={3 / 4}
+                                                        loading="lazy"
+                                                        fallbackSrc="/assets/SM-placeholder-150x150.png"
+                                                    />
+                                                </InertiaChakraLinkOverlay>
+                                            </LinkBox>
+                                            {publication.title && (
+                                                <InertiaChakraLink
+                                                    href={`/publications/${publication.file.name}`}
+                                                >
+                                                    <Text
+                                                        mt={4}
+                                                        fontSize="sm"
+                                                        fontWeight="semibold"
+                                                        textAlign="center"
+                                                    >
+                                                        {publication.title}
+                                                    </Text>
+                                                    {publication.subtitle && (
+                                                        <Text
+                                                            mt={1}
+                                                            fontSize="xs"
+                                                            textAlign="center"
+                                                        >
+                                                            {
+                                                                publication.subtitle
+                                                            }
+                                                        </Text>
+                                                    )}
+                                                </InertiaChakraLink>
+                                            )}
+                                        </Box>
+                                    );
+                                })}
+                            </SimpleGrid>
+                        </Box>
+                    );
             })}
         </Stack>
     );

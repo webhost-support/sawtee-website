@@ -118,8 +118,9 @@ export const AboutSection = ({ data }) => {
     return (
         <Section>
             <SimpleGrid
-                minChildWidth={"minmax(auto, 320px)"}
+                minChildWidth={"320px"}
                 spacing={16}
+                rowGap={28}
                 alignItems="center"
                 maxW={"7xl"}
                 py={{ base: 10, lg: 16 }}
@@ -647,7 +648,7 @@ export const NewsletterSection = ({ newsletters }) => {
                     {isDesktop && index % 2 === 0 && (
                         <>
                             <EmptyCard />
-                            <LineWithDot />
+                            <LineWithDot isMobile={isMobile} />
                             <NewsletterCard {...newsletter} index={index} />
                         </>
                     )}
@@ -655,7 +656,7 @@ export const NewsletterSection = ({ newsletters }) => {
                     {/* Mobile view */}
                     {isMobile && (
                         <>
-                            <LineWithDot />
+                            <LineWithDot isMobile={isMobile} />
                             <NewsletterCard {...newsletter} index={index} />
                         </>
                     )}
@@ -665,7 +666,7 @@ export const NewsletterSection = ({ newsletters }) => {
                         <>
                             <NewsletterCard {...newsletter} index={index} />
 
-                            <LineWithDot />
+                            <LineWithDot isMobile={isMobile} />
                             <EmptyCard />
                         </>
                     )}
@@ -748,6 +749,7 @@ export const NewsletterCard = ({ index, title, excerpt, published_at }) => {
     return (
         <HStack
             as={motion.article}
+            mb={isMobile ? "20px" : 0}
             initial={
                 isEvenId
                     ? {
@@ -826,13 +828,14 @@ export const NewsletterCard = ({ index, title, excerpt, published_at }) => {
     );
 };
 
-export const LineWithDot = () => {
+export const LineWithDot = ({ isMobile }) => {
     return (
         <Flex
             pos="relative"
             alignItems="center"
             mr={{ base: "40px", md: "40px" }}
             ml={{ base: "0", md: "40px" }}
+            mb={isMobile ? "20px" : 0}
         >
             <Text
                 as="span"

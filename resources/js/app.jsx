@@ -6,10 +6,12 @@ import { createInertiaApp } from "@inertiajs/react";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { customTheme, config } from "@/Utils/data";
+import { register } from "swiper/element/bundle";
 
 const appName = import.meta.env.VITE_APP_NAME || "SAWTEE";
 const theme = extendTheme(customTheme);
-
+// register Swiper custom elements
+register();
 
 createInertiaApp({
     title: (title) => `${appName} | ${title}`,

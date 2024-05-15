@@ -14,7 +14,6 @@ import { Pagination, Navigation, Keyboard } from "swiper/modules";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
-import "swiper/css/pagination";
 
 import InertiaChakraLink from "./styles/inertia-chakra-link";
 
@@ -26,33 +25,27 @@ const MultiItemCarousel = ({
     children,
     ...rest
 }) => {
-    const slideWidth = useBreakpointValue({
-        base: "xs",
-        md: "sm",
-        lg: "sm",
-    });
-
     return (
-        <Swiper
-            slidesPerView={1}
-            spaceBetween={spacing}
+        <swiper-container
+            slides-per-view={1}
+            space-between={spacing}
             navigation={true}
             keyboard={true}
+            css-mode="true"
             breakpoints={{
                 640: {
-                    slidesPerView: 1,
+                    slidesPerView: "auto",
                     spaceBetween: 20,
                 },
                 768: {
-                    slidesPerView: 2,
+                    slidesPerView: 3,
                     spaceBetween: 40,
                 },
                 1024: {
-                    slidesPerView: 3,
+                    slidesPerView: 4,
                     spaceBetween: 50,
                 },
             }}
-            modules={[Navigation, Pagination, Keyboard]}
             className={
                 className
                     ? `multi-item-carousel ${className}`
@@ -63,21 +56,11 @@ const MultiItemCarousel = ({
             {slides.length >= 1 &&
                 slides.map((slide) => {
                     return (
-                        <SwiperSlide
-                            className="swiper-slide"
-                            key={slide.id}
-                            style={{
-                                width: slideWidth,
-                            }}
-                        >
-                            <Flex flexDir={"column"} {...rest}>
+                        <swiper-slide key={slide.id} lazy="true">
+                            <Box {...rest}>
                                 <LinkBox
                                     as="article"
-                                    maxW={{
-                                        base: "160px",
-                                        md: "180px",
-                                        lg: "180px",
-                                    }}
+                                    maxW={"140px"}
                                     mx="auto"
                                     _before={{
                                         content: `''`,
@@ -111,11 +94,9 @@ const MultiItemCarousel = ({
                                             title={slide.title}
                                             rounded="md"
                                             objectFit="cover"
-                                            // w={{
-                                            //     base: "160px",
-                                            //     md: "180px",
-                                            //     lg: "180px",
-                                            // }}
+                                            w={"140px"}
+                                            aspectRatio={3 / 4}
+                                            loading="lazy"
                                             fallbackSrc="/assets/SM-placeholder-150x150.png"
                                         />
                                     </InertiaChakraLinkOverlay>
@@ -143,26 +124,26 @@ const MultiItemCarousel = ({
                                         )}
                                     </InertiaChakraLink>
                                 )}
-                            </Flex>
-                        </SwiperSlide>
+                            </Box>
+                        </swiper-slide>
                     );
                 })}
             {slides.length <= 0 &&
                 [1, 2, 3, 4, 5, 6].map((item) => (
-                    <SwiperSlide className="swiper-slide" key={`${item}+1`}>
+                    <swiper-slide key={`${item}+1`}>
                         <Box {...rest} cursor="pointer">
                             <Skeleton
                                 rounded="md"
                                 startColor="gray.300"
                                 endColor="gray.400"
-                                w={{ base: "160px", md: "180px", lg: "180px" }}
+                                w={"140px"}
                                 aspectRatio={3 / 4}
                                 mx="auto"
                             />
                         </Box>
-                    </SwiperSlide>
+                    </swiper-slide>
                 ))}
-        </Swiper>
+        </swiper-container>
     );
 };
 
