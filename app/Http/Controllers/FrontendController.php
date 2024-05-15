@@ -168,7 +168,7 @@ class FrontendController extends Controller
         if ($slug === 'publications' && !$subcategory) {
             $publications = array();
             foreach ($category->children as $subcategory) {
-                $posts = $subcategory->publications()->orderByDesc('id')->take(6)->get();
+                $posts = $subcategory->publications()->orderByDesc('id')->take(4)->get();
                 $publications[$subcategory->slug] = $posts->toArray();
             }
             return Inertia::render('Frontend/Archives/PublicationsArchive', [

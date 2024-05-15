@@ -11,13 +11,6 @@ export default function ContentEditor(props) {
 
     const { colorMode } = useColorMode();
 
-    const [editorTheme, setEditorTheme] = React.useState(
-        colorMode === "dark" ? "oxide-dark" : "oxide"
-    );
-
-    React.useEffect(() => {
-        setEditorTheme(colorMode === "dark" ? "oxide-dark" : "oxide");
-    }, [colorMode]);
 
     const editorConfig = {
         plugins:
@@ -52,7 +45,7 @@ export default function ContentEditor(props) {
         contextmenu: "link image table",
         content_style:
             "body { font-family:Helvetica,Arial,sans-serif; font-size:16px }",
-        skin: editorTheme,
+        skin: colorMode === "dark" ? "oxide-dark" : "oxide",
         content_css: colorMode === "dark" ? "dark" : "default",
         content_style:
             "body { font-family:Helvetica,Arial,sans-serif; font-size:16px }",

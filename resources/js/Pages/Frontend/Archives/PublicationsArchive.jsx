@@ -9,6 +9,7 @@ import {
     SimpleGrid,
     LinkBox,
     Image,
+    Skeleton,
 } from "@chakra-ui/react";
 import { Link } from "@inertiajs/react";
 import React from "react";
@@ -124,111 +125,126 @@ const PublicationSliders = ({ category, publications }) => {
             spacing={"40px"}
         >
             {category.children.map((item) => {
-                if (publications[item.slug].length > 0)
-                    return (
-                        <Box key={item.name}>
-                            <Text
-                                as="h3"
-                                id={`#${item.name}`}
-                                fontSize={{ base: "xl", lg: "2xl" }}
-                                fontFamily="heading"
-                                fontWeight={"bold"}
-                                color={"var(--color-text)"}
-                            >
-                                {
-                                    <Link
-                                        title={`View All ${item.name}`}
-                                        href={`/category/publications/${item.slug}`}
-                                    >
-                                        {item.name}
-                                    </Link>
-                                }
-                            </Text>
+                return (
+                    <Box key={item.name}>
+                        <Text
+                            as="h3"
+                            id={item.name}
+                            fontSize={{ base: "xl", lg: "2xl" }}
+                            fontFamily="heading"
+                            fontWeight={"bold"}
+                            color={"var(--color-text)"}
+                            mb={30}
+                        >
+                            {
+                                <Link
+                                    title={`Explore ${item.name}`}
+                                    href={`/category/publications/${item.slug}`}
+                                >
+                                    {item.name}
+                                </Link>
+                            }
+                        </Text>
 
-                            <SimpleGrid minChildWidth={"140px"}>
-                                {publications[item.slug].map((publication) => {
-                                    return (
-                                        <Box>
-                                            <LinkBox
-                                                as="article"
-                                                maxW={"140px"}
-                                                mx="auto"
-                                                _before={{
-                                                    content: `''`,
-                                                    position: "absolute",
-                                                    top: 0,
-                                                    left: 0,
-                                                    width: `100%`,
-                                                    height: "100%",
-                                                    borderRadius:
-                                                        "var(--chakra-radii-md)",
-                                                    background:
-                                                        "rgba(0,0,0,0.1)",
-                                                    backgroundBlendMode:
-                                                        "overlay",
-                                                }}
-                                                _hover={{
-                                                    _before: {
-                                                        background:
-                                                            "transparent",
-                                                    },
-                                                }}
-                                            >
-                                                <InertiaChakraLinkOverlay
-                                                    title={publication.title}
-                                                    href={
-                                                        publication.file
-                                                            ? `/publications/${publication.file.name}`
-                                                            : "#"
-                                                    }
-                                                    target="_blank"
-                                                >
-                                                    <Image
-                                                        src={`${publication.media[0]?.original_url}`}
-                                                        alt={publication.title}
-                                                        title={
-                                                            publication.title
-                                                        }
-                                                        rounded="md"
-                                                        objectFit="cover"
-                                                        w={"140px"}
-                                                        aspectRatio={3 / 4}
-                                                        loading="lazy"
-                                                        fallbackSrc="/assets/SM-placeholder-150x150.png"
-                                                    />
-                                                </InertiaChakraLinkOverlay>
-                                            </LinkBox>
-                                            {publication.title && (
-                                                <InertiaChakraLink
-                                                    href={`/publications/${publication.file.name}`}
-                                                >
-                                                    <Text
-                                                        mt={4}
-                                                        fontSize="sm"
-                                                        fontWeight="semibold"
-                                                        textAlign="center"
-                                                    >
-                                                        {publication.title}
-                                                    </Text>
-                                                    {publication.subtitle && (
-                                                        <Text
-                                                            mt={1}
-                                                            fontSize="xs"
-                                                            textAlign="center"
-                                                        >
-                                                            {
-                                                                publication.subtitle
-                                                            }
-                                                        </Text>
-                                                    )}
-                                                </InertiaChakraLink>
-                                            )}
-                                        </Box>
-                                    );
-                                })}
-                            </SimpleGrid>
-                        </Box>
-                    );
+                        <SimpleGrid minChildWidth={"140px"} spacing={10}>
+                            {publications[item.slug].length > 0
+                                ? publications[item.slug].map((publication) => {
+                                      return (
+                                          <Box>
+                                              <LinkBox
+                                                  as="article"
+                                                  maxW={"140px"}
+                                                  mx="auto"
+                                                  _before={{
+                                                      content: `''`,
+                                                      position: "absolute",
+                                                      top: 0,
+                                                      left: 0,
+                                                      width: `100%`,
+                                                      height: "100%",
+                                                      borderRadius:
+                                                          "var(--chakra-radii-md)",
+                                                      background:
+                                                          "rgba(0,0,0,0.1)",
+                                                      backgroundBlendMode:
+                                                          "overlay",
+                                                  }}
+                                                  _hover={{
+                                                      _before: {
+                                                          background:
+                                                              "transparent",
+                                                      },
+                                                  }}
+                                              >
+                                                  <InertiaChakraLinkOverlay
+                                                      title={publication.title}
+                                                      href={
+                                                          publication.file
+                                                              ? `/publications/${publication.file.name}`
+                                                              : "#"
+                                                      }
+                                                      target="_blank"
+                                                  >
+                                                      <Image
+                                                          src={`${publication.media[0]?.original_url}`}
+                                                          alt={
+                                                              publication.title
+                                                          }
+                                                          title={
+                                                              publication.title
+                                                          }
+                                                          rounded="md"
+                                                          objectFit="cover"
+                                                          w={"140px"}
+                                                          aspectRatio={3 / 4}
+                                                          loading="lazy"
+                                                          fallbackSrc="/assets/SM-placeholder-150x150.png"
+                                                      />
+                                                  </InertiaChakraLinkOverlay>
+                                              </LinkBox>
+                                              {publication.title && (
+                                                  <InertiaChakraLink
+                                                      href={`/publications/${publication.file.name}`}
+                                                  >
+                                                      <Text
+                                                          mt={4}
+                                                          fontSize="sm"
+                                                          fontWeight="semibold"
+                                                          textAlign="center"
+                                                      >
+                                                          {publication.title}
+                                                      </Text>
+                                                      {publication.subtitle && (
+                                                          <Text
+                                                              mt={1}
+                                                              fontSize="xs"
+                                                              textAlign="center"
+                                                          >
+                                                              {
+                                                                  publication.subtitle
+                                                              }
+                                                          </Text>
+                                                      )}
+                                                  </InertiaChakraLink>
+                                              )}
+                                          </Box>
+                                      );
+                                  })
+                                : [1, 2, 3, 4].map((item) => (
+                                      <Box key={item} cursor="pointer">
+                                          <Skeleton
+                                              rounded="md"
+                                              startColor="gray.300"
+                                              endColor="gray.400"
+                                              w={"140px"}
+                                              aspectRatio={3 / 4}
+                                              mx="auto"
+                                          />
+                                      </Box>
+                                  ))}
+                        </SimpleGrid>
+                    </Box>
+                );
             })}
         </Stack>
     );

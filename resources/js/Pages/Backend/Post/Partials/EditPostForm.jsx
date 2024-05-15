@@ -142,7 +142,7 @@ export default function EditPostForm({
                         isClosable: true,
                     }),
                 onError: (errors) =>
-                    console.error(`Something went wrong: ${errors}`),
+                    console.error(`Something went wrong: ${errors.message}`),
             }
         );
     };
@@ -191,12 +191,9 @@ export default function EditPostForm({
                             <ContentEditor
                                 id="content"
                                 name="content"
-                                initialValue={
-                                    postData.content !== null
-                                        ? postData.content
-                                        : ""
-                                }
+                                initialValue={postData.content || ""}
                                 onChange={(e, editor) => {
+                                    console.log(editor.getContent());
                                     setData("content", editor.getContent());
                                 }}
                             />

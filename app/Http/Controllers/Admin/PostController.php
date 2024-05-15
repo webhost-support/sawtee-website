@@ -114,11 +114,11 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PostRequest $request, Post $post)
+    public function update(Request $request, Post $post)
     {
 
 
-        $validated = $request->validated();
+        $validated = $request->all();
         $validated['title'] = Str::of($validated['title'])->squish();
         $validated['meta_title'] = $validated['title'];
         if ($request->has('tags')) {
