@@ -92,8 +92,7 @@ export const CarouselSection = ({ slides, infocus }) => {
                             slides={slides}
                             loop={true}
                             rewind={true}
-                            pagination={true}
-                            paginationType={"fraction"}
+                            pagination={false}
                         />
                     </GridItem>
                 )}
@@ -129,7 +128,11 @@ export const AboutSection = ({ data }) => {
             >
                 {data.map((item) => {
                     return (
-                        <Box ml={{ base: 0, md: 5 }} pos="relative">
+                        <Box
+                            key={item.id}
+                            ml={{ base: 0, md: 5 }}
+                            pos="relative"
+                        >
                             <DottedBox />
                             <LinkBox
                                 position={"relative"}

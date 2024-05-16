@@ -1,75 +1,44 @@
 import { Box, Stack, Text, Image } from "@chakra-ui/react";
-import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css/bundle";
 
-import {
-    Autoplay,
-    Pagination,
-    Navigation,
-    EffectCreative,
-} from "swiper/modules";
-// register Swiper custom elements
-
 const FullWidthCarousel = ({
     slides,
-    rewind,
-    loop,
+    loop = true,
     pagination,
     paginationType,
 }) => {
-    const creativeEffect = {
-        prev: {
-            shadow: true,
-            translate: ["-20%", 0, -1],
-        },
-        next: {
-            translate: ["100%", 0, 0],
-        },
-    };
-
     return (
-        <Swiper
-            spaceBetween={30}
-            centeredSlides={true}
-            autoplay={{
-                delay: 2500,
-                disableOnInteraction: false,
-            }}
-            pagination={
-                pagination
-                    ? {
-                          type: paginationType ? paginationType : "bullets",
-                      }
-                    : false
-            }
+        <swiper-container
+            space-between={30}
+            centered-slides={true}
+            autoplay-delay="2500"
+            autoplay-disable-on-interaction="true"
+            pagination={pagination}
+            pagination-type={paginationType}
             navigation={true}
-            modules={[Autoplay, Pagination, Navigation, EffectCreative]}
-            effect="creative"
-            loop={false}
-            rewind={rewind}
-            creativeEffect={creativeEffect}
+            effect="fade"
+            loop={loop}
             className="full-width-carousel"
         >
             {slides.map((slide) => (
-                <SwiperSlide className="swiper-slide" key={slide.id}>
-                    <Box backgroundColor="rgba(0,0,0,0.2)">
+                <swiper-slide className="swiper-slide" key={slide.id}>
+                    <Box backgroundColor="rgba(0,0,0,0.4)" h="full">
                         <Image
                             src={`${slide.media[0].original_url}`}
                             alt={slide.title}
-                            objectFit={"cover"}
-                            mixBlendMode="darken"
-                            aspectRatio={16 / 9}
+                            mixBlendMode="overlay"
                         />
                         <Stack
                             pos="absolute"
                             bottom="0px"
                             color="whiteAlpha.800"
-                            bg={"blackAlpha.500"}
-                            p={2}
+                            py={2}
                             px={6}
+                            gap="0"
+                            w="full"
                         >
-                            <Text fontSize={{ base: "md", md: "3xl" }}>
+                            <Text fontSize={{ base: "lg", md: "2xl" }}>
                                 {slide.title}
                             </Text>
                             <Text fontSize={{ base: "xs", md: "sm" }}>
@@ -77,9 +46,9 @@ const FullWidthCarousel = ({
                             </Text>
                         </Stack>
                     </Box>
-                </SwiperSlide>
+                </swiper-slide>
             ))}
-        </Swiper>
+        </swiper-container>
     );
 };
 

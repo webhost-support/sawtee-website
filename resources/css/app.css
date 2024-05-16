@@ -207,9 +207,9 @@ main {
     font-family: var(--chakra-fonts-mono);
 }
 
-time {
+/* time {
     font-family: var(--chakra-fonts-mono);
-}
+} */
 
 .post-slide {
     align-self: center;
@@ -220,43 +220,31 @@ time {
     top: 8rem;
 }
 
-.swiper, .swiper-wrapper,
-.swiper-initialized{
-    width: 100% !important;
-    height: 100% !important;
-}
-
-.carousel-section .swiper-slide {
-    width: 100% !important;
-}
-
-/* .multi-item-carousel .swiper-slide {
-    width: "auto" !important;
-} */
-
-/* .swiper-slide img {
-    display: block;
-    object-fit: cover;
+swiper-container {
     width: 100%;
     height: 100%;
-} */
+}
+
+swiper-slide {
+    text-align: center;
+    font-size: 18px;
+}
+
+swiper-slide img {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+}
+
+.swiper, .swiper-wrapper,
+.swiper-initialized{
+    max-width: 100% !important;
+}
 
 .post-slide {
     max-width: 100% !important;
 }
-
-.full-width-carousel .swiper-button-next, .full-width-carousel .swiper-button-prev {
-    border-color: var(--chakra-colors-whiteAlpha-900);
-}
-
-.full-width-carousel .swiper-button-next::after, .full-width-carousel .swiper-button-prev::after, .full-width-carousel .swiper-pagination-fraction {
-    color: var(--chakra-colors-whiteAlpha-900);
-        font-size: 24px !important;
-
-}
-
-
-
 
 .swiper-button-next,
 .swiper-button-prev {
@@ -272,33 +260,8 @@ time {
 .swiper-button-next::after,
 .swiper-button-prev::after {
     font-size: 1.25rem !important;
-    color: var(--color-text);
+    color: var(--color-text) !important;
 }
-
-.full-width-carousel .swiper-button-next::after,
-.full-width-carousel .swiper-button-prev::after {
-    font-size: 2.25rem !important;
-}
-
-.full-width-carousel .swiper-button-next,
-.full-width-carousel .swiper-button-prev,
-.full-width-carousel .swiper-button-next,
-.full-width-carousel .swiper-button-prev  {
-    top: 30px;
-}
-
-.full-width-carousel .swiper-button-next,
-.full-width-carousel .swiper-button-prev {
-
-    width: 3rem !important;
-    height: 3rem !important;
-}
-
-.full-width-carousel > .swiper-button-prev {
-        right: var(--swiper-navigation-sides-offset, 70px) !important;
-        left: auto !important;
-    }
-
 
 .multi-post-carousel .swiper-button-next,
 .multi-post-carousel .swiper-button-prev,
@@ -447,39 +410,10 @@ time {
 
 @media only screen and (max-width: 767px){
     .our-team .social{ left: -20px; }
-    .full-width-carousel .swiper-button-next::after,
-    .full-width-carousel .swiper-button-prev::after {
-        font-size: 1.25rem !important;
-    }
-    .full-width-carousel .swiper-button-next,
-    .full-width-carousel .swiper-button-prev {
-
-        width: 2.5rem !important;
-        height: 2.5rem !important;
-    }
-    .full-width-carousel > .swiper-button-prev,
-    .full-width-carousel > .swiper-button-prev {
-        right: var(--swiper-navigation-sides-offset, 60px) !important;
-    }
 }
 
 @media only screen and (max-width: 480px){
     .our-team .social{ left: -20px; }
-    .full-width-carousel .swiper-button-next::after,
-    .full-width-carousel .swiper-button-prev::after {
-        font-size: 0.5rem !important;
-    }
-    .full-width-carousel > .swiper-button-prev,
-    .full-width-carousel > .swiper-button-prev {
-        right: var(--swiper-navigation-sides-offset, 50px) !important;
-    }
-    .full-width-carousel .swiper-button-next,
-    .full-width-carousel .swiper-button-prev {
-
-        width: 2rem !important;
-        height: 2rem !important;
-    }
-
 }
 
 /* backend react-datepicker styles */

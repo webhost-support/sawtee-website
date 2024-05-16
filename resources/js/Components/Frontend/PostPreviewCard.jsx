@@ -50,10 +50,7 @@ const PostPreviewCard = ({
                 justify={"center"}
                 direction="column"
             >
-                <HStack
-                    justifyContent="space-between"
-                    alignItems={"center"}
-                >
+                <HStack justifyContent="space-between" alignItems={"center"}>
                     {showCategoryTag && (
                         <PostCategories
                             justify="flex-start"
@@ -76,7 +73,7 @@ const PostPreviewCard = ({
                         textUnderlineOffset: "3px",
                     }}
                 >
-                    <Heading fontSize={{ base: "lg", lg: "xl" }} as="h4">
+                    <Heading fontSize={{ base: "md", lg: "lg" }} as="h4">
                         {title}
                     </Heading>
                 </InertiaChakraLinkOverlay>

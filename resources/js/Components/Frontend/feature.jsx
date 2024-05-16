@@ -27,9 +27,8 @@ export default function Feature({ feature, ...rest }) {
                         fontWeight={600}
                         fontSize={{
                             base: "2xl",
-                            sm: "3xl",
-                            md: "4xl",
-                            lg: "6xl",
+                            md: "3xl",
+                            lg: "4xl",
                         }}
                     >
                         <Text
