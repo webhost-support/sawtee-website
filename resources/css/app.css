@@ -225,7 +225,9 @@ swiper-container {
     height: 100%;
 }
 
-swiper-slide {
+.full-width-carousel swiper-slide {
+    width: 100% !important;
+    height: 100% !important;
     text-align: center;
     font-size: 18px;
 }
@@ -263,14 +265,14 @@ swiper-slide img {
     color: var(--color-text) !important;
 }
 
-.multi-post-carousel .swiper-button-next,
-.multi-post-carousel .swiper-button-prev,
-.multi-item-carousel .swiper-button-next,
-.multi-item-carousel .swiper-button-prev  {
+.multi-post-carousel swiper-container::part(button-next),
+.multi-post-carousel swiper-container::part(button-prev),
+.multi-item-carousel swiper-container::part(button-next),
+.multi-item-carousel swiper-container::part(button-prev)  {
     top: 25px;
 }
 
-.multi-post-carousel > .swiper-button-prev,
+.multi-post-carousel > swiper-container::part(button-next),
 .multi-item-carousel > .swiper-button-prev {
     right: var(--swiper-navigation-sides-offset, 60px) !important;
     left: auto !important;

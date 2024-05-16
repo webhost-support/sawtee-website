@@ -86,7 +86,7 @@ export const CarouselSection = ({ slides, infocus }) => {
                 {slides && slides.length > 0 && (
                     <GridItem
                         colSpan={{ base: 1, md: 4 }}
-                        maxH={{ base: "auto", md: "500px" }}
+                        maxH={{ base: "auto", md: "700px" }}
                     >
                         <FullWidthCarousel
                             slides={slides}
@@ -100,7 +100,7 @@ export const CarouselSection = ({ slides, infocus }) => {
                     colSpan={{ base: 1, md: 3 }}
                     alignSelf={"center"}
                     py={2}
-                    maxH={{ base: "auto", md: "500px" }}
+                    maxH={{ base: "auto", md: "700px" }}
                     overflowY={"scroll"}
                 >
                     <InfocusSection
@@ -168,25 +168,6 @@ export const AboutSection = ({ data }) => {
                         </Box>
                     );
                 })}
-
-                {/* <Box ml={{ base: 0, md: 5 }} pos="relative">
-                    <DottedBox />
-                    <LinkBox mx="auto" shadow={"xl"} rounded="xl">
-                        <InertiaChakraLink
-                            href="/advancing-ldcs’-interests-in-the-wto-strengthening-participation,-securing-priorities"
-                            role="banner"
-                            aria-labelledby="Advancing LDC's Trade Interests"
-                            title="Advancing LDC's Trade Interests"
-                        >
-                            <Image
-                                src="/assets/advancing-ldc_upscaled.webp"
-                                alt="Advancing LDC's Trade Interests"
-                                fit="cover"
-                                rounded="xl"
-                            />
-                        </InertiaChakraLink>
-                    </LinkBox>
-                </Box> */}
             </SimpleGrid>
         </Section>
     );
