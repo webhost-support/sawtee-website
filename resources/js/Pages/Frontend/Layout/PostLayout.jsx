@@ -31,8 +31,8 @@ const PostLayout = ({
         : null;
 
     const shareUrl = isProgramPost
-        ? `/programme/${post.category.slug}/${post.slug}`
-        : `/${post.category.slug}/${post.slug}`;
+        ? `https://ankursingh.com.np/programme/${post.category.slug}/${post.slug}`
+        : `https://ankursingh.com.np/${post.category.slug}/${post.slug}`;
 
     return (
         <LightPatternBox showPattern={showPattern} pt="10px" pb={"40px"}>
@@ -64,12 +64,14 @@ const PostLayout = ({
                     readingTime={readingTime}
                 />
 
-                {isNewsletter ? (
+                {isNewsletter && (
                     <Box>
                         {children}
                         <SocialShare url={shareUrl} />
                     </Box>
-                ) : (
+                )}
+
+                {!isNewsletter && (
                     <Content
                         as={Section}
                         px={{ base: "1.5rem", md: "3rem" }}

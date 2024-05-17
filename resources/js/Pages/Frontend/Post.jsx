@@ -1,10 +1,10 @@
 import { Box, Text, VStack } from "@chakra-ui/react";
 import React from "react";
 import MainLayout from "./Layout/MainLayout";
-import ProgramPost from "./Pages/ProgramPost";
 import PostLayout from "./Layout/PostLayout";
 import NewsletterPost from "./Pages/NewsletterPost";
 import WebsiteHead from "@/Components/Frontend/Head";
+import WebinarPost from "./Pages/WebinarPost";
 
 export default function Post({ post }) {
     const { category, title, content } = post;
@@ -13,7 +13,8 @@ export default function Post({ post }) {
     )[0];
     const isProgramme = category.parent && category.parent.slug === "programme";
     const isNewsletter = category.slug === "newsletters";
-    const isDefault = !isNewsletter && !isProgramme;
+    const isWebinarSeries = category.slug === "webinar-series";
+    const isDefault = !isNewsletter && !isWebinarSeries;
 
     return (
         <MainLayout>
@@ -32,9 +33,8 @@ export default function Post({ post }) {
                 isProgramPost={isProgramme}
                 isNewsletter={isNewsletter}
             >
-                {isProgramme && <ProgramPost post={post} />}
                 {isNewsletter && <NewsletterPost post={post} />}
-
+                {isWebinarSeries && <WebinarPost post={post} />}
                 {isDefault && (
                     <Box className="default_post_content" mt={6}>
                         <Text

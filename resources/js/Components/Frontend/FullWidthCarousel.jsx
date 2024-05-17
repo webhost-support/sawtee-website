@@ -1,51 +1,117 @@
-import { Box, Stack, Text, Image } from "@chakra-ui/react";
+import {
+    Box,
+    Stack,
+    Text,
+    Image,
+    Heading,
+    HStack,
+    Flex,
+} from "@chakra-ui/react";
+import React from "react";
 // Import Swiper styles
 import "swiper/css/bundle";
+const arrowStyles = {
+    cursor: "pointer",
+    pos: "absolute",
+    top: "50%",
+    w: "auto",
+    mt: "-22px",
+    p: "16px",
+    color: "white",
+    fontWeight: "bold",
+    fontSize: "18px",
+    transition: "0.6s ease",
+    borderRadius: "0 3px 3px 0",
+    userSelect: "none",
+    _hover: {
+        opacity: 0.8,
+        bg: "black",
+    },
+};
 
-const FullWidthCarousel = ({
-    slides,
-    loop = true,
-    pagination,
-    paginationType,
-}) => {
+const FullWidthCarousel = ({ slides, pagination, loop = true, ...rest }) => {
+    const swiperElRef = React.useRef(null);
+    const params = {};
+    React.useEffect(() => {
+        if (swiperElRef.current !== null)
+            Object.assign(swiperElRef.current, params);
+    }, []);
     return (
         <swiper-container
+            ref={swiperElRef}
             space-between={30}
+            pagination={pagination}
             centered-slides={true}
             autoplay-delay="2500"
             autoplay-disable-on-interaction="true"
-            pagination={pagination}
-            pagination-type={paginationType}
-            navigation={true}
             effect="fade"
             loop={loop}
             className="full-width-carousel"
+            {...rest}
         >
+            {/* <Box
+                slot="container-start"
+                position="absolute"
+                top="50%"
+                transform="translate(0%, -50%)"
+                w={"full"}
+            >
+                <Text
+                    style={{ ...arrowStyles }}
+                    left="0"
+                    onClick={() => swiperElRef.current.swiper.slidePrev()}
+                >
+                    &#10094;
+                </Text>
+                <Text
+                    style={{ ...arrowStyles }}
+                    right="0"
+                    onClick={() => swiperElRef.current.swiper.slideNext()}
+                >
+                    &#10095;
+                </Text>
+            </Box> */}
             {slides.map((slide) => (
                 <swiper-slide className="swiper-slide" key={slide.id}>
-                    <Box backgroundColor="rgba(0,0,0,0.4)" h="full">
+                    <Flex
+                        backgroundColor="rgba(0,0,0,0.4)"
+                        position={"relative"}
+                        height={"full"}
+                        width={"full"}
+                        justify="center"
+                        alignItems="center"
+                        overflow={"hidden"}
+                    >
                         <Image
                             src={`${slide.media[0].original_url}`}
                             alt={slide.title}
                             mixBlendMode="overlay"
+                            boxSize="full"
+                            backgroundSize="cover"
                         />
                         <Stack
-                            pos="absolute"
-                            bottom="0px"
-                            color="whiteAlpha.800"
-                            py={2}
-                            px={6}
-                            gap="0"
-                            w="full"
+                            spacing={4}
+                            w={"full"}
+                            maxW={"lg"}
+                            position="absolute"
+                            justify="center"
+                            alignItems="center"
+                            color="white"
                         >
-                            <Text fontSize={{ base: "lg", md: "2xl" }}>
+                            <Heading
+                                fontSize={{
+                                    base: "3xl",
+                                    md: "4xl",
+                                    lg: "5xl",
+                                }}
+                            >
                                 {slide.title}
-                            </Text>
-                            <Text fontSize={{ base: "xs", md: "sm" }}>
+                            </Heading>
+                            <Text fontSize={{ base: "md", lg: "lg" }}>
                                 {slide.subtitle}
                             </Text>
                         </Stack>
-                    </Box>
+                    </Flex>
                 </swiper-slide>
             ))}
         </swiper-container>

@@ -86,13 +86,14 @@ export const CarouselSection = ({ slides, infocus }) => {
                 {slides && slides.length > 0 && (
                     <GridItem
                         colSpan={{ base: 1, md: 4 }}
-                        maxH={{ base: "auto", md: "700px" }}
+                        maxH={{ base: "auto", md: "600px" }}
                     >
                         <FullWidthCarousel
                             slides={slides}
-                            loop={true}
-                            rewind={true}
                             pagination={false}
+                            loop={true}
+                            navigation={true}
+                            rewind={true}
                         />
                     </GridItem>
                 )}
@@ -100,7 +101,7 @@ export const CarouselSection = ({ slides, infocus }) => {
                     colSpan={{ base: 1, md: 3 }}
                     alignSelf={"center"}
                     py={2}
-                    maxH={{ base: "auto", md: "700px" }}
+                    maxH={{ base: "auto", md: "600px" }}
                     overflowY={"scroll"}
                 >
                     <InfocusSection
@@ -199,7 +200,7 @@ export const InfocusSection = ({ infocus, link }) => {
             </InertiaChakraLink>
             {infocus.map((article) => {
                 return (
-                    <Box>
+                    <Box key={article.id}>
                         <LinkBox
                             key={article.id}
                             px={{ base: 4, sm: 6 }}
@@ -267,16 +268,10 @@ export const SawteeInMediaSection = ({ articles, link }) => {
                     pagination={false}
                     showCategoryTag={true}
                     scrollbar={true}
-                    my={16}
+                    my={10}
                 >
                     <Show above="sm">
-                        <InertiaChakraLink
-                            as={Link}
-                            pos={"absolute"}
-                            top={"10px"}
-                            zIndex={1020}
-                            href={link}
-                        >
+                        <InertiaChakraLink as={Link} href={link}>
                             <ExploreButton
                                 size="md"
                                 text="Explore All "
@@ -453,10 +448,9 @@ export const PublicationSection = ({ publications, newsletters }) => {
                             as={motion.ul}
                             style={{ listStyle: "none" }}
                             initial={"initial"}
-                            onViewportLeave={"initial"}
                             variants={ListVariant}
-                            onViewportEnter={"whileInView"}
-                            // viewport={{ once: true }}
+                            whileInView={"whileInView"}
+                            viewport={{ once: true }}
                         >
                             {publications &&
                                 publications.map(
@@ -477,7 +471,7 @@ export const PublicationSection = ({ publications, newsletters }) => {
                                             initial={"initial"}
                                             whileInView={"whileInView"}
                                             variants={ListItemVariant}
-                                            // viewport={{ once: true }}
+                                            viewport={{ once: true }}
                                         >
                                             <Grid
                                                 templateRows={{
