@@ -8,11 +8,9 @@ const WebinarPost = ({ post }) => {
     return (
         <Box>
             <Box mb="6" dangerouslySetInnerHTML={{ __html: post.content }} />
-            <Button>
-                <InertiaChakraLink href={file.original_url}>
-                    Summary of Proceedings
-                </InertiaChakraLink>
-            </Button>
+            <InertiaChakraLink href={file.original_url}>
+                <Button>Summary of Proceedings</Button>
+            </InertiaChakraLink>
             <AspectRatio mt={6} ratio={16 / 9}>
                 <iframe
                     width="700"

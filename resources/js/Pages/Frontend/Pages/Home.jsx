@@ -11,6 +11,7 @@ import {
     ReformMonitorSection,
     SawteeInMediaSection,
     SubscribeSection,
+    VideosSection,
 } from "@/Components/Frontend";
 
 const Home = ({
@@ -20,9 +21,8 @@ const Home = ({
     publications,
     sawteeInMedia,
     newsletters,
+    webinars,
 }) => {
-
-
     const AboutSectionData = [
         {
             id: "1",
@@ -68,6 +68,7 @@ const Home = ({
                 />
             )}
             {/* <InfoSection /> */}
+            <VideosSection posts={webinars} />
             <SubscribeSection />
         </MainLayout>
     );

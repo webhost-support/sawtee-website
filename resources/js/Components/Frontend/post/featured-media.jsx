@@ -11,7 +11,6 @@ const FeaturedMedia = ({ src, srcSet, alt, objectFit, rounded, ...rest }) => {
                 borderRadius={rounded ? rounded : "none"}
                 sizes="(min-width: 1200px) 50vw,100vw"
                 alt={alt || "Image Description"}
-                maxH="500px"
             />
         </Box>
     );

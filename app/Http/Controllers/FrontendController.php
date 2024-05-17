@@ -92,6 +92,8 @@ class FrontendController extends Controller
         $sawteeInMedia = Post::where('category_id', strval($sawteeInMediaId))->where('status', 'published')->orderBy('id', 'DESC')->take(6)->get();
         $events = Post::where('category_id', strval($eventsId))->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
         $newsletters = Post::where('category_id', strval($newsletterCategoryId))->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
+        $webinars = Post::where('category_id', strval(Category::where('slug', 'webinar-series')->first()->id))->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
+
         return Inertia::render('Frontend/Pages/Home', [
             'slides' => $slides->load(['media']),
             'infocus' => $infocus->load(['category']),
@@ -99,6 +101,7 @@ class FrontendController extends Controller
             'events' => $events->load(['category', 'media', 'tags']),
             'publications' => $publications,
             'newsletters' => $newsletters,
+            'webinars' => $webinars->load(['media']),
         ]);
     }
 

@@ -45,6 +45,7 @@ import { Newsletter } from "@/Components/Frontend/newsletter";
 import Feature from "@/Components/Frontend/feature";
 import { motion } from "framer-motion";
 import DottedBox from "@/Pages/Frontend/DottedBox";
+import VideoCarousel from "./VideoCarousel";
 // import { Barchart, TreemapChart } from "@/Components/Frontend/Charts";
 export const ListItemVariant = {
     initial: {
@@ -580,6 +581,14 @@ export const PublicationSection = ({ publications, newsletters }) => {
                     </Container>
                 </GridItem>
             </Grid>
+        </Section>
+    );
+};
+
+export const VideosSection = ({ posts }) => {
+    return (
+        <Section title={"Webinars"} className="section videos-section">
+            <VideoCarousel posts={posts} />
         </Section>
     );
 };
