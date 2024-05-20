@@ -62,14 +62,13 @@ const VideoCarousel = ({
                             >
                                 <iframe
                                     width="100%"
-                                    maxWidth="700px"
                                     height="400px"
                                     src={article.link}
                                     title={article.title}
-                                    frameborder="0"
+                                    frameBorder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    // referrerpolicy="strict-origin-when-cross-origin"
-                                    allowfullscreen
+                                    referrerpolicy="strict-origin-when-cross-origin"
+                                    allowFullScreen
                                 ></iframe>
                             </swiper-slide>
                         );
@@ -91,10 +90,10 @@ const VideoCarousel = ({
                         )[0];
                         return (
                             <swiper-slide key={article.id} class="thumb-slide">
-                                <HStack w="full" spacing={4}>
+                                <HStack w="full" spacing={4} cursor="pointer">
                                     {media ? (
                                         <Image
-                                            maxW={"150px"}
+                                            maxW={"120px"}
                                             alt={article.title}
                                             src={media.original_url}
                                             aspectRatio={5 / 3}
@@ -102,7 +101,7 @@ const VideoCarousel = ({
                                         />
                                     ) : (
                                         <Skeleton
-                                            maxW="150px"
+                                            maxW="120px"
                                             w="full"
                                             aspectRatio={5 / 3}
                                             rounded="md"

@@ -1,46 +1,35 @@
+import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import {
     Box,
     Stack,
     Text,
     Image,
     Heading,
-    HStack,
     Flex,
+    IconButton,
 } from "@chakra-ui/react";
 import React from "react";
 // Import Swiper styles
 import "swiper/css/bundle";
-const arrowStyles = {
-    cursor: "pointer",
-    pos: "absolute",
-    top: "50%",
-    w: "auto",
-    mt: "-22px",
-    p: "16px",
-    color: "white",
-    fontWeight: "bold",
-    fontSize: "18px",
-    transition: "0.6s ease",
-    borderRadius: "0 3px 3px 0",
-    userSelect: "none",
-    _hover: {
-        opacity: 0.8,
-        bg: "black",
-    },
-};
 
-const FullWidthCarousel = ({ slides, pagination, loop = true, ...rest }) => {
-    const FullWidthCarouselRef = React.useRef(null);
+const FullWidthCarousel = ({
+    slides,
+    pagination,
+    navigation,
+    loop = true,
+    ...rest
+}) => {
+    const swiperElRef = React.useRef(null);
     const params = {};
     React.useEffect(() => {
-        if (FullWidthCarouselRef.current !== null)
-            Object.assign(FullWidthCarouselRef.current, params);
+        swiperElRef.current && Object.assign(swiperElRef.current, params);
     }, []);
     return (
         <swiper-container
-            ref={FullWidthCarouselRef}
+            ref={swiperElRef}
             space-between={30}
             pagination={pagination}
+            navigation={navigation}
             centered-slides={true}
             autoplay-delay="2500"
             autoplay-disable-on-interaction="true"
@@ -49,28 +38,6 @@ const FullWidthCarousel = ({ slides, pagination, loop = true, ...rest }) => {
             class="full-width-carousel"
             {...rest}
         >
-            {/* <Box
-                slot="container-start"
-                position="absolute"
-                top="50%"
-                transform="translate(0%, -50%)"
-                w={"full"}
-            >
-                <Text
-                    style={{ ...arrowStyles }}
-                    left="0"
-                    onClick={() => swiperElRef.current.swiper.slidePrev()}
-                >
-                    &#10094;
-                </Text>
-                <Text
-                    style={{ ...arrowStyles }}
-                    right="0"
-                    onClick={() => swiperElRef.current.swiper.slideNext()}
-                >
-                    &#10095;
-                </Text>
-            </Box> */}
             {slides.map((slide) => (
                 <swiper-slide class="swiper-slide" key={slide.id}>
                     <Flex
@@ -89,6 +56,32 @@ const FullWidthCarousel = ({ slides, pagination, loop = true, ...rest }) => {
                             boxSize="full"
                             backgroundSize="cover"
                         />
+                        <Box
+                            position="absolute"
+                            top="50%"
+                            transform="translate(0%, 50%)"
+                            w={"full"}
+                        >
+                            <IconButton
+                                position="absolute"
+                                colorScheme="blackAlpha"
+                                icon={<ChevronLeftIcon w="8" h="8" />}
+                                left="10"
+                                onClick={() =>
+                                    swiperElRef.current?.swiper.slidePrev()
+                                }
+                            />
+
+                            <IconButton
+                                position="absolute"
+                                colorScheme="blackAlpha"
+                                icon={<ChevronRightIcon w="8" h="8" />}
+                                right="10"
+                                onClick={() =>
+                                    swiperElRef.current?.swiper.slideNext()
+                                }
+                            />
+                        </Box>
                         <Stack
                             spacing={4}
                             w={"full"}

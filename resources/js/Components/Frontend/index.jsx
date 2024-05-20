@@ -87,13 +87,13 @@ export const CarouselSection = ({ slides, infocus }) => {
                 {slides && slides.length > 0 && (
                     <GridItem
                         colSpan={{ base: 1, md: 4 }}
-                        maxH={{ base: "auto", md: "600px" }}
+                        maxH={{ base: "auto", md: "550px" }}
                     >
                         <FullWidthCarousel
                             slides={slides}
                             pagination={false}
+                            navigation={false}
                             loop={true}
-                            navigation={true}
                             rewind={true}
                         />
                     </GridItem>
@@ -102,7 +102,7 @@ export const CarouselSection = ({ slides, infocus }) => {
                     colSpan={{ base: 1, md: 3 }}
                     alignSelf={"center"}
                     py={2}
-                    maxH={{ base: "auto", md: "600px" }}
+                    maxH={{ base: "auto", md: "550px" }}
                     overflowY={"scroll"}
                 >
                     <InfocusSection
@@ -193,7 +193,7 @@ export const InfocusSection = ({ infocus, link }) => {
                     my={{ base: "4", md: "6", lg: "0" }}
                     px={{ base: 4, sm: 6 }}
                     fontWeight="bold"
-                    fontSize={{ base: "3xl", md: "5xl", lg: "4xl" }}
+                    fontSize={{ base: "xl", md: "4xl", lg: "2xl" }}
                     color="primary.500"
                     textAlign="left"
                     w="max-content"
@@ -238,9 +238,8 @@ export const InfocusSection = ({ infocus, link }) => {
 
                                     <Text
                                         pl="20px"
-                                        fontSize={{
-                                            base: "xs",
-                                        }}
+                                        noOfLines={3}
+                                        fontSize={"xs"}
                                     >
                                         {article.excerpt}
                                     </Text>

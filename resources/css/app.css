@@ -231,8 +231,6 @@ swiper-container {
    text-align: center;
 }
 
-
-
 .swiper-slide img {
     display: block;
     width: 100% !important;
@@ -251,13 +249,9 @@ swiper-container {
 }
 
 
-
-
-
 .thumbs-swiper .thumb-slide {
    width: 100% !important;
    height: auto !important;
-   padding: 10px;
 }
 
 

@@ -71,7 +71,7 @@ export default function Feature({ feature, ...rest }) {
                     w={"full"}
                 >
                     <Blob
-                        w={"150%"}
+                        w={"100%"}
                         h={"150%"}
                         position={"absolute"}
                         top={"-20%"}
