@@ -30,15 +30,15 @@ const arrowStyles = {
 };
 
 const FullWidthCarousel = ({ slides, pagination, loop = true, ...rest }) => {
-    const swiperElRef = React.useRef(null);
+    const FullWidthCarouselRef = React.useRef(null);
     const params = {};
     React.useEffect(() => {
-        if (swiperElRef.current !== null)
-            Object.assign(swiperElRef.current, params);
+        if (FullWidthCarouselRef.current !== null)
+            Object.assign(FullWidthCarouselRef.current, params);
     }, []);
     return (
         <swiper-container
-            ref={swiperElRef}
+            ref={FullWidthCarouselRef}
             space-between={30}
             pagination={pagination}
             centered-slides={true}
@@ -46,7 +46,7 @@ const FullWidthCarousel = ({ slides, pagination, loop = true, ...rest }) => {
             autoplay-disable-on-interaction="true"
             effect="fade"
             loop={loop}
-            className="full-width-carousel"
+            class="full-width-carousel"
             {...rest}
         >
             {/* <Box
@@ -72,7 +72,7 @@ const FullWidthCarousel = ({ slides, pagination, loop = true, ...rest }) => {
                 </Text>
             </Box> */}
             {slides.map((slide) => (
-                <swiper-slide className="swiper-slide" key={slide.id}>
+                <swiper-slide class="swiper-slide" key={slide.id}>
                     <Flex
                         backgroundColor="rgba(0,0,0,0.4)"
                         position={"relative"}

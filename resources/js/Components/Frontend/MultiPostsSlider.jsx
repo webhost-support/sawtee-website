@@ -58,7 +58,7 @@ const MultiPostsCarousel = ({
             space-between={spacing}
             grab-cursor={true}
             direction={direction ? direction : "horizontal"}
-            className={"multi-post-carousel"}
+            class={"multi-post-carousel"}
             id="multi-post-slider"
         >
             <div slot="container-start">
@@ -93,7 +93,7 @@ const MultiPostsCarousel = ({
                 return (
                     <swiper-slide
                         key={article.id}
-                        className="swiper-slide post-slide"
+                        class="swiper-slide post-slide"
                     >
                         <Flex {...rest} justify="center">
                             <PostPreviewCard
@@ -107,9 +107,9 @@ const MultiPostsCarousel = ({
                 );
             })}
             {posts.length <= 0 &&
-                [1, 2, 3].map((_) => (
-                    <Box {...rest}>
-                        <swiper-slide>
+                [1, 2, 3].map((item) => (
+                    <Box {...rest} key={item}>
+                        <swiper-slide class="swiper-slide post-slide">
                             <Skeleton rounded="xl" h="300px" />
                         </swiper-slide>
                     </Box>

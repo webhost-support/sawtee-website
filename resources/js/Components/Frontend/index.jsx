@@ -587,8 +587,8 @@ export const PublicationSection = ({ publications, newsletters }) => {
 
 export const VideosSection = ({ posts }) => {
     return (
-        <Section title={"Webinars"} className="section videos-section">
-            <VideoCarousel posts={posts} />
+        <Section title={"Webinar Series"} className="section videos-section">
+            <VideoCarousel posts={posts} navigation={true} />
         </Section>
     );
 };

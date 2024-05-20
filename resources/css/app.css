@@ -223,20 +223,41 @@ main {
 swiper-container {
     width: 100% !important;
     height: 100% !important;
+
+}
+.full-width-carousel .swiper-slide, .video-carousel .video-slide {
+   width: 100% !important;
+   height: 100% !important;
+   text-align: center;
 }
 
-.full-width-carousel .swiper-slide {
-    width: 100% !important;
-    height: 100% !important;
-    text-align: center;
-    font-size: 18px;
-}
+
 
 .swiper-slide img {
     display: block;
     width: 100% !important;
     height: 100% !important;
     object-fit: cover;
+}
+
+.video-carousel {
+    max-height: 400px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: var(--chakra-radii-lg);
+    overflow: hidden;
+}
+
+
+
+
+
+.thumbs-swiper .thumb-slide {
+   width: 100% !important;
+   height: auto !important;
+   padding: 10px;
 }
 
 
@@ -373,10 +394,12 @@ swiper-container {
 
 @media only screen and (max-width: 767px){
     .our-team .social{ left: -20px; }
+
 }
 
 @media only screen and (max-width: 480px){
     .our-team .social{ left: -20px; }
+
 }
 
 /* backend react-datepicker styles */

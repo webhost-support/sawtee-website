@@ -4,6 +4,7 @@ import {
     GridItem,
     HStack,
     Image,
+    Skeleton,
     Text,
     VStack,
 } from "@chakra-ui/react";
@@ -24,61 +25,40 @@ const VideoCarousel = ({
     ...rest
 }) => {
     const swiperElRef = React.useRef(null);
-    const params = {
-        injectStyles: [
-            `
-            .mySwiper {
-                height: 80%;
-                width: 100%;
-                }
-            `,
-            `.mySwiper2 {
-                height: 20%;
-                box-sizing: border-box;
-                padding: 10px 0;
-                }
-            `,
-            `
-            .mySwiper2 swiper-slide {
-                width: 25%;
-                height: 100%;
-                opacity: 0.4;
-                }
-            `,
-            `
-            .mySwiper2 .swiper-slide-thumb-active {
-                opacity: 1;
-                }
-            `,
-        ],
-    };
-    React.useEffect(() => {
-        swiperElRef.current && Object.assign(swiperElRef.current, params);
-    }, []);
+    // const params = {
+
+    // };
+    // React.useEffect(() => {
+    //     swiperElRef.current && Object.assign(swiperElRef.current, params);
+    // }, [posts]);
 
     return (
         <Grid
             maxW={"8xl"}
             mx="auto"
             gap={10}
-            gridTemplateColumns={"repeat(5, 1fr)"}
+            gridTemplateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
         >
-            <GridItem colSpan={3}>
+            <GridItem colSpan={{ base: 1, lg: 3 }}>
                 <swiper-container
                     ref={swiperElRef}
                     slides-per-view={1}
-                    navigation={true}
-                    pagination={true}
+                    pagination={pagination}
                     keyboard={true}
                     space-between={spacing}
-                    className={"video-carousel"}
-                    // style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
+                    thumbs-swiper=".thumbs-swiper"
+                    class={"video-carousel"}
+                    // style={{
+                    //     swiperNavigationColor: "#fff",
+                    //     swiperPaginationColor: "#fff",
+                    // }}
+                    {...rest}
                 >
                     {posts.map((article) => {
                         return (
                             <swiper-slide
                                 key={article.id}
-                                className="swiper-slide post-slide"
+                                class="swiper-slide video-slide"
                             >
                                 <iframe
                                     width="100%"
@@ -96,38 +76,49 @@ const VideoCarousel = ({
                     })}
                 </swiper-container>
             </GridItem>
-            <GridItem colSpan={2}>
+            <GridItem colSpan={{ base: 1, lg: 2 }}>
                 <swiper-container
-                    class="mySwiper2"
+                    class="thumbs-swiper"
                     space-between="10"
                     slides-per-view="4"
+                    direction="vertical"
                     free-mode="true"
                     watch-slides-progress="true"
                 >
-                    <VStack>
-                        {posts.map((article) => {
-                            const media = article.media.filter(
-                                (m) =>
-                                    m.collection_name === "post-featured-image"
-                            )[0];
-                            return (
-                                <swiper-slide
-                                    key={article.id}
-                                    className="swiper-slide thumb-slide"
-                                >
-                                    <HStack spacing={4}>
+                    {posts.map((article) => {
+                        const media = article.media.filter(
+                            (m) => m.collection_name === "post-featured-image"
+                        )[0];
+                        return (
+                            <swiper-slide key={article.id} class="thumb-slide">
+                                <HStack w="full" spacing={4}>
+                                    {media ? (
                                         <Image
                                             maxW={"150px"}
                                             alt={article.title}
                                             src={media.original_url}
+                                            aspectRatio={5 / 3}
+                                            rounded="md"
                                         />
+                                    ) : (
+                                        <Skeleton
+                                            maxW="150px"
+                                            w="full"
+                                            aspectRatio={5 / 3}
+                                            rounded="md"
+                                        />
+                                    )}
 
-                                        <Text>{article.title}</Text>
-                                    </HStack>
-                                </swiper-slide>
-                            );
-                        })}
-                    </VStack>
+                                    <Text
+                                        fontSize={"sm"}
+                                        fontWeight={"semibold"}
+                                    >
+                                        {article.title}
+                                    </Text>
+                                </HStack>
+                            </swiper-slide>
+                        );
+                    })}
                 </swiper-container>
             </GridItem>
         </Grid>
