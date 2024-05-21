@@ -20,7 +20,7 @@ class Category extends Model implements HasMedia
     use HasSlug;
 
     protected $fillable = ['name', 'slug', 'type', 'parent_id', 'meta_title', 'meta_description'];
-
+    protected $with = ['children'];
 
     /**
      * Get the options for generating the slug.
@@ -110,6 +110,32 @@ class Category extends Model implements HasMedia
         }
         return $array;
     }
+
+    public function getAllPublicationsPost($category)
+    {
+        if (!empty($category)) {
+            $array = array();
+            if (count($category->children) == 0)
+                return $array;
+            else
+                return array_merge($array, $this->getAllChildrenPosts($category->children));
+        } else
+            return null;
+
+    }
+
+    public function getAllChildrenPosts($children)
+    {
+        $array = array();
+        foreach ($children as $subcategory) {
+            $posts = $subcategory->publications()->orderByDesc('id')->take(4)->get();
+            $array[$subcategory->slug] = $posts->toArray();
+            if (count($subcategory->children))
+                $array = array_merge($array, $this->getAllChildrenPosts($subcategory->children));
+        }
+        return $array;
+    }
+
 
 
     /**

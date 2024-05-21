@@ -169,17 +169,8 @@ class FrontendController extends Controller
 
         // If route is for publications category
         if ($slug === 'publications' && !$subcategory) {
-            $subcategory_ids = $category->children->pluck('id')->toArray();
 
-            $publications = array();
-            foreach ($category->children as $subcategory) {
-                // if($subcategory->name === "Publications in Nepali"){
-                //     $posts = Publication::WhereIn('id', $subcategory_ids)->get();
-                //     dd($posts);
-                // }
-                $posts = $subcategory->publications()->orderByDesc('id')->take(4)->get();
-                $publications[$subcategory->slug] = $posts->toArray();
-            }
+            $publications = $category->getAllPublicationsPost($category);
             return Inertia::render('Frontend/Archives/PublicationsArchive', [
                 'category' => $category,
                 'infocus' => $infocus,
