@@ -16,6 +16,7 @@ class CategoryRequest extends FormRequest
         return [
             'name' => ['string', 'max:255', 'required', 'unique:categories'],
             'type' => ['string', 'max:255', 'required'],
+            'parent_id' => 'nullable|numeric',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'meta_title' => ['nullable', 'string', 'max:255'],
             'meta_description' => ['nullable', 'string', 'max:255'],

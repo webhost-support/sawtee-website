@@ -14,7 +14,7 @@ use App\Models\Team;
 use App\Models\Theme;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Spatie\Newsletter\Facades\Newsletter;
+// use Spatie\Newsletter\Facades\Newsletter;
 
 /**
  * A function to retrieve posts based on category and slug.
@@ -169,8 +169,14 @@ class FrontendController extends Controller
 
         // If route is for publications category
         if ($slug === 'publications' && !$subcategory) {
+            $subcategory_ids = $category->children->pluck('id')->toArray();
+
             $publications = array();
             foreach ($category->children as $subcategory) {
+                // if($subcategory->name === "Publications in Nepali"){
+                //     $posts = Publication::WhereIn('id', $subcategory_ids)->get();
+                //     dd($posts);
+                // }
                 $posts = $subcategory->publications()->orderByDesc('id')->take(4)->get();
                 $publications[$subcategory->slug] = $posts->toArray();
             }

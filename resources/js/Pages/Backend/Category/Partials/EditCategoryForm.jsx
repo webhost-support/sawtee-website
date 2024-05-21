@@ -27,7 +27,6 @@ export default function EditCategoryForm({ category, categories }) {
         meta_description: category.meta_description,
     });
 
-
     const toast = useToast();
     const [image, setImage] = React.useState(
         category.media[0] ? category.media[0].preview_url : null
@@ -35,7 +34,6 @@ export default function EditCategoryForm({ category, categories }) {
 
     const submit = (e) => {
         e.preventDefault();
-        console.log(data);
         post(
             route("admin.categories.update", {
                 _method: "patch",
@@ -84,7 +82,7 @@ export default function EditCategoryForm({ category, categories }) {
                     <Select
                         name="type"
                         id="type"
-                        placeholder="Select Type"
+                        placeholder="Select Post Type"
                         value={data.type}
                         onChange={(e) => setData("type", e.target.value)}
                     >
@@ -104,17 +102,14 @@ export default function EditCategoryForm({ category, categories }) {
                     <Select
                         name="parent_id"
                         id="parent_id"
-                        placeholder="Select Parent"
-                        value={data.parent_id}
-                        onChange={(e) => {
-                            console.log(typeof e.target.value);
-                            setData("parent_id", Number(e.target.value));
-                        }}
+                        placeholder="Select Parent Category"
+                        value={data.parent_id || undefined}
+                        onChange={(e) => setData("parent_id", e.target.value)}
                     >
                         {categories &&
-                            categories.map((item) => (
-                                <option key={item.id} value={item.id}>
-                                    {item.name}
+                            categories.map(({ id, name }) => (
+                                <option key={id} value={id}>
+                                    {name}
                                 </option>
                             ))}
                     </Select>
@@ -193,7 +188,7 @@ export default function EditCategoryForm({ category, categories }) {
                 <Textarea
                     id="meta_description"
                     name="meta_description"
-                    value={data.meta_description}
+                    value={data.meta_description || ""}
                     rows={3}
                     resize="vertical"
                     onChange={(e) =>

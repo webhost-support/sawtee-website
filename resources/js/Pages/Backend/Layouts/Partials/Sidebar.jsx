@@ -11,7 +11,8 @@ import { Link } from "@inertiajs/react";
 
 export const NavItem = (props) => {
     const { icon, children, ...rest } = props;
-    const color = useColorModeValue("gray.600", "gray.300");
+    const color = useColorModeValue("gray.700", "gray.300");
+
     return (
         <Flex
             align="center"
@@ -19,20 +20,16 @@ export const NavItem = (props) => {
             pl="4"
             py="3"
             cursor="pointer"
-            color="inherit"
-            _dark={{
-                color: "gray.400",
-            }}
+            color={color}
             _hover={{
                 bg: "gray.100",
                 _dark: {
-                    bg: "gray.900",
+                    bg: "blackAlpha.300",
                 },
-                color: "gray.900",
             }}
             role="group"
-            fontWeight="semibold"
             transition=".15s ease"
+            fontSize={{ base: "xs", md: "sm" }}
             {...rest}
         >
             {icon && (
@@ -63,7 +60,7 @@ export default function Sidebar({ menu, props }) {
             overflowY="auto"
             bg="white"
             _dark={{
-                bg: "gray.800",
+                bg: "var(--color-darker)",
             }}
             border
             color="inherit"
@@ -71,38 +68,35 @@ export default function Sidebar({ menu, props }) {
             w={{ md: "20", lg: "48" }}
             {...props}
         >
-            <Flex flexDir={"column"} px="4" py="5">
+            <Flex
+                flexDir={"column"}
+                gap="2"
+                px="4"
+                py="5"
+                justify="center"
+                align="center"
+            >
                 <Show below="lg">
-                    <Image src="/favicon.ico" alt="logo" />
+                    <Image maxW="30px" src="/favicon.ico" alt="logo" />
                 </Show>
 
                 <Show above="lg">
                     <Image
-                        w="100px"
                         src="/assets/logo-sawtee.webp"
                         alt="logo"
                     />
                 </Show>
                 <Text
-                    display={{ base: "none", lg: "block" }}
-                    fontSize="md"
-                    ml="2"
+                    fontSize="xs"
                     color="primary.500"
                     _dark={{
-                        color: "white",
+                        color: "primary.200",
                     }}
-                    fontWeight="semibold"
                 >
-                    SAWTEE BLOG
+                    CMS
                 </Text>
             </Flex>
-            <Flex
-                direction="column"
-                as="nav"
-                fontSize="sm"
-                color="gray.600"
-                aria-label="Main Navigation"
-            >
+            <Flex direction="column" as="nav" aria-label="Main Navigation">
                 {menu &&
                     menu.map((item) => {
                         return (

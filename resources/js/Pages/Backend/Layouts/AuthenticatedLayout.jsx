@@ -22,7 +22,6 @@ import { RiPagesLine } from "react-icons/ri";
 import { TbSlideshow } from "react-icons/tb";
 import Header from "./Partials/Header";
 import Sidebar from "./Partials/Sidebar";
-import DrawerMenu from "./DrawerMenu";
 
 const MenuItems = [
     {
@@ -113,7 +112,7 @@ export default function Authenticated({ user, children }) {
             >
                 {/* <DrawerOverlay /> */}
                 <DrawerContent w="60">
-                    <DrawerMenu menu={MenuItems} borderRight="none" />
+                    <Sidebar menu={MenuItems} borderRight="none" />
                 </DrawerContent>
             </Drawer>
             <Box

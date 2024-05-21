@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
-use App\Models\Subscriber;
+// use App\Models\Subscriber;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -43,14 +43,14 @@ class CategoryController extends Controller
     }
 
 
-    public function verify(string $token)
-    {
-        $subscriber = Subscriber::where('token', $token)->firstOrFail();
-        $subscriber->update([
-            'token' => null,
-            'verified_at' => now()
-        ]);
-    }
+    // public function verify(string $token)
+    // {
+    //     $subscriber = Subscriber::where('token', $token)->firstOrFail();
+    //     $subscriber->update([
+    //         'token' => null,
+    //         'verified_at' => now()
+    //     ]);
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -101,19 +101,21 @@ class CategoryController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255|',
             'type' => 'required|string|max:255|',
+            'parent_id' => 'nullable|numeric',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string|max:255',
         ]);
-        $validated["slug"] = Str::slug($validated['name'], '-');
+
         if ($request->meta_title === null) {
             $validated['meta_title'] = $validated['name'];
         }
+
         if ($request->hasFile('image')) {
             $category->addMediaFromRequest('image')->toMediaCollection('category_media');
         }
-        $category->update($validated);
 
+        $category->update($validated);
         return redirect()->route('admin.categories.index');
     }
 

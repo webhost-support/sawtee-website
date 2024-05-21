@@ -22,7 +22,7 @@ export default function CreateCategoryForm({ categories }) {
         name: "",
         slug: "",
         type: "posts",
-        parent_id: null,
+        parent_id: "",
         image: "",
         meta_title: "",
         meta_description: "",

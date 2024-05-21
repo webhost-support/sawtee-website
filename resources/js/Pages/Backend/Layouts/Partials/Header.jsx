@@ -35,7 +35,7 @@ export default function Header({ name, image, sidebar, ...rest }) {
             px="4"
             bg="white"
             _dark={{
-                bg: "gray.800",
+                bg: "var(--color-darker)",
             }}
             borderBottomWidth="1px"
             color="inherit"

@@ -25,9 +25,6 @@ import {
     AccordionPanel,
     AccordionIcon,
     Tooltip,
-    useColorModeValue,
-    InputRightElement,
-    Text,
     useColorMode,
 } from "@chakra-ui/react";
 import FileUpload, { PreviewImage } from "@/Components/Backend/FileUpload";

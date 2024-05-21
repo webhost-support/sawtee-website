@@ -1,6 +1,6 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
-import { useColorMode } from "@chakra-ui/react";
+import { Button, Text, VStack, useColorMode } from "@chakra-ui/react";
 
 export default function ContentEditor(props) {
     const { initialValue, ...rest } = props;
@@ -8,14 +8,11 @@ export default function ContentEditor(props) {
         ? import.meta.env.VITE_TINYMCE_API_KEY_GOOGLE
         : import.meta.env.VITE_TINYMCE_API_KEY_GITHUB;
     const editorRef = useRef(null);
-
     const { colorMode } = useColorMode();
-
-
     const editorConfig = {
         plugins:
             "preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons accordion",
-        editimage_cors_hosts: ["picsum.photos"],
+        // editimage_cors_hosts: ["picsum.photos"],
         menubar: "file edit view insert format tools table help",
         toolbar:
             "blocks | forecolor backcolor removeformat | bold italic underline strikethrough | link image blockquote codesample | align bullist numlist | code | undo redo | accordion accordionremove | fontfamily fontsize | table media | lineheight outdent indent| charmap emoticons | code fullscreen preview | save print | pagebreak anchor codesample",
@@ -43,24 +40,23 @@ export default function ContentEditor(props) {
         noneditable_class: "mceNonEditable",
         toolbar_mode: "sliding",
         contextmenu: "link image table",
-        content_style:
-            "body { font-family:Helvetica,Arial,sans-serif; font-size:16px }",
         skin: colorMode === "dark" ? "oxide-dark" : "oxide",
         content_css: colorMode === "dark" ? "dark" : "default",
         content_style:
-            "body { font-family:Helvetica,Arial,sans-serif; font-size:16px }",
+            "body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-size:16px }",
     };
 
     return (
-        <Editor
-            ref={editorRef}
-            apiKey={TINYMCE_API_KEY}
-            initialValue={initialValue || ""}
-            onInit={(evt, editor) => (editorRef.current = editor)}
-            init={{
-                ...editorConfig,
-            }}
-            {...rest}
-        />
+        <VStack spacing="4" align={"start"}>
+            <Editor
+                ref={editorRef}
+                apiKey={TINYMCE_API_KEY}
+                initialValue={initialValue || ""}
+                onInit={(evt, editor) => (editorRef.current = editor)}
+                init={editorConfig}
+                onDirty={() => setDirty(true)}
+                {...rest}
+            />
+        </VStack>
     );
 }
