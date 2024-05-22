@@ -33,7 +33,7 @@ const PostPreviewCard = ({
             as={GlassBox}
             role="group"
             shadow="md"
-            rounded="xl"
+            rounded="md"
             p={6}
             {...rest}
         >

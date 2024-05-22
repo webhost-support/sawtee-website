@@ -41,7 +41,9 @@ function PostCard({ post, ...rest }) {
                     <Box
                         as="figure"
                         pos={"relative"}
+                        rounded="md"
                         mb={imageHeadgingGap ? imageHeadgingGap : "20px"}
+                        overflow="hidden"
                     >
                         <Image
                             width={"100%"}

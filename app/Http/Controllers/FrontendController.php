@@ -171,6 +171,7 @@ class FrontendController extends Controller
         if ($slug === 'publications' && !$subcategory) {
 
             $publications = $category->getAllPublicationsPost($category);
+            // dd($publications);
             return Inertia::render('Frontend/Archives/PublicationsArchive', [
                 'category' => $category,
                 'infocus' => $infocus,
