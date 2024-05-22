@@ -35,12 +35,12 @@ const Home = ({
             image_src: "/assets/COVID-19-South-Asia-and-LDCs.webp",
             link: "/category/covid",
         },
-        {
-            id: "3",
-            title: "Advancing LDC's Trade Interests",
-            image_src: "/assets/advancing-ldc_upscaled.webp",
-            link: "/advancing-ldcs’-interests-in-the-wto-strengthening-participation,-securing-priorities",
-        },
+        // {
+        //     id: "3",
+        //     title: "Advancing LDC's Trade Interests",
+        //     image_src: "/assets/advancing-ldc_upscaled.webp",
+        //     link: "/advancing-ldcs’-interests-in-the-wto-strengthening-participation,-securing-priorities",
+        // },
     ];
 
     return (

@@ -91,7 +91,6 @@ export const CarouselSection = ({ slides, infocus }) => {
                     >
                         <FullWidthCarousel
                             slides={slides}
-                            pagination={false}
                             navigation={false}
                             loop={true}
                             rewind={true}
@@ -450,7 +449,7 @@ export const PublicationSection = ({ publications, newsletters }) => {
                             initial={"initial"}
                             variants={ListVariant}
                             whileInView={"whileInView"}
-                            viewport={{ once: true }}
+                            // viewport={{ once: true }}
                         >
                             {publications &&
                                 publications.map(
@@ -471,7 +470,7 @@ export const PublicationSection = ({ publications, newsletters }) => {
                                             initial={"initial"}
                                             whileInView={"whileInView"}
                                             variants={ListItemVariant}
-                                            viewport={{ once: true }}
+                                            // viewport={{ once: true }}
                                         >
                                             <Grid
                                                 templateRows={{

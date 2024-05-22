@@ -225,20 +225,21 @@ swiper-container {
     height: 100% !important;
 
 }
-.full-width-carousel .swiper-slide, .video-carousel .video-slide {
+.full-width-carousel swiper-slide, .video-carousel .video-slide {
    width: 100% !important;
    height: 100% !important;
    text-align: center;
 }
 
-/* .full-width-carousel .swiper-slide {
+.full-width-carousel swiper-slide {
     position: relative;
     background-color: rgba(0,0,0,0.4);
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-} */
+    width: 100% !important;
+}
 
 .swiper-slide img {
     display: block;

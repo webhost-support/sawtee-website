@@ -10,104 +10,108 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 // Import Swiper styles
-import "swiper/css/bundle";
+import "swiper/css";
+import "swiper/css/pagination";
+
+import { Swiper, SwiperSlide } from "./Swiper";
 
 const FullWidthCarousel = ({
     slides,
-    pagination,
+    pagination = true,
     navigation,
     loop = true,
-    ...rest
 }) => {
-    const swiperElRef = React.useRef(null);
-    const params = {};
     React.useEffect(() => {
-        swiperElRef.current && Object.assign(swiperElRef.current, params);
+        const swiperEl = document.getElementById("full-width-carousel");
+        const prevButtonEl = document.getElementById("prev-button");
+        const nextButtonEl = document.getElementById("next-button");
+
+        prevButtonEl.addEventListener("click", () => {
+            swiperEl.swiper.slidePrev();
+        });
+
+        nextButtonEl.addEventListener("click", () => {
+            swiperEl.swiper.slideNext();
+        });
     }, []);
     return (
-        <swiper-container
-            ref={swiperElRef}
-            slides-per-view={1}
-            space-between={30}
+        <Swiper
+            slidesPerView={1}
+            spaceBetween={30}
             pagination={pagination}
             navigation={navigation}
-            centered-slides={true}
-            autoplay-delay="2500"
-            autoplay-disable-on-interaction="true"
+            centeredSlides={true}
+            autoplay={true}
             effect="fade"
             loop={loop}
-            class="full-width-carousel"
+            className="full-width-carousel"
+            id="full-width-carousel"
         >
             <div slot="container-start">
                 <Box
                     position="absolute"
                     top="50%"
-                    transform="translate(0%, 50%)"
+                    inset={0}
+                    transform="translateY( 45%)"
                     w={"full"}
                     zIndex={100}
                 >
                     <IconButton
                         position="absolute"
                         colorScheme="blackAlpha"
+                        color={"white"}
+                        id="prev-button"
                         icon={<ChevronLeftIcon w="8" h="8" />}
+                        aria-label="previous"
                         left="10"
-                        onClick={() => swiperElRef.current?.swiper.slidePrev()}
                     />
 
                     <IconButton
                         position="absolute"
+                        id="next-button"
                         colorScheme="blackAlpha"
+                        color={"white"}
+                        aria-label="next"
                         icon={<ChevronRightIcon w="8" h="8" />}
                         right="10"
-                        onClick={() => swiperElRef.current?.swiper.slideNext()}
                     />
                 </Box>
             </div>
             {slides.map((slide) => (
-                <swiper-slide class="swiper-slide" key={slide.id}>
-                    <Flex
-                        backgroundColor="rgba(0,0,0,0.4)"
-                        position={"relative"}
-                        height={"full"}
-                        width={"full"}
+                <SwiperSlide key={slide.id}>
+                    <Image
+                        src={`${slide.media[0].original_url}`}
+                        alt={slide.title}
+                        mixBlendMode="overlay"
+                        boxSize="full"
+                        backgroundSize="cover"
+                    />
+
+                    <Stack
+                        spacing={4}
+                        w={"full"}
+                        maxW={"lg"}
+                        position="absolute"
                         justify="center"
                         alignItems="center"
-                        overflow={"hidden"}
+                        color="white"
                     >
-                        <Image
-                            src={`${slide.media[0].original_url}`}
-                            alt={slide.title}
-                            mixBlendMode="overlay"
-                            boxSize="full"
-                            backgroundSize="cover"
-                        />
-
-                        <Stack
-                            spacing={4}
-                            w={"full"}
-                            maxW={"lg"}
-                            position="absolute"
-                            justify="center"
-                            alignItems="center"
-                            color="white"
+                        <Heading
+                            fontSize={{
+                                base: "3xl",
+                                md: "4xl",
+                                lg: "5xl",
+                            }}
                         >
-                            <Heading
-                                fontSize={{
-                                    base: "3xl",
-                                    md: "4xl",
-                                    lg: "5xl",
-                                }}
-                            >
-                                {slide.title}
-                            </Heading>
-                            <Text fontSize={{ base: "md", lg: "lg" }}>
-                                {slide.subtitle}
-                            </Text>
-                        </Stack>
-                    </Flex>
-                </swiper-slide>
+                            {slide.title}
+                        </Heading>
+                        <Text fontSize={{ base: "md", lg: "lg" }}>
+                            {slide.subtitle}
+                        </Text>
+                    </Stack>
+                </SwiperSlide>
             ))}
-        </swiper-container>
+        </Swiper>
     );
 };
 
