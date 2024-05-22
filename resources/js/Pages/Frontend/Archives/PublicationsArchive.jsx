@@ -116,15 +116,10 @@ export default function PublicationsArchive({
     );
 }
 
-const ItemComponent = ({index, item, publications }) => {
+const ItemComponent = ({ item, publications }) => {
     if (publications[item.slug].length > 0) {
         return (
-            <Box
-                key={item.name}
-                py={index == 0 ? 0 : 12}
-                pb={12}
-                borderBottom={"3px solid gray"}
-            >
+            <Box key={item.name} py={12} borderBottom={"3px solid gray"}>
                 <Text
                     as="h3"
                     id={item.name}
@@ -225,13 +220,13 @@ const ItemComponent = ({index, item, publications }) => {
 
 // Recursive function to render items and their children
 const renderItems = (items, publications) => {
-    return items.map((item, index) => (
-        <div key={item.id}>
-            <ItemComponent index={index} item={item} publications={publications} />
-            {item.children && item.children.length > 0 && (
-                <div>{renderItems(item.children, publications)}</div>
-            )}
-        </div>
+    return items.map((item) => (
+        <React.Fragment key={item.id}>
+            <ItemComponent item={item} publications={publications} />
+            {item.children &&
+                item.children.length > 0 &&
+                renderItems(item.children, publications)}
+        </React.Fragment>
     ));
 };
 
