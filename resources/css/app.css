@@ -231,6 +231,15 @@ swiper-container {
    text-align: center;
 }
 
+/* .full-width-carousel .swiper-slide {
+    position: relative;
+    background-color: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+} */
+
 .swiper-slide img {
     display: block;
     width: 100% !important;

@@ -25,12 +25,6 @@ const VideoCarousel = ({
     ...rest
 }) => {
     const swiperElRef = React.useRef(null);
-    // const params = {
-
-    // };
-    // React.useEffect(() => {
-    //     swiperElRef.current && Object.assign(swiperElRef.current, params);
-    // }, [posts]);
 
     return (
         <Grid
@@ -48,10 +42,6 @@ const VideoCarousel = ({
                     space-between={spacing}
                     thumbs-swiper=".thumbs-swiper"
                     class={"video-carousel"}
-                    // style={{
-                    //     swiperNavigationColor: "#fff",
-                    //     swiperPaginationColor: "#fff",
-                    // }}
                     {...rest}
                 >
                     {posts.map((article) => {
@@ -65,9 +55,7 @@ const VideoCarousel = ({
                                     height="400px"
                                     src={article.link}
                                     title={article.title}
-                                    frameBorder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    referrerpolicy="strict-origin-when-cross-origin"
+                                    referrerPolicy="strict-origin-when-cross-origin"
                                     allowFullScreen
                                 ></iframe>
                             </swiper-slide>

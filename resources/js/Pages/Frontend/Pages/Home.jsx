@@ -1,4 +1,3 @@
-import { useBreakpointValue } from "@chakra-ui/react";
 import MainLayout from "../Layout/MainLayout";
 import { feature } from "@/Utils/data";
 

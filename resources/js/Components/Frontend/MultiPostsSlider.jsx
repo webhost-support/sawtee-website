@@ -19,7 +19,7 @@ const MultiPostsCarousel = ({
     spacing,
     pagination,
     scrollbar,
-    showCategoryTag = false,
+    showCategoryTag = "false",
     direction,
     children,
     ...rest

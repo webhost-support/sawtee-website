@@ -27,6 +27,7 @@ const FullWidthCarousel = ({
     return (
         <swiper-container
             ref={swiperElRef}
+            slides-per-view={1}
             space-between={30}
             pagination={pagination}
             navigation={navigation}
@@ -36,8 +37,32 @@ const FullWidthCarousel = ({
             effect="fade"
             loop={loop}
             class="full-width-carousel"
-            {...rest}
         >
+            <div slot="container-start">
+                <Box
+                    position="absolute"
+                    top="50%"
+                    transform="translate(0%, 50%)"
+                    w={"full"}
+                    zIndex={100}
+                >
+                    <IconButton
+                        position="absolute"
+                        colorScheme="blackAlpha"
+                        icon={<ChevronLeftIcon w="8" h="8" />}
+                        left="10"
+                        onClick={() => swiperElRef.current?.swiper.slidePrev()}
+                    />
+
+                    <IconButton
+                        position="absolute"
+                        colorScheme="blackAlpha"
+                        icon={<ChevronRightIcon w="8" h="8" />}
+                        right="10"
+                        onClick={() => swiperElRef.current?.swiper.slideNext()}
+                    />
+                </Box>
+            </div>
             {slides.map((slide) => (
                 <swiper-slide class="swiper-slide" key={slide.id}>
                     <Flex
@@ -56,32 +81,7 @@ const FullWidthCarousel = ({
                             boxSize="full"
                             backgroundSize="cover"
                         />
-                        <Box
-                            position="absolute"
-                            top="50%"
-                            transform="translate(0%, 50%)"
-                            w={"full"}
-                        >
-                            <IconButton
-                                position="absolute"
-                                colorScheme="blackAlpha"
-                                icon={<ChevronLeftIcon w="8" h="8" />}
-                                left="10"
-                                onClick={() =>
-                                    swiperElRef.current?.swiper.slidePrev()
-                                }
-                            />
 
-                            <IconButton
-                                position="absolute"
-                                colorScheme="blackAlpha"
-                                icon={<ChevronRightIcon w="8" h="8" />}
-                                right="10"
-                                onClick={() =>
-                                    swiperElRef.current?.swiper.slideNext()
-                                }
-                            />
-                        </Box>
                         <Stack
                             spacing={4}
                             w={"full"}
