@@ -49,7 +49,7 @@ const PostLayout = ({
             {/* <PostProgressBar value={scroll} /> */}
 
             {/* Look at the settings to see if we should include the featured image */}
-            <Box maxW={"4xl"} mx="auto" px={4}>
+            <Box maxW={"5xl"} mx="auto" px={4}>
                 {!isProgramPost && featured_media && (
                     <FeaturedMedia
                         src={featured_media.original_url}

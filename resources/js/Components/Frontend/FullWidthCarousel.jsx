@@ -77,40 +77,43 @@ const FullWidthCarousel = ({
                     />
                 </Box>
             </div>
-            {slides.map((slide) => (
-                <SwiperSlide key={slide.id}>
-                    <Image
-                        src={`${slide.media[0].original_url}`}
-                        alt={slide.title}
-                        mixBlendMode="overlay"
-                        boxSize="full"
-                        backgroundSize="cover"
-                    />
+            {slides.map((slide) => {
+                console.log(slide.media[0]);
+                return (
+                    <SwiperSlide key={slide.id}>
+                        <Image
+                            src={`${slide.media[0].original_url}`}
+                            alt={slide.title || "carousel image"}
+                            mixBlendMode="overlay"
+                            height="100%"
+                            backgroundSize="cover"
+                        />
 
-                    <Stack
-                        spacing={4}
-                        w={"full"}
-                        maxW={"lg"}
-                        position="absolute"
-                        justify="center"
-                        alignItems="center"
-                        color="white"
-                    >
-                        <Heading
-                            fontSize={{
-                                base: "3xl",
-                                md: "4xl",
-                                lg: "5xl",
-                            }}
+                        <Stack
+                            spacing={4}
+                            w={"full"}
+                            maxW={"lg"}
+                            position="absolute"
+                            justify="center"
+                            alignItems="center"
+                            color="white"
                         >
-                            {slide.title}
-                        </Heading>
-                        <Text fontSize={{ base: "md", lg: "lg" }}>
-                            {slide.subtitle}
-                        </Text>
-                    </Stack>
-                </SwiperSlide>
-            ))}
+                            <Heading
+                                fontSize={{
+                                    base: "3xl",
+                                    md: "4xl",
+                                    lg: "5xl",
+                                }}
+                            >
+                                {slide.title}
+                            </Heading>
+                            <Text fontSize={{ base: "md", lg: "lg" }}>
+                                {slide.subtitle}
+                            </Text>
+                        </Stack>
+                    </SwiperSlide>
+                );
+            })}
         </Swiper>
     );
 };

@@ -38,7 +38,8 @@ class Slide extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('slides')
+        $this
+            ->addMediaCollection('slides')
             ->singleFile();
     }
 }

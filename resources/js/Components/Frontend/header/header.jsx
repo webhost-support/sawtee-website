@@ -1,4 +1,4 @@
-import { Box, Flex, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Flex, Image, Text, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
 import MobileMenu from "../menu";
 
@@ -34,13 +34,21 @@ const SiteHeaderInner = (props) => (
 );
 
 const Logo = ({ text = "SAWTEE", src }) => {
-    const TextLogoColor = useColorModeValue("primary.700", "white");
+    const TextLogoColor = useColorModeValue("primary.700", "primary.300");
 
     if (src) {
-        return <Box as="img" src={src} alt="Logo Image" width="120px" />;
+        return (
+            <Image
+                src={src}
+                alt="Logo Image"
+                height="45"
+                w="full"
+                maxW="180px"
+            />
+        );
     } else {
         return (
-            <Box
+            <Text
                 fontSize="2xl"
                 color={TextLogoColor}
                 fontFamily="heading"
@@ -48,7 +56,7 @@ const Logo = ({ text = "SAWTEE", src }) => {
                 fontWeight="bold"
             >
                 {text}
-            </Box>
+            </Text>
         );
     }
 };
@@ -58,7 +66,7 @@ const SiteLogo = ({ src, established }) => {
     // we assume, if it's a url, it points to an image, else it's a text
     return (
         <Box display="block" flexShrink="0" textAlign="center">
-            <Link href="/">
+            <Link href="/" aria-label="logo">
                 <Logo src={src} />
             </Link>
             {established && (
@@ -74,7 +82,7 @@ const Header = ({ menu = null, children, ...props }) => (
     <SiteHeader {...props}>
         <SiteHeaderInner>
             <MobileMenu menu={menu} />
-            <SiteLogo src={"/assets/logo-sawtee.webp"} established={null} />
+            <SiteLogo src={"/assets/logo-sawtee.svg"} established={null} />
             {children}
         </SiteHeaderInner>
     </SiteHeader>

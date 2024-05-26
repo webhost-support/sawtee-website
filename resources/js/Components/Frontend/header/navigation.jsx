@@ -88,27 +88,28 @@ const MenuItem = ({
         handler: onClose,
     });
     return (
-        <>
-            <MenuLink
-                as={Link}
-                className={active ? "active " : ""}
-                href={slug}
-                preserveState
+        <li>
+            <Button
+                alignItems="center"
+                variant={active ? "solid" : "ghost"}
+                colorScheme={active ? "primary" : "gray"}
+                size="sm"
+                fontFamily={"heading"}
+                fontWeight={"normal"}
+                fontSize={"md"}
+                borderRadius={showIcon ? "5px 0 0 5px" : "5px"}
+                {...rest}
             >
-                <Button
-                    alignItems="center"
-                    variant={active ? "solid" : "ghost"}
-                    colorScheme={active ? "primary" : "gray"}
-                    size="sm"
-                    fontFamily={"heading"}
-                    fontWeight={"normal"}
-                    fontSize={"md"}
-                    borderRadius={showIcon ? "5px 0 0 5px" : "5px"}
-                    {...rest}
+                <MenuLink
+                    as={Link}
+                    className={active ? "active " : ""}
+                    _hover={{ textDecor: "none" }}
+                    href={slug}
+                    preserveState
                 >
                     {title}
-                </Button>
-            </MenuLink>
+                </MenuLink>
+            </Button>
             {showIcon && (
                 <IconButton
                     aria-label={title}
@@ -120,67 +121,63 @@ const MenuItem = ({
                     icon={isOpen ? <HiChevronUp /> : <HiChevronDown />}
                 />
             )}
-        </>
+        </li>
     );
 };
 
 const ExpertCard = ({ expert }) => {
     const image = expert.media[0].original_url;
     return (
-            <Flex
-                shadow="lg"
-                rounded="lg"
-                bg={"whiteAlpha.500"}
-                _dark={{
-                    bg: "blackAlpha.500",
-                }}
-                direction="column"
-                justifyContent="space-between"
-                h={48}
-                py={3}
+        <Flex
+            shadow="lg"
+            rounded="lg"
+            bg={"whiteAlpha.500"}
+            _dark={{
+                bg: "blackAlpha.500",
+            }}
+            direction="column"
+            justifyContent="space-between"
+            h={48}
+            py={3}
+        >
+            <Box
+                borderRadius="lg"
+                p={3}
+                display="flex"
+                alignItems="center"
+                justifyContent={"center"}
             >
-                <Box
-                    borderRadius="lg"
-                    p={3}
-                    display="flex"
-                    alignItems="center"
-                    justifyContent={"center"}
+                <Avatar
+                    src={image}
+                    name={expert.name}
+                    borderRadius="full"
+                    boxSize="75px"
+                />
+            </Box>
+            <Box p={2} textAlign="center" mt={3}>
+                <Text
+                    fontSize="xs"
+                    fontWeight="bold"
+                    color="gray.800"
+                    _dark={{
+                        color: "white",
+                    }}
                 >
-                    <Avatar
-                        src={image}
-                        name={expert.name}
-                        borderRadius="full"
-                        boxSize="75px"
-                    />
-                </Box>
-                <Box
-                    p={2}
-                    textAlign="center"
-                    mt={3}
-                >
-                    <Text
-                        fontSize="xs"
-                        fontWeight="bold"
-                        color="gray.800"
-                        _dark={{
-                            color: "white",
-                        }}
-                    >
-                        {expert.name}
-                    </Text>
+                    {expert.name}
+                </Text>
 
-                    <Text
-                        fontSize="0.65rem"
-                        fontWeight="normal"
-                        color="gray.800"
-                        _dark={{
-                            color: "gray.200",
-                        }}
-                    >
-                        {expert.designation}
-                    </Text>
-                </Box>
-            </Flex>
+                <Text
+                    fontSize="0.65rem"
+                    fontWeight="normal"
+                    color="gray.800"
+                    _dark={{
+                        color: "gray.200",
+                    }}
+                >
+                    {expert.designation}
+                </Text>
+            </Box>
+        </Flex>
     );
 };
 
@@ -277,10 +274,7 @@ const AboutMegaMenu = ({
                         </Text>
                     </Box>
                 </GridItem>
-                <GridItem
-                    colSpan={2}
-                    gap={4}
-                >
+                <GridItem colSpan={2} gap={4}>
                     <Text fontSize="xl" pb={4} fontWeight={"semibold"}>
                         Our Experts
                     </Text>
@@ -414,7 +408,7 @@ const SiteMenuItem = ({
     ...rest
 }) => {
     return (
-        <Box as="li" role="group" {...rest}>
+        <Box role="group" {...rest}>
             <MenuItem
                 aria-label={item.title}
                 title={item.title}

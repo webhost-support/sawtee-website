@@ -186,18 +186,15 @@ export const InfocusSection = ({ infocus, link }) => {
             px={{ base: 4, sm: 10 }}
             mx="auto"
         >
-            <InertiaChakraLink as={Link} href={link}>
-                <Title
-                    text={"In Focus"}
-                    my={{ base: "4", md: "6", lg: "0" }}
-                    px={{ base: 4, sm: 6 }}
-                    fontWeight="bold"
-                    fontSize={{ base: "xl", md: "4xl", lg: "2xl" }}
-                    color="primary.500"
-                    textAlign="left"
-                    w="max-content"
-                />
-            </InertiaChakraLink>
+            <ExploreButton
+                size="md"
+                fontSize={{ base: "xl", md: "4xl", lg: "2xl" }}
+                text="InFocus"
+                variant="link"
+                px={10}
+                my="4"
+            />
+
             {infocus.map((article) => {
                 return (
                     <Box key={article.id}>
@@ -208,41 +205,33 @@ export const InfocusSection = ({ infocus, link }) => {
                             _hover={{ bg: itemBG }}
                         >
                             <Box>
-                                <Heading
-                                    as="h3"
-                                    fontFamily={"heading"}
-                                    fontWeight="bold"
-                                    fontSize={{
-                                        base: "sm",
-                                        md: "md",
-                                    }}
+                                <InertiaChakraLinkOverlay
+                                    href={`/category/${article.category.slug}/${article.slug}`}
                                 >
-                                    <InertiaChakraLinkOverlay
-                                        as={Link}
-                                        href={`/category/${article.category.slug}/${article.slug}`}
+                                    <Heading
+                                        as="h3"
+                                        fontFamily={"heading"}
+                                        fontWeight="bold"
+                                        my="2"
+                                        fontSize={{
+                                            base: "sm",
+                                            md: "md",
+                                        }}
                                     >
                                         {article.title}
-                                    </InertiaChakraLinkOverlay>
-                                </Heading>
+                                    </Heading>
+                                </InertiaChakraLinkOverlay>
 
-                                <HStack pos="relative" mt="20px">
-                                    <Text
-                                        as="span"
-                                        w="5px"
-                                        h="full"
-                                        bg="primary.400"
-                                        rounded="lg"
-                                        pos={"absolute"}
-                                    />
-
-                                    <Text
-                                        pl="20px"
-                                        noOfLines={3}
-                                        fontSize={"xs"}
-                                    >
-                                        {article.excerpt}
-                                    </Text>
-                                </HStack>
+                                <Text
+                                    pl="20px"
+                                    noOfLines={3}
+                                    fontSize={"xs"}
+                                    borderLeft={
+                                        "5px solid var(--chakra-colors-primary-400) "
+                                    }
+                                >
+                                    {article.excerpt}
+                                </Text>
                             </Box>
                         </LinkBox>
                         <Divider m={0} />
