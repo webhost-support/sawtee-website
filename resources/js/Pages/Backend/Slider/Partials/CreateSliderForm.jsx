@@ -6,11 +6,19 @@ import {
     FormErrorMessage,
     FormLabel,
     useToast,
+    Modal,
+    ModalOverlay,
+    ModalCloseButton,
+    ModalContent,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
     Input,
+    Button,
 } from "@chakra-ui/react";
 import React from "react";
 
-export default function CreateSliderForm() {
+export default function CreateSliderForm({ isOpen, onClose }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: "",
     });
@@ -21,7 +29,7 @@ export default function CreateSliderForm() {
 
         post(route("admin.sliders.store"), {
             preserveScroll: true,
-            onSuccess: () =>
+            onSuccess: () => {
                 toast({
                     position: "top-right",
                     title: "Slider Created.",
@@ -29,7 +37,9 @@ export default function CreateSliderForm() {
                     status: "success",
                     duration: 6000,
                     isClosable: true,
-                }),
+                });
+                onClose();
+            },
             onError: (errors) => {
                 if (errors.title) {
                     reset("title");
@@ -39,25 +49,37 @@ export default function CreateSliderForm() {
     };
 
     return (
-        <form onSubmit={submit}>
-            <FormControl mt="4" isInvalid={errors.name}>
-                <FormLabel htmlFor="name">Name</FormLabel>
+        <Modal size={"xl"} isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent as="form" onSubmit={submit}>
+                <ModalHeader>Add new slider</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                    <FormControl mt="4" isInvalid={errors.name}>
+                        <FormLabel htmlFor="name">Name</FormLabel>
 
-                <Input
-                    id="name"
-                    name="name"
-                    placeholder="enter name of slider"
-                    onChange={(e) => setData("name", e.target.value)}
-                />
+                        <Input
+                            id="name"
+                            name="name"
+                            placeholder="enter name of slider"
+                            onChange={(e) => setData("name", e.target.value)}
+                        />
 
-                <FormErrorMessage message={errors.name} className="mt-2" />
-            </FormControl>
-
-            <Box display="flex" gap="4" mt="4">
-                <PrimaryButton type="submit" disabled={processing}>
-                    Save
-                </PrimaryButton>
-            </Box>
-        </form>
+                        <FormErrorMessage
+                            message={errors.name}
+                            className="mt-2"
+                        />
+                    </FormControl>
+                </ModalBody>
+                <ModalFooter>
+                    <PrimaryButton type="submit" isLoading={processing} mr={3}>
+                        Create
+                    </PrimaryButton>
+                    <Button variant="solid" colorScheme="red" onClick={onClose}>
+                        Cancel
+                    </Button>
+                </ModalFooter>
+            </ModalContent>
+        </Modal>
     );
 }

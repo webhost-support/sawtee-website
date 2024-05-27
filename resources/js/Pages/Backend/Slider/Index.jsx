@@ -1,7 +1,13 @@
 import PrimaryButton from "@/Components/Backend/PrimaryButton";
 import { DataTable } from "@/Components/Backend/DataTable";
 import AuthenticatedLayout from "@/Pages/Backend/Layouts/AuthenticatedLayout";
-import { HStack, useToast, Alert, AlertIcon } from "@chakra-ui/react";
+import {
+    HStack,
+    useToast,
+    Alert,
+    AlertIcon,
+    useDisclosure,
+} from "@chakra-ui/react";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { createColumnHelper } from "@tanstack/react-table";
 import {
@@ -9,11 +15,14 @@ import {
     TableEditAction,
 } from "@/Components/Backend/TableActions";
 import React from "react";
+import CreateSliderForm from "./Partials/CreateSliderForm";
+import EditSliderForm from "./Partials/EditSliderForm";
 
 export default function Index({ auth, sliders }) {
     const toast = useToast();
     const columnHelper = createColumnHelper();
     const { processing, delete: destroy, get } = useForm();
+    const createSliderModal = useDisclosure();
 
     const handleEdit = (e, id) => {
         e.preventDefault();
@@ -68,7 +77,7 @@ export default function Index({ auth, sliders }) {
 
     return (
         <AuthenticatedLayout user={auth.user}>
-            <Head title="Sliders" />
+            <Head title="Manage Sliders" />
             {sliders.data.length <= 0 && (
                 <Alert
                     mb="4"
@@ -83,14 +92,20 @@ export default function Index({ auth, sliders }) {
                 </Alert>
             )}
             <HStack gap="6" mb={4}>
-                <PrimaryButton as={Link} href={route("admin.sliders.create")}>
-                    Add New Slider
+                <PrimaryButton onClick={() => createSliderModal.onOpen()}>
+                    Create Slider
                 </PrimaryButton>
             </HStack>
             {sliders && (
                 <DataTable
                     defaultColumns={defaultColumns}
                     data={sliders.data}
+                />
+            )}
+            {createSliderModal.isOpen && (
+                <CreateSliderForm
+                    isOpen={createSliderModal.isOpen}
+                    onClose={createSliderModal.onClose}
                 />
             )}
         </AuthenticatedLayout>

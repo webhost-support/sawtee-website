@@ -71,6 +71,7 @@ body {
     /* overflow-x: hidden; */
     -webkit-scrollbar-width: thin;
     scrollbar-width: thin;
+    -webkit-scrollbar-color:  var(--thumbBG) var(--scrollbarBG);
     scrollbar-color: var(--thumbBG) var(--scrollbarBG);
 }
 
@@ -170,6 +171,7 @@ main {
 
 .glassbox {
     -ms-overflow-styles: none;
+    -webkit-scrollbar-width: none;
     scrollbar-width: none;
 }
 

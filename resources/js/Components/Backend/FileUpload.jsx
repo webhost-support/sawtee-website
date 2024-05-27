@@ -17,6 +17,7 @@ export const PreviewImage = (props) => {
             borderStyle="solid"
             borderColor="gray.400"
             rounded="sm"
+            {...rest}
         >
             <Image
                 height="100%"
@@ -24,7 +25,6 @@ export const PreviewImage = (props) => {
                 objectFit={"cover"}
                 src={src}
                 alt={alt}
-                {...rest}
             />
         </Box>
     );

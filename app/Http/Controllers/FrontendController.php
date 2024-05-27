@@ -86,7 +86,7 @@ class FrontendController extends Controller
         $sawteeInMediaId = Category::where('slug', 'sawtee-in-media')->first()->id;
         $eventsId = Category::where('slug', 'featured-events')->first()->id;
         $newsletterCategoryId = Category::where('slug', 'newsletters')->first()->id;
-        $slider = Slider::first();
+        $slider = Slider::where('name', "Home Page Slider");
         $slides = Slide::where('slider_id', $slider->id)->get();
         $infocus = Post::where('category_id', strval($infocusId))->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
         $sawteeInMedia = Post::where('category_id', strval($sawteeInMediaId))->where('status', 'published')->orderBy('id', 'DESC')->take(6)->get();

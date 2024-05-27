@@ -30,16 +30,21 @@ class Slide extends Model implements HasMedia
     {
         $this
             ->addMediaConversion('preview')
-            ->fit(Manipulations::FIT_CROP, 300, 300)
+            ->fit(Manipulations::FIT_MAX, 300, 150)
             ->nonQueued();
+
+        $this->addMediaConversion('webp')
+            ->format(Manipulations::FORMAT_WEBP)
+            ->performOnCollections('slides');
     }
 
-    // protected $with = ['media'];
+    protected $with = ['media'];
 
     public function registerMediaCollections(): void
     {
         $this
             ->addMediaCollection('slides')
+            ->withResponsiveImages()
             ->singleFile();
     }
 }

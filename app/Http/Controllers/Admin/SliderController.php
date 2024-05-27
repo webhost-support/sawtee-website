@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Slide;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -51,16 +52,19 @@ class SliderController extends Controller
      */
     public function edit(Slider $slider)
     {
-        $slides = $slider->slides;
-        return Inertia::render('Backend/Slider/Edit', ['slider' => $slider, 'slides' => $slides->load('media')]);
+        return Inertia::render('Backend/Slider/Edit', ['slider' => $slider]);
 
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Slider $slider)
+    public function update(Request $request, Slider $slider, Slide $slide)
     {
+        if ($request->hasFile('image')) {
+            $slide->image()->delete();
+            $slide->addMediaFromRequest('image')->toMediaCollection('slides');
+        }
         $slider->update($request->all());
         return redirect()->route('admin.sliders.index');
     }

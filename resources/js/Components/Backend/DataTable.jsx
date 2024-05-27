@@ -6,11 +6,9 @@ import {
     Tr,
     Th,
     Td,
-    chakra,
     TableContainer,
     useColorModeValue,
     Stack,
-    Box,
     Text,
     Input,
     Select,
@@ -152,7 +150,7 @@ export function DataTable({
                                                 header.column.columnDef.header,
                                                 header.getContext()
                                             )}
-                                            <chakra.span pl="4">
+                                            <Text as="span" pl="4">
                                                 {header.column.getIsSorted() ? (
                                                     header.column.getIsSorted() ===
                                                     "desc" ? (
@@ -161,7 +159,7 @@ export function DataTable({
                                                         <TriangleUpIcon aria-label="sorted ascending" />
                                                     )
                                                 ) : null}
-                                            </chakra.span>
+                                            </Text>
                                         </Th>
                                     );
                                 })}

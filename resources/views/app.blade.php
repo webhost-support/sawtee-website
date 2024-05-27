@@ -10,12 +10,11 @@
     <!-- Loads Inter -->
     @googlefonts
     @googlefonts('Roboto')
-
     <!-- Loads IBM Plex Mono -->
     @googlefonts('code')
 
     <!-- Load nprogress style -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
+    {{-- <link defer rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" /> --}}
     @routes
     @viteReactRefresh
     @vite(['resources/js/app.jsx', "resources/js/Pages/{$page['component']}.jsx"])
