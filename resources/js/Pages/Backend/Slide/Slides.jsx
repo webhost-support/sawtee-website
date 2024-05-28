@@ -52,8 +52,10 @@ const Slides = ({ slides, slider }) => {
                 cell: (info) =>
                     info.getValue() && (
                         <Image
+                            border={"1px solid var(--color-text)"}
                             width={"150px"}
                             height="75px"
+                            objectFit="cover"
                             alt="preview_image"
                             rounded="md"
                             src={info.getValue()[0].preview_url}

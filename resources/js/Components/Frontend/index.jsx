@@ -74,6 +74,7 @@ export const ListVariant = {
 };
 
 export const CarouselSection = ({ slides, infocus }) => {
+    console.log(slides);
     return (
         <Section px="0" className="carousel-section">
             <Grid

@@ -86,8 +86,9 @@ class FrontendController extends Controller
         $sawteeInMediaId = Category::where('slug', 'sawtee-in-media')->first()->id;
         $eventsId = Category::where('slug', 'featured-events')->first()->id;
         $newsletterCategoryId = Category::where('slug', 'newsletters')->first()->id;
-        $slider = Slider::where('name', "Home Page Slider");
+        $slider = Slider::where('name', "Home Page Slider")->first();
         $slides = Slide::where('slider_id', $slider->id)->get();
+        // dd($slides);
         $infocus = Post::where('category_id', strval($infocusId))->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
         $sawteeInMedia = Post::where('category_id', strval($sawteeInMediaId))->where('status', 'published')->orderBy('id', 'DESC')->take(6)->get();
         $events = Post::where('category_id', strval($eventsId))->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
@@ -122,6 +123,7 @@ class FrontendController extends Controller
         if ($slug === 'our-work') {
             $themes = Theme::all();
         }
+
 
         return Inertia::render('Frontend/Page', [
             'page' => $page,

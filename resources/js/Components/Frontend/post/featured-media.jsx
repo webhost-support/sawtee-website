@@ -1,4 +1,4 @@
-import { Box, Image } from "@chakra-ui/react";
+import { Box, Image, useColorModeValue } from "@chakra-ui/react";
 
 const FeaturedMedia = ({ src, srcSet, alt, objectFit, rounded, ...rest }) => {
     return (
@@ -10,7 +10,7 @@ const FeaturedMedia = ({ src, srcSet, alt, objectFit, rounded, ...rest }) => {
                 srcSet={srcSet}
                 borderRadius={rounded ? rounded : "none"}
                 sizes="(min-width: 1200px) 50vw,100vw"
-                alt={alt || "Image Description"}
+                alt={alt || "Hero Image"}
             />
         </Box>
     );

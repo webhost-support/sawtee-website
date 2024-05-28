@@ -41,9 +41,9 @@ const FullWidthCarousel = ({
             pagination={pagination}
             navigation={navigation}
             centeredSlides={true}
-            autoplay={true}
+            autoplay={false}
             effect="fade"
-            loop={loop}
+            loop={false}
             className="full-width-carousel"
             id="full-width-carousel"
         >
@@ -78,16 +78,43 @@ const FullWidthCarousel = ({
                 </Box>
             </div>
             {slides.map((slide) => {
-                console.log(slide.media[0]);
+                let srcSet = "";
+                const responsiveImages =
+                    slide.media[0].responsive_images?.media_library_original
+                        ?.urls;
+                responsiveImages &&
+                    responsiveImages.map(
+                        (image) => (srcSet = srcSet + ", " + image)
+                    );
+                console.log(srcSet);
                 return (
                     <SwiperSlide key={slide.id}>
-                        <Image
-                            src={`${slide.media[0].original_url}`}
-                            alt={slide.title || "carousel image"}
-                            mixBlendMode="overlay"
-                            height="100%"
-                            backgroundSize="cover"
-                        />
+                        <Box as="picture" h="full" w="full">
+                            <source
+                                srcset={
+                                    slide.media[0].responsive_images
+                                        ?.media_library_original?.urls[3]
+                                }
+                                media="(min-width: 1200px)"
+                            />
+                            <source
+                                srcset={
+                                    slide.media[0].responsive_images
+                                        ?.media_library_original?.urls[5]
+                                }
+                                media="(min-width: 800px)"
+                            />
+
+                            <Image
+                                src={`${slide.media[0].original_url}`}
+                                srcSet={srcSet ? srcSet : null}
+                                alt={slide.title || "carousel image"}
+                                mixBlendMode="overlay"
+                                height="100%"
+                                w="full"
+                                backgroundSize="cover"
+                            />
+                        </Box>
 
                         <Stack
                             spacing={4}

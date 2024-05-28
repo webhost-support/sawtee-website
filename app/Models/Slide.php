@@ -45,6 +45,7 @@ class Slide extends Model implements HasMedia
         $this
             ->addMediaCollection('slides')
             ->withResponsiveImages()
+            // ->optimize()
             ->singleFile();
     }
 }
