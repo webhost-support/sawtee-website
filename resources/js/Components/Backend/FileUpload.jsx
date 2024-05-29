@@ -52,6 +52,7 @@ export default function FileUpload(props) {
             borderColor={useColorModeValue("gray.600", "gray.300")}
             borderStyle="dashed"
             rounded="md"
+            {...rest}
         >
             <Stack spacing={1} textAlign="center">
                 <Icon

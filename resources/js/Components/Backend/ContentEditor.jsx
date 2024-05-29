@@ -35,6 +35,7 @@ export default function ContentEditor(props) {
         image_file_types: "jpeg,svg,webp,png",
         file_picker_types: "image",
         height: 600,
+        width: "100%",
         quickbars_selection_toolbar:
             "bold italic | quicklink h2 h3 blockquote quickimage quicktable",
         noneditable_class: "mceNonEditable",

@@ -31,52 +31,45 @@ const CardsCarousel = ({ slides, navigation }) => {
                             key={slide.id}
                             className="card-swiper-slide"
                         >
-                            <Box
-                                rounded={"md"}
-                                overflow={"hidden"}
-                                shadow={"2xl"}
-                                border={"1px solid var(--color-text)"}
-                            >
-                                <Image
-                                    src={slide.media[0]?.original_url}
-                                    alt={slide.title + slide.subtitle}
-                                    roundedTop={"md"}
-                                    objectFit="cover"
-                                    aspectRatio={3 / 4}
-                                    fallbackSrc="/assets/SM-placeholder-300x150.png"
-                                />
-                                <Flex
+                            <Box rounded={"md"} overflow={"hidden"}>
+                                <InertiaChakraLink
+                                    href={`/publications/${slide.file.name}`}
+                                    target="_blank"
+                                    fontWeight="semibold"
+                                    fontSize="sm"
+                                    textDecor={"underline"}
+                                    display={"flex"}
+                                    textAlign={"center"}
+                                    mb={4}
                                     p={4}
-                                    alignItems="center"
-                                    justifyContent={"space-between"}
-                                    roundedBottom={"sm"}
+                                    maxW="280px"
+                                    rounded={"sm"}
                                     cursor={"pointer"}
-                                    w="full"
-                                    borderTop={"1px"}
                                     color="gray.700"
                                     _dark={{
                                         color: "gray.300",
                                     }}
                                     bg={useColorModeValue(
-                                        "gray.50",
+                                        "white",
                                         "var(--color-darker)"
                                     )}
+                                    _hover={{
+                                        textUnderlineOffset: "3px",
+                                    }}
                                 >
-                                    <InertiaChakraLink
-                                        href={`/publications/${slide.file.name}`}
-                                        target="_blank"
-                                        fontWeight="semibold"
-                                        fontSize="sm"
-                                        noOfLines={1}
-                                        textDecor={"underline"}
-                                        _hover={{
-                                            textUnderlineOffset: "3px",
-                                        }}
-                                    >
-                                        {slide.title + " "}
-                                        {slide.subtitle && slide.subtitle}
-                                    </InertiaChakraLink>
-                                </Flex>
+                                    {slide.title + " "}
+                                    {slide.subtitle && slide.subtitle}
+                                </InertiaChakraLink>
+                                <Image
+                                    border={"1px solid var(--color-text)"}
+                                    src={slide.media[0]?.original_url}
+                                    alt={slide.title + slide.subtitle}
+                                    rounded={"md"}
+                                    objectFit="cover"
+                                    w="180px"
+                                    aspectRatio={3 / 4}
+                                    fallbackSrc="/assets/SM-placeholder-300x150.png"
+                                />
                             </Box>
                         </SwiperSlide>
                     );

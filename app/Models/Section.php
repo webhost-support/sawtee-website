@@ -17,7 +17,7 @@ class Section extends Model implements HasMedia
     use HasFactory;
     use InteractsWithMedia;
 
-    protected $fillable = ['title', 'type', 'description', 'parent_id', 'page_id', 'link'];
+    protected $fillable = ['title', 'type', 'description', 'parent_id', 'page_id', 'link', 'order'];
 
     public function children(): HasMany
     {
@@ -38,18 +38,18 @@ class Section extends Model implements HasMedia
     {
         $this
             ->addMediaConversion('preview')
-            ->fit(Manipulations::FIT_MAX, 300, 400)
-            ->quality(70)
-            ->sharpen(10)
-            ->keepOriginalImageFormat()
+            ->fit(Manipulations::FIT_MAX, 300, 200)
+            ->format(Manipulations::FORMAT_WEBP)
+            ->quality(75)
             ->nonQueued();
 
         $this
             ->addMediaConversion('responsive')
-            ->performOnCollections('section-media')
-            ->quality(90)
-            ->keepOriginalImageFormat()
+            ->fit(Manipulations::FIT_MAX, 1200, 800)
+            ->quality(75)
+            ->format(Manipulations::FORMAT_WEBP)
             ->withResponsiveImages()
+            ->performOnCollections('section-media')
             ->nonQueued();
     }
 

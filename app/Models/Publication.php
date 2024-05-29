@@ -17,6 +17,7 @@ class Publication extends Model implements HasMedia
 {
     use HasFactory;
     use InteractsWithMedia;
+
     use Searchable;
 
     protected $fillable = ['title', 'subtitle', 'description', 'category_id'];
@@ -59,6 +60,15 @@ class Publication extends Model implements HasMedia
             ->quality(70)
             ->sharpen(10)
             ->keepOriginalImageFormat()
+            ->nonQueued();
+
+        $this
+            ->addMediaConversion('responsive')
+            ->fit(Manipulations::FIT_MAX, 210, 280)
+            ->performOnCollections('publication_featured_image')
+            ->quality(75)
+            ->format(Manipulations::FORMAT_WEBP)
+            ->withResponsiveImages()
             ->nonQueued();
     }
 

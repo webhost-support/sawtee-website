@@ -73,7 +73,7 @@ class FrontendController extends Controller
         // Loop through each subcategory and retrieve 2 posts per subcategory
         foreach ($category->children as $subcategory) {
             // Retrieve 2 posts per subcategory
-            $subcategoryPosts = Publication::with(['media', 'file', 'category'])->where('category_id', $subcategory->id)
+            $subcategoryPosts = Publication::with([ 'file', 'category'])->where('category_id', $subcategory->id)
                 ->orderBy('id', "DESC")
                 ->limit(2)
                 ->get();
@@ -172,7 +172,7 @@ class FrontendController extends Controller
             ->take(5)->get();
         $category = Category::where('slug', $slug)->firstOrFail();
         $featured_image = $category->getFirstMediaUrl('category_media');
-        $srcSet = $category->getFirstMedia('category_media')?->getSrcset('responsive');
+        $category_responsive_images = $category->getFirstMedia('category_media')?->getSrcset('responsive');
         $posts = getPosts($category, $slug);
 
 
@@ -186,7 +186,7 @@ class FrontendController extends Controller
                 'infocus' => $infocus,
                 'sawteeInMedia' => $sawteeInMedia,
                 'publications' => $publications,
-                'srcSet' => $srcSet
+                'srcSet' => $category_responsive_images
             ]);
         }
 
@@ -196,7 +196,7 @@ class FrontendController extends Controller
                     'category' => $category,
                     'teams' => $teams,
                     'featured_image' => $featured_image,
-                    'srcSet' => $srcSet
+                    'srcSet' => $category_responsive_images
                 ]);
             }
 
@@ -219,14 +219,16 @@ class FrontendController extends Controller
                     'infocus' => $infocus,
                     'sawteeInMedia' => $sawteeInMedia,
                     'featured_image' => $featured_image,
-                    'srcSet' => $srcSet
+                    'srcSet' => $category_responsive_images
                 ]);
             }
 
             if (!$category) {
                 $category = Category::with('parent')->where('slug', $segments[1])->first();
                 $post = Post::where('slug', $segments[2])->firstOrFail();
-                return Inertia::render('Frontend/Post', ['post' => $post->load('category', 'category.parent', 'media')]);
+                $media = $post->getFirstMediaUrl('post-featured-image');
+                $srcSet = $post->getFirstMedia('post-featured-image')->getSrcSet('responsive');
+                return Inertia::render('Frontend/Post', ['post' => $post->load('category', 'category.parent', 'media'), 'featured_image'=>$media, "srcSet" => $srcSet]);
             }
 
             return Inertia::render('Frontend/Category', [
@@ -235,7 +237,7 @@ class FrontendController extends Controller
                 'infocus' => $infocus,
                 'sawteeInMedia' => $sawteeInMedia,
                 'featured_image' => $featured_image,
-                'srcSet' => $srcSet
+                'srcSet' => $category_responsive_images
             ]);
         }
 
@@ -246,7 +248,7 @@ class FrontendController extends Controller
             'sawteeInMedia' => $sawteeInMedia,
             'events' => $events->load(['category', 'media']),
             'featured_image' => $featured_image,
-            'srcSet' => $srcSet
+            'srcSet' => $category_responsive_images
         ]);
     }
 

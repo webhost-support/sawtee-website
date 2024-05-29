@@ -89,6 +89,7 @@ export function DataTable({
                 direction={"row"}
                 justifyContent={showColumnFilters ? "space-between" : "end"}
                 mb={4}
+                flexWrap="wrap"
             >
                 {showColumnFilters && (
                     <HStack spacing={4}>

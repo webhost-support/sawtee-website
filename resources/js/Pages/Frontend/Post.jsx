@@ -6,11 +6,9 @@ import NewsletterPost from "./Pages/NewsletterPost";
 import WebsiteHead from "@/Components/Frontend/Head";
 import WebinarPost from "./Pages/WebinarPost";
 
-export default function Post({ post }) {
+export default function Post({ post, featured_image, srcSet }) {
     const { category, title, content } = post;
-    const featured_image = post.media.filter(
-        (m) => m.collection_name === "post-featured-image"
-    )[0];
+
     const isProgramme = category.parent && category.parent.slug === "programme";
     const isNewsletter = category.slug === "newsletters";
     const isWebinarSeries = category.slug === "webinar-series";
@@ -22,14 +20,14 @@ export default function Post({ post }) {
                 title={category.name + " | " + title}
                 description={post.meta_description}
                 image={
-                    featured_image
-                        ? featured_image.original_url
-                        : "/assets/logo-sawtee.webp"
+                    featured_image ? featured_image : "/assets/logo-sawtee.webp"
                 }
             />
 
             <PostLayout
                 post={post}
+                featured_image={featured_image}
+                srcSet={srcSet}
                 isProgramPost={isProgramme}
                 isNewsletter={isNewsletter}
             >

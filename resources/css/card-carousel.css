@@ -1,5 +1,5 @@
 .card-swiper {
-  width: 180px !important;
+  width: var(--chakra-sizes-xs) !important;
   max-width: var(--chakra-sizes-xs) !important;
   padding-block: 10px;
 }
@@ -11,4 +11,13 @@
   font-size: 22px !important;
   font-weight: bold;
   color: #fff;
+}
+
+.card-swiper-slide img {
+    width: 180px !important;
+    margin: 0 auto;
+}
+
+.swiper-slide-shadow {
+    display: none !important;
 }

@@ -22,10 +22,20 @@ class Team extends Model implements HasMedia
     {
         $this
             ->addMediaConversion('preview')
-            ->fit(Manipulations::FIT_MAX, 100, 100)
+            ->fit(Manipulations::FIT_CROP, 120, 80)
             ->quality(90)
             ->keepOriginalImageFormat()
             ->nonQueued();
+
+        $this
+            ->addMediaConversion('responsive')
+            ->fit(Manipulations::FIT_MAX, 600, 400)
+            ->performOnCollections('research_featured_image')
+            ->quality(75)
+            ->format(Manipulations::FORMAT_WEBP)
+            ->withResponsiveImages()
+            ->nonQueued();
+
     }
 
 

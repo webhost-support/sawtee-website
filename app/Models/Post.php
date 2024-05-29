@@ -82,7 +82,7 @@ class Post extends Model implements HasMedia
     {
         $this
             ->addMediaConversion('preview')
-            ->fit(Manipulations::FIT_MAX, 300, 150)
+            ->fit(Manipulations::FIT_MAX, 300, 200)
             ->format(Manipulations::FORMAT_WEBP)
             ->quality(75)
             ->keepOriginalImageFormat()
@@ -90,8 +90,9 @@ class Post extends Model implements HasMedia
 
         $this
             ->addMediaConversion('responsive')
+            ->fit(Manipulations::FIT_MAX, 1200, 800)
             ->performOnCollections('post-featured-image')
-            ->quality(85)
+            ->quality(75)
             ->format(Manipulations::FORMAT_WEBP)
             // ->keepOriginalImageFormat()
             ->withResponsiveImages()

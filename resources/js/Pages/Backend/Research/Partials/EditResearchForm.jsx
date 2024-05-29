@@ -24,7 +24,7 @@ import {
     Tooltip,
 } from "@chakra-ui/react";
 import FileUpload, { PreviewImage } from "@/Components/Backend/FileUpload";
-import React from "react";
+import { useState } from "react";
 import { CloseIcon, QuestionOutlineIcon } from "@chakra-ui/icons";
 import { FiFile } from "react-icons/fi";
 import ChakraDatePicker from "@/Components/Backend/ChakraDatePicker";
@@ -36,23 +36,15 @@ export default function CreateResearchForm({ research }) {
         description: research.description,
         year: research.year,
         image: research.featured_image ? research.featured_image.name : null,
-        file: research.file ? research.file.name : null,
+        file: research.media[0] ? research.media[0].original_url : null,
         meta_title: research.meta_title,
         meta_description: research.meta_description,
     });
-
     const toast = useToast();
-    const [filename, setFilename] = React.useState(
+    const [image, setImage] = useState(data.image);
+    const [filename, setFilename] = useState(
         research.file ? research.file.name : ""
     );
-
-    const [image, setImage] = React.useState(() => {
-        if (data.image !== null) {
-            `http://localhost:8000/images/big/` + data.image;
-        } else {
-            null;
-        }
-    });
 
     const submit = (e) => {
         e.preventDefault();

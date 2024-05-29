@@ -70,7 +70,7 @@ const Home = ({
                 description="Explore South Asia's dynamic journey since the 1980s, navigating global integration and economic challenges."
                 image={"/assets/logo-sawtee.webp"}
             />
-            <Section mt="6" className="carousel-section">
+            <Section pt="10" className="carousel-section">
                 <Grid
                     templateColumns={{
                         base: "1fr",
@@ -120,7 +120,11 @@ const Home = ({
                 <Section className="infocus-section" title={"InFocus"}>
                     <Container maxW="7xl" centerContent>
                         <InfocusSection infocus={infocus} />
-                        <InertiaChakraLink as={Link} href={'/category/in-focus'} mt="4">
+                        <InertiaChakraLink
+                            as={Link}
+                            href={"/category/in-focus"}
+                            mt="4"
+                        >
                             <ExploreButton
                                 size="md"
                                 text="InFocus"

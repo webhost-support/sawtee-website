@@ -64,18 +64,17 @@ class Category extends Model implements HasMedia
     {
         $this
             ->addMediaConversion('preview')
-            ->fit(Manipulations::FIT_MAX, 600, 300)
-            ->quality(90)
-            ->sharpen(30)
+            ->fit(Manipulations::FIT_MAX, 300, 100)
+            ->quality(75)
             ->keepOriginalImageFormat()
             ->nonQueued();
 
         $this
             ->addMediaConversion('responsive')
-            ->fit(Manipulations::FIT_MAX, 1920, 1080)
+            ->fit(Manipulations::FIT_MAX, 1200, 400)
             ->performOnCollections('category_media')
-            ->quality(90)
-            ->keepOriginalImageFormat()
+            ->format(Manipulations::FORMAT_WEBP)
+            ->quality(75)
             ->withResponsiveImages()
             ->nonQueued();
     }

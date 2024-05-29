@@ -19,7 +19,7 @@ import {
     useToast,
 } from "@chakra-ui/react";
 import FileUpload, { PreviewImage } from "@/Components/Backend/FileUpload";
-import React from "react";
+import { useState } from "react";
 import { CloseIcon } from "@chakra-ui/icons";
 import { FiFile } from "react-icons/fi";
 
@@ -33,8 +33,8 @@ export default function CreatePublicationForm({ categories }) {
         file: "",
     });
     const toast = useToast();
-    const [filename, setFilename] = React.useState(data.file.name || "");
-    const [image, setImage] = React.useState(null);
+    const [filename, setFilename] = useState(data.file.name || "");
+    const [image, setImage] = useState(null);
 
     const submit = (e) => {
         e.preventDefault();
@@ -151,11 +151,6 @@ export default function CreatePublicationForm({ categories }) {
                                 placeholder="Select Category"
                                 onChange={(e) => {
                                     setData("category_id", e.target.value);
-                                    const category = categories.find(
-                                        (category) =>
-                                            category.id ===
-                                            Number(e.target.value)
-                                    );
                                 }}
                             >
                                 {categories &&

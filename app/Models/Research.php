@@ -44,7 +44,16 @@ class Research extends Model implements HasMedia
     {
         $this
             ->addMediaConversion('preview')
-            ->fit(Manipulations::FIT_CROP, 180, 240)
+            ->fit(Manipulations::FIT_MAX, 180, 240)
+            ->nonQueued();
+
+        $this
+            ->addMediaConversion('responsive')
+            ->fit(Manipulations::FIT_MAX, 210, 280)
+            ->performOnCollections('research_featured_image')
+            ->quality(75)
+            ->format(Manipulations::FORMAT_WEBP)
+            ->withResponsiveImages()
             ->nonQueued();
     }
 

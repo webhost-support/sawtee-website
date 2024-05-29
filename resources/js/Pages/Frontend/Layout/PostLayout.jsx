@@ -14,14 +14,10 @@ const PostLayout = ({
     isProgramPost,
     isNewsletter,
     post,
+    featured_image,
+    srcSet,
 }) => {
     const postHeaderColor = "var(--color-text)";
-    const featured_media = post.media.filter(
-        (m) => m.collection_name === "post-featured-image"
-    )[0];
-    // const srcSet = Object.values(
-    //     featured_media.responsive_images.responsive.urls
-    // );
 
     const readingTime = post.content
         ? readingDuration(post.content, {
@@ -50,11 +46,11 @@ const PostLayout = ({
 
             {/* Look at the settings to see if we should include the featured image */}
             <Box maxW={"5xl"} mx="auto" px={4}>
-                {!isProgramPost && featured_media && (
+                {!isProgramPost && featured_image && (
                     <FeaturedMedia
-                        src={featured_media.original_url}
+                        src={featured_image}
                         rounded={"xl"}
-                        // srcSet={srcSet}
+                        srcSet={srcSet}
                     />
                 )}
 

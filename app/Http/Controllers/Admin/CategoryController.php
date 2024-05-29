@@ -20,7 +20,6 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::latest()->simplePaginate(50);
-        // dd($categories);
         return Inertia::render('Backend/Category/Index', [
             'categories' => $categories
         ]);
@@ -42,15 +41,6 @@ class CategoryController extends Controller
         return false;
     }
 
-
-    // public function verify(string $token)
-    // {
-    //     $subscriber = Subscriber::where('token', $token)->firstOrFail();
-    //     $subscriber->update([
-    //         'token' => null,
-    //         'verified_at' => now()
-    //     ]);
-    // }
 
     /**
      * Store a newly created resource in storage.

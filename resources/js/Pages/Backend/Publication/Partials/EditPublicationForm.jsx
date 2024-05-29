@@ -21,7 +21,7 @@ import {
 import FileUpload, { PreviewImage } from "@/Components/Backend/FileUpload";
 import { FiFile } from "react-icons/fi";
 import { CloseIcon } from "@chakra-ui/icons";
-import React from "react";
+import { useState } from "react";
 
 export default function EditPublicationForm({ publication, categories }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -33,8 +33,8 @@ export default function EditPublicationForm({ publication, categories }) {
         file: publication.file ? publication.file.name : null,
     });
     const toast = useToast();
-    const [filename, setFilename] = React.useState(data.file);
-    const [image, setImage] = React.useState(data.image);
+    const [filename, setFilename] = useState(data.file);
+    const [image, setImage] = useState(data.image);
 
     const submit = (e) => {
         e.preventDefault();
@@ -160,11 +160,6 @@ export default function EditPublicationForm({ publication, categories }) {
                                 defaultValue={data.category_id}
                                 onChange={(e) => {
                                     setData("category_id", e.target.value);
-                                    const category = categories.find(
-                                        (category) =>
-                                            category.id ===
-                                            Number(e.target.value)
-                                    );
                                 }}
                             >
                                 {categories &&

@@ -31,11 +31,12 @@ class Slide extends Model implements HasMedia
         $this
             ->addMediaConversion('preview')
             ->fit(Manipulations::FIT_MAX, 300, 150)
+            ->format(Manipulations::FORMAT_WEBP)
             ->nonQueued();
 
         $this
             ->addMediaConversion('responsive')
-            ->fit(Manipulations::FIT_MAX, 1920, 1080)
+            ->fit(Manipulations::FIT_MAX, 1280, 720)
             ->performOnCollections('slides')
             ->quality(75)
             ->format(Manipulations::FORMAT_WEBP)

@@ -45,6 +45,7 @@ class SectionController extends Controller
             'description' => 'nullable|string',
             'parent_id' => 'nullable|numeric|exists:sections,id',
             'page_id' => 'nullable|numeric|exists:pages,id',
+            'order' => 'nullable|numeric',
             'image' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048'
         ]);
         $section = Section::create($validatedData);
