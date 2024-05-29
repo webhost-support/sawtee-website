@@ -73,129 +73,82 @@ export const ListVariant = {
     },
 };
 
-export const CarouselSection = ({ slides, infocus }) => {
-    console.log(slides);
+export const CarouselSection = ({
+    slides,
+    responsiveImages,
+    carouselHeight,
+}) => {
     return (
-        <Section px="0" className="carousel-section">
-            <Grid
-                templateColumns={{
-                    base: "1fr",
-                    lg: "repeat(7, 1fr)",
-                }}
-                id="carousel-section"
-                gap={4}
-            >
-                {slides && slides.length > 0 && (
-                    <GridItem
-                        colSpan={{ base: 1, md: 4 }}
-                        maxH={{ base: "auto", md: "550px" }}
-                    >
-                        <FullWidthCarousel
-                            slides={slides}
-                            navigation={false}
-                            loop={true}
-                            rewind={true}
-                        />
-                    </GridItem>
-                )}
-                <GridItem
-                    colSpan={{ base: 1, md: 3 }}
-                    alignSelf={"center"}
-                    py={2}
-                    maxH={{ base: "auto", md: "550px" }}
-                    overflowY={"scroll"}
-                >
-                    <InfocusSection
-                        infocus={infocus}
-                        link={"/category/infocus"}
-                    />
-                </GridItem>
-            </Grid>
-        </Section>
+        slides &&
+        slides.length > 0 && (
+            <FullWidthCarousel
+                slides={slides}
+                navigation={false}
+                loop={true}
+                rewind={true}
+                carouselHeight={carouselHeight}
+                responsiveImages={responsiveImages}
+            />
+        )
     );
 };
 
 export const AboutSection = ({ data }) => {
     return (
-        <Section>
-            <SimpleGrid
-                minChildWidth={"320px"}
-                spacing={16}
-                rowGap={28}
-                alignItems="center"
-                maxW={"7xl"}
-                py={{ base: 10, lg: 16 }}
-                px={{ base: 6, lg: 10 }}
-                mx="auto"
-            >
-                {data.map((item) => {
-                    return (
-                        <Box
-                            key={item.id}
-                            ml={{ base: 0, md: 5 }}
-                            pos="relative"
+        <SimpleGrid
+            minChildWidth={"320px"}
+            spacing={16}
+            rowGap={28}
+            alignItems="center"
+            maxW={"7xl"}
+            py={{ base: 10, lg: 16 }}
+            px={{ base: 6, lg: 10 }}
+            mx="auto"
+        >
+            {data.map((item) => {
+                return (
+                    <Box key={item.id} ml={{ base: 0, md: 5 }} pos="relative">
+                        <DottedBox />
+                        <LinkBox
+                            position={"relative"}
+                            rounded={"2xl"}
+                            boxShadow={"2xl"}
+                            role="group"
                         >
-                            <DottedBox />
-                            <LinkBox
-                                position={"relative"}
-                                rounded={"2xl"}
-                                boxShadow={"2xl"}
-                                role="group"
-                            >
-                                <IconButton
-                                    aria-label={"Play Button"}
-                                    variant={"ghost"}
-                                    _groupHover={{ color: "white" }}
-                                    icon={<PlayIcon w={12} h={12} />}
-                                    size={"lg"}
-                                    color={"whiteAlpha.700"}
-                                    position={"absolute"}
-                                    left={"50%"}
-                                    top={"50%"}
-                                    transform={
-                                        "translateX(-50%) translateY(-50%)"
-                                    }
-                                />
+                            <IconButton
+                                aria-label={"Play Button"}
+                                variant={"ghost"}
+                                _groupHover={{ color: "white" }}
+                                icon={<PlayIcon w={12} h={12} />}
+                                size={"lg"}
+                                color={"whiteAlpha.700"}
+                                position={"absolute"}
+                                left={"50%"}
+                                top={"50%"}
+                                transform={"translateX(-50%) translateY(-50%)"}
+                            />
 
-                                <LinkOverlay href={item.link}>
-                                    <Image
-                                        src={item.image_src}
-                                        alt={item.title}
-                                        fit="cover"
-                                        rounded="xl"
-                                        align={"center"}
-                                    />
-                                </LinkOverlay>
-                            </LinkBox>
-                        </Box>
-                    );
-                })}
-            </SimpleGrid>
-        </Section>
+                            <LinkOverlay href={item.link}>
+                                <Image
+                                    src={item.image_src}
+                                    alt={item.title}
+                                    fit="cover"
+                                    rounded="xl"
+                                    align={"center"}
+                                />
+                            </LinkOverlay>
+                        </LinkBox>
+                    </Box>
+                );
+            })}
+        </SimpleGrid>
     );
 };
 
 export const InfocusSection = ({ infocus, link }) => {
     const itemBG = useColorModeValue("blackAlpha.200", "blackAlpha.300");
     return (
-        <GlassBox
-            bg="transparent"
-            shadow="none"
-            boxShadow="none"
-            rounded="none"
-            border="none"
-            px={{ base: 4, sm: 10 }}
-            mx="auto"
-        >
-            <ExploreButton
-                size="md"
-                fontSize={{ base: "xl", md: "4xl", lg: "2xl" }}
-                text="InFocus"
-                variant="link"
-                px={10}
-                my="4"
-            />
-
+        <GlassBox p={{ base: 4, sm: 10 }}>
             {infocus.map((article) => {
                 return (
                     <Box key={article.id}>
@@ -206,27 +159,30 @@ export const InfocusSection = ({ infocus, link }) => {
                             _hover={{ bg: itemBG }}
                         >
                             <Box>
-                                <InertiaChakraLinkOverlay
-                                    href={`/category/${article.category.slug}/${article.slug}`}
+                                <Heading
+                                    as="h3"
+                                    fontFamily={"heading"}
+                                    fontWeight="bold"
+                                    py="6"
+                                    fontSize={{
+                                        base: "sm",
+                                        md: "xl",
+                                    }}
                                 >
-                                    <Heading
-                                        as="h3"
-                                        fontFamily={"heading"}
-                                        fontWeight="bold"
-                                        my="2"
-                                        fontSize={{
-                                            base: "sm",
-                                            md: "md",
-                                        }}
+                                    <InertiaChakraLinkOverlay
+                                        href={`/category/${article.category.slug}/${article.slug}`}
                                     >
                                         {article.title}
-                                    </Heading>
-                                </InertiaChakraLinkOverlay>
+                                    </InertiaChakraLinkOverlay>
+                                </Heading>
 
                                 <Text
                                     pl="20px"
                                     noOfLines={3}
-                                    fontSize={"xs"}
+                                    fontSize={{
+                                        base: "xs",
+                                        md: "md",
+                                    }}
                                     borderLeft={
                                         "5px solid var(--chakra-colors-primary-400) "
                                     }
@@ -239,39 +195,24 @@ export const InfocusSection = ({ infocus, link }) => {
                     </Box>
                 );
             })}
+
         </GlassBox>
     );
 };
 
 export const SawteeInMediaSection = ({ articles, link }) => {
     return (
-        <Section
-            title={"Sawtee in Media"}
-            bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
-            py={{ base: 12, md: 20 }}
-        >
-            <Container maxW="8xl" centerContent px={6}>
-                <MultiPostsCarousel
-                    posts={articles}
-                    spacing={30}
-                    pagination={false}
-                    showCategoryTag={true}
-                    scrollbar={true}
-                    my={10}
-                >
-                    <Show above="sm">
-                        <InertiaChakraLink as={Link} href={link}>
-                            <ExploreButton
-                                size="md"
-                                text="Explore All "
-                                variant="outline"
-                                px={10}
-                            />
-                        </InertiaChakraLink>
-                    </Show>
-                </MultiPostsCarousel>
-                <Show below="sm">
-                    <InertiaChakraLink as={Link} href={link} mt="4">
+        <Container maxW="8xl" centerContent px={6}>
+            <MultiPostsCarousel
+                posts={articles}
+                spacing={30}
+                pagination={false}
+                showCategoryTag={true}
+                scrollbar={true}
+                my={10}
+            >
+                <Show above="sm">
+                    <InertiaChakraLink as={Link} href={link}>
                         <ExploreButton
                             size="md"
                             text="Explore All "
@@ -280,77 +221,81 @@ export const SawteeInMediaSection = ({ articles, link }) => {
                         />
                     </InertiaChakraLink>
                 </Show>
-            </Container>
-        </Section>
+            </MultiPostsCarousel>
+            <Show below="sm">
+                <InertiaChakraLink as={Link} href={link} mt="4">
+                    <ExploreButton
+                        size="md"
+                        text="Explore All "
+                        variant="outline"
+                        px={10}
+                    />
+                </InertiaChakraLink>
+            </Show>
+        </Container>
     );
 };
 
 export const BlogSection = ({ events }) => {
     return (
-        <Section
-            title={"Policy Outreach"}
-            id="blog-section"
-            className="section"
-        >
-            <Container maxW="8xl" centerContent px={6}>
-                <Grid
-                    className="band"
-                    gridTemplateColumns={{
-                        base: "1fr",
-                        md: "1fr 1fr",
-                        lg: "auto repeat(2, 260px);",
-                    }}
-                    gridTemplateRows={"auto"}
-                    gap={8}
-                    mb="10"
-                >
-                    {events &&
-                        events.length > 0 &&
-                        events.map((article, i) => {
-                            if (i === 0) {
-                                return (
-                                    <GridItem
-                                        key={article.id}
-                                        colSpan={{ base: 1, md: 2, xl: 1 }}
-                                        rowSpan={2}
-                                    >
-                                        <PostCard
-                                            post={article}
-                                            headingSize={"3xl"}
-                                        />
-                                    </GridItem>
-                                );
-                            } else {
-                                return (
-                                    <GridItem
-                                        key={article.id}
-                                        colSpan={1}
-                                        rowSpan="1"
-                                    >
-                                        <PostCard
-                                            post={article}
-                                            showDescription={false}
-                                            aspect={"3/2"}
-                                        />
-                                    </GridItem>
-                                );
-                            }
-                        })}
-                </Grid>
-                <InertiaChakraLink
-                    as={Link}
-                    href={`/category/featured-events`}
-                    mt={6}
-                >
-                    <ExploreButton
-                        size="md"
-                        text="Explore All"
-                        variant="outline"
-                        px={10}
-                    />
-                </InertiaChakraLink>
-            </Container>
-        </Section>
+        <Container maxW="8xl" centerContent px={6}>
+            <Grid
+                className="band"
+                gridTemplateColumns={{
+                    base: "1fr",
+                    md: "1fr 1fr",
+                    lg: "auto repeat(2, 260px);",
+                }}
+                gridTemplateRows={"auto"}
+                gap={8}
+                mb="10"
+            >
+                {events &&
+                    events.length > 0 &&
+                    events.map((article, i) => {
+                        if (i === 0) {
+                            return (
+                                <GridItem
+                                    key={article.id}
+                                    colSpan={{ base: 1, md: 2, xl: 1 }}
+                                    rowSpan={2}
+                                >
+                                    <PostCard
+                                        post={article}
+                                        headingSize={"3xl"}
+                                    />
+                                </GridItem>
+                            );
+                        } else {
+                            return (
+                                <GridItem
+                                    key={article.id}
+                                    colSpan={1}
+                                    rowSpan="1"
+                                >
+                                    <PostCard
+                                        post={article}
+                                        showDescription={false}
+                                        aspect={"3/2"}
+                                    />
+                                </GridItem>
+                            );
+                        }
+                    })}
+            </Grid>
+            <InertiaChakraLink
+                as={Link}
+                href={`/category/featured-events`}
+                mt={6}
+            >
+                <ExploreButton
+                    size="md"
+                    text="Explore All"
+                    variant="outline"
+                    px={10}
+                />
+            </InertiaChakraLink>
+        </Container>
     );
 };
 
@@ -378,31 +323,16 @@ export const InfoSection = () => {
 };
 
 export const SubscribeSection = () => {
-    return (
-        <Section
-            py={{ base: "6", md: "12", lg: "16" }}
-            px={{ base: "10", md: "16", lg: "20" }}
-            className="section"
-        >
-            <Newsletter />
-        </Section>
-    );
+    return <Newsletter />;
 };
 
 export const ReformMonitorSection = ({ feature }) => {
-    return (
-        <Section>
-            <Feature feature={feature} />
-        </Section>
-    );
+    return <Feature feature={feature} />;
 };
 
 export const PublicationSection = ({ publications, newsletters }) => {
     return (
-        <Section
-            bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
-            py={{ base: 12, md: 20 }}
-        >
+
             <Grid
                 gridTemplateColumns={{ base: "1fr", lg: "repeat(7, 1fr)" }}
                 gap={8}
@@ -569,16 +499,12 @@ export const PublicationSection = ({ publications, newsletters }) => {
                     </Container>
                 </GridItem>
             </Grid>
-        </Section>
+
     );
 };
 
 export const VideosSection = ({ posts }) => {
-    return (
-        <Section title={"Webinar Series"} className="section videos-section">
-            <VideoCarousel posts={posts} navigation={true} />
-        </Section>
-    );
+    return <VideoCarousel posts={posts} navigation={true} />;
 };
 
 export const Section = ({ children, title = null, ...rest }) => {

@@ -40,7 +40,7 @@ class SlideController extends Controller
         $slide = Slide::create($validated);
         $slide->addMediaFromRequest('image')->toMediaCollection('slides');
         $slider = Slider::find($request->slider_id);
-        return redirect()->route('admin.sliders.edit', $slider);
+        return to_route('admin.sliders.edit',[ 'slider' => $slider], 303);
     }
 
     /**
@@ -71,7 +71,8 @@ class SlideController extends Controller
             $slide->image()->delete();
             $slide->addMediaFromRequest('image')->toMediaCollection('slides');
         }
-        return redirect()->back();
+        $slider = Slider::find($slider_id);
+        return to_route('admin.sliders.edit', ['slider' => $slider], 303);
     }
 
     /**
@@ -81,6 +82,6 @@ class SlideController extends Controller
     {
         $slider_id = $slide->slider_id;
         $slide->delete();
-        return redirect()->route('admin.sliders.edit', $slider_id);
+        return to_route('admin.sliders.edit', $slider_id);
     }
 }

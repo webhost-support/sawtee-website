@@ -36,7 +36,7 @@ class SliderController extends Controller
             'name' => 'required|string|unique:sliders|max:255',
         ]);
         Slider::create($validated);
-        return redirect()->route('admin.sliders.index');
+        return to_route('admin.sliders.index');
     }
 
     /**
@@ -66,7 +66,7 @@ class SliderController extends Controller
             $slide->addMediaFromRequest('image')->toMediaCollection('slides');
         }
         $slider->update($request->all());
-        return redirect()->route('admin.sliders.index');
+        return to_route('admin.sliders.index');
     }
 
     /**
@@ -75,6 +75,6 @@ class SliderController extends Controller
     public function destroy(Slider $slider)
     {
         $slider->delete();
-        return redirect()->route('admin.sliders.index');
+        return to_route('admin.sliders.index', 302);
     }
 }

@@ -33,9 +33,14 @@ class Slide extends Model implements HasMedia
             ->fit(Manipulations::FIT_MAX, 300, 150)
             ->nonQueued();
 
-        $this->addMediaConversion('webp')
+        $this
+            ->addMediaConversion('responsive')
+            ->fit(Manipulations::FIT_MAX, 1920, 1080)
+            ->performOnCollections('slides')
+            ->quality(75)
             ->format(Manipulations::FORMAT_WEBP)
-            ->performOnCollections('slides');
+            ->withResponsiveImages()
+            ->nonQueued();
     }
 
     protected $with = ['media'];
@@ -44,8 +49,6 @@ class Slide extends Model implements HasMedia
     {
         $this
             ->addMediaCollection('slides')
-            ->withResponsiveImages()
-            // ->optimize()
             ->singleFile();
     }
 }

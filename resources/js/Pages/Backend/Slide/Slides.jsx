@@ -1,5 +1,5 @@
 import { Image, HStack, useDisclosure, useToast } from "@chakra-ui/react";
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { DataTable } from "@/Components/Backend/DataTable";
 import { createColumnHelper } from "@tanstack/react-table";
 import {
@@ -7,19 +7,25 @@ import {
     TableEditAction,
 } from "@/Components/Backend/TableActions";
 import { useForm } from "react-hook-form";
-import EditSliderForm from "../Slider/Partials/EditSliderForm";
+import EditSlideForm from "./EditSlideForm";
 
-const Slides = ({ slides, slider }) => {
+const Slides = ({ slider }) => {
     const toast = useToast();
     const columnHelper = createColumnHelper();
     const { processing, delete: destroy } = useForm();
     const [editSlide, setEditSlide] = useState(null);
     const editSlideModal = useDisclosure();
+
     const handleEdit = (e, id) => {
         e.preventDefault();
-        setEditSlide(slides.filter((slide) => slide.id === id)[0]);
+        const slideToEdit = slider.slides.filter((slide) => slide.id == id)[0];
+        if (slideToEdit) setEditSlide(slideToEdit);
         editSlideModal.onOpen();
     };
+
+    useEffect(() => {
+        !editSlideModal.isOpen && setEditSlide(null);
+    }, [editSlideModal.onToggle]);
 
     const handleDelete = (e, id) => {
         e.preventDefault();
@@ -91,17 +97,16 @@ const Slides = ({ slides, slider }) => {
     return (
         <>
             {editSlide && (
-                <EditSliderForm
+                <EditSlideForm
                     isOpen={editSlideModal.isOpen}
                     onClose={editSlideModal.onClose}
-                    slider={slider}
                     slide={editSlide}
                     setEditSlide={setEditSlide}
                 />
             )}
             <DataTable
                 defaultColumns={defaultColumns}
-                data={slides}
+                data={slider.slides}
                 pagination={false}
                 showColumnFilters={false}
             />

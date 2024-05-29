@@ -1,13 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
-import {
-    Box,
-    Stack,
-    Text,
-    Image,
-    Heading,
-    Flex,
-    IconButton,
-} from "@chakra-ui/react";
+import { Box, Stack, Text, Image, Heading, IconButton } from "@chakra-ui/react";
 import React from "react";
 // Import Swiper styles
 import "swiper/css";
@@ -17,9 +9,14 @@ import { Swiper, SwiperSlide } from "./Swiper";
 
 const FullWidthCarousel = ({
     slides,
+    responsiveImages,
     pagination = true,
     navigation,
     loop = true,
+    autoplay = true,
+    effect = "fade",
+    carouselHeight,
+    ...rest
 }) => {
     React.useEffect(() => {
         const swiperEl = document.getElementById("full-width-carousel");
@@ -42,10 +39,11 @@ const FullWidthCarousel = ({
             navigation={navigation}
             centeredSlides={true}
             autoplay={false}
-            effect="fade"
-            loop={false}
+            loop={loop}
+            effect={effect}
             className="full-width-carousel"
             id="full-width-carousel"
+            {...rest}
         >
             <div slot="container-start">
                 <Box
@@ -77,42 +75,19 @@ const FullWidthCarousel = ({
                     />
                 </Box>
             </div>
-            {slides.map((slide) => {
-                let srcSet = "";
-                const responsiveImages =
-                    slide.media[0].responsive_images?.media_library_original
-                        ?.urls;
-                responsiveImages &&
-                    responsiveImages.map(
-                        (image) => (srcSet = srcSet + ", " + image)
-                    );
-                console.log(srcSet);
+            {slides.map((slide, i) => {
                 return (
                     <SwiperSlide key={slide.id}>
-                        <Box as="picture" h="full" w="full">
-                            <source
-                                srcset={
-                                    slide.media[0].responsive_images
-                                        ?.media_library_original?.urls[3]
-                                }
-                                media="(min-width: 1200px)"
-                            />
-                            <source
-                                srcset={
-                                    slide.media[0].responsive_images
-                                        ?.media_library_original?.urls[5]
-                                }
-                                media="(min-width: 800px)"
-                            />
-
+                        <Box as="picture" h={carouselHeight} w="full">
                             <Image
                                 src={`${slide.media[0].original_url}`}
-                                srcSet={srcSet ? srcSet : null}
+                                srcSet={responsiveImages[i]}
                                 alt={slide.title || "carousel image"}
+                                objectFit="cover"
                                 mixBlendMode="overlay"
-                                height="100%"
+                                loading="lazy"
                                 w="full"
-                                backgroundSize="cover"
+                                h="full"
                             />
                         </Box>
 

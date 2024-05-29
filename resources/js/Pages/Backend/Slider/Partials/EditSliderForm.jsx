@@ -12,7 +12,7 @@ import {
     AlertIcon,
     useToast,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Slides from "../../Slide/Slides";
 import CreateSlideForm from "../../Slide/CreateSlideForm";
 
@@ -22,7 +22,11 @@ export default function EditSliderForm({ slider }) {
     });
     const toast = useToast();
     const createSlideForm = useDisclosure();
-    const [slides, setSlides] = useState(slider.slides);
+    const [slides, setSlides] = useState([]);
+
+    useEffect(() => {
+        setSlides(slider.slides);
+    }, [slider.slides]);
 
     const submit = (e) => {
         e.preventDefault();
@@ -83,7 +87,7 @@ export default function EditSliderForm({ slider }) {
                 </FormControl>
 
                 <Box display="flex" gap="4" mt="4" alignItems={"center"}>
-                    <Button onClick={() => createSlideForm.onOpen()} >
+                    <Button onClick={() => createSlideForm.onOpen()}>
                         Add slide
                     </Button>
                     <PrimaryButton type="submit" disabled={processing}>

@@ -19,12 +19,17 @@ import {
 import React from "react";
 import FileUpload, { PreviewImage } from "@/Components/Backend/FileUpload";
 
-export default function EditSlideForm({ isOpen, onClose, slide }) {
+export default function EditSlideForm({
+    isOpen,
+    onClose,
+    slide,
+    setEditSlide,
+}) {
     const { data, setData, post, processing, errors, reset } = useForm({
         title: slide.title,
         subtitle: slide.subtitle,
         slider_id: slide.slider_id,
-        image: slide.media[0] ? slide.media[0].preview_url : null,
+        image: slide.media[0] ? slide.media[0].original_url : null,
     });
     const toast = useToast();
 
@@ -40,7 +45,7 @@ export default function EditSlideForm({ isOpen, onClose, slide }) {
             }),
             {
                 preserveScroll: true,
-                onSuccess: () =>
+                onSuccess: () => {
                     toast({
                         position: "top-right",
                         title: "Slide Created.",
@@ -48,7 +53,10 @@ export default function EditSlideForm({ isOpen, onClose, slide }) {
                         status: "success",
                         duration: 6000,
                         isClosable: true,
-                    }),
+                    });
+                    setEditSlide(null);
+                    onClose();
+                },
                 onError: (errors) => {
                     if (errors.title) {
                         reset("title");
@@ -72,7 +80,7 @@ export default function EditSlideForm({ isOpen, onClose, slide }) {
                             <Input
                                 id="title"
                                 name="title"
-                                value={data.title}
+                                value={data.title || ""}
                                 onChange={(e) =>
                                     setData("title", e.target.value)
                                 }
@@ -90,7 +98,7 @@ export default function EditSlideForm({ isOpen, onClose, slide }) {
                             <Input
                                 id="subtitle"
                                 name="subtitle"
-                                value={data.subtitle}
+                                value={data.subtitle || ""}
                                 onChange={(e) =>
                                     setData("subtitle", e.target.value)
                                 }

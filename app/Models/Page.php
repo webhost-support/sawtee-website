@@ -41,18 +41,16 @@ class Page extends Model implements HasMedia
     {
         $this
             ->addMediaConversion('preview')
-            ->fit(Manipulations::FIT_MAX, 600, 300)
-            ->quality(90)
-            ->sharpen(30)
-            ->keepOriginalImageFormat()
+            ->fit(Manipulations::FIT_MAX, 300, 150)
+            ->quality(60)
             ->nonQueued();
 
         $this
             ->addMediaConversion('responsive')
             ->fit(Manipulations::FIT_MAX, 1920, 1080)
             ->performOnCollections('page-media')
-            ->quality(90)
-            ->keepOriginalImageFormat()
+            ->quality(75)
+            ->format(Manipulations::FORMAT_WEBP)
             ->withResponsiveImages()
             ->nonQueued();
     }

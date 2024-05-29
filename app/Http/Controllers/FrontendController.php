@@ -87,8 +87,14 @@ class FrontendController extends Controller
         $eventsId = Category::where('slug', 'featured-events')->first()->id;
         $newsletterCategoryId = Category::where('slug', 'newsletters')->first()->id;
         $slider = Slider::where('name', "Home Page Slider")->first();
-        $slides = Slide::where('slider_id', $slider->id)->get();
-        // dd($slides);
+        $slides = Slide::where('slider_id', $slider->id)->orderBy('id', 'DESC')->get();
+        $slidesResponsiveImages = array();
+        foreach ($slides as $slide ){
+            $responsive = $slide->getFirstMedia('slides')->getSrcSet('responsive');
+            if($responsive !== ""){
+                array_push($slidesResponsiveImages, $slide->getFirstMedia('slides')->getSrcSet('responsive'));
+            }
+        }
         $infocus = Post::where('category_id', strval($infocusId))->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
         $sawteeInMedia = Post::where('category_id', strval($sawteeInMediaId))->where('status', 'published')->orderBy('id', 'DESC')->take(6)->get();
         $events = Post::where('category_id', strval($eventsId))->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
@@ -103,6 +109,7 @@ class FrontendController extends Controller
             'publications' => $publications,
             'newsletters' => $newsletters,
             'webinars' => $webinars->load(['media']),
+            'slidesResponsiveImages' => $slidesResponsiveImages
         ]);
     }
 

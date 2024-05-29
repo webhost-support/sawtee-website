@@ -32,27 +32,19 @@ const CardsCarousel = ({ slides, navigation }) => {
                             className="card-swiper-slide"
                         >
                             <Box
-                                rounded={"sm"}
+                                rounded={"md"}
                                 overflow={"hidden"}
-                                bg={useColorModeValue(
-                                    "white",
-                                    "var(--color-darker)"
-                                )}
-                                border={"1px"}
-                                borderColor="black"
+                                shadow={"2xl"}
+                                border={"1px solid var(--color-text)"}
                             >
-                                <Box
+                                <Image
+                                    src={slide.media[0]?.original_url}
+                                    alt={slide.title + slide.subtitle}
+                                    roundedTop={"md"}
+                                    objectFit="cover"
                                     aspectRatio={3 / 4}
-                                    borderBottom={"2px"}
-                                    borderColor="black"
-                                >
-                                    <Image
-                                        src={slide.media[0].original_url}
-                                        alt={slide.title + slide.subtitle}
-                                        roundedTop={"sm"}
-                                        objectFit="cover"
-                                    />
-                                </Box>
+                                    fallbackSrc="/assets/SM-placeholder-300x150.png"
+                                />
                                 <Flex
                                     p={4}
                                     alignItems="center"
@@ -65,6 +57,10 @@ const CardsCarousel = ({ slides, navigation }) => {
                                     _dark={{
                                         color: "gray.300",
                                     }}
+                                    bg={useColorModeValue(
+                                        "gray.50",
+                                        "var(--color-darker)"
+                                    )}
                                 >
                                     <InertiaChakraLink
                                         href={`/publications/${slide.file.name}`}
@@ -77,7 +73,8 @@ const CardsCarousel = ({ slides, navigation }) => {
                                             textUnderlineOffset: "3px",
                                         }}
                                     >
-                                        {slide.title + " " + slide.subtitle}
+                                        {slide.title + " "}
+                                        {slide.subtitle && slide.subtitle}
                                     </InertiaChakraLink>
                                 </Flex>
                             </Box>

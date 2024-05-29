@@ -82,17 +82,18 @@ class Post extends Model implements HasMedia
     {
         $this
             ->addMediaConversion('preview')
-            ->fit(Manipulations::FIT_MAX, 400, 300)
-            ->quality(70)
-            ->sharpen(10)
+            ->fit(Manipulations::FIT_MAX, 300, 150)
+            ->format(Manipulations::FORMAT_WEBP)
+            ->quality(75)
             ->keepOriginalImageFormat()
             ->nonQueued();
 
         $this
             ->addMediaConversion('responsive')
             ->performOnCollections('post-featured-image')
-            ->quality(90)
-            ->keepOriginalImageFormat()
+            ->quality(85)
+            ->format(Manipulations::FORMAT_WEBP)
+            // ->keepOriginalImageFormat()
             ->withResponsiveImages()
             ->nonQueued();
     }
