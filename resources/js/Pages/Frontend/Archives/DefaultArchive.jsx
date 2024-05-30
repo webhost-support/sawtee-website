@@ -5,6 +5,7 @@ import { PostImageWithOverlay } from "@/Components/Frontend/featured-post/compon
 import { Link } from "@inertiajs/react";
 import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
 import { motion } from "framer-motion";
+import React from "react";
 
 const DefaultArchive = ({
     posts,
@@ -19,13 +20,15 @@ const DefaultArchive = ({
         )[0];
 
         return (
-            <ArchivePost
-                post={post}
-                featured_image={featured_image}
-                headingColor={headingColor}
-                textColor={textColor}
-                showFallbackImage={showFallbackImage}
-            />
+            <React.Fragment key={post.id}>
+                <ArchivePost
+                    post={post}
+                    featured_image={featured_image}
+                    headingColor={headingColor}
+                    textColor={textColor}
+                    showFallbackImage={showFallbackImage}
+                />
+            </React.Fragment>
         );
     });
 };
@@ -35,7 +38,6 @@ export default DefaultArchive;
 const ArchivePost = ({ post, featured_image, showFallbackImage, rest }) => {
     return (
         <GlassBox
-            key={post.id}
             spacing={4}
             role="group"
             w="full"
@@ -83,13 +85,7 @@ const ArchivePost = ({ post, featured_image, showFallbackImage, rest }) => {
                                 fontWeight="semibold"
                                 mb={4}
                             >
-                                <InertiaChakraLink
-                                    as={Link}
-                                    href={`/category/${post.category.slug}/${post.slug}`}
-                                    className="primary-link"
-                                >
-                                    {post.title}
-                                </InertiaChakraLink>
+                                {post.title}
                             </Heading>
                         </LinkOverlay>
                         <Text fontSize={["xs", "sm", "sm"]} noOfLines={3}>

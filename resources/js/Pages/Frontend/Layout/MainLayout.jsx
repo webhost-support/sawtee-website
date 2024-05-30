@@ -5,7 +5,7 @@ import { HiArrowNarrowUp } from "react-icons/hi";
 import SkipLink from "@/Components/Frontend/styles/skip-link";
 import { usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
-import { primarMmenu, footerMenu, socialMenu } from "@/Utils/data";
+import { primarMmenu, footerMenu, socialMenu, mobileMenu } from "@/Utils/data";
 
 export default function MainLayout({ children, ...rest }) {
     const { experts, url } = usePage();
@@ -38,7 +38,11 @@ export default function MainLayout({ children, ...rest }) {
                 Skip to main content
             </SkipLink>
 
-            <Header menu={primarMmenu} />
+            <Header
+                menu={primarMmenu}
+                mobileMenu={mobileMenu}
+                socialLinks={socialMenu}
+            />
             <ScaleFade in={url} initialScale={0.9}>
                 <Box as="main" {...rest}>
                     {children}

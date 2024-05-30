@@ -228,7 +228,9 @@ const AboutMegaMenu = ({
                                     pb={{ md: 3, xl: 6 }}
                                     color={"gray.200"}
                                 >
-                                    <Link href={child.url}>{child.title}</Link>
+                                    <MenuLink as={Link} href={child.url}>
+                                        {child.title}
+                                    </MenuLink>
                                 </Box>
                             );
                         })}
@@ -336,9 +338,9 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                                 as={motion.li}
                                 variants={ListVariants}
                             >
-                                <Link href={grandChild.url}>
+                                <MenuLink as={Link} href={grandChild.url}>
                                     {grandChild.title}
-                                </Link>
+                                </MenuLink>
                             </Text>
                         );
                     })}
@@ -351,27 +353,36 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                     if (idx !== 0) {
                         return (
                             <VStack spacing={10} key={grandChildren.title}>
-                                <Text fontSize="2xl" fontWeight="bold">
-                                    <Link href={grandChildren.url}>
+                                <MenuLink as={Link} href={grandChildren.url}>
+                                    <Text fontSize="2xl" fontWeight="bold">
                                         {grandChildren.title}
-                                    </Link>
-                                </Text>
+                                    </Text>
+                                </MenuLink>
                                 <SimpleGrid columns={2} spacing={6}>
                                     {grandChildren.children &&
                                         grandChildren.children.map((child) => {
                                             return (
-                                                <Text
+                                                <Box
                                                     key={child.title}
                                                     as={motion.li}
                                                     variants={ListVariants}
+                                                    fontSize={{
+                                                        md: "sm",
+                                                        xl: "md",
+                                                    }}
+                                                    fontWeight="medium"
+                                                    position="relative"
+                                                    cursor="pointer"
+                                                    pb={{ md: 3, xl: 6 }}
+                                                    color={"gray.200"}
                                                 >
                                                     <MenuLink
+                                                        as={Link}
                                                         href={child.url}
-                                                        textAlign="center"
                                                     >
                                                         {child.title}
                                                     </MenuLink>
-                                                </Text>
+                                                </Box>
                                             );
                                         })}
                                 </SimpleGrid>

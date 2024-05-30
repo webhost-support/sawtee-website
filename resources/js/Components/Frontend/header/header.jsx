@@ -1,6 +1,6 @@
 import { Box, Flex, Image, Text, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
-import MobileMenu from "../menu";
+import MobileMenu from "../menu/mobileMenu";
 
 import { Link } from "@inertiajs/react";
 
@@ -78,10 +78,21 @@ const SiteLogo = ({ src, established }) => {
     );
 };
 
-const Header = ({ menu = null, children, ...props }) => (
+const Header = ({
+    menu = null,
+    mobileMenu = null,
+    socialLinks = null,
+    showSocialLinks = false,
+    children,
+    ...props
+}) => (
     <SiteHeader {...props}>
         <SiteHeaderInner>
-            <MobileMenu menu={menu} />
+            <MobileMenu
+                menu={mobileMenu}
+                socialLinks={socialLinks}
+                showSocialLinks={true}
+            />
             <SiteLogo src={"/assets/logo-sawtee.svg"} established={null} />
             {children}
         </SiteHeaderInner>

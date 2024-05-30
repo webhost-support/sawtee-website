@@ -5,12 +5,16 @@ import ThemeToggle from "./themeToggle";
 import { Box, useDisclosure } from "@chakra-ui/react";
 import React from "react";
 
-const Header = ({ menu = null }) => {
+const Header = ({ menu = null, mobileMenu, socialLinks }) => {
     const searchModal = useDisclosure();
     const [posts, setPosts] = React.useState(null);
     const [query, setQuery] = React.useState(null);
     return (
-        <MainHeader menu={menu}>
+        <MainHeader
+            menu={menu}
+            mobileMenu={mobileMenu}
+            socialLinks={socialLinks}
+        >
             {menu && <Navigation justifyContent="center" menu={menu} />}
 
             <Box as="div" display={"flex"}>

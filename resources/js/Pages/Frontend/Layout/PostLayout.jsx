@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, useColorModeValue } from "@chakra-ui/react";
 import { LightPatternBox } from "@/Components/Frontend/styles/pattern-box";
 import PostHeader from "@/Components/Frontend/post/post-header";
 import Section from "@/Components/Frontend/styles/section";
@@ -17,7 +17,7 @@ const PostLayout = ({
     featured_image,
     srcSet,
 }) => {
-    const postHeaderColor = "var(--color-text)";
+    const postHeaderColor = useColorModeValue("gray.700", "gray.200");
 
     const readingTime = post.content
         ? readingDuration(post.content, {
@@ -32,9 +32,8 @@ const PostLayout = ({
 
     return (
         <LightPatternBox showPattern={showPattern} pt="10px" pb={"40px"}>
-            <Box maxW="5xl" mx="auto">
+            <Box maxW="5xl" mt={"20px"} mx="auto">
                 <PostHeader
-                    mt={"20px"}
                     px={{ base: "32px", md: "3rem" }}
                     color={postHeaderColor}
                     categories={post.category}
@@ -44,24 +43,29 @@ const PostLayout = ({
 
             {/* <PostProgressBar value={scroll} /> */}
 
-            {/* Look at the settings to see if we should include the featured image */}
-            <Box maxW={"5xl"} mx="auto" px={4}>
+            <Box maxW="6xl" w="full" mx="auto" py="40px">
                 {!isProgramPost && featured_image && (
                     <FeaturedMedia
                         src={featured_image}
                         rounded={"xl"}
                         srcSet={srcSet}
+                        aspectRatio={16 / 9}
+                        maxH="550px"
+                        mx="auto"
+                        w="full"
                     />
                 )}
+            </Box>
 
-                <PostMeta
-                    author={post.author}
-                    date={post.published_at}
-                    readingTime={readingTime}
-                />
-
+            {/* Look at the settings to see if we should include the featured image */}
+            <Box maxW={"5xl"} mx="auto" px={4}>
                 {isNewsletter && (
                     <Box>
+                        <PostMeta
+                            author={post.author}
+                            date={post.published_at}
+                            readingTime={readingTime}
+                        />
                         {children}
                         <SocialShare url={shareUrl} />
                     </Box>
@@ -70,11 +74,15 @@ const PostLayout = ({
                 {!isNewsletter && (
                     <Content
                         as={Section}
-                        px={{ base: "1.5rem", md: "3rem" }}
                         size={"lg"}
                         pb="50px"
                         className="post-content"
                     >
+                        <PostMeta
+                            author={post.author}
+                            date={post.published_at}
+                            readingTime={readingTime}
+                        />
                         {children}
                         <SocialShare url={shareUrl} />
                     </Content>

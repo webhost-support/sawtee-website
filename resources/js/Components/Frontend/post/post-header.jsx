@@ -26,7 +26,7 @@ const PostHeader = ({
             as="h1"
             fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
             color={color}
-            my={{ base: "16px", lg: "32px" }}
+            my={{ base: "10px", lg: "20px" }}
             textTransform="capitalize"
             dangerouslySetInnerHTML={{ __html: heading }}
         />

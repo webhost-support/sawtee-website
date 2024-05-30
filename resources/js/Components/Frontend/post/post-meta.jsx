@@ -2,13 +2,13 @@ import { Box, HStack, Text } from "@chakra-ui/react";
 import React from "react";
 import { formatDate } from "@/Utils/helpers";
 
-const PostMeta = ({ author, date, readingTime, ...props }) => (
-    <Box ml={{ base: "1.5rem", md: "3rem" }} className="post-meta" {...props}>
+const PostMeta = ({ author, date, readingTime, ...rest }) => (
+    <Box className="post-meta" {...rest}>
         <HStack
             rowGap="2"
             columnGap="8"
             mt={4}
-            justify={"center"}
+            justify={"start"}
             align={"center"}
             flexWrap={"wrap"}
         >

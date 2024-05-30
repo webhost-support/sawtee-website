@@ -36,7 +36,6 @@ export default function Post({ post, featured_image, srcSet }) {
                 {isDefault && (
                     <Box className="default_post_content" mt={6}>
                         <Text
-                            mt={6}
                             dangerouslySetInnerHTML={{
                                 __html: content,
                             }}
