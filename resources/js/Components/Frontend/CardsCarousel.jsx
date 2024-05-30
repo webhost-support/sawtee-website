@@ -1,7 +1,7 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Keyboard, Navigation, EffectCards } from "swiper/modules";
-import { Box, Image, Flex, useColorModeValue } from "@chakra-ui/react";
+import { Box, Image, Flex, useColorModeValue, LinkBox } from "@chakra-ui/react";
 
 // Import Swiper styles
 import "swiper/css";
@@ -10,6 +10,7 @@ import "swiper/css/effect-cards";
 import "swiper/css/navigation";
 import "../../../css/card-carousel.css";
 import InertiaChakraLink from "./styles/inertia-chakra-link";
+import InertiaChakraLinkOverlay from "./styles/inertia-chakra-link-overlay";
 
 const CardsCarousel = ({ slides, navigation }) => {
     return (
@@ -31,35 +32,38 @@ const CardsCarousel = ({ slides, navigation }) => {
                             key={slide.id}
                             className="card-swiper-slide"
                         >
-                            <Box rounded={"md"} overflow={"hidden"}>
+                            <Box
+                                rounded={"md"}
+                                overflow={"hidden"}
+                                minH="320px"
+                                pos={"relative"}
+                                bg={useColorModeValue(
+                                    "white",
+                                    "blackAlpha.300"
+                                )}
+                            >
                                 <InertiaChakraLink
+                                    pos={"absolute"}
+                                    bottom={0}
+                                    left={0}
                                     href={`/publications/${slide.file.name}`}
                                     target="_blank"
                                     fontWeight="semibold"
-                                    fontSize="sm"
+                                    fontSize="xs"
+                                    w="full"
                                     textDecor={"underline"}
-                                    display={"flex"}
-                                    textAlign={"center"}
-                                    mb={4}
-                                    p={4}
-                                    maxW="280px"
-                                    rounded={"sm"}
                                     cursor={"pointer"}
-                                    color="gray.700"
-                                    _dark={{
-                                        color: "gray.300",
-                                    }}
+                                    color="var(--color-text)"
                                     bg={useColorModeValue(
                                         "white",
-                                        "var(--color-darker)"
+                                        "blackAlpha.300"
                                     )}
-                                    _hover={{
-                                        textUnderlineOffset: "3px",
-                                    }}
+                                    backdropFilter={"blur(5px)"}
                                 >
                                     {slide.title + " "}
                                     {slide.subtitle && slide.subtitle}
                                 </InertiaChakraLink>
+
                                 <Image
                                     border={"1px solid var(--color-text)"}
                                     src={slide.media[0]?.original_url}

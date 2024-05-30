@@ -90,8 +90,8 @@ class FrontendController extends Controller
         $slides = Slide::where('slider_id', $slider->id)->orderBy('id', 'DESC')->get();
         $slidesResponsiveImages = array();
         foreach ($slides as $slide ){
-            $responsive = $slide->getFirstMedia('slides')->getSrcSet('responsive');
-            if($responsive !== ""){
+            $responsive = $slide->getFirstMedia('slides')?->getSrcSet('responsive');
+            if($responsive){
                 array_push($slidesResponsiveImages, $slide->getFirstMedia('slides')->getSrcSet('responsive'));
             }
         }
@@ -227,7 +227,7 @@ class FrontendController extends Controller
                 $category = Category::with('parent')->where('slug', $segments[1])->first();
                 $post = Post::where('slug', $segments[2])->firstOrFail();
                 $media = $post->getFirstMediaUrl('post-featured-image');
-                $srcSet = $post->getFirstMedia('post-featured-image')->getSrcSet('responsive');
+                $srcSet = $post->getFirstMedia('post-featured-image')?->getSrcSet('responsive');
                 return Inertia::render('Frontend/Post', ['post' => $post->load('category', 'category.parent', 'media'), 'featured_image'=>$media, "srcSet" => $srcSet]);
             }
 

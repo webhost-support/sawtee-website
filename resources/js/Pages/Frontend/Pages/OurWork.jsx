@@ -42,19 +42,36 @@ export default function OurWork({ themes, sections }) {
             <Heading
                 as={"h2"}
                 fontSize={{ base: "xl", md: "2xl" }}
-                mb={12}
+                mb={6}
                 textAlign="center"
             >
                 Thematic Areas
             </Heading>
 
-            {intro && (
-                <Box
-                    textAlign="center"
-                    mb={20}
-                    dangerouslySetInnerHTML={{ __html: intro.description }}
-                />
-            )}
+            <Box
+                width="full"
+                display="flex"
+                flexDir="column"
+                justifyContent="center"
+                alignItems="center"
+                position="relative"
+                mb={24}
+            >
+                {intro && (
+                    <Text
+                        as="blockquote"
+                        className="blockquote"
+                        m="0"
+                        py={10}
+                        color="var(--color-text)"
+                        alignSelf={"center"}
+                        maxW="6xl"
+                        dangerouslySetInnerHTML={{
+                            __html: intro.description,
+                        }}
+                    />
+                )}
+            </Box>
 
             <SimpleGrid
                 columns={{ base: 1, lg: 2 }}
@@ -74,6 +91,7 @@ export default function OurWork({ themes, sections }) {
                             role="group"
                             cursor={"pointer"}
                             id={"theme" + (index + 1)}
+                            textAlign="center"
                         >
                             <Heading
                                 as="h3"
@@ -84,7 +102,7 @@ export default function OurWork({ themes, sections }) {
                                 {theme.title}
                             </Heading>
 
-                            <Text mt={1} fontSize={"sm"}>
+                            <Text mt={1} fontSize={"sm"} textAlign="left">
                                 {theme.description}
                             </Text>
                         </Box>

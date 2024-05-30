@@ -57,6 +57,7 @@ const PostPreviewCard = ({
                             category={category}
                             mt="0px"
                             color={color}
+                            colorScheme="primary"
                         />
                     )}
 

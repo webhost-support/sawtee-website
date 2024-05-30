@@ -79,7 +79,7 @@ const ArchivePost = ({ post, featured_image, showFallbackImage, rest }) => {
                         >
                             <Heading
                                 as="h3"
-                                fontSize={["md", "md", "xl"]}
+                                fontSize={["sm", "md", "lg"]}
                                 fontWeight="semibold"
                                 mb={4}
                             >
@@ -92,7 +92,7 @@ const ArchivePost = ({ post, featured_image, showFallbackImage, rest }) => {
                                 </InertiaChakraLink>
                             </Heading>
                         </LinkOverlay>
-                        <Text fontSize={["xs", "md", "md"]} noOfLines={3}>
+                        <Text fontSize={["xs", "sm", "sm"]} noOfLines={3}>
                             {post.excerpt}
                         </Text>
                     </Box>
@@ -106,7 +106,7 @@ const ArchivePost = ({ post, featured_image, showFallbackImage, rest }) => {
                         >
                             <Text
                                 as="time"
-                                fontSize={"sm"}
+                                fontSize={"xs"}
                                 dangerouslySetInnerHTML={{
                                     __html: formatDate(post.published_at),
                                 }}

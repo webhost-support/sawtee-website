@@ -788,7 +788,7 @@ export const Content = styled(Box)`
 
     p {
         padding-block: 10px;
-        font-size: 18px;
+        font-size: 16px;
         line-height: var(--chakra-lineHeights-tall);
     }
 

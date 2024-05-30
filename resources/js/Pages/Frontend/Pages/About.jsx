@@ -30,7 +30,6 @@ export default function About({ sections }) {
             mx="auto"
             py={"80px"}
             maxW={"3xl"}
-            fontSize={{ base: "md", lg: "lg" }}
         >
             {sections !== null &&
                 sections.map((section) => {
@@ -52,17 +51,9 @@ export default function About({ sections }) {
 }
 
 export const Members = ({ memberInstitutions }) => {
-    const headingColor = useColorModeValue("gray.900, whiteAlpha.900");
-
     return (
         <Box>
-            <Heading
-                as="h3"
-                fontSize={["xl", "2xl", "3xl"]}
-                py={"4"}
-                mb="4"
-                color={headingColor}
-            >
+            <Heading as="h3" fontSize={["xl", "2xl", "3xl"]} py={"4"} mb="4">
                 {"Member Institutions"}
             </Heading>
 
@@ -70,13 +61,12 @@ export const Members = ({ memberInstitutions }) => {
                 {memberInstitutions?.map(({ country, institutes }, id) => {
                     return (
                         <AccordionItem key={id} border="none">
-                            <AccordionButton size="md" py="4">
+                            <AccordionButton size="md" py="3">
                                 <Heading
                                     as="h5"
                                     flex="1"
                                     fontFamily={"heading"}
                                     textAlign="left"
-                                    color={headingColor}
                                     style={{ marginBlock: "0" }}
                                 >
                                     {country}
@@ -94,11 +84,6 @@ export const Members = ({ memberInstitutions }) => {
                                                 <ListItem
                                                     key={member_name}
                                                     style={{ margin: "0" }}
-                                                    fontSize={{
-                                                        base: "sm",
-                                                        md: "md",
-                                                        lg: "lg",
-                                                    }}
                                                 >
                                                     <Link
                                                         target="_blank"
@@ -130,8 +115,6 @@ export const PageSection = ({ section, sections }) => {
     const isTabs = section.type === "tabs";
     const isAccordian = section.type === "accordian";
     const isDefault = section.type === "default";
-    const headingColor = useColorModeValue("gray.900, whiteAlpha.900");
-    const contentColor = useColorModeValue("gray.800", "whiteAlpha.800");
     const tabColor = useColorModeValue("blackAlpha", "whiteAlpha");
     const accordianExpandedBackground = useColorModeValue(
         "blackAlpha.200",
@@ -151,7 +134,6 @@ export const PageSection = ({ section, sections }) => {
                 py={"4"}
                 mb="4"
                 fontFamily="heading"
-                color={headingColor}
             >
                 {title}
             </Heading>
@@ -192,7 +174,6 @@ export const PageSection = ({ section, sections }) => {
                                     bg={tabColor}
                                     p={6}
                                     transition="all 0.4s ease-in"
-                                    color={contentColor}
                                 >
                                     <Box
                                         display="flex"
@@ -216,7 +197,7 @@ export const PageSection = ({ section, sections }) => {
                             <AccordionItem key={title} border="none">
                                 <AccordionButton
                                     size="md"
-                                    py="4"
+                                    py="3"
                                     _expanded={{
                                         bg: accordianExpandedBackground,
                                     }}
@@ -226,17 +207,13 @@ export const PageSection = ({ section, sections }) => {
                                         flex="1"
                                         fontFamily={"heading"}
                                         textAlign="left"
-                                        color={headingColor}
                                         style={{ marginBlock: "0" }}
                                     >
                                         {title}
                                     </Heading>
                                     <AccordionIcon />
                                 </AccordionButton>
-                                <AccordionPanel
-                                    px={["5", "10"]}
-                                    color={contentColor}
-                                >
+                                <AccordionPanel px={["5", "10"]}>
                                     <Box
                                         dangerouslySetInnerHTML={{
                                             __html: description,
@@ -250,7 +227,7 @@ export const PageSection = ({ section, sections }) => {
             )}
 
             {isDefault && (
-                <Box color={contentColor}>
+                <Box>
                     <Box
                         dangerouslySetInnerHTML={{
                             __html: description,

@@ -131,14 +131,16 @@ const ExpertCard = ({ expert }) => {
         <Flex
             shadow="lg"
             rounded="lg"
-            bg={"whiteAlpha.500"}
+            bg={"whiteAlpha.200"}
             _dark={{
-                bg: "blackAlpha.500",
+                bg: "blackAlpha.400",
             }}
             direction="column"
             justifyContent="space-between"
             h={48}
             py={3}
+            backdropFilter={"blur(3px)"}
+            maxW="40"
         >
             <Box
                 borderRadius="lg"
@@ -154,26 +156,12 @@ const ExpertCard = ({ expert }) => {
                     boxSize="75px"
                 />
             </Box>
-            <Box p={2} textAlign="center" mt={3}>
-                <Text
-                    fontSize="xs"
-                    fontWeight="bold"
-                    color="gray.800"
-                    _dark={{
-                        color: "white",
-                    }}
-                >
+            <Box p={2} textAlign="center" mt={3} color="gray.200">
+                <Text fontSize="sm" fontWeight="semibold">
                     {expert.name}
                 </Text>
 
-                <Text
-                    fontSize="0.65rem"
-                    fontWeight="normal"
-                    color="gray.800"
-                    _dark={{
-                        color: "gray.200",
-                    }}
-                >
+                <Text fontSize="xs" fontWeight="normal">
                     {expert.designation}
                 </Text>
             </Box>
@@ -203,16 +191,25 @@ const AboutMegaMenu = ({
     ...rest
 }) => {
     return (
-        <Box bg={"primary.500"} mx="auto" px={4} py={10} pb={20}>
+        <Box bg={"primary.700"} mx="auto" px={4} py={10} pb={20}>
             <Grid
-                templateColumns="repeat(6, 1fr)"
+                templateColumns={{
+                    base: 1,
+                    md: "repeat(5, 1fr)",
+                    xl: "repeat(7, 1fr)",
+                }}
+                templateRows={{
+                    base: "auto",
+                    md: "repeat(2, minmax(auto, 250px))",
+                    xl: "auto",
+                }}
                 pos="relative"
                 gap={6}
                 px={6}
                 m="0 auto"
                 {...rest}
             >
-                <GridItem colSpan={1} placeSelf="center">
+                <GridItem colSpan={1} rowSpan={1} placeSelf="center">
                     <Box
                         as={motion.ul}
                         variants={ListContainerVariants}
@@ -224,11 +221,12 @@ const AboutMegaMenu = ({
                                     key={child.title}
                                     as={motion.li}
                                     variants={ListVariants}
-                                    fontSize={"md"}
+                                    fontSize={{ md: "sm", xl: "md" }}
                                     fontWeight="medium"
                                     position="relative"
                                     cursor="pointer"
-                                    pb={6}
+                                    pb={{ md: 3, xl: 6 }}
+                                    color={"gray.200"}
                                 >
                                     <Link href={child.url}>{child.title}</Link>
                                 </Box>
@@ -236,7 +234,12 @@ const AboutMegaMenu = ({
                         })}
                     </Box>
                 </GridItem>
-                <GridItem colSpan={3} width="full" placeSelf="center">
+                <GridItem
+                    colSpan={{ md: 4, xl: 3 }}
+                    rowSpan={1}
+                    width="full"
+                    placeSelf="center"
+                >
                     <Box
                         position="relative"
                         display="flex"
@@ -249,8 +252,8 @@ const AboutMegaMenu = ({
                         bgRepeat={"no-repeat"}
                         bgPos={"center center"}
                         px={6}
-                        py={24}
-                        _before={{
+                        py={{ md: 12, xl: 16 }}
+                        _after={{
                             content: "''",
                             position: "absolute",
                             inset: 0,
@@ -262,37 +265,37 @@ const AboutMegaMenu = ({
                         }}
                     >
                         <Text
-                            fontSize={"md"}
-                            color={"gray-100"}
+                            fontSize={"sm"}
+                            color={"gray.200"}
                             m="0"
                             alignSelf={"center"}
-                            zIndex={10}
+                            zIndex={1}
                             px={6}
-                            lineHeight="1.8"
+                            lineHeight="taller"
                         >
                             {introText}
                         </Text>
                     </Box>
                 </GridItem>
-                <GridItem colSpan={2} gap={4}>
+                <GridItem
+                    colSpan={{ md: 5, xl: 3 }}
+                    rowSpan={{ md: 1, xl: 1 }}
+                    gap={4}
+                >
                     <Text fontSize="xl" pb={4} fontWeight={"semibold"}>
                         Our Experts
                     </Text>
-                    <Grid
-                        templateColumns={"repeat(3, 1fr)"}
-                        templateRows={"repeat(2, auto)"}
-                        gap={2}
-                    >
+                    <SimpleGrid columns={{ base: 6, md: 6, xl: 3 }} gap={2}>
                         {experts &&
                             experts.length > 0 &&
                             experts.map((expert) => {
                                 return (
-                                    <GridItem key={expert.name} colSpan={1}>
+                                    <Box key={expert.name} colSpan={1}>
                                         <ExpertCard expert={expert} />
-                                    </GridItem>
+                                    </Box>
                                 );
                             })}
-                    </Grid>
+                    </SimpleGrid>
                 </GridItem>
             </Grid>
         </Box>
@@ -302,7 +305,7 @@ const AboutMegaMenu = ({
 const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
     return (
         <Box
-            bg={"primary.500"}
+            bg={"primary.700"}
             pos="relative"
             gap="16"
             backdropFilter="blur(5px) saturate(180%)"
