@@ -10,6 +10,7 @@ import {
 // import required modules
 import "swiper/css";
 import "../../../css/video-carousel.css";
+import { useRef } from "react";
 
 const VideoCarousel = ({
     posts,
@@ -21,7 +22,7 @@ const VideoCarousel = ({
     children,
     ...rest
 }) => {
-    const swiperElRef = React.useRef(null);
+    const swiperElRef = useRef(null);
 
     return (
         <Grid

@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from "./Swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import "../../../css/fullwidth-carousel.css";
-
+import { useEffect } from "react";
 
 const FullWidthCarousel = ({
     slides,
@@ -18,7 +18,7 @@ const FullWidthCarousel = ({
     carouselHeight,
     ...rest
 }) => {
-    React.useEffect(() => {
+    useEffect(() => {
         const swiperEl = document.getElementById("full-width-carousel");
         const prevButtonEl = document.getElementById("prev-button");
         const nextButtonEl = document.getElementById("next-button");

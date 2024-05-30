@@ -19,7 +19,7 @@ import {
     OrderedList,
 } from "@chakra-ui/react";
 import React from "react";
-import { convertToSlug } from "@/Utils/helpers";
+import { slugify } from "@/Utils/helpers";
 import { memberInstitutions } from "@/Utils/data";
 
 export default function About({ sections }) {
@@ -120,7 +120,7 @@ export const PageSection = ({ section, sections }) => {
         "blackAlpha.200",
         "blackAlpha.400"
     );
-    const sectionID = convertToSlug(title);
+    const sectionID = slugify(title);
 
     const childSections = sections.filter(
         (sec) => sec.parent_id === section.id
