@@ -11,42 +11,14 @@ export function slugify(inputString)
     .replace(/-+$/, '');            // Trim - from end of text
 }
 
-export const categoriesWidgetsHome = {
-  6: "events",
-  22: "programme",
-  25: "sawtee-in-media",
-  34: "covid",
-  63: "infocus",
-};
-
-export function convertToSlug(title) {
-    // Replace non-alphanumeric characters with dashes
-    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-
-    // Remove leading and trailing dashes
-    return slug.replace(/^-+|-+$/g, "");
-}
-
-export const createMarkupObject = (renderedHtml) => ({ __html: renderedHtml });
 
 export function toTitleCase(str) {
-  return str.replace(/\w\S*/g, function (txt) {
-    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-  });
+    return str.replace(/\w\S*/g, function (txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
 }
 
-export const slugToCamelCase = (string, type, separators) => {
-  if (!separators || typeof separators != "string") {
-    separators = "-_.";
-  }
-  let result = string.replace(
-    new RegExp("[" + separators + "][a-z]", "ig"),
-    function (s) {
-      return s.substr(1, 1).toUpperCase();
-    }
-  );
-  return result;
-};
+
 
 export const getBreakpointValue = (value, fallback, ssr) =>
   useBreakpointValue(

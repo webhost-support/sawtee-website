@@ -1,11 +1,11 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { Box, Stack, Text, Image, Heading, IconButton } from "@chakra-ui/react";
-import React from "react";
+import { Swiper, SwiperSlide } from "./Swiper";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
+import "../../../css/fullwidth-carousel.css";
 
-import { Swiper, SwiperSlide } from "./Swiper";
 
 const FullWidthCarousel = ({
     slides,

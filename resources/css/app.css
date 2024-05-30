@@ -30,16 +30,6 @@
     --color-text-reverse: var(--color-dark);
 }
 
-@font-face {
-    font-family: 'kantipur';
-    src: url('/assets/kantipur_regular-webfont.woff2') format('woff2'),
-         url('/assets/kantipur_regular-webfont.woff') format('woff'),
-         url('/assets/fonts/kantipur_regular.otf') format('otf');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
 *,
 *::before,
 *::after {
@@ -107,23 +97,13 @@ select {
 
 
 
-.post-content a, .page-content a {
-    text-decoration: unset;
-    color: var(--chakra-colors-primary-500);
-
-
-}
 main .primary-link:hover, main a:hover {
     text-decoration: underline;
     text-underline-offset: 3px;
     color: var(--chakra-colors-primary-500);
     text-decoration-color: var(--chakra-colors-primary-500) !important;
 }
-.swiper-button-prev,
-.swiper-button-next {
-    width: 40px !important;
-    height: 35px !important;
-}
+
 
 #root,
 #__next {
@@ -163,6 +143,8 @@ main {
     display: flex;
     flex-direction: column;
 }
+
+
 
 .glassbox::-webkit-scrollbar {
     display: none;
@@ -204,6 +186,12 @@ main {
     text-decoration: none !important;
     color: #fff !important;
 } */
+
+.post-content a, .page-content a {
+    text-decoration: unset;
+    color: var(--chakra-colors-primary-500);
+}
+
 .post-meta p {
     font-size: var(--chakra-fontSizes-sm);
     font-family: var(--chakra-fonts-mono);
@@ -222,26 +210,15 @@ main {
     top: 8rem;
 }
 
+.swiper-button-prev,
+.swiper-button-next {
+    width: 40px !important;
+    height: 35px !important;
+}
+
 swiper-container {
     width: 100% !important;
     height: 100% !important;
-}
-
- .video-carousel .video-slide {
-   width: 100% !important;
-   height: 100% !important;
-   text-align: center;
-}
-
-.full-width-carousel swiper-slide {
-    position: relative;
-    background-color: rgba(0,0,0,0.4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    width: 100% !important;
-
 }
 
 .swiper-slide img {
@@ -250,23 +227,6 @@ swiper-container {
     height: 100% !important;
     object-fit: cover;
 }
-
-.video-carousel {
-    max-height: 400px !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: var(--chakra-radii-lg);
-    overflow: hidden;
-}
-
-
-.thumbs-swiper .thumb-slide {
-   width: 100% !important;
-   height: auto !important;
-}
-
 
 .blockquote::before {
     font-family: Arial, Helvetica, sans-serif;
@@ -340,37 +300,7 @@ swiper-container {
     }
 }
 
-.our-team .social{
-    padding: 10px 0 0 0;
-    margin: 0;
-    list-style: none;
-    position: absolute;
-    top: 40px;
-    left: -27px;
-    background: #3b336a;
-    text-align: center;
-    transform: translate(25px, 0px) rotateY(90deg);
-    transition: all 0.5s ease 0s;
-}
-.our-team:hover .social{
-    transform: translate(0px, 0px) rotateY(0deg);
-}
-.our-team .social li{
-    display: block;
-    margin-bottom: 10px;
-}
-.our-team .social li a{
-    display: block;
-    width: 40px;
-    height: 35px;
-    font-size: 17px;
-    color: #fff;
-    line-height: 30px;
-    transition: all 0.5s ease 0s;
-}
-.our-team .social li a:hover{
-    background: #bc3fbf;
-}
+
 
 .newsletter-html td[data-value*="logo"] img {
     width: 120px !important;
@@ -382,28 +312,7 @@ swiper-container {
     height: 24px !important;
 }
 
-@media only screen and (max-width: 990px){
-    .our-team{ margin-bottom: 30px; }
-    .full-width-carousel > .swiper-button-prev,
-    .full-width-carousel > .swiper-button-prev {
-        right: var(--swiper-navigation-sides-offset, 70px) !important;
-    }
-    .full-width-carousel .swiper-pagination-fraction span {
-        font-size: 24px !important;
-    }
-}
-
-@media only screen and (max-width: 767px){
-    .our-team .social{ left: -20px; }
-
-}
-
-@media only screen and (max-width: 480px){
-    .our-team .social{ left: -20px; }
-
-}
-
-/* backend react-datepicker styles */
+/* backend react-datepicker styles
 .react-datepicker {
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI",
         Roboto, "Helvetica Neue", sans-serif;
@@ -495,4 +404,4 @@ swiper-container {
     &:hover {
         background-color: #2a69ac;
     }
-}
+} */

@@ -4,10 +4,13 @@ export const feature = {
     link: "/reform-monitoring-platform",
 };
 
+// const font_heading =
+//     "'Roboto', 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif";
+// const font_body =
+//     "'Inter',  'Segoe UI', system-ui, Tahoma, Geneva, Verdana, sans-serif";
 const font_heading =
-    "'Roboto', 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif";
-const font_body =
-    "'Inter',  'Segoe UI', system-ui, Tahoma, Geneva, Verdana, sans-serif";
+    "Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif";
+const font_body = "'Segoe UI', system-ui, Tahoma, Geneva, Verdana, sans-serif";
 const font_mono = "'IBM Plex Mono', Menlo, Consolas, monospace";
 export const config = {
     initialColorMode: "system",

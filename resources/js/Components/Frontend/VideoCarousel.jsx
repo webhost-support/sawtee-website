@@ -1,18 +1,15 @@
 import {
-    AspectRatio,
     Grid,
     GridItem,
     HStack,
     Image,
     Skeleton,
     Text,
-    VStack,
 } from "@chakra-ui/react";
-import React from "react";
 
 // import required modules
 import "swiper/css";
-import "swiper/css/scrollbar";
+import "../../../css/video-carousel.css";
 
 const VideoCarousel = ({
     posts,

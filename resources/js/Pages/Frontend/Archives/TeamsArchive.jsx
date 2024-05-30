@@ -1,21 +1,12 @@
 import { GlassBox } from "@/Components/Frontend/index";
-import {
-    Grid,
-    GridItem,
-    VStack,
-    SimpleGrid,
-    Heading,
-    Text,
-    useColorModeValue,
-    Flex,
-    Container,
-} from "@chakra-ui/react";
+import { Heading, Text, Flex, Container } from "@chakra-ui/react";
 import React, { Fragment } from "react";
 import Section from "@/Components/Frontend/styles/section";
 import MainLayout from "../Layout/MainLayout";
 import WebsiteHead from "@/Components/Frontend/Head";
 import { PageLayout } from "../Layout/PageLayout";
 import TeamMember from "../TeamMember";
+import "../../../../css/our-team.css";
 
 const TeamsArchive = ({ category, teams, featured_image, srcSet }) => {
     console.log(teams);
