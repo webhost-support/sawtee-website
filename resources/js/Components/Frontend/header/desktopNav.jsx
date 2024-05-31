@@ -13,6 +13,11 @@ import {
     VStack,
     Divider,
     useOutsideClick,
+    Popover,
+    PopoverTrigger,
+    Icon,
+    PopoverContent,
+    useColorModeValue,
 } from "@chakra-ui/react";
 import { StyledChakraLink } from "@/Components/Frontend/index";
 import { Link, usePage } from "@inertiajs/react";
@@ -20,14 +25,11 @@ import { HiChevronDown, HiChevronUp } from "react-icons/hi";
 import { motion } from "framer-motion";
 import MenuLink from "../styles/inertia-chakra-link";
 import React, { Fragment } from "react";
+import { ChevronRightIcon } from "@chakra-ui/icons";
 
 const StyledLink = ({ children, ...rest }) => {
     return (
-        <StyledChakraLink
-            as={Link}
-            fontSize={"md"}
-            {...rest}
-        >
+        <StyledChakraLink as={Link} fontSize={"md"} {...rest}>
             {children}
         </StyledChakraLink>
     );
@@ -97,7 +99,7 @@ const MenuItem = ({
                 fontFamily={"heading"}
                 fontWeight={"normal"}
                 fontSize={"md"}
-                borderRadius={showIcon ? "5px 0 0 5px" : "5px"}
+                rounded="md"
                 {...rest}
             >
                 <MenuLink
@@ -105,22 +107,19 @@ const MenuItem = ({
                     className={active ? "active " : ""}
                     _hover={{ textDecor: "none" }}
                     href={slug}
-                    preserveState
                 >
                     {title}
                 </MenuLink>
+                {showIcon && (
+                    <Icon
+                        aria-label={title}
+                        ml="3"
+                        w={6}
+                        h={6}
+                        as={isOpen ? HiChevronUp : HiChevronDown}
+                    />
+                )}
             </Button>
-            {showIcon && (
-                <IconButton
-                    aria-label={title}
-                    variant={active ? "solid" : "ghost"}
-                    colorScheme={active ? "primary" : "gray"}
-                    size="sm"
-                    borderRadius={"0 5px 5px 0"}
-                    onClick={isOpen ? onClose : onOpen}
-                    icon={isOpen ? <HiChevronUp /> : <HiChevronDown />}
-                />
-            )}
         </li>
     );
 };
@@ -437,9 +436,56 @@ const SiteMenuItem = ({
     );
 };
 
-const Navigation = ({ menu, ...rest }) => {
-    const ref = React.useRef();
+const DesktopSubNav = ({ title, url }) => {
+    return (
+        <Box
+            as="a"
+            href={url}
+            role={"group"}
+            display={"block"}
+            p={2}
+            rounded={"md"}
+            _hover={{ bg: useColorModeValue("pink.50", "gray.900") }}
+        >
+            <Stack direction={"row"} align={"center"}>
+                <Box>
+                    <Text
+                        transition={"all .3s ease"}
+                        _groupHover={{ color: "pink.400" }}
+                        fontWeight={500}
+                    >
+                        {title}
+                    </Text>
+                </Box>
+                <Flex
+                    transition={"all .3s ease"}
+                    transform={"translateX(-10px)"}
+                    opacity={0}
+                    _groupHover={{
+                        opacity: "100%",
+                        transform: "translateX(0)",
+                    }}
+                    justify={"flex-end"}
+                    align={"center"}
+                    flex={1}
+                >
+                    <Icon
+                        color={"pink.400"}
+                        w={5}
+                        h={5}
+                        as={ChevronRightIcon}
+                    />
+                </Flex>
+            </Stack>
+        </Box>
+    );
+};
 
+const DesktopNavigation = ({ menu, ...rest }) => {
+    const ref = React.useRef();
+    const linkColor = useColorModeValue("gray.600", "gray.200");
+    const linkHoverColor = useColorModeValue("gray.800", "white");
+    const popoverContentBgColor = useColorModeValue("white", "gray.800");
     return (
         <Box
             as="nav"
@@ -450,36 +496,62 @@ const Navigation = ({ menu, ...rest }) => {
         >
             <SiteMenu ml="20px">
                 {menu &&
-                    menu.map((item) => {
+                    menu.map((navItem) => {
                         const { isOpen, onOpen, onClose } = useDisclosure();
                         return (
-                            <Fragment key={item.title}>
-                                {item.children && (
-                                    <Box
-                                        ref={ref}
-                                        as={motion.div}
-                                        pos="absolute"
-                                        left={0}
-                                        top={"80px"}
-                                        w="full"
-                                        display={isOpen ? "block" : "none"}
-                                        animate={isOpen ? "open" : "closed"}
-                                        variants={MegaMenuWrapperVariants}
-                                        transition={{
-                                            durations: 0.6,
-                                        }}
-                                    >
-                                        <MegaMenu item={item} isOpen={isOpen} />
+                            <Popover
+                                trigger={"hover"}
+                                placement={"bottom-start"}
+                            >
+                                <PopoverTrigger>
+                                    <Box key={navItem.title}>
+                                        <SiteMenuItem
+                                            item={navItem}
+                                            onOpen={onOpen}
+                                            isOpen={isOpen}
+                                            onClose={onClose}
+                                            megamenuref={ref}
+                                        />
                                     </Box>
+                                </PopoverTrigger>
+                                {navItem.children && (
+                                    <PopoverContent
+                                        border={0}
+                                        boxShadow={"xl"}
+                                        bg={popoverContentBgColor}
+                                        p={4}
+                                        rounded={"xl"}
+                                        minW={"sm"}
+                                    >
+                                        {navItem.children.map((child) => {
+                                            if (child.title === "Know Us") {
+                                                return (
+                                                    <AboutMegaMenu
+                                                        item={child}
+                                                        experts={child.experts}
+                                                        introText={
+                                                            child.introText
+                                                        }
+                                                        introImage={
+                                                            child.introImage
+                                                        }
+                                                        isOpen={isOpen}
+                                                    />
+                                                );
+                                            } else if (
+                                                child.title === "Our Work"
+                                            ) {
+                                                return (
+                                                    <OurWorkMegaMenu
+                                                        item={child}
+                                                        isOpen={isOpen}
+                                                    />
+                                                );
+                                            }
+                                        })}
+                                    </PopoverContent>
                                 )}
-                                <SiteMenuItem
-                                    item={item}
-                                    onOpen={onOpen}
-                                    isOpen={isOpen}
-                                    onClose={onClose}
-                                    megamenuref={ref}
-                                />
-                            </Fragment>
+                            </Popover>
                         );
                     })}
             </SiteMenu>
@@ -487,4 +559,4 @@ const Navigation = ({ menu, ...rest }) => {
     );
 };
 
-export default Navigation;
+export default DesktopNavigation;

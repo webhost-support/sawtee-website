@@ -1,8 +1,21 @@
-import { Box, Flex, Image, Text, useColorModeValue } from "@chakra-ui/react";
+import {
+    Box,
+    Collapse,
+    Flex,
+    IconButton,
+    Image,
+    Text,
+    useColorModeValue,
+    useDisclosure,
+} from "@chakra-ui/react";
 import React from "react";
 import MobileMenu from "../menu/mobileMenu";
 
 import { Link } from "@inertiajs/react";
+import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
+import DesktopNavigation from "./desktopNav";
+import ThemeToggle from "./themeToggle";
+import { SearchButton, SearchForm, SearchModal } from "../search";
 
 const SiteHeader = (props) => (
     <Box
@@ -22,20 +35,21 @@ const SiteHeader = (props) => (
 
 const SiteHeaderInner = (props) => (
     <Flex
-        // align="center"
         width={{ base: "auto", sm: "92%" }}
         mx="auto"
-        height={"5rem"}
-        maxW="1550px"
-        justifyContent="space-between"
-        alignItems="center"
+        minH={"5rem"}
+        py={{ base: 2 }}
+        px={{ base: 4 }}
+        borderBottom={1}
+        borderStyle={"solid"}
+        align="center"
+        justify={"space-between"}
+        borderColor={useColorModeValue("gray.200", "gray.900")}
         {...props}
     />
 );
 
 const Logo = ({ text = "SAWTEE", src }) => {
-    const TextLogoColor = useColorModeValue("primary.700", "primary.300");
-
     if (src) {
         return (
             <Image
@@ -49,11 +63,13 @@ const Logo = ({ text = "SAWTEE", src }) => {
     } else {
         return (
             <Text
-                fontSize="2xl"
-                color={TextLogoColor}
-                fontFamily="heading"
+                textAlign={useBreakpointValue({
+                    base: "center",
+                    md: "left",
+                })}
+                fontFamily={"heading"}
                 textTransform="uppercase"
-                fontWeight="bold"
+                color={useColorModeValue("primary.700", "primary.300")}
             >
                 {text}
             </Text>
@@ -85,18 +101,78 @@ const Header = ({
     showSocialLinks = false,
     children,
     ...props
-}) => (
-    <SiteHeader {...props}>
-        <SiteHeaderInner>
-            <MobileMenu
-                menu={mobileMenu}
-                socialLinks={socialLinks}
-                showSocialLinks={true}
-            />
-            <SiteLogo src={"/assets/logo-sawtee.svg"} established={null} />
-            {children}
-        </SiteHeaderInner>
-    </SiteHeader>
-);
+}) => {
+    const { isOpen, onToggle } = useDisclosure();
+    const searchModal = useDisclosure();
+    const [posts, setPosts] = React.useState(null);
+    const [query, setQuery] = React.useState(null);
+    return (
+        <SiteHeader {...props}>
+            <SiteHeaderInner>
+                <Flex
+                    flex={{ base: 1 }}
+                    align="center"
+                    justify={"space-between"}
+                >
+                    <Flex
+                        ml={{ base: -2 }}
+                        display={{ base: "flex", md: "none" }}
+                        align="center"
+                    >
+                        <IconButton
+                            onClick={onToggle}
+                            icon={
+                                isOpen ? (
+                                    <CloseIcon w={3} h={3} />
+                                ) : (
+                                    <HamburgerIcon w={5} h={5} />
+                                )
+                            }
+                            variant={"ghost"}
+                            aria-label={"Toggle Navigation"}
+                        />
+                    </Flex>
+                    <SiteLogo
+                        src={"/assets/logo-sawtee.svg"}
+                        established={null}
+                    />
+                    <Flex
+                        display={{ base: "none", md: "flex" }}
+                        justify="center"
+                        ml={20}
+                    >
+                        <DesktopNavigation menu={menu} />
+                    </Flex>
+                    <Box as="div" display={"flex"}>
+                        <ThemeToggle mr="4" />
+                        <SearchButton onClick={searchModal.onOpen} />
+                    </Box>
+                    <SearchModal
+                        isOpen={searchModal.isOpen}
+                        onClose={() => {
+                            setPosts(null);
+                            searchModal.onClose();
+                        }}
+                        posts={posts}
+                        query={query}
+                    >
+                        <SearchForm setPosts={setPosts} setQuery={setQuery} />
+                    </SearchModal>
+                </Flex>
+            </SiteHeaderInner>
+            <Collapse
+                in={isOpen}
+                animateOpacity
+                transition={{ enter: { duration: 0.5 } }}
+            >
+                <MobileMenu
+                    menu={mobileMenu}
+                    socialLinks={socialLinks}
+                    showSocialLinks={true}
+                />
+            </Collapse>
+        </SiteHeader>
+    );
+};
 
 export default Header;

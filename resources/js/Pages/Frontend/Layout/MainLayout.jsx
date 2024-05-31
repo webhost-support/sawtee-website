@@ -1,5 +1,5 @@
 import Footer from "@/Components/Frontend/footer";
-import Header from "@/Components/Frontend/header/index";
+import Header from "@/Components/Frontend/header/header";
 import { Box, Button, Icon, SlideFade, ScaleFade } from "@chakra-ui/react";
 import { HiArrowNarrowUp } from "react-icons/hi";
 import SkipLink from "@/Components/Frontend/styles/skip-link";
