@@ -223,9 +223,11 @@ const renderItems = (items, publications) => {
     return items.map((item) => (
         <React.Fragment key={item.id}>
             <ItemComponent item={item} publications={publications} />
-            {item.children &&
-                item.children.length > 0 &&
-                renderItems(item.children, publications)}
+            {item.children && item.children.length > 0 && (
+                <React.Fragment key={item.id}>
+                    renderItems(item.children, publications)
+                </React.Fragment>
+            )}
         </React.Fragment>
     ));
 };

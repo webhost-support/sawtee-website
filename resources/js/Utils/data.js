@@ -346,7 +346,80 @@ export const primarMmenu = [
     {
         title: "Publications",
         url: "/category/publications",
-        children: null,
+        children: [
+            {
+                title: "Trade Insight",
+                url: "/category/publications/trade-insight",
+                children: null,
+            },
+            {
+                title: "Policy Brief",
+                url: "/category/publications/policy-brief",
+                children: null,
+            },
+            {
+                title: "Briefing Paper",
+                url: "/category/publications/briefing-paper",
+                children: null,
+            },
+            {
+                title: "Discussion Paper",
+                url: "/category/publications/discussion-paper",
+                children: null,
+            },
+            {
+                title: "Research Brief",
+                url: "/category/publications/research-brief",
+                children: null,
+            },
+            {
+                title: "Books",
+                url: "/category/publications/books",
+                children: null,
+            },
+            {
+                title: "Working Paper",
+                url: "/category/publications/working-paper",
+                children: null,
+            },
+            {
+                title: "Others",
+                url: "/category/publications/others",
+                children: null,
+            },
+            {
+                title: "Publications in Nepali",
+                url: "/category/publications/publication-in-nepali",
+                children: [
+                    {
+                        title: "Nepali Briefing Paper",
+                        url: "/category/publications/publications-in-nepali/nepali-briefing-paper",
+                        children: null,
+                    },
+                    {
+                        title: "Nepali Policy Brief",
+                        url: "/category/publications/publications-in-nepali/nepali-policy-brief",
+                        children: null,
+                    },
+                    {
+                        title: "Nepali Newsletters",
+                        url: "/category/publications/publications-in-nepali/nepali-newsletters",
+                        children: [
+                            {
+                                title: "Swachha Pratispardha",
+                                url: "/category/publications/publications-in-nepali/nepali-newsletters/swachha-pratispardha",
+                                children: null,
+                            },
+                            {
+                                title: "Byapar ra Bikash",
+                                url: "/category/publications/publications-in-nepali/nepali-newsletters/byapar-ra-bikash",
+                                children: null,
+                            },
+                        ],
+                    },
+                ],
+            },
+        ],
     },
     {
         title: "Policy Research",

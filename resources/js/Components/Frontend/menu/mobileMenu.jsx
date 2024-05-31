@@ -3,20 +3,15 @@ import {
     Box,
     useColorModeValue,
     Icon,
-    Menu,
-    MenuButton,
-    MenuList,
     Flex,
     Text,
     useDisclosure,
     Collapse,
-    HStack,
 } from "@chakra-ui/react";
 import React, { useRef } from "react";
 import { SocialMenu } from "@/Components/Frontend/header/social-menu";
 import { Link } from "@inertiajs/react";
 import InertiaChakraLink from "../styles/inertia-chakra-link";
-import { BiChevronDown } from "react-icons/bi";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 
 const MenuLink = ({ title, url, index, isOpen, ...rest }) => {
