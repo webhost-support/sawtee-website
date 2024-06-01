@@ -6,26 +6,31 @@ import {
     BlogSection,
     CarouselSection,
     ExploreButton,
+    FancyTitle,
     InfocusSection,
     PublicationSection,
     ReformMonitorSection,
     SawteeInMediaSection,
     Section,
-    SubscribeSection,
     Title,
     VideosSection,
 } from "@/Components/Frontend";
 import {
     Box,
     Container,
+    Flex,
     Grid,
     GridItem,
+    Show,
+    useBreakpoint,
     useColorModeValue,
 } from "@chakra-ui/react";
 import CardsCarousel from "@/Components/Frontend/CardsCarousel";
 import { splitPosts } from "@/Utils/helpers";
 import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
 import { Link } from "@inertiajs/react";
+import SimpleList from "@/Components/Frontend/SimpleList";
+import { Newsletter } from "@/Components/Frontend/newsletter";
 
 const Home = ({
     infocus,
@@ -59,7 +64,6 @@ const Home = ({
     ];
 
     const [featuredPublication, latestPublication] = splitPosts(publications);
-
     return (
         <MainLayout>
             <WebsiteHead
@@ -75,6 +79,7 @@ const Home = ({
                     }}
                     id="carousel-section"
                     gap={4}
+                    rowGap={20}
                 >
                     <GridItem colSpan={{ base: 1, sm: 5, md: 4 }}>
                         <Box
@@ -86,7 +91,7 @@ const Home = ({
                             <CarouselSection
                                 slides={slides}
                                 responsiveImages={slidesResponsiveImages}
-                                carouselHeight={"500px"}
+                                carouselHeight={{ base: "auto", md: "500px" }}
                             />
                         </Box>
                     </GridItem>
@@ -108,33 +113,46 @@ const Home = ({
             </Section>
 
             {feature && (
-                <Section className="reform-section">
-                    <ReformMonitorSection feature={feature} />
+                <Section
+                    className="reform-section"
+                    bg={useColorModeValue(
+                        "blackAlpha.50",
+                        "var(--color-darker)"
+                    )}
+                    py={{ base: 12, md: 20 }}
+                >
+                    <Box maxW="7xl" mx="auto">
+                        <ReformMonitorSection feature={feature} />
+                    </Box>
                 </Section>
             )}
 
-            {infocus && (
-                <Section className="infocus-section" title={"InFocus"}>
-                    <Container maxW="7xl" centerContent>
+            {/* {infocus && (
+                <Section className="infocus-section">
+                    <Box maxW="7xl" mx="auto">
+                        <FancyTitle title={"In Focus"} />
                         <InfocusSection infocus={infocus} />
-                        <InertiaChakraLink
-                            as={Link}
-                            href={"/category/in-focus"}
-                            mt="4"
-                        >
-                            <ExploreButton
-                                size="md"
-                                text="InFocus"
-                                variant="outline"
-                                px={10}
-                                my="4"
-                            />
-                        </InertiaChakraLink>
-                    </Container>
+                        <Flex justify={"end"}>
+                            <InertiaChakraLink
+                                as={Link}
+                                href={"/category/in-focus"}
+                                mt="4"
+                                ml="auto"
+                            >
+                                <ExploreButton
+                                    size={["xs", "sm"]}
+                                    text="More on in focus"
+                                    variant="link"
+                                    px={10}
+                                    my="8"
+                                />
+                            </InertiaChakraLink>
+                        </Flex>
+                    </Box>
                 </Section>
-            )}
+            )} */}
 
-            <Section className="about-section">
+            <Section className="about-section" py={{ base: 12, md: 20 }}>
                 <AboutSection data={AboutSectionData} />
             </Section>
 
@@ -144,50 +162,70 @@ const Home = ({
                 className="publications-section"
             >
                 <PublicationSection
-                    publications={latestPublication}
-                    newsletters={newsletters}
+                    infocus={infocus}
+                    publications={publications}
+                    events={events}
                 />
             </Section>
 
-            {events && (
+            {/* {events && (
                 <Section
-                    title={"Policy Outreach"}
                     id="blog-section"
                     className="events-section"
+                    py={{ base: 12, md: 20 }}
                 >
-                    <BlogSection events={events} />
+                    <Box maxW="8xl" mx="auto" px={6}>
+                        <FancyTitle title={"Featured Events"} />
+                        <BlogSection events={events} />
+                        <Flex justify={"end"}>
+                            <InertiaChakraLink
+                                as={Link}
+                                href={`/category/featured-events`}
+                                mt={6}
+                            >
+                                <ExploreButton
+                                    size={["xs", "sm"]}
+                                    text="More on featured events"
+                                    variant="link"
+                                    px={10}
+                                />
+                            </InertiaChakraLink>
+                        </Flex>
+                    </Box>
                 </Section>
-            )}
+            )} */}
 
             {sawteeInMedia && (
                 <Section
-                    title={"Sawtee in Media"}
                     className="sawtee-in-media-section"
-                    bg={useColorModeValue(
-                        "blackAlpha.50",
-                        "var(--color-darker)"
-                    )}
                     py={{ base: 12, md: 20 }}
                 >
-                    <SawteeInMediaSection
-                        articles={sawteeInMedia}
-                        link={"/category/sawtee-in-media"}
-                    />
+                    <Box maxW="8xl" mx="auto" px={6}>
+                        <FancyTitle title={"Sawtee in Media"} />
+                        <SawteeInMediaSection
+                            articles={sawteeInMedia}
+                            link={"/category/sawtee-in-media"}
+                        />
+                    </Box>
                 </Section>
             )}
             {/* <InfoSection /> */}
             <Section
-                title={"Webinar Series"}
                 className="section videos-section"
+                bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
+                py={{ base: 12, md: 20 }}
             >
-                <VideosSection posts={webinars} />
+                <Box maxW="8xl" mx="auto" px={6}>
+                    <FancyTitle title={"Webinar Series"} />
+                    <VideosSection posts={webinars} />
+                </Box>
             </Section>
             <Section
                 py={{ base: "6", md: "12", lg: "16" }}
                 px={{ base: "10", md: "16", lg: "20" }}
                 className="subscribe-section"
             >
-                <SubscribeSection />
+                <Newsletter data={newsletters} />
             </Section>
         </MainLayout>
     );

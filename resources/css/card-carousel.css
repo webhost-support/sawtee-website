@@ -1,6 +1,6 @@
 .card-swiper {
   width: 100% !important;
-  max-width: var(--chakra-sizes-md) !important;
+  max-width: var(--chakra-sizes-sm) !important;
   padding-block: 10px;
 }
 

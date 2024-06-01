@@ -19,7 +19,7 @@ const MultiPostsCarousel = ({
     spacing,
     pagination,
     scrollbar,
-    showCategoryTag = "false",
+    showCategoryTag,
     direction,
     children,
     ...rest
@@ -63,14 +63,16 @@ const MultiPostsCarousel = ({
         >
             <div slot="container-start">
                 <HStack w="full" justify={"space-between"} spacing={4}>
-                    {children}
-                    <HStack spacing={4}>
+                    <HStack
+                        spacing={4}
+                        justify={{ base: "justify-between", md: "end" }}
+                    >
                         <IconButton
                             id="prev-button"
                             colorScheme="primary"
                             variant="outline"
                             icon={<ChevronLeftIcon w="8" h="8" />}
-                            aria-label="previous"
+                            aria-label="previous button"
                             onClick={() =>
                                 swiperElRef.current?.swiper.slidePrev()
                             }
@@ -81,12 +83,13 @@ const MultiPostsCarousel = ({
                             colorScheme="primary"
                             variant="outline"
                             icon={<ChevronRightIcon w="8" h="8" />}
-                            aria-label="next"
+                            aria-label="next button"
                             onClick={() =>
                                 swiperElRef.current?.swiper.slideNext()
                             }
                         />
                     </HStack>
+                    {children}
                 </HStack>
             </div>
             {posts.map((article) => {

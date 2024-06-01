@@ -107,7 +107,7 @@ class FrontendController extends Controller
             'sawteeInMedia' => $sawteeInMedia->load('category'),
             'events' => $events->load(['category', 'media', 'tags']),
             'publications' => $publications,
-            'newsletters' => $newsletters,
+            'newsletters' => $newsletters->load(['category', 'media']),
             'webinars' => $webinars->load(['media']),
             'slidesResponsiveImages' => $slidesResponsiveImages
         ]);

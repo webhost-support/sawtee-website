@@ -29,6 +29,8 @@ import {
     Tag,
     IconButton,
     LinkOverlay,
+    ListItem,
+    Badge,
 } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import { Link } from "@inertiajs/react";
@@ -46,6 +48,7 @@ import Feature from "@/Components/Frontend/feature";
 import { motion } from "framer-motion";
 import DottedBox from "@/Pages/Frontend/DottedBox";
 import VideoCarousel from "./VideoCarousel";
+import SimpleList from "./SimpleList";
 // import { Barchart, TreemapChart } from "@/Components/Frontend/Charts";
 export const ListItemVariant = {
     initial: {
@@ -195,107 +198,71 @@ export const InfocusSection = ({ infocus, link }) => {
                     </Box>
                 );
             })}
-
         </GlassBox>
     );
 };
 
 export const SawteeInMediaSection = ({ articles, link }) => {
     return (
-        <Container maxW="8xl" centerContent px={6}>
-            <MultiPostsCarousel
-                posts={articles}
-                spacing={30}
-                pagination={false}
-                showCategoryTag={true}
-                scrollbar={true}
-                my={10}
-            >
-                <Show above="sm">
-                    <InertiaChakraLink as={Link} href={link}>
-                        <ExploreButton
-                            size="md"
-                            text="Explore All "
-                            variant="outline"
-                            px={10}
-                        />
-                    </InertiaChakraLink>
-                </Show>
-            </MultiPostsCarousel>
-            <Show below="sm">
-                <InertiaChakraLink as={Link} href={link} mt="4">
-                    <ExploreButton
-                        size="md"
-                        text="Explore All "
-                        variant="outline"
-                        px={10}
-                    />
-                </InertiaChakraLink>
-            </Show>
-        </Container>
+        <MultiPostsCarousel
+            posts={articles}
+            spacing={30}
+            pagination={false}
+            showCategoryTag={true}
+            scrollbar={true}
+            my={10}
+        >
+            <InertiaChakraLink as={Link} href={link}>
+                <ExploreButton
+                    size={["xs", "sm"]}
+                    text="More on sawtee in media "
+                    variant="link"
+                    px={10}
+                />
+            </InertiaChakraLink>
+        </MultiPostsCarousel>
     );
 };
 
 export const BlogSection = ({ events }) => {
     return (
-        <Container maxW="8xl" centerContent px={6}>
-            <Grid
-                className="band"
-                gridTemplateColumns={{
-                    base: "1fr",
-                    md: "1fr 1fr",
-                    lg: "auto repeat(2, 260px);",
-                }}
-                gridTemplateRows={"auto"}
-                gap={8}
-                mb="10"
-            >
-                {events &&
-                    events.length > 0 &&
-                    events.map((article, i) => {
-                        if (i === 0) {
-                            return (
-                                <GridItem
-                                    key={article.id}
-                                    colSpan={{ base: 1, md: 2, xl: 1 }}
-                                    rowSpan={2}
-                                >
-                                    <PostCard
-                                        post={article}
-                                        headingSize={"3xl"}
-                                    />
-                                </GridItem>
-                            );
-                        } else {
-                            return (
-                                <GridItem
-                                    key={article.id}
-                                    colSpan={1}
-                                    rowSpan="1"
-                                >
-                                    <PostCard
-                                        post={article}
-                                        showDescription={false}
-                                        aspect={"3/2"}
-                                    />
-                                </GridItem>
-                            );
-                        }
-                    })}
-            </Grid>
-            <InertiaChakraLink
-                as={Link}
-                href={`/category/featured-events`}
-                mt={6}
-            >
-                <ExploreButton
-                    size="md"
-                    text="Explore All"
-                    variant="outline"
-                    px={10}
-                />
-            </InertiaChakraLink>
-        </Container>
+        <Grid
+            className="band"
+            gridTemplateColumns={{
+                base: "1fr",
+                md: "1fr 1fr",
+                lg: "auto repeat(2, 260px);",
+            }}
+            gridTemplateRows={"auto"}
+            gap={8}
+            mb="10"
+        >
+            {events &&
+                events.length > 0 &&
+                events.map((article, i) => {
+                    if (i === 0) {
+                        return (
+                            <GridItem
+                                key={article.id}
+                                colSpan={{ base: 1, md: 2, xl: 1 }}
+                                rowSpan={2}
+                            >
+                                <PostCard post={article} headingSize={"3xl"} />
+                            </GridItem>
+                        );
+                    } else {
+                        return (
+                            <GridItem key={article.id} colSpan={1} rowSpan="1">
+                                <PostCard
+                                    post={article}
+                                    showDescription={false}
+                                    aspect={"3/2"}
+                                />
+                            </GridItem>
+                        );
+                    }
+                })}
+        </Grid>
     );
 };
 
@@ -322,184 +289,198 @@ export const InfoSection = () => {
     );
 };
 
-export const SubscribeSection = () => {
-    return <Newsletter />;
-};
-
 export const ReformMonitorSection = ({ feature }) => {
     return <Feature feature={feature} />;
 };
 
-export const PublicationSection = ({ publications, newsletters }) => {
+export const PublicationSection = ({ publications, infocus, events }) => {
     return (
-
-            <Grid
-                gridTemplateColumns={{ base: "1fr", lg: "repeat(7, 1fr)" }}
-                gap={8}
-                maxW={"8xl"}
-                mx="auto"
-            >
-                <GridItem colSpan={{ base: 1, lg: 4 }}>
-                    <NewsletterSection newsletters={newsletters} />
-                </GridItem>
-                <GridItem colSpan={{ base: 1, lg: 3 }}>
-                    <Container>
-                        <Flex justify={"center"} mb={3}>
-                            <InertiaChakraLink
-                                href="/category/publications"
-                                textAlign={"center"}
-                                my={6}
-                            >
-                                <ExploreButton
-                                    size="md"
-                                    text="Latest Publications"
-                                    variant="outline"
-                                    px={10}
-                                />
-                            </InertiaChakraLink>
-                        </Flex>
-                        <VStack
-                            border="1px solid"
-                            borderColor="gray.400"
-                            rounded="md"
-                            spacing={0}
-                            align={"space-between"}
-                            as={motion.ul}
-                            style={{ listStyle: "none" }}
-                            initial={"initial"}
-                            variants={ListVariant}
-                            whileInView={"whileInView"}
-                            // viewport={{ once: true }}
-                        >
-                            {publications &&
-                                publications.map(
-                                    (
-                                        {
-                                            id,
-                                            title,
-                                            subtitle,
-                                            file,
-                                            media,
-                                            category,
-                                        },
-                                        i
-                                    ) => (
-                                        <Box
-                                            key={id}
-                                            as={motion.li}
-                                            initial={"initial"}
-                                            whileInView={"whileInView"}
-                                            variants={ListItemVariant}
-                                            // viewport={{ once: true }}
+        <Grid
+            gridTemplateColumns={{ base: "1fr", lg: "repeat(6, 1fr)" }}
+            gap={10}
+            maxW={"8xl"}
+            mx="auto"
+        >
+            <GridItem colSpan={{ base: 1, md: 2 }}>
+                <SimpleList heading={"in focus"}>
+                    {infocus.map((item) => {
+                        return (
+                            <ListItem key={item.id} mb="1rem">
+                                <Box>
+                                    <InertiaChakraLink
+                                        textDecor="underline"
+                                        textUnderlineOffset="3px"
+                                        href={`/category/in-focus/${item.slug}`}
+                                    >
+                                        <Text
+                                            fontSize={"0.875rem"}
+                                            lineHeight={"short"}
                                         >
-                                            <Grid
-                                                templateRows={{
-                                                    base: "auto auto",
-                                                    md: "auto",
-                                                }}
-                                                templateColumns={{
-                                                    base: "4fr",
-                                                    md: "4fr 2fr",
-                                                }}
-                                                p={{ base: 3, md: 8 }}
-                                                gap={3}
-                                                _hover={{
-                                                    bg: useColorModeValue(
-                                                        "blackAlpha.50",
-                                                        "blackAlpha.300"
-                                                    ),
-                                                }}
+                                            {item.title}
+                                        </Text>
+                                    </InertiaChakraLink>
+                                    <Text
+                                        color={useColorModeValue(
+                                            "gray.600",
+                                            "gray.300"
+                                        )}
+                                        fontSize={".75rem"}
+                                        mt={2}
+                                    >
+                                        {formatDate(item.published_at)}
+                                    </Text>
+                                </Box>
+                            </ListItem>
+                        );
+                    })}
+                </SimpleList>
+            </GridItem>
+            <GridItem colSpan={{ base: 1, md: 2 }}>
+                <SimpleList heading={"publications"}>
+                    {publications.map((publication) => {
+                        const media = publication.media.length
+                            ? publication.media.filter(
+                                  (media) =>
+                                      media.collection_name ===
+                                      "publication_featured_image"
+                              )[0].original_url
+                            : "/assets/SM-placeholder-150x150.png";
+                        return (
+                            <ListItem key={publication.id} mb="1rem">
+                                <Badge size={"sm"} colorScheme="blue">
+                                    {publication.category?.name}
+                                </Badge>
+                                <LinkBox
+                                    as={HStack}
+                                    justify="space-between"
+                                    gap={6}
+                                >
+                                    <Box>
+                                        <InertiaChakraLinkOverlay
+                                            as={Link}
+                                            textDecor="underline"
+                                            textUnderlineOffset="3px"
+                                            href={
+                                                publication.file
+                                                    ? `/publications/${publication.file.name}`
+                                                    : "#"
+                                            }
+                                        >
+                                            <Text
+                                                fontSize={"0.875rem"}
+                                                lineHeight={"short"}
                                             >
-                                                <GridItem
-                                                    gridTemplateColumns={{
-                                                        base: "span 3",
-                                                        md: "span 4",
-                                                    }}
-                                                >
-                                                    <Tag
-                                                        w="max-content"
-                                                        colorScheme="primary"
-                                                        mb={2}
-                                                    >
-                                                        {category.name}
-                                                    </Tag>
-
-                                                    <InertiaChakraLink
-                                                        href={`publication/${file.name}`}
-                                                    >
-                                                        <Heading
-                                                            as="h3"
-                                                            fontWeight="bold"
-                                                            fontSize="md"
-                                                            m="0"
-                                                        >
-                                                            {title}
-                                                        </Heading>
-                                                        {subtitle && (
-                                                            <Text
-                                                                as="span"
-                                                                fontWeight="medium"
-                                                                fontSize="xs"
-                                                                color={useColorModeValue(
-                                                                    "gray.600",
-                                                                    "gray.300"
-                                                                )}
-                                                            >
-                                                                {" " + subtitle}
-                                                            </Text>
-                                                        )}
-                                                    </InertiaChakraLink>
-                                                </GridItem>
-
-                                                <GridItem
-                                                    gridTemplateColumns={{
-                                                        base: "span 1",
-                                                        md: "span 2",
-                                                    }}
-                                                    justifySelf={"flex-end"}
-                                                    alignSelf="start"
-                                                >
-                                                    <InertiaChakraLink
-                                                        href={`/publicaitons/${file.name}`}
-                                                    >
-                                                        <Image
-                                                            src={
-                                                                media.length
-                                                                    ? media.filter(
-                                                                          (
-                                                                              media
-                                                                          ) =>
-                                                                              media.collection_name ===
-                                                                              "publication_featured_image"
-                                                                      )[0]
-                                                                          .original_url
-                                                                    : "/assets/SM-placeholder-150x150.png"
-                                                            }
-                                                            alt={title}
-                                                            w="60px"
-                                                            border="1px solid"
-                                                            borderColor={
-                                                                "gray.400"
-                                                            }
-                                                            p={1}
-                                                            rounded="sm"
-                                                            aspectRatio={3 / 4}
-                                                            // h="190px"
-                                                        />
-                                                    </InertiaChakraLink>
-                                                </GridItem>
-                                            </Grid>
-                                            {publications.length - 1 !== i && (
-                                                <Divider m={0} />
+                                                {publication.title}
+                                            </Text>
+                                        </InertiaChakraLinkOverlay>
+                                        <Text
+                                            color={useColorModeValue(
+                                                "gray.600",
+                                                "gray.300"
                                             )}
-                                        </Box>
-                                    )
-                                )}
-                        </VStack>
-                    </Container>
-                </GridItem>
-            </Grid>
+                                            fontSize={".75rem"}
+                                            mt={2}
+                                        >
+                                            {publication.subtitle}
+                                        </Text>
+                                    </Box>
 
+                                    {media && (
+                                        <Box>
+                                            <Image
+                                                src={media}
+                                                alt={publication.title}
+                                                w="60px"
+                                                border="1px solid"
+                                                borderColor={"gray.400"}
+                                                p={1}
+                                                rounded="sm"
+                                                aspectRatio={3 / 4}
+                                            />
+                                        </Box>
+                                    )}
+                                </LinkBox>
+                            </ListItem>
+                        );
+                    })}
+                </SimpleList>
+            </GridItem>
+
+            <GridItem colSpan={{ base: 1, md: 2 }}>
+                <SimpleList heading={"Featured Events"}>
+                    {events.map((event) => {
+                        const featured_image =
+                            event.media.length > 0
+                                ? event.media.filter(
+                                      (item) =>
+                                          item.collection_name ===
+                                          "post-featured-image"
+                                  )[0].original_url
+                                : "/assets/SM-placeholder-150x150.png";
+                        // const srcSet = featured_image
+                        //     ? featured_image.responsive_images.responsive.urls
+                        //     : null;
+
+                        return (
+                            <ListItem
+                                key={event.id}
+                                className="list-tem"
+                                mb="1rem"
+                            >
+                                <LinkBox
+                                    as={HStack}
+                                    // w="full"
+                                    align="center"
+                                    justify="space-between"
+                                    gap={4}
+                                >
+                                    <Box flexGrow={1} maxW="70%">
+                                        <InertiaChakraLinkOverlay
+                                            as={Link}
+                                            textDecor="underline"
+                                            textUnderlineOffset="3px"
+                                            href={`/category/events/${event.slug}`}
+                                        >
+                                            <Text
+                                                fontSize={"0.875rem"}
+                                                lineHeight={"short"}
+                                            >
+                                                {event.title}
+                                            </Text>
+                                        </InertiaChakraLinkOverlay>
+                                        <Text
+                                            color={useColorModeValue(
+                                                "gray.600",
+                                                "gray.300"
+                                            )}
+                                            fontSize={".75rem"}
+                                            mt={2}
+                                        >
+                                            {formatDate(event.published_at)}
+                                        </Text>
+                                    </Box>
+
+                                    {featured_image && (
+                                        <Box maxW="70%" boxSize={"90px"}>
+                                            <Image
+                                                src={featured_image}
+                                                alt={event.title}
+                                                w="full"
+                                                border="1px solid"
+                                                borderColor={"gray.400"}
+                                                p={1}
+                                                rounded="sm"
+                                                aspectRatio={3 / 2}
+                                            />
+                                        </Box>
+                                    )}
+                                </LinkBox>
+                            </ListItem>
+                        );
+                    })}
+                </SimpleList>
+            </GridItem>
+        </Grid>
     );
 };
 
@@ -517,13 +498,13 @@ export const Section = ({ children, title = null, ...rest }) => {
             className="section"
             {...rest}
         >
-            {title && <FancyTitle title={title} mb={0} />}
+            {title && <FancyTitle title={title} />}
             {children}
         </Box>
     );
 };
 
-export const NewsletterSection = ({ newsletters }) => {
+export const publicationsection = ({ newsletters }) => {
     const isMobile = useBreakpointValue({ base: true, md: false });
     const isDesktop = useBreakpointValue({ base: false, md: true });
 
@@ -935,36 +916,29 @@ export const Accordian = ({ data }) => {
 
 export const FancyTitle = ({ title, ...rest }) => {
     return (
-        <HStack
-            position="relative"
-            justify={"space-evenly"}
-            padding="10"
-            mb="6"
-            gap="4"
+        <Heading
+            as="h3"
+            fontSize={"1.5rem"}
+            fontWeight="bold"
+            fontFamily={
+                "Gotham Narrow SSm A,Gotham Narrow SSm B,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif"
+            }
+            marginBottom={"3rem !important"}
+            display={"flex"}
+            alignItems={"center"}
+            _after={{
+                content: `""`,
+                height: "2px",
+                bg: useColorModeValue("gray.800", "gray.200"),
+                ml: "1rem",
+                borderRadius: "4px",
+                opacity: 0.25,
+                flexGrow: 1,
+            }}
             {...rest}
         >
-            <Divider h="2px" bg="gray.800" _dark={{ bg: "whiteAlpha.800" }} />
-            <Box
-                bg="blackAlpha.800"
-                color="whiteAlpha.900"
-                _dark={{ bg: "whiteAlpha.800", color: "gray.800" }}
-                px="4"
-                py="2"
-                shadow="xl"
-            >
-                <Heading
-                    as="h3"
-                    fontSize={{ base: "xl", md: "2xl", lg: "4xl" }}
-                    fontWeight="bold"
-                    textAlign="center"
-                    w="max-content"
-                >
-                    {title}
-                </Heading>
-            </Box>
-
-            <Divider h="2px" bg="gray.800" _dark={{ bg: "whiteAlpha.800" }} />
-        </HStack>
+            {title}
+        </Heading>
     );
 };
 

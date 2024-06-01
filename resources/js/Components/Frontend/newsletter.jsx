@@ -10,17 +10,22 @@ import {
     FormControl,
     FormErrorMessage,
     FormHelperText,
+    Grid,
+    GridItem,
+    ListItem,
 } from "@chakra-ui/react";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import InertiaChakraLink from "./styles/inertia-chakra-link";
 import { ExploreButton } from ".";
 import { Link } from "@inertiajs/react";
 import { useForm } from "@inertiajs/react";
+import SimpleList from "./SimpleList";
 
 export const PatternBox = ({ showPattern = false, ...props }) => (
     <Box
         as="section"
         bg={useColorModeValue("primary.50", "primary.700")}
+        backdropFilter={"blur(5px)"}
         borderTop="10px solid"
         borderColor={"primary.500"}
         {...(showPattern && {
@@ -39,7 +44,7 @@ export const PatternBoxInner = (props) => (
         zIndex="1"
         overflow="hidden"
         textAlign="center"
-        maxW="640px"
+        maxW="3xl"
         mx="auto"
         px={6}
         {...props}
@@ -47,27 +52,71 @@ export const PatternBoxInner = (props) => (
 );
 
 // TODO: Add the logic to show this component based on if newsletter package exists
-export const Newsletter = (props) => {
+export const Newsletter = ({ data, props }) => {
     return (
         <PatternBox {...props}>
-            <Box
-                py="80px"
-                position="relative"
-                zIndex="1"
-                overflow="hidden"
-                textAlign="center"
-                mx="auto"
-                px={6}
+            <Grid
+                gridTemplateColumns={{ base: "1fr", md: "repeat(5, 1fr)" }}
+                placeItems="center"
+                p="40px"
+                gap={10}
             >
-                <Heading color="var(--color-text)" textTransform="uppercase">
-                    Never miss an update!
-                </Heading>
-                <Text mt={4} fontSize="xl" color="primary.500">
-                    Receive the latest publication releases, update and monthly
-                    newsletter.
-                </Text>
-                <SubscribeForm />
-            </Box>
+                <GridItem colSpan={{ base: 1, md: 3 }}>
+                    <Box
+                        position="relative"
+                        zIndex="1"
+                        overflow="hidden"
+                        textAlign="center"
+                        mx="auto"
+                        px={6}
+                    >
+                        <Heading
+                            color="var(--color-text)"
+                            textTransform="uppercase"
+                        >
+                            Never miss an update!
+                        </Heading>
+                        <Text mt={4} fontSize="xl" color="primary.500">
+                            Receive the latest publication releases, update and
+                            monthly newsletter.
+                        </Text>
+                        <SubscribeForm />
+                    </Box>
+                </GridItem>
+                <GridItem colSpan={{ base: 1, md: 2 }}>
+                    <SimpleList heading={"e-newsletters"} my="10">
+                        {data.slice(0, 5).map((item) => {
+                            return (
+                                <ListItem key={item.id} mb="1rem">
+                                    <InertiaChakraLink
+                                        textDecor="underline"
+                                        textUnderlineOffset="3px"
+                                        href={`/category/in-focus/${item.slug}`}
+                                    >
+                                        <Text
+                                            fontSize={"0.875rem"}
+                                            lineHeight={"short"}
+                                        >
+                                            {item.title}
+                                        </Text>
+                                    </InertiaChakraLink>
+                                </ListItem>
+                            );
+                        })}
+                    </SimpleList>
+                    <InertiaChakraLink
+                        as={Link}
+                        href={"/category/newsletters"}
+                        ml="6"
+                    >
+                        <ExploreButton
+                            size="sm"
+                            text="More newsletters"
+                            variant="link"
+                        />
+                    </InertiaChakraLink>
+                </GridItem>
+            </Grid>
         </PatternBox>
     );
 };
@@ -152,14 +201,6 @@ const SubscribeForm = ({ ...rest }) => {
                     />
                 </Button>
             </Flex>
-            <InertiaChakraLink as={Link} href={"/category/newsletters"}>
-                <ExploreButton
-                    size="md"
-                    text="Explore newsletters"
-                    mt={10}
-                    variant="solid"
-                />
-            </InertiaChakraLink>
         </Box>
     );
 };

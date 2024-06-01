@@ -78,7 +78,7 @@ const FullWidthCarousel = ({
             {slides.map((slide, i) => {
                 return (
                     <SwiperSlide key={slide.id}>
-                        <Box as="picture" h={carouselHeight} w="full">
+                        <Box as="picture" h={["auto", carouselHeight]} w="full">
                             <Image
                                 src={`${slide.media[0].original_url}`}
                                 srcSet={responsiveImages[i]}
