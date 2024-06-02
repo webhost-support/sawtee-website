@@ -82,7 +82,7 @@ class FrontendController extends Controller
             $publications = array_merge($publications, $subcategoryPosts->toArray());
         }
 
-        $infocusId = Category::where('slug', 'infocus')->first()->id;
+        $infocusId = Category::where('slug', 'in-focus')->first()->id;
         $sawteeInMediaId = Category::where('slug', 'sawtee-in-media')->first()->id;
         $eventsId = Category::where('slug', 'featured-events')->first()->id;
         $newsletterCategoryId = Category::where('slug', 'newsletters')->first()->id;

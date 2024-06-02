@@ -225,7 +225,7 @@ const Home = ({
                 px={{ base: "10", md: "16", lg: "20" }}
                 className="subscribe-section"
             >
-                <Newsletter data={newsletters} />
+                <Newsletter data={newsletters}  />
             </Section>
         </MainLayout>
     );

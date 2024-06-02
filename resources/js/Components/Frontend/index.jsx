@@ -357,7 +357,8 @@ export const PublicationSection = ({ publications, infocus, events }) => {
                                 >
                                     <Box>
                                         <InertiaChakraLinkOverlay
-                                            as={Link}
+                                            // as={Link}
+                                            target="_blank"
                                             textDecor="underline"
                                             textUnderlineOffset="3px"
                                             href={
@@ -439,7 +440,7 @@ export const PublicationSection = ({ publications, infocus, events }) => {
                                             as={Link}
                                             textDecor="underline"
                                             textUnderlineOffset="3px"
-                                            href={`/category/events/${event.slug}`}
+                                            href={`/category/featured-events/${event.slug}`}
                                         >
                                             <Text
                                                 fontSize={"0.875rem"}

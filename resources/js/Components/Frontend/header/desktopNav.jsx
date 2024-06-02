@@ -4,7 +4,7 @@ import {
     Grid,
     Button,
     IconButton,
-    useDisclosure,
+    Icon,
     GridItem,
     Text,
     Flex,
@@ -12,7 +12,6 @@ import {
     SimpleGrid,
     VStack,
     Divider,
-    Icon,
     useColorModeValue,
     ButtonGroup,
     Menu,
@@ -20,15 +19,11 @@ import {
     MenuList,
     MenuDivider,
 } from "@chakra-ui/react";
-import { StyledChakraLink } from "@/Components/Frontend/index";
 import { Link, usePage } from "@inertiajs/react";
 import { motion } from "framer-motion";
 import MenuLink from "../styles/inertia-chakra-link";
-import {
-    ChevronDownIcon,
-    ChevronRightIcon,
-    ChevronUpIcon,
-} from "@chakra-ui/icons";
+import { ChevronDownIcon } from "@chakra-ui/icons";
+import React from "react";
 
 const MegaMenuWrapperVariants = {
     open: {
@@ -163,7 +158,8 @@ const AboutMegaMenu = ({
                     <Box
                         as={motion.ul}
                         variants={ListContainerVariants}
-                        animate={isOpen ? "open" : "closed"}
+                        initial={"closed"}
+                        whileInView={"open"}
                     >
                         {item.children.map((child) => {
                             return (
@@ -171,6 +167,8 @@ const AboutMegaMenu = ({
                                     key={child.title}
                                     as={motion.li}
                                     variants={ListVariants}
+                                    initial={"closed"}
+                                    whileInView={"open"}
                                     fontSize={{ md: "sm", xl: "md" }}
                                     fontWeight="medium"
                                     position="relative"
@@ -275,7 +273,8 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                 <SimpleGrid
                     as={motion.ul}
                     variants={ListContainerVariants}
-                    animate={isOpen ? "open" : "closed"}
+                    initial={"closed"}
+                    whileInView={"open"}
                     columns={3}
                     spacing={6}
                     // placeItems="center"
@@ -286,6 +285,8 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                                 key={grandChild.title}
                                 as={motion.li}
                                 variants={ListVariants}
+                                initial={"closed"}
+                                whileInView={"open"}
                                 fontSize={{
                                     md: "sm",
                                     xl: "md",
@@ -321,7 +322,8 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                                     spacing={6}
                                     as={motion.ul}
                                     variants={ListContainerVariants}
-                                    animate={isOpen ? "open" : "closed"}
+                                    initial={"closed"}
+                                    whileInView={"open"}
                                 >
                                     {grandChildren.children &&
                                         grandChildren.children.map((child) => {
@@ -330,6 +332,8 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                                                     key={child.title}
                                                     as={motion.li}
                                                     variants={ListVariants}
+                                                    initial={"closed"}
+                                                    whileInView={"open"}
                                                     fontSize={{
                                                         md: "sm",
                                                         xl: "md",
@@ -385,86 +389,137 @@ const SiteMenuItem = ({ item, ...rest }) => {
             {({ isOpen, onClose }) => {
                 return (
                     <>
-                        <ButtonGroup
+                        <Box
+                            as="li"
+                            role={"group"}
+                            display={"block"}
+                            p={2}
+                            fontSize={{ base: "sm", md: "sm" }}
+                            rounded={"md"}
+                            color={useColorModeValue("gray.700", "gray.200")}
+                            _hover={{
+                                bg: useColorModeValue(
+                                    "primary.50",
+                                    "primary.700"
+                                ),
+                                color: useColorModeValue(
+                                    "gray.700",
+                                    "gray.200"
+                                ),
+                            }}
+                        >
+                            <Stack direction={"row"} align={"center"}>
+                                <Box as="a" href={item.url}>
+                                    <Text
+                                        transition={"all .3s ease"}
+                                        fontWeight={500}
+                                    >
+                                        {item.title}
+                                    </Text>
+                                </Box>
+                                <Flex
+                                    justify={"flex-end"}
+                                    align={"center"}
+                                    flex={1}
+                                >
+                                    {item.children && (
+                                        <MenuButton
+                                            isActive={isOpen}
+                                            as={Button}
+                                            variant="link"
+                                            size={"1rem"}
+                                            rounded={"none"}
+                                            aria-label="Menu DropDown"
+                                        >
+                                            <Icon
+                                                transform={
+                                                    isOpen
+                                                        ? "rotate(180deg)"
+                                                        : ""
+                                                }
+                                                transition="all .25s ease-in-out"
+                                                w={5}
+                                                h={5}
+                                                as={ChevronDownIcon}
+                                            />
+                                        </MenuButton>
+                                    )}
+                                </Flex>
+                            </Stack>
+                        </Box>
+                        {/* <ButtonGroup
                             role="group"
-                            colorScheme={"telegram"}
+                            colorScheme={"primary"}
                             isAttached
                             variant={active ? "solid" : "ghost"}
                             w="full"
                             justifyContent={"start"}
+                            size="md"
                             {...rest}
                         >
-                            <Link
+                            <Button
+                                as={Link}
                                 _hover={{ textDecor: "none" }}
                                 href={item.url}
-                                style={{ width: "100%" }}
-                                aria-label="menu item link"
+                                variant={"link"}
+                                rounded={"none"}
+                                aria-label={item.title}
+                                justifyContent={"start"}
+                                px="4"
+                                // w="full"
                             >
-                                <Button
-                                    fontFamily={"heading"}
-                                    fontWeight={"normal"}
-                                    fontSize={"md"}
-                                    rounded={"none"}
-                                    aria-label={item.title}
-                                    justifyContent={"start"}
-                                    w="full"
-                                >
-                                    {item.title}
-                                </Button>
-                            </Link>
+                                {item.title}
+                            </Button>
 
                             {item.children && (
                                 <MenuButton
-                                    as={IconButton}
+                                    isActive={isOpen}
+                                    as={Button}
+                                    rightIcon={
+                                        <ChevronDownIcon
+                                            m={0}
+                                            transform={
+                                                isOpen ? "rotate(180deg)" : ""
+                                            }
+                                            transition="all .25s ease-in-out"
+                                        />
+                                    }
                                     rounded={"none"}
                                     aria-label="Menu DropDown"
-                                    icon={<ChevronDownIcon />}
-                                    _hover={{ bg: "transparent" }}
-                                    transition="all .25s ease-in-out"
-                                    transform={isOpen ? "rotate(180deg)" : ""}
                                 />
                             )}
-                        </ButtonGroup>
+                        </ButtonGroup> */}
 
-                        {item.title === "Our Work" && (
+                        {item.title === "Our Work" ||
+                        item.title === "Know Us" ? (
                             <MenuList zIndex={5} maxW={"8xl"} p={0}>
                                 <MegaMenu item={item} isOpen={isOpen} />
                             </MenuList>
-                        )}
-                        {item.title === "Know Us" && (
-                            <MenuList zIndex={5} maxW={"8xl"} p={0}>
-                                <MegaMenu item={item} isOpen={isOpen} />
+                        ) : (
+                            <MenuList
+                                zIndex={5}
+                                border="2px solid"
+                                borderColor={useColorModeValue(
+                                    "gray.700",
+                                    "gray.100"
+                                )}
+                                boxShadow="4px 4px 0"
+                            >
+                                {item.children?.map((child) => {
+                                    return (
+                                        <Stack
+                                            key={child.title}
+                                            gap={0}
+                                            w="full"
+                                        >
+                                            <MenuLink w="full">
+                                                <SiteMenuItem item={child} />
+                                            </MenuLink>
+                                        </Stack>
+                                    );
+                                })}
                             </MenuList>
                         )}
-
-                        {item.title !== "Our Work" &&
-                            item.title !== "Know Us" && (
-                                <MenuList
-                                    zIndex={5}
-                                    border="2px solid"
-                                    borderColor={useColorModeValue(
-                                        "gray.700",
-                                        "gray.100"
-                                    )}
-                                    boxShadow="4px 4px 0"
-                                >
-                                    {item.children?.map((child) => {
-                                        return (
-                                            <Stack
-                                                key={child.title}
-                                                gap={0}
-                                                w="full"
-                                            >
-                                                <MenuLink w="full">
-                                                    <SiteMenuItem
-                                                        item={child}
-                                                    />
-                                                </MenuLink>
-                                            </Stack>
-                                        );
-                                    })}
-                                </MenuList>
-                            )}
 
                         <MenuDivider m={0} />
                     </>
@@ -477,7 +532,7 @@ const SiteMenuItem = ({ item, ...rest }) => {
 const DesktopNavigation = ({ menu, ...rest }) => {
     return (
         <Box
-            as="nav"
+            as="ul"
             width="100%"
             display={{ base: "none", lg: "flex" }}
             zIndex={"999"}
@@ -486,7 +541,11 @@ const DesktopNavigation = ({ menu, ...rest }) => {
             <SiteMenu ml="20px">
                 {menu &&
                     menu.map((navItem) => {
-                        return <SiteMenuItem item={navItem} w="full" />;
+                        return (
+                            <React.Fragment key={navItem.title}>
+                                <SiteMenuItem item={navItem} />
+                            </React.Fragment>
+                        );
                     })}
             </SiteMenu>
         </Box>

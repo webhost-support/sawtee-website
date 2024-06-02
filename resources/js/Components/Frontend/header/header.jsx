@@ -139,7 +139,7 @@ const Header = ({
                     <Flex
                         display={{ base: "none", md: "flex" }}
                         justify="center"
-                        ml={20}
+
                     >
                         <DesktopNavigation menu={menu} />
                     </Flex>

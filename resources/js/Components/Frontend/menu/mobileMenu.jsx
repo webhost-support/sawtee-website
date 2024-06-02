@@ -8,7 +8,7 @@ import {
     useDisclosure,
     Collapse,
 } from "@chakra-ui/react";
-import React, { useRef } from "react";
+import React from "react";
 import { SocialMenu } from "@/Components/Frontend/header/social-menu";
 import { Link } from "@inertiajs/react";
 import InertiaChakraLink from "../styles/inertia-chakra-link";
@@ -107,12 +107,14 @@ const DropDownMenu = ({ menuItem, index, padding = "10px", size = "md" }) => {
                 >
                     {menuItem.children &&
                         menuItem.children.map((child, index) => (
-                            <DropDownMenu
-                                menuItem={child}
-                                index={index}
-                                padding={"5px"}
-                                size="sm"
-                            />
+                            <React.Fragment key={child.title}>
+                                <DropDownMenu
+                                    menuItem={child}
+                                    index={index}
+                                    padding={"5px"}
+                                    size="sm"
+                                />
+                            </React.Fragment>
                         ))}
                 </Stack>
             </Collapse>
@@ -133,9 +135,9 @@ const MobileMenu = ({
         >
             {menu &&
                 menu.map((menuItem, index) => (
-                    <Box key={`0${index + 1}`}>
+                    <React.Fragment key={menuItem.title}>
                         <DropDownMenu menuItem={menuItem} index={index} />
-                    </Box>
+                    </React.Fragment>
                 ))}
             {showSocialLinks && (
                 <Box marginTop={5} mx="auto" p={5}>

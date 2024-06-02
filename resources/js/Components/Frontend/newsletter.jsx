@@ -60,6 +60,8 @@ export const Newsletter = ({ data, props }) => {
                 placeItems="center"
                 p="40px"
                 gap={10}
+                maxW="7xl"
+                mx="auto"
             >
                 <GridItem colSpan={{ base: 1, md: 3 }}>
                     <Box
@@ -76,7 +78,7 @@ export const Newsletter = ({ data, props }) => {
                         >
                             Never miss an update!
                         </Heading>
-                        <Text mt={4} fontSize="xl" color="primary.500">
+                        <Text mt={4} fontSize="sm" color="primary.500">
                             Receive the latest publication releases, update and
                             monthly newsletter.
                         </Text>
