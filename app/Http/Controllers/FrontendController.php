@@ -155,7 +155,7 @@ class FrontendController extends Controller
     {
         $segments = request()->segments();
         $eventsId = Category::where('slug', 'featured-events')->first()->id;
-        $infocusId = Category::where('slug', 'infocus')->first()->id;
+        $infocusId = Category::where('slug', 'in-focus')->first()->id;
         $sawteeInMediaId = Category::where('slug', 'sawtee-in-media')->first()->id;
 
         $infocus = Post::where('category_id', strval($infocusId))

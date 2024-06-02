@@ -37,7 +37,7 @@ Route::get('/admin', AuthenticatedSessionController::class . '@create');
 Route::get('/admin/login', AuthenticatedSessionController::class . '@create');
 Route::middleware(['auth', 'verified'])->prefix('admin')->as('admin.')->group(function () {
     Route::get('/dashboard', function () {
-        return Inertia::render('Backend/Dashboard');
+        return redirect('/admin/posts');
     })->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -56,19 +56,16 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->as('admin.')->group(fu
     Route::resource('/teams', TeamController::class);
 
     Route::post('/post/uploadmedia', [PostController::class, 'uploadmedia'])->name('post.upload');
-    // Route::get('/menus/manage-menus/{id?}', [MenuController::class, 'manage'])->name('manage.menus');
-    // Route::post('/menus/create', [MenuController::class, 'store'])->name('create.menu');
-    // Route::delete('/menus/delete/{id}', [MenuController::class, 'delete'])->name('delete.menu');
-    // Route::post('/menus/add-menu-items-to-menu', [MenuController::class, 'addMenuItemToMenu'])->name('addMenuItems.menu');
-    // Route::patch('/menus/edit-menu-item/{id}', [MenuController::class, 'editMenuItem'])->name('editMenuItem.menu');
-    // Route::delete('/menus/delete-menu-item/{id}', [MenuController::class, 'deleteMenuItem'])->name('deleteMenuItem.menu');
-    // Route::post('/menus/add-custom-link', [MenuController::class, 'addCustomLink'])->name('addCustomLink.menu');
-    // Route::get('/subscribers', [SubscriptionController::class, 'index'])->name('subscribers.list');
+    Route::get('/menus/manage-menus/{id?}', [MenuController::class, 'manage'])->name('manage.menus');
+    Route::post('/menus/create', [MenuController::class, 'store'])->name('create.menu');
+    Route::delete('/menus/delete/{id}', [MenuController::class, 'delete'])->name('delete.menu');
+    Route::post('/menus/add-menu-items-to-menu', [MenuController::class, 'addMenuItemToMenu'])->name('addMenuItems.menu');
+    Route::patch('/menus/edit-menu-item/{id}', [MenuController::class, 'editMenuItem'])->name('editMenuItem.menu');
+    Route::delete('/menus/delete-menu-item/{id}', [MenuController::class, 'deleteMenuItem'])->name('deleteMenuItem.menu');
+    Route::post('/menus/add-custom-link', [MenuController::class, 'addCustomLink'])->name('addCustomLink.menu');
 
 });
 
-Route::post('/subscribe', [SubscriptionController::class, 'subscribe'])->name('subscribe');
-Route::get('/unsubscribe/{email}', [SubscriptionController::class, 'unsubscribe'])->name('unsubscribe');
 Route::get('/search', [FrontendController::class, 'search'])->name('search');
 
 Route::get('/', [FrontendController::class, 'index'])->name('home');

@@ -16,7 +16,7 @@ import {
     FiGlobe,
     FiGrid,
     FiUsers,
-    FiMail,
+    FiFeather,
 } from "react-icons/fi";
 import { RiPagesLine } from "react-icons/ri";
 import { TbSlideshow } from "react-icons/tb";
@@ -25,25 +25,15 @@ import Sidebar from "./Partials/Sidebar";
 
 const MenuItems = [
     {
-        name: "Dashboard",
-        icon: FiHome,
-        route: "admin.dashboard",
-    },
-    {
         name: "Website",
         icon: FiGlobe,
         route: "home",
     },
-    // {
-    //     name: "Menu",
-    //     icon: FiGrid,
-    //     route: "admin.manage.menus",
-    // },
-    // {
-    //     name: "Menu Items",
-    //     icon: FiFeather,
-    //     route: "admin.menu-items.index",
-    // },
+    {
+        name: "Menu",
+        icon: FiGrid,
+        route: "admin.manage.menus",
+    },
     {
         name: "Pages",
         icon: RiPagesLine,

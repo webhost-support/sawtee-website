@@ -54,8 +54,6 @@ export default function ManageMenu({
     const toast = useToast();
     const { get, delete: destroy, processing, errors } = useForm();
 
-    console.log(desiredMenu);
-
     useEffect(() => {
         categories.map((cat) => {
             setCategoriesOptions((prev) => [
@@ -180,7 +178,7 @@ export default function ManageMenu({
 
                             <AddCustomLink
                                 menu={desiredMenu}
-                                menuItems={menuItems}
+                                menuItems={menuItems ? menuItems : null}
                             />
                         </Box>
                     )}
@@ -282,7 +280,6 @@ const AddCustomLink = ({ menu, menuItems }) => {
 
     const addCustomLinkToMenu = (e) => {
         e.preventDefault();
-        console.log(data);
         post(route("admin.addCustomLink.menu"), {
             preserveScroll: true,
             onSuccess: () => {
@@ -303,7 +300,7 @@ const AddCustomLink = ({ menu, menuItems }) => {
     };
     return (
         <GlassBox mt={6} p={6}>
-            <Accordion>
+            <Accordion allowToggle>
                 <AccordionItem>
                     <AccordionButton>
                         <Box as="span" flex="1" textAlign="left">
@@ -358,28 +355,30 @@ const AddCustomLink = ({ menu, menuItems }) => {
                                     }
                                 />
                             </FormControl>
-                            <FormControl>
-                                <FormLabel htmlFor="parent_id">
-                                    Select parent menu item
-                                </FormLabel>
-                                <Select
-                                    name="parent_id"
-                                    id="parent_id"
-                                    placeholder="Select parent"
-                                    onChange={(e) =>
-                                        setData("parent_id", e.target.value)
-                                    }
-                                >
-                                    {menuItems.map((menuItem) => (
-                                        <option
-                                            key={menuItem.id}
-                                            value={menuItem.id}
-                                        >
-                                            {menuItem.title}
-                                        </option>
-                                    ))}
-                                </Select>
-                            </FormControl>
+                            {menuItems && (
+                                <FormControl>
+                                    <FormLabel htmlFor="parent_id">
+                                        Select parent menu item
+                                    </FormLabel>
+                                    <Select
+                                        name="parent_id"
+                                        id="parent_id"
+                                        placeholder="Select parent"
+                                        onChange={(e) =>
+                                            setData("parent_id", e.target.value)
+                                        }
+                                    >
+                                        {menuItems.map((menuItem) => (
+                                            <option
+                                                key={menuItem.id}
+                                                value={menuItem.id}
+                                            >
+                                                {menuItem.title}
+                                            </option>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            )}
                         </VStack>
                     </AccordionPanel>
                 </AccordionItem>
@@ -399,17 +398,18 @@ const MenuStructure = ({ menuItems, menuItem, setMenuItem }) => {
     const editMenuItem = useDisclosure();
     const toast = useToast();
     const { delete: destroy, processing, errors } = useForm();
-    const [MenuItems, setMenuItems] = useState([]);
+    const [MenuItems, setMenuItems] = useState(menuItems);
 
     useEffect(() => {
         const newMenuItems = [];
-        menuItems
-            .toSorted((a, b) => a.order - b.order)
-            .map((menuItem) => {
-                if (!menuItem.parent_id) {
-                    newMenuItems.push(menuItem);
-                }
-            });
+        menuItems &&
+            menuItems
+                .toSorted((a, b) => a.order - b.order)
+                .map((menuItem) => {
+                    if (!menuItem.parent_id) {
+                        newMenuItems.push(menuItem);
+                    }
+                });
         setMenuItems(newMenuItems);
     }, [menuItems]);
 
