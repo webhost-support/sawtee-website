@@ -22,12 +22,12 @@ class MenuController extends Controller
     public function manage($id = null)
     {
         $desiredMenu = $id ? Menu::where('id', $id)->firstOrFail() : Menu::orderby('id', 'DESC')->first();
-        $menu_items = $desiredMenu ? Menuitem::with('children')->where('menu_id', $desiredMenu->id)->orderBy('order', 'ASC')->get() : null;
+        $menu_items = $desiredMenu ? Menuitem::with(['children' ])->where('menu_id', $desiredMenu->id)->orderBy('order', 'ASC')->get() : null;
 
-
+        // $categories =
         // dd($menu_items);
         return Inertia::render('Backend/Menu/ManageMenus', [
-            'categories' => Category::all(),
+            'categories' => Category::with(['parent'])->get(),
             'pages' => Page::all(),
             'menus' => Menu::all(),
             'desiredMenu' => $desiredMenu,
@@ -38,36 +38,15 @@ class MenuController extends Controller
     public function addMenuItemToMenu(Request $request)
     {
         $menu_id = $request->menu_id;
-        $ids = $request->ids;
-        $type = $request->type;
-
-        foreach ($ids as $id) {
-            $data = $type === 'categories' ? Category::find($id) : Page::find($id);
-            MenuItem::create([
-                'menu_id' => $menu_id,
-                'name' => $data->name,
-                'title' => $data->name,
-                'url' => $data->slug,
-                'order' => 0,
-                'parent_id' => null,
-            ]);
-        }
-
-        return redirect()->route('admin.manage.menus', $menu_id);
-    }
-
-    public function addCustomLink(Request $request)
-    {
-        $menu_id = $request->menu_id;
-
-        MenuItem::create([
-            'menu_id' => $menu_id,
-            'name' => $request->name,
-            'title' => $request->title,
-            'url' => $request->url,
-            'order' => 0,
-            'parent_id' => null,
+        $validated = $request->validate([
+            'menu_id' => 'numeric',
+            'name' => 'string|max:255',
+            'title' => 'string|max:255',
+            'url' => 'nullable|string',
+            'order' => 'nullable|numeric',
+            'parent_id' => 'nullable|numeric',
         ]);
+        MenuItem::create($validated);
         return redirect()->route('admin.manage.menus', $menu_id);
     }
 

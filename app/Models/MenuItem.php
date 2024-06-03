@@ -23,6 +23,10 @@ class MenuItem extends Model
         return $this->belongsTo(MenuItem::class);
     }
 
+    public function allChildrens() {
+        return $this->children()->all();
+    }
+
     public function menu(): BelongsTo
     {
         return $this->belongsTo(Menu::class)->as('menu');

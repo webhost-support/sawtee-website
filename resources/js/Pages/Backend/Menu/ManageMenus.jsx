@@ -25,11 +25,12 @@ import {
     AccordionButton,
     AccordionPanel,
     AccordionIcon,
+    useColorModeValue,
+    FormErrorMessage,
 } from "@chakra-ui/react";
 import { Head, useForm } from "@inertiajs/react";
 import { GlassBox } from "@/Components/Frontend";
 import PrimaryButton from "@/Components/Backend/PrimaryButton";
-import MultiSelect from "@/Components/Backend/MultiSelect";
 import CreateMenuForm from "./Partials/CreateMenuForm";
 import DeleteMenuForm from "./Partials/DeleteMenuForm";
 import {
@@ -48,29 +49,9 @@ export default function ManageMenu({
 }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const deleteMenu = useDisclosure();
-    const [categoriesOptions, setCategoriesOptions] = useState([]);
-    const [pagesOptions, setPagesOptions] = useState([]);
     const [menuItem, setMenuItem] = useState(null);
     const toast = useToast();
     const { get, delete: destroy, processing, errors } = useForm();
-
-    useEffect(() => {
-        categories.map((cat) => {
-            setCategoriesOptions((prev) => [
-                ...prev,
-                { value: cat.id, label: cat.name },
-            ]);
-        });
-    }, []);
-
-    useEffect(() => {
-        pages.map((page) => {
-            setPagesOptions((prev) => [
-                ...prev,
-                { value: page.id, label: page.name },
-            ]);
-        });
-    }, []);
 
     // const handleUpdate = (e, id) => {
     //     e.preventDefault();
@@ -148,35 +129,39 @@ export default function ManageMenu({
             >
                 <GridItem colSpan={1}>
                     <Box
-                        borderBottom={
-                            "5px solid var(--chakra-colors-primary-500)"
-                        }
+                        borderBottom={"5px solid"}
+                        borderColor={useColorModeValue(
+                            "primary.300",
+                            "primary.500"
+                        )}
                     >
-                        <Button
-                            as="h4"
-                            p={3}
-                            colorScheme="primary"
-                            size={"lg"}
-                            rounded={"none"}
+                        <Box
+                            p={2}
+                            bg={useColorModeValue("primary.500", "primary.700")}
+                            w="max-content"
+                            color="white"
                         >
                             Add Menu Items
-                        </Button>
+                        </Box>
                     </Box>
                     {desiredMenu && (
                         <Box>
                             <AddToMenu
-                                options={categoriesOptions}
+                                options={categories}
                                 name="categories"
                                 menu={desiredMenu}
+                                menuItems={menuItems ? menuItems : null}
                             />
 
                             <AddToMenu
-                                options={pagesOptions}
+                                options={pages}
                                 name="pages"
                                 menu={desiredMenu}
+                                menuItems={menuItems ? menuItems : null}
                             />
 
-                            <AddCustomLink
+                            <AddToMenu
+                                name="custom link"
                                 menu={desiredMenu}
                                 menuItems={menuItems ? menuItems : null}
                             />
@@ -185,19 +170,20 @@ export default function ManageMenu({
                 </GridItem>
                 <GridItem colSpan={1}>
                     <Box
-                        borderBottom={
-                            "5px solid var(--chakra-colors-primary-500)"
-                        }
+                        borderBottom={"5px solid"}
+                        borderColor={useColorModeValue(
+                            "primary.300",
+                            "primary.500"
+                        )}
                     >
-                        <Button
-                            as="h4"
-                            p={3}
-                            colorScheme="primary"
-                            size={"lg"}
-                            rounded={"none"}
+                        <Box
+                            p={2}
+                            bg={useColorModeValue("primary.500", "primary.700")}
+                            w="max-content"
+                            color="white"
                         >
                             Menu Structure
-                        </Button>
+                        </Box>
                     </Box>
                     <MenuStructure
                         menuItems={menuItems}
@@ -210,16 +196,49 @@ export default function ManageMenu({
     );
 }
 
-const AddToMenu = ({ options, name, menu }) => {
+const AddToMenu = ({ options, name, menu, menuItems }) => {
+    const [selectedData, setSelectedData] = useState(null);
+    const [parent, setParent] = useState(null);
     const { data, setData, post, processing, errors, reset } = useForm({
         menu_id: menu.id,
-        ids: [],
-        type: name,
+        title: "",
+        name: "",
+        url: "",
+        order: menuItems.length + 1,
+        parent_id: null,
     });
     const toast = useToast();
 
+    useEffect(() => {
+        if (selectedData) {
+            console.log(selectedData);
+            const url =
+                name === "pages"
+                    ? `/${selectedData.slug}`
+                    : selectedData.parent
+                    ? `/category/${selectedData.parent.slug}/${selectedData.slug}`
+                    : `/category/${selectedData.slug}`;
+
+            setData({
+                menu_id: menu.id,
+                title: selectedData.name,
+                name: selectedData.name,
+                url: url,
+            });
+        }
+    }, [selectedData]);
+
+    useEffect(() => {
+        const order = parent
+            ? menuItems.filter((menuItem) => menuItem.id === parent)[0].children
+                  .length + 1
+            : menuItems.length + 1;
+        setData("order", order);
+    }, [parent]);
+
     const addToMenu = (e) => {
         e.preventDefault();
+
         post(route("admin.addMenuItems.menu"), {
             preserveScroll: true,
             onSuccess: () => {
@@ -231,70 +250,11 @@ const AddToMenu = ({ options, name, menu }) => {
                     duration: 6000,
                     isClosable: true,
                 });
-                reset();
+
+                reset("name", "order", "parent_id", "url");
             },
             onError: (errors) => {
-                console.log(errors);
-            },
-        });
-    };
-    return (
-        <GlassBox mt={6} p={6}>
-            <FormControl textAlign="left">
-                <FormLabel htmlFor={name}>Select {name}</FormLabel>
-                <MultiSelect
-                    name={name}
-                    id={name}
-                    placeholder={"Select " + name}
-                    options={options}
-                    onChange={(e) => {
-                        let array = [];
-                        e.forEach((item) => array.push(item.value));
-                        setData("ids", array);
-                    }}
-                />
-            </FormControl>
-
-            <Button
-                mt={4}
-                size={"sm"}
-                isLoading={processing}
-                onClick={(e) => addToMenu(e)}
-            >
-                Add to Menu
-            </Button>
-        </GlassBox>
-    );
-};
-
-const AddCustomLink = ({ menu, menuItems }) => {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        menu_id: menu.id,
-        title: "",
-        name: "",
-        url: "",
-        order: "",
-        parent_id: null,
-    });
-    const toast = useToast();
-
-    const addCustomLinkToMenu = (e) => {
-        e.preventDefault();
-        post(route("admin.addCustomLink.menu"), {
-            preserveScroll: true,
-            onSuccess: () => {
-                toast({
-                    position: "top-right",
-                    title: "Menu Created.",
-                    description: "Menu Created Successfully",
-                    status: "success",
-                    duration: 6000,
-                    isClosable: true,
-                });
-                reset();
-            },
-            onError: (errors) => {
-                console.log(errors);
+                console.error(errors);
             },
         });
     };
@@ -303,25 +263,54 @@ const AddCustomLink = ({ menu, menuItems }) => {
             <Accordion allowToggle>
                 <AccordionItem>
                     <AccordionButton>
-                        <Box as="span" flex="1" textAlign="left">
-                            Add Custom Link
+                        <Box
+                            as="span"
+                            flex="1"
+                            textAlign="left"
+                            textTransform={"capitalize"}
+                        >
+                            Add {name}
                         </Box>
                         <AccordionIcon />
                     </AccordionButton>
                     <AccordionPanel pb={4}>
-                        <VStack>
-                            <FormControl isRequired isInvalid={!!errors.title}>
-                                <FormLabel htmlFor="title">Title</FormLabel>
-                                <Input
-                                    name="title"
-                                    id="title"
-                                    value={data.title}
-                                    onChange={(e) =>
-                                        setData("title", e.target.value)
-                                    }
-                                />
-                            </FormControl>
-                            <FormControl isRequired isInvalid={!!errors.name}>
+                        <VStack spacing={4}>
+                            {options && (
+                                <FormControl textAlign="left">
+                                    <FormLabel htmlFor={name}>
+                                        Select {name}
+                                    </FormLabel>
+                                    <Select
+                                        name={name}
+                                        id={name}
+                                        placeholder={"Select " + name}
+                                        value={
+                                            selectedData ? selectedData.id : ""
+                                        }
+                                        onChange={(e) => {
+                                            const selected = options.filter(
+                                                (option) =>
+                                                    option.id == e.target.value
+                                            )[0];
+                                            setSelectedData(selected);
+                                        }}
+                                    >
+                                        {options &&
+                                            options.map((option) => {
+                                                return (
+                                                    <option
+                                                        key={option.id}
+                                                        value={option.id}
+                                                    >
+                                                        {option.name}
+                                                    </option>
+                                                );
+                                            })}
+                                    </Select>
+                                </FormControl>
+                            )}
+
+                            <FormControl isRequired isInvalid={errors.name}>
                                 <FormLabel htmlFor="name">Name</FormLabel>
                                 <Input
                                     name="name"
@@ -331,8 +320,14 @@ const AddCustomLink = ({ menu, menuItems }) => {
                                         setData("name", e.target.value)
                                     }
                                 />
+                                {errors.name && (
+                                    <FormErrorMessage mt={2}>
+                                        {errors.name}
+                                    </FormErrorMessage>
+                                )}
                             </FormControl>
-                            <FormControl isRequired isInvalid={!!errors.name}>
+
+                            <FormControl isRequired isInvalid={errors.url}>
                                 <FormLabel htmlFor="url">URL</FormLabel>
                                 <Input
                                     name="url"
@@ -342,8 +337,14 @@ const AddCustomLink = ({ menu, menuItems }) => {
                                         setData("url", e.target.value)
                                     }
                                 />
+                                {errors.url && (
+                                    <FormErrorMessage mt={2}>
+                                        {errors.url}
+                                    </FormErrorMessage>
+                                )}
                             </FormControl>
-                            <FormControl>
+
+                            <FormControl isInvalid={errors.order}>
                                 <FormLabel htmlFor="order">Order</FormLabel>
                                 <Input
                                     type="number"
@@ -354,9 +355,14 @@ const AddCustomLink = ({ menu, menuItems }) => {
                                         setData("order", e.target.value)
                                     }
                                 />
+                                {errors.order && (
+                                    <FormErrorMessage mt={2}>
+                                        {errors.order}
+                                    </FormErrorMessage>
+                                )}
                             </FormControl>
                             {menuItems && (
-                                <FormControl>
+                                <FormControl isInvalid={errors.parent_id}>
                                     <FormLabel htmlFor="parent_id">
                                         Select parent menu item
                                     </FormLabel>
@@ -364,9 +370,14 @@ const AddCustomLink = ({ menu, menuItems }) => {
                                         name="parent_id"
                                         id="parent_id"
                                         placeholder="Select parent"
-                                        onChange={(e) =>
-                                            setData("parent_id", e.target.value)
-                                        }
+                                        value={parent ? parent : ""}
+                                        onChange={(e) => {
+                                            setParent(Number(e.target.value));
+                                            setData(
+                                                "parent_id",
+                                                e.target.value
+                                            );
+                                        }}
                                     >
                                         {menuItems.map((menuItem) => (
                                             <option
@@ -377,19 +388,30 @@ const AddCustomLink = ({ menu, menuItems }) => {
                                             </option>
                                         ))}
                                     </Select>
+                                    {errors.parent_id && (
+                                        <FormErrorMessage mt={2}>
+                                            {errors.parent_id}
+                                        </FormErrorMessage>
+                                    )}
                                 </FormControl>
                             )}
+
+                            <Button
+                                mt={4}
+                                size={"sm"}
+                                isLoading={processing}
+                                onClick={(e) => {
+                                    addToMenu(e);
+                                    setSelectedData(null);
+                                    setParent(null);
+                                }}
+                            >
+                                Add to Menu
+                            </Button>
                         </VStack>
                     </AccordionPanel>
                 </AccordionItem>
             </Accordion>
-            <Button
-                mt={4}
-                size={"sm"}
-                onClick={(e) => addCustomLinkToMenu(e, e.target.value)}
-            >
-                Add to Menu
-            </Button>
         </GlassBox>
     );
 };
@@ -399,7 +421,6 @@ const MenuStructure = ({ menuItems, menuItem, setMenuItem }) => {
     const toast = useToast();
     const { delete: destroy, processing, errors } = useForm();
     const [MenuItems, setMenuItems] = useState(menuItems);
-
     useEffect(() => {
         const newMenuItems = [];
         menuItems &&
@@ -439,6 +460,59 @@ const MenuStructure = ({ menuItems, menuItem, setMenuItem }) => {
         });
     };
 
+    const MenuItemsList = ({
+        menuItems,
+        handleDeleteMenuItem,
+        handleEditMenuItem,
+        ...rest
+    }) => {
+        return (
+            <List display="flex" flexDir={"column"} gap="3" {...rest}>
+                {menuItems.map((item, idx) => {
+                    return (
+                        <ListItem key={item.id}>
+                            <HStack justify={"space-between"}>
+                                <Text>
+                                    {idx + 1}. {item.title}
+                                </Text>
+                                <HStack spacing={4}>
+                                    <TableEditAction
+                                        onClick={(e) => {
+                                            handleEditMenuItem(e, item.id);
+                                        }}
+                                        isDisabled={processing}
+                                    />
+                                    <TableDeleteAction
+                                        onClick={(e) => {
+                                            handleDeleteMenuItem(e, item.id);
+                                        }}
+                                        isDisabled={processing}
+                                    />
+                                </HStack>
+                            </HStack>
+                            {item.children && item.children.length > 0 && (
+                                <MenuItemsList
+                                    menuItems={item.children}
+                                    handleDeleteMenuItem={handleDeleteMenuItem}
+                                    handleEditMenuItem={handleEditMenuItem}
+                                    ml={6}
+                                    px={6}
+                                    gap="2"
+                                    mt={4}
+                                    borderLeft={"1px solid var(--color-text)"}
+                                    borderColor={useColorModeValue(
+                                        "gray.400",
+                                        "gray.200"
+                                    )}
+                                />
+                            )}
+                        </ListItem>
+                    );
+                })}
+            </List>
+        );
+    };
+
     return (
         <>
             {menuItem && (
@@ -454,85 +528,15 @@ const MenuStructure = ({ menuItems, menuItem, setMenuItem }) => {
 
             <GlassBox mt={6} p={6}>
                 {MenuItems && MenuItems.length > 0 && (
-                    <List>
-                        {MenuItems.map((item, idx) => (
-                            <ListItem key={item.id} mb={4}>
-                                <HStack justify={"space-between"}>
-                                    <Text>
-                                        {idx + 1}. {item.title}
-                                    </Text>
-                                    <HStack spacing={4}>
-                                        <TableEditAction
-                                            onClick={(e) => {
-                                                handleEditMenuItem(e, item.id);
-                                            }}
-                                            isDisabled={processing}
-                                        />
-                                        <TableDeleteAction
-                                            onClick={(e) => {
-                                                handleDeleteMenuItem(
-                                                    e,
-                                                    item.id
-                                                );
-                                            }}
-                                            isDisabled={processing}
-                                        />
-                                    </HStack>
-                                </HStack>
-
-                                {item.children && item.children.length > 0 && (
-                                    <List ml={6} mt={4}>
-                                        {item.children
-                                            .sort((a, b) => a.order - b.order)
-                                            .map((child, idx) => (
-                                                <ListItem key={child.id} mb={4}>
-                                                    <HStack
-                                                        justify={
-                                                            "space-between"
-                                                        }
-                                                    >
-                                                        <Text>
-                                                            {idx + 1}.{" "}
-                                                            {child.title}
-                                                        </Text>
-                                                        <HStack spacing={4}>
-                                                            <TableEditAction
-                                                                onClick={(
-                                                                    e
-                                                                ) => {
-                                                                    handleEditMenuItem(
-                                                                        e,
-                                                                        child.id
-                                                                    );
-                                                                }}
-                                                                isDisabled={
-                                                                    processing
-                                                                }
-                                                            />
-                                                            <TableDeleteAction
-                                                                onClick={(
-                                                                    e
-                                                                ) => {
-                                                                    handleDeleteMenuItem(
-                                                                        e,
-                                                                        child.id
-                                                                    );
-                                                                }}
-                                                                isDisabled={
-                                                                    processing
-                                                                }
-                                                            />
-                                                        </HStack>
-                                                    </HStack>
-                                                </ListItem>
-                                            ))}
-                                    </List>
-                                )}
-                            </ListItem>
-                        ))}
-                    </List>
+                    <MenuItemsList
+                        menuItems={MenuItems}
+                        handleDeleteMenuItem={handleDeleteMenuItem}
+                        handleEditMenuItem={handleEditMenuItem}
+                    />
                 )}
             </GlassBox>
         </>
     );
 };
+
+
