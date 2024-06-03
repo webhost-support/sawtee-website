@@ -33,16 +33,17 @@ import {
     getSortedRowModel,
 } from "@tanstack/react-table";
 import { DebouncedInput } from "../Frontend/index";
+import { Link } from "@inertiajs/react";
 
 export function DataTable({
     data,
+    allColumns,
     defaultColumns,
     showColumnFilters = true,
     pagination = true,
     showSearch = false,
 }) {
     const [sorting, setSorting] = React.useState([]);
-    const [showItems, setShowItems] = React.useState(10);
     const [columns] = React.useState(defaultColumns);
     const [columnVisibility, setColumnVisibility] = React.useState({});
     const [globalFilter, setGlobalFilter] = React.useState("");
@@ -62,7 +63,9 @@ export function DataTable({
 
     const table = useReactTable({
         columns,
-        data,
+        data: data.data,
+        // loading,
+        manualPagination: false,
         getCoreRowModel: getCoreRowModel(),
         onSortingChange: setSorting,
         getSortedRowModel: getSortedRowModel(),
@@ -78,9 +81,6 @@ export function DataTable({
         },
     });
 
-    React.useEffect(() => {
-        table.setPageSize(showItems);
-    }, [showItems]);
 
     return (
         <>
@@ -206,72 +206,46 @@ export function DataTable({
                         mt={6}
                     >
                         <HStack justify="center" spacing={4}>
-                            <IconButton
-                                className="border rounded p-1"
-                                onClick={() => table.setPageIndex(0)}
-                                isDisabled={!table.getCanPreviousPage()}
-                                icon={<ArrowLeftIcon />}
-                            />
+                            <Link href={data.first_page_url}>
+                                <IconButton
+                                    className="border rounded p-1"
+                                    onClick={() => table.setPageIndex(0)}
+                                    isDisabled={!data.prev_page_url}
+                                    icon={<ArrowLeftIcon />}
+                                />
+                            </Link>
 
-                            <IconButton
-                                className="border rounded p-1"
-                                onClick={() => table.previousPage()}
-                                isDisabled={!table.getCanPreviousPage()}
-                                icon={<ArrowBackIcon />}
-                            />
-                            <IconButton
-                                className="border rounded p-1"
-                                onClick={() => table.nextPage()}
-                                isDisabled={!table.getCanNextPage()}
-                                icon={<ArrowForwardIcon />}
-                            />
+                            <Link href={data.prev_page_url}>
+                                <IconButton
+                                    className="border rounded p-1"
+                                    // onClick={() => table.previousPage()}
+                                    isDisabled={!data.prev_page_url}
+                                    icon={<ArrowBackIcon />}
+                                />
+                            </Link>
+                            <Link href={data.next_page_url}>
+                                <IconButton
+                                    className="border rounded p-1"
+                                    onClick={() => table.nextPage()}
+                                    isDisabled={!data.next_page_url}
+                                    icon={<ArrowForwardIcon />}
+                                />
+                            </Link>
+                            <Link href={data.last_page_url}>
+                                <IconButton
+                                    className="border rounded p-1"
 
-                            <IconButton
-                                className="border rounded p-1"
-                                onClick={() =>
-                                    table.setPageIndex(table.getPageCount() - 1)
-                                }
-                                isDisabled={!table.getCanNextPage()}
-                                icon={<ArrowRightIcon />}
-                            />
+                                    isDisabled={!data.next_page_url}
+                                    icon={<ArrowRightIcon />}
+                                />
+                            </Link>
                         </HStack>
                         <HStack justify="center" spacing={4}>
                             <Text>Page</Text>
                             <strong>
-                                {table.getState().pagination.pageIndex + 1} of{" "}
-                                {table.getPageCount()}
+                                {data.current_page} of {data.last_page}
                             </strong>
                         </HStack>
-                        <HStack justify="center" spacing={4}>
-                            | Go to page:
-                            <Input
-                                type="number"
-                                defaultValue={
-                                    table.getState().pagination.pageIndex + 1
-                                }
-                                onChange={(e) => {
-                                    const page = e.target.value
-                                        ? Number(e.target.value) - 1
-                                        : 0;
-                                    table.setPageIndex(page);
-                                }}
-                                padding={2}
-                                w={16}
-                            />
-                        </HStack>
-                        <Select
-                            w={64}
-                            value={showItems}
-                            onChange={(e) => {
-                                setShowItems(Number(e.target.value));
-                            }}
-                        >
-                            {[10, 20, 30, 40, 50].map((pageSize) => (
-                                <option key={pageSize} value={pageSize}>
-                                    Show {pageSize}
-                                </option>
-                            ))}
-                        </Select>
                     </Stack>
                 )}
             </TableContainer>

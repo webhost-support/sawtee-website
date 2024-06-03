@@ -10,6 +10,7 @@ import {
 } from "@/Components/Backend/TableActions";
 import React from "react";
 import DeletePostModal from "./Partials/DeletePostModal";
+// import { DataTable } from "@/Components/Backend/ReactTable";
 
 export default function Index({ auth, posts }) {
     const columnHelper = createColumnHelper();
@@ -68,8 +69,13 @@ export default function Index({ auth, posts }) {
     //     });
     // };
 
-    const defaultColumns = React.useMemo(
+    const allColumns = React.useMemo(
         () => [
+            columnHelper.accessor("id", {
+                cell: (info) => info.getValue(),
+
+                header: "ID",
+            }),
             columnHelper.accessor("title", {
                 cell: (info) => (
                     <Text w="64" noOfLines={1}>
@@ -129,6 +135,66 @@ export default function Index({ auth, posts }) {
         []
     );
 
+    const defaultColumns = React.useMemo(
+        () => [
+            columnHelper.accessor("title", {
+                cell: (info) => (
+                    <Text maxW="64" noOfLines={1}>
+                        {info.getValue()}
+                    </Text>
+                ),
+                header: "Title",
+            }),
+            columnHelper.accessor("category.name", {
+                cell: (info) => (
+                    <Tag colorScheme="green">{info.getValue()}</Tag>
+                ),
+                header: "Category",
+            }),
+            columnHelper.accessor("theme.title", {
+                cell: (info) => (!info.getValue() ? "None" : info.getValue()),
+                header: "Theme",
+            }),
+            columnHelper.accessor("tags", {
+                cell: (info) => <TagsColumn tags={info.getValue()} />,
+                header: "Tags",
+            }),
+            columnHelper.accessor("status", {
+                cell: (info) => (
+                    <Tag colorScheme={getStatusColor(info.getValue())}>
+                        {info.getValue()}
+                    </Tag>
+                ),
+                header: "Status",
+            }),
+            columnHelper.accessor("author", {
+                cell: (info) => info.getValue(),
+                header: "author",
+                enableHiding: true,
+            }),
+            columnHelper.accessor("id", {
+                cell: (info) => {
+                    return (
+                        <HStack spacing={4}>
+                            <TableEditAction
+                                onClick={(e) => handleEdit(e, info.getValue())}
+                                isDisabled={processing}
+                            />
+                            <TableDeleteAction
+                                onClick={(e) =>
+                                    handleDelete(e, info.getValue())
+                                }
+                                isDisabled={processing}
+                            />
+                        </HStack>
+                    );
+                },
+                header: "Actions",
+            }),
+        ],
+        []
+    );
+
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Posts" />
@@ -142,7 +208,18 @@ export default function Index({ auth, posts }) {
                     <PrimaryButton>Create New Post</PrimaryButton>
                 </Link>
             </Box>
-            <DataTable defaultColumns={defaultColumns} data={posts.data} />
+            {/* <DataTable
+                defaultColumns={defaultColumns}
+                allColumns={allColumns}
+                data={posts}
+                showSearch={true}
+            /> */}
+            <DataTable
+                defaultColumns={defaultColumns}
+                allColumns={allColumns}
+                data={posts}
+                showSearch={true}
+            />
         </AuthenticatedLayout>
     );
 }

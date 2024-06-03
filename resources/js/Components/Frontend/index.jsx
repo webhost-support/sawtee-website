@@ -34,7 +34,7 @@ import {
 } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import { Link } from "@inertiajs/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { HiArrowRight, HiChevronDown, HiChevronRight } from "react-icons/hi";
 import FullWidthCarousel from "@/Components/Frontend/FullWidthCarousel";
 import { formatDate } from "@/Utils/helpers";
