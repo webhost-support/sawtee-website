@@ -13,7 +13,7 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = Tag::latest()->paginate();
+        $tags = Tag::withCount(['posts'])->latest()->paginate();
         return Inertia::render('Backend/Tag/Index', [
             'tags' => $tags,
         ]);

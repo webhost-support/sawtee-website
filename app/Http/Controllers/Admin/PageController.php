@@ -17,7 +17,7 @@ class PageController extends Controller
      */
     public function index()
     {
-        $pages = Page::withCount('sections')->get();
+        $pages = Page::withCount('sections')->paginate();
         return Inertia::render("Backend/Page/Index", ['pages' => $pages]);
     }
 

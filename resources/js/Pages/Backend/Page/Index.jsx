@@ -31,31 +31,21 @@ export default function Index({ auth, pages: data }) {
         () => [
             columnHelper.accessor("name", {
                 cell: (info) => (
-                    <HStack
-                        flexWrap={"wrap"}
-                        maxW={"200"}
-                        pr={2}
-                        overflow={"hidden"}
-                    >
-                        <Text title={info.getValue()}>{info.getValue()}</Text>
-                    </HStack>
+                    <Text maxW={64} title={info.getValue()}>
+                        {info.getValue()}
+                    </Text>
                 ),
                 header: "Name",
             }),
             columnHelper.accessor("slug", {
                 cell: (info) => (
-                    <HStack
-                        flexWrap={"wrap"}
-                        maxW={"200"}
-                        pr={2}
-                        overflow={"hidden"}
-                    >
-                        <Text title={info.getValue()}>{info.getValue()}</Text>
-                    </HStack>
+                    <Text maxW={64} title={info.getValue()}>
+                        {info.getValue()}
+                    </Text>
                 ),
                 header: "Slug",
             }),
-            columnHelper.accessor("sections.count", {
+            columnHelper.accessor("sections_count", {
                 cell: (info) => info.getValue(),
                 header: "Sections Count",
             }),

@@ -59,11 +59,11 @@ export default function Index({ auth, sections: data }) {
                 cell: (info) =>
                     data.data.filter((item) => item.id === info.getValue())[0]
                         ?.title,
-                header: "Parent Category",
+                header: "Parent Section",
             }),
             columnHelper.accessor("page.name", {
                 cell: (info) => info.getValue(),
-                header: "Parent Page",
+                header: "Belongs to Page",
             }),
             columnHelper.accessor("id", {
                 cell: (info) => {
@@ -97,9 +97,7 @@ export default function Index({ auth, sections: data }) {
                     <PrimaryButton>Create New Section</PrimaryButton>
                 </Link>
             </Box>
-            {data && (
-                <DataTable defaultColumns={defaultColumns} data={data.data} />
-            )}
+            {data && <DataTable defaultColumns={defaultColumns} data={data} />}
         </AuthenticatedLayout>
     );
 }

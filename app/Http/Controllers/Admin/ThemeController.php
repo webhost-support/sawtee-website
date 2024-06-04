@@ -16,7 +16,7 @@ class ThemeController extends Controller
      */
     public function index()
     {
-        $themes = Theme::withCount(['posts'])->latest()->simplePaginate(50);
+        $themes = Theme::withCount(['posts'])->latest()->paginate();
         return Inertia::render('Backend/Theme/Index', ['themes' => $themes]);
     }
 

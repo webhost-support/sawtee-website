@@ -52,9 +52,18 @@ export default function CreateMenuForm({ isOpen, onOpen, onClose }) {
         });
     };
     return (
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal
+            isOpen={isOpen}
+            onClose={onClose}
+            size={{ base: "xs", md: "md" }}
+        >
             <ModalOverlay />
-            <ModalContent as="form" onSubmit={submit}>
+            <ModalContent
+                as="form"
+                onSubmit={submit}
+                bg={useColorModeValue("whiteAlpha.500", "blackAlpha.500")}
+                backdropFilter={"blur(5px)"}
+            >
                 <ModalHeader>Add Menu</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>

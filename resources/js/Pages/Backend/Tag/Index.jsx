@@ -47,6 +47,10 @@ export default function Index({ auth, tags }) {
                 ),
                 header: "Name",
             }),
+            columnHelper.accessor("posts_count", {
+                cell: (info) => info.getValue(),
+                header: "Post Count",
+            }),
 
             columnHelper.accessor("id", {
                 cell: (info) => {
@@ -81,7 +85,7 @@ export default function Index({ auth, tags }) {
                 </Link>
             </Box>
             {tags.data && (
-                <DataTable defaultColumns={defaultColumns} data={tags.data} />
+                <DataTable defaultColumns={defaultColumns} data={tags} />
             )}
         </AuthenticatedLayout>
     );

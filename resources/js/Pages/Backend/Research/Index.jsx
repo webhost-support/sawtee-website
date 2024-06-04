@@ -82,7 +82,7 @@ export default function Index({ auth, researchs: data }) {
                 </Link>
             </Box>
             {data.data && (
-                <DataTable defaultColumns={defaultColumns} data={data.data} />
+                <DataTable defaultColumns={defaultColumns} data={data} />
             )}
         </AuthenticatedLayout>
     );

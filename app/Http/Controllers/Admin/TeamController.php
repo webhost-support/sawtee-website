@@ -13,7 +13,7 @@ class TeamController extends Controller
      */
     public function index()
     {
-        $teams = Team::with('media')->simplePaginate(10);
+        $teams = Team::with('media')->paginate(10);
         $images = array();
         foreach ($teams as $team) {
             $images[$team->id] = $team->getFirstMediaUrl('avatar', 'preview');

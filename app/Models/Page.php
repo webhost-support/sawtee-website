@@ -36,6 +36,11 @@ class Page extends Model implements HasMedia
         return $this->hasMany(Section::class);
     }
 
+    public function sectionCount()
+    {
+        return $this->sections->count();
+    }
+
 
     public function registerMediaConversions(Media $media = null): void
     {

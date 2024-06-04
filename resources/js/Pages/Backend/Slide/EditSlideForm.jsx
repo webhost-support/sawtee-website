@@ -15,6 +15,7 @@ import {
     ModalBody,
     ModalFooter,
     VStack,
+    useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
 import FileUpload, { PreviewImage } from "@/Components/Backend/FileUpload";
@@ -31,8 +32,8 @@ export default function EditSlideForm({
         slider_id: slide.slider_id,
         image: slide.media[0] ? slide.media[0].original_url : null,
     });
+    const titleRef = React.useRef(null);
     const toast = useToast();
-
     const [image, setImage] = React.useState(data.image);
 
     const submit = (e) => {
@@ -67,9 +68,19 @@ export default function EditSlideForm({
     };
 
     return (
-        <Modal size={"xl"} isOpen={isOpen} onClose={onClose}>
+        <Modal
+            size={{ base: "xs", md: "md", lg:"xl" }}
+            isOpen={isOpen}
+            onClose={onClose}
+            initialFocusRef={titleRef}
+        >
             <ModalOverlay />
-            <ModalContent as="form" onSubmit={submit}>
+            <ModalContent
+                as="form"
+                onSubmit={submit}
+                bg={useColorModeValue("whiteAlpha.500", "blackAlpha.500")}
+                backdropFilter={"blur(5px)"}
+            >
                 <ModalHeader>Add slide</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
@@ -78,6 +89,7 @@ export default function EditSlideForm({
                             <FormLabel htmlFor="title">Title</FormLabel>
 
                             <Input
+                                ref={titleRef}
                                 id="title"
                                 name="title"
                                 value={data.title || ""}

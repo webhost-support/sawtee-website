@@ -18,6 +18,7 @@ import {
     ModalHeader,
     ModalBody,
     ModalFooter,
+    useColorModeValue,
 } from "@chakra-ui/react";
 
 export default function EditMenuItem({
@@ -60,9 +61,18 @@ export default function EditMenuItem({
     };
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
+        <Modal
+            isOpen={isOpen}
+            onClose={onClose}
+            size={{ base: "xs", md: "md" }}
+        >
             <ModalOverlay />
-            <ModalContent as="form" onSubmit={submit}>
+            <ModalContent
+                as="form"
+                onSubmit={submit}
+                bg={useColorModeValue("whiteAlpha.500", "blackAlpha.500")}
+                backdropFilter={"blur(5px)"}
+            >
                 <ModalHeader>Edit Menu Item</ModalHeader>
                 <ModalCloseButton
                     onClick={() => {

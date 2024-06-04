@@ -95,7 +95,7 @@ export default function Index({ auth, teams, images }) {
                 </Link>
             </Box>
             {teams && (
-                <DataTable defaultColumns={defaultColumns} data={teams.data} />
+                <DataTable defaultColumns={defaultColumns} data={teams} />
             )}
         </AuthenticatedLayout>
     );

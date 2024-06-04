@@ -13,9 +13,7 @@ class Slider extends Model
 
     protected $fillable = ['name'];
 
-    protected $with = ['slides'];
 
-    // protected $with = ['image'];
     public function slides(): HasMany
     {
         return $this->hasMany(Slide::class);

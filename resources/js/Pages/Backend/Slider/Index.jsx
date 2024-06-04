@@ -8,7 +8,7 @@ import {
     AlertIcon,
     useDisclosure,
 } from "@chakra-ui/react";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 import { createColumnHelper } from "@tanstack/react-table";
 import {
     TableDeleteAction,
@@ -16,7 +16,6 @@ import {
 } from "@/Components/Backend/TableActions";
 import React from "react";
 import CreateSliderForm from "./Partials/CreateSliderForm";
-import EditSliderForm from "./Partials/EditSliderForm";
 
 export default function Index({ auth, sliders }) {
     const toast = useToast();
@@ -97,10 +96,7 @@ export default function Index({ auth, sliders }) {
                 </PrimaryButton>
             </HStack>
             {sliders && (
-                <DataTable
-                    defaultColumns={defaultColumns}
-                    data={sliders.data}
-                />
+                <DataTable defaultColumns={defaultColumns} data={sliders} />
             )}
             {createSliderModal.isOpen && (
                 <CreateSliderForm

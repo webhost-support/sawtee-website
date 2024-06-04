@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Inertia } from "@inertiajs/inertia";
 import {
     Table,
     Thead,
@@ -34,7 +35,6 @@ import {
 } from "@tanstack/react-table";
 import { DebouncedInput } from "../Frontend/index";
 import { Link } from "@inertiajs/react";
-
 export function DataTable({
     data,
     allColumns,
@@ -47,7 +47,10 @@ export function DataTable({
     const [columns] = React.useState(defaultColumns);
     const [columnVisibility, setColumnVisibility] = React.useState({});
     const [globalFilter, setGlobalFilter] = React.useState("");
-
+    const [categoryName] = React.useState(() => {
+        const array = data.path ? data.path.split("/admin/") : [];
+        return array[array.length - 1];
+    });
     const fuzzyFilter = (row, columnId, value, addMeta) => {
         // Rank the item
         const itemRank = rankItem(row.getValue(columnId), value);
@@ -60,7 +63,6 @@ export function DataTable({
         // Return if the item should be filtered in/out
         return itemRank.passed;
     };
-
     const table = useReactTable({
         columns,
         data: data.data,
@@ -80,7 +82,6 @@ export function DataTable({
             globalFilter,
         },
     });
-
 
     return (
         <>
@@ -131,10 +132,11 @@ export function DataTable({
                 rounded={"xl"}
             >
                 <Table
-                    variant={"striped"}
-                    size={"sm"}
-                    colorScheme={"blackAlpha"}
+                    variant={"simple"}
+                    size={{ base: "sm", xxl: "md" }}
+                    colorScheme={"light"}
                     layout={"responsive"}
+                    fontSize={{ base: "sm", xl: "md" }}
                 >
                     <Thead>
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -185,6 +187,8 @@ export function DataTable({
                                         <Td
                                             key={cell.id}
                                             isNumeric={meta?.isNumeric}
+                                            maxW={"48"}
+                                            overflow="hidden"
                                         >
                                             {flexRender(
                                                 cell.column.columnDef.cell,
@@ -206,7 +210,10 @@ export function DataTable({
                         mt={6}
                     >
                         <HStack justify="center" spacing={4}>
-                            <Link href={data.first_page_url}>
+                            <Link
+                                href={data.first_page_url}
+                                only={[categoryName]}
+                            >
                                 <IconButton
                                     className="border rounded p-1"
                                     onClick={() => table.setPageIndex(0)}
@@ -215,15 +222,20 @@ export function DataTable({
                                 />
                             </Link>
 
-                            <Link href={data.prev_page_url}>
+                            <Link
+                                href={data.prev_page_url}
+                                only={[categoryName]}
+                            >
                                 <IconButton
                                     className="border rounded p-1"
-                                    // onClick={() => table.previousPage()}
                                     isDisabled={!data.prev_page_url}
                                     icon={<ArrowBackIcon />}
                                 />
                             </Link>
-                            <Link href={data.next_page_url}>
+                            <Link
+                                href={data.next_page_url}
+                                only={[categoryName]}
+                            >
                                 <IconButton
                                     className="border rounded p-1"
                                     onClick={() => table.nextPage()}
@@ -231,20 +243,51 @@ export function DataTable({
                                     icon={<ArrowForwardIcon />}
                                 />
                             </Link>
-                            <Link href={data.last_page_url}>
+                            <Link
+                                href={data.last_page_url}
+                                only={[categoryName]}
+                            >
                                 <IconButton
                                     className="border rounded p-1"
-
                                     isDisabled={!data.next_page_url}
                                     icon={<ArrowRightIcon />}
                                 />
                             </Link>
                         </HStack>
                         <HStack justify="center" spacing={4}>
-                            <Text>Page</Text>
-                            <strong>
-                                {data.current_page} of {data.last_page}
-                            </strong>
+                            <Text>
+                                {"Page "}
+                                <Text as="span" fontWeight={"semibold"}>
+                                    {data.current_page}
+                                </Text>
+                                {" of "}
+                                <Text as="span" fontWeight={"semibold"}>
+                                    {data.last_page}
+                                </Text>
+                            </Text>
+                        </HStack>
+                        <HStack justify="center" spacing={4}>
+                            <Text fontWeight={"semibold"}>| Go to page:</Text>
+
+                            <Input
+                                type="number"
+                                defaultValue={data.current_page}
+                                onChange={(e) => {
+                                    setTimeout(() => {
+                                        Inertia.visit(
+                                            `${data.path}?page=${e.target.value}`,
+                                            {
+                                                method: "get",
+                                                replace: true,
+                                                preserveState: true,
+                                                only: [categoryName],
+                                            }
+                                        );
+                                    }, 1500);
+                                }}
+                                padding={2}
+                                maxW={10}
+                            />
                         </HStack>
                     </Stack>
                 )}

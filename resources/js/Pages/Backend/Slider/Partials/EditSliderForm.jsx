@@ -16,17 +16,12 @@ import React, { useState, useEffect } from "react";
 import Slides from "../../Slide/Slides";
 import CreateSlideForm from "../../Slide/CreateSlideForm";
 
-export default function EditSliderForm({ slider }) {
+export default function EditSliderForm({ slider, slides }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: slider.name,
     });
     const toast = useToast();
     const createSlideForm = useDisclosure();
-    const [slides, setSlides] = useState([]);
-
-    useEffect(() => {
-        setSlides(slider.slides);
-    }, [slider.slides]);
 
     const submit = (e) => {
         e.preventDefault();
@@ -59,7 +54,7 @@ export default function EditSliderForm({ slider }) {
 
     return (
         <>
-            {slides.length <= 0 && (
+            {slides.data.length < 1 && (
                 <Alert
                     mb="4"
                     status="warning"
@@ -96,7 +91,7 @@ export default function EditSliderForm({ slider }) {
                 </Box>
             </form>
 
-            {slides.length > 0 && (
+            {slides.data.length > 0 && (
                 <Box mt={6}>
                     <Slides slides={slides} slider={slider} />
                 </Box>

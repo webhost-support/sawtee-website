@@ -22,7 +22,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['category', 'media', 'tags', 'theme'])->idDescending()->paginate(10);
+        $posts = Post::with(['category', 'media', 'tags', 'theme'])->idDescending()->paginate();
         return Inertia::render('Backend/Post/Index', [
             'posts' => $posts
         ]);

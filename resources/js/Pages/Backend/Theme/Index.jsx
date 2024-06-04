@@ -91,9 +91,7 @@ export default function Index({ auth, themes: data }) {
                     <PrimaryButton>Create New theme</PrimaryButton>
                 </Link>
             </Box>
-            {data && (
-                <DataTable defaultColumns={defaultColumns} data={data.data} />
-            )}
+            {data && <DataTable defaultColumns={defaultColumns} data={data} />}
         </AuthenticatedLayout>
     );
 }

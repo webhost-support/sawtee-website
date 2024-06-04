@@ -87,9 +87,7 @@ export default function Index({ auth, categories: data }) {
                     <PrimaryButton>Create New Category</PrimaryButton>
                 </Link>
             </Box>
-            {data && (
-                <DataTable defaultColumns={defaultColumns} data={data.data} />
-            )}
+            {data && <DataTable defaultColumns={defaultColumns} data={data} />}
         </AuthenticatedLayout>
     );
 }

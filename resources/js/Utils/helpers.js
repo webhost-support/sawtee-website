@@ -12,12 +12,18 @@ export function slugify(inputString)
 }
 
 
+
 export function toTitleCase(str) {
     return str.replace(/\w\S*/g, function (txt) {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
 }
 
+export const createArrayRange = (startingNumber, endingNumber, step = 1) =>
+    Array.from(
+        { length: (endingNumber - startingNumber) / step + 1 },
+        (value, index) => startingNumber + index * step
+    );
 
 
 export const getBreakpointValue = (value, fallback, ssr) =>
