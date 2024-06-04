@@ -18,25 +18,24 @@ import {
     useColorModeValue,
 } from "@chakra-ui/react";
 
-export default function DeleteMenuForm({ isOpen, onOpen, onClose, menu }) {
+export default function DeleteMenuForm({ isOpen, onClose, item, setMenuItem }) {
     const { delete: destroy, processing } = useForm();
     const toast = useToast();
 
     const submit = (e) => {
         e.preventDefault();
-
-        destroy(route("admin.delete.menu", menu.id), {
+        destroy(route("admin.deleteMenuItem.menu", item.id), {
             preserveScroll: true,
             onSuccess: () => {
                 toast({
                     position: "top-right",
-                    title: "Menu deleted.",
-                    description: "Menu deleted Successfully",
+                    title: "Menu Item deleted.",
+                    description: "Menu Item deleted Successfully",
                     status: "error",
                     duration: 6000,
                     isClosable: true,
                 });
-
+                setMenuItem(null);
                 onClose();
             },
             onError: () => console.log("Error while deleting"),
@@ -80,7 +79,13 @@ export default function DeleteMenuForm({ isOpen, onOpen, onClose, menu }) {
                     >
                         Delete
                     </PrimaryButton>
-                    <Button variant="ghost" onClick={onClose}>
+                    <Button
+                        variant="ghost"
+                        onClick={() => {
+                            onClose();
+                            setMenuItem(null);
+                        }}
+                    >
                         Cancel
                     </Button>
                 </ModalFooter>

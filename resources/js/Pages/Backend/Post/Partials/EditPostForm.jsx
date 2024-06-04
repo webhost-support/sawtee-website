@@ -173,14 +173,15 @@ export default function EditPostForm({
                                 mt={1}
                                 value={data.title}
                                 autoComplete="title"
+                                
                                 onChange={(e) =>
                                     setData("title", e.target.value)
                                 }
                             />
 
-                            {errors.name && (
+                            {errors.title && (
                                 <FormErrorMessage mt={2}>
-                                    {errors.name}
+                                    {errors.title}
                                 </FormErrorMessage>
                             )}
                         </FormControl>

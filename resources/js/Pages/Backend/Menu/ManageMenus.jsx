@@ -204,14 +204,14 @@ const AddToMenu = ({ options, name, menu, menuItems }) => {
         title: "",
         name: "",
         url: "",
-        order: menuItems.length + 1,
+        order: 0,
         parent_id: null,
     });
     const toast = useToast();
 
     useEffect(() => {
         if (selectedData) {
-            console.log(selectedData);
+            console.log("selectedData", menuItems);
             const url =
                 name === "pages"
                     ? `/${selectedData.slug}`
@@ -222,6 +222,7 @@ const AddToMenu = ({ options, name, menu, menuItems }) => {
             setData({
                 menu_id: menu.id,
                 title: selectedData.name,
+                order: menuItems.length + 1,
                 name: selectedData.name,
                 url: url,
             });
@@ -229,11 +230,15 @@ const AddToMenu = ({ options, name, menu, menuItems }) => {
     }, [selectedData]);
 
     useEffect(() => {
-        const order = parent
-            ? menuItems.filter((menuItem) => menuItem.id === parent)[0].children
-                  .length + 1
-            : menuItems.length + 1;
-        setData("order", order);
+        console.log("parent", parent, menuItems);
+
+        if (parent) {
+            const order = parent
+                ? menuItems.filter((menuItem) => menuItem.id === parent)[0]
+                      .children.length + 1
+                : menuItems.length + 1;
+            setData("order", order);
+        }
     }, [parent]);
 
     const addToMenu = (e) => {
@@ -309,6 +314,23 @@ const AddToMenu = ({ options, name, menu, menuItems }) => {
                                     </Select>
                                 </FormControl>
                             )}
+
+                            <FormControl isRequired isInvalid={errors.title}>
+                                <FormLabel htmlFor="title">Title</FormLabel>
+                                <Input
+                                    name="title"
+                                    id="title"
+                                    value={data.title}
+                                    onChange={(e) =>
+                                        setData("title", e.target.value)
+                                    }
+                                />
+                                {errors.title && (
+                                    <FormErrorMessage mt={2}>
+                                        {errors.title}
+                                    </FormErrorMessage>
+                                )}
+                            </FormControl>
 
                             <FormControl isRequired isInvalid={errors.name}>
                                 <FormLabel htmlFor="name">Name</FormLabel>
@@ -418,21 +440,20 @@ const AddToMenu = ({ options, name, menu, menuItems }) => {
 
 const MenuStructure = ({ menuItems, menuItem, setMenuItem }) => {
     const editMenuItem = useDisclosure();
-    const toast = useToast();
-    const { delete: destroy, processing, errors } = useForm();
-    const [MenuItems, setMenuItems] = useState(menuItems);
-    useEffect(() => {
-        const newMenuItems = [];
-        menuItems &&
-            menuItems
-                .toSorted((a, b) => a.order - b.order)
-                .map((menuItem) => {
-                    if (!menuItem.parent_id) {
-                        newMenuItems.push(menuItem);
-                    }
-                });
-        setMenuItems(newMenuItems);
-    }, [menuItems]);
+    const deleteMenuItem = useDisclosure();
+    // const [MenuItems, setMenuItems] = useState(menuItems);
+    // useEffect(() => {
+    //     const newMenuItems = [];
+    //     menuItems &&
+    //         menuItems
+    //             .toSorted((a, b) => a.order - b.order)
+    //             .map((menuItem) => {
+    //                 if (!menuItem.parent_id) {
+    //                     newMenuItems.push(menuItem);
+    //                 }
+    //             });
+    //     setMenuItems(newMenuItems);
+    // }, [menuItems]);
 
     const handleEditMenuItem = (e, id) => {
         e.preventDefault();
@@ -445,91 +466,39 @@ const MenuStructure = ({ menuItems, menuItem, setMenuItem }) => {
 
     const handleDeleteMenuItem = (e, id) => {
         e.preventDefault();
-        destroy(route("admin.deleteMenuItem.menu", id), {
-            preserveScroll: true,
-            onSuccess: () =>
-                toast({
-                    position: "top-right",
-                    title: "Menu Item deleted.",
-                    description: "Menu Item deleted Successfully",
-                    status: "error",
-                    duration: 6000,
-                    isClosable: true,
-                }),
-            onError: () => console.log("Error while deleting"),
-        });
-    };
-
-    const MenuItemsList = ({
-        menuItems,
-        handleDeleteMenuItem,
-        handleEditMenuItem,
-        ...rest
-    }) => {
-        return (
-            <List display="flex" flexDir={"column"} gap="3" {...rest}>
-                {menuItems.map((item, idx) => {
-                    return (
-                        <ListItem key={item.id}>
-                            <HStack justify={"space-between"}>
-                                <Text>
-                                    {idx + 1}. {item.title}
-                                </Text>
-                                <HStack spacing={4}>
-                                    <TableEditAction
-                                        onClick={(e) => {
-                                            handleEditMenuItem(e, item.id);
-                                        }}
-                                        isDisabled={processing}
-                                    />
-                                    <TableDeleteAction
-                                        onClick={(e) => {
-                                            handleDeleteMenuItem(e, item.id);
-                                        }}
-                                        isDisabled={processing}
-                                    />
-                                </HStack>
-                            </HStack>
-                            {item.children && item.children.length > 0 && (
-                                <MenuItemsList
-                                    menuItems={item.children}
-                                    handleDeleteMenuItem={handleDeleteMenuItem}
-                                    handleEditMenuItem={handleEditMenuItem}
-                                    ml={6}
-                                    px={6}
-                                    gap="2"
-                                    mt={4}
-                                    borderLeft={"1px solid var(--color-text)"}
-                                    borderColor={useColorModeValue(
-                                        "gray.400",
-                                        "gray.200"
-                                    )}
-                                />
-                            )}
-                        </ListItem>
-                    );
-                })}
-            </List>
-        );
+        const newMenuItem = menuItems.filter(
+            (MenuItem) => MenuItem.id == id
+        )[0];
+        setMenuItem(newMenuItem);
+        deleteMenuItem.onOpen();
     };
 
     return (
         <>
-            {menuItem && (
+            {menuItem && editMenuItem.isOpen && (
                 <EditMenuItem
                     onOpen={editMenuItem.onOpen}
                     isOpen={editMenuItem.isOpen}
                     onClose={editMenuItem.onClose}
                     item={menuItem}
                     setMenuItem={setMenuItem}
-                    menuItems={MenuItems}
+                    menuItems={menuItems}
+                />
+            )}
+            {menuItem && deleteMenuItem.isOpen && (
+                <DeleteMenuForm
+                    onOpen={deleteMenuItem.onOpen}
+                    isOpen={deleteMenuItem.isOpen}
+                    onClose={deleteMenuItem.onClose}
+                    item={menuItem}
+                    setMenuItem={setMenuItem}
                 />
             )}
 
             <GlassBox mt={6} p={6}>
-                {MenuItems && MenuItems.length > 0 && (
+                {menuItems && menuItems.length > 0 && (
                     <MenuItemsList
-                        menuItems={MenuItems}
+                        menuItems={menuItems}
                         handleDeleteMenuItem={handleDeleteMenuItem}
                         handleEditMenuItem={handleEditMenuItem}
                     />
@@ -539,4 +508,53 @@ const MenuStructure = ({ menuItems, menuItem, setMenuItem }) => {
     );
 };
 
-
+const MenuItemsList = ({
+    menuItems,
+    handleDeleteMenuItem,
+    handleEditMenuItem,
+    ...rest
+}) => {
+    return (
+        <List display="flex" flexDir={"column"} gap="3" {...rest}>
+            {menuItems.map((item, idx) => {
+                return (
+                    <ListItem key={item.id}>
+                        <HStack justify={"space-between"}>
+                            <Text>
+                                {item.order}. {item.title}
+                            </Text>
+                            <HStack spacing={4}>
+                                <TableEditAction
+                                    onClick={(e) => {
+                                        handleEditMenuItem(e, item.id);
+                                    }}
+                                />
+                                <TableDeleteAction
+                                    onClick={(e) => {
+                                        handleDeleteMenuItem(e, item.id);
+                                    }}
+                                />
+                            </HStack>
+                        </HStack>
+                        {item.children && item.children.length > 0 && (
+                            <MenuItemsList
+                                menuItems={item.children}
+                                handleDeleteMenuItem={handleDeleteMenuItem}
+                                handleEditMenuItem={handleEditMenuItem}
+                                ml={6}
+                                px={6}
+                                gap="2"
+                                mt={4}
+                                borderLeft={"1px solid var(--color-text)"}
+                                borderColor={useColorModeValue(
+                                    "gray.400",
+                                    "gray.200"
+                                )}
+                            />
+                        )}
+                    </ListItem>
+                );
+            })}
+        </List>
+    );
+};

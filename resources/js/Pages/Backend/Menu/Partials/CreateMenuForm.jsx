@@ -1,7 +1,7 @@
 import PrimaryButton from "@/Components/Backend/PrimaryButton";
 import { useForm } from "@inertiajs/react";
 import {
-    Box,
+    useColorModeValue,
     Button,
     FormControl,
     FormErrorMessage,

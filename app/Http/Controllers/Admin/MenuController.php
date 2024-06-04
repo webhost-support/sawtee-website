@@ -62,6 +62,10 @@ class MenuController extends Controller
     {
         // dd($id);
         $menuItem = MenuItem::find($id);
+        $menuItemChildrens = MenuItem::where('parent_id', $menuItem->id)->get();
+        foreach ($menuItemChildrens as $menuItemChildren) {
+            $menuItemChildren->delete();
+        }
         $menu_id = $menuItem->menu_id;
         $menuItem->delete();
         return redirect()->route('admin.manage.menus', $menu_id);

@@ -37,11 +37,9 @@ export default function EditMenuItem({
         parent_id: item.parent_id || "",
     });
     const toast = useToast();
-    console.log(item);
 
     const submit = (e) => {
         e.preventDefault();
-        console.log(data);
 
         patch(route("admin.editMenuItem.menu", item.id), {
             preserveScroll: true,
@@ -55,6 +53,7 @@ export default function EditMenuItem({
                     isClosable: true,
                 });
                 setMenuItem(null);
+                reset("parent_id", "menu_id", "title", "name", "url", "order");
                 onClose();
             },
         });
@@ -164,7 +163,7 @@ export default function EditMenuItem({
                     <Button
                         variant="ghost"
                         onClick={() => {
-                            onClose;
+                            onClose();
                             setMenuItem(null);
                         }}
                     >

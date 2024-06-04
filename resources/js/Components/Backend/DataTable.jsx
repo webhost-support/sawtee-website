@@ -215,7 +215,8 @@ export function DataTable({
                                 only={[categoryName]}
                             >
                                 <IconButton
-                                    className="border rounded p-1"
+                                    p={1}
+                                    variant="outline"
                                     onClick={() => table.setPageIndex(0)}
                                     isDisabled={!data.prev_page_url}
                                     icon={<ArrowLeftIcon />}
@@ -227,7 +228,8 @@ export function DataTable({
                                 only={[categoryName]}
                             >
                                 <IconButton
-                                    className="border rounded p-1"
+                                    p={1}
+                                    variant="outline"
                                     isDisabled={!data.prev_page_url}
                                     icon={<ArrowBackIcon />}
                                 />
@@ -237,7 +239,8 @@ export function DataTable({
                                 only={[categoryName]}
                             >
                                 <IconButton
-                                    className="border rounded p-1"
+                                    p={1}
+                                    variant="outline"
                                     onClick={() => table.nextPage()}
                                     isDisabled={!data.next_page_url}
                                     icon={<ArrowForwardIcon />}
@@ -248,7 +251,8 @@ export function DataTable({
                                 only={[categoryName]}
                             >
                                 <IconButton
-                                    className="border rounded p-1"
+                                    p={1}
+                                    variant="outline"
                                     isDisabled={!data.next_page_url}
                                     icon={<ArrowRightIcon />}
                                 />
@@ -273,6 +277,7 @@ export function DataTable({
                                 type="number"
                                 defaultValue={data.current_page}
                                 onChange={(e) => {
+                                    console.log(Number(e.target.value));
                                     setTimeout(() => {
                                         Inertia.visit(
                                             `${data.path}?page=${e.target.value}`,
