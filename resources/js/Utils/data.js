@@ -214,7 +214,14 @@ export const staticExperts = [
         media: [{ original_url: "/assets/Kshitiz.webp" }],
     },
 ];
-export const primarMmenu = [
+
+export const aboutMenuData = {
+    introText:
+        "South Asia Watch on Trade, Economics and Environment (SAWTEE) was launched in 1994 as a loose regional network of non-governmental organizations (NGOs) from five South Asian countries: Bangladesh, India, Nepal, Pakistan and Sri Lanka. Taking into consideration the emerging need for fair, effective and meaningful integration of South Asian countries into the regional as well as global economies, the major motto of this regional initiative has been “GLOBALIZATION YES, BUT WITH SAFETY NETS”",
+    introImage: "/assets/Airports_Network_Map.png",
+    experts: [...staticExperts],
+};
+export const primarMenu = [
     {
         title: "Home",
         url: "/",

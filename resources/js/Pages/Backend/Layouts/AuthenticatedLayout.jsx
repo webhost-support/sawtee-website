@@ -32,7 +32,7 @@ const MenuItems = [
     {
         name: "Menu",
         icon: FiGrid,
-        route: "admin.manage.menus",
+        route: "admin.menus.index",
     },
     {
         name: "Pages",

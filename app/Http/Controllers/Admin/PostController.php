@@ -108,7 +108,7 @@ class PostController extends Controller
         $themes = Theme::all();
         $featured_image = $post->getFirstMediaUrl('post_featured_image');
         $file = $post->getMedia('post-files');
-        return Inertia::render('Backend/Post/Edit', ['post' => $post->load('tags', 'postContentFiles'), 'categories' => $categories, 'tags' => $tags, 'themes' => $themes, 'featured_image' => $featured_image, 'file' => $file]);
+        return Inertia::render('Backend/Post/Edit', ['post' => $post->load( 'tags','postContentFiles'), 'categories' => $categories, 'tags' => $tags, 'themes' => $themes, 'featured_image' => $featured_image, 'file' => $file]);
     }
 
     /**

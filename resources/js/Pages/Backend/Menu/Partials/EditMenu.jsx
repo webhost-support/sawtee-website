@@ -1,7 +1,7 @@
 import PrimaryButton from "@/Components/Backend/PrimaryButton";
 import { useForm } from "@inertiajs/react";
 import {
-    useColorModeValue,
+    Box,
     Button,
     FormControl,
     FormErrorMessage,
@@ -18,29 +18,27 @@ import {
     ModalFooter,
 } from "@chakra-ui/react";
 
-export default function CreateMenuForm({ isOpen, onOpen, onClose }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        title: "",
-        location: "",
+export default function EditMenuForm({ isOpen, onClose, menu }) {
+    const { data, setData, patch, processing, errors, reset } = useForm({
+        title: menu.title,
+        location: menu.location,
     });
     const toast = useToast();
 
     const submit = (e) => {
         e.preventDefault();
 
-        post(route("admin.create.menu"), {
+        patch(route("admin.menus.update", menu), {
             preserveScroll: true,
-            onSuccess: () => {
+            onSuccess: () =>
                 toast({
                     position: "top-right",
-                    title: "Menu Created.",
-                    description: "Menu Created Successfully",
+                    title: "Menu edited.",
+                    description: "Menu edited Successfully",
                     status: "success",
                     duration: 6000,
                     isClosable: true,
-                });
-                onClose();
-            },
+                }),
             onError: (errors) => {
                 if (errors.title) {
                     reset("title");
@@ -51,6 +49,7 @@ export default function CreateMenuForm({ isOpen, onOpen, onClose }) {
             },
         });
     };
+
     return (
         <Modal
             isOpen={isOpen}
@@ -58,23 +57,23 @@ export default function CreateMenuForm({ isOpen, onOpen, onClose }) {
             size={{ base: "xs", md: "md" }}
         >
             <ModalOverlay />
-            <ModalContent
-                as="form"
-                onSubmit={submit}
-                bg={useColorModeValue("whiteAlpha.500", "blackAlpha.500")}
-                backdropFilter={"blur(5px)"}
-            >
-                <ModalHeader>Add Menu</ModalHeader>
+            <ModalContent as="form" onSubmit={submit}>
+                <ModalHeader>Delete Menu</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                    <VStack gap="6" alignItems={"start"}>
+                    <VStack
+                        as="form"
+                        onSubmit={submit}
+                        gap="6"
+                        alignItems={"start"}
+                    >
                         <FormControl mt="4" isInvalid={errors.title}>
-                            <FormLabel htmlFor="title">Menu Name</FormLabel>
+                            <FormLabel htmlFor="title">Title</FormLabel>
 
                             <Input
                                 id="title"
                                 name="title"
-                                placeholder="enter menu title"
+                                value={data.title}
                                 onChange={(e) =>
                                     setData("title", e.target.value)
                                 }
@@ -88,14 +87,12 @@ export default function CreateMenuForm({ isOpen, onOpen, onClose }) {
                         </FormControl>
 
                         <FormControl mt="4" isInvalid={errors.location}>
-                            <FormLabel htmlFor="location">
-                                Menu Location
-                            </FormLabel>
+                            <FormLabel htmlFor="location">location</FormLabel>
 
                             <Input
                                 id="location"
                                 name="location"
-                                placeholder="enter menu location"
+                                value={data.location}
                                 onChange={(e) =>
                                     setData("location", e.target.value)
                                 }
@@ -107,6 +104,14 @@ export default function CreateMenuForm({ isOpen, onOpen, onClose }) {
                                 classlocation="mt-2"
                             />
                         </FormControl>
+
+                        <PrimaryButton
+                            type="submit"
+                            isLoading={processing}
+                            minW="64"
+                        >
+                            Save
+                        </PrimaryButton>
                     </VStack>
                 </ModalBody>
 
@@ -117,7 +122,7 @@ export default function CreateMenuForm({ isOpen, onOpen, onClose }) {
                         isLoading={processing}
                         mr={3}
                     >
-                        Add
+                        Delete
                     </PrimaryButton>
                     <Button variant="ghost" onClick={onClose}>
                         Cancel
@@ -126,4 +131,4 @@ export default function CreateMenuForm({ isOpen, onOpen, onClose }) {
             </ModalContent>
         </Modal>
     );
-};
+}

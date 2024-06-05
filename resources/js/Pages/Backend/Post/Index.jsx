@@ -52,23 +52,6 @@ export default function Index({ auth, posts }) {
         get(route("admin.posts.edit", post));
     };
 
-    // const handleDelete = (e, post) => {
-    //     e.preventDefault();
-    //     destroy(route("admin.posts.destroy", post), {
-    //         preserveScroll: true,
-    //         onSuccess: () =>
-    //             toast({
-    //                 position: "top-right",
-    //                 title: `Post ID: ${post} deleted.`,
-    //                 description: `Post  deleted Successfully`,
-    //                 status: "error",
-    //                 duration: 6000,
-    //                 isClosable: true,
-    //             }),
-    //         onError: () => console.log("Error while deleting"),
-    //     });
-    // };
-
     const allColumns = React.useMemo(
         () => [
             columnHelper.accessor("id", {

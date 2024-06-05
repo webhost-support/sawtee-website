@@ -16,10 +16,47 @@ class MenuController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-        return Inertia::render('Backend/Menu/Index', ['menus' => Menu::all()]);
+        return Inertia::render('Backend/Menu/Index', ['menus' => Menu::paginate()]);
     }
 
-    public function manage($id = null)
+
+
+
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return Inertia::render('Backend/Menu/Create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'title' => 'required|unique:menus,title|max:100',
+            'location' => 'required|unique:menus,location|max:100',
+        ]);
+        Menu::create($data);
+        return redirect()->route('admin.menus.index');
+
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Menu $menu)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+     public function manage($id = null)
     {
         $desiredMenu = $id ? Menu::where('id', $id)->firstOrFail() : Menu::orderby('id', 'DESC')->first();
         $menu_items = $desiredMenu ? Menuitem::with(['children' ])->where('menu_id', $desiredMenu->id)->orderBy('order', 'ASC')->get() : null;
@@ -35,7 +72,7 @@ class MenuController extends Controller
         ]);
     }
 
-    public function addMenuItemToMenu(Request $request)
+     public function addMenuItemToMenu(Request $request)
     {
         $menu_id = $request->menu_id;
         $validated = $request->validate([
@@ -69,47 +106,6 @@ class MenuController extends Controller
         $menu_id = $menuItem->menu_id;
         $menuItem->delete();
         return redirect()->route('admin.manage.menus', $menu_id);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return Inertia::render('Backend/Menu/Create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $data = $request->validate([
-            'title' => 'required|unique:menus,title|max:100',
-            'location' => 'required|unique:menus,location|max:100',
-        ]);
-        if (Menu::create($data)) {
-            $newdata = Menu::orderby('id', 'DESC')->first();
-            return redirect()->route('admin.manage.menus', $newdata->id);
-        } else {
-            return redirect()->back()->with('error', 'Failed to save menu !');
-        }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Menu $menu)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Menu $menu)
-    {
-        return Inertia::render('Backend/Menu/Edit', ['menu' => $menu]);
     }
 
     /**

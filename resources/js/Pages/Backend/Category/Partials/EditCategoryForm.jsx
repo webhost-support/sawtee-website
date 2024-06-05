@@ -73,7 +73,9 @@ export default function EditCategoryForm({ category, categories }) {
                     required
                 />
 
-                <FormErrorMessage message={errors.name} className="mt-2" />
+                {errors.name && (
+                    <FormErrorMessage mt="2">{errors.name}</FormErrorMessage>
+                )}
             </FormControl>
             <SimpleGrid columns={2} spacing={10} w="full">
                 <FormControl>
@@ -174,10 +176,11 @@ export default function EditCategoryForm({ category, categories }) {
                     onChange={(e) => setData("meta_title", e.target.value)}
                 />
 
-                <FormErrorMessage
-                    message={errors.meta_title}
-                    className="mt-2"
-                />
+                {errors.meta_title && (
+                    <FormErrorMessage mt="2">
+                        {errors.meta_title}
+                    </FormErrorMessage>
+                )}
             </FormControl>
 
             <FormControl isInvalid={errors.meta_description}>
@@ -196,10 +199,11 @@ export default function EditCategoryForm({ category, categories }) {
                     }
                 />
 
-                <FormErrorMessage
-                    message={errors.meta_description}
-                    className="mt-2"
-                />
+                {errors.meta_description && (
+                    <FormErrorMessage mt="2">
+                        {errors.meta_description}
+                    </FormErrorMessage>
+                )}
             </FormControl>
 
             <PrimaryButton type="submit" isLoading={processing} minW="64">

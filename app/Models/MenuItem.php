@@ -15,7 +15,7 @@ class MenuItem extends Model
 
     public function children(): HasMany
     {
-        return $this->hasMany(MenuItem::class, 'parent_id');
+        return $this->hasMany(MenuItem::class, 'parent_id')->with('children');
     }
 
     public function parent(): BelongsTo
@@ -23,9 +23,9 @@ class MenuItem extends Model
         return $this->belongsTo(MenuItem::class);
     }
 
-    public function allChildrens() {
-        return $this->children()->all();
-    }
+    // public function allChildrens() {
+    //     return $this->children()->all();
+    // }
 
     public function menu(): BelongsTo
     {

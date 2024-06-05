@@ -5,11 +5,14 @@ import { HiArrowNarrowUp } from "react-icons/hi";
 import SkipLink from "@/Components/Frontend/styles/skip-link";
 import { usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
-import { primarMmenu, footerMenu, socialMenu, mobileMenu } from "@/Utils/data";
+import { footerMenu, socialMenu, mobileMenu } from "@/Utils/data";
 
 export default function MainLayout({ children, ...rest }) {
-    const { experts, url } = usePage();
     const [visible, setVisible] = useState(false);
+
+    const page = usePage();
+    const { primaryMenu } = page.props;
+    const url = page.url;
     const toggleVisibility = () => {
         if (window.pageYOffset > 570) {
             setVisible(true);
@@ -20,7 +23,6 @@ export default function MainLayout({ children, ...rest }) {
 
     useEffect(() => {
         window.addEventListener("scroll", toggleVisibility);
-        if (experts) primarMmenu.experts = [...experts];
         return () => window.removeEventListener("scroll", toggleVisibility);
     }, []);
 
@@ -39,7 +41,7 @@ export default function MainLayout({ children, ...rest }) {
             </SkipLink>
 
             <Header
-                menu={primarMmenu}
+                menu={primaryMenu}
                 mobileMenu={mobileMenu}
                 socialLinks={socialMenu}
             />

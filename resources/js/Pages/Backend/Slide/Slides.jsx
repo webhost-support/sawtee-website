@@ -61,7 +61,8 @@ const Slides = ({ slides,slider }) => {
                             <Image
                                 border={"1px solid var(--color-text)"}
                                 width={"150px"}
-                                height="75px"
+                                aspectRatio={5 / 2}
+                                // height="75px"
                                 objectFit="cover"
                                 alt="preview_image"
                                 rounded="md"

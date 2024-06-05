@@ -1,7 +1,14 @@
 import PrimaryButton from "@/Components/Backend/PrimaryButton";
 import { DataTable } from "@/Components/Backend/DataTable";
 import AuthenticatedLayout from "@/Pages/Backend/Layouts/AuthenticatedLayout";
-import { Box, HStack, Tag, Text, useToast } from "@chakra-ui/react";
+import {
+    Box,
+    HStack,
+    Tag,
+    Text,
+    useDisclosure,
+    useToast,
+} from "@chakra-ui/react";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { createColumnHelper } from "@tanstack/react-table";
 import {
@@ -9,33 +16,30 @@ import {
     TableEditAction,
 } from "@/Components/Backend/TableActions";
 import React from "react";
+import CreateMenuForm from "./Partials/CreateMenu";
+import DeleteMenu from "./Partials/DeleteMenu";
+import { useState } from "react";
 
 export default function Index({ auth, menus }) {
-    const toast = useToast();
     const columnHelper = createColumnHelper();
-    const { processing, delete: destroy, get } = useForm();
+    const { processing, get } = useForm();
+    const createMenu = useDisclosure();
+    const deleteMenu = useDisclosure();
+
+    const [menuItem, setMenuItem] = useState(null);
 
     const handleEdit = (e, id) => {
         e.preventDefault();
-        get(route("admin.menus.edit", id));
+        get(route("admin.manage.menus", id));
     };
 
     const handleDelete = (e, id) => {
         e.preventDefault();
-        destroy(route("admin.menus.destroy", id), {
-            preserveScroll: true,
-            onSuccess: () =>
-                toast({
-                    position: "top-right",
-                    title: "Menu deleted.",
-                    description: "Menu deleted Successfully",
-                    status: "error",
-                    duration: 6000,
-                    isClosable: true,
-                }),
-            onError: () => console.log("Error while deleting"),
-        });
+        setMenuItem(id);
+        deleteMenu.onOpen();
     };
+
+
 
     const defaultColumns = React.useMemo(
         () => [
@@ -74,15 +78,42 @@ export default function Index({ auth, menus }) {
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Menus" />
+            {menus.length <= 0 && (
+                <HStack spacing={4} variant="left-accent">
+                    <Alert status="warning">
+                        <AlertIcon />
+                        <AlertTitle>No menu!</AlertTitle>
+                        <AlertDescription>
+                            Create a menu to add menu items.
+                        </AlertDescription>
+                    </Alert>
 
-            <Box mb={4}>
-                <Link href={route("admin.menus.create")}>
-                    <PrimaryButton>Add New Menu</PrimaryButton>
-                </Link>
-            </Box>
-            {menus && (
-                <DataTable defaultColumns={defaultColumns} data={menus} />
+                    <Button onClick={onOpen}>Create new menu</Button>
+                </HStack>
             )}
+
+            {menus && (
+                <>
+                    <Box mb={4}>
+                        <PrimaryButton onClick={createMenu.onOpen}>
+                            Add New Menu
+                        </PrimaryButton>
+                    </Box>
+                    <DataTable defaultColumns={defaultColumns} data={menus} />
+                </>
+            )}
+
+            <CreateMenuForm
+                onOpen={createMenu.onOpen}
+                isOpen={createMenu.isOpen}
+                onClose={createMenu.onClose}
+            />
+            <DeleteMenu
+                onOpen={deleteMenu.onOpen}
+                isOpen={deleteMenu.isOpen}
+                onClose={deleteMenu.onClose}
+                menu={menuItem}
+            />
         </AuthenticatedLayout>
     );
 }

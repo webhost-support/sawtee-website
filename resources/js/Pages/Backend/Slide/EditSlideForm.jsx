@@ -15,7 +15,6 @@ import {
     ModalBody,
     ModalFooter,
     VStack,
-    useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
 import FileUpload, { PreviewImage } from "@/Components/Backend/FileUpload";
@@ -69,18 +68,13 @@ export default function EditSlideForm({
 
     return (
         <Modal
-            size={{ base: "xs", md: "md", lg:"xl" }}
+            size={{ base: "xs", md: "md", lg: "xl" }}
             isOpen={isOpen}
             onClose={onClose}
             initialFocusRef={titleRef}
         >
             <ModalOverlay />
-            <ModalContent
-                as="form"
-                onSubmit={submit}
-                bg={useColorModeValue("whiteAlpha.500", "blackAlpha.500")}
-                backdropFilter={"blur(5px)"}
-            >
+            <ModalContent as="form" onSubmit={submit}>
                 <ModalHeader>Add slide</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>

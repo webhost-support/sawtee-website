@@ -1,7 +1,7 @@
 import AuthenticatedLayout from "@/Pages/Backend/Layouts/AuthenticatedLayout";
 
 import { Head } from "@inertiajs/react";
-import CreateMenuForm from "./Partials/CreateMenuForm";
+import CreateMenuForm from "./Partials/CreateMenu";
 
 
 export default function Create({ auth }) {

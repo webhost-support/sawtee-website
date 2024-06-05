@@ -18,12 +18,14 @@ import {
     MenuButton,
     MenuList,
     MenuDivider,
+    HStack,
 } from "@chakra-ui/react";
 import { Link, usePage } from "@inertiajs/react";
 import { motion } from "framer-motion";
-import MenuLink from "../styles/inertia-chakra-link";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import React from "react";
+import { aboutMenuData } from "@/Utils/data";
+import InertiaChakraLink from "../styles/inertia-chakra-link";
 
 const MegaMenuWrapperVariants = {
     open: {
@@ -129,12 +131,12 @@ const AboutMegaMenu = ({
 }) => {
     return (
         <Box
-            bg={"rgba(8, 126, 164,1)"}
+            bg={"rgba(8, 126, 164,0.9)"}
             as={motion.div}
             mx="auto"
-            px={4}
+            px={8}
             py={10}
-            pb={20}
+            display={"flex"}
             variants={MegaMenuWrapperVariants}
         >
             <Grid
@@ -151,7 +153,7 @@ const AboutMegaMenu = ({
                 pos="relative"
                 gap={6}
                 px={6}
-                m="0 auto"
+                mx="auto"
                 {...rest}
             >
                 <GridItem colSpan={1} rowSpan={1} placeSelf="center">
@@ -176,9 +178,12 @@ const AboutMegaMenu = ({
                                     pb={{ md: 3, xl: 6 }}
                                     color={"gray.200"}
                                 >
-                                    <MenuLink as={Link} href={child.url}>
+                                    <InertiaChakraLink
+                                        as={Link}
+                                        href={child.url}
+                                    >
                                         {child.title}
-                                    </MenuLink>
+                                    </InertiaChakraLink>
                                 </Box>
                             );
                         })}
@@ -256,19 +261,21 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
     return (
         <Box
             bg={"rgba(8, 126, 164,0.9)"}
-            pos="relative"
-            gap="16"
+            as={motion.div}
+            gap="4"
             px={8}
             py={10}
+            w="full"
             display="flex"
             flexDirection={"column"}
+            variants={MegaMenuWrapperVariants}
             {...rest}
         >
-            <VStack spacing={10} maxW="90%" m="0 auto">
+            <VStack spacing={10} align={"center"} justify="center">
                 <Text fontSize="2xl" fontFamily={"body"}>
-                    <MenuLink as={Link} href={item.children[0].url}>
+                    <InertiaChakraLink as={Link} href={item.children[0].url}>
                         {item.children[0].title}
-                    </MenuLink>
+                    </InertiaChakraLink>
                 </Text>
                 <SimpleGrid
                     as={motion.ul}
@@ -297,9 +304,12 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                                 pb={{ md: 3, xl: 6 }}
                                 color={"gray.200"}
                             >
-                                <MenuLink as={Link} href={grandChild.url}>
+                                <InertiaChakraLink
+                                    as={Link}
+                                    href={grandChild.url}
+                                >
                                     {grandChild.title}
-                                </MenuLink>
+                                </InertiaChakraLink>
                             </Text>
                         );
                     })}
@@ -312,11 +322,14 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                     if (idx !== 0) {
                         return (
                             <VStack spacing={10} key={grandChildren.title}>
-                                <MenuLink as={Link} href={grandChildren.url}>
+                                <InertiaChakraLink
+                                    as={Link}
+                                    href={grandChildren.url}
+                                >
                                     <Text fontSize="2xl" fontWeight="bold">
                                         {grandChildren.title}
                                     </Text>
-                                </MenuLink>
+                                </InertiaChakraLink>
                                 <SimpleGrid
                                     columns={2}
                                     spacing={6}
@@ -344,12 +357,12 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                                                     pb={{ md: 3, xl: 6 }}
                                                     color={"gray.200"}
                                                 >
-                                                    <MenuLink
+                                                    <InertiaChakraLink
                                                         as={Link}
                                                         href={child.url}
                                                     >
                                                         {child.title}
-                                                    </MenuLink>
+                                                    </InertiaChakraLink>
                                                 </Box>
                                             );
                                         })}
@@ -363,27 +376,26 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
     );
 };
 
-const MegaMenu = ({ item, isOpen }) => {
-    // const li = useColorModeValue("rgb(8, 126, 164,1)", "whiteAlpha.800");
-
-    if (item.title === "Know Us") {
+const MegaMenu = ({ item, experts = null, isOpen }) => {
+    if (item.name === "Know Us") {
         return (
             <AboutMegaMenu
                 item={item}
-                experts={item.experts}
-                introText={item.introText}
-                introImage={item.introImage}
+                experts={experts ? experts : aboutMenuData.experts}
+                introText={aboutMenuData.introText}
+                introImage={aboutMenuData.introImage}
                 isOpen={isOpen}
             />
         );
-    } else if (item.title === "Our Work") {
+    } else if (item.name === "Our Work") {
         return <OurWorkMegaMenu item={item} isOpen={isOpen} />;
     }
 };
 
 const SiteMenuItem = ({ item, ...rest }) => {
     const { url } = usePage();
-    const active = item.url === url;
+    const { experts } = usePage().props;
+    const active = item.url == `${url}`;
     return (
         <Menu isLazy placement="bottom">
             {({ isOpen, onClose }) => {
@@ -393,107 +405,76 @@ const SiteMenuItem = ({ item, ...rest }) => {
                             as="li"
                             role={"group"}
                             display={"block"}
-                            p={2}
                             fontSize={{ base: "sm", md: "sm" }}
                             rounded={"md"}
-                            color={useColorModeValue("gray.700", "gray.200")}
+                            color={
+                                active
+                                    ? "gray.200"
+                                    : useColorModeValue("gray.700", "gray.200")
+                            }
+                            bg={active ? "primary.700" : "transparent"}
                             _hover={{
                                 bg: useColorModeValue(
                                     "primary.50",
-                                    "primary.700"
+                                    "primary.500"
                                 ),
                                 color: useColorModeValue(
                                     "gray.700",
                                     "gray.200"
                                 ),
                             }}
-                        >
-                            <Stack direction={"row"} align={"center"}>
-                                <Box as="a" href={item.url}>
-                                    <Text
-                                        transition={"all .3s ease"}
-                                        fontWeight={500}
-                                    >
-                                        {item.title}
-                                    </Text>
-                                </Box>
-                                <Flex
-                                    justify={"flex-end"}
-                                    align={"center"}
-                                    flex={1}
-                                >
-                                    {item.children && (
-                                        <MenuButton
-                                            isActive={isOpen}
-                                            as={Button}
-                                            variant="link"
-                                            size={"1rem"}
-                                            rounded={"none"}
-                                            aria-label="Menu DropDown"
-                                        >
-                                            <Icon
-                                                transform={
-                                                    isOpen
-                                                        ? "rotate(180deg)"
-                                                        : ""
-                                                }
-                                                transition="all .25s ease-in-out"
-                                                w={5}
-                                                h={5}
-                                                as={ChevronDownIcon}
-                                            />
-                                        </MenuButton>
-                                    )}
-                                </Flex>
-                            </Stack>
-                        </Box>
-                        {/* <ButtonGroup
-                            role="group"
-                            colorScheme={"primary"}
-                            isAttached
-                            variant={active ? "solid" : "ghost"}
-                            w="full"
-                            justifyContent={"start"}
-                            size="md"
+                            lineHeight={"1.1"}
                             {...rest}
                         >
-                            <Button
-                                as={Link}
-                                _hover={{ textDecor: "none" }}
-                                href={item.url}
-                                variant={"link"}
-                                rounded={"none"}
-                                aria-label={item.title}
-                                justifyContent={"start"}
-                                px="4"
-                                // w="full"
-                            >
-                                {item.title}
-                            </Button>
-
-                            {item.children && (
-                                <MenuButton
-                                    isActive={isOpen}
-                                    as={Button}
-                                    rightIcon={
-                                        <ChevronDownIcon
-                                            m={0}
+                            <HStack p={2} alignItems={"center"}>
+                                <InertiaChakraLink
+                                    as={Link}
+                                    transition={"all .3s ease"}
+                                    fontWeight={500}
+                                    href={item.url}
+                                    textDecor={"none"}
+                                    _hover={{ textDecor: "none" }}
+                                >
+                                    {item.name}
+                                </InertiaChakraLink>
+                                {item.children?.length && (
+                                    <MenuButton
+                                        isActive={isOpen}
+                                        as={Button}
+                                        variant="link"
+                                        size={"1rem"}
+                                        rounded={"none"}
+                                        aria-label="Menu DropDown"
+                                    >
+                                        <Icon
                                             transform={
                                                 isOpen ? "rotate(180deg)" : ""
                                             }
                                             transition="all .25s ease-in-out"
+                                            w={5}
+                                            h={5}
+                                            as={ChevronDownIcon}
                                         />
-                                    }
-                                    rounded={"none"}
-                                    aria-label="Menu DropDown"
+                                    </MenuButton>
+                                )}
+                            </HStack>
+                        </Box>
+                        {item.name === "Our Work" || item.name === "Know Us" ? (
+                            <MenuList
+                                zIndex={5}
+                                maxW={"100dvw"}
+                                p={0}
+                                bg="transparent"
+                                boxShadow="none"
+                                border={"none"}
+                                rounded={"lg"}
+                                overflow={"hidden"}
+                            >
+                                <MegaMenu
+                                    item={item}
+                                    isOpen={isOpen}
+                                    experts={experts}
                                 />
-                            )}
-                        </ButtonGroup> */}
-
-                        {item.title === "Our Work" ||
-                        item.title === "Know Us" ? (
-                            <MenuList zIndex={5} maxW={"8xl"} p={0}>
-                                <MegaMenu item={item} isOpen={isOpen} />
                             </MenuList>
                         ) : (
                             <MenuList
@@ -503,18 +484,30 @@ const SiteMenuItem = ({ item, ...rest }) => {
                                     "gray.700",
                                     "gray.100"
                                 )}
-                                boxShadow="4px 4px 0"
+                                p={0}
+                                boxShadow="none"
+                                rounded={"lg"}
+                                overflow={"hidden"}
                             >
                                 {item.children?.map((child) => {
                                     return (
                                         <Stack
                                             key={child.title}
                                             gap={0}
-                                            w="full"
+                                            // w="full"
                                         >
-                                            <MenuLink w="full">
-                                                <SiteMenuItem item={child} />
-                                            </MenuLink>
+                                            <InertiaChakraLink
+                                                as={Link}
+                                                href={child.url}
+                                                textDecor={"none"}
+                                                _hover={{ textDecor: "none" }}
+                                                w="full"
+                                            >
+                                                <SiteMenuItem
+                                                    item={child}
+                                                    rounded="none"
+                                                />
+                                            </InertiaChakraLink>
                                         </Stack>
                                     );
                                 })}

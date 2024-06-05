@@ -12,9 +12,9 @@ import {
     AlertIcon,
     useToast,
 } from "@chakra-ui/react";
-import React, { useState, useEffect } from "react";
 import Slides from "../../Slide/Slides";
 import CreateSlideForm from "../../Slide/CreateSlideForm";
+import {  SmallAddIcon } from "@chakra-ui/icons";
 
 export default function EditSliderForm({ slider, slides }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -26,7 +26,7 @@ export default function EditSliderForm({ slider, slides }) {
     const submit = (e) => {
         e.preventDefault();
         post(
-            route("admin.sliders.store", {
+            route("admin.sliders.update", {
                 _method: "patch",
                 slider: slider.id,
             }),
@@ -68,21 +68,25 @@ export default function EditSliderForm({ slider, slides }) {
             )}
 
             <form onSubmit={submit}>
-                <FormControl mt="4" isInvalid={errors.name}>
-                    <FormLabel htmlFor="name">Name</FormLabel>
+                <Box display="flex" gap="4" alignItems={"end"}>
+                    <FormControl isInvalid={errors.name}>
+                        <FormLabel htmlFor="name">Name</FormLabel>
 
-                    <Input
-                        id="name"
-                        name="name"
-                        value={data.name}
-                        onChange={(e) => setData("name", e.target.value)}
-                    />
+                        <Input
+                            id="name"
+                            name="name"
+                            value={data.name}
+                            onChange={(e) => setData("name", e.target.value)}
+                        />
 
-                    <FormErrorMessage message={errors.name} className="mt-2" />
-                </FormControl>
-
-                <Box display="flex" gap="4" mt="4" alignItems={"center"}>
-                    <Button onClick={() => createSlideForm.onOpen()}>
+                        <FormErrorMessage
+                            message={errors.name}
+                        />
+                    </FormControl>
+                    <Button
+                        onClick={createSlideForm.onOpen}
+                        leftIcon={<SmallAddIcon />}
+                    >
                         Add slide
                     </Button>
                     <PrimaryButton type="submit" disabled={processing}>

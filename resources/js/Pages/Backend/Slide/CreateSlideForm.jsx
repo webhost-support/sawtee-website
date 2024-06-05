@@ -15,6 +15,7 @@ import {
     ModalBody,
     ModalFooter,
     useToast,
+    useColorModeValue,
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import FileUpload, { PreviewImage } from "@/Components/Backend/FileUpload";

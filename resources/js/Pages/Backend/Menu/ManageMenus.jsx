@@ -30,14 +30,13 @@ import {
 } from "@chakra-ui/react";
 import { Head, useForm } from "@inertiajs/react";
 import { GlassBox } from "@/Components/Frontend";
-import PrimaryButton from "@/Components/Backend/PrimaryButton";
-import CreateMenuForm from "./Partials/CreateMenuForm";
-import DeleteMenuForm from "./Partials/DeleteMenuForm";
+import DeleteMenuItem from "../MenuItem/DeleteMenuItem";
 import {
     TableDeleteAction,
     TableEditAction,
 } from "@/Components/Backend/TableActions";
-import EditMenuItem from "./Partials/EditMenuItem";
+import EditMenuItem from "../MenuItem/EditMenuItem";
+import EditMenuForm from "./Partials/EditMenu";
 
 export default function ManageMenu({
     auth,
@@ -47,11 +46,12 @@ export default function ManageMenu({
     desiredMenu,
     menuItems,
 }) {
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const deleteMenu = useDisclosure();
+    const editMenu = useDisclosure();
+    const editMenuItem = useDisclosure();
+    const deleteMenuItem = useDisclosure();
     const [menuItem, setMenuItem] = useState(null);
-    const toast = useToast();
-    const { get, delete: destroy, processing, errors } = useForm();
+    const [MenuItems, setMenuItems] = useState(menuItems);
+    const { get } = useForm();
 
     // const handleUpdate = (e, id) => {
     //     e.preventDefault();
@@ -63,31 +63,33 @@ export default function ManageMenu({
         get(route("admin.manage.menus", id));
     };
 
+    useEffect(() => {
+        const newMenuItems = [];
+        menuItems &&
+            menuItems
+                .toSorted((a, b) => a.order - b.order)
+                .map((menuItem) => {
+                    if (!menuItem.parent_id) {
+                        newMenuItems.push(menuItem);
+                    }
+                });
+        setMenuItems(newMenuItems);
+    }, [menuItems]);
+
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Manage Menus" />
-            <CreateMenuForm onOpen={onOpen} isOpen={isOpen} onClose={onClose} />
-            <DeleteMenuForm
-                onOpen={deleteMenu.onOpen}
-                isOpen={deleteMenu.isOpen}
-                onClose={deleteMenu.onClose}
-                menu={desiredMenu}
-            />
+
+            {editMenu.isOpen && (
+                <EditMenuForm
+                    isOpen={editMenu.isOpen}
+                    onOpen={editMenu.onOpen}
+                    onClose={editMenu.onClose}
+                    menu={desiredMenu}
+                />
+            )}
 
             <GlassBox mb={6} p={6}>
-                {menus.length <= 0 && (
-                    <HStack spacing={4} variant="left-accent">
-                        <Alert status="warning">
-                            <AlertIcon />
-                            <AlertTitle>No menu!</AlertTitle>
-                            <AlertDescription>
-                                Create a menu to add menu items.
-                            </AlertDescription>
-                        </Alert>
-
-                        <Button onClick={onOpen}>Create new menu</Button>
-                    </HStack>
-                )}
                 {menus.length > 0 && (
                     <HStack spacing={6}>
                         <Box w="full" maxW={"xl"}>
@@ -105,19 +107,17 @@ export default function ManageMenu({
                                 ))}
                             </Select>
                         </Box>
-                        <PrimaryButton variant={"outline"} onClick={onOpen}>
-                            Add new menu
-                        </PrimaryButton>
                         <Button
                             variant={"outline"}
-                            colorScheme="red"
-                            onClick={deleteMenu.onOpen}
+                            colorScheme="blue"
+                            onClick={editMenu.onOpen}
                         >
-                            Delete selected menu
+                            Edit selected menu
                         </Button>
                     </HStack>
                 )}
             </GlassBox>
+
             <Grid
                 gridTemplateColumns={{
                     base: "1fr",
@@ -186,7 +186,7 @@ export default function ManageMenu({
                         </Box>
                     </Box>
                     <MenuStructure
-                        menuItems={menuItems}
+                        MenuItems={MenuItems}
                         menuItem={menuItem}
                         setMenuItem={setMenuItem}
                     />
@@ -199,19 +199,19 @@ export default function ManageMenu({
 const AddToMenu = ({ options, name, menu, menuItems }) => {
     const [selectedData, setSelectedData] = useState(null);
     const [parent, setParent] = useState(null);
+
     const { data, setData, post, processing, errors, reset } = useForm({
         menu_id: menu.id,
         title: "",
         name: "",
         url: "",
-        order: 0,
-        parent_id: null,
+        order: menuItems.filter((menuItem) => !menuItem.parent_id).length + 1,
+        parent_id: 0,
     });
     const toast = useToast();
 
     useEffect(() => {
         if (selectedData) {
-            console.log("selectedData", menuItems);
             const url =
                 name === "pages"
                     ? `/${selectedData.slug}`
@@ -222,7 +222,7 @@ const AddToMenu = ({ options, name, menu, menuItems }) => {
             setData({
                 menu_id: menu.id,
                 title: selectedData.name,
-                order: menuItems.length + 1,
+                order: data.order,
                 name: selectedData.name,
                 url: url,
             });
@@ -230,14 +230,18 @@ const AddToMenu = ({ options, name, menu, menuItems }) => {
     }, [selectedData]);
 
     useEffect(() => {
-        console.log("parent", parent, menuItems);
-
         if (parent) {
-            const order = parent
-                ? menuItems.filter((menuItem) => menuItem.id === parent)[0]
-                      .children.length + 1
-                : menuItems.length + 1;
-            setData("order", order);
+            setData(
+                "order",
+                menuItems.filter((menuItem) => menuItem.id === parent)[0]
+                    .children.length + 1
+            );
+        }
+        if (parent == 0) {
+            setData(
+                "order",
+                menuItems.filter((menuItem) => !menuItem.parent_id).length + 1
+            );
         }
     }, [parent]);
 
@@ -256,7 +260,7 @@ const AddToMenu = ({ options, name, menu, menuItems }) => {
                     isClosable: true,
                 });
 
-                reset("name", "order", "parent_id", "url");
+                reset("name", "title", "order", "parent_id", "url");
             },
             onError: (errors) => {
                 console.error(errors);
@@ -438,26 +442,12 @@ const AddToMenu = ({ options, name, menu, menuItems }) => {
     );
 };
 
-const MenuStructure = ({ menuItems, menuItem, setMenuItem }) => {
+const MenuStructure = ({ MenuItems, menuItem, setMenuItem }) => {
     const editMenuItem = useDisclosure();
     const deleteMenuItem = useDisclosure();
-    // const [MenuItems, setMenuItems] = useState(menuItems);
-    // useEffect(() => {
-    //     const newMenuItems = [];
-    //     menuItems &&
-    //         menuItems
-    //             .toSorted((a, b) => a.order - b.order)
-    //             .map((menuItem) => {
-    //                 if (!menuItem.parent_id) {
-    //                     newMenuItems.push(menuItem);
-    //                 }
-    //             });
-    //     setMenuItems(newMenuItems);
-    // }, [menuItems]);
-
     const handleEditMenuItem = (e, id) => {
         e.preventDefault();
-        const newMenuItem = menuItems.filter(
+        const newMenuItem = MenuItems.filter(
             (MenuItem) => MenuItem.id == id
         )[0];
         setMenuItem(newMenuItem);
@@ -466,7 +456,7 @@ const MenuStructure = ({ menuItems, menuItem, setMenuItem }) => {
 
     const handleDeleteMenuItem = (e, id) => {
         e.preventDefault();
-        const newMenuItem = menuItems.filter(
+        const newMenuItem = MenuItems.filter(
             (MenuItem) => MenuItem.id == id
         )[0];
         setMenuItem(newMenuItem);
@@ -482,11 +472,11 @@ const MenuStructure = ({ menuItems, menuItem, setMenuItem }) => {
                     onClose={editMenuItem.onClose}
                     item={menuItem}
                     setMenuItem={setMenuItem}
-                    menuItems={menuItems}
+                    menuItems={MenuItems}
                 />
             )}
             {menuItem && deleteMenuItem.isOpen && (
-                <DeleteMenuForm
+                <DeleteMenuItem
                     onOpen={deleteMenuItem.onOpen}
                     isOpen={deleteMenuItem.isOpen}
                     onClose={deleteMenuItem.onClose}
@@ -496,9 +486,9 @@ const MenuStructure = ({ menuItems, menuItem, setMenuItem }) => {
             )}
 
             <GlassBox mt={6} p={6}>
-                {menuItems && menuItems.length > 0 && (
+                {MenuItems && MenuItems.length > 0 && (
                     <MenuItemsList
-                        menuItems={menuItems}
+                        menuItems={MenuItems}
                         handleDeleteMenuItem={handleDeleteMenuItem}
                         handleEditMenuItem={handleEditMenuItem}
                     />
@@ -518,41 +508,75 @@ const MenuItemsList = ({
         <List display="flex" flexDir={"column"} gap="3" {...rest}>
             {menuItems.map((item, idx) => {
                 return (
-                    <ListItem key={item.id}>
-                        <HStack justify={"space-between"}>
-                            <Text>
-                                {item.order}. {item.title}
-                            </Text>
-                            <HStack spacing={4}>
-                                <TableEditAction
-                                    onClick={(e) => {
-                                        handleEditMenuItem(e, item.id);
-                                    }}
-                                />
-                                <TableDeleteAction
-                                    onClick={(e) => {
-                                        handleDeleteMenuItem(e, item.id);
-                                    }}
-                                />
-                            </HStack>
-                        </HStack>
-                        {item.children && item.children.length > 0 && (
-                            <MenuItemsList
-                                menuItems={item.children}
-                                handleDeleteMenuItem={handleDeleteMenuItem}
-                                handleEditMenuItem={handleEditMenuItem}
-                                ml={6}
-                                px={6}
-                                gap="2"
-                                mt={4}
-                                borderLeft={"1px solid var(--color-text)"}
-                                borderColor={useColorModeValue(
-                                    "gray.400",
-                                    "gray.200"
-                                )}
-                            />
-                        )}
-                    </ListItem>
+                    <Accordion allowToggle>
+                        <AccordionItem p={2}>
+                            <ListItem key={item.id}>
+                                <HStack justify={"space-between"}>
+                                    <Text>
+                                        {item.order}. {item.name}
+                                    </Text>
+
+                                    <HStack spacing={4}>
+                                        {item.children &&
+                                            item.children.length > 0 && (
+                                                <AccordionButton
+                                                    rounded={"md"}
+                                                    _hover={{
+                                                        bg: "blue.100",
+                                                    }}
+                                                    _expanded={{
+                                                        bg: "blue.500",
+                                                        color: "white",
+                                                    }}
+                                                >
+                                                    {"Submenu items"}
+                                                    <AccordionIcon />
+                                                </AccordionButton>
+                                            )}
+                                        <TableEditAction
+                                            onClick={(e) => {
+                                                handleEditMenuItem(e, item.id);
+                                            }}
+                                        />
+                                        <TableDeleteAction
+                                            onClick={(e) => {
+                                                handleDeleteMenuItem(
+                                                    e,
+                                                    item.id
+                                                );
+                                            }}
+                                        />
+                                    </HStack>
+                                </HStack>
+                            </ListItem>
+                            {item.children && item.children.length > 0 && (
+                                <>
+                                    <AccordionPanel pb={4}>
+                                        <MenuItemsList
+                                            menuItems={item.children}
+                                            handleDeleteMenuItem={
+                                                handleDeleteMenuItem
+                                            }
+                                            handleEditMenuItem={
+                                                handleEditMenuItem
+                                            }
+                                            ml={6}
+                                            px={6}
+                                            gap="2"
+                                            mt={4}
+                                            borderLeft={
+                                                "1px solid var(--color-text)"
+                                            }
+                                            borderColor={useColorModeValue(
+                                                "gray.400",
+                                                "gray.200"
+                                            )}
+                                        />
+                                    </AccordionPanel>
+                                </>
+                            )}
+                        </AccordionItem>
+                    </Accordion>
                 );
             })}
         </List>
