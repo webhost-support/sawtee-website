@@ -59,7 +59,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->as('admin.')->group(fu
     Route::get("/menus", [MenuController::class, 'index'])->name('menus.index');
     Route::get('/menus/manage-menus/{id?}', [MenuController::class, 'manage'])->name('manage.menus');
     Route::post('/menus/create', [MenuController::class, 'store'])->name('create.menu');
-    // Route::get('/menus/edit', [MenuController::class, 'edit'])->name('edit.menu');
+    Route::patch('/menus/update', [MenuController::class, 'update'])->name('update.menu');
     Route::delete('/menus/delete/{id}', [MenuController::class, 'delete'])->name('delete.menu');
     Route::post('/menus/add-menu-items-to-menu', [MenuController::class, 'addMenuItemToMenu'])->name('addMenuItems.menu');
     Route::patch('/menus/edit-menu-item/{id}', [MenuController::class, 'editMenuItem'])->name('editMenuItem.menu');

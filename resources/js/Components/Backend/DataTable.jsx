@@ -277,7 +277,6 @@ export function DataTable({
                                 type="number"
                                 defaultValue={data.current_page}
                                 onChange={(e) => {
-                                    console.log(Number(e.target.value));
                                     setTimeout(() => {
                                         Inertia.visit(
                                             `${data.path}?page=${e.target.value}`,

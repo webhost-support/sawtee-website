@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Menu;
 use App\Models\MenuItem;
 use App\Models\Page;
+use App\Models\Section;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -39,9 +40,10 @@ class MenuController extends Controller
         $data = $request->validate([
             'title' => 'required|unique:menus,title|max:100',
             'location' => 'required|unique:menus,location|max:100',
+            'content' => 'nullable'
         ]);
         Menu::create($data);
-        return redirect()->route('admin.menus.index');
+        return to_route('admin.menus.index');
 
     }
 
@@ -67,6 +69,7 @@ class MenuController extends Controller
             'categories' => Category::with(['parent'])->get(),
             'pages' => Page::all(),
             'menus' => Menu::all(),
+            'sections' => Section::all(),
             'desiredMenu' => $desiredMenu,
             'menuItems' => $menu_items,
         ]);
@@ -84,7 +87,7 @@ class MenuController extends Controller
             'parent_id' => 'nullable|numeric',
         ]);
         MenuItem::create($validated);
-        return redirect()->route('admin.manage.menus', $menu_id);
+        return to_route('admin.manage.menus', $menu_id);
     }
 
     public function editMenuItem(Request $request, $id)
@@ -92,7 +95,7 @@ class MenuController extends Controller
         // dd($id);
         $menuItem = MenuItem::find($id);
         $menuItem->update($request->all());
-        return redirect()->route('admin.manage.menus', $menuItem->menu_id);
+        return to_route('admin.manage.menus', $menuItem->menu_id);
     }
 
     public function deleteMenuItem($id)
@@ -105,7 +108,7 @@ class MenuController extends Controller
         }
         $menu_id = $menuItem->menu_id;
         $menuItem->delete();
-        return redirect()->route('admin.manage.menus', $menu_id);
+        return to_route('admin.manage.menus', $menu_id);
     }
 
     /**
@@ -113,8 +116,10 @@ class MenuController extends Controller
      */
     public function update(Request $request, Menu $menu)
     {
-        $menu->update($request->all());
-        return redirect()->route('admin.manage.menus');
+        $menuToEdit = Menu::findOrFail($request->menu["id"]);
+        $menuToEdit->update($request->all());
+        // dd( $menuToEdit->location);
+        return to_route('admin.manage.menus', $menuToEdit->id);
     }
 
     /**
@@ -125,6 +130,6 @@ class MenuController extends Controller
         $menu = Menu::findOrFail($id);
         $menu->delete();
         $new_menu = Menu::orderby('id', 'DESC')->first();
-        return redirect()->route('admin.manage.menus', $new_menu->id);
+        return to_route('admin.manage.menus', $new_menu->id);
     }
 }

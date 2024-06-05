@@ -28,9 +28,9 @@ export default function EditMenuForm({ isOpen, onClose, menu }) {
     const submit = (e) => {
         e.preventDefault();
 
-        patch(route("admin.menus.update", menu), {
+        patch(route("admin.update.menu", menu), {
             preserveScroll: true,
-            onSuccess: () =>
+            onSuccess: () => {
                 toast({
                     position: "top-right",
                     title: "Menu edited.",
@@ -38,7 +38,9 @@ export default function EditMenuForm({ isOpen, onClose, menu }) {
                     status: "success",
                     duration: 6000,
                     isClosable: true,
-                }),
+                });
+                onClose();
+            },
             onError: (errors) => {
                 if (errors.title) {
                     reset("title");
@@ -58,18 +60,12 @@ export default function EditMenuForm({ isOpen, onClose, menu }) {
         >
             <ModalOverlay />
             <ModalContent as="form" onSubmit={submit}>
-                <ModalHeader>Delete Menu</ModalHeader>
+                <ModalHeader>Edit Menu</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                    <VStack
-                        as="form"
-                        onSubmit={submit}
-                        gap="6"
-                        alignItems={"start"}
-                    >
-                        <FormControl mt="4" isInvalid={errors.title}>
+                    <VStack gap="6" alignItems={"start"}>
+                        <FormControl mt="4" isInvalid={errors.title} isRequired>
                             <FormLabel htmlFor="title">Title</FormLabel>
-
                             <Input
                                 id="title"
                                 name="title"
@@ -77,16 +73,20 @@ export default function EditMenuForm({ isOpen, onClose, menu }) {
                                 onChange={(e) =>
                                     setData("title", e.target.value)
                                 }
-                                required
                             />
 
-                            <FormErrorMessage
-                                message={errors.title}
-                                classtitle="mt-2"
-                            />
+                            {errors.title && (
+                                <FormErrorMessage mt="2">
+                                    {errors.title}
+                                </FormErrorMessage>
+                            )}
                         </FormControl>
 
-                        <FormControl mt="4" isInvalid={errors.location}>
+                        <FormControl
+                            mt="4"
+                            isInvalid={errors.location}
+                            isRequired
+                        >
                             <FormLabel htmlFor="location">location</FormLabel>
 
                             <Input
@@ -96,33 +96,20 @@ export default function EditMenuForm({ isOpen, onClose, menu }) {
                                 onChange={(e) =>
                                     setData("location", e.target.value)
                                 }
-                                required
                             />
 
-                            <FormErrorMessage
-                                message={errors.location}
-                                classlocation="mt-2"
-                            />
+                            {errors.location && (
+                                <FormErrorMessage mt="2">
+                                    {errors.location}
+                                </FormErrorMessage>
+                            )}
                         </FormControl>
-
-                        <PrimaryButton
-                            type="submit"
-                            isLoading={processing}
-                            minW="64"
-                        >
-                            Save
-                        </PrimaryButton>
                     </VStack>
                 </ModalBody>
 
                 <ModalFooter>
-                    <PrimaryButton
-                        colorScheme="blue"
-                        type="submit"
-                        isLoading={processing}
-                        mr={3}
-                    >
-                        Delete
+                    <PrimaryButton type="submit" isLoading={processing}>
+                        Save
                     </PrimaryButton>
                     <Button variant="ghost" onClick={onClose}>
                         Cancel

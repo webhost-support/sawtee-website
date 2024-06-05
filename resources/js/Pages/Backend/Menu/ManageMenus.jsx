@@ -37,18 +37,18 @@ import {
 } from "@/Components/Backend/TableActions";
 import EditMenuItem from "../MenuItem/EditMenuItem";
 import EditMenuForm from "./Partials/EditMenu";
+import { slugify } from "@/Utils/helpers";
 
 export default function ManageMenu({
     auth,
     categories,
+    sections,
     menus,
     pages,
     desiredMenu,
     menuItems,
 }) {
     const editMenu = useDisclosure();
-    const editMenuItem = useDisclosure();
-    const deleteMenuItem = useDisclosure();
     const [menuItem, setMenuItem] = useState(null);
     const [MenuItems, setMenuItems] = useState(menuItems);
     const { get } = useForm();
@@ -161,6 +161,14 @@ export default function ManageMenu({
                             />
 
                             <AddToMenu
+                                options={sections}
+                                name="sections"
+                                menu={desiredMenu}
+                                pages={pages}
+                                menuItems={menuItems ? menuItems : null}
+                            />
+
+                            <AddToMenu
                                 name="custom link"
                                 menu={desiredMenu}
                                 menuItems={menuItems ? menuItems : null}
@@ -196,7 +204,7 @@ export default function ManageMenu({
     );
 }
 
-const AddToMenu = ({ options, name, menu, menuItems }) => {
+const AddToMenu = ({ options, name, menu, menuItems, pages = null }) => {
     const [selectedData, setSelectedData] = useState(null);
     const [parent, setParent] = useState(null);
 
@@ -212,36 +220,57 @@ const AddToMenu = ({ options, name, menu, menuItems }) => {
 
     useEffect(() => {
         if (selectedData) {
-            const url =
-                name === "pages"
-                    ? `/${selectedData.slug}`
-                    : selectedData.parent
-                    ? `/category/${selectedData.parent.slug}/${selectedData.slug}`
-                    : `/category/${selectedData.slug}`;
+            let url = "";
+            switch (name) {
+                case "pages":
+                    url = `/${selectedData.slug}`;
+                    break;
+                case "sections":
+                    const slug = slugify(selectedData.title);
+                    url = `/#${slug}`;
+                    break;
+                default:
+                    url = selectedData.parent
+                        ? `/category/${selectedData.parent.slug}/${selectedData.slug}`
+                        : `/category/${selectedData.slug}`;
+            }
 
             setData({
                 menu_id: menu.id,
-                title: selectedData.name,
+                title: selectedData.name || selectedData.title,
                 order: data.order,
-                name: selectedData.name,
+                name: selectedData.name || selectedData.title,
                 url: url,
             });
         }
     }, [selectedData]);
 
     useEffect(() => {
+        let slug = "";
         if (parent) {
-            setData(
-                "order",
-                menuItems.filter((menuItem) => menuItem.id === parent)[0]
-                    .children.length + 1
-            );
+            slug = pages
+                ? slugify(selectedData.title || selectedData.name)
+                : "";
+            const page = pages?.filter(
+                (page) => page.id === selectedData.page_id
+            )[0];
+            setData({
+                ...data,
+                order:
+                    menuItems.filter((menuItem) => menuItem.id === parent)[0]
+                        .children.length + 1,
+                url: pages ? `/${page.slug}/#${slug}` : data.url,
+            });
         }
         if (parent == 0) {
-            setData(
-                "order",
-                menuItems.filter((menuItem) => !menuItem.parent_id).length + 1
-            );
+            slug = slugify(selectedData.title || selectedData.name);
+            setData({
+                ...data,
+                order:
+                    menuItems.filter((menuItem) => !menuItem.parent_id).length +
+                    1,
+                url: pages ? `/#${slug}` : data.url,
+            });
         }
     }, [parent]);
 
@@ -311,7 +340,8 @@ const AddToMenu = ({ options, name, menu, menuItems }) => {
                                                         key={option.id}
                                                         value={option.id}
                                                     >
-                                                        {option.name}
+                                                        {option.name ||
+                                                            option.title}
                                                     </option>
                                                 );
                                             })}
@@ -522,7 +552,11 @@ const MenuItemsList = ({
                                                 <AccordionButton
                                                     rounded={"md"}
                                                     _hover={{
-                                                        bg: "blue.100",
+                                                        bg: useColorModeValue(
+                                                            "blue.50",
+                                                            "blue.200"
+                                                        ),
+                                                        color: "gray.700",
                                                     }}
                                                     _expanded={{
                                                         bg: "blue.500",

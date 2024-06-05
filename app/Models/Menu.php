@@ -9,7 +9,7 @@ class Menu extends Model
 {
     use HasFactory;
     protected $table = 'menus';
-    protected $fillable = ['title', 'location', 'content', 'created_at', 'updated_at'];
+    protected $fillable = ['title', 'location', 'created_at', 'updated_at'];
 
     // public function widgets(): HasMany
     // {
