@@ -49,14 +49,8 @@ export default function ManageMenu({
     menuItems,
 }) {
     const editMenu = useDisclosure();
-    const [menuItem, setMenuItem] = useState(null);
     const [MenuItems, setMenuItems] = useState(menuItems);
     const { get } = useForm();
-
-    // const handleUpdate = (e, id) => {
-    //     e.preventDefault();
-    //     get(route("admin.menus.edit", id));
-    // };
 
     const handleMenuSlected = (e, id) => {
         e.preventDefault();
@@ -193,11 +187,7 @@ export default function ManageMenu({
                             Menu Structure
                         </Box>
                     </Box>
-                    <MenuStructure
-                        MenuItems={MenuItems}
-                        menuItem={menuItem}
-                        setMenuItem={setMenuItem}
-                    />
+                    <MenuStructure MenuItems={MenuItems} />
                 </GridItem>
             </Grid>
         </AuthenticatedLayout>
@@ -235,7 +225,7 @@ const AddToMenu = ({ options, name, menu, menuItems, pages = null }) => {
                         : `/category/${selectedData.slug}`;
                     break;
                 default:
-                   url = `/${selectedData.slug}`;
+                    url = `/${selectedData.slug}`;
             }
 
             setData({
@@ -475,12 +465,24 @@ const AddToMenu = ({ options, name, menu, menuItems, pages = null }) => {
     );
 };
 
-const MenuStructure = ({ MenuItems, menuItem, setMenuItem }) => {
+const MenuStructure = ({ MenuItems }) => {
+    return (
+        <GlassBox mt={6} p={6}>
+            {MenuItems && MenuItems.length > 0 && (
+                <MenuItemsList menuItems={MenuItems} />
+            )}
+        </GlassBox>
+    );
+};
+
+const MenuItemsList = ({ menuItems, ...rest }) => {
     const editMenuItem = useDisclosure();
     const deleteMenuItem = useDisclosure();
+    const [menuItem, setMenuItem] = useState(null);
+
     const handleEditMenuItem = (e, id) => {
         e.preventDefault();
-        const newMenuItem = MenuItems.filter(
+        const newMenuItem = menuItems.filter(
             (MenuItem) => MenuItem.id == id
         )[0];
         setMenuItem(newMenuItem);
@@ -489,13 +491,12 @@ const MenuStructure = ({ MenuItems, menuItem, setMenuItem }) => {
 
     const handleDeleteMenuItem = (e, id) => {
         e.preventDefault();
-        const newMenuItem = MenuItems.filter(
+        const newMenuItem = menuItems.filter(
             (MenuItem) => MenuItem.id == id
         )[0];
         setMenuItem(newMenuItem);
         deleteMenuItem.onOpen();
     };
-
     return (
         <>
             {menuItem && editMenuItem.isOpen && (
@@ -505,7 +506,7 @@ const MenuStructure = ({ MenuItems, menuItem, setMenuItem }) => {
                     onClose={editMenuItem.onClose}
                     item={menuItem}
                     setMenuItem={setMenuItem}
-                    menuItems={MenuItems}
+                    menuItems={menuItems}
                 />
             )}
             {menuItem && deleteMenuItem.isOpen && (
@@ -518,104 +519,88 @@ const MenuStructure = ({ MenuItems, menuItem, setMenuItem }) => {
                 />
             )}
 
-            <GlassBox mt={6} p={6}>
-                {MenuItems && MenuItems.length > 0 && (
-                    <MenuItemsList
-                        menuItems={MenuItems}
-                        handleDeleteMenuItem={handleDeleteMenuItem}
-                        handleEditMenuItem={handleEditMenuItem}
-                    />
-                )}
-            </GlassBox>
-        </>
-    );
-};
+            <List display="flex" flexDir={"column"} gap="3" {...rest}>
+                {menuItems.map((item, idx) => {
+                    return (
+                        <Accordion allowToggle>
+                            <AccordionItem p={2}>
+                                <ListItem key={item.id}>
+                                    <HStack justify={"space-between"}>
+                                        <Text>
+                                            {item.order}. {item.name}
+                                        </Text>
 
-const MenuItemsList = ({
-    menuItems,
-    handleDeleteMenuItem,
-    handleEditMenuItem,
-    ...rest
-}) => {
-    return (
-        <List display="flex" flexDir={"column"} gap="3" {...rest}>
-            {menuItems.map((item, idx) => {
-                return (
-                    <Accordion allowToggle>
-                        <AccordionItem p={2}>
-                            <ListItem key={item.id}>
-                                <HStack justify={"space-between"}>
-                                    <Text>
-                                        {item.order}. {item.name}
-                                    </Text>
-
-                                    <HStack spacing={4}>
-                                        {item.children &&
-                                            item.children.length > 0 && (
-                                                <AccordionButton
-                                                    rounded={"md"}
-                                                    _hover={{
-                                                        bg: useColorModeValue(
-                                                            "blue.50",
-                                                            "blue.200"
-                                                        ),
-                                                        color: "gray.700",
-                                                    }}
-                                                    _expanded={{
-                                                        bg: "blue.500",
-                                                        color: "white",
-                                                    }}
-                                                >
-                                                    {"Submenu items"}
-                                                    <AccordionIcon />
-                                                </AccordionButton>
-                                            )}
-                                        <TableEditAction
-                                            onClick={(e) => {
-                                                handleEditMenuItem(e, item.id);
-                                            }}
-                                        />
-                                        <TableDeleteAction
-                                            onClick={(e) => {
-                                                handleDeleteMenuItem(
-                                                    e,
-                                                    item.id
-                                                );
-                                            }}
-                                        />
+                                        <HStack spacing={4}>
+                                            {item.children &&
+                                                item.children.length > 0 && (
+                                                    <AccordionButton
+                                                        rounded={"md"}
+                                                        _hover={{
+                                                            bg: useColorModeValue(
+                                                                "blue.50",
+                                                                "blue.200"
+                                                            ),
+                                                            color: "gray.700",
+                                                        }}
+                                                        _expanded={{
+                                                            bg: "blue.500",
+                                                            color: "white",
+                                                        }}
+                                                    >
+                                                        {"Submenu items"}
+                                                        <AccordionIcon />
+                                                    </AccordionButton>
+                                                )}
+                                            <TableEditAction
+                                                onClick={(e) => {
+                                                    handleEditMenuItem(
+                                                        e,
+                                                        item.id
+                                                    );
+                                                }}
+                                            />
+                                            <TableDeleteAction
+                                                onClick={(e) => {
+                                                    handleDeleteMenuItem(
+                                                        e,
+                                                        item.id
+                                                    );
+                                                }}
+                                            />
+                                        </HStack>
                                     </HStack>
-                                </HStack>
-                            </ListItem>
-                            {item.children && item.children.length > 0 && (
-                                <>
-                                    <AccordionPanel pb={4}>
-                                        <MenuItemsList
-                                            menuItems={item.children}
-                                            handleDeleteMenuItem={
-                                                handleDeleteMenuItem
-                                            }
-                                            handleEditMenuItem={
-                                                handleEditMenuItem
-                                            }
-                                            ml={6}
-                                            px={6}
-                                            gap="2"
-                                            mt={4}
-                                            borderLeft={
-                                                "1px solid var(--color-text)"
-                                            }
-                                            borderColor={useColorModeValue(
-                                                "gray.400",
-                                                "gray.200"
-                                            )}
-                                        />
-                                    </AccordionPanel>
-                                </>
-                            )}
-                        </AccordionItem>
-                    </Accordion>
-                );
-            })}
-        </List>
+                                </ListItem>
+                                {item.children && item.children.length > 0 && (
+                                    <>
+                                        <AccordionPanel pb={4}>
+                                            <MenuItemsList
+                                                menuItems={item.children}
+                                                handleDeleteMenuItem={
+                                                    handleDeleteMenuItem
+                                                }
+                                                handleEditMenuItem={
+                                                    handleEditMenuItem
+                                                }
+                                                ml={6}
+                                                px={6}
+                                                gap="2"
+                                                mt={4}
+                                                borderLeft={
+                                                    "1px solid var(--color-text)"
+                                                }
+                                                borderColor={useColorModeValue(
+                                                    "gray.400",
+                                                    "gray.200"
+                                                )}
+                                            />
+                                        </AccordionPanel>
+                                    </>
+                                )}
+                            </AccordionItem>
+                        </Accordion>
+                    );
+                })}
+            </List>
+        </>
     );
 };
