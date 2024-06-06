@@ -229,10 +229,13 @@ const AddToMenu = ({ options, name, menu, menuItems, pages = null }) => {
                     const slug = slugify(selectedData.title);
                     url = `/#${slug}`;
                     break;
-                default:
+                case "categories":
                     url = selectedData.parent
                         ? `/category/${selectedData.parent.slug}/${selectedData.slug}`
                         : `/category/${selectedData.slug}`;
+                    break;
+                default:
+                   url = `/${selectedData.slug}`;
             }
 
             setData({
@@ -259,7 +262,7 @@ const AddToMenu = ({ options, name, menu, menuItems, pages = null }) => {
                 order:
                     menuItems.filter((menuItem) => menuItem.id === parent)[0]
                         .children.length + 1,
-                url: pages ? `/${page.slug}/#${slug}` : data.url,
+                url: pages ? `/${page.slug}#${slug}` : data.url,
             });
         }
         if (parent == 0) {
