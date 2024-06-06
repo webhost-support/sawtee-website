@@ -37,10 +37,7 @@ const CardsCarousel = ({ slides, navigation }) => {
                                 overflow={"hidden"}
                                 minH="320px"
                                 pos={"relative"}
-                                bg={useColorModeValue(
-                                    "white",
-                                    "blackAlpha.300"
-                                )}
+                                bg={"var(--color-body-bg)"}
                             >
                                 <InertiaChakraLink
                                     pos={"absolute"}
@@ -54,10 +51,7 @@ const CardsCarousel = ({ slides, navigation }) => {
                                     textDecor={"underline"}
                                     cursor={"pointer"}
                                     color="var(--color-text)"
-                                    bg={useColorModeValue(
-                                        "white",
-                                        "blackAlpha.300"
-                                    )}
+                                    bg={"var(--color-body-bg)"}
                                     backdropFilter={"blur(5px)"}
                                 >
                                     {slide.title + " "}

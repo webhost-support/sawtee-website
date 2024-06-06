@@ -65,7 +65,7 @@ export default function Sidebar({ menu, props }) {
             border
             color="inherit"
             borderRightWidth="1px"
-            w={{ md: "20", lg: "48" }}
+            w={48}
             {...props}
         >
             <Flex
@@ -81,10 +81,7 @@ export default function Sidebar({ menu, props }) {
                 </Show>
 
                 <Show above="lg">
-                    <Image
-                        src="/assets/logo-sawtee.webp"
-                        alt="logo"
-                    />
+                    <Image src="/assets/logo-sawtee.webp" alt="logo" />
                 </Show>
                 <Text
                     fontSize="xs"
@@ -107,7 +104,7 @@ export default function Sidebar({ menu, props }) {
                                     preserveScroll={true}
                                 >
                                     <NavItem icon={item.icon}>
-                                        <Show above="lg">{item.name}</Show>
+                                        {item.name}
                                     </NavItem>
                                 </Link>
                             </Box>

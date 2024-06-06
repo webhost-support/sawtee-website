@@ -87,13 +87,19 @@ export function DataTable({
         <>
             <Stack
                 spacing={4}
-                direction={"row"}
+                direction={{ base: "column", md: "row" }}
                 justifyContent={showColumnFilters ? "space-between" : "end"}
                 mb={4}
                 flexWrap="wrap"
             >
                 {showColumnFilters && (
-                    <HStack spacing={4}>
+                    <Stack
+                        spacing={4}
+                        direction={{ base: "column", md: "row" }}
+                        justifyContent={"space-evenly"}
+                        mb={4}
+                        flexWrap="wrap"
+                    >
                         <Checkbox
                             defaultChecked={table.getIsAllColumnsVisible()}
                             onChange={table.getToggleAllColumnsVisibilityHandler()}
@@ -111,7 +117,7 @@ export function DataTable({
                                 </Checkbox>
                             );
                         })}
-                    </HStack>
+                    </Stack>
                 )}
 
                 {showSearch && (

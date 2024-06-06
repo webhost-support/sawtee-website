@@ -1,3 +1,19 @@
+import {
+    FiHome,
+    FiTrendingUp,
+    FiCompass,
+    FiStar,
+    FiLayout,
+    FiBook,
+    FiFileText,
+    FiGlobe,
+    FiGrid,
+    FiUsers,
+    FiFeather,
+} from "react-icons/fi";
+import { RiPagesLine } from "react-icons/ri";
+import { TbSlideshow } from "react-icons/tb";
+
 export const feature = {
     name: "Reform Monitoring Platform",
     image: "/assets/Policy-Reform-Banner-green-sized.webp",
@@ -10,12 +26,16 @@ export const feature = {
 //     "'Inter',  'Segoe UI', system-ui, Tahoma, Geneva, Verdana, sans-serif";
 const font_heading =
     "Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif";
+
 const font_body = "'Segoe UI', system-ui, Tahoma, Geneva, Verdana, sans-serif";
+
 const font_mono = "'IBM Plex Mono', Menlo, Consolas, monospace";
+
 export const config = {
     initialColorMode: "system",
     useSystemColorMode: true,
 };
+
 export const customTheme = {
     colors: {
         darkgray: {
@@ -221,6 +241,76 @@ export const aboutMenuData = {
     introImage: "/assets/Airports_Network_Map.png",
     experts: [...staticExperts],
 };
+
+export const DashBoardMenuItems = [
+    {
+        name: "Dashboard",
+        icon: FiHome,
+        route: "admin.dashboard",
+    },
+    {
+        name: "Website",
+        icon: FiGlobe,
+        route: "home",
+    },
+    {
+        name: "Menu",
+        icon: FiGrid,
+        route: "admin.menus.index",
+    },
+    {
+        name: "Pages",
+        icon: RiPagesLine,
+        route: "admin.pages.index",
+    },
+    {
+        name: "Sections",
+        icon: FiLayout,
+        route: "admin.sections.index",
+    },
+    {
+        name: "Posts",
+        icon: FiTrendingUp,
+        route: "admin.posts.index",
+    },
+    {
+        name: "Themes",
+        icon: FiCompass,
+        route: "admin.themes.index",
+    },
+    {
+        name: "Tags",
+        icon: FiCompass,
+        route: "admin.tags.index",
+    },
+    {
+        name: "Categories",
+        icon: FiStar,
+        route: "admin.categories.index",
+    },
+    {
+        name: "Publications",
+        icon: FiBook,
+        route: "admin.publications.index",
+    },
+    {
+        name: "Research",
+        icon: FiFileText,
+        route: "admin.research.index",
+    },
+    {
+        name: "Team Members",
+        icon: FiUsers,
+        route: "admin.teams.index",
+    },
+    ,
+    {
+        name: "Slider",
+        icon: TbSlideshow,
+        route: "admin.sliders.index",
+    },
+];
+
 export const primarMenu = [
     {
         title: "Home",

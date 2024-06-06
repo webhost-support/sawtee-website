@@ -18,7 +18,7 @@ import {
     useColorMode,
 } from "@chakra-ui/react";
 import { FiMenu, FiChevronDown, FiSearch } from "react-icons/fi";
-import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Link } from "@inertiajs/react";
 import styled from "@emotion/styled";
 
@@ -49,32 +49,14 @@ export default function Header({ name, image, sidebar, ...rest }) {
                         base: "inline-flex",
                     }}
                     onClick={sidebar.onOpen}
-                    icon={<FiMenu />}
+                    icon={<HamburgerIcon />}
                     size="sm"
                 />
             </Show>
             <HStack spacing={{ base: "2", md: "6" }}>
-                <InputGroup
-                    w="96"
-                    display={{
-                        base: "none",
-                        md: "flex",
-                    }}
-                >
-                    <InputLeftElement color="gray.500">
-                        <FiSearch />
-                    </InputLeftElement>
-                    <Input placeholder="Search for articles..." />
-                </InputGroup>
                 <Button onClick={toggleColorMode}>
                     {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
                 </Button>
-                {/* <IconButton
-                    size="lg"
-                    variant="ghost"
-                    aria-label="open menu"
-                    icon={<FiBell />}
-                /> */}
                 <Flex align="center">
                     <Menu>
                         <MenuButton

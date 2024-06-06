@@ -37,7 +37,7 @@ Route::get('/admin', AuthenticatedSessionController::class . '@create');
 Route::get('/admin/login', AuthenticatedSessionController::class . '@create');
 Route::middleware(['auth', 'verified'])->prefix('admin')->as('admin.')->group(function () {
     Route::get('/dashboard', function () {
-        return redirect('/admin/posts');
+        return Inertia::render('Backend/Dashboard');
     })->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
