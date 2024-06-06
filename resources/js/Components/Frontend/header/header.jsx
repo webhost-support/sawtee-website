@@ -4,6 +4,7 @@ import {
     Flex,
     IconButton,
     Image,
+    Show,
     Text,
     useColorModeValue,
     useDisclosure,
@@ -114,35 +115,33 @@ const Header = ({
                     align="center"
                     justify={"space-between"}
                 >
-                    <Flex
-                        ml={{ base: -2 }}
-                        display={{ base: "flex", md: "none" }}
-                        align="center"
-                    >
-                        <IconButton
-                            onClick={onToggle}
-                            icon={
-                                isOpen ? (
-                                    <CloseIcon w={3} h={3} />
-                                ) : (
-                                    <HamburgerIcon w={5} h={5} />
-                                )
-                            }
-                            variant={"ghost"}
-                            aria-label={"Toggle Navigation"}
+                    <Show below="lg">
+                        <Flex ml={{ base: -2 }} align="center">
+                            <IconButton
+                                onClick={onToggle}
+                                icon={
+                                    isOpen ? (
+                                        <CloseIcon w={3} h={3} />
+                                    ) : (
+                                        <HamburgerIcon w={5} h={5} />
+                                    )
+                                }
+                                variant={"ghost"}
+                                aria-label={"Toggle Navigation"}
+                            />
+                        </Flex>
+                    </Show>
+                    <Flex justify="center">
+                        <SiteLogo
+                            src={"/assets/logo-sawtee.svg"}
+                            established={null}
                         />
                     </Flex>
-                    <SiteLogo
-                        src={"/assets/logo-sawtee.svg"}
-                        established={null}
-                    />
-                    <Flex
-                        display={{ base: "none", md: "flex" }}
-                        justify="center"
-
-                    >
-                        <DesktopNavigation menu={menu} />
-                    </Flex>
+                    <Show above="lg">
+                        <Flex justify="center">
+                            <DesktopNavigation menu={menu} />
+                        </Flex>
+                    </Show>
                     <Box as="div" display={"flex"}>
                         <ThemeToggle mr="4" />
                         <SearchButton onClick={searchModal.onOpen} />
@@ -164,6 +163,7 @@ const Header = ({
                 in={isOpen}
                 animateOpacity
                 transition={{ enter: { duration: 0.5 } }}
+                style={{ overflow: "scroll" }}
             >
                 <MobileMenu
                     menu={mobileMenu}

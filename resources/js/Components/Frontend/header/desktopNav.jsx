@@ -108,7 +108,7 @@ const ExpertCard = ({ expert }) => {
 export const SiteMenu = ({ ...styles }) => (
     <Stack
         m="0"
-        spacing="20px"
+        spacing="10px"
         as="ul"
         listStyleType="none"
         alignItems="center"
@@ -129,6 +129,7 @@ const AboutMegaMenu = ({
     return (
         <Box
             bg={"rgba(8, 126, 164,0.9)"}
+            backdropFilter={"blur(5px)"}
             as={motion.div}
             mx="auto"
             px={8}
@@ -258,6 +259,7 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
     return (
         <Box
             bg={"rgba(8, 126, 164,0.9)"}
+            backdropFilter={"blur(5px)"}
             as={motion.div}
             gap="4"
             px={8}
@@ -275,14 +277,14 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                     </InertiaChakraLink>
                 </Text>
                 <SimpleGrid
-                    as={OrderedList}
-                    styleType={"lower-roman"}
+                    as={"ul"}
+                    // styleType={"lower-roman"}
                     columns={2}
-                    placeItems="end"
+                    // placeItems="end"
                 >
                     {item.children[0].children.map((grandChild) => {
                         return (
-                            <ListItem
+                            <Box
                                 key={grandChild.title}
                                 as={motion.li}
                                 variants={ListVariants}
@@ -303,7 +305,7 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                                 >
                                     {grandChild.title}
                                 </InertiaChakraLink>
-                            </ListItem>
+                            </Box>
                         );
                     })}
                 </SimpleGrid>
@@ -389,7 +391,7 @@ const SiteMenuItem = ({ item, ...rest }) => {
     const { experts } = usePage().props;
     const active = item.url == `${url}`;
     return (
-        <Menu isLazy placement="bottom">
+        <Menu isLazy placement="bottom" gutter={30} {...rest}>
             {({ isOpen, onClose }) => {
                 return (
                     <>
@@ -416,7 +418,7 @@ const SiteMenuItem = ({ item, ...rest }) => {
                                 ),
                             }}
                             lineHeight={"1.1"}
-                            {...rest}
+                            transition="all .25s ease-in-out"
                         >
                             <Stack p={2} direction="row" alignItems={"center"}>
                                 <InertiaChakraLink
@@ -457,6 +459,14 @@ const SiteMenuItem = ({ item, ...rest }) => {
                                                               "gray.200"
                                                           )
                                                 }
+                                                _groupHover={{
+                                                    color: active
+                                                        ? useColorModeValue(
+                                                              "gray.700",
+                                                              "gray.200"
+                                                          )
+                                                        : "inherit",
+                                                }}
                                                 transition="all .25s ease-in-out"
                                                 w={5}
                                                 h={5}
@@ -475,7 +485,7 @@ const SiteMenuItem = ({ item, ...rest }) => {
                                 bg="transparent"
                                 boxShadow="none"
                                 border={"none"}
-                                rounded={"lg"}
+                                rounded={"none"}
                                 overflow={"hidden"}
                             >
                                 <MegaMenu
@@ -496,16 +506,15 @@ const SiteMenuItem = ({ item, ...rest }) => {
                                 boxShadow="none"
                                 rounded={"lg"}
                                 overflow={"hidden"}
+                                mx="auto"
                             >
-                                <Stack
-                                    gap={0}
-                                    // w="full"
-                                >
+                                <Stack gap={1}>
                                     {item.children?.map((child) => {
                                         return (
                                             <SiteMenuItem
                                                 item={child}
                                                 rounded="none"
+                                                offset={[0, 10]}
                                             />
                                         );
                                     })}
@@ -524,7 +533,7 @@ const SiteMenuItem = ({ item, ...rest }) => {
 const DesktopNavigation = ({ menu, ...rest }) => {
     return (
         <Box
-            as="ul"
+            as="nav"
             width="100%"
             display={{ base: "none", lg: "flex" }}
             zIndex={"999"}

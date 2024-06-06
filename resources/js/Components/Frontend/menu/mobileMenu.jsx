@@ -23,7 +23,6 @@ const MenuLink = ({ title, url, index, isOpen, ...rest }) => {
             transition="all 0.3s"
             padding="10px"
             textDecor="none"
-            w="full"
             _hover={{
                 textDecor: "none",
             }}
@@ -61,6 +60,7 @@ const DropDownMenu = ({ menuItem, index, padding = "10px", size = "md" }) => {
                 borderColor={useColorModeValue("gray.500", "whiteAlpha.500")}
                 justifyContent="space-between"
                 alignItems="center"
+                gap={4}
             >
                 <MenuLink
                     p={padding}
@@ -76,7 +76,7 @@ const DropDownMenu = ({ menuItem, index, padding = "10px", size = "md" }) => {
                 />
 
                 {menuItem.children && (
-                    <Box w="16" onClick={onToggle}>
+                    <Box w="16" flex={1} onClick={onToggle}>
                         <Icon
                             as={ChevronDownIcon}
                             transition={"all .25s ease-in-out"}
@@ -102,7 +102,7 @@ const DropDownMenu = ({ menuItem, index, padding = "10px", size = "md" }) => {
                     ml={4}
                     borderLeft={1}
                     borderStyle={"solid"}
-                    borderColor={useColorModeValue("gray.200", "gray.700")}
+                    borderColor={useColorModeValue("gray.600", "gray.200")}
                     align={"start"}
                 >
                     {menuItem.children &&

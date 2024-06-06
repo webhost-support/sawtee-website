@@ -490,7 +490,6 @@ const MenuItemsList = ({ firstLevelMenuItems, menuItems, ...rest }) => {
     const editMenuItem = useDisclosure();
     const deleteMenuItem = useDisclosure();
     const [menuItem, setMenuItem] = useState(null);
-    console.log(firstLevelMenuItems);
     const handleEditMenuItem = (e, id) => {
         e.preventDefault();
         const newMenuItem = menuItems.filter(
