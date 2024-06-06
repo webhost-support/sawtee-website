@@ -49,8 +49,13 @@ export default function ManageMenu({
     menuItems,
 }) {
     const editMenu = useDisclosure();
-    const [MenuItems, setMenuItems] = useState(menuItems);
+    const [firstLevelMenuItems, setFirstLevelMenuItems] = useState(menuItems);
     const { get } = useForm();
+
+    // const handleUpdate = (e, id) => {
+    //     e.preventDefault();
+    //     get(route("admin.menus.edit", id));
+    // };
 
     const handleMenuSlected = (e, id) => {
         e.preventDefault();
@@ -67,7 +72,7 @@ export default function ManageMenu({
                         newMenuItems.push(menuItem);
                     }
                 });
-        setMenuItems(newMenuItems);
+        setFirstLevelMenuItems(newMenuItems);
     }, [menuItems]);
 
     return (
@@ -187,7 +192,10 @@ export default function ManageMenu({
                             Menu Structure
                         </Box>
                     </Box>
-                    <MenuStructure MenuItems={MenuItems} />
+                    <MenuStructure
+                        firstLevelMenuItems={firstLevelMenuItems}
+                        menuItems={menuItems}
+                    />
                 </GridItem>
             </Grid>
         </AuthenticatedLayout>
@@ -465,21 +473,24 @@ const AddToMenu = ({ options, name, menu, menuItems, pages = null }) => {
     );
 };
 
-const MenuStructure = ({ MenuItems }) => {
+const MenuStructure = ({ firstLevelMenuItems, menuItems }) => {
     return (
         <GlassBox mt={6} p={6}>
-            {MenuItems && MenuItems.length > 0 && (
-                <MenuItemsList menuItems={MenuItems} />
+            {firstLevelMenuItems && firstLevelMenuItems.length > 0 && (
+                <MenuItemsList
+                    firstLevelMenuItems={firstLevelMenuItems}
+                    menuItems={menuItems}
+                />
             )}
         </GlassBox>
     );
 };
 
-const MenuItemsList = ({ menuItems, ...rest }) => {
+const MenuItemsList = ({ firstLevelMenuItems, menuItems, ...rest }) => {
     const editMenuItem = useDisclosure();
     const deleteMenuItem = useDisclosure();
     const [menuItem, setMenuItem] = useState(null);
-
+    console.log(firstLevelMenuItems);
     const handleEditMenuItem = (e, id) => {
         e.preventDefault();
         const newMenuItem = menuItems.filter(
@@ -520,7 +531,7 @@ const MenuItemsList = ({ menuItems, ...rest }) => {
             )}
 
             <List display="flex" flexDir={"column"} gap="3" {...rest}>
-                {menuItems.map((item, idx) => {
+                {firstLevelMenuItems?.map((item, idx) => {
                     return (
                         <Accordion allowToggle>
                             <AccordionItem p={2}>
@@ -574,7 +585,10 @@ const MenuItemsList = ({ menuItems, ...rest }) => {
                                     <>
                                         <AccordionPanel pb={4}>
                                             <MenuItemsList
-                                                menuItems={item.children}
+                                                firstLevelMenuItems={
+                                                    item.children
+                                                }
+                                                menuItems={menuItems}
                                                 handleDeleteMenuItem={
                                                     handleDeleteMenuItem
                                                 }

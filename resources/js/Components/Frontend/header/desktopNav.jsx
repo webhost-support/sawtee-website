@@ -3,7 +3,6 @@ import {
     Stack,
     Grid,
     Button,
-    IconButton,
     Icon,
     GridItem,
     Text,
@@ -13,12 +12,12 @@ import {
     VStack,
     Divider,
     useColorModeValue,
-    ButtonGroup,
     Menu,
     MenuButton,
     MenuList,
     MenuDivider,
-    HStack,
+    ListItem,
+    OrderedList,
 } from "@chakra-ui/react";
 import { Link, usePage } from "@inertiajs/react";
 import { motion } from "framer-motion";
@@ -71,15 +70,13 @@ const ExpertCard = ({ expert }) => {
             shadow="lg"
             rounded="lg"
             bg={"blackAlpha.400"}
-            // _dark={{
-            //     bg: "blackAlpha.400",
-            // }}
             direction="column"
             justifyContent="space-between"
             h={48}
             py={3}
             backdropFilter={"blur(3px)"}
             maxW="40"
+            mx="auto"
         >
             <Box
                 borderRadius="lg"
@@ -278,17 +275,14 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                     </InertiaChakraLink>
                 </Text>
                 <SimpleGrid
-                    as={motion.ul}
-                    variants={ListContainerVariants}
-                    initial={"closed"}
-                    whileInView={"open"}
-                    columns={3}
-                    spacing={6}
-                    // placeItems="center"
+                    as={OrderedList}
+                    styleType={"lower-roman"}
+                    columns={2}
+                    placeItems="end"
                 >
                     {item.children[0].children.map((grandChild) => {
                         return (
-                            <Text
+                            <ListItem
                                 key={grandChild.title}
                                 as={motion.li}
                                 variants={ListVariants}
@@ -298,7 +292,6 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                                     md: "sm",
                                     xl: "md",
                                 }}
-                                fontWeight="medium"
                                 position="relative"
                                 cursor="pointer"
                                 pb={{ md: 3, xl: 6 }}
@@ -310,7 +303,7 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                                 >
                                     {grandChild.title}
                                 </InertiaChakraLink>
-                            </Text>
+                            </ListItem>
                         );
                     })}
                 </SimpleGrid>
@@ -325,10 +318,9 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                                 <InertiaChakraLink
                                     as={Link}
                                     href={grandChildren.url}
+                                    fontSize="2xl"
                                 >
-                                    <Text fontSize="2xl" fontWeight="bold">
-                                        {grandChildren.title}
-                                    </Text>
+                                    {grandChildren.title}
                                 </InertiaChakraLink>
                                 <SimpleGrid
                                     columns={2}
@@ -381,7 +373,7 @@ const MegaMenu = ({ item, experts = null, isOpen }) => {
         return (
             <AboutMegaMenu
                 item={item}
-                experts={experts ? experts : aboutMenuData.experts}
+                experts={experts.length > 3 ? experts : aboutMenuData.experts}
                 introText={aboutMenuData.introText}
                 introImage={aboutMenuData.introImage}
                 isOpen={isOpen}
@@ -426,7 +418,7 @@ const SiteMenuItem = ({ item, ...rest }) => {
                             lineHeight={"1.1"}
                             {...rest}
                         >
-                            <HStack p={2} alignItems={"center"}>
+                            <Stack p={2} direction="row" alignItems={"center"}>
                                 <InertiaChakraLink
                                     as={Link}
                                     transition={"all .3s ease"}
@@ -438,31 +430,47 @@ const SiteMenuItem = ({ item, ...rest }) => {
                                     {item.name}
                                 </InertiaChakraLink>
                                 {item.children?.length && (
-                                    <MenuButton
-                                        isActive={isOpen}
-                                        as={Button}
-                                        variant="link"
-                                        size={"1rem"}
-                                        rounded={"none"}
-                                        aria-label="Menu DropDown"
+                                    <Flex
+                                        justify={"flex-end"}
+                                        align={"center"}
+                                        flex={1}
                                     >
-                                        <Icon
-                                            transform={
-                                                isOpen ? "rotate(180deg)" : ""
-                                            }
-                                            transition="all .25s ease-in-out"
-                                            w={5}
-                                            h={5}
-                                            as={ChevronDownIcon}
-                                        />
-                                    </MenuButton>
+                                        <MenuButton
+                                            isActive={isOpen}
+                                            as={Button}
+                                            variant="link"
+                                            size={"1rem"}
+                                            rounded={"none"}
+                                            aria-label="Menu DropDown"
+                                        >
+                                            <Icon
+                                                transform={
+                                                    isOpen
+                                                        ? "rotate(180deg)"
+                                                        : ""
+                                                }
+                                                color={
+                                                    active
+                                                        ? "gray.200"
+                                                        : useColorModeValue(
+                                                              "gray.700",
+                                                              "gray.200"
+                                                          )
+                                                }
+                                                transition="all .25s ease-in-out"
+                                                w={5}
+                                                h={5}
+                                                as={ChevronDownIcon}
+                                            />
+                                        </MenuButton>
+                                    </Flex>
                                 )}
-                            </HStack>
+                            </Stack>
                         </Box>
                         {item.name === "Our Work" || item.name === "Know Us" ? (
                             <MenuList
                                 zIndex={5}
-                                maxW={"100dvw"}
+                                w={"100dvw"}
                                 p={0}
                                 bg="transparent"
                                 boxShadow="none"
@@ -489,28 +497,19 @@ const SiteMenuItem = ({ item, ...rest }) => {
                                 rounded={"lg"}
                                 overflow={"hidden"}
                             >
-                                {item.children?.map((child) => {
-                                    return (
-                                        <Stack
-                                            key={child.title}
-                                            gap={0}
-                                            // w="full"
-                                        >
-                                            <InertiaChakraLink
-                                                as={Link}
-                                                href={child.url}
-                                                textDecor={"none"}
-                                                _hover={{ textDecor: "none" }}
-                                                w="full"
-                                            >
-                                                <SiteMenuItem
-                                                    item={child}
-                                                    rounded="none"
-                                                />
-                                            </InertiaChakraLink>
-                                        </Stack>
-                                    );
-                                })}
+                                <Stack
+                                    gap={0}
+                                    // w="full"
+                                >
+                                    {item.children?.map((child) => {
+                                        return (
+                                            <SiteMenuItem
+                                                item={child}
+                                                rounded="none"
+                                            />
+                                        );
+                                    })}
+                                </Stack>
                             </MenuList>
                         )}
 

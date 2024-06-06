@@ -27,6 +27,7 @@ export default function EditMenuItem({
     setMenuItem,
     menuItems,
 }) {
+    console.log(menuItems);
     const { data, setData, patch, processing, errors, reset } = useForm({
         title: item.title,
         name: item.name,
