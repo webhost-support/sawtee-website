@@ -66,7 +66,7 @@ export default function Category({
                             base: "1fr",
                             md: "1fr",
                             lg: "1fr 1fr",
-                            xl: "var(--chakra-sizes-3xl) minmax(var(--chakra-sizes-md), var(--chakra-sizes-lg))",
+                            xl: "var(--chakra-sizes-lg) minmax(var(--chakra-sizes-sm), var(--chakra-sizes-md))",
                         }}
                         gap={10}
                         pos={"relative"}
@@ -75,7 +75,6 @@ export default function Category({
                         <GridItem
                             as={VStack}
                             spacing={12}
-                            mb="56px"
                             colSpan={{ base: 1, md: 2, lg: 1 }}
                         >
                             {isDefault && (
@@ -150,7 +149,6 @@ export default function Category({
                                     py="4"
                                     px="4"
                                     rounded="xl"
-                                    maxW={["md", "lg", "xl"]}
                                     height="max-content"
                                 >
                                     <SubscriptionCard />

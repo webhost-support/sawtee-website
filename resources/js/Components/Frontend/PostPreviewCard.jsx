@@ -34,7 +34,7 @@ const PostPreviewCard = ({
             role="group"
             shadow="md"
             rounded="md"
-            p={6}
+            p={4}
             {...rest}
         >
             {showImage && featured_image && (
@@ -46,7 +46,7 @@ const PostPreviewCard = ({
 
             <Flex
                 mt={showImage ? 4 : 0}
-                gap={6}
+                gap={2}
                 justify={"center"}
                 direction="column"
             >
@@ -69,18 +69,14 @@ const PostPreviewCard = ({
                 <InertiaChakraLinkOverlay
                     as={Link}
                     href={`/category/${category.slug}/${slug}`}
-                    _groupHover={{
-                        textDecoration: "underline",
-                        textUnderlineOffset: "3px",
-                    }}
                 >
-                    <Heading fontSize={{ base: "md", lg: "lg" }} as="h4">
+                    <Heading fontSize={{ base: "xs", lg: "sm" }} as="h4">
                         {title}
                     </Heading>
                 </InertiaChakraLinkOverlay>
 
                 <Text
-                    fontSize={{ base: "sm", lg: "md" }}
+                    fontSize={{ base: "xs", lg: "sm" }}
                     overflow="hidden"
                     textOverflow="ellipsis"
                     display="-webkit-box"

@@ -71,22 +71,24 @@ const MultiPostsCarousel = ({
                             id="prev-button"
                             colorScheme="primary"
                             variant="outline"
-                            icon={<ChevronLeftIcon w="8" h="8" />}
+                            icon={<ChevronLeftIcon w="5" h="5" />}
                             aria-label="previous button"
                             onClick={() =>
                                 swiperElRef.current?.swiper.slidePrev()
                             }
+                            size={"sm"}
                         />
 
                         <IconButton
                             id="next-button"
                             colorScheme="primary"
                             variant="outline"
-                            icon={<ChevronRightIcon w="8" h="8" />}
+                            icon={<ChevronRightIcon w="5" h="5" />}
                             aria-label="next button"
                             onClick={() =>
                                 swiperElRef.current?.swiper.slideNext()
                             }
+                            size={"sm"}
                         />
                     </HStack>
                     {children}
@@ -103,7 +105,9 @@ const MultiPostsCarousel = ({
                                 post={article}
                                 showImage={false}
                                 showCategoryTag={showCategoryTag}
-                                maxW="md"
+                                minH={40}
+                                pt={2}
+                                maxW="sm"
                             />
                         </Flex>
                     </swiper-slide>

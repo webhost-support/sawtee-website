@@ -64,43 +64,42 @@ const SidebarWidget = ({ array, title, link, ...rest }) => {
                 {array.length > 0 &&
                     array.map((post, index) => {
                         return (
-                            <Stack spacing={2} mt="6" key={post.id}>
-                                <Heading
-                                    as="h4"
-                                    className="title"
-                                    fontSize={{
-                                        base: "sm",
-                                        md: "md",
-                                    }}
-                                    fontWeight="semibold"
-                                >
-                                    <ChakraLink
-                                        as={Link}
-                                        className="primary-link"
-                                        href={`${link}/${post.slug}`}
+                            <>
+                                <Stack spacing={1} py="2" key={post.id}>
+                                    <Heading
+                                        as="h4"
+                                        className="title"
+                                        fontSize={"sm"}
+                                        fontWeight="semibold"
                                     >
-                                        {post.title}
-                                    </ChakraLink>
-                                </Heading>
-                                <Box
-                                    as="time"
-                                    fontSize={"xs"}
-                                    dateTime={new Date(
-                                        post.publishDate
-                                    ).toLocaleDateString()}
-                                    dangerouslySetInnerHTML={{
-                                        __html: formatDate(post.created_at),
-                                    }}
-                                />
+                                        <ChakraLink
+                                            as={Link}
+                                            className="primary-link"
+                                            href={`${link}/${post.slug}`}
+                                        >
+                                            {post.title}
+                                        </ChakraLink>
+                                    </Heading>
+                                    <Box
+                                        as="time"
+                                        fontSize={"xs"}
+                                        dateTime={new Date(
+                                            post.publishDate
+                                        ).toLocaleDateString()}
+                                        dangerouslySetInnerHTML={{
+                                            __html: formatDate(post.created_at),
+                                        }}
+                                    />
+                                </Stack>
                                 <Divider
-                                    mb="10px"
+                                    my="10px"
                                     display={
                                         index === array.length - 1
                                             ? "none"
                                             : "block"
                                     }
                                 />
-                            </Stack>
+                            </>
                         );
                     })}
             </Box>

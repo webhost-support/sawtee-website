@@ -10,7 +10,6 @@ import "swiper/css/effect-cards";
 import "swiper/css/navigation";
 import "../../../css/card-carousel.css";
 import InertiaChakraLink from "./styles/inertia-chakra-link";
-import InertiaChakraLinkOverlay from "./styles/inertia-chakra-link-overlay";
 
 const CardsCarousel = ({ slides, navigation }) => {
     return (
@@ -35,9 +34,7 @@ const CardsCarousel = ({ slides, navigation }) => {
                             <Box
                                 rounded={"md"}
                                 overflow={"hidden"}
-                                minH="320px"
                                 pos={"relative"}
-                                bg={"var(--color-body-bg)"}
                             >
                                 <InertiaChakraLink
                                     pos={"absolute"}
@@ -51,20 +48,22 @@ const CardsCarousel = ({ slides, navigation }) => {
                                     textDecor={"underline"}
                                     cursor={"pointer"}
                                     color="var(--color-text)"
-                                    bg={"var(--color-body-bg)"}
+                                    bg={"blackAlpha.200"}
                                     backdropFilter={"blur(5px)"}
+                                    py="1"
+                                    border={"1px solid var(--color-text)"}
                                 >
                                     {slide.title + " "}
-                                    {slide.subtitle && slide.subtitle}
+                                    {/* {slide.subtitle && slide.subtitle} */}
                                 </InertiaChakraLink>
 
                                 <Image
                                     border={"1px solid var(--color-text)"}
                                     src={slide.media[0]?.original_url}
-                                    alt={slide.title + slide.subtitle}
+                                    alt={slide.title}
                                     rounded={"md"}
                                     objectFit="cover"
-                                    w="180px"
+                                    w="140px"
                                     aspectRatio={3 / 4}
                                     fallbackSrc="/assets/SM-placeholder-300x150.png"
                                 />

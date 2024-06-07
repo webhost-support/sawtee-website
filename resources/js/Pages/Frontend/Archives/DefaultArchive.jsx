@@ -38,10 +38,9 @@ export default DefaultArchive;
 const ArchivePost = ({ post, featured_image, showFallbackImage, rest }) => {
     return (
         <GlassBox
-            spacing={4}
             role="group"
             w="full"
-            maxW="2xl"
+            maxW="lg"
             as={motion.article}
             initial={{ y: 100 }}
             whileInView={{ y: 0 }}
@@ -53,7 +52,7 @@ const ArchivePost = ({ post, featured_image, showFallbackImage, rest }) => {
             <LinkBox>
                 {showFallbackImage && (
                     <PostImageWithOverlay
-                        height="250px"
+                        height="180px"
                         borderRadius="var(--chakra-radii-md) var(--chakra-radii-md) 0 0"
                         overflow="hidden"
                         _groupHover={{
@@ -74,21 +73,20 @@ const ArchivePost = ({ post, featured_image, showFallbackImage, rest }) => {
                         }
                     />
                 )}
-                <Box p={[4, 8]}>
+                <Box p={[2, 4]}>
                     <Box>
                         <LinkOverlay
                             href={`/category/${post.category.slug}/${post.slug}`}
                         >
                             <Heading
                                 as="h3"
-                                fontSize={["sm", "md", "lg"]}
+                                fontSize={["sm", "sm", "sm", 'md']}
                                 fontWeight="semibold"
-                                mb={4}
                             >
                                 {post.title}
                             </Heading>
                         </LinkOverlay>
-                        <Text fontSize={["xs", "sm", "sm"]} noOfLines={3}>
+                        <Text fontSize={"xs"} noOfLines={3}>
                             {post.excerpt}
                         </Text>
                     </Box>
@@ -100,19 +98,15 @@ const ArchivePost = ({ post, featured_image, showFallbackImage, rest }) => {
                             flexWrap={"wrap"}
                             alignItems={"center"}
                         >
-                            <Text
-                                as="time"
-                                fontSize={"xs"}
-                                dangerouslySetInnerHTML={{
-                                    __html: formatDate(post.published_at),
-                                }}
-                            />
+                            <Text as="time" fontSize={"xs"}>
+                                {formatDate(post.published_at)}
+                            </Text>
 
                             <Link
                                 href={`/category/${post.category.slug}/${post.slug}`}
                             >
                                 <ExploreButton
-                                    size="sm"
+                                    size="xs"
                                     text="Read more"
                                     aria-label={"Read More"}
                                     colorScheme={"gray"}

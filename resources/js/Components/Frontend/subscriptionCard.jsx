@@ -21,15 +21,11 @@ const SubscriptionCard = ({
     showIcon = true,
     showChildren = false,
     showCheckbox = false,
-    fontSize = { base: "lg", lg: "xl" },
+    fontSize = { base: "md", lg: "lg" },
     headingText = "Subscribe to our Newsletter",
     consentText = "I agree receiving emails from SAWTEE",
     ...rest
 }) => {
-    const color = useColorModeValue(
-        "var(--color-dark)",
-        "var(--color-grey-lighter)"
-    );
     const { data, setData, post, processing, errors, reset } = useForm({
         email: "",
     });
@@ -62,20 +58,17 @@ const SubscriptionCard = ({
             pos={"relative"}
             rounded="xl"
             textAlign="center"
-            color={useColorModeValue("gray.700", "whiteAlpha.700")}
             {...rest}
         >
             {showIcon && (
-                <Box display={"flex"} justifyContent="center">
-                    <BsMailbox2 size={"90px"} fill={color} />
-                </Box>
+                <Box
+                    size={"90px"}
+                    mx="auto"
+                    as={BsMailbox2}
+                    color={useColorModeValue("primary.700", "primary.500")}
+                />
             )}
-            <Heading
-                as="h4"
-                fontSize={fontSize}
-                textTransform="uppercase"
-                color={color}
-            >
+            <Heading as="h4" fontSize={fontSize} textTransform="uppercase">
                 {headingText}
             </Heading>
             {showCheckbox && (

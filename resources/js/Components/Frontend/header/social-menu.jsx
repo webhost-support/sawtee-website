@@ -38,7 +38,7 @@ const SocialMenuItem = ({ icon, label, link, ...props }) => (
         {...props}
     >
         <Link href={link}>
-            <Box as={icon} boxSize="24px" />
+            <Box as={icon} boxSize="20px" />
         </Link>
         <VisuallyHidden>{label}</VisuallyHidden>
     </Box>

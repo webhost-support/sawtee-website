@@ -9,6 +9,8 @@ import {
     useColorModeValue,
     LinkBox,
     LinkOverlay,
+    Box,
+    Icon,
 } from "@chakra-ui/react";
 import { Blob, PlayIcon } from ".";
 
@@ -26,9 +28,10 @@ export default function Feature({ feature, ...rest }) {
                     lineHeight={1.2}
                     fontWeight={600}
                     fontSize={{
-                        base: "2xl",
-                        md: "3xl",
-                        lg: "4xl",
+                        base: "lg",
+                        sm: "xl",
+                        md: "2xl",
+                        xl: "3xl",
                     }}
                 >
                     <Text
@@ -41,7 +44,7 @@ export default function Feature({ feature, ...rest }) {
                             position: "absolute",
                             bottom: 1,
                             left: 0,
-                            bg: "primary.400",
+                            bg: "primary.100",
                             zIndex: -1,
                         }}
                     >
@@ -54,7 +57,7 @@ export default function Feature({ feature, ...rest }) {
                 </Heading>
                 <Text
                     color={useColorModeValue("gray.600", "gray.300")}
-                    fontSize={{ base: "sm", md: "md", lg: "lg" }}
+                    fontSize={{ base: "xs", md: "sm", lg: "md" }}
                 >
                     Some text about reform monitoring platform. Snippy is a rich
                     coding snippets app that lets you create your own code
@@ -68,7 +71,6 @@ export default function Feature({ feature, ...rest }) {
                 align={"center"}
                 position={"relative"}
                 my="10"
-                // w={"full"}
             >
                 <Blob
                     w={"100%"}
@@ -76,8 +78,7 @@ export default function Feature({ feature, ...rest }) {
                     position={"absolute"}
                     top={"-20%"}
                     left={0}
-                    zIndex={-1}
-                    color={useColorModeValue("primary.50", "primary.400")}
+                    color={useColorModeValue("primary.100", "primary.400")}
                 />
 
                 <LinkBox

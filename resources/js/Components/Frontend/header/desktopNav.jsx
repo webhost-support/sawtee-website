@@ -497,16 +497,17 @@ const SiteMenuItem = ({ item, ...rest }) => {
                         ) : (
                             <MenuList
                                 zIndex={5}
-                                border="2px solid"
-                                borderColor={useColorModeValue(
-                                    "gray.700",
-                                    "gray.100"
-                                )}
+                                // border="2px solid"
+                                // borderColor={useColorModeValue(
+                                //     "gray.700",
+                                //     "gray.100"
+                                // )}
+                                // boxShadow="4px 4px 0"
                                 p={0}
-                                boxShadow="none"
                                 rounded={"lg"}
                                 overflow={"hidden"}
-                                mx="auto"
+                                    mx="auto"
+                                    shadow="dark-lg"
                             >
                                 <Stack gap={1}>
                                     {item.children?.map((child) => {

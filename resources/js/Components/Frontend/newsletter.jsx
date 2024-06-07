@@ -13,13 +13,17 @@ import {
     Grid,
     GridItem,
     ListItem,
+    InputGroup,
+    InputRightElement,
+    InputRightAddon,
+    IconButton,
 } from "@chakra-ui/react";
-import { IoIosArrowRoundForward } from "react-icons/io";
 import InertiaChakraLink from "./styles/inertia-chakra-link";
 import { ExploreButton } from ".";
 import { Link } from "@inertiajs/react";
 import { useForm } from "@inertiajs/react";
 import SimpleList from "./SimpleList";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 
 export const PatternBox = ({ showPattern = false, ...props }) => (
     <Box
@@ -60,7 +64,7 @@ export const Newsletter = ({ data, props }) => {
                 placeItems="center"
                 p="40px"
                 gap={10}
-                maxW="7xl"
+                maxW="6xl"
                 mx="auto"
             >
                 <GridItem colSpan={{ base: 1, md: 3 }}>
@@ -73,12 +77,14 @@ export const Newsletter = ({ data, props }) => {
                         px={6}
                     >
                         <Heading
+                            as="h4"
+                            fontSize={"2xl"}
                             color="var(--color-text)"
                             textTransform="uppercase"
                         >
                             Never miss an update!
                         </Heading>
-                        <Text mt={4} fontSize="sm" color="primary.500">
+                        <Text mt={2} fontSize="sm" color="primary.500">
                             Receive the latest publication releases, update and
                             monthly newsletter.
                         </Text>
@@ -150,23 +156,39 @@ const SubscribeForm = ({ ...rest }) => {
 
     return (
         <Box maxW="640px" mx="auto">
-            <Flex as="form" onSubmit={submit} mt="40px" {...rest}>
+            <Flex as="form" onSubmit={submit} mt="20px" {...rest}>
                 <FormControl isInvalid={errors.email} isRequired>
-                    <Input
-                        type="email"
-                        id="email"
-                        name="email"
-                        bg="white"
-                        height="60px"
-                        value={data.email}
-                        px="15px"
-                        fontSize="md"
-                        placeholder="Subscribe to our newsletter"
-                        _placeholder={{ color: "gray.500" }}
-                        onChange={(e) => {
-                            setData("email", e.target.value);
-                        }}
-                    />
+                    <InputGroup>
+                        <Input
+                            type="email"
+                            id="email"
+                            name="email"
+                            bg="white"
+                            height="40px"
+                            value={data.email}
+                            px="15px"
+                            fontSize="sm"
+                            placeholder="Subscribe to our newsletter"
+                            _placeholder={{ color: "gray.500" }}
+                            onChange={(e) => {
+                                setData("email", e.target.value);
+                            }}
+                        />
+                        <InputRightElement>
+                            <IconButton
+                                transition="background-color ease .25s"
+                                cursor="pointer"
+                                textAlign="center"
+                                colorScheme={"primary"}
+                                h="30px"
+                                type="submit"
+                                mr="3"
+                                isLoading={processing}
+                                icon={<ArrowForwardIcon />}
+                            />
+                        </InputRightElement>
+                    </InputGroup>
+
                     {errors.email && (
                         <FormErrorMessage mt={2}>
                             {errors.email}
@@ -179,29 +201,6 @@ const SubscribeForm = ({ ...rest }) => {
                         </FormHelperText>
                     )}
                 </FormControl>
-
-                <Button
-                    transition="background-color ease .25s"
-                    fontSize={"md"}
-                    cursor="pointer"
-                    textAlign="center"
-                    colorScheme={"primary"}
-                    flexShrink="0"
-                    height="60px"
-                    minWidth="60px"
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                    type="submit"
-                    isLoading={processing}
-                >
-                    <Box
-                        focusable="false"
-                        width="40px"
-                        height="auto"
-                        as={IoIosArrowRoundForward}
-                    />
-                </Button>
             </Flex>
         </Box>
     );

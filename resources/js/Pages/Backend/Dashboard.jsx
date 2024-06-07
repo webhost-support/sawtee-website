@@ -9,7 +9,7 @@ import {
     Flex,
     SimpleGrid,
     Stat,
-    StatLabel,
+StatLabel,
     StatNumber,
     Text,
     useColorModeValue,

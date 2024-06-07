@@ -10,7 +10,7 @@ import {
     useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
-import MobileMenu from "../menu/mobileMenu";
+import MobileMenu from "../mobileMenu";
 
 import { Link } from "@inertiajs/react";
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";

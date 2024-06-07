@@ -3,12 +3,12 @@ import { feature } from "@/Utils/data";
 import WebsiteHead from "@/Components/Frontend/Head";
 import {
     AboutSection,
-    BlogSection,
     CarouselSection,
     ExploreButton,
     FancyTitle,
-    InfocusSection,
-    PublicationSection,
+    OutreachSection,
+    PublicationsSection,
+    // PublicationSection,
     ReformMonitorSection,
     SawteeInMediaSection,
     Section,
@@ -17,19 +17,12 @@ import {
 } from "@/Components/Frontend";
 import {
     Box,
-    Container,
-    Flex,
     Grid,
     GridItem,
-    Show,
-    useBreakpoint,
     useColorModeValue,
 } from "@chakra-ui/react";
 import CardsCarousel from "@/Components/Frontend/CardsCarousel";
 import { splitPosts } from "@/Utils/helpers";
-import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
-import { Link } from "@inertiajs/react";
-import SimpleList from "@/Components/Frontend/SimpleList";
 import { Newsletter } from "@/Components/Frontend/newsletter";
 
 const Home = ({
@@ -71,7 +64,7 @@ const Home = ({
                 description="Explore South Asia's dynamic journey since the 1980s, navigating global integration and economic challenges."
                 image={"/assets/logo-sawtee.webp"}
             />
-            <Section pt="10" className="carousel-section">
+            <Section py="5" className="carousel-section">
                 <Grid
                     templateColumns={{
                         base: "1fr",
@@ -91,21 +84,21 @@ const Home = ({
                             <CarouselSection
                                 slides={slides}
                                 responsiveImages={slidesResponsiveImages}
-                                carouselHeight={{ base: "auto", md: "500px" }}
+                                carouselHeight={{ base: "auto", md: "350px" }}
                             />
                         </Box>
                     </GridItem>
                     <GridItem
                         colSpan={{ base: 1, sm: 1, md: 2 }}
                         alignSelf={"center"}
-                        maxH={{ base: "auto", md: "500px" }}
+                        maxH={{ base: "auto", md: "350px" }}
                     >
                         <Title
                             text="Featured Publications"
                             mb="6"
                             textAlign="center"
                             fontWeight="bold"
-                            fontSize={{ base: "2xl" }}
+                            fontSize={{ base: "lg" }}
                         />
                         <CardsCarousel slides={featuredPublication} />
                     </GridItem>
@@ -121,36 +114,11 @@ const Home = ({
                     )}
                     py={{ base: 12, md: 20 }}
                 >
-                    <Box maxW="7xl" mx="auto">
+                    <Box maxW="5xl" mx="auto">
                         <ReformMonitorSection feature={feature} />
                     </Box>
                 </Section>
             )}
-
-            {/* {infocus && (
-                <Section className="infocus-section">
-                    <Box maxW="7xl" mx="auto">
-                        <FancyTitle title={"In Focus"} />
-                        <InfocusSection infocus={infocus} />
-                        <Flex justify={"end"}>
-                            <InertiaChakraLink
-                                as={Link}
-                                href={"/category/in-focus"}
-                                mt="4"
-                                ml="auto"
-                            >
-                                <ExploreButton
-                                    size={["xs", "sm"]}
-                                    text="More on in focus"
-                                    variant="link"
-                                    px={10}
-                                    my="8"
-                                />
-                            </InertiaChakraLink>
-                        </Flex>
-                    </Box>
-                </Section>
-            )} */}
 
             <Section className="about-section" py={{ base: 12, md: 20 }}>
                 <AboutSection data={AboutSectionData} />
@@ -159,48 +127,31 @@ const Home = ({
             <Section
                 bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
                 py={{ base: 12, md: 20 }}
-                className="publications-section"
+                className="outreach-section"
             >
-                <PublicationSection
-                    infocus={infocus}
-                    publications={publications}
-                    events={events}
-                />
+                <Box maxW={"5xl"} mx="auto">
+                    <FancyTitle title={"Outreach"} />
+                    <OutreachSection infocus={infocus} events={events} />
+                </Box>
             </Section>
 
-            {/* {events && (
-                <Section
-                    id="blog-section"
-                    className="events-section"
-                    py={{ base: 12, md: 20 }}
-                >
-                    <Box maxW="8xl" mx="auto" px={6}>
-                        <FancyTitle title={"Featured Events"} />
-                        <BlogSection events={events} />
-                        <Flex justify={"end"}>
-                            <InertiaChakraLink
-                                as={Link}
-                                href={`/category/featured-events`}
-                                mt={6}
-                            >
-                                <ExploreButton
-                                    size={["xs", "sm"]}
-                                    text="More on featured events"
-                                    variant="link"
-                                    px={10}
-                                />
-                            </InertiaChakraLink>
-                        </Flex>
-                    </Box>
-                </Section>
-            )} */}
+            {/* Add publication section here  */}
+            <Section
+                py={{ base: 12, md: 20 }}
+                className="publications-section"
+            >
+                <Box maxW={"5xl"} mx="auto">
+                    <FancyTitle title={"Latest in Pubications"} />
+                    <PublicationsSection publications={publications} />
+                </Box>
+            </Section>
 
             {sawteeInMedia && (
                 <Section
                     className="sawtee-in-media-section"
                     py={{ base: 12, md: 20 }}
                 >
-                    <Box maxW="8xl" mx="auto" px={6}>
+                    <Box maxW="6xl" mx="auto" px={6}>
                         <FancyTitle title={"Sawtee in Media"} />
                         <SawteeInMediaSection
                             articles={sawteeInMedia}
@@ -225,7 +176,7 @@ const Home = ({
                 px={{ base: "10", md: "16", lg: "20" }}
                 className="subscribe-section"
             >
-                <Newsletter data={newsletters}  />
+                <Newsletter data={newsletters} />
             </Section>
         </MainLayout>
     );

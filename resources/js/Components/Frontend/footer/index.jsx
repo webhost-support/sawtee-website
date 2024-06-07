@@ -107,7 +107,6 @@ const Widget = ({ item }) => {
                                                 _hover={{
                                                     color: hoverColor,
                                                 }}
-                                                fontSize={"md"}
                                             >
                                                 {title}
                                             </StyledChakraLink>
@@ -137,7 +136,6 @@ const Widget = ({ item }) => {
                                             _hover={{
                                                 color: hoverColor,
                                             }}
-                                            fontSize={"md"}
                                         >
                                             {title}
                                         </StyledChakraLink>
@@ -160,7 +158,6 @@ const Widget = ({ item }) => {
                                             _hover={{
                                                 color: hoverColor,
                                             }}
-                                            fontSize={"md"}
                                         >
                                             {title}
                                         </StyledChakraLink>
@@ -183,7 +180,6 @@ const Widget = ({ item }) => {
                                             _hover={{
                                                 color: hoverColor,
                                             }}
-                                            fontSize={"md"}
                                         >
                                             {title}
                                         </StyledChakraLink>
@@ -206,7 +202,6 @@ const Widget = ({ item }) => {
                                             _hover={{
                                                 color: hoverColor,
                                             }}
-                                            fontSize={"md"}
                                         >
                                             {title}
                                         </StyledChakraLink>
@@ -243,7 +238,6 @@ const Widget = ({ item }) => {
                                         }}
                                     />
                                     <StyledChakraLink
-                                        fontSize={"md"}
                                         href={url}
                                         color={linkcolor}
                                         _hover={{
@@ -299,6 +293,7 @@ const Footer = ({ menu = null, socialMenu = null }) => {
                     fontWeight="bold"
                     fontFamily="heading"
                     textTransform="uppercase"
+                    fontSize="md"
                 >
                     © {new Date().getFullYear()} {"SAWTEE"}
                 </FooterSectionItem>

@@ -1,7 +1,6 @@
 import {
     Box,
     Button,
-    Divider,
     HStack,
     Heading,
     Icon,
@@ -25,8 +24,7 @@ import {
     Container,
     LinkBox,
     SimpleGrid,
-    Show,
-    Tag,
+
     IconButton,
     LinkOverlay,
     ListItem,
@@ -42,14 +40,10 @@ import MultiPostsCarousel from "@/Components/Frontend/MultiPostsSlider";
 import PostCard from "@/Components/Frontend/PostCard";
 import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
 import InertiaChakraLinkOverlay from "@/Components/Frontend/styles/inertia-chakra-link-overlay";
-import { Newsletter } from "@/Components/Frontend/newsletter";
-// import CardsCarousel from "@/Components/Frontend/CardsCarousel";
 import Feature from "@/Components/Frontend/feature";
 import { motion } from "framer-motion";
-import DottedBox from "@/Pages/Frontend/DottedBox";
 import VideoCarousel from "./VideoCarousel";
 import SimpleList from "./SimpleList";
-// import { Barchart, TreemapChart } from "@/Components/Frontend/Charts";
 export const ListItemVariant = {
     initial: {
         y: 50,
@@ -99,11 +93,11 @@ export const CarouselSection = ({
 export const AboutSection = ({ data }) => {
     return (
         <SimpleGrid
-            minChildWidth={"320px"}
+            minChildWidth={"300px"}
             spacing={16}
             rowGap={28}
             alignItems="center"
-            maxW={"7xl"}
+            maxW={"5xl"}
             py={{ base: 10, lg: 16 }}
             px={{ base: 6, lg: 10 }}
             mx="auto"
@@ -111,7 +105,25 @@ export const AboutSection = ({ data }) => {
             {data.map((item) => {
                 return (
                     <Box key={item.id} ml={{ base: 0, md: 5 }} pos="relative">
-                        <DottedBox />
+                        <Box
+                            pos="absolute"
+                            border="4px solid"
+                            borderColor="blackAlpha.400"
+                            left={"25px"}
+                            top="-20px"
+                            w="full"
+                            h="full"
+                            rounded={"2xl"}
+                        />
+                        {/* <Blob
+                            w={"100%"}
+                            h={"150%"}
+                            position={"absolute"}
+                            top={"-20%"}
+                            left={0}
+                            zIndex={-1}
+                            color={"primary.50"}
+                        /> */}
                         <LinkBox
                             position={"relative"}
                             rounded={"2xl"}
@@ -145,60 +157,6 @@ export const AboutSection = ({ data }) => {
                 );
             })}
         </SimpleGrid>
-    );
-};
-
-export const InfocusSection = ({ infocus, link }) => {
-    const itemBG = useColorModeValue("blackAlpha.200", "blackAlpha.300");
-    return (
-        <GlassBox p={{ base: 4, sm: 10 }}>
-            {infocus.map((article) => {
-                return (
-                    <Box key={article.id}>
-                        <LinkBox
-                            key={article.id}
-                            px={{ base: 4, sm: 6 }}
-                            py={{ base: 2, sm: 3 }}
-                            _hover={{ bg: itemBG }}
-                        >
-                            <Box>
-                                <Heading
-                                    as="h3"
-                                    fontFamily={"heading"}
-                                    fontWeight="bold"
-                                    py="6"
-                                    fontSize={{
-                                        base: "sm",
-                                        md: "xl",
-                                    }}
-                                >
-                                    <InertiaChakraLinkOverlay
-                                        href={`/category/${article.category.slug}/${article.slug}`}
-                                    >
-                                        {article.title}
-                                    </InertiaChakraLinkOverlay>
-                                </Heading>
-
-                                <Text
-                                    pl="20px"
-                                    noOfLines={3}
-                                    fontSize={{
-                                        base: "xs",
-                                        md: "md",
-                                    }}
-                                    borderLeft={
-                                        "5px solid var(--chakra-colors-primary-400) "
-                                    }
-                                >
-                                    {article.excerpt}
-                                </Text>
-                            </Box>
-                        </LinkBox>
-                        <Divider m={0} />
-                    </Box>
-                );
-            })}
-        </GlassBox>
     );
 };
 
@@ -293,15 +251,13 @@ export const ReformMonitorSection = ({ feature }) => {
     return <Feature feature={feature} />;
 };
 
-export const PublicationSection = ({ publications, infocus, events }) => {
+export const OutreachSection = ({ infocus, events }) => {
     return (
         <Grid
             gridTemplateColumns={{ base: "1fr", lg: "repeat(6, 1fr)" }}
             gap={10}
-            maxW={"8xl"}
-            mx="auto"
         >
-            <GridItem colSpan={{ base: 1, md: 2 }}>
+            <GridItem colSpan={{ base: 1, md: 3 }}>
                 <SimpleList heading={"in focus"}>
                     {infocus.map((item) => {
                         return (
@@ -334,80 +290,14 @@ export const PublicationSection = ({ publications, infocus, events }) => {
                         );
                     })}
                 </SimpleList>
-            </GridItem>
-            <GridItem colSpan={{ base: 1, md: 2 }}>
-                <SimpleList heading={"publications"}>
-                    {publications.map((publication) => {
-                        const media = publication.media.length
-                            ? publication.media.filter(
-                                  (media) =>
-                                      media.collection_name ===
-                                      "publication_featured_image"
-                              )[0].original_url
-                            : "/assets/SM-placeholder-150x150.png";
-                        return (
-                            <ListItem key={publication.id} mb="1rem">
-                                <Badge size={"sm"} colorScheme="blue">
-                                    {publication.category?.name}
-                                </Badge>
-                                <LinkBox
-                                    as={HStack}
-                                    justify="space-between"
-                                    gap={6}
-                                >
-                                    <Box>
-                                        <InertiaChakraLinkOverlay
-                                            // as={Link}
-                                            target="_blank"
-                                            textDecor="underline"
-                                            textUnderlineOffset="3px"
-                                            href={
-                                                publication.file
-                                                    ? `/publications/${publication.file.name}`
-                                                    : "#"
-                                            }
-                                        >
-                                            <Text
-                                                fontSize={"0.875rem"}
-                                                lineHeight={"short"}
-                                            >
-                                                {publication.title}
-                                            </Text>
-                                        </InertiaChakraLinkOverlay>
-                                        <Text
-                                            color={useColorModeValue(
-                                                "gray.600",
-                                                "gray.300"
-                                            )}
-                                            fontSize={".75rem"}
-                                            mt={2}
-                                        >
-                                            {publication.subtitle}
-                                        </Text>
-                                    </Box>
-
-                                    {media && (
-                                        <Box>
-                                            <Image
-                                                src={media}
-                                                alt={publication.title}
-                                                w="60px"
-                                                border="1px solid"
-                                                borderColor={"gray.400"}
-                                                p={1}
-                                                rounded="sm"
-                                                aspectRatio={3 / 4}
-                                            />
-                                        </Box>
-                                    )}
-                                </LinkBox>
-                            </ListItem>
-                        );
-                    })}
-                </SimpleList>
+                <ExploreButton
+                    size={["xs", "sm"]}
+                    text="More in focus"
+                    variant="link"
+                />
             </GridItem>
 
-            <GridItem colSpan={{ base: 1, md: 2 }}>
+            <GridItem colSpan={{ base: 1, md: 3 }}>
                 <SimpleList heading={"Featured Events"}>
                     {events.map((event) => {
                         const featured_image =
@@ -480,8 +370,89 @@ export const PublicationSection = ({ publications, infocus, events }) => {
                         );
                     })}
                 </SimpleList>
+                <ExploreButton
+                    size={["xs", "sm"]}
+                    text="More on featured events"
+                    variant="link"
+                />
             </GridItem>
         </Grid>
+    );
+};
+
+export const PublicationsSection = ({ publications }) => {
+    return (
+        <Section>
+            <SimpleList heading={"publications"}>
+                {publications.map((publication) => {
+                    const media = publication.media.length
+                        ? publication.media.filter(
+                              (media) =>
+                                  media.collection_name ===
+                                  "publication_featured_image"
+                          )[0].original_url
+                        : "/assets/SM-placeholder-150x150.png";
+                    return (
+                        <ListItem key={publication.id} mb="1rem">
+                            <Badge size={"sm"} colorScheme="blue">
+                                {publication.category?.name}
+                            </Badge>
+                            <LinkBox
+                                as={HStack}
+                                justify="space-between"
+                                gap={6}
+                            >
+                                <Box>
+                                    <InertiaChakraLinkOverlay
+                                        // as={Link}
+                                        target="_blank"
+                                        textDecor="underline"
+                                        textUnderlineOffset="3px"
+                                        href={
+                                            publication.file
+                                                ? `/publications/${publication.file.name}`
+                                                : "#"
+                                        }
+                                    >
+                                        <Text
+                                            fontSize={"0.875rem"}
+                                            lineHeight={"short"}
+                                        >
+                                            {publication.title}
+                                        </Text>
+                                    </InertiaChakraLinkOverlay>
+                                    <Text
+                                        color={useColorModeValue(
+                                            "gray.600",
+                                            "gray.300"
+                                        )}
+                                        fontSize={".75rem"}
+                                        mt={2}
+                                    >
+                                        {publication.subtitle}
+                                    </Text>
+                                </Box>
+
+                                {media && (
+                                    <Box>
+                                        <Image
+                                            src={media}
+                                            alt={publication.title}
+                                            w="60px"
+                                            border="1px solid"
+                                            borderColor={"gray.400"}
+                                            p={1}
+                                            rounded="sm"
+                                            aspectRatio={3 / 4}
+                                        />
+                                    </Box>
+                                )}
+                            </LinkBox>
+                        </ListItem>
+                    );
+                })}
+            </SimpleList>
+        </Section>
     );
 };
 
@@ -494,7 +465,7 @@ export const Section = ({ children, title = null, ...rest }) => {
         <Box
             as="section"
             mx="auto"
-            pb={{ base: 20, md: 28 }}
+            pb={{ base: 5, md: 10 }}
             px={{ base: "24px", md: "80px" }}
             className="section"
             {...rest}
@@ -595,18 +566,10 @@ export const PlayIcon = createIcon({
     d: "M28.9999 0.562988C13.3196 0.562988 0.562378 13.3202 0.562378 29.0005C0.562378 44.6808 13.3196 57.438 28.9999 57.438C44.6801 57.438 57.4374 44.6808 57.4374 29.0005C57.4374 13.3202 44.6801 0.562988 28.9999 0.562988ZM39.2223 30.272L23.5749 39.7247C23.3506 39.8591 23.0946 39.9314 22.8332 39.9342C22.5717 39.9369 22.3142 39.8701 22.0871 39.7406C21.86 39.611 21.6715 39.4234 21.5408 39.1969C21.4102 38.9705 21.3421 38.7133 21.3436 38.4519V19.5491C21.3421 19.2877 21.4102 19.0305 21.5408 18.8041C21.6715 18.5776 21.86 18.3899 22.0871 18.2604C22.3142 18.1308 22.5717 18.064 22.8332 18.0668C23.0946 18.0696 23.3506 18.1419 23.5749 18.2763L39.2223 27.729C39.4404 27.8619 39.6207 28.0486 39.7458 28.2713C39.8709 28.494 39.9366 28.7451 39.9366 29.0005C39.9366 29.2559 39.8709 29.507 39.7458 29.7297C39.6207 29.9523 39.4404 30.1391 39.2223 30.272Z",
 });
 
-export const Blob = (props) => {
+export const Blob = ({color, ...rest}) => {
     return (
-        <Icon
-            width={"100%"}
-            viewBox="0 0 578 440"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            {...props}
-        >
+        <Icon width={"100%"} viewBox="0 0 578 440" color={color} {...rest}>
             <path
-                fillRule="evenodd"
-                clipRule="evenodd"
                 d="M239.184 439.443c-55.13-5.419-110.241-21.365-151.074-58.767C42.307 338.722-7.478 282.729.938 221.217c8.433-61.644 78.896-91.048 126.871-130.712 34.337-28.388 70.198-51.348 112.004-66.78C282.34 8.024 325.382-3.369 370.518.904c54.019 5.115 112.774 10.886 150.881 49.482 39.916 40.427 49.421 100.753 53.385 157.402 4.13 59.015 11.255 128.44-30.444 170.44-41.383 41.683-111.6 19.106-169.213 30.663-46.68 9.364-88.56 35.21-135.943 30.551z"
                 fill="currentColor"
             />
@@ -1064,16 +1027,16 @@ export const StyledChakraLink = styled(InertiaChakraLink)`
     font-size: ${(props) =>
         props.fontSize
             ? `var(--chakra-fontSizes-${props.fontSize})`
-            : "var(--chakra-fontSizes-md)"};
+            : "var(--chakra-fontSizes-sm)"};
     color: ${(props) =>
         props.color ? props.color : "var(--chakra-colors-gray-700)"};
 
     &::after {
         content: "";
         width: 0%;
-        height: 2px;
+        height: 1px;
         position: absolute;
-        bottom: -2px;
+        bottom: 0;
         left: 0;
         margin: 0;
 

@@ -46,7 +46,7 @@ export default function MainLayout({ children, ...rest }) {
                 socialLinks={socialMenu}
             />
             <ScaleFade in={url} initialScale={0.9}>
-                <Box as="main" {...rest}>
+                <Box as="main" isolation={"isolate"} {...rest}>
                     {children}
                 </Box>
             </ScaleFade>
