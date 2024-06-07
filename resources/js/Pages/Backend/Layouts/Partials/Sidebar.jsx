@@ -11,16 +11,14 @@ import { Link } from "@inertiajs/react";
 
 export const NavItem = (props) => {
     const { icon, children, ...rest } = props;
-    const color = useColorModeValue("gray.700", "gray.300");
 
     return (
         <Flex
             align="center"
             px="4"
             pl="4"
-            py="3"
+            py="2"
             cursor="pointer"
-            color={color}
             _hover={{
                 bg: "gray.100",
                 _dark: {
@@ -29,25 +27,16 @@ export const NavItem = (props) => {
             }}
             role="group"
             transition=".15s ease"
-            fontSize={{ base: "xs", md: "sm" }}
+            fontSize={{ base: "xs", md: "sm", lg: "md" }}
             {...rest}
         >
-            {icon && (
-                <Icon
-                    mx="2"
-                    boxSize="4"
-                    _groupHover={{
-                        color: color,
-                    }}
-                    as={icon}
-                />
-            )}
+            {icon && <Icon mx="2" boxSize="4" as={icon} />}
             {children}
         </Flex>
     );
 };
 
-export default function Sidebar({ menu, props }) {
+export default function Sidebar({ menu, isOpen, props }) {
     return (
         <Box
             as="nav"
@@ -65,7 +54,7 @@ export default function Sidebar({ menu, props }) {
             border
             color="inherit"
             borderRightWidth="1px"
-            w={48}
+            w={isOpen ? "full" : 48}
             {...props}
         >
             <Flex
@@ -76,21 +65,10 @@ export default function Sidebar({ menu, props }) {
                 justify="center"
                 align="center"
             >
-                <Show below="lg">
-                    <Image maxW="30px" src="/favicon.ico" alt="logo" />
-                </Show>
+                <Image maxW="40px" src="/favicon.ico" alt="logo" />
 
-                <Show above="lg">
-                    <Image src="/assets/logo-sawtee.webp" alt="logo" />
-                </Show>
-                <Text
-                    fontSize="xs"
-                    color="primary.500"
-                    _dark={{
-                        color: "primary.200",
-                    }}
-                >
-                    CMS
+                <Text fontSize="sm" fontWeight={"semibold"}>
+                    Website CMS
                 </Text>
             </Flex>
             <Flex direction="column" as="nav" aria-label="Main Navigation">

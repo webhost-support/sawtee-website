@@ -22,18 +22,21 @@ export default function Authenticated({ user, children }) {
                 isOpen={sidebar.isOpen}
                 onClose={sidebar.onClose}
                 placement="left"
-                size="xs"
             >
                 <DrawerOverlay />
                 <DrawerContent>
-                    <Sidebar menu={DashBoardMenuItems} borderRight="none" />
+                    <Sidebar
+                        menu={DashBoardMenuItems}
+                        isOpen={sidebar.isOpen}
+                        borderRight="none"
+                    />
                 </DrawerContent>
             </Drawer>
             <Box
                 as="main"
                 ml={{
                     base: 0,
-                    lg: 48,
+                    md: 48,
                     // lg: 48,
                 }}
                 transition=".3s ease"
@@ -43,6 +46,7 @@ export default function Authenticated({ user, children }) {
                     sidebar={sidebar}
                     name={user.name}
                     image={user?.image}
+                    isOpen={sidebar.isOpen}
                     position="sticky"
                     top="0"
                     zIndex="100"

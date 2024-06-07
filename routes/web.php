@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\MenuItemController;
 use App\Http\Controllers\Admin\PostController;
@@ -36,9 +37,7 @@ use Inertia\Inertia;
 Route::get('/admin', AuthenticatedSessionController::class . '@create');
 Route::get('/admin/login', AuthenticatedSessionController::class . '@create');
 Route::middleware(['auth', 'verified'])->prefix('admin')->as('admin.')->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Backend/Dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

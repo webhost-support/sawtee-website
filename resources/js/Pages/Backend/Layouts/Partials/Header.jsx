@@ -54,7 +54,11 @@ export default function Header({ name, image, sidebar, ...rest }) {
                 />
             </Show>
             <HStack spacing={{ base: "2", md: "6" }}>
-                <Button onClick={toggleColorMode}>
+                <Button
+                    size="sm"
+                    aria-label="Theme Toggle"
+                    onClick={toggleColorMode}
+                >
                     {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
                 </Button>
                 <Flex align="center">
@@ -87,23 +91,15 @@ export default function Header({ name, image, sidebar, ...rest }) {
                                 "gray.200",
                                 "gray.700"
                             )}
-                            px={4}
+                            px="2"
+                            fontSize="sm"
                         >
-                            <Text fontSize="sm">{name.toUpperCase()}</Text>
+                            <Text>{name.toUpperCase()}</Text>
                             <MenuDivider />
-                            <MenuLink
-                                href={route("admin.profile.edit")}
-                                as="button"
-                                type="button"
-                            >
+                            <MenuLink href={route("admin.profile.edit")}>
                                 Profile
                             </MenuLink>
-                            <MenuLink
-                                href={route("logout")}
-                                method="post"
-                                as="button"
-                                type="button"
-                            >
+                            <MenuLink href={route("logout")} method="post">
                                 Sign out
                             </MenuLink>
                         </MenuList>
