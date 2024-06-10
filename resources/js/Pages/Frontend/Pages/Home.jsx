@@ -4,15 +4,14 @@ import WebsiteHead from "@/Components/Frontend/Head";
 import {
     AboutSection,
     CarouselSection,
-    FancyTitle,
+    Title,
     OutreachSection,
     PublicationsSection,
     ReformMonitorSection,
     SawteeInMediaSection,
-    Title,
     VideosSection,
 } from "@/Components/Frontend";
-import { Box, Grid, GridItem, useColorModeValue } from "@chakra-ui/react";
+import { Box, Grid, GridItem, Text, useColorModeValue } from "@chakra-ui/react";
 import CardsCarousel from "@/Components/Frontend/CardsCarousel";
 import { splitPosts } from "@/Utils/helpers";
 import { Newsletter } from "@/Components/Frontend/newsletter";
@@ -85,13 +84,21 @@ const Home = ({
                         alignSelf={"center"}
                         maxH={{ base: "auto", md: "350px" }}
                     >
-                        <Title
-                            text="Featured Publications"
+                        <Text
+                            as="h3"
+                            fontFamily="heading"
+                            color={useColorModeValue(
+                                "gray.700",
+                                "whiteAlpha.800"
+                            )}
                             mb="6"
                             textAlign="center"
                             fontWeight="bold"
                             fontSize={{ base: "lg" }}
-                        />
+                        >
+                            {"Featured Publications"}
+                        </Text>
+
                         <CardsCarousel slides={featuredPublication} />
                     </GridItem>
                 </Grid>
@@ -122,7 +129,7 @@ const Home = ({
                 className="outreach-section"
             >
                 <Box maxW={"5xl"} mx="auto">
-                    <FancyTitle title={"Outreach"} />
+                    <Title title={"Outreach"} />
                     <OutreachSection infocus={infocus} events={events} />
                 </Box>
             </Section>
@@ -130,7 +137,7 @@ const Home = ({
             {/* Add publication section here  */}
             <Section py={{ base: 12, md: 20 }} className="publications-section">
                 <Box maxW={"5xl"} mx="auto">
-                    <FancyTitle title={"Latest in Pubications"} />
+                    <Title title={"Latest in Pubications"} />
                     <PublicationsSection publications={publications} />
                 </Box>
             </Section>
@@ -141,7 +148,7 @@ const Home = ({
                     py={{ base: 12, md: 20 }}
                 >
                     <Box maxW="6xl" mx="auto" px={6}>
-                        <FancyTitle title={"Sawtee in Media"} />
+                        <Title title={"Sawtee in Media"} />
                         <SawteeInMediaSection
                             articles={sawteeInMedia}
                             link={"/category/sawtee-in-media"}
@@ -156,7 +163,7 @@ const Home = ({
                 py={{ base: 12, md: 20 }}
             >
                 <Box maxW="8xl" mx="auto" px={6}>
-                    <FancyTitle title={"Webinar Series"} />
+                    <Title title={"Webinar Series"} />
                     <VideosSection posts={webinars} />
                 </Box>
             </Section>
@@ -181,7 +188,7 @@ const Section = ({ children, title = null, ...rest }) => {
             className="section"
             {...rest}
         >
-            {title && <FancyTitle title={title} />}
+            {title && <Title title={title} />}
             {children}
         </Box>
     );

@@ -67,20 +67,7 @@ export const ListVariant = {
     },
 };
 
-export const Title = ({ text, color, ...rest }) => {
-    return (
-        <Text
-            as="h3"
-            fontFamily="heading"
-            color={
-                color ? color : useColorModeValue("gray.800", "whiteAlpha.800")
-            }
-            {...rest}
-        >
-            {text}
-        </Text>
-    );
-};
+
 
 export const CarouselSection = ({
     slides,
@@ -671,7 +658,7 @@ export const Accordian = ({ data }) => {
     );
 };
 
-export const FancyTitle = ({ title, ...rest }) => {
+export const Title = ({ title, ...rest }) => {
     return (
         <Heading
             as="h3"
@@ -686,10 +673,9 @@ export const FancyTitle = ({ title, ...rest }) => {
             _after={{
                 content: `""`,
                 height: "2px",
-                bg: useColorModeValue("gray.800", "gray.200"),
+                bg: useColorModeValue("blackAlpha.400", "whiteAlpha.400"),
                 ml: "1rem",
                 borderRadius: "4px",
-                opacity: 0.25,
                 flexGrow: 1,
             }}
             {...rest}

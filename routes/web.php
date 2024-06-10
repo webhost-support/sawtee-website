@@ -66,7 +66,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->as('admin.')->group(fu
     Route::post('/menus/add-custom-link', [MenuController::class, 'addCustomLink'])->name('addCustomLink.menu');
 
 });
-
+Route::post('/subscribe', [SubscriptionController::class, 'subscribe'])->name('subscribe');
 Route::get('/search', [FrontendController::class, 'search'])->name('search');
 
 Route::get('/', [FrontendController::class, 'index'])->name('home');

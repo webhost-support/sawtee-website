@@ -1,14 +1,10 @@
 import {
     Box,
-    Flex,
-    Divider,
-    Heading,
     Skeleton,
-    Stack,
-    List,
     ListItem,
     useColorModeValue,
     Text,
+    Flex,
 } from "@chakra-ui/react";
 import React from "react";
 import { formatDate, slugify } from "@/Utils/helpers";
@@ -16,42 +12,6 @@ import { ExploreButton, GlassBox } from "@/Components/Frontend/index";
 import { Link } from "@inertiajs/react";
 import ChakraLink from "./styles/inertia-chakra-link";
 import SimpleList from "./SimpleList";
-
-const ListHeading = ({ title, link }) => {
-    return (
-        <Box
-            bg={"var(--color-dark-acc)"}
-            borderRadius={"0.5rem 0.5rem 0 0"}
-            px={6}
-            py={3}
-        >
-            <Flex
-                justify={"space-between"}
-                align="center"
-                wrap={"wrap"}
-                p="3"
-                color={"whiteAlpha.900"}
-            >
-                <Heading as="h3" fontSize={{ base: "md", md: "lg" }}>
-                    {title}
-                </Heading>
-                <ChakraLink
-                    as={Link}
-                    href={link}
-                    fontSize="xs"
-                    textDecor={"underline"}
-                    textUnderlineOffset={"2px"}
-                    _hover={{
-                        textDecor: "underline",
-                    }}
-                    fontWeight="medium"
-                >
-                    explore
-                </ChakraLink>
-            </Flex>
-        </Box>
-    );
-};
 
 const SidebarWidget = ({ array, title, link, ...rest }) => {
     return (
@@ -61,6 +21,8 @@ const SidebarWidget = ({ array, title, link, ...rest }) => {
             shadow="none"
             border="none"
             position="relative"
+            // bg="transparent"
+            rounded="none"
             {...rest}
         >
             {/* <ListHeading title={title} link={link} /> */}
@@ -82,6 +44,7 @@ const SidebarWidget = ({ array, title, link, ...rest }) => {
                             <ListItem key={post.id} mb="1rem">
                                 <Box>
                                     <ChakraLink
+                                        as={Link}
                                         textDecor="underline"
                                         textUnderlineOffset="3px"
                                         href={`${link}/${post.slug}`}
@@ -107,13 +70,15 @@ const SidebarWidget = ({ array, title, link, ...rest }) => {
                             </ListItem>
                         );
                     })}
-                <ExploreButton
-                    size={["xs", "sm"]}
-                    text={`More ${title}`}
-                    variant="link"
-                    _hover={{ textDecor: "none" }}
-                    link={link}
-                />
+                <Flex w="full" justify="flex-end">
+                    <ExploreButton
+                        size={["xs", "sm"]}
+                        text={`More ${title}`}
+                        variant="link"
+                        _hover={{ textDecor: "none" }}
+                        link={link}
+                    />
+                </Flex>
             </SimpleList>
         </GlassBox>
     );

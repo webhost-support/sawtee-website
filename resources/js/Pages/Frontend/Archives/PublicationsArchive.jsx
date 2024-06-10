@@ -1,15 +1,13 @@
 import {
     Grid,
     GridItem,
-    Stack,
     Text,
-    StackDivider,
     VStack,
     Box,
     SimpleGrid,
     LinkBox,
     Image,
-    Skeleton,
+    useColorModeValue,
 } from "@chakra-ui/react";
 import { Link } from "@inertiajs/react";
 import React from "react";
@@ -117,28 +115,33 @@ export default function PublicationsArchive({
 }
 
 const ItemComponent = ({ item, publications }) => {
-    if (publications[item.slug].length > 0) {
-        return (
-            <Box key={item.name} py={12} borderBottom={"3px solid gray"}>
-                <Text
-                    as="h3"
-                    id={item.name}
-                    fontSize={{ base: "xl", lg: "2xl" }}
-                    fontFamily="heading"
-                    fontWeight={"bold"}
-                    color={"var(--color-text)"}
-                    mb={30}
-                >
-                    {
-                        <Link
-                            title={`Explore ${item.name}`}
-                            href={`/category/publications/${item.slug}`}
-                        >
-                            {item.name}
-                        </Link>
-                    }
-                </Text>
-
+    return (
+        <Box
+            key={item.name}
+            py={12}
+            borderBottom={"2px solid"}
+            borderColor={useColorModeValue("blackAlpha.400", "whiteAlpha.400")}
+            border
+        >
+            <Text
+                as="h3"
+                id={item.name}
+                fontSize={{ base: "xl", lg: "2xl" }}
+                fontFamily="heading"
+                fontWeight={"bold"}
+                color={"var(--color-text)"}
+                mb={30}
+            >
+                {
+                    <Link
+                        title={`Explore ${item.name}`}
+                        href={`/category/publications/${item.slug}`}
+                    >
+                        {item.name}
+                    </Link>
+                }
+            </Text>
+            {publications[item.slug].length > 0 && (
                 <SimpleGrid minChildWidth={"140px"} spacing={10}>
                     {publications[item.slug].map((publication) => {
                         return (
@@ -213,9 +216,9 @@ const ItemComponent = ({ item, publications }) => {
                         );
                     })}
                 </SimpleGrid>
-            </Box>
-        );
-    }
+            )}
+        </Box>
+    );
 };
 
 // Recursive function to render items and their children
@@ -223,11 +226,13 @@ const renderItems = (items, publications) => {
     return items.map((item) => (
         <React.Fragment key={item.id}>
             <ItemComponent item={item} publications={publications} />
-            {item.children && item.children.length > 0 && (
-                <React.Fragment key={item.id}>
-                    renderItems(item.children, publications)
-                </React.Fragment>
-            )}
+            {item.children &&
+                item.children.length > 0 &&
+                !item.children[0].children && (
+                    <React.Fragment key={item.id}>
+                        renderItems(item.children, publications)
+                    </React.Fragment>
+                )}
         </React.Fragment>
     ));
 };

@@ -23,6 +23,22 @@ class SubscribeRequest extends FormRequest
     {
         return [
             'email' => 'email|required|unique:subscribers,email|min:6|max:100',
+            'content' => 'required'
+        ];
+    }
+
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'email.required' => 'Please provide your email address',
+            'consent.required' => 'Please check the checkbox to subscribe',
+            'email.unique' => 'You are already subscribed.',
         ];
     }
 }

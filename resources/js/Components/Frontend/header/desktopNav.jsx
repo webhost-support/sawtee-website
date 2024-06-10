@@ -403,30 +403,29 @@ const SiteMenuItem = ({ item, ...rest }) => {
                             rounded={"md"}
                             color={
                                 active
-                                    ? "gray.200"
-                                    : useColorModeValue("gray.700", "gray.200")
+                                    ? "white"
+                                    : useColorModeValue("gray.800", "gray.200")
                             }
-                            bg={active ? "primary.700" : "transparent"}
+                            bg={active ? "primary.500" : "unset"}
                             _hover={{
-                                bg: useColorModeValue(
-                                    "primary.50",
-                                    "primary.500"
-                                ),
-                                color: useColorModeValue(
-                                    "gray.700",
-                                    "gray.200"
-                                ),
+                                bg: !active
+                                    ? useColorModeValue(
+                                          "primary.50",
+                                          "primary.200"
+                                      )
+                                    : "primary.500",
+                                color: !active ? "gray.800" : "unset",
                             }}
                             lineHeight={"1.1"}
-                            transition="all .25s ease-in-out"
+                            transition="background .25s ease-in-out"
                         >
                             <Stack p={2} direction="row" alignItems={"center"}>
                                 <InertiaChakraLink
                                     as={Link}
                                     transition={"all .3s ease"}
-                                    fontWeight={500}
                                     href={item.url}
                                     textDecor={"none"}
+                                    fontWeight="600"
                                     _hover={{ textDecor: "none" }}
                                 >
                                     {item.name}
@@ -453,19 +452,16 @@ const SiteMenuItem = ({ item, ...rest }) => {
                                                 }
                                                 color={
                                                     active
-                                                        ? "gray.200"
+                                                        ? "white"
                                                         : useColorModeValue(
-                                                              "gray.700",
+                                                              "gray.800",
                                                               "gray.200"
                                                           )
                                                 }
                                                 _groupHover={{
-                                                    color: active
-                                                        ? useColorModeValue(
-                                                              "gray.700",
-                                                              "gray.200"
-                                                          )
-                                                        : "inherit",
+                                                    color: !active
+                                                        ? "gray.800"
+                                                        : "white",
                                                 }}
                                                 transition="all .25s ease-in-out"
                                                 w={5}
@@ -506,8 +502,8 @@ const SiteMenuItem = ({ item, ...rest }) => {
                                 p={0}
                                 rounded={"lg"}
                                 overflow={"hidden"}
-                                    mx="auto"
-                                    shadow="dark-lg"
+                                mx="auto"
+                                shadow="dark-lg"
                             >
                                 <Stack gap={1}>
                                     {item.children?.map((child) => {

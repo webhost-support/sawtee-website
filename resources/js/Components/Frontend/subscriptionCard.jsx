@@ -10,9 +10,11 @@ import {
     Checkbox,
     Input,
     HStack,
-    Button,
     useColorModeValue,
     FormHelperText,
+    InputGroup,
+    InputRightElement,
+    IconButton,
 } from "@chakra-ui/react";
 import { useForm } from "@inertiajs/react";
 
@@ -28,6 +30,7 @@ const SubscriptionCard = ({
 }) => {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: "",
+        consent: null,
     });
     const [message, setMessage] = React.useState(null);
 
@@ -50,7 +53,9 @@ const SubscriptionCard = ({
     };
 
     return (
-        <SubscriptionBox
+        <Box
+            as={"form"}
+            onSubmit={handleSubmit}
             display="flex"
             flexDir={"column"}
             w="full"
@@ -76,47 +81,58 @@ const SubscriptionCard = ({
             >
                 {headingText}
             </Heading>
-            {showCheckbox && (
-                <FormControl
-                    fontSize={["xs"]}
-                    textAlign="center"
-                    fontStyle="italic"
-                    mb={2}
-                    isRequired
+            <FormControl
+                fontSize={["xs"]}
+                textAlign="center"
+                fontStyle="italic"
+                mb={2}
+                isRequired
+            >
+                <Checkbox
+                    defaultChecked={data.consent}
+                    colorScheme="blue"
+                    size="sm"
+                    spacing={4}
                 >
-                    <Checkbox
-                        defaultChecked
-                        colorScheme="blue"
-                        size="sm"
-                        spacing={4}
-                    >
-                        {consentText}
-                    </Checkbox>
-                </FormControl>
-            )}
+                    {consentText}
+                </Checkbox>
+            </FormControl>
             {showChildren && <Box>{children}</Box>}
 
             <HStack
-                as={"form"}
-                onSubmit={handleSubmit}
                 className="sidebar-form"
                 margin={"0 auto"}
                 w="full"
                 alignItems={"center"}
-                pos={"relative"}
             >
                 <FormControl isInvalid={errors.email} isRequired>
-                    <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        placeholder="email address"
-                        color={useColorModeValue(
-                            "var(--color-grey-darker)",
-                            "var(--color-grey-lighter)"
-                        )}
-                        onChange={(e) => setData("email", e.target.value)}
-                    />
+                    <InputGroup>
+                        <Input
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="email address"
+                            color={useColorModeValue(
+                                "var(--color-grey-darker)",
+                                "var(--color-grey-lighter)"
+                            )}
+                            onChange={(e) => setData("email", e.target.value)}
+                        />
+
+                        <InputRightElement>
+                            <IconButton
+                                transition="background-color ease .25s"
+                                cursor="pointer"
+                                textAlign="center"
+                                colorScheme={"primary"}
+                                h="30px"
+                                type="submit"
+                                mr="3"
+                                isLoading={processing}
+                                icon={<FiSend />}
+                            />
+                        </InputRightElement>
+                    </InputGroup>
                     {errors.email && (
                         <FormErrorMessage mt={2}>
                             {errors.email}
@@ -128,37 +144,11 @@ const SubscriptionCard = ({
                         </FormHelperText>
                     )}
                 </FormControl>
-                <Button
-                    type="submit"
-                    size="sm"
-                    isLoading={processing}
-                    variant="solid"
-                    colorScheme="primary"
-                    color={"white"}
-                >
-                    <FiSend color={useColorModeValue("white", "black")} />
-                </Button>
             </HStack>
-        </SubscriptionBox>
+        </Box>
     );
 };
 
 export default SubscriptionCard;
 
-const SubscriptionBox = styled(Box)`
-    & input[type="email"] {
-        flex: 1 0 auto;
-        height: 45px;
-        border: 1px solid var(--color-grey);
-        border-radius: 10px;
-    }
 
-    & button[type="submit"] {
-        position: absolute;
-        right: 0;
-        height: 43px;
-        min-width: 60px;
-        z-index: 100;
-        border-radius: 0 10px 10px 0;
-    }
-`;
