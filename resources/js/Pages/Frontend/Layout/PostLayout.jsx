@@ -1,7 +1,6 @@
 import { Box, useColorModeValue } from "@chakra-ui/react";
 import { LightPatternBox } from "@/Components/Frontend/styles/pattern-box";
 import PostHeader from "@/Components/Frontend/post/post-header";
-import Section from "@/Components/Frontend/styles/section";
 import FeaturedMedia from "@/Components/Frontend/post/featured-media";
 import { Content } from "@/Components/Frontend/index";
 import SocialShare from "@/Components/Frontend/SocialShare";
@@ -43,41 +42,25 @@ const PostLayout = ({
 
             {/* <PostProgressBar value={scroll} /> */}
 
-            <Box maxW="6xl" w="full" mx="auto" py="40px">
+            <Box maxW={{ base: "full", md: "3xl", xl: "5xl" }} mx="auto" px={4}>
                 {!isProgramPost && featured_image && (
                     <FeaturedMedia
                         src={featured_image}
                         rounded={"xl"}
                         srcSet={srcSet}
-                        aspectRatio={16 / 9}
-                        maxH="550px"
-                        mx="auto"
-                        w="full"
                     />
                 )}
-            </Box>
 
-            {/* Look at the settings to see if we should include the featured image */}
-            <Box maxW={"5xl"} mx="auto" px={4}>
+                {/* Look at the settings to see if we should include the featured image */}
                 {isNewsletter && (
                     <Box>
-                        <PostMeta
-                            author={post.author}
-                            date={post.published_at}
-                            readingTime={readingTime}
-                        />
                         {children}
                         <SocialShare url={shareUrl} />
                     </Box>
                 )}
 
                 {!isNewsletter && (
-                    <Content
-                        as={Section}
-                        size={"lg"}
-                        pb="50px"
-                        className="post-content"
-                    >
+                    <Content pb="50px" className="post-content">
                         <PostMeta
                             author={post.author}
                             date={post.published_at}

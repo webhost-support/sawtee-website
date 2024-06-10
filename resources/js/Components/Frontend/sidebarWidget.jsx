@@ -39,7 +39,6 @@ const SidebarWidget = ({ array, title, link, ...rest }) => {
                 )}
                 {array.length > 0 &&
                     array.map((post, index) => {
-                        console.log(post);
                         return (
                             <ListItem key={post.id} mb="1rem">
                                 <Box>

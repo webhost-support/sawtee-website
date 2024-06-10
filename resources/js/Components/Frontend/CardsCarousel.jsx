@@ -49,11 +49,11 @@ const CardsCarousel = ({ slides, navigation }) => {
                                     cursor={"pointer"}
                                     color="var(--color-text)"
                                     bg={useColorModeValue(
-                                        "whiteAlpha.200",
-                                        "blackAlpha.700"
+                                        "blackAlpha.200",
+                                        "blackAlpha.500"
                                     )}
                                     backdropFilter={"blur(5px)"}
-                                    py="1"
+                                    p="1"
                                     border={"1px solid var(--color-text)"}
                                 >
                                     {slide.title + " "}

@@ -13,6 +13,8 @@ const FeaturedMedia = ({
         <Box as="picture" rounded={rounded ? rounded : "none"} {...rest}>
             <Image
                 boxSize="100%"
+                aspectRatio={16 / 9}
+                maxH="450px"
                 objectFit={objectFit ? objectFit : "cover"}
                 src={src}
                 srcSet={srcSet}

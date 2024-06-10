@@ -55,8 +55,14 @@ export const PostOverlay = (props) => (
     />
 );
 
-export const PostImageWithOverlay = ({ src, srcSet, alt, borderRadius, ...props }) => (
-    <Box cursor="pointer" height="300px" width="100%" pos="relative" {...props}>
+export const PostImageWithOverlay = ({
+    src,
+    srcSet,
+    alt,
+    borderRadius,
+    ...props
+}) => (
+    <Box cursor="pointer" width="100%" pos="relative" {...props}>
         <PostOverlay borderRadius={borderRadius} />
         <PostImage
             src={src}
@@ -103,14 +109,13 @@ export const SecondaryPostArticle = (props) => (
 export const PostImage = (props) => (
     <Box
         as={Image}
-        width="900"
-        height="550"
+        aspectRatio={5 / 2}
+        width="full"
         position="absolute"
         boxSize="100%"
         objectFit="cover"
         top="0"
         left="0"
-        maxWidth="100%"
         {...props}
     />
 );

@@ -37,7 +37,6 @@ import PostCard from "@/Components/Frontend/PostCard";
 import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
 import InertiaChakraLinkOverlay from "@/Components/Frontend/styles/inertia-chakra-link-overlay";
 import Feature from "@/Components/Frontend/feature";
-import { motion } from "framer-motion";
 import VideoCarousel from "./VideoCarousel";
 import SimpleList from "./SimpleList";
 import Section from "@/Components/Frontend/styles/section";
@@ -67,8 +66,6 @@ export const ListVariant = {
     },
 };
 
-
-
 export const CarouselSection = ({
     slides,
     responsiveImages,
@@ -94,7 +91,6 @@ export const AboutSection = ({ data }) => {
         <SimpleGrid
             minChildWidth={"300px"}
             spacing={16}
-            rowGap={28}
             alignItems="center"
             maxW={"5xl"}
             py={{ base: 10, lg: 16 }}
@@ -103,7 +99,7 @@ export const AboutSection = ({ data }) => {
         >
             {data.map((item) => {
                 return (
-                    <Box key={item.id} ml={{ base: 0, md: 5 }} pos="relative">
+                    <Box key={item.id} pos="relative">
                         <Box
                             pos="absolute"
                             border="4px solid"
@@ -242,15 +238,15 @@ export const ReformMonitorSection = ({ feature }) => {
     return <Feature feature={feature} />;
 };
 
-export const OutreachSection = ({ infocus, events }) => {
+export const OutreachSection = ({ sawteeInMedia, events }) => {
     return (
         <Grid
             gridTemplateColumns={{ base: "1fr", lg: "repeat(6, 1fr)" }}
             gap={10}
         >
             <GridItem colSpan={{ base: 1, md: 3 }}>
-                <SimpleList heading={"in focus"}>
-                    {infocus.map((item) => {
+                <SimpleList heading={"sawtee in media"}>
+                    {sawteeInMedia.map((item) => {
                         return (
                             <ListItem key={item.id} mb="1rem">
                                 <Box>
@@ -283,7 +279,7 @@ export const OutreachSection = ({ infocus, events }) => {
                 </SimpleList>
                 <ExploreButton
                     size={["xs", "sm"]}
-                    text="More in focus"
+                    text="More in sawtee in media "
                     variant="link"
                 />
             </GridItem>
@@ -368,6 +364,49 @@ export const OutreachSection = ({ infocus, events }) => {
                 />
             </GridItem>
         </Grid>
+    );
+};
+
+export const InfocusSection = ({ data }) => {
+    return (
+        <Box maxW="5xl" mx="auto">
+            <SimpleList heading={"In focus"} borderLeft={"none"}>
+                {data.map((item) => {
+                    return (
+                        <ListItem key={item.id} mb="1rem">
+                            <LinkBox>
+                                <Box>
+                                    <InertiaChakraLinkOverlay
+                                        as={Link}
+                                        target="_blank"
+                                        textDecor="underline"
+                                        textUnderlineOffset="3px"
+                                        href={`/category/in-focus/${item.slug}`}
+                                    >
+                                        <Text
+                                            fontSize={"0.875rem"}
+                                            lineHeight={"short"}
+                                        >
+                                            {item.title}
+                                        </Text>
+                                    </InertiaChakraLinkOverlay>
+                                    <Text
+                                        color={useColorModeValue(
+                                            "gray.600",
+                                            "gray.300"
+                                        )}
+                                        fontSize={".75rem"}
+                                        mt={2}
+                                    >
+                                        {item.excerpt}
+                                    </Text>
+                                </Box>
+                            </LinkBox>
+                        </ListItem>
+                    );
+                })}
+            </SimpleList>
+        </Box>
     );
 };
 

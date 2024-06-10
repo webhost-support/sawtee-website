@@ -193,8 +193,7 @@ main {
 }
 
 .post-meta p {
-    font-size: var(--chakra-fontSizes-sm);
-    font-family: var(--chakra-fonts-mono);
+    font-size: var(--chakra-fontSizes-sm) !important;
 }
 
 /* time {

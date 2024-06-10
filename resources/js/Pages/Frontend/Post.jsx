@@ -34,7 +34,7 @@ export default function Post({ post, featured_image, srcSet }) {
                 {isNewsletter && <NewsletterPost post={post} />}
                 {isWebinarSeries && <WebinarPost post={post} />}
                 {isDefault && (
-                    <Box className="default_post_content" mt={6}>
+                    <Box maxW="5xl" className="default_post_content">
                         <Text
                             dangerouslySetInnerHTML={{
                                 __html: content,

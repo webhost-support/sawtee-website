@@ -7,17 +7,16 @@ const PostMeta = ({ author, date, readingTime, ...rest }) => (
         <HStack
             rowGap="2"
             columnGap="8"
-            mt={4}
             justify={"start"}
             align={"center"}
             flexWrap={"wrap"}
+            fontSize={"sm"}
         >
             {readingTime && <Text>Reading Time: {readingTime}</Text>}
             {author && <Text>Author: {author}</Text>}
             {date && (
                 <Text
                     fontSize={"sm"}
-                    fontFamily={"mono"}
                     as={"time"}
                     dateTime={date}
                 >

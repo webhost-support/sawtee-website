@@ -10,6 +10,7 @@ import {
     ReformMonitorSection,
     SawteeInMediaSection,
     VideosSection,
+    InfocusSection,
 } from "@/Components/Frontend";
 import { Box, Grid, GridItem, Text, useColorModeValue } from "@chakra-ui/react";
 import CardsCarousel from "@/Components/Frontend/CardsCarousel";
@@ -75,7 +76,7 @@ const Home = ({
                             <CarouselSection
                                 slides={slides}
                                 responsiveImages={slidesResponsiveImages}
-                                carouselHeight={{ base: "auto", md: "350px" }}
+                                carouselHeight={{ base: "auto", md: "450px" }}
                             />
                         </Box>
                     </GridItem>
@@ -107,10 +108,10 @@ const Home = ({
             {feature && (
                 <Section
                     className="reform-section"
-                    bg={useColorModeValue(
-                        "blackAlpha.50",
-                        "var(--color-darker)"
-                    )}
+                    // bg={useColorModeValue(
+                    //     "blackAlpha.50",
+                    //     "var(--color-darker)"
+                    // )}
                     py={{ base: 12, md: 20 }}
                 >
                     <Box maxW="5xl" mx="auto">
@@ -119,19 +120,17 @@ const Home = ({
                 </Section>
             )}
 
-            <Section className="about-section" py={{ base: 12, md: 20 }}>
-                <AboutSection data={AboutSectionData} />
-            </Section>
-
+            {infocus && (
+                <Section className="infocus-section" py={{ base: 12, md: 20 }}>
+                    <InfocusSection data={infocus} />
+                </Section>
+            )}
             <Section
-                bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
+                className="about-section"
                 py={{ base: 12, md: 20 }}
-                className="outreach-section"
+                // bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
             >
-                <Box maxW={"5xl"} mx="auto">
-                    <Title title={"Outreach"} />
-                    <OutreachSection infocus={infocus} events={events} />
-                </Box>
+                <AboutSection data={AboutSectionData} />
             </Section>
 
             {/* Add publication section here  */}
@@ -142,7 +141,21 @@ const Home = ({
                 </Box>
             </Section>
 
-            {sawteeInMedia && (
+            <Section
+                // bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
+                py={{ base: 12, md: 20 }}
+                className="outreach-section"
+            >
+                <Box maxW={"5xl"} mx="auto">
+                    <Title title={"Outreach"} />
+                    <OutreachSection
+                        sawteeInMedia={sawteeInMedia}
+                        events={events}
+                    />
+                </Box>
+            </Section>
+
+            {/* {sawteeInMedia && (
                 <Section
                     className="sawtee-in-media-section"
                     py={{ base: 12, md: 20 }}
@@ -155,14 +168,14 @@ const Home = ({
                         />
                     </Box>
                 </Section>
-            )}
+            )} */}
             {/* <InfoSection /> */}
             <Section
                 className="section videos-section"
-                bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
+                // bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
                 py={{ base: 12, md: 20 }}
             >
-                <Box maxW="8xl" mx="auto" px={6}>
+                <Box maxW="5xl" mx="auto">
                     <Title title={"Webinar Series"} />
                     <VideosSection posts={webinars} />
                 </Box>

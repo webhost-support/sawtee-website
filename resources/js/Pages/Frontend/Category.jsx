@@ -53,7 +53,7 @@ export default function Category({
             >
                 <Grid
                     py={{ base: "24px", lg: "80px" }}
-                    px={{ base: "32px", lg: "40px" }}
+                    px={{ base: "32px", lg: "80px" }}
                     mx="auto"
                     pt="50px"
                     templateColumns={{

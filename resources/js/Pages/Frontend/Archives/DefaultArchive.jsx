@@ -39,7 +39,7 @@ const ArchivePost = ({ post, featured_image, showFallbackImage, rest }) => {
     return (
         <GlassBox
             role="group"
-            maxW={{ base: "100%", md: "md", xl: "lg" }}
+            maxW={{ base: "100%", md: "lg", lg: "xl", xl: "2xl" }}
             as={"article"}
             _hover={{ boxShadow: "xl" }}
             {...rest}
@@ -47,7 +47,7 @@ const ArchivePost = ({ post, featured_image, showFallbackImage, rest }) => {
             <LinkBox>
                 {showFallbackImage && (
                     <PostImageWithOverlay
-                        height="180px"
+                        height="240px"
                         borderRadius="var(--chakra-radii-md) var(--chakra-radii-md) 0 0"
                         overflow="hidden"
                         _groupHover={{

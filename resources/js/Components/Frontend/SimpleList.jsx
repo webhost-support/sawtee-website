@@ -12,9 +12,9 @@ export default function SimpleList({ heading, children, ...rest }) {
     return (
         <Box
             px={6}
-            {...rest}
             borderLeft={"2px solid"}
             borderColor={useColorModeValue("blackAlpha.400", "whiteAlpha.400")}
+            {...rest}
         >
             {heading && (
                 <Heading
