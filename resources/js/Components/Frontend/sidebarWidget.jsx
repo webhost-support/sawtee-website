@@ -111,6 +111,7 @@ const SidebarWidget = ({ array, title, link, ...rest }) => {
                     size={["xs", "sm"]}
                     text={`More ${title}`}
                     variant="link"
+                    _hover={{ textDecor: "none" }}
                     link={link}
                 />
             </SimpleList>

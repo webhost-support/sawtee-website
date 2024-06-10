@@ -48,7 +48,10 @@ const CardsCarousel = ({ slides, navigation }) => {
                                     textDecor={"underline"}
                                     cursor={"pointer"}
                                     color="var(--color-text)"
-                                    bg={"blackAlpha.200"}
+                                    bg={useColorModeValue(
+                                        "whiteAlpha.200",
+                                        "blackAlpha.700"
+                                    )}
                                     backdropFilter={"blur(5px)"}
                                     py="1"
                                     border={"1px solid var(--color-text)"}

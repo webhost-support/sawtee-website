@@ -2,7 +2,6 @@ import {
     VStack,
     Heading,
     Box,
-    Container,
     Circle,
     Flex,
     Link,
@@ -14,7 +13,7 @@ import { FiCheckCircle } from "react-icons/fi";
 import { GlassBox } from "@/Components/Frontend";
 import React from "react";
 
-const ResearchArchive = ({ posts, headingColor }) => {
+const ResearchArchive = ({ posts }) => {
     // Get the data of the current list.
     if (!posts || posts.length <= 0)
         return <Text fontSize={"2xl"}>"No posts found"</Text>;
