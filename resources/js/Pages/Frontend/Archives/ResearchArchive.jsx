@@ -108,7 +108,15 @@ const ReasearchItem = ({
                     left="0.85em"
                     top="0.85em"
                 />
-                {skipTrail ? <Box w="1px" flex={1} bg={color} my={1} /> : null}
+                {skipTrail ? (
+                    <Box
+                        w="1px"
+                        flex={1}
+                        my={1}
+                        bg={useColorModeValue("gray.600", "gray.500")}
+                        opacity={useColorModeValue(0.07, 0.15)}
+                    />
+                ) : null}
             </Flex>
             <Box pt={{ base: 1, sm: 3 }} {...boxProps}>
                 {children}
