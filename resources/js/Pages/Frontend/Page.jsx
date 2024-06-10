@@ -68,7 +68,7 @@ const PageContent = ({ slug, themes, sections, content }) => {
             );
 
         case "about":
-            return <About sections={sections} content={content} />;
+            return <About sections={sections} content={content} size={"xl"} />;
 
         case "contact":
             return <Contact content={content} />;

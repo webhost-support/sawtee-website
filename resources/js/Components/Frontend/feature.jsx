@@ -1,5 +1,4 @@
 import {
-    Container,
     Stack,
     Flex,
     Heading,
@@ -9,10 +8,8 @@ import {
     useColorModeValue,
     LinkBox,
     LinkOverlay,
-    Box,
-    Icon,
 } from "@chakra-ui/react";
-import { Blob, PlayIcon } from ".";
+import { Blob, PlayIcon } from "./icons";
 
 export default function Feature({ feature, ...rest }) {
     return (
@@ -117,5 +114,3 @@ export default function Feature({ feature, ...rest }) {
         </Stack>
     );
 }
-
-

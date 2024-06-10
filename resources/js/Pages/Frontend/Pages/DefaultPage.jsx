@@ -1,19 +1,16 @@
 import { Content } from "@/Components/Frontend/index";
-import Section from "@/Components/Frontend/styles/section";
 import { Box, Heading, useColorModeValue } from "@chakra-ui/react";
 
-const DefaultPage = ({ sections, content, size = "md", rest }) => {
+const DefaultPage = ({ sections, content, ...rest }) => {
     const headingColor = useColorModeValue("gray.900, whiteAlpha.900");
     const contentColor = useColorModeValue("gray.800", "whiteAlpha.800");
     return (
         <Content
-            as={Section}
-            px={["4", "8"]}
-            py="80px"
-            m="0 auto"
-            size={size}
-            paddingBlock="50px"
-            fontSize={["sm", "md"]}
+            className="page-content"
+            px={{ base: "32px", md: "0" }}
+            mx="auto"
+            py={"80px"}
+            maxW={"2xl"}
             {...rest}
         >
             {content && (

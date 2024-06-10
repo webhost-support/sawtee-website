@@ -14,7 +14,13 @@ import { GlassBox } from "@/Components/Frontend/index";
 
 const CovidArchive = ({ posts }) => {
     return (
-        <SimpleGrid columns={{ base: 1, md: 2 }} gap={4} rowGap={20}>
+        <SimpleGrid
+            w="full"
+            px={[4, 8]}
+            columns={{ base: 1, md: 2 }}
+            gap={4}
+            rowGap={10}
+        >
             {posts.map((post) => {
                 return (
                     <VStack
@@ -26,12 +32,13 @@ const CovidArchive = ({ posts }) => {
                         p={6}
                         align="start"
                         justify="space-evenly"
+                        transition="all 0.25s ease"
                         spacing={6}
                         _hover={{
                             shadow: "dark-lg",
                             transform: "scale(1.02)",
                         }}
-
+                        w="full"
                     >
                         <HStack w="full" justify="space-between">
                             {post.genre && (

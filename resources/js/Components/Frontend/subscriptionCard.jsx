@@ -65,10 +65,15 @@ const SubscriptionCard = ({
                     size={"90px"}
                     mx="auto"
                     as={BsMailbox2}
-                    color={useColorModeValue("primary.700", "primary.500")}
+                    color={useColorModeValue("primary.500", "primary.200")}
                 />
             )}
-            <Heading as="h4" fontSize={fontSize} textTransform="uppercase">
+            <Heading
+                as="h4"
+                fontSize={fontSize}
+                textTransform="uppercase"
+                color={useColorModeValue("gray.700", "gray.300")}
+            >
                 {headingText}
             </Heading>
             {showCheckbox && (
@@ -128,19 +133,10 @@ const SubscriptionCard = ({
                     size="sm"
                     isLoading={processing}
                     variant="solid"
-                    bg={useColorModeValue(
-                        "var(--color-dark)",
-                        "var(--color-grey)"
-                    )}
-                    _hover={{
-                        bg: useColorModeValue(
-                            "var(--color-darker)",
-                            "var(--color-grey-light)"
-                        ),
-                    }}
+                    colorScheme="primary"
                     color={"white"}
                 >
-                    <FiSend />
+                    <FiSend color={useColorModeValue("white", "black")} />
                 </Button>
             </HStack>
         </SubscriptionBox>

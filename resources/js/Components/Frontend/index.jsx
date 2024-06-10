@@ -3,7 +3,6 @@ import {
     Button,
     HStack,
     Heading,
-    Icon,
     Image,
     Input,
     Modal,
@@ -14,8 +13,6 @@ import {
     ModalHeader,
     ModalOverlay,
     Text,
-    VStack,
-    createIcon,
     Flex,
     useBreakpointValue,
     useColorModeValue,
@@ -24,7 +21,6 @@ import {
     Container,
     LinkBox,
     SimpleGrid,
-
     IconButton,
     LinkOverlay,
     ListItem,
@@ -44,17 +40,18 @@ import Feature from "@/Components/Frontend/feature";
 import { motion } from "framer-motion";
 import VideoCarousel from "./VideoCarousel";
 import SimpleList from "./SimpleList";
+import Section from "@/Components/Frontend/styles/section";
+import { PlayIcon } from "./icons";
+
 export const ListItemVariant = {
     initial: {
         y: 50,
-        // opacity: 0,
         transition: {
             y: { stiffness: 1000 },
         },
     },
     whileInView: {
         y: 0,
-        // opacity: 1,
         transition: {
             y: { stiffness: 1000, velocity: -100 },
         },
@@ -68,6 +65,21 @@ export const ListVariant = {
     whileInView: {
         transition: { staggerChildren: 0.07, delayChildren: 0.2 },
     },
+};
+
+export const Title = ({ text, color, ...rest }) => {
+    return (
+        <Text
+            as="h3"
+            fontFamily="heading"
+            color={
+                color ? color : useColorModeValue("gray.800", "whiteAlpha.800")
+            }
+            {...rest}
+        >
+            {text}
+        </Text>
+    );
 };
 
 export const CarouselSection = ({
@@ -115,15 +127,7 @@ export const AboutSection = ({ data }) => {
                             h="full"
                             rounded={"2xl"}
                         />
-                        {/* <Blob
-                            w={"100%"}
-                            h={"150%"}
-                            position={"absolute"}
-                            top={"-20%"}
-                            left={0}
-                            zIndex={-1}
-                            color={"primary.50"}
-                        /> */}
+
                         <LinkBox
                             position={"relative"}
                             rounded={"2xl"}
@@ -460,22 +464,6 @@ export const VideosSection = ({ posts }) => {
     return <VideoCarousel posts={posts} navigation={true} />;
 };
 
-export const Section = ({ children, title = null, ...rest }) => {
-    return (
-        <Box
-            as="section"
-            mx="auto"
-            pb={{ base: 5, md: 10 }}
-            px={{ base: "24px", md: "80px" }}
-            className="section"
-            {...rest}
-        >
-            {title && <FancyTitle title={title} />}
-            {children}
-        </Box>
-    );
-};
-
 export const publicationsection = ({ newsletters }) => {
     const isMobile = useBreakpointValue({ base: true, md: false });
     const isDesktop = useBreakpointValue({ base: false, md: true });
@@ -560,173 +548,8 @@ export function DebouncedInput({
     );
 }
 
-export const PlayIcon = createIcon({
-    displayName: "PlayIcon",
-    viewBox: "0 0 58 58",
-    d: "M28.9999 0.562988C13.3196 0.562988 0.562378 13.3202 0.562378 29.0005C0.562378 44.6808 13.3196 57.438 28.9999 57.438C44.6801 57.438 57.4374 44.6808 57.4374 29.0005C57.4374 13.3202 44.6801 0.562988 28.9999 0.562988ZM39.2223 30.272L23.5749 39.7247C23.3506 39.8591 23.0946 39.9314 22.8332 39.9342C22.5717 39.9369 22.3142 39.8701 22.0871 39.7406C21.86 39.611 21.6715 39.4234 21.5408 39.1969C21.4102 38.9705 21.3421 38.7133 21.3436 38.4519V19.5491C21.3421 19.2877 21.4102 19.0305 21.5408 18.8041C21.6715 18.5776 21.86 18.3899 22.0871 18.2604C22.3142 18.1308 22.5717 18.064 22.8332 18.0668C23.0946 18.0696 23.3506 18.1419 23.5749 18.2763L39.2223 27.729C39.4404 27.8619 39.6207 28.0486 39.7458 28.2713C39.8709 28.494 39.9366 28.7451 39.9366 29.0005C39.9366 29.2559 39.8709 29.507 39.7458 29.7297C39.6207 29.9523 39.4404 30.1391 39.2223 30.272Z",
-});
-
-export const Blob = ({color, ...rest}) => {
-    return (
-        <Icon width={"100%"} viewBox="0 0 578 440" color={color} {...rest}>
-            <path
-                d="M239.184 439.443c-55.13-5.419-110.241-21.365-151.074-58.767C42.307 338.722-7.478 282.729.938 221.217c8.433-61.644 78.896-91.048 126.871-130.712 34.337-28.388 70.198-51.348 112.004-66.78C282.34 8.024 325.382-3.369 370.518.904c54.019 5.115 112.774 10.886 150.881 49.482 39.916 40.427 49.421 100.753 53.385 157.402 4.13 59.015 11.255 128.44-30.444 170.44-41.383 41.683-111.6 19.106-169.213 30.663-46.68 9.364-88.56 35.21-135.943 30.551z"
-                fill="currentColor"
-            />
-        </Icon>
-    );
-};
-
-export const NewsletterCard = ({ index, title, excerpt, published_at }) => {
-    // For even id show card on left side
-    // For odd id show card on right side
-    const isEvenId = index % 2 == 0;
-    let borderWidthValue = isEvenId ? "15px 15px 15px 0" : "15px 0 15px 15px";
-    let leftValue = isEvenId ? "-15px" : "unset";
-    let rightValue = isEvenId ? "unset" : "-15px";
-
-    const isMobile = useBreakpointValue({ base: true, md: false });
-    if (isMobile) {
-        leftValue = "-15px";
-        rightValue = "unset";
-        borderWidthValue = "15px 15px 15px 0";
-    }
-
-    return (
-        <HStack
-            as={motion.article}
-            mb={isMobile ? "20px" : 0}
-            initial={
-                isEvenId
-                    ? {
-                          x: 50,
-                          opacity: 0,
-                          transition: {
-                              y: { stiffness: 1000 },
-                          },
-                      }
-                    : {
-                          x: -50,
-                          opacity: 0,
-                          transition: {
-                              y: { stiffness: 1000 },
-                          },
-                      }
-            }
-            whileInView={
-                isEvenId
-                    ? {
-                          x: 0,
-                          opacity: 1,
-                          transition: {
-                              y: { stiffness: 1000, velocity: -100 },
-                          },
-                      }
-                    : {
-                          x: 0,
-                          opacity: 1,
-                          transition: {
-                              y: { stiffness: 1000, velocity: -100 },
-                          },
-                      }
-            }
-            flex={1}
-            p={{ base: 3, sm: 6 }}
-            bg={useColorModeValue("blackAlpha.50", "blackAlpha.300")}
-            spacing={5}
-            rounded="lg"
-            alignItems="center"
-            pos="relative"
-            _before={{
-                content: `""`,
-                w: "0",
-                h: "0",
-                borderColor: `transparent ${useColorModeValue(
-                    "var(--chakra-colors-blackAlpha-50)",
-                    "var(--chakra-colors-blackAlpha-300)"
-                )} transparent`,
-                borderStyle: "solid",
-                borderWidth: borderWidthValue,
-                position: "absolute",
-                left: leftValue,
-                right: rightValue,
-                display: "block",
-            }}
-        >
-            <Box>
-                <Text fontSize="sm" color={"primary.500"} mb={2}>
-                    {formatDate(published_at)}
-                </Text>
-
-                <VStack spacing={2} textAlign="left">
-                    <Heading
-                        as="h3"
-                        fontSize="lg"
-                        lineHeight={1.2}
-                        fontWeight="bold"
-                        w="100%"
-                    >
-                        {title}
-                    </Heading>
-                </VStack>
-            </Box>
-        </HStack>
-    );
-};
-
-export const LineWithDot = ({ isMobile }) => {
-    return (
-        <Flex
-            pos="relative"
-            alignItems="center"
-            mr={{ base: "40px", md: "40px" }}
-            ml={{ base: "0", md: "40px" }}
-            mb={isMobile ? "20px" : 0}
-        >
-            <Text
-                as="span"
-                position="absolute"
-                left="50%"
-                height="calc(100% + 10px)"
-                border="1px solid"
-                borderColor={useColorModeValue("gray.200", "gray.700")}
-                top="0px"
-            ></Text>
-            <Box pos="relative" p="10px">
-                <Box
-                    pos="absolute"
-                    top="0"
-                    left="0"
-                    bottom="0"
-                    right="0"
-                    width="100%"
-                    height="100%"
-                    backgroundSize="cover"
-                    backgroundRepeat="no-repeat"
-                    backgroundPosition="center center"
-                    bg={useColorModeValue("gray.600", "gray.200")}
-                    borderRadius="100px"
-                    backgroundImage="none"
-                    opacity={1}
-                ></Box>
-            </Box>
-        </Flex>
-    );
-};
-
-export const EmptyCard = () => {
-    return (
-        <Box
-            flex={{ base: 0, md: 1 }}
-            p={{ base: 0, md: 6 }}
-            bg="transparent"
-        ></Box>
-    );
-};
-
-export const Content = styled(Box)`
+export const Content = styled(Section)`
     word-break: break-word;
-    font-size: var(--chakra-fontSizes-md);
     white-space: collapse balance;
 
     line-height: var(--chakra-lineHeights-taller);
@@ -755,36 +578,6 @@ export const Content = styled(Box)`
     h6 {
         overflow-wrap: break-word;
         word-break: break-word;
-    }
-
-    h1 {
-        font-size: var(--chakra-fontSizes-4xl);
-        margin-block: 35px;
-    }
-
-    h2 {
-        font-size: var(--chakra-fontSizes-3xl);
-        margin-block: 30px;
-    }
-
-    h3 {
-        font-size: var(--chakra-fontSizes-2xl);
-        margin-block: 25px;
-    }
-
-    h4 {
-        font-size: var(--chakra-fontSizes-xl);
-        margin-block: 20px;
-    }
-
-    h5 {
-        font-size: var(--chakra-fontSizes-lg);
-        margin-block: 15px;
-    }
-
-    h6 {
-        font-size: var(--chakra-fontSizes-md);
-        margin-block: 10px;
     }
 
     img {
@@ -951,71 +744,25 @@ export const MapModel = ({ isOpen, onClose, mapLink }) => {
     );
 };
 
-export const Title = ({ text, color, ...rest }) => {
-    return (
-        <Text
-            as="h3"
-            fontFamily="heading"
-            color={
-                color ? color : useColorModeValue("gray.800", "whiteAlpha.800")
-            }
-            {...rest}
-        >
-            {text}
-        </Text>
-    );
-};
-
-export const ExploreButton = ({ text = "Explore All", ...rest }) => {
+export const ExploreButton = ({ text = "Explore All", link, ...rest }) => {
     const [hovered, setHovered] = useState(false);
 
     return (
         <Button
             variant="solid"
             colorScheme={"primary"}
-            aria-label="view all"
+            aria-label={text}
             onMouseEnter={() => setHovered(!hovered)}
-            onMouseLeave={() => setHovered(!hovered)}
+            onMouseLeave={() => hovered && setHovered(!hovered)}
             rightIcon={hovered ? <HiArrowRight /> : <HiChevronRight />}
-            maxW="md"
-            fontFamily={"body"}
-            fontWeight={"semibold"}
             {...rest}
         >
-            {text}
+            {link ? <Link href={link}>{text}</Link> : text}
         </Button>
     );
 };
 
-export const StyledLink = styled(Link)`
-    position: relative;
-    text-decoration: none;
-    font-size: ${(props) =>
-        props.fontSize ? props.fontSize : "var(--chakra-fontSizes-sm)"};
-    color: ${(props) => (props.color ? props.color : "inherit")};
 
-    &::after {
-        content: "";
-        width: 0%;
-        height: 2px;
-        position: absolute;
-        bottom: 1;
-        left: 0;
-        margin: 0;
-
-        background: ${(props) => (props.color ? props.color : "#fff")};
-        opacity: 0;
-        transition: all 0.5s ease;
-    }
-
-    &:hover {
-        text-decoration: none;
-        &::after {
-            width: 100%;
-            opacity: 1;
-        }
-    }
-`;
 
 export const StyledChakraLink = styled(InertiaChakraLink)`
     position: relative;

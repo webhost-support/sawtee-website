@@ -4,23 +4,15 @@ import WebsiteHead from "@/Components/Frontend/Head";
 import {
     AboutSection,
     CarouselSection,
-    ExploreButton,
     FancyTitle,
     OutreachSection,
     PublicationsSection,
-    // PublicationSection,
     ReformMonitorSection,
     SawteeInMediaSection,
-    Section,
     Title,
     VideosSection,
 } from "@/Components/Frontend";
-import {
-    Box,
-    Grid,
-    GridItem,
-    useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, Grid, GridItem, useColorModeValue } from "@chakra-ui/react";
 import CardsCarousel from "@/Components/Frontend/CardsCarousel";
 import { splitPosts } from "@/Utils/helpers";
 import { Newsletter } from "@/Components/Frontend/newsletter";
@@ -136,10 +128,7 @@ const Home = ({
             </Section>
 
             {/* Add publication section here  */}
-            <Section
-                py={{ base: 12, md: 20 }}
-                className="publications-section"
-            >
+            <Section py={{ base: 12, md: 20 }} className="publications-section">
                 <Box maxW={"5xl"} mx="auto">
                     <FancyTitle title={"Latest in Pubications"} />
                     <PublicationsSection publications={publications} />
@@ -179,6 +168,22 @@ const Home = ({
                 <Newsletter data={newsletters} />
             </Section>
         </MainLayout>
+    );
+};
+
+const Section = ({ children, title = null, ...rest }) => {
+    return (
+        <Box
+            as="section"
+            mx="auto"
+            pb={{ base: 5, md: 10 }}
+            px={{ base: "24px", md: "80px" }}
+            className="section"
+            {...rest}
+        >
+            {title && <FancyTitle title={title} />}
+            {children}
+        </Box>
     );
 };
 

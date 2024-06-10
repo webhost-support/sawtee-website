@@ -7,8 +7,7 @@ return [
      * The google-fonts:fetch command will prefetch these fonts.
      */
     'fonts' => [
-        'default' => 'https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700&display=swap',
-        'Roboto' => 'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap',
+        'default' => 'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap',
         'code' => 'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400&display=swap',
     ],
 
@@ -35,7 +34,7 @@ return [
      * in the HTML output to instruct the browser to start fetching the
      * font files as early as possible, even before the CSS is fully parsed.
      */
-    'preload' => false,
+    'preload' => true,
 
     /*
      * When something goes wrong fonts are loaded directly from Google.

@@ -39,13 +39,8 @@ const ArchivePost = ({ post, featured_image, showFallbackImage, rest }) => {
     return (
         <GlassBox
             role="group"
-            w="full"
-            maxW="lg"
-            as={motion.article}
-            initial={{ y: 100 }}
-            whileInView={{ y: 0 }}
-            transitionDuration="200ms"
-            // viewport={{ once: true }}
+            maxW={{ base: "100%", md: "md", xl: "lg" }}
+            as={"article"}
             _hover={{ boxShadow: "xl" }}
             {...rest}
         >
@@ -80,13 +75,13 @@ const ArchivePost = ({ post, featured_image, showFallbackImage, rest }) => {
                         >
                             <Heading
                                 as="h3"
-                                fontSize={["sm", "sm", "sm", 'md']}
+                                fontSize={["sm", "sm", "sm", "md"]}
                                 fontWeight="semibold"
                             >
                                 {post.title}
                             </Heading>
                         </LinkOverlay>
-                        <Text fontSize={"xs"} noOfLines={3}>
+                        <Text fontSize={"xs"} mt={2} noOfLines={3}>
                             {post.excerpt}
                         </Text>
                     </Box>

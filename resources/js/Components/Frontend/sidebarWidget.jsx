@@ -1,9 +1,21 @@
-import { Box, Flex, Divider, Heading, Skeleton, Stack } from "@chakra-ui/react";
+import {
+    Box,
+    Flex,
+    Divider,
+    Heading,
+    Skeleton,
+    Stack,
+    List,
+    ListItem,
+    useColorModeValue,
+    Text,
+} from "@chakra-ui/react";
 import React from "react";
-import { formatDate } from "@/Utils/helpers";
-import { GlassBox } from "@/Components/Frontend/index";
+import { formatDate, slugify } from "@/Utils/helpers";
+import { ExploreButton, GlassBox } from "@/Components/Frontend/index";
 import { Link } from "@inertiajs/react";
 import ChakraLink from "./styles/inertia-chakra-link";
+import SimpleList from "./SimpleList";
 
 const ListHeading = ({ title, link }) => {
     return (
@@ -45,13 +57,15 @@ const SidebarWidget = ({ array, title, link, ...rest }) => {
     return (
         <GlassBox
             className="sidebar_widget"
-            rounded="xl"
             height="max-content"
+            shadow="none"
+            border="none"
+            position="relative"
             {...rest}
         >
-            <ListHeading title={title} link={link} />
+            {/* <ListHeading title={title} link={link} /> */}
 
-            <Box py="4" px="8">
+            <SimpleList heading={title} py="4" px="8" spacing={4}>
                 {array.length <= 0 && (
                     <Box display={"flex"} flexDir={"column"} gap={2}>
                         <Skeleton w="full" height="30px" />
@@ -63,46 +77,43 @@ const SidebarWidget = ({ array, title, link, ...rest }) => {
                 )}
                 {array.length > 0 &&
                     array.map((post, index) => {
+                        console.log(post);
                         return (
-                            <>
-                                <Stack spacing={1} py="2" key={post.id}>
-                                    <Heading
-                                        as="h4"
-                                        className="title"
-                                        fontSize={"sm"}
-                                        fontWeight="semibold"
+                            <ListItem key={post.id} mb="1rem">
+                                <Box>
+                                    <ChakraLink
+                                        textDecor="underline"
+                                        textUnderlineOffset="3px"
+                                        href={`${link}/${post.slug}`}
                                     >
-                                        <ChakraLink
-                                            as={Link}
-                                            className="primary-link"
-                                            href={`${link}/${post.slug}`}
+                                        <Text
+                                            fontSize={"0.875rem"}
+                                            lineHeight={"short"}
                                         >
                                             {post.title}
-                                        </ChakraLink>
-                                    </Heading>
-                                    <Box
-                                        as="time"
-                                        fontSize={"xs"}
-                                        dateTime={new Date(
-                                            post.publishDate
-                                        ).toLocaleDateString()}
-                                        dangerouslySetInnerHTML={{
-                                            __html: formatDate(post.created_at),
-                                        }}
-                                    />
-                                </Stack>
-                                <Divider
-                                    my="10px"
-                                    display={
-                                        index === array.length - 1
-                                            ? "none"
-                                            : "block"
-                                    }
-                                />
-                            </>
+                                        </Text>
+                                    </ChakraLink>
+                                    <Text
+                                        color={useColorModeValue(
+                                            "gray.600",
+                                            "gray.300"
+                                        )}
+                                        fontSize={".75rem"}
+                                        mt={2}
+                                    >
+                                        {formatDate(post.published_at)}
+                                    </Text>
+                                </Box>
+                            </ListItem>
                         );
                     })}
-            </Box>
+                <ExploreButton
+                    size={["xs", "sm"]}
+                    text={`More ${title}`}
+                    variant="link"
+                    link={link}
+                />
+            </SimpleList>
         </GlassBox>
     );
 };

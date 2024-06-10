@@ -1,6 +1,5 @@
-import { VStack, Grid, GridItem } from "@chakra-ui/react";
+import { VStack, Grid, GridItem, Box } from "@chakra-ui/react";
 import React from "react";
-import Section from "@/Components/Frontend/styles/section";
 import SidebarWidget from "@/Components/Frontend/sidebarWidget";
 import MainLayout from "./Layout/MainLayout";
 import DefaultArchive from "./Archives/DefaultArchive";
@@ -11,7 +10,6 @@ import Pagination from "@/Components/Frontend/Pagination";
 import BlogArchive from "./Archives/BlogArchive";
 import WebsiteHead from "@/Components/Frontend/Head";
 import ResearchArchive from "./Archives/ResearchArchive";
-import TeamsArchive from "./Archives/TeamsArchive";
 import CovidArchive from "./Archives/CovidArchive";
 import { PageLayout } from "./Layout/PageLayout";
 
@@ -53,30 +51,23 @@ export default function Category({
                 title={category.name}
                 showBackgroundPattern={false}
             >
-                <Section
-                    pb="80px"
+                <Grid
                     py={{ base: "24px", lg: "80px" }}
-                    px={{ base: "32px", lg: "80px" }}
-                    size="full"
+                    px={{ base: "32px", lg: "40px" }}
                     mx="auto"
                     pt="50px"
+                    templateColumns={{
+                        base: "1fr",
+                        md: "1fr",
+                        lg: "1fr 1fr",
+                        xl: "minmax(var(--chakra-sizes-xl), 1fr) minmax(var(--chakra-sizes-sm), var(--chakra-sizes-md))",
+                    }}
+                    gap={20}
+                    rowGap={10}
+                    pos={"relative"}
                 >
-                    <Grid
-                        templateColumns={{
-                            base: "1fr",
-                            md: "1fr",
-                            lg: "1fr 1fr",
-                            xl: "var(--chakra-sizes-lg) minmax(var(--chakra-sizes-sm), var(--chakra-sizes-md))",
-                        }}
-                        gap={10}
-                        pos={"relative"}
-                        placeContent={"center"}
-                    >
-                        <GridItem
-                            as={VStack}
-                            spacing={12}
-                            colSpan={{ base: 1, md: 2, lg: 1 }}
-                        >
+                    <GridItem as="section" colSpan={1}>
+                        <VStack spacing={12}>
                             {isDefault && (
                                 <DefaultArchive
                                     posts={posts.data}
@@ -103,19 +94,15 @@ export default function Category({
                                     width="full"
                                 />
                             )}
-                        </GridItem>
-                        <GridItem
-                            colSpan={1}
-                            as={VStack}
-                            spacing={12}
-                            className="sidebar"
-                        >
+                        </VStack>
+                    </GridItem>
+                    <GridItem colSpan={1} as="aside" className="sidebar">
+                        <VStack spacing={12}>
                             {!isMedia && sawteeInMedia && (
                                 <SidebarWidget
                                     array={sawteeInMedia}
                                     title={"Sawtee in Media"}
                                     link={"/category/sawtee-in-media"}
-                                    maxW={["md", "lg", "xl"]}
                                 />
                             )}
                             {isInFocus && events && (
@@ -124,7 +111,6 @@ export default function Category({
                                     title={"Featured Events"}
                                     link={"/category/featured-events"}
                                     mt={12}
-                                    maxW={["md", "lg", "xl"]}
                                 />
                             )}
                             {isMedia && events && (
@@ -132,31 +118,24 @@ export default function Category({
                                     array={events}
                                     title={"Featured Events"}
                                     link={"/category/featured-events"}
-                                    maxW={["md", "lg", "xl"]}
                                 />
                             )}
                             {!isInFocus && infocus && (
                                 <SidebarWidget
                                     array={infocus}
-                                    link={"/category/infocus"}
-                                    title={"InFocus"}
-                                    maxW={["md", "lg", "xl"]}
+                                    link={"/category/in-focus"}
+                                    title={"In Focus"}
                                 />
                             )}
 
                             {showSubscriptionBox && (
-                                <GlassBox
-                                    py="4"
-                                    px="4"
-                                    rounded="xl"
-                                    height="max-content"
-                                >
+                                <GlassBox py="4" px="4" rounded="xl">
                                     <SubscriptionCard />
                                 </GlassBox>
                             )}
-                        </GridItem>
-                    </Grid>
-                </Section>
+                        </VStack>
+                    </GridItem>
+                </Grid>
             </PageLayout>
         </MainLayout>
     );

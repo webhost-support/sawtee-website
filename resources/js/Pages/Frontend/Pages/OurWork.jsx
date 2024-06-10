@@ -35,7 +35,7 @@ export default function OurWork({ themes, sections }) {
             className="intro"
             pos="relative"
             py="80px"
-            maxW="6xl"
+            maxW="5xl"
             px={{ base: 5, md: 10 }}
             centerContent
         >
@@ -78,7 +78,6 @@ export default function OurWork({ themes, sections }) {
                 placeItems="center"
                 spacing={10}
                 mb={4}
-                px={8}
             >
                 {themes.map((theme, index) => {
                     return (

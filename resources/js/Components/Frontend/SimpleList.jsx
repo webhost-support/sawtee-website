@@ -1,12 +1,5 @@
-import {
-    Box,
-    Divider,
-    Heading,
-    List,
-    useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, Heading, List } from "@chakra-ui/react";
 import React from "react";
-import { GlassBox } from ".";
 
 export default function SimpleList({ heading, children, ...rest }) {
     return (

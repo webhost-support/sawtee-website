@@ -29,7 +29,7 @@ export default function About({ sections }) {
             px={{ base: "32px", md: "0" }}
             mx="auto"
             py={"80px"}
-            maxW={"3xl"}
+            maxW={"2xl"}
         >
             {sections !== null &&
                 sections.map((section) => {
@@ -61,16 +61,20 @@ export const Members = ({ memberInstitutions }) => {
                 {memberInstitutions?.map(({ country, institutes }, id) => {
                     return (
                         <AccordionItem key={id} border="none">
-                            <AccordionButton size="md" py="3">
-                                <Heading
-                                    as="h5"
-                                    flex="1"
-                                    fontFamily={"heading"}
-                                    textAlign="left"
-                                    style={{ marginBlock: "0" }}
-                                >
-                                    {country}
-                                </Heading>
+                            <AccordionButton
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    marginBlock: "0",
+                                }}
+                                _expanded={{
+                                    bg: useColorModeValue(
+                                        "blackAlpha.200",
+                                        "blackAlpha.400"
+                                    ),
+                                }}
+                            >
+                                {country}
                                 <AccordionIcon />
                             </AccordionButton>
                             <AccordionPanel px={["5", "10"]}>
@@ -116,21 +120,17 @@ export const PageSection = ({ section, sections }) => {
     const isAccordian = section.type === "accordian";
     const isDefault = section.type === "default";
     const tabColor = useColorModeValue("blackAlpha", "whiteAlpha");
-    const accordianExpandedBackground = useColorModeValue(
-        "blackAlpha.200",
-        "blackAlpha.400"
-    );
+
     const sectionID = slugify(title);
 
     const childSections = sections.filter(
         (sec) => sec.parent_id === section.id
     );
-    // Get the html2react component.
     return (
         <Box id={sectionID}>
             <Heading
-                as="h3"
-                fontSize={["lg", "xl", "2xl", "4xl"]}
+                as="h2"
+                fontSize={["lg", "xl", "2xl"]}
                 py={"4"}
                 mb="4"
                 fontFamily="heading"
@@ -144,10 +144,8 @@ export const PageSection = ({ section, sections }) => {
                         <TabList>
                             {childSections.map(({ title }) => (
                                 <Tab
-                                    as="h5"
+                                    as="h3"
                                     key={title}
-                                    fontWeight={"semibold"}
-                                    fontFamily={"heading"}
                                     style={{ marginBlock: "0" }}
                                     _selected={{
                                         borderColor: useColorModeValue(
@@ -197,20 +195,20 @@ export const PageSection = ({ section, sections }) => {
                             <AccordionItem key={title} border="none">
                                 <AccordionButton
                                     size="md"
-                                    py="3"
                                     _expanded={{
-                                        bg: accordianExpandedBackground,
+                                        bg: useColorModeValue(
+                                            "blackAlpha.200",
+                                            "blackAlpha.400"
+                                        ),
                                     }}
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        marginBlock: "0",
+                                    }}
+                                    w="full"
                                 >
-                                    <Heading
-                                        as="h5"
-                                        flex="1"
-                                        fontFamily={"heading"}
-                                        textAlign="left"
-                                        style={{ marginBlock: "0" }}
-                                    >
-                                        {title}
-                                    </Heading>
+                                    {title}
                                     <AccordionIcon />
                                 </AccordionButton>
                                 <AccordionPanel px={["5", "10"]}>

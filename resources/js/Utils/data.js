@@ -9,7 +9,6 @@ import {
     FiGlobe,
     FiGrid,
     FiUsers,
-    FiFeather,
 } from "react-icons/fi";
 import { RiPagesLine } from "react-icons/ri";
 import { TbSlideshow } from "react-icons/tb";
@@ -20,14 +19,10 @@ export const feature = {
     link: "/reform-monitoring-platform",
 };
 
-// const font_heading =
-//     "'Roboto', 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif";
-// const font_body =
-//     "'Inter',  'Segoe UI', system-ui, Tahoma, Geneva, Verdana, sans-serif";
 const font_heading =
-    "Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif";
+    "Inter, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans";
 
-const font_body = "'Segoe UI', system-ui, Tahoma, Geneva, Verdana, sans-serif";
+const font_body = "'Segoe UI', system-ui, Tahoma, Geneva, Verdana, serif";
 
 const font_mono = "'IBM Plex Mono', Menlo, Consolas, monospace";
 
