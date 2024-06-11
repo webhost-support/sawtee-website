@@ -61,7 +61,7 @@ class FrontendController extends Controller
 
         $subcategorySlugs = ["trade-insight", "books", "issue-paper", "policy-brief"];
         $publications = [];
-
+        $featured_publications = [];
         // Retrieve the category named "publication" along with its subcategories
         $category = Category::where('slug', 'publications')
             ->with(['children' => function ($query) use ($subcategorySlugs) {
@@ -73,15 +73,16 @@ class FrontendController extends Controller
         // Loop through each subcategory and retrieve 2 posts per subcategory
         foreach ($category->children as $subcategory) {
             // Retrieve 2 posts per subcategory
+            $featured_publications_array = Publication::with(['file', 'category'])->where('category_id', $subcategory->id)->orderBy('id', "DESC")->limit(1)->get();
             $subcategoryPosts = Publication::with([ 'file', 'category'])->where('category_id', $subcategory->id)
                 ->orderBy('id', "DESC")
-                ->limit(2)
+                ->skip(1)
+                ->limit(3)
                 ->get();
-
+            $featured_publications = array_merge($featured_publications, $featured_publications_array->toArray());
             // Merge posts into the main array
             $publications = array_merge($publications, $subcategoryPosts->toArray());
         }
-        $featuredPubs = Publication::with([ 'file', 'category', 'media'])->where('category_id', $category->id);
         $infocusId = Category::where('slug', 'in-focus')->first()->id;
         $sawteeInMediaId = Category::where('slug', 'sawtee-in-media')->first()->id;
         $eventsId = Category::where('slug', 'featured-events')->first()->id;
@@ -106,6 +107,7 @@ class FrontendController extends Controller
             'infocus' => $infocus->load(['category']),
             'sawteeInMedia' => $sawteeInMedia->load('category'),
             'events' => $events->load(['category', 'media', 'tags']),
+            'featuredPublications' => $featured_publications,
             'publications' => $publications,
             'newsletters' => $newsletters->load(['category', 'media']),
             'webinars' => $webinars->load(['media']),
