@@ -16,7 +16,6 @@ export default function Feature({ feature, ...rest }) {
         <Stack
             align={"center"}
             spacing={{ base: 8, md: 10 }}
-            px={{ base: 6, md: 10 }}
             direction={{ base: "column", lg: "row" }}
             {...rest}
         >

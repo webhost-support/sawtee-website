@@ -93,8 +93,6 @@ export const AboutSection = ({ data }) => {
             spacing={16}
             alignItems="center"
             maxW={"5xl"}
-            py={{ base: 10, lg: 16 }}
-            px={{ base: 6, lg: 10 }}
             mx="auto"
         >
             {data.map((item) => {
@@ -166,48 +164,6 @@ export const SawteeInMediaSection = ({ articles, link }) => {
                 />
             </InertiaChakraLink>
         </MultiPostsCarousel>
-    );
-};
-
-export const BlogSection = ({ events }) => {
-    return (
-        <Grid
-            className="band"
-            gridTemplateColumns={{
-                base: "1fr",
-                md: "1fr 1fr",
-                lg: "auto repeat(2, 260px);",
-            }}
-            gridTemplateRows={"auto"}
-            gap={8}
-            mb="10"
-        >
-            {events &&
-                events.length > 0 &&
-                events.map((article, i) => {
-                    if (i === 0) {
-                        return (
-                            <GridItem
-                                key={article.id}
-                                colSpan={{ base: 1, md: 2, xl: 1 }}
-                                rowSpan={2}
-                            >
-                                <PostCard post={article} headingSize={"3xl"} />
-                            </GridItem>
-                        );
-                    } else {
-                        return (
-                            <GridItem key={article.id} colSpan={1} rowSpan="1">
-                                <PostCard
-                                    post={article}
-                                    showDescription={false}
-                                    aspect={"3/2"}
-                                />
-                            </GridItem>
-                        );
-                    }
-                })}
-        </Grid>
     );
 };
 
@@ -369,51 +325,49 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
 
 export const InfocusSection = ({ data }) => {
     return (
-        <Box maxW="5xl" mx="auto">
-            <SimpleList heading={"In focus"} borderLeft={"none"}>
-                {data.map((item) => {
-                    return (
-                        <ListItem key={item.id} mb="1rem">
-                            <LinkBox>
-                                <Box>
-                                    <InertiaChakraLinkOverlay
-                                        as={Link}
-                                        target="_blank"
-                                        textDecor="underline"
-                                        textUnderlineOffset="3px"
-                                        href={`/category/in-focus/${item.slug}`}
-                                    >
-                                        <Text
-                                            fontSize={"0.875rem"}
-                                            lineHeight={"short"}
-                                        >
-                                            {item.title}
-                                        </Text>
-                                    </InertiaChakraLinkOverlay>
+        <SimpleList heading={null} borderLeft={"none"}>
+            {data.map((item) => {
+                return (
+                    <ListItem key={item.id} mb="1rem">
+                        <LinkBox>
+                            <Box>
+                                <InertiaChakraLinkOverlay
+                                    as={Link}
+                                    target="_blank"
+                                    textDecor="underline"
+                                    textUnderlineOffset="3px"
+                                    href={`/category/in-focus/${item.slug}`}
+                                >
                                     <Text
-                                        color={useColorModeValue(
-                                            "gray.600",
-                                            "gray.300"
-                                        )}
-                                        fontSize={".75rem"}
-                                        mt={2}
+                                        // fontSize={"0.875rem"}
+                                        lineHeight={"short"}
                                     >
-                                        {item.excerpt}
+                                        {item.title}
                                     </Text>
-                                </Box>
-                            </LinkBox>
-                        </ListItem>
-                    );
-                })}
-            </SimpleList>
-        </Box>
+                                </InertiaChakraLinkOverlay>
+                                <Text
+                                    color={useColorModeValue(
+                                        "gray.600",
+                                        "gray.300"
+                                    )}
+                                    fontSize={".875rem"}
+                                    mt={2}
+                                >
+                                    {item.excerpt}
+                                </Text>
+                            </Box>
+                        </LinkBox>
+                    </ListItem>
+                );
+            })}
+        </SimpleList>
     );
 };
 
-export const PublicationsSection = ({ publications }) => {
+export const FeaturedPublications = ({ publications }) => {
     return (
-        <Section>
-            <SimpleList heading={"publications"}>
+        <GlassBox py={4}>
+            <SimpleList border="none" heading={"featured publications"}>
                 {publications.map((publication) => {
                     const media = publication.media.length
                         ? publication.media.filter(
@@ -424,15 +378,19 @@ export const PublicationsSection = ({ publications }) => {
                         : "/assets/SM-placeholder-150x150.png";
                     return (
                         <ListItem key={publication.id} mb="1rem">
-                            <Badge size={"sm"} colorScheme="blue">
-                                {publication.category?.name}
-                            </Badge>
                             <LinkBox
                                 as={HStack}
                                 justify="space-between"
                                 gap={6}
                             >
                                 <Box>
+                                    <Badge
+                                        size={"sm"}
+                                        colorScheme="blue"
+                                        mb={2}
+                                    >
+                                        {publication.category?.name}
+                                    </Badge>
                                     <InertiaChakraLinkOverlay
                                         // as={Link}
                                         target="_blank"
@@ -457,7 +415,7 @@ export const PublicationsSection = ({ publications }) => {
                                             "gray.300"
                                         )}
                                         fontSize={".75rem"}
-                                        mt={2}
+                                        mt={1}
                                     >
                                         {publication.subtitle}
                                     </Text>
@@ -482,66 +440,106 @@ export const PublicationsSection = ({ publications }) => {
                     );
                 })}
             </SimpleList>
-        </Section>
+        </GlassBox>
+    );
+};
+
+export const PublicationsSection = ({ publications, link }) => {
+    console.log(publications);
+    return (
+        // <Section>
+        //     <SimpleList heading={"publications"}>
+        //         {publications.map((publication) => {
+        //             const media = publication.media.length
+        //                 ? publication.media.filter(
+        //                       (media) =>
+        //                           media.collection_name ===
+        //                           "publication_featured_image"
+        //                   )[0].original_url
+        //                 : "/assets/SM-placeholder-150x150.png";
+        //             return (
+        //                 <ListItem key={publication.id} mb="1rem">
+        //                     <Badge size={"sm"} colorScheme="blue">
+        //                         {publication.category?.name}
+        //                     </Badge>
+        //                     <LinkBox
+        //                         as={HStack}
+        //                         justify="space-between"
+        //                         gap={6}
+        //                     >
+        //                         <Box>
+        //                             <InertiaChakraLinkOverlay
+        //                                 // as={Link}
+        //                                 target="_blank"
+        //                                 textDecor="underline"
+        //                                 textUnderlineOffset="3px"
+        //                                 href={
+        //                                     publication.file
+        //                                         ? `/publications/${publication.file.name}`
+        //                                         : "#"
+        //                                 }
+        //                             >
+        //                                 <Text
+        //                                     fontSize={"0.875rem"}
+        //                                     lineHeight={"short"}
+        //                                 >
+        //                                     {publication.title}
+        //                                 </Text>
+        //                             </InertiaChakraLinkOverlay>
+        //                             <Text
+        //                                 color={useColorModeValue(
+        //                                     "gray.600",
+        //                                     "gray.300"
+        //                                 )}
+        //                                 fontSize={".75rem"}
+        //                                 mt={2}
+        //                             >
+        //                                 {publication.subtitle}
+        //                             </Text>
+        //                         </Box>
+
+        //                         {media && (
+        //                             <Box>
+        //                                 <Image
+        //                                     src={media}
+        //                                     alt={publication.title}
+        //                                     w="60px"
+        //                                     border="1px solid"
+        //                                     borderColor={"gray.400"}
+        //                                     p={1}
+        //                                     rounded="sm"
+        //                                     aspectRatio={3 / 4}
+        //                                 />
+        //                             </Box>
+        //                         )}
+        //                     </LinkBox>
+        //                 </ListItem>
+        //             );
+        //         })}
+        //     </SimpleList>
+        // </Section>
+        <MultiPostsCarousel
+            posts={publications}
+            spacing={30}
+            pagination={false}
+            showCategoryTag={true}
+            scrollbar={true}
+            my={10}
+        >
+            <InertiaChakraLink as={Link} href={link}>
+                <ExploreButton
+                    size={["xs", "sm"]}
+                    text="More on sawtee in media "
+                    variant="link"
+                    px={10}
+                />
+            </InertiaChakraLink>
+        </MultiPostsCarousel>
     );
 };
 
 export const VideosSection = ({ posts }) => {
     return <VideoCarousel posts={posts} navigation={true} />;
-};
-
-export const publicationsection = ({ newsletters }) => {
-    const isMobile = useBreakpointValue({ base: true, md: false });
-    const isDesktop = useBreakpointValue({ base: false, md: true });
-
-    return (
-        <Container maxW="full" centerContent>
-            <Flex justify={"center"} w="full" mb={3}>
-                <InertiaChakraLink
-                    href="/category/newsletters"
-                    textAlign={"center"}
-                    my={6}
-                >
-                    <ExploreButton
-                        size="md"
-                        text="Newsletters"
-                        variant="outline"
-                        px={10}
-                    />
-                </InertiaChakraLink>
-            </Flex>
-            {newsletters.map((newsletter, index) => (
-                <Flex key={newsletter.id} w="full">
-                    {/* Desktop view(left card) */}
-                    {isDesktop && index % 2 === 0 && (
-                        <>
-                            <EmptyCard />
-                            <LineWithDot isMobile={isMobile} />
-                            <NewsletterCard {...newsletter} index={index} />
-                        </>
-                    )}
-
-                    {/* Mobile view */}
-                    {isMobile && (
-                        <>
-                            <LineWithDot isMobile={isMobile} />
-                            <NewsletterCard {...newsletter} index={index} />
-                        </>
-                    )}
-
-                    {/* Desktop view(right NewsletterCard) */}
-                    {isDesktop && index % 2 !== 0 && (
-                        <>
-                            <NewsletterCard {...newsletter} index={index} />
-
-                            <LineWithDot isMobile={isMobile} />
-                            <EmptyCard />
-                        </>
-                    )}
-                </Flex>
-            ))}
-        </Container>
-    );
 };
 
 // A debounced input react component

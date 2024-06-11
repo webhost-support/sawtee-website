@@ -95,19 +95,24 @@ const MultiPostsCarousel = ({
                 </HStack>
             </div>
             {posts.map((article) => {
+                const media = publication.media.length
+                    ? publication.media.filter(
+                          (media) =>
+                              media.collection_name ===
+                              "publication_featured_image"
+                      )[0].original_url
+                    : "/assets/SM-placeholder-150x150.png";
                 return (
                     <swiper-slide
                         key={article.id}
                         class="swiper-slide post-slide"
                     >
                         <Flex {...rest} justify="center">
-                            <PostPreviewCard
-                                post={article}
-                                showImage={false}
-                                showCategoryTag={showCategoryTag}
-                                minH={40}
-                                pt={2}
-                                maxW="sm"
+                            <Image
+                                src={media}
+                                alt={article.title}
+                                rounded="sm"
+                                aspectRatio={3 / 4}
                             />
                         </Flex>
                     </swiper-slide>

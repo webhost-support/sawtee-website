@@ -6,6 +6,7 @@ import { Content } from "@/Components/Frontend/index";
 import SocialShare from "@/Components/Frontend/SocialShare";
 import readingDuration from "reading-duration";
 import PostMeta from "@/Components/Frontend/post/post-meta";
+import Section from "@/Components/Frontend/styles/section";
 
 const PostLayout = ({
     children,
@@ -42,7 +43,7 @@ const PostLayout = ({
 
             {/* <PostProgressBar value={scroll} /> */}
 
-            <Box maxW={{ base: "full", md: "3xl", xl: "5xl" }} mx="auto" px={4}>
+            <Box maxW={{ base: "full", md: "3xl", xl: "4xl" }} mx="auto" px={4}>
                 {!isProgramPost && featured_image && (
                     <FeaturedMedia
                         src={featured_image}
@@ -50,27 +51,32 @@ const PostLayout = ({
                         srcSet={srcSet}
                     />
                 )}
-
-                {/* Look at the settings to see if we should include the featured image */}
-                {isNewsletter && (
-                    <Box>
-                        {children}
-                        <SocialShare url={shareUrl} />
-                    </Box>
-                )}
-
-                {!isNewsletter && (
-                    <Content pb="50px" className="post-content">
-                        <PostMeta
-                            author={post.author}
-                            date={post.published_at}
-                            readingTime={readingTime}
-                        />
-                        {children}
-                        <SocialShare url={shareUrl} />
-                    </Content>
-                )}
             </Box>
+
+            {/* Look at the settings to see if we should include the featured image */}
+            {isNewsletter && (
+                <Box>
+                    {children}
+                    <SocialShare url={shareUrl} />
+                </Box>
+            )}
+
+            {!isNewsletter && (
+                <Content
+                    as={Section}
+                    size="md"
+                    pb="50px"
+                    className="post-content"
+                >
+                    <PostMeta
+                        author={post.author}
+                        date={post.published_at}
+                        readingTime={readingTime}
+                    />
+                    {children}
+                    <SocialShare url={shareUrl} />
+                </Content>
+            )}
         </LightPatternBox>
     );
 };

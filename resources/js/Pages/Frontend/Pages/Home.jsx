@@ -11,11 +11,13 @@ import {
     SawteeInMediaSection,
     VideosSection,
     InfocusSection,
+    FeaturedPublications,
 } from "@/Components/Frontend";
 import { Box, Grid, GridItem, Text, useColorModeValue } from "@chakra-ui/react";
 import CardsCarousel from "@/Components/Frontend/CardsCarousel";
 import { splitPosts } from "@/Utils/helpers";
 import { Newsletter } from "@/Components/Frontend/newsletter";
+import SimpleList from "@/Components/Frontend/SimpleList";
 
 const Home = ({
     infocus,
@@ -63,7 +65,7 @@ const Home = ({
                         lg: "repeat(6, 1fr)",
                     }}
                     id="carousel-section"
-                    gap={4}
+                    gap={8}
                     rowGap={20}
                 >
                     <GridItem colSpan={{ base: 1, sm: 5, md: 4 }}>
@@ -85,7 +87,7 @@ const Home = ({
                         alignSelf={"center"}
                         maxH={{ base: "auto", md: "350px" }}
                     >
-                        <Text
+                        {/* <Text
                             as="h3"
                             fontFamily="heading"
                             color={useColorModeValue(
@@ -100,20 +102,15 @@ const Home = ({
                             {"Featured Publications"}
                         </Text>
 
-                        <CardsCarousel slides={featuredPublication} />
+                        <CardsCarousel slides={featuredPublication} /> */}
+
+                        <FeaturedPublications publications={featuredPublication} />
                     </GridItem>
                 </Grid>
             </Section>
 
             {feature && (
-                <Section
-                    className="reform-section"
-                    // bg={useColorModeValue(
-                    //     "blackAlpha.50",
-                    //     "var(--color-darker)"
-                    // )}
-                    py={{ base: 12, md: 20 }}
-                >
+                <Section className="reform-section">
                     <Box maxW="5xl" mx="auto">
                         <ReformMonitorSection feature={feature} />
                     </Box>
@@ -121,31 +118,26 @@ const Home = ({
             )}
 
             {infocus && (
-                <Section className="infocus-section" py={{ base: 12, md: 20 }}>
-                    <InfocusSection data={infocus} />
+                <Section className="infocus-section">
+                    <Box maxW="5xl" mx="auto">
+                        <Title title={"In Focus"} />
+                        <InfocusSection data={infocus} />
+                    </Box>
                 </Section>
             )}
-            <Section
-                className="about-section"
-                py={{ base: 12, md: 20 }}
-                // bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
-            >
+            <Section className="about-section">
                 <AboutSection data={AboutSectionData} />
             </Section>
 
             {/* Add publication section here  */}
-            <Section py={{ base: 12, md: 20 }} className="publications-section">
+            <Section className="publications-section">
                 <Box maxW={"5xl"} mx="auto">
                     <Title title={"Latest in Pubications"} />
                     <PublicationsSection publications={publications} />
                 </Box>
             </Section>
 
-            <Section
-                // bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
-                py={{ base: 12, md: 20 }}
-                className="outreach-section"
-            >
+            <Section className="outreach-section">
                 <Box maxW={"5xl"} mx="auto">
                     <Title title={"Outreach"} />
                     <OutreachSection
@@ -173,7 +165,6 @@ const Home = ({
             <Section
                 className="section videos-section"
                 // bg={useColorModeValue("blackAlpha.50", "var(--color-darker)")}
-                py={{ base: 12, md: 20 }}
             >
                 <Box maxW="5xl" mx="auto">
                     <Title title={"Webinar Series"} />
@@ -191,13 +182,18 @@ const Home = ({
     );
 };
 
-const Section = ({ children, title = null, ...rest }) => {
+const Section = ({ children, title = null, bgDark, ...rest }) => {
     return (
         <Box
             as="section"
             mx="auto"
-            pb={{ base: 5, md: 10 }}
+            py={{ base: 12, md: 20 }}
             px={{ base: "24px", md: "80px" }}
+            bg={
+                bgDark
+                    ? useColorModeValue("blackAlpha.50", "var(--color-darker)")
+                    : "unset"
+            }
             className="section"
             {...rest}
         >

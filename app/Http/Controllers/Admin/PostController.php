@@ -12,7 +12,8 @@ use App\Models\Tag;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
-
+use Mostafaznv\PdfOptimizer\Laravel\Facade\PdfOptimizer;
+use Mostafaznv\PdfOptimizer\Enums\PdfSettings;
 
 
 class PostController extends Controller
@@ -40,13 +41,13 @@ class PostController extends Controller
         ]);
     }
 
+
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(PostRequest $request)
     {
-
-
         $validated = $request->validated();
         $validated['title'] = Str::of($validated['title'])->squish();
         $validated['meta_title'] = $validated['title'];
@@ -65,22 +66,25 @@ class PostController extends Controller
             $post->addMediaFromRequest('file')->toMediaCollection('post-files');
         }
 
-        if ($request->hasFile('files')) {
             // $post->addMediaFromRequest('files')->toMediaCollection('post-');
+            // optimize uploaded pdf files to reduce size
             if ($request->hasFile('files')) {
                 $files = $request->files;
                 foreach ($files as $key => $value) {
                     if($key === 'files'){
-                        foreach ($value as $file)
-                        {
+                    foreach ($value as $file) {
                             $name = $file->getClientOriginalName();
                             $path = $file->move(public_path('Featured_Events'), $name);
                             $document = new File();
                             $document->path = $path;
                             $document->name = $name;
-                            $post->postContentFiles()->save($document);
-                            // return response()->json(['location' => "/storage/$path", 'text' => $text]);
-                        }
+                        // $optimizedDocument = PdfOptimizer::open($document->path)
+                        // ->settings(PdfSettings::SCREEN)
+                        // ->colorImageResolution(50)
+                        // ->onQueue()
+                        // ->optimize($document);
+                        // dd($optimizedDocument);
+                        $post->postContentFiles()->save($document);
                     }
                 }
             }

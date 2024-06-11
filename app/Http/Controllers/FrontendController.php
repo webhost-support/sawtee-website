@@ -81,7 +81,7 @@ class FrontendController extends Controller
             // Merge posts into the main array
             $publications = array_merge($publications, $subcategoryPosts->toArray());
         }
-
+        $featuredPubs = Publication::with([ 'file', 'category', 'media'])->where('category_id', $category->id);
         $infocusId = Category::where('slug', 'in-focus')->first()->id;
         $sawteeInMediaId = Category::where('slug', 'sawtee-in-media')->first()->id;
         $eventsId = Category::where('slug', 'featured-events')->first()->id;
