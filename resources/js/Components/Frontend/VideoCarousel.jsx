@@ -96,7 +96,7 @@ const VideoCarousel = ({
 
                                     <Text
                                         fontSize={"sm"}
-                                        fontWeight={"semibold"}
+                                        // fontWeight={"semibold"}
                                     >
                                         {article.title}
                                     </Text>

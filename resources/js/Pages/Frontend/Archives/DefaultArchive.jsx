@@ -76,7 +76,7 @@ const ArchivePost = ({ post, featured_image, showFallbackImage, rest }) => {
                             <Heading
                                 as="h3"
                                 fontSize={["sm", "sm", "sm", "md"]}
-                                fontWeight="semibold"
+                                fontWeight="normal"
                             >
                                 {post.title}
                             </Heading>

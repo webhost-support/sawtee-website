@@ -141,20 +141,7 @@ const Home = ({
                 </Box>
             </Section>
 
-            {/* {sawteeInMedia && (
-                <Section
-                    className="sawtee-in-media-section"
-                    py={{ base: 12, md: 20 }}
-                >
-                    <Box maxW="6xl" mx="auto" px={6}>
-                        <Title title={"Sawtee in Media"} />
-                        <SawteeInMediaSection
-                            articles={sawteeInMedia}
-                            link={"/category/sawtee-in-media"}
-                        />
-                    </Box>
-                </Section>
-            )} */}
+
             {/* <InfoSection /> */}
             <Section
                 className="section videos-section"

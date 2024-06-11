@@ -388,7 +388,7 @@ export const FeaturedPublications = ({ publications }) => {
                                     >
                                         <Badge
                                             size={"sm"}
-                                            colorScheme="primary"
+                                            colorScheme="gray"
                                             mb={2}
                                             rounded="md"
                                             px="2"
@@ -493,7 +493,6 @@ export const PublicationsSection = ({ publications }) => {
                                     mb="2"
                                 />
                                 <LinkOverlay
-                                    as={Link}
                                     fontSize={"xs"}
                                     href={`/publications/${publication.file.name}`}
                                 >

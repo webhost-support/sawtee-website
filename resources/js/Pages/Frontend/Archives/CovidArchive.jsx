@@ -8,6 +8,7 @@ import {
     HStack,
     Divider,
     SimpleGrid,
+    Badge,
 } from "@chakra-ui/react";
 import { DateFormat } from "@/Utils/helpers";
 import { GlassBox } from "@/Components/Frontend/index";
@@ -42,21 +43,15 @@ const CovidArchive = ({ posts }) => {
                     >
                         <HStack w="full" justify="space-between">
                             {post.genre && (
-                                <Box
-                                    bg={useColorModeValue(
-                                        "var(--color-dark-acc)",
-                                        "var(--color-dark)"
-                                    )}
-                                    display={"inline-block"}
+                                <Badge
+                                    colorScheme="gray"
                                     px={2}
                                     py={1}
-                                    color="gray.200"
                                     rounded="md"
+                                    fontSize={"xs"}
                                 >
-                                    <Text fontSize={"xs"} fontWeight="medium">
-                                        {post.genre}
-                                    </Text>
-                                </Box>
+                                    {post.genre}
+                                </Badge>
                             )}
 
                             <Text
@@ -70,7 +65,11 @@ const CovidArchive = ({ posts }) => {
                             />
                         </HStack>
                         <Link href={post.link} className="primary-link">
-                            <Heading as="h3" fontSize={"lg"}>
+                            <Heading
+                                as="h3"
+                                fontSize={"md"}
+                                fontWeight={"normal"}
+                            >
                                 {post.title}
                             </Heading>
                         </Link>
