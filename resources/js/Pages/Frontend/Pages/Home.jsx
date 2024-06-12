@@ -12,6 +12,7 @@ import {
     VideosSection,
     InfocusSection,
     FeaturedPublications,
+    ExploreButton,
 } from "@/Components/Frontend";
 import { Box, Grid, GridItem, Text, useColorModeValue } from "@chakra-ui/react";
 import CardsCarousel from "@/Components/Frontend/CardsCarousel";
@@ -23,6 +24,7 @@ const Home = ({
     infocus,
     slides,
     events,
+    featuredPublications,
     publications,
     sawteeInMedia,
     newsletters,
@@ -50,7 +52,6 @@ const Home = ({
         // },
     ];
 
-    const [featuredPublication, latestPublication] = splitPosts(publications);
     return (
         <MainLayout>
             <WebsiteHead
@@ -85,26 +86,10 @@ const Home = ({
                     <GridItem
                         colSpan={{ base: 1, sm: 1, md: 2 }}
                         alignSelf={"center"}
-                        maxH={{ base: "auto", md: "350px" }}
                     >
-                        {/* <Text
-                            as="h3"
-                            fontFamily="heading"
-                            color={useColorModeValue(
-                                "gray.700",
-                                "whiteAlpha.800"
-                            )}
-                            mb="6"
-                            textAlign="center"
-                            fontWeight="bold"
-                            fontSize={{ base: "lg" }}
-                        >
-                            {"Featured Publications"}
-                        </Text>
-
-                        <CardsCarousel slides={featuredPublication} /> */}
-
-                        <FeaturedPublications publications={featuredPublication} />
+                        <FeaturedPublications
+                            publications={featuredPublications}
+                        />
                     </GridItem>
                 </Grid>
             </Section>
@@ -122,6 +107,15 @@ const Home = ({
                     <Box maxW="5xl" mx="auto">
                         <Title title={"In Focus"} />
                         <InfocusSection data={infocus} />
+
+                        <ExploreButton
+                            size={["xs", "sm"]}
+                            text="More In Focus"
+                            variant="link"
+                            px={10}
+                            mt="4"
+                            link={"/category/in-focus"}
+                        />
                     </Box>
                 </Section>
             )}
@@ -147,20 +141,7 @@ const Home = ({
                 </Box>
             </Section>
 
-            {/* {sawteeInMedia && (
-                <Section
-                    className="sawtee-in-media-section"
-                    py={{ base: 12, md: 20 }}
-                >
-                    <Box maxW="6xl" mx="auto" px={6}>
-                        <Title title={"Sawtee in Media"} />
-                        <SawteeInMediaSection
-                            articles={sawteeInMedia}
-                            link={"/category/sawtee-in-media"}
-                        />
-                    </Box>
-                </Section>
-            )} */}
+
             {/* <InfoSection /> */}
             <Section
                 className="section videos-section"

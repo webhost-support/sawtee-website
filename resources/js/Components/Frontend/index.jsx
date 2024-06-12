@@ -18,13 +18,13 @@ import {
     useColorModeValue,
     Grid,
     GridItem,
-    Container,
     LinkBox,
     SimpleGrid,
     IconButton,
     LinkOverlay,
     ListItem,
     Badge,
+    Skeleton,
 } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import { Link } from "@inertiajs/react";
@@ -33,7 +33,6 @@ import { HiArrowRight, HiChevronDown, HiChevronRight } from "react-icons/hi";
 import FullWidthCarousel from "@/Components/Frontend/FullWidthCarousel";
 import { formatDate } from "@/Utils/helpers";
 import MultiPostsCarousel from "@/Components/Frontend/MultiPostsSlider";
-import PostCard from "@/Components/Frontend/PostCard";
 import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
 import InertiaChakraLinkOverlay from "@/Components/Frontend/styles/inertia-chakra-link-overlay";
 import Feature from "@/Components/Frontend/feature";
@@ -351,7 +350,7 @@ export const InfocusSection = ({ data }) => {
                                         "gray.300"
                                     )}
                                     fontSize={".875rem"}
-                                    mt={2}
+                                    mt={4}
                                 >
                                     {item.excerpt}
                                 </Text>
@@ -384,13 +383,21 @@ export const FeaturedPublications = ({ publications }) => {
                                 gap={6}
                             >
                                 <Box>
-                                    <Badge
-                                        size={"sm"}
-                                        colorScheme="blue"
-                                        mb={2}
+                                    <Link
+                                        href={`category/publications/${publication.category?.slug}`}
                                     >
-                                        {publication.category?.name}
-                                    </Badge>
+                                        <Badge
+                                            size={"sm"}
+                                            colorScheme="gray"
+                                            mb={2}
+                                            rounded="md"
+                                            px="2"
+                                            fontSize="0.75rem"
+                                            fontWeight="normal"
+                                        >
+                                            {publication.category?.name}
+                                        </Badge>
+                                    </Link>
                                     <InertiaChakraLinkOverlay
                                         // as={Link}
                                         target="_blank"
@@ -444,96 +451,73 @@ export const FeaturedPublications = ({ publications }) => {
     );
 };
 
-export const PublicationsSection = ({ publications, link }) => {
-    console.log(publications);
+export const PublicationsSection = ({ publications }) => {
     return (
-        // <Section>
-        //     <SimpleList heading={"publications"}>
-        //         {publications.map((publication) => {
-        //             const media = publication.media.length
-        //                 ? publication.media.filter(
-        //                       (media) =>
-        //                           media.collection_name ===
-        //                           "publication_featured_image"
-        //                   )[0].original_url
-        //                 : "/assets/SM-placeholder-150x150.png";
-        //             return (
-        //                 <ListItem key={publication.id} mb="1rem">
-        //                     <Badge size={"sm"} colorScheme="blue">
-        //                         {publication.category?.name}
-        //                     </Badge>
-        //                     <LinkBox
-        //                         as={HStack}
-        //                         justify="space-between"
-        //                         gap={6}
-        //                     >
-        //                         <Box>
-        //                             <InertiaChakraLinkOverlay
-        //                                 // as={Link}
-        //                                 target="_blank"
-        //                                 textDecor="underline"
-        //                                 textUnderlineOffset="3px"
-        //                                 href={
-        //                                     publication.file
-        //                                         ? `/publications/${publication.file.name}`
-        //                                         : "#"
-        //                                 }
-        //                             >
-        //                                 <Text
-        //                                     fontSize={"0.875rem"}
-        //                                     lineHeight={"short"}
-        //                                 >
-        //                                     {publication.title}
-        //                                 </Text>
-        //                             </InertiaChakraLinkOverlay>
-        //                             <Text
-        //                                 color={useColorModeValue(
-        //                                     "gray.600",
-        //                                     "gray.300"
-        //                                 )}
-        //                                 fontSize={".75rem"}
-        //                                 mt={2}
-        //                             >
-        //                                 {publication.subtitle}
-        //                             </Text>
-        //                         </Box>
-
-        //                         {media && (
-        //                             <Box>
-        //                                 <Image
-        //                                     src={media}
-        //                                     alt={publication.title}
-        //                                     w="60px"
-        //                                     border="1px solid"
-        //                                     borderColor={"gray.400"}
-        //                                     p={1}
-        //                                     rounded="sm"
-        //                                     aspectRatio={3 / 4}
-        //                                 />
-        //                             </Box>
-        //                         )}
-        //                     </LinkBox>
-        //                 </ListItem>
-        //             );
-        //         })}
-        //     </SimpleList>
-        // </Section>
-        <MultiPostsCarousel
-            posts={publications}
-            spacing={30}
-            pagination={false}
-            showCategoryTag={true}
-            scrollbar={true}
-            my={10}
-        >
-            <InertiaChakraLink as={Link} href={link}>
+        <MultiPostsCarousel spacing={30} pagination={false} scrollbar={false}>
+            <div slot="container-end">
                 <ExploreButton
                     size={["xs", "sm"]}
-                    text="More on sawtee in media "
+                    text="More in Publications"
                     variant="link"
                     px={10}
+                    link={"/category/publications"}
                 />
-            </InertiaChakraLink>
+            </div>
+
+            {publications.map((publication) => {
+                console.log(publication);
+                const media = publication.media.length
+                    ? publication.media.filter(
+                          (media) =>
+                              media.collection_name ===
+                              "publication_featured_image"
+                      )[0].original_url
+                    : "/assets/SM-placeholder-150x150.png";
+                return (
+                    <swiper-slide
+                        key={publication.id}
+                        class="swiper-slide publication-slide"
+                    >
+                        <Flex my={6} justify="center">
+                            <LinkBox textAlign="center">
+                                <Image
+                                    src={media}
+                                    fallbackSrc="/assets/SM-placeholder-150x150.png"
+                                    w="180px"
+                                    h={"240px"}
+                                    alt={publication.title}
+                                    title={publication.title}
+                                    rounded="md"
+                                    // aspectRatio={3 / 4}
+                                    mx="auto"
+                                    mb="2"
+                                />
+                                <LinkOverlay
+                                    fontSize={"xs"}
+                                    href={`/publications/${publication.file.name}`}
+                                >
+                                    {publication.title}
+                                </LinkOverlay>
+                            </LinkBox>
+                        </Flex>
+                    </swiper-slide>
+                );
+            })}
+            {publications.length <= 0 &&
+                [1, 2, 3].map((item) => (
+                    <Box my={10} key={item}>
+                        <swiper-slide class="swiper-slide publication-slide">
+                            <Skeleton
+                                w="180px"
+                                height={"240px"}
+                                alt={publication.title}
+                                rounded="md"
+                                // aspectRatio={3 / 4}
+                                mx="auto"
+                            />
+                        </swiper-slide>
+                    </Box>
+                ))}
         </MultiPostsCarousel>
     );
 };
@@ -775,17 +759,23 @@ export const ExploreButton = ({ text = "Explore All", link, ...rest }) => {
             variant="solid"
             colorScheme={"primary"}
             aria-label={text}
+            fontWeight={"normal"}
             onMouseEnter={() => setHovered(!hovered)}
             onMouseLeave={() => hovered && setHovered(!hovered)}
             rightIcon={hovered ? <HiArrowRight /> : <HiChevronRight />}
             {...rest}
         >
-            {link ? <Link href={link}>{text}</Link> : text}
+            <InertiaChakraLink
+                as={Link}
+                textDecor={"none"}
+                _hover={{ textDecor: "none" }}
+                href={link ? link : "#"}
+            >
+                {text}
+            </InertiaChakraLink>
         </Button>
     );
 };
-
-
 
 export const StyledChakraLink = styled(InertiaChakraLink)`
     position: relative;

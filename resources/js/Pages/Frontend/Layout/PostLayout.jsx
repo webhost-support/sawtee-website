@@ -72,6 +72,7 @@ const PostLayout = ({
                         author={post.author}
                         date={post.published_at}
                         readingTime={readingTime}
+                        mt={4}
                     />
                     {children}
                     <SocialShare url={shareUrl} />

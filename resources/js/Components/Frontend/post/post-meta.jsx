@@ -12,14 +12,10 @@ const PostMeta = ({ author, date, readingTime, ...rest }) => (
             flexWrap={"wrap"}
             fontSize={"sm"}
         >
-            {readingTime && <Text>Reading Time: {readingTime}</Text>}
-            {author && <Text>Author: {author}</Text>}
+            {readingTime && <Text p={0}>Reading Time: {readingTime}</Text>}
+            {author && <Text p={0}>Author: {author}</Text>}
             {date && (
-                <Text
-                    fontSize={"sm"}
-                    as={"time"}
-                    dateTime={date}
-                >
+                <Text fontSize={"sm"} p={0} as={"time"} dateTime={date}>
                     Published at: {formatDate(date)}
                 </Text>
             )}
