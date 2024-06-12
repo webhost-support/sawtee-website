@@ -21,13 +21,10 @@ const SidebarWidget = ({ array, title, link, ...rest }) => {
             shadow="none"
             border="none"
             position="relative"
-            // bg="transparent"
-            rounded="none"
+            rounded="md"
             {...rest}
         >
-            {/* <ListHeading title={title} link={link} /> */}
-
-            <SimpleList heading={title} px="8" spacing={4}>
+            <SimpleList heading={title} px="8" py={4} spacing={4}>
                 {array.length <= 0 && (
                     <Box display={"flex"} flexDir={"column"} gap={2}>
                         <Skeleton w="full" height="30px" />
@@ -69,15 +66,13 @@ const SidebarWidget = ({ array, title, link, ...rest }) => {
                             </ListItem>
                         );
                     })}
+                <ExploreButton
+                    size={["xs", "sm"]}
+                    text={`More ${title}`}
+                    link={link}
+                    p={0}
+                />
             </SimpleList>
-            <ExploreButton
-                size={["xs", "sm"]}
-                text={`More ${title}`}
-                variant="link"
-                _hover={{ textDecor: "none" }}
-                link={link}
-                ml={6}
-            />
         </GlassBox>
     );
 };

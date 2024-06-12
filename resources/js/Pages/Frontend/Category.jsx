@@ -110,7 +110,6 @@ export default function Category({
                                     array={events}
                                     title={"Featured Events"}
                                     link={"/category/featured-events"}
-                                    mt={12}
                                 />
                             )}
                             {isMedia && events && (

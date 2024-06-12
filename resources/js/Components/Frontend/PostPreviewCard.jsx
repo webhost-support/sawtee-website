@@ -62,7 +62,7 @@ const PostPreviewCard = ({
                     )}
 
                     <Box as="time" fontSize={"xs"} color={color}>
-                        {formatDate(created_at)}
+                        {formatDate(publish_at)}
                     </Box>
                 </HStack>
 

@@ -14,7 +14,6 @@ import {
     ModalOverlay,
     Text,
     Flex,
-    useBreakpointValue,
     useColorModeValue,
     Grid,
     GridItem,
@@ -158,7 +157,6 @@ export const SawteeInMediaSection = ({ articles, link }) => {
                 <ExploreButton
                     size={["xs", "sm"]}
                     text="More on sawtee in media "
-                    variant="link"
                     px={10}
                 />
             </InertiaChakraLink>
@@ -235,7 +233,6 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
                 <ExploreButton
                     size={["xs", "sm"]}
                     text="More in sawtee in media "
-                    variant="link"
                     link={`/category/sawtee-in-media`}
                 />
             </GridItem>
@@ -316,7 +313,6 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
                 <ExploreButton
                     size={["xs", "sm"]}
                     text="More on featured events"
-                    variant="link"
                     link={`/category/featured-events`}
                 />
             </GridItem>
@@ -339,10 +335,7 @@ export const InfocusSection = ({ data }) => {
                                     textUnderlineOffset="3px"
                                     href={`/category/in-focus/${item.slug}`}
                                 >
-                                    <Text
-                                        // fontSize={"0.875rem"}
-                                        lineHeight={"short"}
-                                    >
+                                    <Text lineHeight={"short"}>
                                         {item.title}
                                     </Text>
                                 </InertiaChakraLinkOverlay>
@@ -384,7 +377,7 @@ export const FeaturedPublications = ({ publications }) => {
                                 justify="space-between"
                                 gap={6}
                             >
-                                <Box>
+                                <Box w="80%">
                                     <Link
                                         href={`category/publications/${publication.category?.slug}`}
                                     >
@@ -431,7 +424,7 @@ export const FeaturedPublications = ({ publications }) => {
                                 </Box>
 
                                 {media && (
-                                    <Box>
+                                    <Box w="20%">
                                         <Image
                                             src={media}
                                             alt={publication.title}
@@ -441,6 +434,7 @@ export const FeaturedPublications = ({ publications }) => {
                                             p={1}
                                             rounded="sm"
                                             aspectRatio={3 / 4}
+                                            mx="auto"
                                         />
                                     </Box>
                                 )}
@@ -455,19 +449,16 @@ export const FeaturedPublications = ({ publications }) => {
 
 export const PublicationsSection = ({ publications }) => {
     return (
-        <MultiPostsCarousel spacing={30} pagination={false} scrollbar={false}>
-            <div slot="container-end">
-                <ExploreButton
-                    size={["xs", "sm"]}
-                    text="More in Publications"
-                    variant="link"
-                    px={10}
-                    link={"/category/publications"}
-                />
-            </div>
-
+        <MultiPostsCarousel
+            spacing={30}
+            pagination={"false"}
+            navigation={"true"}
+            scrollbar={"true"}
+            link={"/category/publications"}
+            text={"More in publications"}
+            my={10}
+        >
             {publications.map((publication) => {
-                console.log(publication);
                 const media = publication.media.length
                     ? publication.media.filter(
                           (media) =>
@@ -480,7 +471,7 @@ export const PublicationsSection = ({ publications }) => {
                         key={publication.id}
                         class="swiper-slide publication-slide"
                     >
-                        <Flex my={6} justify="center">
+                        <Flex justify="center">
                             <LinkBox textAlign="center">
                                 <Image
                                     src={media}
@@ -507,7 +498,7 @@ export const PublicationsSection = ({ publications }) => {
             })}
             {publications.length <= 0 &&
                 [1, 2, 3].map((item) => (
-                    <Box my={10} key={item}>
+                    <Box key={item}>
                         <swiper-slide class="swiper-slide publication-slide">
                             <Skeleton
                                 w="180px"
@@ -617,7 +608,7 @@ export const GlassBox = ({ children, ...rest }) => {
             rounded="md"
             shadow="md"
             w="full"
-            bg="var(--color-bg)"
+            bg={useColorModeValue("whiteAlpha.200", "var(--color-darker)")}
             {...rest}
         >
             {children}
@@ -757,25 +748,22 @@ export const ExploreButton = ({ text = "Explore All", link, ...rest }) => {
     const [hovered, setHovered] = useState(false);
 
     return (
-        <Button
-            variant="solid"
-            colorScheme={"primary"}
-            aria-label={text}
-            fontWeight={"normal"}
-            onMouseEnter={() => setHovered(!hovered)}
-            onMouseLeave={() => hovered && setHovered(!hovered)}
-            rightIcon={hovered ? <HiArrowRight /> : <HiChevronRight />}
-            {...rest}
-        >
-            <InertiaChakraLink
-                as={Link}
-                textDecor={"none"}
-                _hover={{ textDecor: "none" }}
+        <InertiaChakraLink as={Link} href={link ? link : "#"}>
+            <Button
+                variant={"link"}
+                colorScheme={"primary"}
+                aria-label={text}
+                fontWeight={"normal"}
+                onMouseEnter={() => setHovered(!hovered)}
+                onMouseLeave={() => hovered && setHovered(!hovered)}
+                rightIcon={hovered ? <HiArrowRight /> : <HiChevronRight />}
                 href={link ? link : "#"}
+                size={"sm"}
+                {...rest}
             >
                 {text}
-            </InertiaChakraLink>
-        </Button>
+            </Button>
+        </InertiaChakraLink>
     );
 };
 

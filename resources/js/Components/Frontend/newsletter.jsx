@@ -112,17 +112,12 @@ export const Newsletter = ({ data, props }) => {
                             );
                         })}
                     </SimpleList>
-                    <InertiaChakraLink
-                        as={Link}
-                        href={"/category/newsletters"}
-                        ml="6"
-                    >
-                        <ExploreButton
-                            size="sm"
-                            text="More newsletters"
-                            variant="link"
-                        />
-                    </InertiaChakraLink>
+
+                    <ExploreButton
+                        size="sm"
+                        text="More newsletters"
+                        link={"/category/newsletters"}
+                    />
                 </GridItem>
             </Grid>
         </PatternBox>

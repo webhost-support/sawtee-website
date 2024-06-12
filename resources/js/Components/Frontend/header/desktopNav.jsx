@@ -493,12 +493,6 @@ const SiteMenuItem = ({ item, ...rest }) => {
                         ) : (
                             <MenuList
                                 zIndex={5}
-                                // border="2px solid"
-                                // borderColor={useColorModeValue(
-                                //     "gray.700",
-                                //     "gray.100"
-                                // )}
-                                // boxShadow="4px 4px 0"
                                 p={0}
                                 rounded={"lg"}
                                 overflow={"hidden"}
@@ -508,11 +502,13 @@ const SiteMenuItem = ({ item, ...rest }) => {
                                 <Stack gap={1}>
                                     {item.children?.map((child) => {
                                         return (
-                                            <SiteMenuItem
-                                                item={child}
-                                                rounded="none"
-                                                offset={[0, 10]}
-                                            />
+                                            <React.Fragment key={child.id}>
+                                                <SiteMenuItem
+                                                    item={child}
+                                                    rounded="none"
+                                                    offset={[0, 10]}
+                                                />
+                                            </React.Fragment>
                                         );
                                     })}
                                 </Stack>

@@ -111,7 +111,6 @@ const Home = ({
                         <ExploreButton
                             size={["xs", "sm"]}
                             text="More In Focus"
-                            variant="link"
                             px={10}
                             mt="4"
                             link={"/category/in-focus"}
@@ -140,7 +139,6 @@ const Home = ({
                     />
                 </Box>
             </Section>
-
 
             {/* <InfoSection /> */}
             <Section

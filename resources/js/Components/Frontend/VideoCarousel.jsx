@@ -2,7 +2,10 @@ import {
     Grid,
     GridItem,
     HStack,
+    IconButton,
     Image,
+    LinkBox,
+    LinkOverlay,
     Skeleton,
     Text,
 } from "@chakra-ui/react";
@@ -11,6 +14,7 @@ import {
 import "swiper/css";
 import "../../../css/video-carousel.css";
 import { useRef } from "react";
+import { PlayIcon } from "./icons";
 
 const VideoCarousel = ({
     posts,
@@ -43,19 +47,51 @@ const VideoCarousel = ({
                     {...rest}
                 >
                     {posts.map((article) => {
+                        const media =
+                            article.media.length > 0
+                                ? article.media?.filter(
+                                      (m) =>
+                                          m.collection_name ===
+                                          "post-featured-image"
+                                  )[0]
+                                : null;
                         return (
                             <swiper-slide
                                 key={article.id}
                                 class="swiper-slide video-slide"
                             >
-                                <iframe
-                                    width="100%"
-                                    height="400px"
-                                    src={article.link}
-                                    title={article.title}
-                                    referrerPolicy="strict-origin-when-cross-origin"
-                                    allowFullScreen
-                                ></iframe>
+                                <LinkBox>
+                                    <IconButton
+                                        aria-label={"Play Button"}
+                                        variant={"ghost"}
+                                        _groupHover={{ color: "white" }}
+                                        icon={<PlayIcon w={12} h={12} />}
+                                        size={"lg"}
+                                        color={"whiteAlpha.700"}
+                                        position={"absolute"}
+                                        left={"50%"}
+                                        top={"50%"}
+                                        transform={
+                                            "translateX(-50%) translateY(-50%)"
+                                        }
+                                    />
+                                    <LinkOverlay
+                                        target="_blank"
+                                        href={article.link}
+                                    >
+                                        <Image
+                                            alt={article.title}
+                                            src={
+                                                media
+                                                    ? media.original_url
+                                                    : "/assets/SM-placeholder-1024x512.png"
+                                            }
+                                            w="full"
+                                            h="400px"
+                                            fallbackSrc="/assets/SM-placeholder-1024x512.png"
+                                        />
+                                    </LinkOverlay>
+                                </LinkBox>
                             </swiper-slide>
                         );
                     })}
@@ -77,29 +113,16 @@ const VideoCarousel = ({
                         return (
                             <swiper-slide key={article.id} class="thumb-slide">
                                 <HStack w="full" spacing={4} cursor="pointer">
-                                    {media ? (
-                                        <Image
-                                            maxW={"120px"}
-                                            alt={article.title}
-                                            src={media.original_url}
-                                            aspectRatio={5 / 3}
-                                            rounded="md"
-                                        />
-                                    ) : (
-                                        <Skeleton
-                                            maxW="120px"
-                                            w="full"
-                                            aspectRatio={5 / 3}
-                                            rounded="md"
-                                        />
-                                    )}
+                                    <Image
+                                        maxW={"120px"}
+                                        alt={article.title}
+                                        src={media ? media.original_url : null}
+                                        aspectRatio={5 / 3}
+                                        rounded="md"
+                                        fallbackSrc="/assets/SM-placeholder-150x150.png"
+                                    />
 
-                                    <Text
-                                        fontSize={"sm"}
-                                        // fontWeight={"semibold"}
-                                    >
-                                        {article.title}
-                                    </Text>
+                                    <Text fontSize={"sm"}>{article.title}</Text>
                                 </HStack>
                             </swiper-slide>
                         );

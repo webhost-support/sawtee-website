@@ -3,8 +3,6 @@ import { ExploreButton, GlassBox } from "@/Components/Frontend/index";
 import { formatDate } from "@/Utils/helpers";
 import { PostImageWithOverlay } from "@/Components/Frontend/featured-post/components";
 import { Link } from "@inertiajs/react";
-import InertiaChakraLink from "@/Components/Frontend/styles/inertia-chakra-link";
-import { motion } from "framer-motion";
 import React from "react";
 
 const DefaultArchive = ({
@@ -93,21 +91,19 @@ const ArchivePost = ({ post, featured_image, showFallbackImage, rest }) => {
                             flexWrap={"wrap"}
                             alignItems={"center"}
                         >
-                            <Text as="time" fontSize={"xs"}>
+                            <Text as="time" fontSize={"xs"} color="gray.600">
                                 {formatDate(post.published_at)}
                             </Text>
 
-                            <Link
-                                href={`/category/${post.category.slug}/${post.slug}`}
-                            >
-                                <ExploreButton
-                                    size="xs"
-                                    text="Read more"
-                                    aria-label={"Read More"}
-                                    colorScheme={"gray"}
-                                    w="full"
-                                />
-                            </Link>
+                            <ExploreButton
+                                size="xs"
+                                text="Read more"
+                                aria-label={"Read More"}
+                                colorScheme={"gray"}
+                                w="full"
+                                variant={"solid"}
+                                link={`/category/${post.category.slug}/${post.slug}`}
+                            />
                         </Stack>
                     </Box>
                 </Box>

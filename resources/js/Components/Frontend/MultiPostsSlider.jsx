@@ -1,18 +1,11 @@
 import React from "react";
-import PostPreviewCard from "./PostPreviewCard";
-import {
-    Box,
-    Flex,
-    HStack,
-    IconButton,
-    Skeleton,
-    useBreakpoint,
-} from "@chakra-ui/react";
+import { HStack, IconButton, Box } from "@chakra-ui/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
 // import required modules
 import "swiper/css";
 import "swiper/css/scrollbar";
+import { ExploreButton } from ".";
 
 const MultiPostsCarousel = ({
     spacing,
@@ -20,10 +13,11 @@ const MultiPostsCarousel = ({
     scrollbar,
     showCategoryTag,
     direction,
+    text,
+    link,
     children,
     ...rest
 }) => {
-    const windowSize = useBreakpoint();
     const swiperElRef = React.useRef(null);
     const params = {
         breakpoints: {
@@ -41,10 +35,11 @@ const MultiPostsCarousel = ({
             },
         },
     };
+
     React.useEffect(() => {
         if (swiperElRef.current !== null)
             Object.assign(swiperElRef.current, params);
-    }, [windowSize]);
+    }, []);
 
     return (
         <swiper-container
@@ -60,40 +55,48 @@ const MultiPostsCarousel = ({
             class={"multi-post-carousel"}
             id="multi-post-slider"
         >
-            <div
-                slot="container-start"
-                style={{
-                    display: "flex",
-                    justify: "space-between",
-                    gap: "1rem",
-                }}
-            >
-                <HStack
-                    spacing={4}
-                    justify={{ base: "justify-between", md: "end" }}
-                >
-                    <IconButton
-                        id="prev-button"
-                        colorScheme="primary"
-                        variant="outline"
-                        icon={<ChevronLeftIcon w="5" h="5" />}
-                        aria-label="previous button"
-                        onClick={() => swiperElRef.current?.swiper.slidePrev()}
-                        size={"sm"}
-                    />
+            <div slot="container-start">
+                <HStack w="full" justify={"space-between"} spacing={4}>
+                    <HStack
+                        spacing={4}
+                        justify={{ base: "justify-between", md: "end" }}
+                    >
+                        <IconButton
+                            id="prev-button"
+                            colorScheme="gray"
+                            variant="outline"
+                            icon={<ChevronLeftIcon w="5" h="5" />}
+                            aria-label="previous button"
+                            onClick={() =>
+                                swiperElRef.current?.swiper.slidePrev()
+                            }
+                            isDisabled={swiperElRef.current?.swiper.isBeginning}
+                            size={"sm"}
+                        />
 
-                    <IconButton
-                        id="next-button"
-                        colorScheme="primary"
-                        variant="outline"
-                        icon={<ChevronRightIcon w="5" h="5" />}
-                        aria-label="next button"
-                        onClick={() => swiperElRef.current?.swiper.slideNext()}
-                        size={"sm"}
+                        <IconButton
+                            id="next-button"
+                            colorScheme="gray"
+                            variant="outline"
+                            icon={<ChevronRightIcon w="5" h="5" />}
+                            aria-label="next button"
+                            onClick={() =>
+                                swiperElRef.current?.swiper.slideNext()
+                            }
+                            isDisabled={swiperElRef.current?.swiper.isEnd}
+                            size={"sm"}
+                        />
+                    </HStack>
+
+                    <ExploreButton
+                        size={["xs", "sm"]}
+                        text={text}
+                        px={10}
+                        link={link}
                     />
                 </HStack>
             </div>
-            {children}
+            <Box {...rest}>{children}</Box>
         </swiper-container>
     );
 };

@@ -8,12 +8,17 @@ export const PaginationButton = styled(Button)`
     display: flex;
     align-items: center;
     justify-content: center;
-    // font-size: 1.2rem;
-    padding: 0.8rem 1rem;
-    min-height: 60px;
+    font-size: 1rem;
+    // padding: 0.8rem 1rem;
+    // min-height: 50px;
 `;
 
-export const PrevLink = ({ isDisabled, label = "See older posts", link, ...rest }) => (
+export const PrevLink = ({
+    isDisabled,
+    label = "See older posts",
+    link,
+    ...rest
+}) => (
     <Box width="100%" role="group" {...rest}>
         <StyledLink href={link} aria-disabled={isDisabled}>
             <PaginationButton
@@ -24,7 +29,7 @@ export const PrevLink = ({ isDisabled, label = "See older posts", link, ...rest 
             >
                 <Box
                     className="icon"
-                    width="40px"
+                    boxSize="30px"
                     height="auto"
                     as={IoIosArrowRoundBack}
                     _groupHover={{ transform: "translateX(-10px)" }}
@@ -47,7 +52,7 @@ export const NextLink = ({ isDisabled, label = "See newer posts", link, ...rest 
                 <span>Older posts</span>
                 <Box
                     className="icon"
-                    width="40px"
+                    boxSize="30px"
                     height="auto"
                     as={IoIosArrowRoundForward}
                     _groupHover={{ transform: "translateX(10px)" }}
