@@ -12,6 +12,17 @@ export function slugify(inputString)
 }
 
 
+export function filterByReference(arr1, arr2) {
+    let res = [];
+    res = arr1.filter((el) => {
+        return !arr2.find((element) => {
+            return element.id === el.id;
+        });
+    });
+    return res;
+}
+
+
 
 export function toTitleCase(str) {
     return str.replace(/\w\S*/g, function (txt) {
