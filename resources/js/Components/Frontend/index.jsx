@@ -236,6 +236,7 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
                     size={["xs", "sm"]}
                     text="More in sawtee in media "
                     variant="link"
+                    link={`/category/sawtee-in-media`}
                 />
             </GridItem>
 
@@ -316,6 +317,7 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
                     size={["xs", "sm"]}
                     text="More on featured events"
                     variant="link"
+                    link={`/category/featured-events`}
                 />
             </GridItem>
         </Grid>

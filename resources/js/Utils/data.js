@@ -20,9 +20,10 @@ export const feature = {
 };
 
 const font_heading =
-    "Inter, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans";
+    'Gotham Narrow SSm A, Gotham Narrow SSm B, Figtree , ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", -apple-system, BlinkMacSystemFont, "Segoe UI Emoji",Segoe UI Symbol, "Noto Color Emoji"';
 
-const font_body = "'Segoe UI', system-ui, Tahoma, Geneva, Verdana, serif";
+const font_body =
+    'Inter , ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", -apple-system, BlinkMacSystemFont, "Segoe UI Emoji",Segoe UI Symbol, "Noto Color Emoji"';
 
 const font_mono = "'IBM Plex Mono', Menlo, Consolas, monospace";
 
