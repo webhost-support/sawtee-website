@@ -26,7 +26,7 @@ class Post extends Model implements HasMedia
     protected $fillable = ['title', 'slug', 'content', 'excerpt', 'category_id', 'theme_id', 'author', 'genre', 'status', 'link', 'published_at', 'meta_title', 'meta_description'];
 
 
-
+    // protected $with = ["postContentFiles", "category", "media"];
     /**
      * Get the indexable data array for the model.
      *

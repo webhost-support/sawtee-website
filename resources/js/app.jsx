@@ -7,6 +7,11 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { customTheme, config } from "@/Utils/data";
 import { register } from "swiper/element/bundle";
+import * as Sentry from "@sentry/react";
+
+Sentry.init({
+    dsn: import.meta.env.VITE_SENTRY_DSN_PUBLIC,
+});
 
 const appName = import.meta.env.VITE_APP_NAME || "SAWTEE";
 const theme = extendTheme(customTheme);

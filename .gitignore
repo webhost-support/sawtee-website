@@ -12,6 +12,7 @@
 /public/Featured_Events
 /public/storage
 /storage/*.key
+/build/*
 /vendor
 .env
 .env.backup

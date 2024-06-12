@@ -27,6 +27,7 @@
         "@emotion/styled": "^11.11.0",
         "@inertiajs/inertia": "^0.11.1",
         "@inertiajs/inertia-react": "^0.8.1",
+        "@sentry/react": "^7.40.0",
         "@tanstack/react-table": "^8.10.6",
         "@tinymce/tinymce-react": "^4.3.0",
         "chakra-react-select": "^4.7.4",

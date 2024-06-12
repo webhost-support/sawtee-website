@@ -23,7 +23,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['category', 'media', 'tags', 'theme'])->idDescending()->paginate();
+        $posts = Post::with(['category', 'tags', 'theme'])->idDescending()->paginate();
         return Inertia::render('Backend/Post/Index', [
             'posts' => $posts
         ]);
@@ -121,7 +121,6 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
 
-
         $validated = $request->all();
         $validated['title'] = Str::of($validated['title'])->squish();
         $validated['meta_title'] = $validated['title'];
@@ -136,7 +135,15 @@ class PostController extends Controller
         }
 
         if ($request->hasFile('files')) {
-            // $post->postContentFiles()->delete();
+
+            $post_content_files = $post->load('postContentFiles')->postContentFiles->toArray();
+            // unlink old files from storage and delete from database before saving new files.
+            foreach ($post_content_files as $key => $value) {
+                if (File::exists($value['path'])) {
+                    unlink($value['path']);
+                    File::where('id', $value['id'])->delete();
+                }
+            }
             $files = $request->files;
             foreach ($files as $key => $value) {
                 if($key === 'files'){
@@ -148,7 +155,6 @@ class PostController extends Controller
                         $document->path = $path;
                         $document->name = $name;
                         $post->postContentFiles()->save($document);
-                        // return response()->json(['location' => "/storage/$path", 'text' => $text]);
                     }
                 }
             }

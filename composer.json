@@ -20,6 +20,7 @@
         "laravel/scout": "^10.8",
         "laravel/tinker": "^2.8",
         "mostafaznv/pdf-optimizer": "^1.1",
+        "sentry/sentry-laravel": "^4.6",
         "spatie/laravel-google-fonts": "^1.4",
         "spatie/laravel-medialibrary": "*",
         "spatie/laravel-newsletter": "^5.1",
