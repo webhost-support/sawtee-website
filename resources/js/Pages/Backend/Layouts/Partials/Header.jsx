@@ -4,9 +4,7 @@ import {
     Box,
     Flex,
     Text,
-    Input,
-    InputGroup,
-    InputLeftElement,
+
     useColorModeValue,
     Menu,
     MenuButton,
@@ -17,8 +15,7 @@ import {
     Button,
     useColorMode,
 } from "@chakra-ui/react";
-import { FiMenu, FiChevronDown, FiSearch } from "react-icons/fi";
-import { HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon, HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Link } from "@inertiajs/react";
 import styled from "@emotion/styled";
 
@@ -82,7 +79,7 @@ export default function Header({ name, image, sidebar, ...rest }) {
                                         md: "flex",
                                     }}
                                 >
-                                    <FiChevronDown />
+                                    <ChevronDownIcon />
                                 </Box>
                             </HStack>
                         </MenuButton>
@@ -96,12 +93,20 @@ export default function Header({ name, image, sidebar, ...rest }) {
                         >
                             <Text>{name.toUpperCase()}</Text>
                             <MenuDivider />
-                            <MenuLink href={route("admin.profile.edit")}>
+
+                            <Link
+                                as="button"
+                                href={route("admin.profile.edit")}
+                            >
                                 Profile
-                            </MenuLink>
-                            <MenuLink href={route("logout")} method="post">
+                            </Link>
+                            <Link
+                                as="button"
+                                href={route("logout")}
+                                method="post"
+                            >
                                 Sign out
-                            </MenuLink>
+                            </Link>
                         </MenuList>
                     </Menu>
                 </Flex>
@@ -110,13 +115,4 @@ export default function Header({ name, image, sidebar, ...rest }) {
     );
 }
 
-const MenuLink = styled(Link)`
-    display: block;
-    padding: 10px;
-    text-align: left;
-    width: 100%;
 
-    &:hover {
-        background-color: var(--chakra-colors-blackAlpha-200);
-    }
-`;

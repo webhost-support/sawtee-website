@@ -12,7 +12,6 @@ import {
     Stack,
     Text,
     Input,
-    Select,
     IconButton,
     HStack,
     Checkbox,
@@ -35,13 +34,14 @@ import {
 } from "@tanstack/react-table";
 import { DebouncedInput } from "../Frontend/index";
 import { Link } from "@inertiajs/react";
+import { rankItem } from "@tanstack/match-sorter-utils";
+
 export function DataTable({
     data,
-    allColumns,
     defaultColumns,
     showColumnFilters = true,
     pagination = true,
-    showSearch = false,
+    showSearch = true,
 }) {
     const [sorting, setSorting] = React.useState([]);
     const [columns] = React.useState(defaultColumns);
@@ -63,10 +63,14 @@ export function DataTable({
         // Return if the item should be filtered in/out
         return itemRank.passed;
     };
+
     const table = useReactTable({
         columns,
         data: data.data,
         // loading,
+        filterFns: {
+            fuzzy: fuzzyFilter, //define as a filter function that can be used in column definitions
+        },
         manualPagination: false,
         getCoreRowModel: getCoreRowModel(),
         onSortingChange: setSorting,
@@ -76,6 +80,8 @@ export function DataTable({
         onColumnVisibilityChange: setColumnVisibility,
         onGlobalFilterChange: setGlobalFilter,
         globalFilterFn: fuzzyFilter,
+        onGlobalFilterChange: setGlobalFilter,
+        // globalFilterFn: "fuzzy",
         state: {
             sorting,
             columnVisibility,
@@ -125,7 +131,6 @@ export function DataTable({
                         <DebouncedInput
                             value={globalFilter ?? ""}
                             onChange={(value) => setGlobalFilter(String(value))}
-                            className="p-2 font-lg shadow border border-block"
                             placeholder="Search all columns..."
                         />
                     </div>
@@ -187,7 +192,6 @@ export function DataTable({
                                 }}
                             >
                                 {row.getVisibleCells().map((cell) => {
-                                    // see https://tanstack.com/table/v8/docs/api/core/column-def#meta to type this correctly
                                     const meta = cell.column.columnDef.meta;
                                     return (
                                         <Td
@@ -283,7 +287,7 @@ export function DataTable({
                                 type="number"
                                 defaultValue={data.current_page}
                                 onChange={(e) => {
-                                    setTimeout(() => {
+                                    const page = setTimeout(() => {
                                         Inertia.visit(
                                             `${data.path}?page=${e.target.value}`,
                                             {
@@ -294,6 +298,7 @@ export function DataTable({
                                             }
                                         );
                                     }, 1500);
+                                    clearTimeout(page);
                                 }}
                                 padding={2}
                                 maxW={10}
