@@ -453,10 +453,9 @@ export const PublicationsSection = ({ publications }) => {
             spacing={30}
             pagination={"false"}
             navigation={"true"}
-            scrollbar={"true"}
+            scrollbar={"false"}
             link={"/category/publications"}
             text={"More in publications"}
-            my={10}
         >
             {publications.map((publication) => {
                 const media = publication.media.length
@@ -471,7 +470,7 @@ export const PublicationsSection = ({ publications }) => {
                         key={publication.id}
                         class="swiper-slide publication-slide"
                     >
-                        <Flex justify="center">
+                        <Flex my={8} justify="center">
                             <LinkBox textAlign="center">
                                 <Image
                                     src={media}
@@ -498,7 +497,7 @@ export const PublicationsSection = ({ publications }) => {
             })}
             {publications.length <= 0 &&
                 [1, 2, 3].map((item) => (
-                    <Box key={item}>
+                    <Box my={8} key={item}>
                         <swiper-slide class="swiper-slide publication-slide">
                             <Skeleton
                                 w="180px"

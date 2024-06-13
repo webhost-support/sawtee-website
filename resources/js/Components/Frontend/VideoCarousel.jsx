@@ -1,4 +1,5 @@
 import {
+    Box,
     Grid,
     GridItem,
     HStack,
@@ -64,13 +65,17 @@ const VideoCarousel = ({
                                     <IconButton
                                         aria-label={"Play Button"}
                                         variant={"ghost"}
-                                        _groupHover={{ color: "white" }}
-                                        icon={<PlayIcon w={12} h={12} />}
+                                        color={"red.500"}
+                                        opacity={0.5}
+                                        _groupHover={{
+                                            opacity: 1,
+                                        }}
+                                        icon={<PlayIcon w={16} h={16} />}
                                         size={"lg"}
-                                        color={"whiteAlpha.700"}
                                         position={"absolute"}
                                         left={"50%"}
                                         top={"50%"}
+                                        transition={"all .25s ease"}
                                         transform={
                                             "translateX(-50%) translateY(-50%)"
                                         }
@@ -113,14 +118,38 @@ const VideoCarousel = ({
                         return (
                             <swiper-slide key={article.id} class="thumb-slide">
                                 <HStack w="full" spacing={4} cursor="pointer">
-                                    <Image
-                                        maxW={"120px"}
-                                        alt={article.title}
-                                        src={media ? media.original_url : null}
-                                        aspectRatio={5 / 3}
-                                        rounded="md"
-                                        fallbackSrc="/assets/SM-placeholder-150x150.png"
-                                    />
+                                    <Box pos="relative">
+                                        <IconButton
+                                            aria-label={"Play Button"}
+                                            variant={"ghost"}
+                                            color={"red.500"}
+                                            opacity={0.5}
+                                            _groupHover={{
+                                                opacity: 1,
+                                            }}
+                                            icon={<PlayIcon w={6} h={6} />}
+                                            position={"absolute"}
+                                            left={"50%"}
+                                            top={"50%"}
+                                            transition={"all .25s ease"}
+                                            transform={
+                                                "translateX(-50%) translateY(-50%)"
+                                            }
+                                            size={"xs"}
+                                        />
+                                        <Image
+                                            maxW={"120px"}
+                                            alt={article.title}
+                                            src={
+                                                media
+                                                    ? media.original_url
+                                                    : null
+                                            }
+                                            aspectRatio={5 / 3}
+                                            rounded="md"
+                                            fallbackSrc="/assets/SM-placeholder-150x150.png"
+                                        />
+                                    </Box>
 
                                     <Text fontSize={"sm"}>{article.title}</Text>
                                 </HStack>

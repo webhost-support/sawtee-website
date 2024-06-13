@@ -30,11 +30,8 @@ import FileUpload, { PreviewImage } from "@/Components/Backend/FileUpload";
 import React from "react";
 import ContentEditor from "@/Components/Backend/ContentEditor";
 import ControlledMultiSelect from "@/Components/Backend/MultiSelect";
-import { filterByReference } from "@/Utils";
-import {
-    CloseIcon,
-    QuestionOutlineIcon,
-} from "@chakra-ui/icons";
+import { filterByReference } from "@/Utils/helpers";
+import { CloseIcon, QuestionOutlineIcon } from "@chakra-ui/icons";
 import { FiFile } from "react-icons/fi";
 
 export default function EditPostForm({
@@ -66,7 +63,6 @@ export default function EditPostForm({
         meta_description: postData.meta_description,
     });
 
-
     const toast = useToast();
     const [imageUrl, setImageUrl] = React.useState(
         data.image ? data.image.preview_url : null
@@ -87,8 +83,6 @@ export default function EditPostForm({
         return tagsarray;
     });
 
-
-
     const [tagOptions, setTagOptions] = React.useState([]);
 
     function setDataTags(e) {
@@ -107,8 +101,6 @@ export default function EditPostForm({
     const [selectedCategory, setSelectedCategory] = React.useState(
         categories.filter((cat) => cat.id == data.category_id)[0].name
     );
-
-
 
     React.useEffect(() => {
         if (postTags && tags) {
@@ -173,7 +165,6 @@ export default function EditPostForm({
                                 mt={1}
                                 value={data.title}
                                 autoComplete="title"
-                                
                                 onChange={(e) =>
                                     setData("title", e.target.value)
                                 }

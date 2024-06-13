@@ -1,5 +1,5 @@
-import React from "react";
-import { HStack, IconButton, Box } from "@chakra-ui/react";
+import { useEffect, useRef, useState } from "react";
+import { HStack, IconButton } from "@chakra-ui/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
 // import required modules
@@ -18,33 +18,44 @@ const MultiPostsCarousel = ({
     children,
     ...rest
 }) => {
-    const swiperElRef = React.useRef(null);
+    const swiperElRef = useRef(null);
+    const [progressValue, setProgressValue] = useState(0);
     const params = {
         breakpoints: {
             640: {
                 slidesPerView: 1,
                 spaceBetween: 20,
+                slidesPerGroup: 1,
             },
             768: {
                 slidesPerView: 2,
                 spaceBetween: 40,
+                slidesPerGroup: 2,
             },
             1024: {
                 slidesPerView: 3,
                 spaceBetween: 50,
+                slidesPerGroup: 3,
             },
         },
     };
 
-    React.useEffect(() => {
-        if (swiperElRef.current !== null)
+    useEffect(() => {
+        if (swiperElRef.current !== null) {
+            // listen for Swiper events using addEventListener
+            swiperElRef.current.addEventListener("swiperprogress", (e) => {
+                const [_, progress] = e.detail;
+                setProgressValue(progress);
+            });
             Object.assign(swiperElRef.current, params);
+        }
     }, []);
 
     return (
         <swiper-container
             ref={swiperElRef}
             slides-per-view={1}
+            slides-per-group={1}
             navigation={false}
             pagination={pagination}
             keyboard={true}
@@ -67,11 +78,11 @@ const MultiPostsCarousel = ({
                             variant="outline"
                             icon={<ChevronLeftIcon w="5" h="5" />}
                             aria-label="previous button"
-                            onClick={() =>
-                                swiperElRef.current?.swiper.slidePrev()
-                            }
-                            isDisabled={swiperElRef.current?.swiper.isBeginning}
+                            onClick={() => {
+                                swiperElRef.current?.swiper.slidePrev();
+                            }}
                             size={"sm"}
+                            isDisabled={progressValue === 0}
                         />
 
                         <IconButton
@@ -80,11 +91,11 @@ const MultiPostsCarousel = ({
                             variant="outline"
                             icon={<ChevronRightIcon w="5" h="5" />}
                             aria-label="next button"
-                            onClick={() =>
-                                swiperElRef.current?.swiper.slideNext()
-                            }
-                            isDisabled={swiperElRef.current?.swiper.isEnd}
+                            onClick={() => {
+                                swiperElRef.current?.swiper.slideNext();
+                            }}
                             size={"sm"}
+                            isDisabled={progressValue === 1}
                         />
                     </HStack>
 
@@ -96,7 +107,7 @@ const MultiPostsCarousel = ({
                     />
                 </HStack>
             </div>
-            <Box {...rest}>{children}</Box>
+            {children}
         </swiper-container>
     );
 };
