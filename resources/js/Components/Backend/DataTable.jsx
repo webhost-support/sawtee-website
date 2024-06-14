@@ -80,7 +80,6 @@ export function DataTable({
         onColumnVisibilityChange: setColumnVisibility,
         onGlobalFilterChange: setGlobalFilter,
         globalFilterFn: fuzzyFilter,
-        onGlobalFilterChange: setGlobalFilter,
         // globalFilterFn: "fuzzy",
         state: {
             sorting,

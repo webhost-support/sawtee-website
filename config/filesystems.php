@@ -72,6 +72,13 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+        'tmp' => [
+            'driver' => 'local',
+            'root' => public_path('tmp'),
+            'url' => env('APP_URL') . '/tmp',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

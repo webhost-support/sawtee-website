@@ -13,8 +13,9 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 use Mostafaznv\PdfOptimizer\Laravel\Facade\PdfOptimizer;
+use Mostafaznv\PdfOptimizer\Enums\ColorConversionStrategy;
 use Mostafaznv\PdfOptimizer\Enums\PdfSettings;
-
+use Illuminate\Http\UploadedFile;
 
 class PostController extends Controller
 {
@@ -66,29 +67,38 @@ class PostController extends Controller
             $post->addMediaFromRequest('file')->toMediaCollection('post-files');
         }
 
-            // $post->addMediaFromRequest('files')->toMediaCollection('post-');
-            // optimize uploaded pdf files to reduce size
-            if ($request->hasFile('files')) {
-                $files = $request->files;
-                foreach ($files as $key => $value) {
-                    if($key === 'files'){
-                    foreach ($value as $file) {
-                            $name = $file->getClientOriginalName();
-                            $path = $file->move(public_path('Featured_Events'), $name);
-                            $document = new File();
-                            $document->path = $path;
-                            $document->name = $name;
-                        // $optimizedDocument = PdfOptimizer::open($document->path)
-                        // ->settings(PdfSettings::SCREEN)
-                        // ->colorImageResolution(50)
-                        // ->onQueue()
-                        // ->optimize($document);
-                        // dd($optimizedDocument);
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                $filename = $file->getClientOriginalName();
+                $filepath = $file->getPathname();
+                $outputFilePath = public_path('Featured_Events/' . $filename);
+                $document = new File();
+                $document->name = $filename;
+                $document->path = $filepath;
+
+                // optimize uploaded pdf files to reduce size
+                $optimizedDocument = PdfOptimizer::open($document)
+                    ->settings(PdfSettings::EBOOK)
+                    ->colorConversionStrategy(ColorConversionStrategy::DEVICE_INDEPENDENT_COLOR)
+                    ->colorImageResolution(50)
+                    // ->setExtraOptions([
+                    //     '-dCompatibilityLevel=1.4',
+                    //     '-dEmbedAllFonts=true',
+                    //     '-dSubsetFonts=true',
+                    //     '-dColorImageDownsampleType=/Bicubic',
+                    //     '-dColorImageResolution=144',
+                    //     '-dGrayImageDownsampleType=/Bicubic',
+                    //     '-dGrayImageResolution=144',
+                    //     '-dMonoImageDownsampleType=/Bicubic',
+                    //     '-dMonoImageResolution=144'
+                    // ])
+                    ->optimize($outputFilePath);
+                    if($optimizedDocument->status) {
                         $post->postContentFiles()->save($document);
                     }
-                }
             }
         }
+
 
         return redirect()->route('admin.posts.index');
     }
@@ -112,7 +122,7 @@ class PostController extends Controller
         $themes = Theme::all();
         $featured_image = $post->getFirstMediaUrl('post_featured_image');
         $file = $post->getMedia('post-files');
-        return Inertia::render('Backend/Post/Edit', ['post' => $post->load( 'tags','postContentFiles'), 'categories' => $categories, 'tags' => $tags, 'themes' => $themes, 'featured_image' => $featured_image, 'file' => $file]);
+        return Inertia::render('Backend/Post/Edit', ['post' => $post->load('tags', 'postContentFiles'), 'categories' => $categories, 'tags' => $tags, 'themes' => $themes, 'featured_image' => $featured_image, 'file' => $file]);
     }
 
     /**
@@ -146,9 +156,8 @@ class PostController extends Controller
             }
             $files = $request->files;
             foreach ($files as $key => $value) {
-                if($key === 'files'){
-                    foreach ($value as $file)
-                    {
+                if ($key === 'files') {
+                    foreach ($value as $file) {
                         $name = $file->getClientOriginalName();
                         $path = $file->move(public_path('Featured_Events'), $name);
                         $document = new File();
@@ -162,7 +171,6 @@ class PostController extends Controller
 
         $post->update($validated);
         return redirect()->route('admin.posts.index');
-
     }
 
     /**

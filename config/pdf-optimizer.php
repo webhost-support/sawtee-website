@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'gs' => 'gs',
+    'gs' => '/usr/bin/gs',
 
 
     /*
@@ -43,7 +43,7 @@ return [
     */
 
     'queue' => [
-        'enabled'    => false,
+        'enabled'    => true,
         'name'       => 'default',
         'connection' => null,
         'timeout'    => 900 // seconds (15 minutes)
