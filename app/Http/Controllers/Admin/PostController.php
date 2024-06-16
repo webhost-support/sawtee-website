@@ -15,7 +15,6 @@ use Illuminate\Support\Str;
 use Mostafaznv\PdfOptimizer\Laravel\Facade\PdfOptimizer;
 use Mostafaznv\PdfOptimizer\Enums\ColorConversionStrategy;
 use Mostafaznv\PdfOptimizer\Enums\PdfSettings;
-use Illuminate\Http\UploadedFile;
 
 class PostController extends Controller
 {
@@ -24,9 +23,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['category', 'tags', 'theme'])->idDescending()->paginate();
-        return Inertia::render('Backend/Post/Index', [
-            'posts' => $posts
+        $posts = Post::with(["category", "tags", "theme"])
+            ->idDescending()
+            ->paginate();
+        return Inertia::render("Backend/Post/Index", [
+            "posts" => $posts,
         ]);
     }
 
@@ -35,14 +36,12 @@ class PostController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Backend/Post/Create', [
-            'categories' => Category::where('type', 'post')->get(),
-            'themes' => Theme::all(),
-            'tags' => Tag::all()
+        return Inertia::render("Backend/Post/Create", [
+            "categories" => Category::where("type", "post")->get(),
+            "themes" => Theme::all(),
+            "tags" => Tag::all(),
         ]);
     }
-
-
 
     /**
      * Store a newly created resource in storage.
@@ -50,57 +49,59 @@ class PostController extends Controller
     public function store(PostRequest $request)
     {
         $validated = $request->validated();
-        $validated['title'] = Str::of($validated['title'])->squish();
-        $validated['meta_title'] = $validated['title'];
+        $validated["title"] = Str::of($validated["title"])->squish();
+        $validated["meta_title"] = $validated["title"];
 
         $post = Post::create($validated);
 
-        if ($request->has('tags')) {
+        if ($request->has("tags")) {
             $post->tags()->attach($request->tags);
         }
 
-        if ($request->hasFile('image')) {
-            $post->addMediaFromRequest('image')->toMediaCollection('post-featured-image');
+        if ($request->hasFile("image")) {
+            $post
+                ->addMediaFromRequest("image")
+                ->toMediaCollection("post-featured-image");
         }
 
-        if ($request->hasFile('file')) {
-            $post->addMediaFromRequest('file')->toMediaCollection('post-files');
+        if ($request->file("file")) {
+            $filename = $request->file("file")->getClientOriginalName();
+            $outputFilePath = public_path("tmp/" . $filename);
+
+            $result = PdfOptimizer::open($request->file("file"))
+                ->settings(PdfSettings::DEFAULT)
+                ->toDisk("tmp")
+                ->colorImageResolution(144)
+                ->downSampleColorImages(true)
+                ->optimize($filename);
+
+            $post->addMedia($outputFilePath)->toMediaCollection("post-files");
         }
 
-        if ($request->hasFile('files')) {
-            foreach ($request->file('files') as $file) {
+        if ($request->file("files")) {
+            foreach ($request->file("files") as $file) {
                 $filename = $file->getClientOriginalName();
-                $filepath = $file->getPathname();
-                $outputFilePath = public_path('Featured_Events/' . $filename);
-                $document = new File();
-                $document->name = $filename;
-                $document->path = $filepath;
+
+                $outputFile = public_path("Featured_Events/" . $filename);
+
+                $optimizedDocument = new File();
+                $optimizedDocument->name = $filename;
+                $optimizedDocument->path = $outputFile;
 
                 // optimize uploaded pdf files to reduce size
-                $optimizedDocument = PdfOptimizer::open($document)
-                    ->settings(PdfSettings::EBOOK)
-                    ->colorConversionStrategy(ColorConversionStrategy::DEVICE_INDEPENDENT_COLOR)
-                    ->colorImageResolution(50)
-                    // ->setExtraOptions([
-                    //     '-dCompatibilityLevel=1.4',
-                    //     '-dEmbedAllFonts=true',
-                    //     '-dSubsetFonts=true',
-                    //     '-dColorImageDownsampleType=/Bicubic',
-                    //     '-dColorImageResolution=144',
-                    //     '-dGrayImageDownsampleType=/Bicubic',
-                    //     '-dGrayImageResolution=144',
-                    //     '-dMonoImageDownsampleType=/Bicubic',
-                    //     '-dMonoImageResolution=144'
-                    // ])
-                    ->optimize($outputFilePath);
-                    if($optimizedDocument->status) {
-                        $post->postContentFiles()->save($document);
-                    }
+                $result = PdfOptimizer::open($file)
+                    ->settings(PdfSettings::SCREEN)
+                    ->colorImageResolution(144)
+                    ->downSampleColorImages(true)
+                    ->optimize($outputFile);
+
+                if ($result->status) {
+                    $post->postContentFiles()->save($optimizedDocument);
+                }
             }
         }
 
-
-        return redirect()->route('admin.posts.index');
+        return redirect()->route("admin.posts.index");
     }
 
     /**
@@ -108,8 +109,8 @@ class PostController extends Controller
      */
     public function show($category, $slug)
     {
-        $post = Post::with('category')->where('slug', $slug)->first();
-        return Inertia::render('Frontend/Post', ['post' => $post]);
+        $post = Post::with("category")->where("slug", $slug)->first();
+        return Inertia::render("Frontend/Post", ["post" => $post]);
     }
 
     /**
@@ -117,12 +118,19 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $categories = Category::where('type', 'post')->get();
+        $categories = Category::where("type", "post")->get();
         $tags = Tag::all();
         $themes = Theme::all();
-        $featured_image = $post->getFirstMediaUrl('post_featured_image');
-        $file = $post->getMedia('post-files');
-        return Inertia::render('Backend/Post/Edit', ['post' => $post->load('tags', 'postContentFiles'), 'categories' => $categories, 'tags' => $tags, 'themes' => $themes, 'featured_image' => $featured_image, 'file' => $file]);
+        $featured_image = $post->getFirstMediaUrl("post_featured_image");
+        $file = $post->getMedia("post-files");
+        return Inertia::render("Backend/Post/Edit", [
+            "post" => $post->load("tags", "postContentFiles"),
+            "categories" => $categories,
+            "tags" => $tags,
+            "themes" => $themes,
+            "featured_image" => $featured_image,
+            "file" => $file,
+        ]);
     }
 
     /**
@@ -130,47 +138,68 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-
         $validated = $request->all();
-        $validated['title'] = Str::of($validated['title'])->squish();
-        $validated['meta_title'] = $validated['title'];
-        if ($request->has('tags')) {
+        $validated["title"] = Str::of($validated["title"])->squish();
+        $validated["meta_title"] = $validated["title"];
+        if ($request->has("tags")) {
             $post->tags()->sync($request->tags);
         }
-        if ($request->hasFile('image')) {
-            $post->addMediaFromRequest('image')->toMediaCollection('post-featured-image');
+        if ($request->hasFile("image")) {
+            $post
+                ->addMediaFromRequest("image")
+                ->toMediaCollection("post-featured-image");
         }
-        if ($request->hasFile('file')) {
-            $post->addMediaFromRequest('file')->toMediaCollection('post-files');
+        if ($request->hasFile("file")) {
+            $filename = $request->file("file")->getClientOriginalName();
+            $outputFilePath = public_path("tmp/" . $filename);
+            $result = PdfOptimizer::open($request->file("file"))
+                ->settings(PdfSettings::DEFAULT)
+                ->colorImageResolution(144)
+                ->downSampleColorImages(true)
+                ->optimize($outputFilePath);
+
+            if ($result->status) {
+                $post
+                    ->addMedia($outputFilePath)
+                    ->toMediaCollection("post-files");
+            }
         }
 
-        if ($request->hasFile('files')) {
-
-            $post_content_files = $post->load('postContentFiles')->postContentFiles->toArray();
+        if ($request->file("files")) {
+            $post_content_files = $post
+                ->load("postContentFiles")
+                ->postContentFiles->toArray();
             // unlink old files from storage and delete from database before saving new files.
             foreach ($post_content_files as $key => $value) {
-                if (File::exists($value['path'])) {
-                    unlink($value['path']);
-                    File::where('id', $value['id'])->delete();
+                if (File::exists($value["path"])) {
+                    unlink($value["path"]);
+                    File::where("id", $value["id"])->delete();
                 }
             }
-            $files = $request->files;
-            foreach ($files as $key => $value) {
-                if ($key === 'files') {
-                    foreach ($value as $file) {
-                        $name = $file->getClientOriginalName();
-                        $path = $file->move(public_path('Featured_Events'), $name);
-                        $document = new File();
-                        $document->path = $path;
-                        $document->name = $name;
-                        $post->postContentFiles()->save($document);
-                    }
+
+            foreach ($request->file("files") as $file) {
+                $filename = $file->getClientOriginalName();
+                $outputFile = public_path("Featured_Events/" . $filename);
+
+                $optimizedDocument = new File();
+                $optimizedDocument->name = $filename;
+                $optimizedDocument->path = $outputFile;
+
+                // optimize uploaded pdf files to reduce size
+                $result = PdfOptimizer::open($file)
+                    ->settings(PdfSettings::SCREEN)
+                    ->colorImageResolution(144)
+                    ->downSampleColorImages(true)
+                    ->optimize($outputFile);
+
+                if ($result->status) {
+                    $post->postContentFiles()->save($optimizedDocument);
                 }
             }
         }
 
         $post->update($validated);
-        return redirect()->route('admin.posts.index');
+        return redirect()->route("admin.posts.index");
     }
 
     /**
@@ -179,15 +208,20 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-        return redirect()->route('admin.posts.index');
+        return redirect()->route("admin.posts.index");
     }
 
     public function uploadmedia(Request $request)
     {
-        if ($request->hasFile('file')) {
-            $fileName = $request->file('file')->getClientOriginalName();
-            $path = $request->file('file')->storeAs('uploads', $fileName, 'public');
-            return response()->json(['location' => "/storage/$path", 'text' => $fileName]);
+        if ($request->hasFile("file")) {
+            $fileName = $request->file("file")->getClientOriginalName();
+            $path = $request
+                ->file("file")
+                ->storeAs("uploads", $fileName, "public");
+            return response()->json([
+                "location" => "/storage/$path",
+                "text" => $fileName,
+            ]);
         }
     }
 }

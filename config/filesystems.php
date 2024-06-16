@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Filesystem Disk
@@ -13,7 +12,7 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DISK', 'local'),
+    "default" => env("FILESYSTEM_DISK", "local"),
 
     /*
     |--------------------------------------------------------------------------
@@ -28,69 +27,70 @@ return [
     |
     */
 
-    'disks' => [
-
-        'local' => [
-            'driver' => 'local',
-            'root' => storage_path('app'),
-            'throw' => false,
+    "disks" => [
+        "local" => [
+            "driver" => "local",
+            "root" => storage_path("app"),
+            "throw" => false,
         ],
 
-        'public' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
-            'visibility' => 'public',
-            'throw' => false,
+        "public" => [
+            "driver" => "local",
+            "root" => storage_path("app/public"),
+            "url" => env("APP_URL") . "/storage",
+            "visibility" => "public",
+            "throw" => false,
         ],
-        'media' => [
-            'driver' => 'local',
-            'root' => public_path('media-library'),
-            'url' => env('APP_URL') . '/media-library',
-            'visibility' => 'public',
-            'throw' => false,
-        ],
-
-        'publications' => [
-            'driver' => 'local',
-            'root' => public_path('publications'),
-            'url' => env('APP_URL') . '/publications',
-            'visibility' => 'public',
-            'throw' => false,
-        ],
-        'research' => [
-            'driver' => 'local',
-            'root' => public_path('Research_Report'),
-            'url' => env('APP_URL') . '/Research_Report',
-            'visibility' => 'public',
-            'throw' => false,
-        ],
-        'events' => [
-            'driver' => 'local',
-            'root' => public_path('Featured_Events'),
-            'url' => env('APP_URL') . '/Featured_Events',
-            'visibility' => 'public',
-            'throw' => false,
-        ],
-        'tmp' => [
-            'driver' => 'local',
-            'root' => public_path('tmp'),
-            'url' => env('APP_URL') . '/tmp',
-            'visibility' => 'public',
-            'throw' => false,
-        ],
-        's3' => [
-            'driver' => 's3',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'region' => env('AWS_DEFAULT_REGION'),
-            'bucket' => env('AWS_BUCKET'),
-            'url' => env('AWS_URL'),
-            'endpoint' => env('AWS_ENDPOINT'),
-            'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
-            'throw' => false,
+        "media" => [
+            "driver" => "local",
+            "root" => public_path("media-library"),
+            "url" => env("APP_URL") . "/media-library",
+            "visibility" => "public",
+            "throw" => false,
         ],
 
+        "publications" => [
+            "driver" => "local",
+            "root" => public_path("publications"),
+            "url" => env("APP_URL") . "/publications",
+            "visibility" => "public",
+            "throw" => false,
+        ],
+        "research" => [
+            "driver" => "local",
+            "root" => public_path("Research_Report"),
+            "url" => env("APP_URL") . "/Research_Report",
+            "visibility" => "public",
+            "throw" => false,
+        ],
+        "events" => [
+            "driver" => "local",
+            "root" => public_path("Featured_Events"),
+            "url" => env("APP_URL") . "/Featured_Events",
+            "visibility" => "public",
+            "throw" => false,
+        ],
+        "tmp" => [
+            "driver" => "local",
+            "root" => public_path("tmp"),
+            "url" => env("APP_URL") . "/tmp",
+            "visibility" => "public",
+            "throw" => false,
+        ],
+        "s3" => [
+            "driver" => "s3",
+            "key" => env("AWS_ACCESS_KEY_ID"),
+            "secret" => env("AWS_SECRET_ACCESS_KEY"),
+            "region" => env("AWS_DEFAULT_REGION"),
+            "bucket" => env("AWS_BUCKET"),
+            "url" => env("AWS_URL"),
+            "endpoint" => env("AWS_ENDPOINT"),
+            "use_path_style_endpoint" => env(
+                "AWS_USE_PATH_STYLE_ENDPOINT",
+                false
+            ),
+            "throw" => false,
+        ],
     ],
 
     /*
@@ -104,9 +104,7 @@ return [
     |
     */
 
-    'links' => [
-        public_path('storage') => storage_path('app/public'),
-
+    "links" => [
+        public_path("storage") => storage_path("app/public"),
     ],
-
 ];

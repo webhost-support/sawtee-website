@@ -117,6 +117,7 @@ export default function EditPostForm({
 
     const submit = (e) => {
         e.preventDefault();
+        console.log(data)
         post(
             route("admin.posts.update", {
                 _method: "patch",
@@ -140,7 +141,7 @@ export default function EditPostForm({
     };
 
     React.useEffect(() => {
-        files.length && setData("files", files);
+        files && setData("files", files) && console.log(files);
     }, [files]);
 
     return (
@@ -666,8 +667,8 @@ export default function EditPostForm({
                                     cursor={"pointer"}
                                     aria-hidden="true"
                                     accept=".pdf,.doc,.docx,.ppt,.pptx"
-                                    id="image"
-                                    name="image"
+                                    id="files"
+                                    name="files"
                                     size="md"
                                     onChange={(e) => {
                                         const newFiles = [
@@ -687,7 +688,8 @@ export default function EditPostForm({
                                                 <Input
                                                     isReadOnly
                                                     size="md"
-                                                    placeholder={`/Featured_Events/${file.name}`}
+                                                    value={`/Featured_Events/${file.name}`}                                         title={`/Featured_Events/${file.name}`}
+
                                                 />
                                                 {file.name && (
                                                     <InputRightAddon

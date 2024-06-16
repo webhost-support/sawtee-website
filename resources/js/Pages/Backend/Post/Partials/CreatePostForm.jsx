@@ -654,8 +654,8 @@ export default function CreatePostForm({ categories, themes, tags }) {
                                     cursor={"pointer"}
                                     aria-hidden="true"
                                     accept=".pdf,.doc,.docx,.ppt,.pptx"
-                                    id="image"
-                                    name="image"
+                                    id="files"
+                                    name="files"
                                     size="md"
                                     onChange={(e) => {
                                         setFiles(Array.from(e.target.files));

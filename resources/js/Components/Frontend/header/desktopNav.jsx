@@ -130,12 +130,11 @@ const AboutMegaMenu = ({
         <Box
             bg={"rgba(8, 126, 164,0.9)"}
             backdropFilter={"blur(5px)"}
-            as={motion.div}
             mx="auto"
             px={8}
             py={10}
             display={"flex"}
-            variants={MegaMenuWrapperVariants}
+
         >
             <Grid
                 templateColumns={{
@@ -167,8 +166,8 @@ const AboutMegaMenu = ({
                                     key={child.title}
                                     as={motion.li}
                                     variants={ListVariants}
-                                    initial={"closed"}
-                                    whileInView={"open"}
+                                    // initial={"closed"}
+                                    // whileInView={"open"}
                                     fontSize={{ md: "sm", xl: "md" }}
                                     fontWeight="medium"
                                     position="relative"
@@ -260,14 +259,12 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
         <Box
             bg={"rgba(8, 126, 164,0.9)"}
             backdropFilter={"blur(5px)"}
-            as={motion.div}
             gap="4"
             px={8}
             py={10}
             w="full"
             display="flex"
             flexDirection={"column"}
-            variants={MegaMenuWrapperVariants}
             {...rest}
         >
             <VStack spacing={10} align={"center"} justify="center">
@@ -277,7 +274,10 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                     </InertiaChakraLink>
                 </Text>
                 <SimpleGrid
-                    as={"ul"}
+                    as={motion.ul}
+                    variants={ListContainerVariants}
+                    initial={"closed"}
+                    whileInView={"open"}
                     // styleType={"lower-roman"}
                     columns={2}
                     // placeItems="end"
@@ -288,8 +288,6 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                                 key={grandChild.title}
                                 as={motion.li}
                                 variants={ListVariants}
-                                initial={"closed"}
-                                whileInView={"open"}
                                 fontSize={{
                                     md: "sm",
                                     xl: "md",
@@ -339,8 +337,6 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                                                     key={child.title}
                                                     as={motion.li}
                                                     variants={ListVariants}
-                                                    initial={"closed"}
-                                                    whileInView={"open"}
                                                     fontSize={{
                                                         md: "sm",
                                                         xl: "md",
