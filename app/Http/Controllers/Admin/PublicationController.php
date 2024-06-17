@@ -17,7 +17,7 @@ class PublicationController extends Controller
      */
     public function index()
     {
-        $publications = Publication::with(['category'])->latest()->paginate();
+        $publications = Publication::with(['category'])->latest()->paginate(10);
         return Inertia::render('Backend/Publication/Index', ['publications' => $publications]);
     }
 

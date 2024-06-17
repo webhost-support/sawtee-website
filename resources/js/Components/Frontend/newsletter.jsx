@@ -15,7 +15,6 @@ import {
     ListItem,
     InputGroup,
     InputRightElement,
-    InputRightAddon,
     IconButton,
 } from "@chakra-ui/react";
 import InertiaChakraLink from "./styles/inertia-chakra-link";
@@ -94,12 +93,15 @@ export const Newsletter = ({ data, props }) => {
                 <GridItem colSpan={{ base: 1, md: 2 }}>
                     <SimpleList heading={"e-newsletters"} my="10">
                         {data.slice(0, 5).map((item) => {
+                            const file = item.media.filter(
+                                (m) => m.collection_name === "post-files"
+                            )[0];
                             return (
                                 <ListItem key={item.id} mb="1rem">
                                     <InertiaChakraLink
                                         textDecor="underline"
                                         textUnderlineOffset="3px"
-                                        href={`/category/in-focus/${item.slug}`}
+                                        href={file?.original_url}
                                     >
                                         <Text
                                             fontSize={"0.875rem"}

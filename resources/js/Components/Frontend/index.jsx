@@ -206,7 +206,7 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
                                     <InertiaChakraLink
                                         textDecor="underline"
                                         textUnderlineOffset="3px"
-                                        href={`/category/in-focus/${item.slug}`}
+                                        href={`/category/sawtee-in-media/${item.slug}`}
                                     >
                                         <Text
                                             fontSize={"0.875rem"}
@@ -246,11 +246,12 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
                                       (item) =>
                                           item.collection_name ===
                                           "post-featured-image"
-                                  )[0].original_url
+                                  )[0]?.original_url
                                 : "/assets/SM-placeholder-150x150.png";
                         // const srcSet = featured_image
                         //     ? featured_image.responsive_images.responsive.urls
                         //     : null;
+
 
                         return (
                             <ListItem

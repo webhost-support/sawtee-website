@@ -69,7 +69,11 @@ const ArchivePost = ({ post, featured_image, showFallbackImage, rest }) => {
                 <Box p={[2, 4]}>
                     <Box>
                         <LinkOverlay
-                            href={`/category/${post.category.slug}/${post.slug}`}
+                            href={
+                                post.category.parent
+                                    ? `/category/${post.category.parent.slug}/${post.category.slug}/${post.slug}`
+                                    : `/category/${post.category.slug}/${post.slug}`
+                            }
                         >
                             <Heading
                                 as="h3"

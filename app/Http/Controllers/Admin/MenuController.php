@@ -17,7 +17,7 @@ class MenuController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-        return Inertia::render('Backend/Menu/Index', ['menus' => Menu::paginate()]);
+        return Inertia::render('Backend/Menu/Index', ['menus' => Menu::paginate(10)]);
     }
 
 

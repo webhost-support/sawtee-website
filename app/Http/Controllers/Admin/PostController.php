@@ -25,7 +25,7 @@ class PostController extends Controller
     {
         $posts = Post::with(["category", "tags", "theme"])
             ->idDescending()
-            ->paginate();
+            ->paginate(10);
         return Inertia::render("Backend/Post/Index", [
             "posts" => $posts,
         ]);

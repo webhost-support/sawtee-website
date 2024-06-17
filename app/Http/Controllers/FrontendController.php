@@ -74,7 +74,7 @@ class FrontendController extends Controller
         foreach ($category->children as $subcategory) {
             // Retrieve 2 posts per subcategory
             $featured_publications_array = Publication::with(['file', 'category'])->where('category_id', $subcategory->id)->orderBy('id', "DESC")->limit(1)->get();
-            $subcategoryPosts = Publication::with([ 'file', 'category'])->where('category_id', $subcategory->id)
+            $subcategoryPosts = Publication::with(['file', 'category'])->where('category_id', $subcategory->id)
                 ->orderBy('id', "DESC")
                 ->skip(1)
                 ->limit(3)
@@ -90,9 +90,9 @@ class FrontendController extends Controller
         $slider = Slider::where('name', "Home Page Slider")->first();
         $slides = Slide::where('slider_id', $slider->id)->orderBy('id', 'DESC')->get();
         $slidesResponsiveImages = array();
-        foreach ($slides as $slide ){
+        foreach ($slides as $slide) {
             $responsive = $slide->getFirstMedia('slides')?->getSrcSet('responsive');
-            if($responsive){
+            if ($responsive) {
                 array_push($slidesResponsiveImages, $slide->getFirstMedia('slides')->getSrcSet('responsive'));
             }
         }
@@ -177,7 +177,6 @@ class FrontendController extends Controller
         $category_responsive_images = $category->getFirstMedia('category_media')?->getSrcset('responsive');
         $posts = getPosts($category, $slug);
 
-
         // If route is for publications category
         if ($slug === 'publications' && !$subcategory) {
 
@@ -193,20 +192,24 @@ class FrontendController extends Controller
         }
 
         if ($slug === 'teams' && !$subcategory) {
-                $teams = Team::with('media')->orderByDesc('id')->simplePaginate(12);
-                return Inertia::render('Frontend/Archives/TeamsArchive', [
-                    'category' => $category,
-                    'teams' => $teams,
-                    'featured_image' => $featured_image,
-                    'srcSet' => $category_responsive_images
-                ]);
-            }
+            $teams = Team::with('media')->orderByDesc('id')->simplePaginate(12);
+            return Inertia::render('Frontend/Archives/TeamsArchive', [
+                'category' => $category,
+                'teams' => $teams,
+                'featured_image' => $featured_image,
+                'srcSet' => $category_responsive_images
+            ]);
+        }
 
 
         // if route is for category/subcategory/post eg: sawtee.org/programmes/ongoing-programmes/post-slug
         if ($subcategory && $post) {
+            // dd($post, $segments);
+
             $slug = $segments[3];
-            $post = Post::where('slug', $slug)->firstOrFail();
+            $category = Category::where('slug', $subcategory)->firstOrFail();
+            $post =
+            Post::where("category_id", $category->id)->where("status", "published")->where('slug', $slug)->firstOrFail();;
             return Inertia::render('Frontend/Post', ['post' => $post->load('category', "category.parent", 'media')]);
         }
 
@@ -226,11 +229,13 @@ class FrontendController extends Controller
             }
 
             if (!$category) {
+                // dd("here", $segments[2], $segments[1]);
+
                 $category = Category::with('parent')->where('slug', $segments[1])->first();
-                $post = Post::where('slug', $segments[2])->firstOrFail();
+                $post = Post::where("category_id", $category->id)->where("status", "published")->where('slug', $segments[2])->firstOrFail();
                 $media = $post->getFirstMediaUrl('post-featured-image');
                 $srcSet = $post->getFirstMedia('post-featured-image')?->getSrcSet('responsive');
-                return Inertia::render('Frontend/Post', ['post' => $post->load('category', 'category.parent', 'media'), 'featured_image'=>$media, "srcSet" => $srcSet]);
+                return Inertia::render('Frontend/Post', ['post' => $post->load('category', 'category.parent', 'media'), 'featured_image' => $media, "srcSet" => $srcSet]);
             }
 
             return Inertia::render('Frontend/Category', [
@@ -264,6 +269,4 @@ class FrontendController extends Controller
         // $result = array_merge($posts, $publications, $research);
         return response()->json($posts->load('category'));
     }
-
-
 }

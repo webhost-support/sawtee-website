@@ -17,7 +17,7 @@ class SectionController extends Controller
      */
     public function index()
     {
-        $sections = Section::with('page')->orderBy('id', 'DESC')->paginate();
+        $sections = Section::with('page')->orderBy('id', 'DESC')->paginate(10);
         return Inertia::render('Backend/Section/Index', [
             'sections' => $sections
         ]);

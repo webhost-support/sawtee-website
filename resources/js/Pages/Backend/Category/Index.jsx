@@ -1,12 +1,7 @@
 import PrimaryButton from "@/Components/Backend/PrimaryButton";
 import { DataTable } from "@/Components/Backend/DataTable";
 import AuthenticatedLayout from "@/Pages/Backend/Layouts/AuthenticatedLayout";
-import {
-    Box,
-    HStack,
-
-    useDisclosure,
-} from "@chakra-ui/react";
+import { Box, HStack, useDisclosure } from "@chakra-ui/react";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { createColumnHelper } from "@tanstack/react-table";
 import {
