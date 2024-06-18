@@ -1,54 +1,50 @@
-import { Box, Heading, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
-import React from "react";
-import { splitPosts } from "@/Utils/helpers";
-import PostPreviewCard from "@/Components/Frontend/PostPreviewCard";
-import { FeaturedPostSection } from "@/Components/Frontend/featured-post";
+import { Box, Heading, SimpleGrid, useColorModeValue } from '@chakra-ui/react';
+import React from 'react';
+import { splitPosts } from '@/Utils/helpers';
+import PostPreviewCard from '@/Components/Frontend/PostPreviewCard';
+import { FeaturedPostSection } from '@/Components/Frontend/featured-post';
 
 const BlogArchive = ({ posts }) => {
-    // Get the data of the current list.
-    const [firstThreePosts, othersPosts] = splitPosts(posts);
+	// Get the data of the current list.
+	const [firstThreePosts, othersPosts] = splitPosts(posts);
 
-    return (
-        <Box as="section">
-            <FeaturedPostSection data={firstThreePosts} />
+	return (
+		<Box as="section">
+			<FeaturedPostSection data={firstThreePosts} />
 
-            <Box
-                // bg={useColorModeValue("whiteAlpha.700", "gray.700")}
-                py={{ base: "64px", md: "80px" }}
-                px={{ base: "24px", md: "40px" }}
-                width={{ base: "auto", lg: "80%" }}
-                maxWidth="1200px"
-                mx="auto"
-            >
-                <Heading
-                    as="h3"
-                    textTransform="uppercase"
-                    textAlign="center"
-                    fontSize={{ base: "4xl", md: "6xl" }}
-                    color={useColorModeValue("accent.400", "accent.50")}
-                >
-                    Latest Blog Posts
-                </Heading>
+			<Box
+				// bg={useColorModeValue("whiteAlpha.700", "gray.700")}
+				py={{ base: '64px', md: '80px' }}
+				px={{ base: '24px', md: '40px' }}
+				width={{ base: 'auto', lg: '80%' }}
+				maxWidth="1200px"
+				mx="auto"
+			>
+				<Heading
+					as="h3"
+					textTransform="uppercase"
+					textAlign="center"
+					fontSize={{ base: '4xl', md: '6xl' }}
+					color={useColorModeValue('accent.400', 'accent.50')}
+				>
+					Latest Blog Posts
+				</Heading>
 
-                <SimpleGrid
-                    mt={{ base: "64px", md: "80px" }}
-                    columns={{ base: 1, md: 2 }}
-                    spacing="40px"
-                >
-                    {othersPosts.map((post, idx) => {
-                        return (
-                            <PostPreviewCard
-                                showImage={false}
-                                key={post.id}
-                                data={post}
-                                color={"gray.700"}
-                                _dark={{ color: "whiteAlpha.700" }}
-                                rounded="xl"
-                            />
-                        );
-                    })}
-                </SimpleGrid>
-                {/* <Box as="section" w="full">
+				<SimpleGrid mt={{ base: '64px', md: '80px' }} columns={{ base: 1, md: 2 }} spacing="40px">
+					{othersPosts.map((post, idx) => {
+						return (
+							<PostPreviewCard
+								showImage={false}
+								key={post.id}
+								data={post}
+								color={'gray.700'}
+								_dark={{ color: 'whiteAlpha.700' }}
+								rounded="xl"
+							/>
+						);
+					})}
+				</SimpleGrid>
+				{/* <Box as="section" w="full">
           {postsPerCategory.map(({ posts, category }) => (
             <Box key={category.id}>
               <Heading as="h4">{category.name}</Heading>
@@ -74,9 +70,9 @@ const BlogArchive = ({ posts }) => {
             </Box>
           ))}
         </Box> */}
-            </Box>
-        </Box>
-    );
+			</Box>
+		</Box>
+	);
 };
 
 export default BlogArchive;

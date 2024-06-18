@@ -1,49 +1,39 @@
-import { VStack, Text, Heading, HStack } from "@chakra-ui/react";
-import { motion } from "framer-motion";
-import { formatDate } from "@/Utils/helpers";
-import { ExploreButton, GlassBox } from "@/Components/Frontend/index";
-import { Link } from "@inertiajs/react";
+import { VStack, Text, Heading, HStack } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
+import { formatDate } from '@/Utils/helpers';
+import { ExploreButton, GlassBox } from '@/Components/Frontend/index';
+import { Link } from '@inertiajs/react';
 
 const SawteeInMediaArchive = ({ posts, headingColor, textColor }) => {
-    return posts.map(({ title, slug, excerpt, published_at }) => {
-        return (
-            <GlassBox
-                as={motion.div}
-                whileHover={{ y: "-10px" }}
-                _hover={{ boxShadow: "xl" }}
-                p="40px"
-                boxShadow="none"
-                role="group"
-                maxW="xl"
-            >
-                <VStack spacing={2} mb={5} alignItems={"start"}>
-                    <Link href={`/category/sawtee-in-media/${slug}`}>
-                        <Heading
-                            color={headingColor}
-                            fontSize={"md"}
-                            lineHeight={1.2}
-                            fontWeight="semibold"
-                            textAlign="left"
-                            mb={4}
-                        >
-                            {title}
-                        </Heading>
-                    </Link>
+	return posts.map(({ title, slug, excerpt, published_at }) => {
+		return (
+			<GlassBox
+				as={motion.div}
+				whileHover={{ y: '-10px' }}
+				_hover={{ boxShadow: 'xl' }}
+				p="40px"
+				boxShadow="none"
+				role="group"
+				maxW="xl"
+			>
+				<VStack spacing={2} mb={5} alignItems={'start'}>
+					<Link href={`/category/sawtee-in-media/${slug}`}>
+						<Heading
+							color={headingColor}
+							fontSize={'md'}
+							lineHeight={1.2}
+							fontWeight="semibold"
+							textAlign="left"
+							mb={4}
+						>
+							{title}
+						</Heading>
+					</Link>
 
-                    <Text
-                        fontSize="sm"
-                        noOfLines={3}
-                        color={textColor}
-                        dangerouslySetInnerHTML={{ __html: excerpt }}
-                    />
-                </VStack>
-                <HStack
-                    fontSize="sm"
-                    spacing={2}
-                    justifyContent="space-between"
-                    alignItems="center"
-                >
-                    {/* {acf.publishers.length > 0 &&
+					<Text fontSize="sm" noOfLines={3} color={textColor} dangerouslySetInnerHTML={{ __html: excerpt }} />
+				</VStack>
+				<HStack fontSize="sm" spacing={2} justifyContent="space-between" alignItems="center">
+					{/* {acf.publishers.length > 0 &&
                     acf.publishers.map(({ publisher, publisher_website }) => {
                         return (
                             <Tag
@@ -60,25 +50,20 @@ const SawteeInMediaArchive = ({ posts, headingColor, textColor }) => {
                         );
                     })} */}
 
-                    <Text
-                        fontSize={"xs"}
-                        color={headingColor}
-                        dangerouslySetInnerHTML={{
-                            __html: formatDate(published_at),
-                        }}
-                    />
-                    <Link href={`/category/sawtee-in-media/${slug}`}>
-                        <ExploreButton
-                            size="xs"
-                            text="Read more"
-                            colorScheme={"gray"}
-                            w="full"
-                        />
-                    </Link>
-                </HStack>
-            </GlassBox>
-        );
-    });
+					<Text
+						fontSize={'xs'}
+						color={headingColor}
+						dangerouslySetInnerHTML={{
+							__html: formatDate(published_at),
+						}}
+					/>
+					<Link href={`/category/sawtee-in-media/${slug}`}>
+						<ExploreButton size="xs" text="Read more" colorScheme={'gray'} w="full" />
+					</Link>
+				</HStack>
+			</GlassBox>
+		);
+	});
 };
 
 export default SawteeInMediaArchive;

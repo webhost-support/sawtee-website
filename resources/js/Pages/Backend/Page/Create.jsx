@@ -1,14 +1,14 @@
-import AuthenticatedLayout from "@/Pages/Backend/Layouts/AuthenticatedLayout";
+import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
 
-import { Head } from "@inertiajs/react";
-import CreatePageForm from "./Partials/CreatePageForm";
+import { Head } from '@inertiajs/react';
+import CreatePageForm from './Partials/CreatePageForm';
 
 export default function Create({ auth, pages }) {
-    return (
-        <AuthenticatedLayout user={auth.user}>
-            <Head title="Add New Page" />
+	return (
+		<AuthenticatedLayout user={auth.user}>
+			<Head title="Add New Page" />
 
-            <CreatePageForm pages={pages} />
-        </AuthenticatedLayout>
-    );
+			<CreatePageForm pages={pages} />
+		</AuthenticatedLayout>
+	);
 }

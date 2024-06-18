@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
 use Mostafaznv\PdfOptimizer\Laravel\Facade\PdfOptimizer;
 use Mostafaznv\PdfOptimizer\Enums\ColorConversionStrategy;
 use Mostafaznv\PdfOptimizer\Enums\PdfSettings;
+use Storage;
 
 class PostController extends Controller
 {
@@ -52,6 +53,7 @@ class PostController extends Controller
         $validated["title"] = Str::of($validated["title"])->squish();
         $validated["meta_title"] = $validated["title"];
 
+
         $post = Post::create($validated);
 
         if ($request->has("tags")) {
@@ -64,16 +66,19 @@ class PostController extends Controller
                 ->toMediaCollection("post-featured-image");
         }
 
-        if ($request->file("file")) {
+        if ($request->hasFile("file")) {
+
+// dd("here", $request->file('file'));
+
             $filename = $request->file("file")->getClientOriginalName();
             $outputFilePath = public_path("tmp/" . $filename);
-
             $result = PdfOptimizer::open($request->file("file"))
-                ->settings(PdfSettings::DEFAULT)
+                ->settings(PdfSettings::SCREEN)
                 ->toDisk("tmp")
                 ->colorImageResolution(144)
                 ->downSampleColorImages(true)
                 ->optimize($filename);
+
 
             $post->addMedia($outputFilePath)->toMediaCollection("post-files");
         }
@@ -171,7 +176,7 @@ class PostController extends Controller
                 ->postContentFiles->toArray();
             // unlink old files from storage and delete from database before saving new files.
             foreach ($post_content_files as $key => $value) {
-                if (File::exists($value["path"])) {
+                if (Storage::disk('events')->exists($value["path"])) {
                     unlink($value["path"]);
                     File::where("id", $value["id"])->delete();
                 }

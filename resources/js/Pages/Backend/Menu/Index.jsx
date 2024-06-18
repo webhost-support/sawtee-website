@@ -1,119 +1,86 @@
-import PrimaryButton from "@/Components/Backend/PrimaryButton";
-import { DataTable } from "@/Components/Backend/DataTable";
-import AuthenticatedLayout from "@/Pages/Backend/Layouts/AuthenticatedLayout";
-import {
-    Box,
-    HStack,
-    Tag,
-    Text,
-    useDisclosure,
-    useToast,
-} from "@chakra-ui/react";
-import { Head, Link, useForm } from "@inertiajs/react";
-import { createColumnHelper } from "@tanstack/react-table";
-import {
-    TableDeleteAction,
-    TableEditAction,
-} from "@/Components/Backend/TableActions";
-import React from "react";
-import CreateMenuForm from "./Partials/CreateMenu";
-import DeleteMenu from "./Partials/DeleteMenu";
-import { useState } from "react";
+import PrimaryButton from '@/Components/Backend/PrimaryButton';
+import { DataTable } from '@/Components/Backend/DataTable';
+import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
+import { Box, HStack, Tag, Text, useDisclosure, useToast } from '@chakra-ui/react';
+import { Head, Link, useForm } from '@inertiajs/react';
+import { createColumnHelper } from '@tanstack/react-table';
+import { TableDeleteAction, TableEditAction } from '@/Components/Backend/TableActions';
+import React from 'react';
+import CreateMenuForm from './Partials/CreateMenu';
+import DeleteMenu from './Partials/DeleteMenu';
+import { useState } from 'react';
 
 export default function Index({ auth, menus }) {
-    const columnHelper = createColumnHelper();
-    const { processing, get } = useForm();
-    const createMenu = useDisclosure();
-    const deleteMenu = useDisclosure();
+	const columnHelper = createColumnHelper();
+	const { processing, get } = useForm();
+	const createMenu = useDisclosure();
+	const deleteMenu = useDisclosure();
 
-    const [menuItem, setMenuItem] = useState(null);
+	const [menuItem, setMenuItem] = useState(null);
 
-    const handleEdit = (e, id) => {
-        e.preventDefault();
-        get(route("admin.manage.menus", id));
-    };
+	const handleEdit = (e, id) => {
+		e.preventDefault();
+		get(route('admin.manage.menus', id));
+	};
 
-    const handleDelete = (e, id) => {
-        e.preventDefault();
-        setMenuItem(id);
-        deleteMenu.onOpen();
-    };
+	const handleDelete = (e, id) => {
+		e.preventDefault();
+		setMenuItem(id);
+		deleteMenu.onOpen();
+	};
 
+	const defaultColumns = React.useMemo(
+		() => [
+			columnHelper.accessor('title', {
+				cell: info => info.getValue(),
+				header: 'Title',
+			}),
+			columnHelper.accessor('location', {
+				cell: info => info.getValue(),
+				header: 'Location',
+			}),
 
+			columnHelper.accessor('id', {
+				cell: info => {
+					return (
+						<HStack spacing={4}>
+							<TableEditAction onClick={e => handleEdit(e, info.getValue())} isDisabled={processing} />
+							<TableDeleteAction onClick={e => handleDelete(e, info.getValue())} isDisabled={processing} />
+						</HStack>
+					);
+				},
+				header: 'Actions',
+			}),
+		],
+		[]
+	);
 
-    const defaultColumns = React.useMemo(
-        () => [
-            columnHelper.accessor("title", {
-                cell: (info) => info.getValue(),
-                header: "Title",
-            }),
-            columnHelper.accessor("location", {
-                cell: (info) => info.getValue(),
-                header: "Location",
-            }),
+	return (
+		<AuthenticatedLayout user={auth.user}>
+			<Head title="Menus" />
+			{menus.length <= 0 && (
+				<HStack spacing={4} variant="left-accent">
+					<Alert status="warning">
+						<AlertIcon />
+						<AlertTitle>No menu!</AlertTitle>
+						<AlertDescription>Create a menu to add menu items.</AlertDescription>
+					</Alert>
 
-            columnHelper.accessor("id", {
-                cell: (info) => {
-                    return (
-                        <HStack spacing={4}>
-                            <TableEditAction
-                                onClick={(e) => handleEdit(e, info.getValue())}
-                                isDisabled={processing}
-                            />
-                            <TableDeleteAction
-                                onClick={(e) =>
-                                    handleDelete(e, info.getValue())
-                                }
-                                isDisabled={processing}
-                            />
-                        </HStack>
-                    );
-                },
-                header: "Actions",
-            }),
-        ],
-        []
-    );
+					<Button onClick={onOpen}>Create new menu</Button>
+				</HStack>
+			)}
 
-    return (
-        <AuthenticatedLayout user={auth.user}>
-            <Head title="Menus" />
-            {menus.length <= 0 && (
-                <HStack spacing={4} variant="left-accent">
-                    <Alert status="warning">
-                        <AlertIcon />
-                        <AlertTitle>No menu!</AlertTitle>
-                        <AlertDescription>
-                            Create a menu to add menu items.
-                        </AlertDescription>
-                    </Alert>
+			{menus && (
+				<>
+					<Box mb={4}>
+						<PrimaryButton onClick={createMenu.onOpen}>Add New Menu</PrimaryButton>
+					</Box>
+					<DataTable defaultColumns={defaultColumns} data={menus} />
+				</>
+			)}
 
-                    <Button onClick={onOpen}>Create new menu</Button>
-                </HStack>
-            )}
-
-            {menus && (
-                <>
-                    <Box mb={4}>
-                        <PrimaryButton onClick={createMenu.onOpen}>
-                            Add New Menu
-                        </PrimaryButton>
-                    </Box>
-                    <DataTable defaultColumns={defaultColumns} data={menus} />
-                </>
-            )}
-
-            <CreateMenuForm
-                onOpen={createMenu.onOpen}
-                isOpen={createMenu.isOpen}
-                onClose={createMenu.onClose}
-            />
-            <DeleteMenu
-                onOpen={deleteMenu.onOpen}
-                isOpen={deleteMenu.isOpen}
-                onClose={deleteMenu.onClose}
-                menu={menuItem}
-            />
-        </AuthenticatedLayout>
-    );
+			<CreateMenuForm onOpen={createMenu.onOpen} isOpen={createMenu.isOpen} onClose={createMenu.onClose} />
+			<DeleteMenu onOpen={deleteMenu.onOpen} isOpen={deleteMenu.isOpen} onClose={deleteMenu.onClose} menu={menuItem} />
+		</AuthenticatedLayout>
+	);
 }

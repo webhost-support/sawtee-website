@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Laravel\Scout\Searchable;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
@@ -42,12 +44,17 @@ class Publication extends Model implements HasMedia
     }
 
 
-    public function file()
+    public function file(): MorphOne
     {
         return $this->morphOne(File::class, 'fileable');
     }
 
-    public function category()
+	/**
+	 * Retrieves the category associated with this publication.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
