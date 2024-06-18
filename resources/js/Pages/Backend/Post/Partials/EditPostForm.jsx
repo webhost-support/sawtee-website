@@ -1,6 +1,15 @@
+import ContentEditor from '@/Components/Backend/ContentEditor';
+import FileUpload, { PreviewImage } from '@/Components/Backend/FileUpload';
+import ControlledMultiSelect from '@/Components/Backend/MultiSelect';
 import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import { useForm } from '@inertiajs/react';
+import { filterByReference } from '@/Utils/helpers';
+import { CloseIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
 import {
+	Accordion,
+	AccordionButton,
+	AccordionIcon,
+	AccordionItem,
+	AccordionPanel,
 	Box,
 	Button,
 	FormControl,
@@ -8,6 +17,7 @@ import {
 	FormLabel,
 	Grid,
 	GridItem,
+	IconButton,
 	Input,
 	InputGroup,
 	InputLeftAddon,
@@ -16,22 +26,12 @@ import {
 	Select,
 	Stack,
 	Textarea,
+	Tooltip,
 	VStack,
 	useToast,
-	Tooltip,
-	Accordion,
-	AccordionItem,
-	AccordionButton,
-	AccordionPanel,
-	AccordionIcon,
-	IconButton,
 } from '@chakra-ui/react';
-import FileUpload, { PreviewImage } from '@/Components/Backend/FileUpload';
+import { useForm } from '@inertiajs/react';
 import React from 'react';
-import ContentEditor from '@/Components/Backend/ContentEditor';
-import ControlledMultiSelect from '@/Components/Backend/MultiSelect';
-import { filterByReference } from '@/Utils/helpers';
-import { CloseIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
 import { FiFile } from 'react-icons/fi';
 
 export default function EditPostForm({ post: postData, categories, tags, themes }) {

@@ -67,26 +67,23 @@ class PostController extends Controller
         }
 
         if ($request->hasFile("file")) {
-
-// dd("here", $request->file('file'));
-
             $filename = $request->file("file")->getClientOriginalName();
             $outputFilePath = public_path("tmp/" . $filename);
+
             $result = PdfOptimizer::open($request->file("file"))
                 ->settings(PdfSettings::SCREEN)
-                ->toDisk("tmp")
                 ->colorImageResolution(144)
                 ->downSampleColorImages(true)
-                ->optimize($filename);
+                ->optimize($outputFilePath);
 
-
-            $post->addMedia($outputFilePath)->toMediaCollection("post-files");
+						if($result->status){
+							$post->addMedia($outputFilePath)->toMediaCollection("post-files");
+						}
         }
 
         if ($request->file("files")) {
             foreach ($request->file("files") as $file) {
                 $filename = $file->getClientOriginalName();
-
                 $outputFile = public_path("Featured_Events/" . $filename);
 
                 $optimizedDocument = new File();
