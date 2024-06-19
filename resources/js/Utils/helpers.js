@@ -11,6 +11,15 @@ export function slugify(inputString) {
 		.replace(/-+$/, ''); // Trim - from end of text
 }
 
+	export const createExcerpt = (content, maxNumberOfWords, trailingIndicator = '...') => {
+		const listOfWords = content.trim().split(' ');
+		const truncatedContent = listOfWords.slice(0, maxNumberOfWords).join(' ');
+		const excerpt = truncatedContent + trailingIndicator;
+		const output = listOfWords.length > maxNumberOfWords ? excerpt : content;
+
+		return output;
+	};
+
 export function filterByReference(arr1, arr2) {
 	let res = [];
 	res = arr1.filter(el => {

@@ -3,6 +3,7 @@ import ContentEditor from '@/Components/Backend/ContentEditor';
 import FileUpload, { PreviewImage } from '@/Components/Backend/FileUpload';
 import ControlledMultiSelect from '@/Components/Backend/MultiSelect';
 import PrimaryButton from '@/Components/Backend/PrimaryButton';
+import { createExcerpt } from '@/Utils/helpers';
 import { CloseIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
 import {
 	Accordion,
@@ -28,7 +29,6 @@ import {
 	Textarea,
 	Tooltip,
 	VStack,
-	useColorMode,
 	useToast,
 } from '@chakra-ui/react';
 import { useForm } from '@inertiajs/react';
@@ -61,7 +61,6 @@ export default function CreatePostForm({ categories, themes, tags }) {
 	const [image, setImage] = React.useState(null);
 	const [selectedCategory, setSelectedCategory] = React.useState(null);
 	const [postTags, setPostTags] = React.useState([]);
-	const { colorMode } = useColorMode();
 	const [startDate, setStartDate] = React.useState(new Date());
 
 	const [tagOptions, setTagOptions] = React.useState(() => {
@@ -75,7 +74,6 @@ export default function CreatePostForm({ categories, themes, tags }) {
 
 		return tagsarray;
 	});
-
 
 	function setDataTags(e) {
 		let array = [];
@@ -113,6 +111,17 @@ export default function CreatePostForm({ categories, themes, tags }) {
 	React.useEffect(() => {
 		files.length && setData('files', files);
 	}, [files]);
+
+	React.useEffect(() => {
+		const content = data.content
+			.toString()
+			.replace(/\-\-+/g, '-')
+			.replace(/^-+/, '')
+			.replace(/-+$/, '')
+			.replace('<p>', '');
+		const excerpt = createExcerpt(content, 30);
+		excerpt && setData('excerpt', excerpt);
+	}, [data.content]);
 
 	return (
 		<form onSubmit={submit}>
@@ -168,6 +177,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
 								isInvalid={errors.excerpt}
 								resize={'vertical'}
 								placeholder="Short Description"
+								value={data.excerpt}
 								rows={6}
 								mt={1}
 								autoComplete="excerpt"

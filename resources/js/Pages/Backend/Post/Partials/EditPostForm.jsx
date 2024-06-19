@@ -3,8 +3,9 @@ import ContentEditor from '@/Components/Backend/ContentEditor';
 import FileUpload, { PreviewImage } from '@/Components/Backend/FileUpload';
 import ControlledMultiSelect from '@/Components/Backend/MultiSelect';
 import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import { filterByReference } from '@/Utils/helpers';
+import { createExcerpt, filterByReference } from '@/Utils/helpers';
 import { CloseIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
+
 import {
 	Accordion,
 	AccordionButton,
@@ -132,6 +133,18 @@ export default function EditPostForm({ post: postData, categories, tags, themes 
 	React.useEffect(() => {
 		files && setData('files', files);
 	}, [files]);
+
+	React.useEffect(() => {
+		if (data.content) {
+			const content = data.content
+				.toString()
+				.replace(/^-+/, '')
+				.replace(/-+$/, '')
+				.replace(/(<([^>]+)>)/gi, '');
+			const excerpt = createExcerpt(content, 30);
+			excerpt && setData('excerpt', excerpt);
+		}
+	}, [data.content]);
 
 	return (
 		<form onSubmit={submit}>

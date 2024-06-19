@@ -6,7 +6,6 @@ use App\Models\Menu;
 use App\Models\MenuItem;
 use App\Models\Team;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
 
