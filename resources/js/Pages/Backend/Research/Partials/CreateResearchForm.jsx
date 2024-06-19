@@ -1,6 +1,13 @@
+import ChakraDatePicker from '@/Components/Backend/ChakraDatePicker';
+import FileUpload, { PreviewImage } from '@/Components/Backend/FileUpload';
 import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import { useForm } from '@inertiajs/react';
+import { CloseIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
 import {
+	Accordion,
+	AccordionButton,
+	AccordionIcon,
+	AccordionItem,
+	AccordionPanel,
 	AspectRatio,
 	Box,
 	Button,
@@ -14,20 +21,13 @@ import {
 	InputLeftAddon,
 	InputRightAddon,
 	Textarea,
+	Tooltip,
 	VStack,
 	useToast,
-	Accordion,
-	AccordionItem,
-	AccordionButton,
-	AccordionPanel,
-	AccordionIcon,
-	Tooltip,
 } from '@chakra-ui/react';
-import FileUpload, { PreviewImage } from '@/Components/Backend/FileUpload';
+import { useForm } from '@inertiajs/react';
 import { useState } from 'react';
-import { CloseIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
 import { FiFile } from 'react-icons/fi';
-import ChakraDatePicker from '@/Components/Backend/ChakraDatePicker';
 
 export default function CreateResearchForm() {
 	const { data, setData, post, processing, errors } = useForm({

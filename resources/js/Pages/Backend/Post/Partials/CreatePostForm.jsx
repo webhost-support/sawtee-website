@@ -1,3 +1,4 @@
+import ChakraDatePicker from '@/Components/Backend/ChakraDatePicker';
 import ContentEditor from '@/Components/Backend/ContentEditor';
 import FileUpload, { PreviewImage } from '@/Components/Backend/FileUpload';
 import ControlledMultiSelect from '@/Components/Backend/MultiSelect';
@@ -33,6 +34,7 @@ import {
 import { useForm } from '@inertiajs/react';
 import React from 'react';
 import { FiFile } from 'react-icons/fi';
+import '../../../../../css/date-picker.css';
 
 export default function CreatePostForm({ categories, themes, tags }) {
 	const { data, setData, post, processing, errors } = useForm({
@@ -49,7 +51,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
 		files: [],
 		link: null,
 		genre: '',
-		published_at: new Date(),
+		published_at: null,
 		meta_title: '',
 		meta_description: '',
 	});
@@ -60,6 +62,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
 	const [selectedCategory, setSelectedCategory] = React.useState(null);
 	const [postTags, setPostTags] = React.useState([]);
 	const { colorMode } = useColorMode();
+	const [startDate, setStartDate] = React.useState(new Date());
 
 	const [tagOptions, setTagOptions] = React.useState(() => {
 		let tagsarray = [];
@@ -73,15 +76,6 @@ export default function CreatePostForm({ categories, themes, tags }) {
 		return tagsarray;
 	});
 
-	// Set Slug if title value changes
-	// React.useEffect(() => {
-	//     const postSlug = data.title
-	//         .toLowerCase()
-	//         .replace(/\s+/g, "-")
-	//         .replaceAll(",", "");
-	//     setData("slug", postSlug);
-	//     setValue(postSlug);
-	// }, [data.title]);
 
 	function setDataTags(e) {
 		let array = [];
@@ -111,7 +105,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
 					isClosable: true,
 				}),
 			onError: errors => {
-				console.log(errors);
+				console.error(errors);
 			},
 		});
 	};
@@ -180,12 +174,12 @@ export default function CreatePostForm({ categories, themes, tags }) {
 								onChange={e => setData('excerpt', e.target.value)}
 							/>
 
-							{errors.title && <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>}
+							{errors.excerpt && <FormErrorMessage mt={2}>{errors.excerpt}</FormErrorMessage>}
 						</FormControl>
 					</VStack>
 				</GridItem>
 				<GridItem colSpan={{ base: 1, xl: 2 }}>
-					<VStack spacing={8}>
+					<VStack spacing={8} position={'sticky'} top={'2rem'}>
 						<Accordion allowToggle w="full">
 							<AccordionItem>
 								<h2>
@@ -196,9 +190,9 @@ export default function CreatePostForm({ categories, themes, tags }) {
 										}}
 									>
 										<Box as="span" flex="1" textAlign="left" fontWeight={'semibold'}>
-											{'SEO Meta Tags '}
+											{'SEO Meta Tags'}
 											<Tooltip label="Add meta-title and meta-description for SEO" fontSize="xs">
-												<QuestionOutlineIcon boxSize={3} />
+												<QuestionOutlineIcon ml="2" boxSize={3} />
 											</Tooltip>
 										</Box>
 										<AccordionIcon />
@@ -238,6 +232,194 @@ export default function CreatePostForm({ categories, themes, tags }) {
 							</AccordionItem>
 						</Accordion>
 
+						<Accordion allowToggle w="full">
+							<AccordionItem>
+								<h2>
+									<AccordionButton
+										_expanded={{
+											bg: 'gray.600',
+											color: 'white',
+										}}
+									>
+										<Box as="span" flex="1" textAlign="left" fontWeight={'semibold'}>
+											{'Optional Fields'}
+											<Tooltip label="Add theme and post tags for this post" fontSize="xs">
+												<QuestionOutlineIcon ml="2" boxSize={3} />
+											</Tooltip>
+										</Box>
+										<AccordionIcon />
+									</AccordionButton>
+								</h2>
+								<AccordionPanel pb={4}>
+									<VStack gap="6" alignItems={'start'}>
+										<FormControl isInvalid={errors.theme_id} as="fieldset">
+											<FormLabel as="legend" htmlFor="theme_id">
+												Theme
+											</FormLabel>
+
+											<Select
+												name="theme_id"
+												placeholder="Select theme"
+												onChange={e => {
+													setData('theme_id', e.target.value);
+												}}
+											>
+												{themes &&
+													themes.map(theme => (
+														<option key={theme.id} value={theme.id}>
+															{theme.title}
+														</option>
+													))}
+											</Select>
+
+											{errors.theme_id && <FormErrorMessage mt={2}>{errors.theme_id}</FormErrorMessage>}
+										</FormControl>
+
+										<FormControl py={4} id={'tags'}>
+											<FormLabel htmlFor="tags">{' Add Tags'}</FormLabel>
+
+											<ControlledMultiSelect
+												isMulti
+												name={'tags'}
+												options={tagOptions}
+												variant="filled"
+												tagVariant="solid"
+												placeholder="Select Tags"
+												value={postTags}
+												onChange={e => {
+													setPostTags(e);
+													setDataTags(e);
+												}}
+												selectedOptionColorScheme="blue"
+											/>
+										</FormControl>
+									</VStack>
+								</AccordionPanel>
+							</AccordionItem>
+						</Accordion>
+
+						<Accordion allowToggle w="full">
+							<AccordionItem>
+								<h2>
+									<AccordionButton
+										_expanded={{
+											bg: 'gray.600',
+											color: 'white',
+										}}
+									>
+										<Box as="span" flex="1" textAlign="left" fontWeight={'semibold'}>
+											{'Upload files'}
+											<Tooltip label="Upload files associated with this post" fontSize="xs">
+												<QuestionOutlineIcon ml="2" boxSize={3} />
+											</Tooltip>
+										</Box>
+										<AccordionIcon />
+									</AccordionButton>
+								</h2>
+								<AccordionPanel pb={4}>
+									<VStack gap="6" alignItems={'start'}>
+										<FormControl mt={4}>
+											<FormLabel htmlFor="file">File Upload</FormLabel>
+
+											<InputGroup cursor={'pointer'}>
+												<InputLeftAddon children={<FiFile />} />
+												<Box position="relative">
+													<Input size="md" isReadOnly placeholder={filename ? filename : 'click to select file'} />
+													<Input
+														type="file"
+														height="100%"
+														width="100%"
+														position="absolute"
+														cursor={'pointer'}
+														top="0"
+														left="0"
+														opacity="0"
+														aria-hidden="true"
+														accept=".pdf,.docx,.pptx"
+														id="file"
+														name="file"
+														size="md"
+														onChange={e => {
+															setFilename(e.target.files[0].name);
+															setData('file', e.target.files[0]);
+														}}
+													/>
+												</Box>
+												{filename && (
+													<InputRightAddon
+														children={
+															<IconButton
+																icon={<CloseIcon />}
+																color={'red.500'}
+																onClick={() => {
+																	setFilename(null);
+																	setData('file', null);
+																}}
+															/>
+														}
+													/>
+												)}
+											</InputGroup>
+										</FormControl>
+
+										<FormControl mt={4}>
+											<FormLabel htmlFor="files">Content Files Upload</FormLabel>
+
+											<FileUpload text="Drop files here or click to select" accept=".pdf,.doc,.docx,.ppt,.pptx">
+												<Input
+													type="file"
+													height="100%"
+													width="100%"
+													position="absolute"
+													multiple
+													top="0"
+													left="0"
+													opacity="0"
+													cursor={'pointer'}
+													aria-hidden="true"
+													accept=".pdf,.doc,.docx,.ppt,.pptx"
+													id="files"
+													name="files"
+													size="md"
+													onChange={e => {
+														setFiles(Array.from(e.target.files));
+													}}
+												/>
+											</FileUpload>
+
+											<VStack spacing={4} mt={2}>
+												{files.length &&
+													files.map(file => {
+														return (
+															<InputGroup key={file.name}>
+																<InputLeftAddon children={<FiFile />} />
+
+																<Input size="md" isReadOnly placeholder={file.name} />
+																{file.name && (
+																	<InputRightAddon
+																		children={
+																			<IconButton
+																				icon={<CloseIcon />}
+																				color={'red.500'}
+																				onClick={() => {
+																					const newfiles = files.filter(prevfile => prevfile.name !== file.name);
+
+																					setFiles(newfiles);
+																				}}
+																			/>
+																		}
+																	/>
+																)}
+															</InputGroup>
+														);
+													})}
+											</VStack>
+										</FormControl>
+									</VStack>
+								</AccordionPanel>
+							</AccordionItem>
+						</Accordion>
+
 						<FormControl isInvalid={errors.category_id} isRequired as="fieldset">
 							<FormLabel as="legend" htmlFor="category_id">
 								Category
@@ -268,58 +450,34 @@ export default function CreatePostForm({ categories, themes, tags }) {
 								Published At
 							</FormLabel>
 
-							<Input
+							{/* <Input
 								type="date"
-								placeholder="Select Date and Time"
+								placeholder="Select Date"
 								id="published_at"
 								name="published_at"
-								onChange={e => setData('published_at', e.target.value)}
+								onChange={e => {
+									const newDate = new Date(e.target.value);
+
+									setData('published_at', e.target.value);
+								}}
+							/> */}
+							<ChakraDatePicker
+								selectedDate={startDate}
+								showMonthDropdown
+								showYearDropdown
+								dropdownMode="select"
+								withPortal
+								onChange={date => {
+									const newDate = new Date(date);
+									const publishedDate = `${newDate.getFullYear()}-${newDate.getMonth()}-${newDate.getDate()}`;
+									setStartDate(date);
+									setData('published_at', publishedDate);
+								}}
 							/>
 
 							{errors.published_at && <FormErrorMessage mt={2}>{errors.published_at}</FormErrorMessage>}
 						</FormControl>
 
-						<FormControl isInvalid={errors.theme_id} as="fieldset">
-							<FormLabel as="legend" htmlFor="theme_id">
-								Theme
-							</FormLabel>
-
-							<Select
-								name="theme_id"
-								placeholder="Select theme"
-								onChange={e => {
-									setData('theme_id', e.target.value);
-								}}
-							>
-								{themes &&
-									themes.map(theme => (
-										<option key={theme.id} value={theme.id}>
-											{theme.title}
-										</option>
-									))}
-							</Select>
-
-							{errors.theme_id && <FormErrorMessage mt={2}>{errors.theme_id}</FormErrorMessage>}
-						</FormControl>
-
-						<FormControl py={4} id={'tags'}>
-							<FormLabel htmlFor="tags">{' Add Tags'}</FormLabel>
-
-							<ControlledMultiSelect
-								isMulti
-								name={'tags'}
-								options={tagOptions}
-								variant="filled"
-								tagVariant="solid"
-								placeholder="Select Tags"
-								value={postTags}
-								onChange={e => {
-									setPostTags(e);
-									setDataTags(e);
-								}}
-								selectedOptionColorScheme="blue"
-							/>
-						</FormControl>
 						<FormControl mt={4} isInvalid={errors.status} isRequired as="fieldset">
 							<FormLabel as="legend" htmlFor="status">
 								Status
@@ -333,6 +491,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
 											name="status"
 											isChecked={data.status === item}
 											value={item}
+											size={'sm'}
 											onChange={e => {
 												setData('status', e.target.value);
 											}}
@@ -346,32 +505,34 @@ export default function CreatePostForm({ categories, themes, tags }) {
 							{errors.status && <FormErrorMessage mt={2}>{errors.status}</FormErrorMessage>}
 						</FormControl>
 
-						<FormControl isInvalid={errors.author} mt={4}>
-							<FormLabel htmlFor="author">
-								{'Author/s '}
-								<Tooltip
-									label="Add author name, if multple authors use comma seperated format. Eg: Paras Kharel, Dikshya Singh, Kshitiz Dahal"
-									fontSize="xs"
-									float={'right'}
-								>
-									<QuestionOutlineIcon boxSize={3} />
-								</Tooltip>
-							</FormLabel>
+						{selectedCategory === ('Covid' || 'Opinion in Lead' || 'Blog') && (
+							<FormControl isInvalid={errors.author} mt={4}>
+								<FormLabel htmlFor="author">
+									{'Author/s '}
+									<Tooltip
+										label="Add author name, if multple authors use comma seperated format. Eg: Paras Kharel, Dikshya Singh, Kshitiz Dahal"
+										fontSize="xs"
+										float={'right'}
+									>
+										<QuestionOutlineIcon boxSize={3} />
+									</Tooltip>
+								</FormLabel>
 
-							<Input
-								type="text"
-								id="author"
-								name="author"
-								display="block"
-								placeholder="Add author full name"
-								w="full"
-								mt={1}
-								autoComplete="author"
-								onChange={e => setData('author', e.target.value)}
-							/>
+								<Input
+									type="text"
+									id="author"
+									name="author"
+									display="block"
+									placeholder="Add author full name"
+									w="full"
+									mt={1}
+									autoComplete="author"
+									onChange={e => setData('author', e.target.value)}
+								/>
 
-							{errors.author && <FormErrorMessage mt={2}>{errors.author}</FormErrorMessage>}
-						</FormControl>
+								{errors.author && <FormErrorMessage mt={2}>{errors.author}</FormErrorMessage>}
+							</FormControl>
+						)}
 
 						{selectedCategory === 'Covid' && (
 							<FormControl isInvalid={errors.genre} mt={4}>
@@ -392,22 +553,24 @@ export default function CreatePostForm({ categories, themes, tags }) {
 							</FormControl>
 						)}
 
-						<FormControl isInvalid={errors.link} mt={4}>
-							<FormLabel htmlFor="link">External Link</FormLabel>
+						{selectedCategory === ('Covid' || 'Opinion in Lead' || 'Webinar Series') && (
+							<FormControl isInvalid={errors.link} mt={4}>
+								<FormLabel htmlFor="link">External Link</FormLabel>
 
-							<Input
-								type="text"
-								id="link"
-								name="link"
-								display="block"
-								w="full"
-								mt={1}
-								autoComplete="link"
-								onChange={e => setData('link', e.target.value)}
-							/>
+								<Input
+									type="text"
+									id="link"
+									name="link"
+									display="block"
+									w="full"
+									mt={1}
+									autoComplete="link"
+									onChange={e => setData('link', e.target.value)}
+								/>
 
-							{errors.author && <FormErrorMessage mt={2}>{errors.author}</FormErrorMessage>}
-						</FormControl>
+								{errors.author && <FormErrorMessage mt={2}>{errors.author}</FormErrorMessage>}
+							</FormControl>
+						)}
 
 						<FormControl mt={4}>
 							<FormLabel htmlFor="image">Featured Image</FormLabel>
@@ -453,103 +616,6 @@ export default function CreatePostForm({ categories, themes, tags }) {
 							)}
 						</FormControl>
 
-						<FormControl mt={4}>
-							<FormLabel htmlFor="file">File Upload</FormLabel>
-
-							<InputGroup cursor={'pointer'}>
-								<InputLeftAddon children={<FiFile />} />
-								<Box position="relative">
-									<Input size="md" isReadOnly placeholder={filename ? filename : 'click to select file'} />
-									<Input
-										type="file"
-										height="100%"
-										width="100%"
-										position="absolute"
-										cursor={'pointer'}
-										top="0"
-										left="0"
-										opacity="0"
-										aria-hidden="true"
-										accept=".pdf,.docx,.pptx"
-										id="file"
-										name="file"
-										size="md"
-										onChange={e => {
-											setFilename(e.target.files[0].name);
-											setData('file', e.target.files[0]);
-										}}
-									/>
-								</Box>
-								{filename && (
-									<InputRightAddon
-										children={
-											<IconButton
-												icon={<CloseIcon />}
-												color={'red.500'}
-												onClick={() => {
-													setFilename(null);
-													setData('file', null);
-												}}
-											/>
-										}
-									/>
-								)}
-							</InputGroup>
-						</FormControl>
-
-						<FormControl mt={4}>
-							<FormLabel htmlFor="files">Content Files Upload</FormLabel>
-
-							<FileUpload text="Drop files here or click to select" accept=".pdf,.doc,.docx,.ppt,.pptx">
-								<Input
-									type="file"
-									height="100%"
-									width="100%"
-									position="absolute"
-									multiple
-									top="0"
-									left="0"
-									opacity="0"
-									cursor={'pointer'}
-									aria-hidden="true"
-									accept=".pdf,.doc,.docx,.ppt,.pptx"
-									id="files"
-									name="files"
-									size="md"
-									onChange={e => {
-										setFiles(Array.from(e.target.files));
-									}}
-								/>
-							</FileUpload>
-
-							<VStack spacing={4} mt={2}>
-								{files.length &&
-									files.map(file => {
-										return (
-											<InputGroup key={file.name}>
-												<InputLeftAddon children={<FiFile />} />
-
-												<Input size="md" isReadOnly placeholder={file.name} />
-												{file.name && (
-													<InputRightAddon
-														children={
-															<IconButton
-																icon={<CloseIcon />}
-																color={'red.500'}
-																onClick={() => {
-																	const newfiles = files.filter(prevfile => prevfile.name !== file.name);
-
-																	setFiles(newfiles);
-																}}
-															/>
-														}
-													/>
-												)}
-											</InputGroup>
-										);
-									})}
-							</VStack>
-						</FormControl>
 						<PrimaryButton type="submit" isLoading={processing} mt={4} w="md" maxW="full">
 							Save
 						</PrimaryButton>
