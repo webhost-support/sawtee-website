@@ -209,8 +209,11 @@ class FrontendController extends Controller
             $slug = $segments[3];
             $category = Category::where('slug', $subcategory)->firstOrFail();
             $post =
-            Post::where("category_id", $category->id)->where("status", "published")->where('slug', $slug)->firstOrFail();;
-            return Inertia::render('Frontend/Post', ['post' => $post->load('category', "category.parent", 'media')]);
+            Post::where("category_id", $category->id)->where("status", "published")->where('slug', $slug)->firstOrFail();
+            $media = $post->getFirstMediaUrl('post-featured-image');
+            $srcSet = $post->getFirstMedia('post-featured-image')?->getSrcSet('responsive');
+            $file = $post->getFirstMediaurl('post-files');
+            return Inertia::render('Frontend/Post', ['post' => $post->load('category', 'category.parent'), 'featured_image' => $media, "srcSet" => $srcSet, 'file' => $file]);
         }
 
         // if route is for category/category-slug/subcategory eg: sawtee.org/category/programmes/ongoing-programmes/
@@ -229,13 +232,13 @@ class FrontendController extends Controller
             }
 
             if (!$category) {
-                // dd("here", $segments[2], $segments[1]);
 
                 $category = Category::with('parent')->where('slug', $segments[1])->first();
                 $post = Post::where("category_id", $category->id)->where("status", "published")->where('slug', $segments[2])->firstOrFail();
                 $media = $post->getFirstMediaUrl('post-featured-image');
                 $srcSet = $post->getFirstMedia('post-featured-image')?->getSrcSet('responsive');
-                return Inertia::render('Frontend/Post', ['post' => $post->load('category', 'category.parent', 'media'), 'featured_image' => $media, "srcSet" => $srcSet]);
+                $file = $post->getFirstMediaurl('post-files');
+                return Inertia::render('Frontend/Post', ['post' => $post->load('category', 'category.parent'), 'featured_image' => $media, "srcSet" => $srcSet, 'file' => $file]);
             }
 
             return Inertia::render('Frontend/Category', [

@@ -41,7 +41,7 @@ export default function EditPostForm({ post: postData, categories, tags, themes 
     slug: postData.slug,
     category_id: postData.category_id,
     theme_id: postData.theme_id,
-    content: postData.content,
+    content: postData.content ? postData.content : ' ',
     excerpt: postData.excerpt,
     status: postData.status,
     author: postData.author,
@@ -177,9 +177,9 @@ export default function EditPostForm({ post: postData, categories, tags, themes 
               <ContentEditor
                 id="content"
                 name="content"
-                initialValue={postData.content || ''}
+                initialValue={data.content}
+                value={undefined}
                 onChange={(e, editor) => {
-                  console.log(editor.getContent());
                   setData('content', editor.getContent());
                 }}
               />

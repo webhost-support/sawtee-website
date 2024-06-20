@@ -1,14 +1,14 @@
 import {
-	FiHome,
-	FiTrendingUp,
-	FiCompass,
-	FiStar,
-	FiLayout,
-	FiBook,
-	FiFileText,
-	FiGlobe,
-	FiGrid,
-	FiUsers,
+  FiBook,
+  FiCompass,
+  FiFileText,
+  FiGlobe,
+  FiGrid,
+  FiHome,
+  FiLayout,
+  FiStar,
+  FiTrendingUp,
+  FiUsers,
 } from 'react-icons/fi';
 import { RiPagesLine } from 'react-icons/ri';
 import { TbSlideshow } from 'react-icons/tb';
