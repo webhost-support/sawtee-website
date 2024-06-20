@@ -11,6 +11,7 @@ import {
   HStack,
   IconButton,
   Input,
+  Select,
   Stack,
   Table,
   TableContainer,
@@ -20,11 +21,11 @@ import {
   Th,
   Thead,
   Tr,
+  chakra,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { Inertia } from '@inertiajs/inertia';
-import { Link } from '@inertiajs/react';
 import { rankItem } from '@tanstack/match-sorter-utils';
+
 import {
   flexRender,
   getCoreRowModel,
@@ -36,17 +37,19 @@ import {
 import * as React from 'react';
 import { DebouncedInput } from '../Frontend/index';
 
-export function DataTable({ data, defaultColumns, showColumnFilters = true, pagination = true, showSearch = true }) {
-  console.log(data);
-
+export function FrontDataTable({
+  data,
+  defaultColumns,
+  showColumnFilters = true,
+  pagination = true,
+  showSearch = true,
+}) {
   const [sorting, setSorting] = React.useState([]);
+  const [showItems, setShowItems] = React.useState(10);
   const [columns] = React.useState(defaultColumns);
   const [columnVisibility, setColumnVisibility] = React.useState({});
   const [globalFilter, setGlobalFilter] = React.useState('');
-  const [categoryName] = React.useState(() => {
-    const array = data.path ? data.path.split('/admin/') : [];
-    return array[array.length - 1];
-  });
+
   const fuzzyFilter = (row, columnId, value, addMeta) => {
     // Rank the item
     const itemRank = rankItem(row.getValue(columnId), value);
@@ -62,8 +65,7 @@ export function DataTable({ data, defaultColumns, showColumnFilters = true, pagi
 
   const table = useReactTable({
     columns,
-    data: data.data,
-    manualPagination: false,
+    data,
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
@@ -72,7 +74,6 @@ export function DataTable({ data, defaultColumns, showColumnFilters = true, pagi
     onColumnVisibilityChange: setColumnVisibility,
     onGlobalFilterChange: setGlobalFilter,
     globalFilterFn: fuzzyFilter,
-    // globalFilterFn: "fuzzy",
     state: {
       sorting,
       columnVisibility,
@@ -80,23 +81,15 @@ export function DataTable({ data, defaultColumns, showColumnFilters = true, pagi
     },
   });
 
+  React.useEffect(() => {
+    table.setPageSize(showItems);
+  }, [showItems]);
+
   return (
     <>
-      <Stack
-        spacing={4}
-        direction={{ base: 'column', md: 'row' }}
-        justifyContent={showColumnFilters ? 'space-between' : 'end'}
-        mb={4}
-        flexWrap="wrap"
-      >
+      <Stack spacing={4} direction={'row'} justifyContent={showColumnFilters ? 'space-between' : 'end'} mb={4}>
         {showColumnFilters && (
-          <Stack
-            spacing={4}
-            direction={{ base: 'column', md: 'row' }}
-            justifyContent={'space-evenly'}
-            mb={4}
-            flexWrap="wrap"
-          >
+          <HStack spacing={4}>
             <Checkbox
               defaultChecked={table.getIsAllColumnsVisible()}
               onChange={table.getToggleAllColumnsVisibilityHandler()}
@@ -114,7 +107,7 @@ export function DataTable({ data, defaultColumns, showColumnFilters = true, pagi
                 </Checkbox>
               );
             })}
-          </Stack>
+          </HStack>
         )}
 
         {showSearch && (
@@ -122,6 +115,7 @@ export function DataTable({ data, defaultColumns, showColumnFilters = true, pagi
             <DebouncedInput
               value={globalFilter ?? ''}
               onChange={value => setGlobalFilter(String(value))}
+              className="p-2 font-lg shadow border border-block"
               placeholder="Search all columns..."
             />
           </div>
@@ -133,13 +127,7 @@ export function DataTable({ data, defaultColumns, showColumnFilters = true, pagi
         borderColor={useColorModeValue('gray.200', 'whiteAlpha.700')}
         rounded={'xl'}
       >
-        <Table
-          variant={'simple'}
-          size={{ base: 'sm', xxl: 'md' }}
-          colorScheme={'light'}
-          layout={'responsive'}
-          fontSize={{ base: 'sm', xl: 'md' }}
-        >
+        <Table variant={'striped'} size={'sm'} colorScheme={'blackAlpha'} layout={'responsive'}>
           <Thead>
             {table.getHeaderGroups().map(headerGroup => (
               <Tr key={headerGroup.id}>
@@ -148,7 +136,7 @@ export function DataTable({ data, defaultColumns, showColumnFilters = true, pagi
                   return (
                     <Th key={header.id} onClick={header.column.getToggleSortingHandler()} isNumeric={meta?.isNumeric}>
                       {flexRender(header.column.columnDef.header, header.getContext())}
-                      <Text as="span" pl="4">
+                      <chakra.span pl="4">
                         {header.column.getIsSorted() ? (
                           header.column.getIsSorted() === 'desc' ? (
                             <TriangleDownIcon aria-label="sorted descending" />
@@ -156,7 +144,7 @@ export function DataTable({ data, defaultColumns, showColumnFilters = true, pagi
                             <TriangleUpIcon aria-label="sorted ascending" />
                           )
                         ) : null}
-                      </Text>
+                      </chakra.span>
                     </Th>
                   );
                 })}
@@ -172,9 +160,10 @@ export function DataTable({ data, defaultColumns, showColumnFilters = true, pagi
                 }}
               >
                 {row.getVisibleCells().map(cell => {
+                  // see https://tanstack.com/table/v8/docs/api/core/column-def#meta to type this correctly
                   const meta = cell.column.columnDef.meta;
                   return (
-                    <Td key={cell.id} isNumeric={meta?.isNumeric} maxW={'48'} overflow="hidden">
+                    <Td key={cell.id} isNumeric={meta?.isNumeric}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </Td>
                   );
@@ -186,65 +175,65 @@ export function DataTable({ data, defaultColumns, showColumnFilters = true, pagi
         {pagination && (
           <Stack direction="row" mx="auto" justify="center" spacing={6} mt={6}>
             <HStack justify="center" spacing={4}>
-              <Link href={data.first_page_url} only={[categoryName]}>
-                <IconButton
-                  p={1}
-                  variant="outline"
-                  onClick={() => table.setPageIndex(0)}
-                  isDisabled={!data.prev_page_url}
-                  icon={<ArrowLeftIcon />}
-                />
-              </Link>
+              <IconButton
+                className="border rounded p-1"
+                onClick={() => table.setPageIndex(0)}
+                isDisabled={!table.getCanPreviousPage()}
+                icon={<ArrowLeftIcon />}
+              />
 
-              <Link href={data.prev_page_url} only={[categoryName]}>
-                <IconButton p={1} variant="outline" isDisabled={!data.prev_page_url} icon={<ArrowBackIcon />} />
-              </Link>
-              <Link href={data.next_page_url} only={[categoryName]}>
-                <IconButton
-                  p={1}
-                  variant="outline"
-                  onClick={() => table.nextPage()}
-                  isDisabled={!data.next_page_url}
-                  icon={<ArrowForwardIcon />}
-                />
-              </Link>
-              <Link href={data.last_page_url} only={[categoryName]}>
-                <IconButton p={1} variant="outline" isDisabled={!data.next_page_url} icon={<ArrowRightIcon />} />
-              </Link>
-            </HStack>
-            <HStack justify="center" spacing={4}>
-              <Text>
-                {'Page '}
-                <Text as="span" fontWeight={'semibold'}>
-                  {data.current_page}
-                </Text>
-                {' of '}
-                <Text as="span" fontWeight={'semibold'}>
-                  {data.last_page}
-                </Text>
-              </Text>
-            </HStack>
-            <HStack justify="center" spacing={4}>
-              <Text fontWeight={'semibold'}>| Go to page:</Text>
+              <IconButton
+                className="border rounded p-1"
+                onClick={() => table.previousPage()}
+                isDisabled={!table.getCanPreviousPage()}
+                icon={<ArrowBackIcon />}
+              />
+              <IconButton
+                className="border rounded p-1"
+                onClick={() => table.nextPage()}
+                isDisabled={!table.getCanNextPage()}
+                icon={<ArrowForwardIcon />}
+              />
 
-              <Input
-                type="number"
-                defaultValue={data.current_page}
-                onChange={e => {
-                  const page = setTimeout(() => {
-                    Inertia.visit(`${data.path}?page=${e.target.value}`, {
-                      method: 'get',
-                      replace: true,
-                      preserveState: true,
-                      only: [categoryName],
-                    });
-                  }, 1500);
-                  clearTimeout(page);
-                }}
-                padding={2}
-                maxW={10}
+              <IconButton
+                className="border rounded p-1"
+                onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+                isDisabled={!table.getCanNextPage()}
+                icon={<ArrowRightIcon />}
               />
             </HStack>
+            <HStack justify="center" spacing={4}>
+              <Text>Page</Text>
+              <strong>
+                {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+              </strong>
+            </HStack>
+            <HStack justify="center" spacing={4}>
+              | Go to page:
+              <Input
+                type="number"
+                defaultValue={table.getState().pagination.pageIndex + 1}
+                onChange={e => {
+                  const page = e.target.value ? Number(e.target.value) - 1 : 0;
+                  table.setPageIndex(page);
+                }}
+                padding={2}
+                w={16}
+              />
+            </HStack>
+            <Select
+              w={64}
+              value={showItems}
+              onChange={e => {
+                setShowItems(Number(e.target.value));
+              }}
+            >
+              {[10, 20, 30, 40, 50].map(pageSize => (
+                <option key={pageSize} value={pageSize}>
+                  Show {pageSize}
+                </option>
+              ))}
+            </Select>
           </Stack>
         )}
       </TableContainer>

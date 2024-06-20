@@ -7,30 +7,30 @@ import { createExcerpt, filterByReference } from '@/Utils/helpers';
 import { CloseIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
 
 import {
-	Accordion,
-	AccordionButton,
-	AccordionIcon,
-	AccordionItem,
-	AccordionPanel,
-	Box,
-	Button,
-	FormControl,
-	FormErrorMessage,
-	FormLabel,
-	Grid,
-	GridItem,
-	IconButton,
-	Input,
-	InputGroup,
-	InputLeftAddon,
-	InputRightAddon,
-	Radio,
-	Select,
-	Stack,
-	Textarea,
-	Tooltip,
-	VStack,
-	useToast,
+    Accordion,
+    AccordionButton,
+    AccordionIcon,
+    AccordionItem,
+    AccordionPanel,
+    Box,
+    Button,
+    FormControl,
+    FormErrorMessage,
+    FormLabel,
+    Grid,
+    GridItem,
+    IconButton,
+    Input,
+    InputGroup,
+    InputLeftAddon,
+    InputRightAddon,
+    Radio,
+    Select,
+    Stack,
+    Textarea,
+    Tooltip,
+    VStack,
+    useToast,
 } from '@chakra-ui/react';
 import { useForm } from '@inertiajs/react';
 import React from 'react';
@@ -38,60 +38,62 @@ import { FiFile } from 'react-icons/fi';
 
 export default function EditPostForm({ post: postData, categories, tags, themes }) {
 	const { data, setData, post, processing, errors } = useForm({
-		title: postData.title,
-		slug: postData.slug,
-		category_id: postData.category_id,
-		theme_id: postData.theme_id,
-		content: postData.content,
-		excerpt: postData.excerpt,
-		status: postData.status,
-		author: postData.author,
-		image: postData.media.filter(m => m.collection_name === 'post-featured-image')[0],
-		file: postData.media.filter(m => m.collection_name === 'post-files')[0],
-		files: [],
-		link: postData.link,
-		genre: postData.genre,
-		published_at: postData.published_at,
-		meta_title: postData.meta_title,
-		meta_description: postData.meta_description,
-	});
+    title: postData.title,
+    slug: postData.slug,
+    category_id: postData.category_id,
+    theme_id: postData.theme_id,
+    content: postData.content,
+    excerpt: postData.excerpt,
+    status: postData.status,
+    author: postData.author,
+    image: postData.media?.filter(m => m.collection_name === 'post-featured-image')[0],
+    file: postData.media?.filter(m => m.collection_name === 'post-files')[0],
+    files: [],
+    link: postData.link,
+    genre: postData.genre,
+    published_at: postData.published_at,
+    meta_title: postData.meta_title,
+    meta_description: postData.meta_description,
+    });
 
-	const toast = useToast();
-	const [imageUrl, setImageUrl] = React.useState(data.image ? data.image.preview_url : null);
-	const [filename, setFilename] = React.useState(data.file ? data.file.file_name : null);
-	const [files, setFiles] = React.useState(postData.post_content_files);
-	const [startDate, setStartDate] = React.useState(new Date());
+    console.log(postData)
 
-	const [postTags, setPostTags] = React.useState(() => {
-		let tagsarray = [];
-		postData.tags.map(tag => {
-			tagsarray.push({
-				value: tag.id,
-				label: tag.name,
-			});
-		});
+  const toast = useToast();
+  const [imageUrl, setImageUrl] = React.useState(data.image ? data.image.preview_url : null);
+  const [filename, setFilename] = React.useState(data.file ? data.file.file_name : null);
+  const [files, setFiles] = React.useState(postData.post_content_files);
+  const [startDate, setStartDate] = React.useState(new Date());
 
-		return tagsarray;
-	});
+  const [postTags, setPostTags] = React.useState(() => {
+    let tagsarray = [];
+    postData.tags.map(tag => {
+      tagsarray.push({
+        value: tag.id,
+        label: tag.name,
+      });
+    });
 
-	const [tagOptions, setTagOptions] = React.useState([]);
+    return tagsarray;
+  });
 
-	function setDataTags(e) {
-		let array = [];
-		setPostTags(e);
-		e.forEach(item =>
-			array.push({
-				tag_id: item.value,
-				post_id: postData.id,
-			})
-		);
+  const [tagOptions, setTagOptions] = React.useState([]);
 
-		setData('tags', array);
-	}
+  function setDataTags(e) {
+    let array = [];
+    setPostTags(e);
+    e.forEach(item =>
+      array.push({
+        tag_id: item.value,
+        post_id: postData.id,
+      })
+    );
 
-	const [selectedCategory, setSelectedCategory] = React.useState(
-		categories.filter(cat => cat.id == data.category_id)[0].name
-	);
+    setData('tags', array);
+  }
+
+  const [selectedCategory, setSelectedCategory] = React.useState(
+    categories ? categories.filter(cat => cat.id == data.category_id)[0].name : null
+  );
 
 	React.useEffect(() => {
 		if (postTags && tags) {

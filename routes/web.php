@@ -41,7 +41,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->as('admin.')->group(fu
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('/categories', CategoryController::class);
-    Route::resource('/posts', PostController::class);
+    // Route::resource('/posts', PostController::class);
     Route::resource('/themes', ThemeController::class);
     Route::resource('/tags', TagController::class);
     Route::resource('/sections', SectionController::class);
@@ -52,8 +52,15 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->as('admin.')->group(fu
     Route::resource('/pages', PageController::class);
     Route::resource('/teams', TeamController::class);
 
+
+    Route::get('/posts{categoryId?}', [PostController::class, 'index'])->name('posts.index');
+    Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+    Route::get('/posts/edit/{id?}', [PostController::class, 'edit'])->name('posts.edit');
+    Route::post('/posts/store', [PostController::class, 'store'])->name('posts.store');
+    Route::patch('/posts/update', [PostController::class, 'update'])->name('posts.update');
+    Route::delete('/posts/delete/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
+
     Route::post('/post/uploadmedia', [PostController::class, 'uploadmedia'])->name('post.upload');
-    Route::get('/filterByCategory', [PostController::class, 'filterByCategory'])->name('posts.filterByCategory');
     Route::get("/menus", [MenuController::class, 'index'])->name('menus.index');
     Route::get('/menus/manage-menus/{id?}', [MenuController::class, 'manage'])->name('manage.menus');
     Route::post('/menus/create', [MenuController::class, 'store'])->name('create.menu');

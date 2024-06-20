@@ -1,28 +1,29 @@
-import { useForm } from '@inertiajs/react';
-import {
-	Box,
-	Button,
-	useToast,
-	Modal,
-	ModalOverlay,
-	ModalCloseButton,
-	ModalContent,
-	ModalHeader,
-	ModalBody,
-	ModalFooter,
-	Alert,
-	AlertIcon,
-	AlertTitle,
-	AlertDescription,
-} from '@chakra-ui/react';
 import DangerButton from '@/Components/Backend/DangerButton';
+import {
+    Alert,
+    AlertDescription,
+    AlertIcon,
+    AlertTitle,
+    Box,
+    Button,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
+    useToast,
+} from '@chakra-ui/react';
+import { useForm } from '@inertiajs/react';
 
 export default function DeletePostModal({ isOpen, onClose, postId }) {
 	const { delete: destroy, processing } = useForm();
 	const toast = useToast();
 	const submit = e => {
 		e.preventDefault();
-		destroy(route('admin.posts.destroy', postId), {
+        destroy(route('admin.posts.destroy', postId), {
+            preserveState: true,
 			preserveScroll: true,
 			onSuccess: () => {
 				toast({

@@ -1,18 +1,19 @@
+import { FrontDataTable } from '@/Components/Backend/FrontDataTable';
 import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import { DataTable } from '@/Components/Backend/DataTable';
+import { TableDeleteAction, TableEditAction } from '@/Components/Backend/TableActions';
 import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
-import { Box, Tag, HStack, Text, Select, useDisclosure } from '@chakra-ui/react';
+import { HStack, Select, Tag, Text, useDisclosure } from '@chakra-ui/react';
 import { Head, Link, router, useForm } from '@inertiajs/react';
 import { createColumnHelper } from '@tanstack/react-table';
-import { TableDeleteAction, TableEditAction } from '@/Components/Backend/TableActions';
 import React from 'react';
 import DeletePostModal from './Partials/DeletePostModal';
-
-export default function Index({ auth, posts, categories }) {
+export default function Index({ auth, posts, categories, categoryId }) {
   const columnHelper = createColumnHelper();
-  const { processing, get, delete: destroy } = useForm();
+  const { processing, get } = useForm();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [postId, setPostId] = React.useState(null);
+
+  const [selectedCategory, setSelectedCategory] = React.useState(categoryId);
 
   const handleDelete = (e, id) => {
     e.preventDefault();
@@ -22,13 +23,10 @@ export default function Index({ auth, posts, categories }) {
 
   function handleCategoryFilter(e, category) {
     e.preventDefault();
-    return router.visit('/filterByCategory', {
-      method: 'get',
-      data: { category: category },
-      replace: false,
-      preserveState: false,
-      preserveScroll: false,
-
+    setSelectedCategory(category);
+    router.visit('/admin/posts', {
+      data: { category_id: category },
+      preserveState: true,
     });
   }
 
@@ -65,7 +63,7 @@ export default function Index({ auth, posts, categories }) {
     () => [
       columnHelper.accessor('title', {
         cell: info => (
-          <Text maxW="90" noOfLines={1}>
+          <Text maxW="96" noOfLines={1}>
             {info.getValue()}
           </Text>
         ),
@@ -110,18 +108,18 @@ export default function Index({ auth, posts, categories }) {
   return (
     <AuthenticatedLayout user={auth.user}>
       <Head title="Posts" />
-      <DeletePostModal isOpen={isOpen} onClose={onClose} postId={postId} />
+      <DeletePostModal isOpen={isOpen} onClose={onClose} postId={postId} categoryId={selectedCategory} />
       <HStack mb={4}>
         <Link as="button" href={route('admin.posts.create')}>
           <PrimaryButton>Create New Post</PrimaryButton>
         </Link>
-
 
         <Select
           maxW="96"
           name="category"
           placeholder="Filter posts by Category"
           onChange={e => handleCategoryFilter(e, e.target.value)}
+          defaultValue={selectedCategory}
         >
           {categories &&
             categories.map(category => (
@@ -130,10 +128,9 @@ export default function Index({ auth, posts, categories }) {
               </option>
             ))}
         </Select>
-
-
       </HStack>
-      <DataTable defaultColumns={defaultColumns} data={posts} showSearch={true} />
+      {/* <DataTable defaultColumns={defaultColumns} data={posts} showSearch={true} /> */}
+      <FrontDataTable defaultColumns={defaultColumns} data={posts}></FrontDataTable>
     </AuthenticatedLayout>
   );
 }

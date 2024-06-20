@@ -21,39 +21,30 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::with(["category", "tags", "theme"])
-            ->idDescending()
-            ->paginate(10);
 
-        $categories = Category::all();
-        return Inertia::render("Backend/Post/Index", [
-            "posts" => $posts,
-            "categories" => $categories,
-        ]);
-    }
-
-    public function filterByCategory($categoryId = null)
-    {
         $posts = null;
+        $categoryId = $request->category_id ? $request->category_id : "1";
 
         if ($categoryId) {
             $posts = Post::with(["category", "tags", "theme"])
                 ->where('category_id', $categoryId)
                 ->idDescending()
-                ->paginate(10);
+                ->get();
         } else {
             $posts = Post::with(["category", "tags", "theme"])
+                ->where('category_id', "1")
                 ->idDescending()
-                ->paginate(10);
+                ->get();
+            // dd($posts, $categoryId);
         }
 
-        dd($posts, $categoryId);
         $categories = Category::all();
         return Inertia::render("Backend/Post/Index", [
             "posts" => $posts,
             "categories" => $categories,
+            "categoryId" => $categoryId,
         ]);
     }
 
@@ -143,15 +134,16 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
+    public function edit($id)
     {
+        $post = Post::with(["category", "tags", "postContentFiles"])->where("id", $id)->first();
         $categories = Category::where("type", "post")->get();
         $tags = Tag::all();
         $themes = Theme::all();
         $featured_image = $post->getFirstMediaUrl("post_featured_image");
         $file = $post->getMedia("post-files");
         return Inertia::render("Backend/Post/Edit", [
-            "post" => $post->load("tags", "postContentFiles"),
+            "post" => $post,
             "categories" => $categories,
             "tags" => $tags,
             "themes" => $themes,
@@ -228,16 +220,17 @@ class PostController extends Controller
         }
 
         $post->update($validated);
-        return redirect()->route("admin.posts.index");
+        return to_route("admin.posts.index");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
+        $post = Post::findOrFail($id);
         $post->delete();
-        return redirect()->route("admin.posts.index");
+        return to_route("admin.posts.index");
     }
 
     public function uploadmedia(Request $request)
