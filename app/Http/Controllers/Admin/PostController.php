@@ -25,11 +25,11 @@ class PostController extends Controller
     {
 
         $posts = null;
-        $categoryId = $request->category_id ? $request->category_id : "1";
+        $categoryID = $request->category_id ? $request->category_id : "1";
 
-        if ($categoryId) {
+        if ($categoryID) {
             $posts = Post::with(["category", "tags", "theme"])
-                ->where('category_id', $categoryId)
+                ->where('category_id', $categoryID)
                 ->idDescending()
                 ->get();
         } else {
@@ -44,7 +44,7 @@ class PostController extends Controller
         return Inertia::render("Backend/Post/Index", [
             "posts" => $posts,
             "categories" => $categories,
-            "categoryId" => $categoryId,
+            "categoryID" => $categoryID,
         ]);
     }
 
@@ -125,11 +125,11 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($category, $slug)
-    {
-        $post = Post::with("category")->where("slug", $slug)->first();
-        return Inertia::render("Frontend/Post", ["post" => $post]);
-    }
+    // public function show($category, $slug)
+    // {
+    //     $post = Post::with("category")->where("slug", $slug)->first();
+    //     return Inertia::render("Frontend/Post", ["post" => $post]);
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -149,14 +149,16 @@ class PostController extends Controller
             "themes" => $themes,
             "featured_image" => $featured_image,
             "file" => $file,
+
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, $id)
     {
+        $post = Post::findOrFail($id);
         $validated = $request->all();
         $validated["title"] = Str::of($validated["title"])->title()->squish();
         $validated["meta_title"] = $validated["title"];

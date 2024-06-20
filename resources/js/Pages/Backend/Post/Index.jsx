@@ -7,13 +7,13 @@ import { Head, Link, router, useForm } from '@inertiajs/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import React from 'react';
 import DeletePostModal from './Partials/DeletePostModal';
-export default function Index({ auth, posts, categories, categoryId }) {
+export default function Index({ auth, posts, categories, categoryID }) {
   const columnHelper = createColumnHelper();
   const { processing, get } = useForm();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [postId, setPostId] = React.useState(null);
 
-  const [selectedCategory, setSelectedCategory] = React.useState(categoryId);
+  const [selectedCategory, setSelectedCategory] = React.useState(categoryID);
 
   const handleDelete = (e, id) => {
     e.preventDefault();
@@ -54,9 +54,10 @@ export default function Index({ auth, posts, categories, categoryId }) {
     );
   };
 
-  const handleEdit = (e, post) => {
+  const handleEdit = (e, post_id, category_id) => {
     e.preventDefault();
-    get(route('admin.posts.edit', post));
+    console.log(category_id);
+    get(route('admin.posts.edit', post_id, category_id));
   };
 
   const defaultColumns = React.useMemo(
@@ -94,8 +95,14 @@ export default function Index({ auth, posts, categories, categoryId }) {
         cell: info => {
           return (
             <HStack spacing={4}>
-              <TableEditAction onClick={e => handleEdit(e, info.getValue())} isDisabled={processing} />
-              <TableDeleteAction onClick={e => handleDelete(e, info.getValue())} isDisabled={processing} />
+              <TableEditAction
+                onClick={e => handleEdit(e, info.getValue(), selectedCategory)}
+                isDisabled={processing}
+              />
+              <TableDeleteAction
+                onClick={e => handleDelete(e, info.getValue(), selectedCategory)}
+                isDisabled={processing}
+              />
             </HStack>
           );
         },
@@ -110,9 +117,9 @@ export default function Index({ auth, posts, categories, categoryId }) {
       <Head title="Posts" />
       <DeletePostModal isOpen={isOpen} onClose={onClose} postId={postId} categoryId={selectedCategory} />
       <HStack mb={4}>
-        <Link as="button" href={route('admin.posts.create')}>
-          <PrimaryButton>Create New Post</PrimaryButton>
-        </Link>
+        <PrimaryButton as={Link} href={route('admin.posts.create', selectedCategory)}>
+          Create New Post
+        </PrimaryButton>
 
         <Select
           maxW="96"

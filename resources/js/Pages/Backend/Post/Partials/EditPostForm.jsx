@@ -106,11 +106,10 @@ export default function EditPostForm({ post: postData, categories, tags, themes 
 
   const submit = e => {
     e.preventDefault();
-    console.log(data);
     post(
       route('admin.posts.update', {
         _method: 'patch',
-        post: postData.id,
+        id: postData.id,
       }),
       {
         preserveScroll: true,
@@ -483,11 +482,11 @@ export default function EditPostForm({ post: postData, categories, tags, themes 
                 Published At
               </FormLabel>
               <Input
-                type="date"
+                type="datetime-local"
                 placeholder="Select Date"
                 id="published_at"
                 name="published_at"
-                value={data.published_at}
+                value={data.published_at || new Date()}
                 onChange={e => {
                   setData('published_at', e.target.value);
                 }}
