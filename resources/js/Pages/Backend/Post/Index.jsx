@@ -2,7 +2,7 @@ import { FrontDataTable } from '@/Components/Backend/FrontDataTable';
 import PrimaryButton from '@/Components/Backend/PrimaryButton';
 import { TableDeleteAction, TableEditAction } from '@/Components/Backend/TableActions';
 import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
-import { HStack, Select, Tag, Text, useDisclosure } from '@chakra-ui/react';
+import { HStack, Select, Tag, useDisclosure } from '@chakra-ui/react';
 import { Head, Link, router, useForm } from '@inertiajs/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import React from 'react';
@@ -41,6 +41,9 @@ export default function Index({ auth, posts, categories, categoryID }) {
   }
 
   const TagsColumn = ({ tags }) => {
+    if (!tags.length) {
+      return 'N/A';
+    }
     return (
       <HStack columns={{ base: 1, lg: 2 }} spacing={2}>
         {tags.map(tag => {
@@ -62,11 +65,7 @@ export default function Index({ auth, posts, categories, categoryID }) {
   const defaultColumns = React.useMemo(
     () => [
       columnHelper.accessor('title', {
-        cell: info => (
-          <Text maxW="96" noOfLines={1}>
-            {info.getValue()}
-          </Text>
-        ),
+        cell: info => info.getValue(),
         header: 'Title',
       }),
       columnHelper.accessor('category.name', {
@@ -74,7 +73,7 @@ export default function Index({ auth, posts, categories, categoryID }) {
         header: 'Category',
       }),
       columnHelper.accessor('theme.title', {
-        cell: info => (info.getValue() ? info.getValue() : 'None'),
+        cell: info => (info.getValue() ? info.getValue() : 'N/A'),
         header: 'Theme',
       }),
       columnHelper.accessor('tags', {

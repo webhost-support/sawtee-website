@@ -23,7 +23,7 @@ class SubscribeRequest extends FormRequest
     {
         return [
             'email' => 'email|required|unique:subscribers,email|min:6|max:100',
-            'content' => 'required'
+            'content' => 'sometimes|required'
         ];
     }
 

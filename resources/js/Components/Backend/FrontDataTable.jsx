@@ -1,38 +1,38 @@
 import {
-  ArrowBackIcon,
-  ArrowForwardIcon,
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  TriangleDownIcon,
-  TriangleUpIcon,
+    ArrowBackIcon,
+    ArrowForwardIcon,
+    ArrowLeftIcon,
+    ArrowRightIcon,
+    TriangleDownIcon,
+    TriangleUpIcon,
 } from '@chakra-ui/icons';
 import {
-  Checkbox,
-  HStack,
-  IconButton,
-  Input,
-  Select,
-  Stack,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Text,
-  Th,
-  Thead,
-  Tr,
-  chakra,
-  useColorModeValue,
+    Checkbox,
+    HStack,
+    IconButton,
+    Input,
+    Select,
+    Stack,
+    Table,
+    TableContainer,
+    Tbody,
+    Td,
+    Text,
+    Th,
+    Thead,
+    Tr,
+    chakra,
+    useColorModeValue,
 } from '@chakra-ui/react';
 import { rankItem } from '@tanstack/match-sorter-utils';
 
 import {
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
+    flexRender,
+    getCoreRowModel,
+    getFilteredRowModel,
+    getPaginationRowModel,
+    getSortedRowModel,
+    useReactTable,
 } from '@tanstack/react-table';
 import * as React from 'react';
 import { DebouncedInput } from '../Frontend/index';
@@ -166,10 +166,9 @@ export function FrontDataTable({
                 }}
               >
                 {row.getVisibleCells().map(cell => {
-                  // see https://tanstack.com/table/v8/docs/api/core/column-def#meta to type this correctly
                   const meta = cell.column.columnDef.meta;
                   return (
-                    <Td key={cell.id} isNumeric={meta?.isNumeric}>
+                    <Td maxW="72" overflow={'hidden'} key={cell.id} isNumeric={meta?.isNumeric}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </Td>
                   );
@@ -182,27 +181,31 @@ export function FrontDataTable({
           <Stack direction="row" mx="auto" justify="center" spacing={6} mt={6}>
             <HStack justify="center" spacing={4}>
               <IconButton
-                className="border rounded p-1"
+                aria-label="First Page"
+                title="First Page"
                 onClick={() => table.setPageIndex(0)}
                 isDisabled={!table.getCanPreviousPage()}
                 icon={<ArrowLeftIcon />}
               />
 
               <IconButton
-                className="border rounded p-1"
+                aria-label="Previous Page"
+                title="Previous Page"
                 onClick={() => table.previousPage()}
                 isDisabled={!table.getCanPreviousPage()}
                 icon={<ArrowBackIcon />}
               />
               <IconButton
-                className="border rounded p-1"
+                aria-label="Next Page"
+                title="Next Page"
                 onClick={() => table.nextPage()}
                 isDisabled={!table.getCanNextPage()}
                 icon={<ArrowForwardIcon />}
               />
 
               <IconButton
-                className="border rounded p-1"
+                aria-label="Last Page"
+                title="Last Page"
                 onClick={() => table.setPageIndex(table.getPageCount() - 1)}
                 isDisabled={!table.getCanNextPage()}
                 icon={<ArrowRightIcon />}
@@ -234,7 +237,7 @@ export function FrontDataTable({
                 setShowItems(Number(e.target.value));
               }}
             >
-              {[10, 20, 30, 40, 50].map(pageSize => (
+              {[10, 25, 50].map(pageSize => (
                 <option key={pageSize} value={pageSize}>
                   Show {pageSize}
                 </option>

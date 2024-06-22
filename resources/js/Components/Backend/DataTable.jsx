@@ -187,6 +187,8 @@ export function DataTable({ data, defaultColumns, showColumnFilters = true, pagi
               <Link href={data.first_page_url} only={[categoryName]}>
                 <IconButton
                   p={1}
+                  aria-label="Go to first page"
+                  title="Go to first page"
                   variant="outline"
                   onClick={() => table.setPageIndex(0)}
                   isDisabled={!data.prev_page_url}
@@ -195,11 +197,20 @@ export function DataTable({ data, defaultColumns, showColumnFilters = true, pagi
               </Link>
 
               <Link href={data.prev_page_url} only={[categoryName]}>
-                <IconButton p={1} variant="outline" isDisabled={!data.prev_page_url} icon={<ArrowBackIcon />} />
+                <IconButton
+                  aria-label="Previous page"
+                  title="Previous page"
+                  p={1}
+                  variant="outline"
+                  isDisabled={!data.prev_page_url}
+                  icon={<ArrowBackIcon />}
+                />
               </Link>
               <Link href={data.next_page_url} only={[categoryName]}>
                 <IconButton
                   p={1}
+                  aria-label="Next page"
+                  title="Next page"
                   variant="outline"
                   onClick={() => table.nextPage()}
                   isDisabled={!data.next_page_url}
@@ -207,7 +218,14 @@ export function DataTable({ data, defaultColumns, showColumnFilters = true, pagi
                 />
               </Link>
               <Link href={data.last_page_url} only={[categoryName]}>
-                <IconButton p={1} variant="outline" isDisabled={!data.next_page_url} icon={<ArrowRightIcon />} />
+                <IconButton
+                  p={1}
+                  aria-label="Go to last page"
+                  title="Go to last page"
+                  variant="outline"
+                  isDisabled={!data.next_page_url}
+                  icon={<ArrowRightIcon />}
+                />
               </Link>
             </HStack>
             <HStack justify="center" spacing={4}>

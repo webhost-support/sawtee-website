@@ -33,10 +33,10 @@ export default function Index({ auth, subscribers }) {
 	);
 
 	return (
-		<AuthenticatedLayout user={auth.user}>
-			<Head title="Subscribers" />
+    <AuthenticatedLayout user={auth.user}>
+      <Head title="Subscribers" />
 
-			{subscribers && <DataTable defaultColumns={defaultColumns} data={subscribers.data} />}
-		</AuthenticatedLayout>
-	);
+      {subscribers.data && <DataTable defaultColumns={defaultColumns} data={subscribers} />}
+    </AuthenticatedLayout>
+  );
 }

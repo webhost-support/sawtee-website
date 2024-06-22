@@ -24,26 +24,20 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $posts = null;
-        $categoryID = $request->category_id ? $request->category_id : '1';
+        $category = $request->category_id ? Category::where('type', 'post')->find($request->category_id) : Category::where('type', 'post')->first()->id;
+        $subcategory_ids = $category->children->pluck('id')->toArray();
+        $parent_and_subcategory_ids = array_merge(array($category->slug === 'programme' ? null : $category->id), $subcategory_ids);
 
-        if ($categoryID) {
             $posts = Post::with(['category', 'tags', 'theme'])
-                ->where('category_id', $categoryID)
+            ->whereIn('category_id', $parent_and_subcategory_ids)
                 ->idDescending()
-                ->get();
-        } else {
-            $posts = Post::with(['category', 'tags', 'theme'])
-                ->where('category_id', '1')
-                ->idDescending()
-                ->get();
-            // dd($posts, $categoryId);
-        }
+        ->get();
 
-        $categories = Category::all();
+        $categories = Category::where('type', 'post')->where('parent_id', null)->get();
         return Inertia::render('Backend/Post/Index', [
             'posts' => $posts,
             'categories' => $categories,
-            'categoryID' => $categoryID,
+            'categoryID' => $category->id,
         ]);
     }
 

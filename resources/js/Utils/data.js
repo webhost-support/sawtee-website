@@ -232,72 +232,77 @@ export const aboutMenuData = {
 };
 
 export const DashBoardMenuItems = [
-	{
-		name: 'Dashboard',
-		icon: FiHome,
-		route: 'admin.dashboard',
-	},
-	{
-		name: 'Website',
-		icon: FiGlobe,
-		route: 'home',
-	},
-	{
-		name: 'Menu',
-		icon: FiGrid,
-		route: 'admin.menus.index',
-	},
-	{
-		name: 'Pages',
-		icon: RiPagesLine,
-		route: 'admin.pages.index',
-	},
-	{
-		name: 'Sections',
-		icon: FiLayout,
-		route: 'admin.sections.index',
-	},
-	{
-		name: 'Posts',
-		icon: FiTrendingUp,
-		route: 'admin.posts.index',
-	},
-	{
-		name: 'Themes',
-		icon: FiCompass,
-		route: 'admin.themes.index',
-	},
-	{
-		name: 'Tags',
-		icon: FiCompass,
-		route: 'admin.tags.index',
-	},
-	{
-		name: 'Categories',
-		icon: FiStar,
-		route: 'admin.categories.index',
-	},
-	{
-		name: 'Publications',
-		icon: FiBook,
-		route: 'admin.publications.index',
-	},
-	{
-		name: 'Research',
-		icon: FiFileText,
-		route: 'admin.research.index',
-	},
-	{
-		name: 'Team Members',
-		icon: FiUsers,
-		route: 'admin.teams.index',
-	},
-	,
-	{
-		name: 'Slider',
-		icon: TbSlideshow,
-		route: 'admin.sliders.index',
-	},
+  {
+    name: 'Dashboard',
+    icon: FiHome,
+    route: 'admin.dashboard',
+  },
+  {
+    name: 'Website',
+    icon: FiGlobe,
+    route: 'home',
+  },
+  {
+    name: 'Menu',
+    icon: FiGrid,
+    route: 'admin.menus.index',
+  },
+  {
+    name: 'Pages',
+    icon: RiPagesLine,
+    route: 'admin.pages.index',
+  },
+  {
+    name: 'Sections',
+    icon: FiLayout,
+    route: 'admin.sections.index',
+  },
+  {
+    name: 'Posts',
+    icon: FiTrendingUp,
+    route: 'admin.posts.index',
+  },
+  {
+    name: 'Themes',
+    icon: FiCompass,
+    route: 'admin.themes.index',
+  },
+  {
+    name: 'Tags',
+    icon: FiCompass,
+    route: 'admin.tags.index',
+  },
+  {
+    name: 'Categories',
+    icon: FiStar,
+    route: 'admin.categories.index',
+  },
+  {
+    name: 'Publications',
+    icon: FiBook,
+    route: 'admin.publications.index',
+  },
+  {
+    name: 'Research',
+    icon: FiFileText,
+    route: 'admin.research.index',
+  },
+  {
+    name: 'Team Members',
+    icon: FiUsers,
+    route: 'admin.teams.index',
+  },
+  ,
+  {
+    name: 'Slider',
+    icon: TbSlideshow,
+    route: 'admin.sliders.index',
+  },
+  {
+    name: 'Subscribers',
+    icon: TbSlideshow,
+    route: 'admin.subscribers.list',
+  },
 ];
 
 export const primarMenu = [

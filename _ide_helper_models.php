@@ -327,6 +327,7 @@ namespace App\Models{
  * @property int $page_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int|null $order
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Section> $children
  * @property-read int|null $children_count
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $media
@@ -340,6 +341,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Section whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Section whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Section whereLink($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Section whereOrder($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Section wherePageId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Section whereParentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Section whereTitle($value)
@@ -394,6 +396,36 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Slider whereUpdatedAt($value)
  */
 	class Slider extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\Subscriber
+ *
+ * @property int $id
+ * @property string $email
+ * @property string|null $verified_at
+ * @property string $status
+ * @property string|null $token
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|Subscriber newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Subscriber newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Subscriber onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Subscriber query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Subscriber whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Subscriber whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Subscriber whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Subscriber whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Subscriber whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Subscriber whereToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Subscriber whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Subscriber whereVerifiedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Subscriber withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Subscriber withoutTrashed()
+ */
+	class Subscriber extends \Eloquent {}
 }
 
 namespace App\Models{
