@@ -20,13 +20,6 @@ class ThemeController extends Controller
         return Inertia::render('Backend/Theme/Index', ['themes' => $themes]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return Inertia::render('Backend/Theme/Create');
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -37,28 +30,18 @@ class ThemeController extends Controller
         return redirect()->route('admin.themes.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Theme $theme)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Theme $theme)
-    {
-        return Inertia::render('Backend/Theme/Edit', ['theme' => $theme]);
-    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Theme $theme)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255',
+        ]);
+        $theme->update($validated);
+        return redirect()->route('admin.themes.index');
     }
 
     /**
@@ -66,6 +49,7 @@ class ThemeController extends Controller
      */
     public function destroy(Theme $theme)
     {
-        //
+        $theme->delete();
+        return redirect()->route('admin.themes.index');
     }
 }

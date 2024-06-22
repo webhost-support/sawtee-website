@@ -56,7 +56,6 @@ export default function Index({ auth, posts, categories, categoryID }) {
 
   const handleEdit = (e, post_id, category_id) => {
     e.preventDefault();
-    console.log(category_id);
     get(route('admin.posts.edit', post_id, category_id));
   };
 
@@ -117,9 +116,9 @@ export default function Index({ auth, posts, categories, categoryID }) {
       <Head title="Posts" />
       <DeletePostModal isOpen={isOpen} onClose={onClose} postId={postId} categoryId={selectedCategory} />
       <HStack mb={4}>
-        <PrimaryButton as={Link} href={route('admin.posts.create', selectedCategory)}>
-          Create New Post
-        </PrimaryButton>
+        <Link href={route('admin.posts.create', selectedCategory)}>
+          <PrimaryButton>Create New Post</PrimaryButton>
+        </Link>
 
         <Select
           maxW="96"

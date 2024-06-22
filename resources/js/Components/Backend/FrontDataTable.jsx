@@ -89,7 +89,13 @@ export function FrontDataTable({
     <>
       <Stack spacing={4} direction={'row'} justifyContent={showColumnFilters ? 'space-between' : 'end'} mb={4}>
         {showColumnFilters && (
-          <HStack spacing={4}>
+          <Stack
+            spacing={4}
+            direction={{ base: 'column', md: 'row' }}
+            justifyContent={'space-evenly'}
+            mb={4}
+            flexWrap="wrap"
+          >
             <Checkbox
               defaultChecked={table.getIsAllColumnsVisible()}
               onChange={table.getToggleAllColumnsVisibilityHandler()}
@@ -107,7 +113,7 @@ export function FrontDataTable({
                 </Checkbox>
               );
             })}
-          </HStack>
+          </Stack>
         )}
 
         {showSearch && (

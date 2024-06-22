@@ -37,8 +37,6 @@ import * as React from 'react';
 import { DebouncedInput } from '../Frontend/index';
 
 export function DataTable({ data, defaultColumns, showColumnFilters = true, pagination = true, showSearch = true }) {
-  console.log(data);
-
   const [sorting, setSorting] = React.useState([]);
   const [columns] = React.useState(defaultColumns);
   const [columnVisibility, setColumnVisibility] = React.useState({});

@@ -19,13 +19,7 @@ class TagController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return Inertia::render("Backend/Tag/Create");
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -33,37 +27,25 @@ class TagController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255'
+            'name' => 'required|string|max:60'
         ]);
 
-        $tag = Tag::create($validated);
-
-        return redirect()->route('admin.tags.index');
+        Tag::create($validated);
+        return to_route('admin.tags.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Tag $tag)
-    {
-        return Inertia::render('Backend/Tag/Edit', ['tag' => $tag]);
-    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Tag $tag)
     {
-        $tag->update($request->all());
-        return redirect()->route('admin.tags.index');
+        $validated = $request->validate([
+            'name' => 'required|string|max:60'
+        ]);
+        $tag->update($validated);
+        return to_route('admin.tags.index');
     }
 
     /**
@@ -72,6 +54,6 @@ class TagController extends Controller
     public function destroy(Tag $tag)
     {
         $tag->delete();
-        return redirect()->route('admin.tags.index');
+        return to_route('admin.tags.index');
     }
 }
