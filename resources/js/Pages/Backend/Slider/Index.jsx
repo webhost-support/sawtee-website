@@ -32,7 +32,7 @@ export default function Index({ auth, sliders, pages }) {
           duration: 6000,
           isClosable: true,
         }),
-      onError: () => console.log('Error while deleting'),
+      onError: () => console.error('Error while deleting'),
     });
   };
 

@@ -29,32 +29,31 @@ export default function EditSliderForm({ slider, slides, pages }) {
 
   const submit = e => {
       e.preventDefault();
-      console.log(data)
-    post(
-      route('admin.sliders.update', {
-        _method: 'patch',
-        slider: slider.id,
-      }),
-      {
-        preserveScroll: true,
-        onSuccess: () => {
-          toast({
-            position: 'top-right',
-            title: 'Slider Created.',
-            description: 'Slider Created Successfully',
-            status: 'success',
-            duration: 6000,
-            isClosable: true,
-          });
-          onClose();
-        },
-        onError: errors => {
-          if (errors.title) {
-            reset('title');
-          }
-        },
-      }
-    );
+      post(
+        route('admin.sliders.update', {
+          _method: 'patch',
+          slider: slider.id,
+        }),
+        {
+          preserveScroll: true,
+          onSuccess: () => {
+            toast({
+              position: 'top-right',
+              title: 'Slider Created.',
+              description: 'Slider Created Successfully',
+              status: 'success',
+              duration: 6000,
+              isClosable: true,
+            });
+          },
+          onError: errors => {
+            console.error(errors);
+            if (errors.title) {
+              reset('title');
+            }
+          },
+        }
+      );
   };
   return (
     <>
