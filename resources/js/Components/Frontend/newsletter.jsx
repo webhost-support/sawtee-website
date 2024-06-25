@@ -1,4 +1,3 @@
-import { ArrowForwardIcon } from '@chakra-ui/icons';
 import {
   Box,
   Flex,
@@ -21,6 +20,7 @@ import React from 'react';
 import { ExploreButton } from '.';
 import SimpleList from './SimpleList';
 import InertiaChakraLink from './styles/inertia-chakra-link';
+import { SendPlaneIcon } from './icons';
 
 export const PatternBox = ({ showPattern = false, ...props }) => (
   <Box
@@ -153,7 +153,7 @@ const SubscribeForm = ({ ...rest }) => {
                 type="submit"
                 mr="3"
                 isLoading={processing}
-                icon={<ArrowForwardIcon />}
+                icon={<SendPlaneIcon />}
               />
             </InputRightElement>
           </InputGroup>

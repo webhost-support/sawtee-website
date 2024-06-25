@@ -15,8 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { useForm } from '@inertiajs/react';
 import React from 'react';
-import { BsMailbox2 } from 'react-icons/bs';
-import { FiSend } from 'react-icons/fi';
+import { EmailIcon, SendPlaneIcon } from './icons';
 
 const SubscriptionCard = ({
   children,
@@ -67,7 +66,7 @@ const SubscriptionCard = ({
       {...rest}
     >
       {showIcon && (
-        <Box size={'90px'} mx="auto" as={BsMailbox2} color={useColorModeValue('primary.500', 'primary.200')} />
+        <Box boxSize={'24'} mx="auto" as={EmailIcon} color={useColorModeValue('primary.500', 'primary.200')} />
       )}
       <Heading as="h4" fontSize={fontSize} textTransform="uppercase" color={useColorModeValue('gray.700', 'gray.300')}>
         {headingText}
@@ -106,7 +105,7 @@ const SubscriptionCard = ({
                 type="submit"
                 mr="3"
                 isLoading={processing}
-                icon={<FiSend />}
+                icon={<SendPlaneIcon />}
               />
             </InputRightElement>
           </InputGroup>

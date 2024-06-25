@@ -1,14 +1,14 @@
 import {
-    AboutSection,
-    CarouselSection,
-    ExploreButton,
-    FeaturedPublications,
-    InfocusSection,
-    OutreachSection,
-    PublicationsSection,
-    ReformMonitorSection,
-    Title,
-    VideosSection,
+  AboutSection,
+  CarouselSection,
+  ExploreButton,
+  FeaturedPublications,
+  InfocusSection,
+  OutreachSection,
+  PublicationsSection,
+  ReformMonitorSection,
+  Title,
+  VideosSection,
 } from '@/Components/Frontend';
 import WebsiteHead from '@/Components/Frontend/Head';
 import { Newsletter } from '@/Components/Frontend/newsletter';
@@ -55,7 +55,7 @@ const Home = ({
         description="Explore South Asia's dynamic journey since the 1980s, navigating global integration and economic challenges."
         image={'/assets/logo-sawtee.webp'}
       />
-      <Section py="5" className="carousel-section" pl={{ base: '24px', md: '0' }}>
+      <Section py={{ base: '5', lg: ' 5' }} className="carousel-section" pl={{ base: '24px', lg: '0' }}>
         <Grid
           templateColumns={{
             base: '1fr',
@@ -65,12 +65,15 @@ const Home = ({
           gap={8}
           rowGap={20}
         >
-          <GridItem colSpan={{ base: 1, sm: 5, md: 4 }}>
+          <GridItem colSpan={{ base: 1, lg: 4 }}>
             <Box
               maxW="5xl"
               mx="auto"
               overflow="hidden"
-              borderRadius={'0 var(--chakra-radii-2xl) var(--chakra-radii-2xl) 0'}
+              borderRadius={{
+                base: 'var(--chakra-radii-2xl)',
+                lg: '0 var(--chakra-radii-2xl) var(--chakra-radii-2xl) 0',
+              }}
             >
               <CarouselSection
                 slides={slides}
@@ -79,7 +82,7 @@ const Home = ({
               />
             </Box>
           </GridItem>
-          <GridItem colSpan={{ base: 1, sm: 1, md: 2 }} alignSelf={'center'}>
+          <GridItem colSpan={{ base: 1, lg: 2 }} alignSelf={'center'}>
             <FeaturedPublications publications={featuredPublications} />
           </GridItem>
         </Grid>

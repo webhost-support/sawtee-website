@@ -392,6 +392,9 @@ export const PublicationsSection = ({ publications }) => {
                   alt={publication.title}
                   title={publication.title}
                   rounded="md"
+                  shadow="md"
+                  // border="1px solid"
+                  // borderColor={useColorModeValue('gray.600', 'gray.300')}
                   // aspectRatio={3 / 4}
                   mx="auto"
                   mb="2"

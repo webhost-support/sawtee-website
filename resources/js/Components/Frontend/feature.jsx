@@ -1,15 +1,15 @@
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import {
-    Box,
-    Flex,
-    Heading,
-    IconButton,
-    Image,
-    LinkBox,
-    LinkOverlay,
-    Stack,
-    Text,
-    useColorModeValue,
+  Box,
+  Flex,
+  Heading,
+  IconButton,
+  Image,
+  LinkBox,
+  LinkOverlay,
+  Stack,
+  Text,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { Blob } from './icons';
 
@@ -46,9 +46,10 @@ export default function Feature({ feature, ...rest }) {
           <br />
         </Heading>
         <Text color={useColorModeValue('gray.600', 'gray.300')} fontSize={{ base: 'xs', md: 'sm', lg: 'md' }}>
-          The Reform Monitoring Platform intends to strengthen monitoring and evaluation of the policy reform process
-          through an online reform tracking system to increase transparency, inclusiveness, and accountability of trade
-          and investment related reforms.
+          The <strong>Reform Monitoring Platform</strong> intends to strengthen
+          <strong>monitoring and evaluation</strong> of the policy reform process through an online{' '}
+          <strong>reform tracking system</strong> to increase transparency, inclusiveness, and accountability of{' '}
+          <strong>trade and investment</strong> related reforms.
         </Text>
       </Stack>
       <Flex flex={1} justify={'center'} align={'center'} position={'relative'} my="10">
