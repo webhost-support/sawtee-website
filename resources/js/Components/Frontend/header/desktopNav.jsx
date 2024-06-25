@@ -1,41 +1,28 @@
+import { aboutMenuData } from '@/Utils/data';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 import {
-	Box,
-	Stack,
-	Grid,
-	Button,
-	Icon,
-	GridItem,
-	Text,
-	Flex,
-	Avatar,
-	SimpleGrid,
-	VStack,
-	Divider,
-	useColorModeValue,
-	Menu,
-	MenuButton,
-	MenuList,
-	MenuDivider,
-	ListItem,
-	OrderedList,
+    Avatar,
+    Box,
+    Button,
+    Divider,
+    Flex,
+    Grid,
+    GridItem,
+    Icon,
+    Menu,
+    MenuButton,
+    MenuDivider,
+    MenuList,
+    SimpleGrid,
+    Stack,
+    Text,
+    VStack,
+    useColorModeValue,
 } from '@chakra-ui/react';
 import { Link, usePage } from '@inertiajs/react';
 import { motion } from 'framer-motion';
-import { ChevronDownIcon } from '@chakra-ui/icons';
 import React from 'react';
-import { aboutMenuData } from '@/Utils/data';
 import InertiaChakraLink from '../styles/inertia-chakra-link';
-
-const MegaMenuWrapperVariants = {
-	open: {
-		opacity: 1,
-		y: 0,
-	},
-	closed: {
-		opacity: 0,
-		y: '-50px',
-	},
-};
 
 const ListVariants = {
 	open: {
@@ -310,7 +297,7 @@ const MegaMenu = ({ item, experts = null, isOpen }) => {
 		return (
 			<AboutMegaMenu
 				item={item}
-				experts={experts.length > 3 ? experts : aboutMenuData.experts}
+				experts={experts}
 				introText={aboutMenuData.introText}
 				introImage={aboutMenuData.introImage}
 				isOpen={isOpen}

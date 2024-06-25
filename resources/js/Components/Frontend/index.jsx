@@ -176,6 +176,7 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
               <ListItem key={item.id} mb="1rem">
                 <Box>
                   <InertiaChakraLink
+                    as={Link}
                     textDecor="underline"
                     textUnderlineOffset="3px"
                     href={`/category/sawtee-in-media/${item.slug}`}

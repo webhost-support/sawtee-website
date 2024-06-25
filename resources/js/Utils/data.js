@@ -1,14 +1,14 @@
 import {
-  FiBook,
-  FiCompass,
-  FiFileText,
-  FiGlobe,
-  FiGrid,
-  FiHome,
-  FiLayout,
-  FiStar,
-  FiTrendingUp,
-  FiUsers,
+    FiBook,
+    FiCompass,
+    FiFileText,
+    FiGlobe,
+    FiGrid,
+    FiHome,
+    FiLayout,
+    FiStar,
+    FiTrendingUp,
+    FiUsers,
 } from 'react-icons/fi';
 import { RiPagesLine } from 'react-icons/ri';
 import { TbSlideshow } from 'react-icons/tb';
@@ -187,41 +187,41 @@ export const memberInstitutions = [
 ];
 
 export const staticExperts = [
-	{
-		name: 'Ratnakar Adhikari',
-		designation: 'Chairman',
-		media: [{ original_url: '/assets/Ratnakar_headshot.webp' }],
-	},
-	{
-		name: 'Posh Raj Pandey',
-		designation: 'Chair Emeritus',
-		media: [{ original_url: '/assets/PRP.webp' }],
-	},
-	{
-		name: 'Paras Kharel',
-		designation: 'Executive Director',
-		media: [{ original_url: '/assets/PK_headshot.webp' }],
-	},
-	{
-		name: 'Dhrubesh C. Regmi',
-		designation: 'General Secretary',
-		media: [{ original_url: '/assets/dhrubesh.webp' }],
-	},
-	// {
-	//     name: "Neelu Thapa",
-	//     designation: "Treasurer",
-	//     media: [{ original_url: "/assets/Neelu-Thapa.webp" }],
-	// },
-	{
-		name: 'Dikshya Singh',
-		designation: 'Programme Coordinator',
-		media: [{ original_url: '/assets/dikshya.webp' }],
-	},
-	{
-		name: 'Kshitiz Dahal',
-		designation: 'Sr. Research Officer',
-		media: [{ original_url: '/assets/Kshitiz.webp' }],
-	},
+  {
+    name: 'Ratnakar Adhikari',
+    designation: 'Chairman',
+    media: [{ original_url: '/assets/Ratnakar_headshot.webp' }],
+  },
+  {
+    name: 'Posh Raj Pandey',
+    designation: 'Chair Emeritus',
+    media: [{ original_url: '/assets/PRP.webp' }],
+  },
+  {
+    name: 'Paras Kharel',
+    designation: 'Executive Director',
+    media: [{ original_url: '/assets/PK_headshot.webp' }],
+  },
+  {
+    name: 'Dhrubesh C. Regmi',
+    designation: 'General Secretary',
+    media: [{ original_url: '/assets/dhrubesh.webp' }],
+  },
+  {
+    name: 'Neelu Thapa',
+    designation: 'Treasurer',
+    media: [{ original_url: '/assets/Neelu-Thapa.webp' }],
+  },
+  {
+    name: 'Dikshya Singh',
+    designation: 'Programme Coordinator',
+    media: [{ original_url: '/assets/dikshya.webp' }],
+  },
+  {
+    name: 'Kshitiz Dahal',
+    designation: 'Sr. Research Officer',
+    media: [{ original_url: '/assets/Kshitiz.webp' }],
+  },
 ];
 
 export const aboutMenuData = {
@@ -354,7 +354,7 @@ export const primarMenu = [
 		introText:
 			'South Asia Watch on Trade, Economics and Environment (SAWTEE) was launched in 1994 as a loose regional network of non-governmental organizations (NGOs) from five South Asian countries: Bangladesh, India, Nepal, Pakistan and Sri Lanka. Taking into consideration the emerging need for fair, effective and meaningful integration of South Asian countries into the regional as well as global economies, the major motto of this regional initiative has been “GLOBALIZATION YES, BUT WITH SAFETY NETS”',
 		introImage: '/assets/Airports_Network_Map.png',
-		experts: [...staticExperts],
+		// experts: [...staticExperts],
 	},
 	{
 		title: 'Our Work',

@@ -40,7 +40,7 @@ class ResearchController extends Controller
             'slug' =>'nullable|string|unique:research',
             'subtitle' =>'nullable|string|max:255',
             'description' => 'nullable|string|max:2000',
-            'year' => 'nullable|numeric|max:3030',
+            'year' => 'required|digits:4|integer|min:1900|max:' . date('Y'),
             'link' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'file' => 'nullable|file|mimes:pdf,doc,docx|max:5120',
@@ -86,19 +86,31 @@ class ResearchController extends Controller
      */
     public function update(Request $request, Research $research)
     {
+        $validated = $request->validate([
+            'title' => 'string|min:6|max:255',
+            'slug' => 'nullable|string',
+            'subtitle' => 'nullable|string|max:255',
+            'description' => 'nullable|string|max:2000',
+            'year' => 'required|digits:4|integer|min:1900|max:' . (date('Y')),
+            'link' => 'nullable|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'file' => 'nullable|file|mimes:pdf,doc,docx|max:5120',
+            'meta_title' => "nullable|string|max:255",
+            'meta_description' => "nullable|string"
+        ]);
 
         if ($request->hasFile('image'))
             $research->addMediaFromRequest('image')->toMediaCollection('featured_image');
         if($request->hasFile('file')){
             $research->file()->delete();
             $name = $request->file('file')->getClientOriginalName();
-            $path = $request->file('file')->move(public_path('Research_Reports'), $name);
+            $path = $request->file('file')->move(public_path('Research_Reports '), $name);
             $file = new File();
             $file->path = $path;
             $file->name = $name;
             $research->file()->save($file);
         }
-        $research->update($request->all());
+        $research->update($validated);
 
         return redirect()->route('admin.research.index');
     }

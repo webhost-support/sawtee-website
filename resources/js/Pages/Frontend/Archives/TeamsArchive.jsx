@@ -9,7 +9,6 @@ import TeamMember from '../TeamMember';
 import '../../../../css/our-team.css';
 
 const TeamsArchive = ({ category, teams, featured_image, srcSet }) => {
-	console.log(teams);
 
 	return (
 		<MainLayout>
