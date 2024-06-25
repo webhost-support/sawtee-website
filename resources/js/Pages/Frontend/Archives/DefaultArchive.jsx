@@ -8,7 +8,6 @@ const DefaultArchive = ({ posts, headingColor, textColor, showFallbackImage, ...
   if (!posts || posts.length <= 0) return 'No posts found';
   return posts.map(post => {
     const featured_image = post.media.filter(media => media.collection_name === 'post-featured-image')[0];
-    const file = post.media.filter(media => media.collection_name === 'post-files')[0];
 
     return (
       <GlassBox
@@ -22,7 +21,6 @@ const DefaultArchive = ({ posts, headingColor, textColor, showFallbackImage, ...
       >
         <ArchivePost
           post={post}
-          file={file}
           featured_image={featured_image}
           headingColor={headingColor}
           textColor={textColor}
@@ -35,7 +33,7 @@ const DefaultArchive = ({ posts, headingColor, textColor, showFallbackImage, ...
 
 export default DefaultArchive;
 
-const ArchivePost = ({ post, featured_image, showFallbackImage, file, rest }) => {
+const ArchivePost = ({ post, featured_image, showFallbackImage, ...rest }) => {
   return (
     <LinkBox {...rest}>
       {showFallbackImage && (
@@ -63,23 +61,18 @@ const ArchivePost = ({ post, featured_image, showFallbackImage, file, rest }) =>
       <Box p={[2, 4]}>
         <Box>
           <LinkOverlay
-            as={post.content ? Link : 'a'}
-            target={post.content ? '_self' : '_blank'}
+            as={Link}
             href={
-              post.content
-                ? post.category.parent
-                  ? `/category/${post.category.parent.slug}/${post.category.slug}/${post.slug}`
-                  : `/category/${post.category.slug}/${post.slug}`
-                : file?.original_url
+              post.category.parent
+                ? `/category/${post.category.parent.slug}/${post.category.slug}/${post.slug}`
+                : `/category/${post.category.slug}/${post.slug}`
             }
           >
             <Heading as="h3" fontSize={['sm', 'sm', 'sm', 'md']} fontWeight="normal">
               {post.title}
             </Heading>
           </LinkOverlay>
-          <Text fontSize={'xs'} mt={2} noOfLines={3}>
-            {post.excerpt}
-          </Text>
+          <Text fontSize={'xs'} mt={2} noOfLines={3} dangerouslySetInnerHTML={{ __html: post.excerpt }} />
         </Box>
 
         <Box mt="4">

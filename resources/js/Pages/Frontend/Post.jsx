@@ -8,7 +8,6 @@ import WebinarPost from './Pages/WebinarPost';
 
 export default function Post({ post, featured_image, srcSet, file }) {
   const { category, title, content } = post;
-  //   const file = post.media.filter(media => media.collection_name === 'post-files')[0];
   const isProgramme = category.parent && category.parent.slug === 'programme';
   const isNewsletter = category.slug === 'newsletters';
   const isWebinarSeries = category.slug === 'webinar-series';

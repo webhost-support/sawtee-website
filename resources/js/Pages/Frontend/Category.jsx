@@ -9,6 +9,7 @@ import CovidArchive from './Archives/CovidArchive';
 import DefaultArchive from './Archives/DefaultArchive';
 import NewsletterArchive from './Archives/NewsletterArchive';
 import ResearchArchive from './Archives/ResearchArchive';
+import SawteeInMediaArchive from './Archives/SawteeInMediaArchive';
 import MainLayout from './Layout/MainLayout';
 import { PageLayout } from './Layout/PageLayout';
 
@@ -29,7 +30,7 @@ export default function Category({
   const isBlog = category.slug === 'blog';
   const isCovid = category.slug === 'covid';
   const isResearch = category.slug === 'research';
-  const isDefault = !isNewsletter && !isBlog && !isResearch && !isCovid;
+  const isDefault = !isNewsletter && !isBlog && !isResearch && !isCovid && !isMedia;
 
   return (
     <MainLayout>
@@ -62,6 +63,8 @@ export default function Category({
             {isBlog && <BlogArchive posts={posts.data} />}
 
             {isNewsletter && <NewsletterArchive posts={posts.data} />}
+
+            {isMedia && <SawteeInMediaArchive posts={posts.data} />}
 
             {!isResearch && (
               <Pagination

@@ -1,69 +1,62 @@
-import { VStack, Text, Heading, HStack } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
-import { formatDate } from '@/Utils/helpers';
 import { ExploreButton, GlassBox } from '@/Components/Frontend/index';
+import { formatDate } from '@/Utils/helpers';
+import { Box, Heading, LinkBox, LinkOverlay, Stack, Text } from '@chakra-ui/react';
 import { Link } from '@inertiajs/react';
+import { motion, spring } from 'framer-motion';
 
-const SawteeInMediaArchive = ({ posts, headingColor, textColor }) => {
-	return posts.map(({ title, slug, excerpt, published_at }) => {
-		return (
-			<GlassBox
-				as={motion.div}
-				whileHover={{ y: '-10px' }}
-				_hover={{ boxShadow: 'xl' }}
-				p="40px"
-				boxShadow="none"
-				role="group"
-				maxW="xl"
-			>
-				<VStack spacing={2} mb={5} alignItems={'start'}>
-					<Link href={`/category/sawtee-in-media/${slug}`}>
-						<Heading
-							color={headingColor}
-							fontSize={'md'}
-							lineHeight={1.2}
-							fontWeight="semibold"
-							textAlign="left"
-							mb={4}
-						>
-							{title}
-						</Heading>
-					</Link>
+const SawteeInMediaArchive = ({ posts, ...rest }) => {
+  if (!posts || posts.length <= 0) return 'No posts found';
 
-					<Text fontSize="sm" noOfLines={3} color={textColor} dangerouslySetInnerHTML={{ __html: excerpt }} />
-				</VStack>
-				<HStack fontSize="sm" spacing={2} justifyContent="space-between" alignItems="center">
-					{/* {acf.publishers.length > 0 &&
-                    acf.publishers.map(({ publisher, publisher_website }) => {
-                        return (
-                            <Tag
-                                key={publisher}
-                                px="4"
-                                py={2}
-                                as="a"
-                                color={textColor}
-                                href={publisher_website}
-                                _hover={{ textDecor: "underline" }}
-                            >
-                                {publisher}
-                            </Tag>
-                        );
-                    })} */}
+  return posts.map(({ title, slug, media, content, category, excerpt, published_at }) => {
+    const featured_image = media.filter(media => media.collection_name === 'post-featured-image')[0];
+    const file = media.filter(media => media.collection_name === 'post-files')[0];
+    const hasContent = content !== null || '';
+    return (
+      <GlassBox
+        as={motion.article}
+        whileHover={{ y: '-10px', stiffness: 100, velocity: 100, transition: { duration: 0.2 } }}
+        _hover={{ boxShadow: 'xl' }}
+        role="group"
+        w={{ base: 'xs', sm: 'md', md: 'lg', lg: 'xl' }}
+        boxShadow="none"
+        maxW="xl"
+        {...rest}
+      >
+        <LinkBox p={[2, 4]}>
+          <Box>
+            <LinkOverlay
+              as={hasContent ? Link : 'a'}
+              target={hasContent || !file ? '_self' : '_blank'}
+              href={hasContent || !file ? `/category/${category.slug}/${slug}` : file?.original_url}
+            >
+              <Heading as="h3" fontSize={['sm', 'sm', 'sm', 'md']} fontWeight="normal">
+                {title}
+              </Heading>
+            </LinkOverlay>
+            <Text fontSize={'xs'} mt={2} noOfLines={3} dangerouslySetInnerHTML={{ __html: excerpt }} />
+          </Box>
 
-					<Text
-						fontSize={'xs'}
-						color={headingColor}
-						dangerouslySetInnerHTML={{
-							__html: formatDate(published_at),
-						}}
-					/>
-					<Link href={`/category/sawtee-in-media/${slug}`}>
-						<ExploreButton size="xs" text="Read more" colorScheme={'gray'} w="full" />
-					</Link>
-				</HStack>
-			</GlassBox>
-		);
-	});
+          <Box mt="4">
+            <Stack justify="space-between" direction={'row'} flexWrap={'wrap'} alignItems={'center'}>
+              <Text as="time" fontSize={'xs'} color="gray.600">
+                {formatDate(published_at)}
+              </Text>
+
+              <ExploreButton
+                size="xs"
+                text="Read more"
+                aria-label={'Read More'}
+                colorScheme={'gray'}
+                w="full"
+                variant={'solid'}
+                link={`/category/${category.slug}/${slug}`}
+              />
+            </Stack>
+          </Box>
+        </LinkBox>
+      </GlassBox>
+    );
+  });
 };
 
 export default SawteeInMediaArchive;

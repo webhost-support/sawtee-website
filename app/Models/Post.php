@@ -39,7 +39,6 @@ class Post extends Model implements HasMedia
         "meta_description",
     ];
 
-    // protected $with = ["postContentFiles", "category", "media"];
     /**
      * Get the indexable data array for the model.
      *
@@ -75,16 +74,6 @@ class Post extends Model implements HasMedia
             ->startSlugSuffixFrom(2);
     }
 
-    // /**
-    //  * Get the route key for the model.
-    //  *
-    //  * @return string
-    //  */
-    // public function getRouteKeyName()
-    // {
-    //     return 'slug';
-    // }
-
     public function postContentFiles(): MorphMany
     {
         return $this->morphMany(File::class, "fileable");
@@ -96,7 +85,6 @@ class Post extends Model implements HasMedia
             ->fit(Manipulations::FIT_MAX, 300, 200)
             ->format(Manipulations::FORMAT_WEBP)
             ->quality(75)
-            ->keepOriginalImageFormat()
             ->nonQueued();
 
         $this->addMediaConversion("responsive")
@@ -104,7 +92,6 @@ class Post extends Model implements HasMedia
             ->performOnCollections("post-featured-image")
             ->quality(75)
             ->format(Manipulations::FORMAT_WEBP)
-            // ->keepOriginalImageFormat()
             ->withResponsiveImages()
             ->nonQueued();
     }

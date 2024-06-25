@@ -15,7 +15,6 @@ class Team extends Model implements HasMedia
     use HasFactory;
 
     public $fillable = ['name', 'email', 'designation', 'bio', 'order'];
-    protected $with = ['media'];
 
 
     public function registerMediaConversions(Media $media = null): void
