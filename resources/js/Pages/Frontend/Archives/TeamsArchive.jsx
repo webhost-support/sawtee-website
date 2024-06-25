@@ -1,12 +1,10 @@
-import { GlassBox } from '@/Components/Frontend/index';
-import { Heading, Text, Flex, Container } from '@chakra-ui/react';
-import React, { Fragment } from 'react';
-import Section from '@/Components/Frontend/styles/section';
-import MainLayout from '../Layout/MainLayout';
 import WebsiteHead from '@/Components/Frontend/Head';
+import Section from '@/Components/Frontend/styles/section';
+import { Container, Flex, Heading, Text, VStack } from '@chakra-ui/react';
+import '../../../../css/our-team.css';
+import MainLayout from '../Layout/MainLayout';
 import { PageLayout } from '../Layout/PageLayout';
 import TeamMember from '../TeamMember';
-import '../../../../css/our-team.css';
 
 const TeamsArchive = ({ category, teams, featured_image, srcSet }) => {
 
@@ -33,9 +31,9 @@ const TeamsArchive = ({ category, teams, featured_image, srcSet }) => {
 						) : (
 							teams.data.map(post => {
 								return (
-									<Fragment key={post.id}>
+									<VStack spacing={10} key={post.id}>
 										<TeamMember member={post} />
-									</Fragment>
+									</VStack>
 								);
 							})
 						)}

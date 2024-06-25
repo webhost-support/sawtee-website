@@ -55,7 +55,7 @@ const Home = ({
         description="Explore South Asia's dynamic journey since the 1980s, navigating global integration and economic challenges."
         image={'/assets/logo-sawtee.webp'}
       />
-      <Section py="5" className="carousel-section">
+      <Section py="5" className="carousel-section" pl={{ base: '24px', md: '0' }}>
         <Grid
           templateColumns={{
             base: '1fr',
@@ -66,7 +66,12 @@ const Home = ({
           rowGap={20}
         >
           <GridItem colSpan={{ base: 1, sm: 5, md: 4 }}>
-            <Box maxW="5xl" mx="auto" overflow="hidden" rounded={'2xl'}>
+            <Box
+              maxW="5xl"
+              mx="auto"
+              overflow="hidden"
+              borderRadius={'0 var(--chakra-radii-2xl) var(--chakra-radii-2xl) 0'}
+            >
               <CarouselSection
                 slides={slides}
                 responsiveImages={slidesResponsiveImages}
@@ -112,7 +117,7 @@ const Home = ({
 
       <Section className="outreach-section">
         <Box maxW={'5xl'} mx="auto">
-          <Title title={'Outreach'} />
+          <Title title={'Outreach and Media'} />
           <OutreachSection sawteeInMedia={sawteeInMedia} events={events} />
         </Box>
       </Section>

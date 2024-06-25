@@ -14,12 +14,13 @@ const TeamMember = ({ member, ...rest }) => {
       justifyContent="center"
       {...rest}
     >
-      <Show above="sm">
-        <Box width="30rem" pos="relative">
+      <Show above="lg">
+        <Box width="15rem" pos="relative">
           <Image
             pos="absolute"
+            w="full"
+            h="full"
             rounded="lg"
-            boxSize={'2xl'}
             src={avatar.original_url}
             top="-3.8rem"
             boxShadow="lg"
@@ -28,13 +29,13 @@ const TeamMember = ({ member, ...rest }) => {
         </Box>
       </Show>
 
-      <Stack direction="column" spacing={4} textAlign="left" maxW="2xl">
+      <Stack direction="column" spacing={4} w="full" textAlign="left">
         <Icon as={ImQuotesLeft} w={10} h={10} />
         <Text fontSize="sm" color={color} fontWeight="semibold">
           {member.bio}
         </Text>
         <Stack alignItems={{ base: 'center', sm: 'flex-start' }} spacing={0}>
-          <Show below="sm">
+          <Show below="lg">
             <Avatar size="xl" showBorder={true} borderColor="blue.400" name="avatar" src={avatar.original_url} />
           </Show>
           <Text fontWeight="bold" fontSize="md" color={color}>

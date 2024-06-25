@@ -5,6 +5,7 @@ import InertiaChakraLink from '@/Components/Frontend/styles/inertia-chakra-link'
 import InertiaChakraLinkOverlay from '@/Components/Frontend/styles/inertia-chakra-link-overlay';
 import Section from '@/Components/Frontend/styles/section';
 import { formatDate } from '@/Utils/helpers';
+import { ExternalLinkIcon } from '@chakra-ui/icons';
 import {
   Badge,
   Box,
@@ -38,7 +39,6 @@ import { useEffect, useState } from 'react';
 import { HiArrowRight, HiChevronDown, HiChevronRight } from 'react-icons/hi';
 import SimpleList from './SimpleList';
 import VideoCarousel from './VideoCarousel';
-import { PlayIcon } from './icons';
 
 export const ListItemVariant = {
   initial: {
@@ -97,17 +97,28 @@ export const AboutSection = ({ data }) => {
               rounded={'2xl'}
             />
 
-            <LinkBox position={'relative'} rounded={'2xl'} boxShadow={'2xl'} role="group">
+            <LinkBox position={'relative'} rounded={'2xl'} overflow="hidden" boxShadow={'2xl'} role="group">
+              <Box
+                pos="absolute"
+                w="full"
+                h="full"
+                bg={'blackAlpha.400'}
+                _groupHover={{ bg: 'blackAlpha.200' }}
+                transition="all 0.25s ease"
+                inset="0"
+              />
+
               <IconButton
                 aria-label={'Play Button'}
                 variant={'ghost'}
                 _groupHover={{ color: 'white' }}
-                icon={<PlayIcon w={12} h={12} />}
+                icon={<ExternalLinkIcon w={12} h={12} />}
                 size={'lg'}
                 color={'whiteAlpha.700'}
                 position={'absolute'}
                 left={'50%'}
                 top={'50%'}
+                transition="all 0.25s ease"
                 transform={'translateX(-50%) translateY(-50%)'}
               />
 
@@ -172,14 +183,18 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
       <GridItem colSpan={{ base: 1, md: 3 }}>
         <SimpleList heading={'sawtee in media'}>
           {sawteeInMedia.map(item => {
+            const hasContent = item.content !== null || '';
+            const file = item.media?.filter(media => media.collection_name === 'post-files')[0];
+
             return (
               <ListItem key={item.id} mb="1rem">
                 <Box>
                   <InertiaChakraLink
-                    as={Link}
+                    as={hasContent ? Link : 'a'}
+                    target={hasContent || !file ? '_self' : '_blank'}
+                    href={hasContent || !file ? `/category/${item.category.slug}/${item.slug}` : file?.original_url}
                     textDecor="underline"
                     textUnderlineOffset="3px"
-                    href={`/category/sawtee-in-media/${item.slug}`}
                   >
                     <Text fontSize={'0.875rem'} lineHeight={'short'}>
                       {item.title}

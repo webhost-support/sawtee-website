@@ -107,7 +107,7 @@ class FrontendController extends Controller
         return Inertia::render('Frontend/Pages/Home', [
             'slides' => $slides->load(['media']),
             'infocus' => $infocus->load(['category']),
-            'sawteeInMedia' => $sawteeInMedia->load('category'),
+            'sawteeInMedia' => $sawteeInMedia->load(['category', 'media']),
             'events' => $events->load(['category', 'media', 'tags']),
             'featuredPublications' => $featured_publications,
             'publications' => $publications,
@@ -198,7 +198,7 @@ class FrontendController extends Controller
         }
 
         if ($slug === 'teams' && !$subcategory) {
-            $teams = Team::with('media')->orderByDesc('id')->simplePaginate(12);
+            $teams = Team::with('media')->orderBy('order', 'ASC')->simplePaginate(10);
             return Inertia::render('Frontend/Archives/TeamsArchive', [
                 'category' => $category,
                 'teams' => $teams,

@@ -28,27 +28,28 @@ export default function CreateMenuForm({ isOpen, onOpen, onClose }) {
 		e.preventDefault();
 
 		post(route('admin.create.menu'), {
-			preserveScroll: true,
-			onSuccess: () => {
-				toast({
-					position: 'top-right',
-					title: 'Menu Created.',
-					description: 'Menu Created Successfully',
-					status: 'success',
-					duration: 6000,
-					isClosable: true,
-				});
-				onClose();
-			},
-			onError: errors => {
-				if (errors.title) {
-					reset('title');
-				}
-				if (errors.location) {
-					reset('location');
-				}
-			},
-		});
+      preserveScroll: true,
+      onSuccess: () => {
+        toast({
+          position: 'top-right',
+          title: 'Menu Created.',
+          description: 'Menu Created Successfully',
+          status: 'success',
+          duration: 6000,
+          isClosable: true,
+        });
+        onClose();
+      },
+      onError: errors => {
+        console.error(errors);
+        if (errors.title) {
+          reset('title');
+        }
+        if (errors.location) {
+          reset('location');
+        }
+      },
+    });
 	};
 	return (
     <Modal isOpen={isOpen} onClose={onClose} size={{ base: 'xs', md: 'md' }}>

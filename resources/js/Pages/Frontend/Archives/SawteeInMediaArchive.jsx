@@ -2,13 +2,12 @@ import { ExploreButton, GlassBox } from '@/Components/Frontend/index';
 import { formatDate } from '@/Utils/helpers';
 import { Box, Heading, LinkBox, LinkOverlay, Stack, Text } from '@chakra-ui/react';
 import { Link } from '@inertiajs/react';
-import { motion, spring } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const SawteeInMediaArchive = ({ posts, ...rest }) => {
   if (!posts || posts.length <= 0) return 'No posts found';
 
   return posts.map(({ title, slug, media, content, category, excerpt, published_at }) => {
-    const featured_image = media.filter(media => media.collection_name === 'post-featured-image')[0];
     const file = media.filter(media => media.collection_name === 'post-files')[0];
     const hasContent = content !== null || '';
     return (
