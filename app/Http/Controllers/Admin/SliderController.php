@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Page;
 use App\Models\Slide;
 use App\Models\Slider;
 use Illuminate\Http\Request;
@@ -16,7 +17,8 @@ class SliderController extends Controller
     public function index()
     {
         $sliders = Slider::latest()->paginate(10);
-        return Inertia::render('Backend/Slider/Index', ['sliders' => $sliders]);
+        $pages = Page::all();
+        return Inertia::render('Backend/Slider/Index', ['sliders' => $sliders, "pages" => $pages]);
     }
 
     /**
@@ -34,6 +36,7 @@ class SliderController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|unique:sliders|max:255',
+            'page_id' => 'nullable|numeric|exists:pages,id',
         ]);
         Slider::create($validated);
         return to_route('admin.sliders.index');
@@ -52,8 +55,12 @@ class SliderController extends Controller
      */
     public function edit(Slider $slider)
     {
-        $slides = Slide::where('slider_id', $slider->id)->paginate();
-        return Inertia::render('Backend/Slider/Edit', ['slider' => $slider, 'slides' => $slides]);
+        $pages = Page::all();
+        $slides = Slide::where(
+            'slider_id',
+            $slider->id
+        )->paginate();
+        return Inertia::render('Backend/Slider/Edit', ['slider' => $slider, 'slides' => $slides, 'pages' => $pages]);
 
     }
 

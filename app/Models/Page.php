@@ -41,6 +41,11 @@ class Page extends Model implements HasMedia
         return $this->sections->count();
     }
 
+    public function slider(): HasMany
+    {
+        return $this->hasMany(Slider::class);
+    }
+
 
     public function registerMediaConversions(Media $media = null): void
     {

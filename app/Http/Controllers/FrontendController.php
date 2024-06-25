@@ -14,6 +14,8 @@ use App\Models\Team;
 use App\Models\Theme;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Redirect;
+
 // use Spatie\Newsletter\Facades\Newsletter;
 
 /**
@@ -87,7 +89,7 @@ class FrontendController extends Controller
         $sawteeInMediaId = Category::where('slug', 'sawtee-in-media')->first()->id;
         $eventsId = Category::where('slug', 'featured-events')->first()->id;
         $newsletterCategoryId = Category::where('slug', 'newsletters')->first()->id;
-        $slider = Slider::where('name', "Home Page Slider")->first();
+        $slider = Slider::where('page_id', Page::where('name', 'home')->first()->id,)->first();
         $slides = Slide::where('slider_id', $slider->id)->orderBy('id', 'DESC')->get();
         $slidesResponsiveImages = array();
         foreach ($slides as $slide) {
@@ -97,8 +99,8 @@ class FrontendController extends Controller
             }
         }
         $infocus = Post::where('category_id', strval($infocusId))->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
-        $sawteeInMedia = Post::where('category_id', strval($sawteeInMediaId))->where('status', 'published')->orderBy('id', 'DESC')->take(6)->get();
-        $events = Post::where('category_id', strval($eventsId))->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
+        $sawteeInMedia = Post::where('category_id', strval($sawteeInMediaId))->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
+        $events = Post::where('category_id', strval($eventsId))->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
         $newsletters = Post::where('category_id', strval($newsletterCategoryId))->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
         $webinars = Post::where('category_id', strval(Category::where('slug', 'webinar-series')->first()->id))->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
 
@@ -131,6 +133,10 @@ class FrontendController extends Controller
 
         if ($slug === 'our-work') {
             $themes = Theme::all();
+        }
+
+        if ($slug === 'home') {
+            return Redirect::route('home');
         }
 
 

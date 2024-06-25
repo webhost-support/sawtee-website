@@ -8,7 +8,7 @@ import { createColumnHelper } from '@tanstack/react-table';
 import React from 'react';
 import CreateSliderForm from './Partials/CreateSliderForm';
 
-export default function Index({ auth, sliders }) {
+export default function Index({ auth, sliders, pages }) {
   const toast = useToast();
   const columnHelper = createColumnHelper();
   const { processing, delete: destroy, get } = useForm();
@@ -72,7 +72,7 @@ export default function Index({ auth, sliders }) {
       </PrimaryButton>
       {sliders && <DataTable defaultColumns={defaultColumns} data={sliders} />}
       {createSliderModal.isOpen && (
-        <CreateSliderForm isOpen={createSliderModal.isOpen} onClose={createSliderModal.onClose} />
+        <CreateSliderForm isOpen={createSliderModal.isOpen} onClose={createSliderModal.onClose} pages={pages} />
       )}
     </AuthenticatedLayout>
   );
