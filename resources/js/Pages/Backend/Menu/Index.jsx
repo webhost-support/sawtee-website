@@ -1,14 +1,13 @@
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
 import { DataTable } from '@/Components/Backend/DataTable';
-import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
-import { Box, HStack, Tag, Text, useDisclosure, useToast } from '@chakra-ui/react';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { createColumnHelper } from '@tanstack/react-table';
+import PrimaryButton from '@/Components/Backend/PrimaryButton';
 import { TableDeleteAction, TableEditAction } from '@/Components/Backend/TableActions';
-import React from 'react';
+import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
+import { Box, HStack, useDisclosure } from '@chakra-ui/react';
+import { Head, useForm } from '@inertiajs/react';
+import { createColumnHelper } from '@tanstack/react-table';
+import React, { useState } from 'react';
 import CreateMenuForm from './Partials/CreateMenu';
 import DeleteMenu from './Partials/DeleteMenu';
-import { useState } from 'react';
 
 export default function Index({ auth, menus }) {
 	const columnHelper = createColumnHelper();

@@ -43,7 +43,7 @@ export default function Category({
         <script
           async
           defer
-          crossorigin="anonymous"
+          crossOrigin="anonymous"
           src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v20.0"
           nonce="fqoExb8K"
         ></script>

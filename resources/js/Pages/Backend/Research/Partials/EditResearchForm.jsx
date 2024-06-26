@@ -1,5 +1,6 @@
 import FileUpload, { PreviewImage } from '@/Components/Backend/FileUpload';
 import PrimaryButton from '@/Components/Backend/PrimaryButton';
+import { FileIcon } from '@/Components/Frontend/icons';
 import { CloseIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
 import {
     Accordion,
@@ -26,7 +27,6 @@ import {
 } from '@chakra-ui/react';
 import { useForm } from '@inertiajs/react';
 import { useState } from 'react';
-import { FiFile } from 'react-icons/fi';
 
 export default function CreateResearchForm({ research }) {
 	const { data, setData, post, processing, errors } = useForm({
@@ -243,7 +243,7 @@ export default function CreateResearchForm({ research }) {
             <FormControl mt={4} isInvalid={errors.file}>
               <FormLabel htmlFor="file">File Upload</FormLabel>
               <InputGroup>
-                <InputLeftAddon children={<FiFile />} />
+                <InputLeftAddon children={<FileIcon />} />
                 <Box position="relative">
                   <Input size="md" isReadOnly placeholder={filename ? filename : 'No file selected'} />
                   <Input

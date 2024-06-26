@@ -1,24 +1,23 @@
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import { useForm } from '@inertiajs/react';
-import {
-	FormControl,
-	FormErrorMessage,
-	FormLabel,
-	Input,
-	VStack,
-	Button,
-	Modal,
-	ModalOverlay,
-	ModalCloseButton,
-	ModalContent,
-	ModalHeader,
-	ModalBody,
-	ModalFooter,
-	useToast,
-	useColorModeValue,
-} from '@chakra-ui/react';
-import React, { useState, useEffect } from 'react';
 import FileUpload, { PreviewImage } from '@/Components/Backend/FileUpload';
+import PrimaryButton from '@/Components/Backend/PrimaryButton';
+import {
+    Button,
+    FormControl,
+    FormErrorMessage,
+    FormLabel,
+    Input,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
+    VStack,
+    useToast
+} from '@chakra-ui/react';
+import { useForm } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
 
 function CreateSlideForm({ isOpen, onClose, slider }) {
 	const { data, setData, post, processing, errors, reset } = useForm({

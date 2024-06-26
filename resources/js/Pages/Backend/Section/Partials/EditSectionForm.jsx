@@ -1,29 +1,29 @@
+import ContentEditor from '@/Components/Backend/ContentEditor';
+import FileUpload, { PreviewImage } from '@/Components/Backend/FileUpload';
 import PrimaryButton from '@/Components/Backend/PrimaryButton';
 import {
-	FormControl,
-	FormErrorMessage,
-	FormLabel,
-	Input,
-	Radio,
-	Stack,
-	Select,
-	VStack,
-	Box,
-	useToast,
-	AspectRatio,
-	Button,
-	NumberInput,
-	NumberInputField,
-	NumberInputStepper,
-	NumberIncrementStepper,
-	NumberDecrementStepper,
-	HStack,
-	SimpleGrid,
+    AspectRatio,
+    Box,
+    Button,
+    FormControl,
+    FormErrorMessage,
+    FormLabel,
+    HStack,
+    Input,
+    NumberDecrementStepper,
+    NumberIncrementStepper,
+    NumberInput,
+    NumberInputField,
+    NumberInputStepper,
+    Radio,
+    Select,
+    SimpleGrid,
+    Stack,
+    VStack,
+    useToast,
 } from '@chakra-ui/react';
 import { useForm } from '@inertiajs/react';
-import ContentEditor from '@/Components/Backend/ContentEditor';
 import React from 'react';
-import FileUpload, { PreviewImage } from '@/Components/Backend/FileUpload';
 
 export default function EditSectionForm({ sections, section, pages }) {
 	const { data, setData, post, processing, errors } = useForm({

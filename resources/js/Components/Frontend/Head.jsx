@@ -4,9 +4,9 @@ const WebsiteHead = ({ title, description, image, children }) => {
 	return (
 		<Head>
 			<title>{title}</title>
-			<meta http-equiv="imagetoolbar" content="no" />
+			<meta httpEquiv="imagetoolbar" content="no" />
 			<meta head-key="description" name="description" content={description} />
-			<meta head-key="imagetoolbar" http-equiv="imagetoolbar" content="no" />
+			<meta head-key="imagetoolbar" httpEquiv="imagetoolbar" content="no" />
 			<meta head-key="og:title" property="og:title" content={'SAWTEE | ' + title} />
 			<meta head-key="og:type" property="og:type" content="post page" />
 			<meta head-key="og:description" property="og:description" content={description} />

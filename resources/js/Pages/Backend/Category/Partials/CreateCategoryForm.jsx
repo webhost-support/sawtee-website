@@ -1,20 +1,19 @@
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import { useForm } from '@inertiajs/react';
-import {
-	Box,
-	Button,
-	SimpleGrid,
-	FormControl,
-	FormErrorMessage,
-	FormLabel,
-	Select,
-	VStack,
-	useToast,
-	Input,
-	Textarea,
-	Text,
-} from '@chakra-ui/react';
 import FileUpload, { PreviewImage } from '@/Components/Backend/FileUpload';
+import PrimaryButton from '@/Components/Backend/PrimaryButton';
+import {
+    Box,
+    Button,
+    FormControl,
+    FormErrorMessage,
+    FormLabel,
+    Input,
+    Select,
+    SimpleGrid,
+    Textarea,
+    VStack,
+    useToast
+} from '@chakra-ui/react';
+import { useForm } from '@inertiajs/react';
 import React from 'react';
 
 export default function CreateCategoryForm({ categories }) {
