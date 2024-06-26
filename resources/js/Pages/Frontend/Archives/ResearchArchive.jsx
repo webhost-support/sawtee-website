@@ -1,8 +1,6 @@
-import { VStack, Heading, Box, Circle, Flex, Link, Text, useColorModeValue } from '@chakra-ui/react';
-import { FaFilePdf } from 'react-icons/fa';
-import { FiCheckCircle } from 'react-icons/fi';
 import { GlassBox } from '@/Components/Frontend';
-import React from 'react';
+import { PDFFileIcon } from '@/Components/Frontend/icons';
+import { Box, Circle, Flex, Heading, Link, Text, VStack, useColorModeValue } from '@chakra-ui/react';
 
 const ResearchArchive = ({ posts }) => {
 	// Get the data of the current list.
@@ -35,7 +33,7 @@ const ResearchArchive = ({ posts }) => {
 								{tagitem[1].map((researchItem, idx) => (
 									<ReasearchItem
 										key={researchItem.id}
-										icon={FaFilePdf}
+										icon={PDFFileIcon}
 										skipTrail={idx !== tagitem[1].length - 1 ? true : false}
 										minH={idx !== tagitem[1].length - 1 ? 20 : 'auto'}
 									>
@@ -60,7 +58,7 @@ const ResearchArchive = ({ posts }) => {
 
 export default ResearchArchive;
 
-const ReasearchItem = ({ icon = FiCheckCircle, boxProps = {}, skipTrail, children, ...props }) => {
+const ReasearchItem = ({ icon = CheckCircleIcon, boxProps = {}, skipTrail, children, ...props }) => {
 	return (
 		<Flex {...props} align={'center'}>
 			<Flex flexDir="column" alignItems="center" mr={4} pos="relative">

@@ -20,6 +20,7 @@ export default function Category({
   sawteeInMedia,
   events,
   showSubscriptionBox = true,
+  showFacebookEmbed = true,
   featured_image,
   srcSet,
 }) {
@@ -38,7 +39,15 @@ export default function Category({
         title={category.meta_title ? category.meta_title : category.name}
         description={category.meta_description}
         image={featured_image ? featured_image.original_url : '/assets/logo-sawtee.webp'}
-      ></WebsiteHead>
+      >
+        <script
+          async
+          defer
+          crossorigin="anonymous"
+          src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v20.0"
+          nonce="fqoExb8K"
+        ></script>
+      </WebsiteHead>
       <PageLayout featured_image={featured_image} srcSet={srcSet} title={category.name} showBackgroundPattern={false}>
         <Grid
           py={{ base: '24px', lg: '80px' }}
@@ -54,7 +63,15 @@ export default function Category({
           gap={12}
           rowGap={10}
         >
-          <GridItem as="section" display="flex" flexDir="column" alignItems="center" gap={12} colSpan={1}>
+          <GridItem
+            as="section"
+            display="flex"
+            flexDir="column"
+            alignItems="center"
+            gap={12}
+            colSpan={1}
+            className="archive-list"
+          >
             {isDefault && <DefaultArchive posts={posts.data} showFallbackImage={isEvent} />}
             {isCovid && <CovidArchive posts={posts.data} />}
 
@@ -90,6 +107,28 @@ export default function Category({
               )}
               {!isInFocus && infocus && (
                 <SidebarWidget array={infocus} link={'/category/in-focus'} title={'In Focus'} />
+              )}
+              {showFacebookEmbed && (
+                <GlassBox py="4" px="4" rounded="xl" w="full" textAlign="center">
+                  <div id="fb-root"></div>
+                  <div
+                    className="fb-page"
+                    data-href="https://www.facebook.com/sawteenp/"
+                    data-tabs="timeline"
+                    data-width=""
+                    data-height=""
+                    data-small-header="false"
+                    data-adapt-container-width="true"
+                    data-hide-cover="false"
+                    data-show-facepile="false"
+                  >
+                    <blockquote cite="https://www.facebook.com/sawteenp/" className="fb-xfbml-parse-ignore">
+                      <a href="https://www.facebook.com/sawteenp/">
+                        South Asia Watch on Trade, Economics and Environment (SAWTEE)
+                      </a>
+                    </blockquote>
+                  </div>
+                </GlassBox>
               )}
 
               {showSubscriptionBox && (

@@ -5,62 +5,61 @@ import InertiaChakraLink from '@/Components/Frontend/styles/inertia-chakra-link'
 import InertiaChakraLinkOverlay from '@/Components/Frontend/styles/inertia-chakra-link-overlay';
 import Section from '@/Components/Frontend/styles/section';
 import { formatDate } from '@/Utils/helpers';
-import { ExternalLinkIcon } from '@chakra-ui/icons';
+import { ArrowForwardIcon, ChevronDownIcon, ChevronRightIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 import {
-  Badge,
-  Box,
-  Button,
-  Flex,
-  Grid,
-  GridItem,
-  HStack,
-  Heading,
-  IconButton,
-  Image,
-  Input,
-  LinkBox,
-  LinkOverlay,
-  ListItem,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  SimpleGrid,
-  Skeleton,
-  Text,
-  useColorModeValue,
+    Badge,
+    Box,
+    Button,
+    Flex,
+    Grid,
+    GridItem,
+    HStack,
+    Heading,
+    IconButton,
+    Image,
+    Input,
+    LinkBox,
+    LinkOverlay,
+    ListItem,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
+    SimpleGrid,
+    Skeleton,
+    Text,
+    useColorModeValue,
 } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import { Link } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
-import { HiArrowRight, HiChevronDown, HiChevronRight } from 'react-icons/hi';
 import SimpleList from './SimpleList';
 import VideoCarousel from './VideoCarousel';
 
 export const ListItemVariant = {
-  initial: {
-    y: 50,
-    transition: {
-      y: { stiffness: 1000 },
-    },
-  },
-  whileInView: {
+  open: {
     y: 0,
     transition: {
       y: { stiffness: 1000, velocity: -100 },
     },
   },
+  closed: {
+    y: 50,
+    transition: {
+      y: { stiffness: 1000 },
+    },
+  },
 };
 
 export const ListVariant = {
-  initial: {
-    transition: { staggerChildren: 0.05, staggerDirection: -1 },
-  },
-  whileInView: {
+  open: {
     transition: { staggerChildren: 0.07, delayChildren: 0.2 },
+  },
+  closed: {
+    transition: { staggerChildren: 0.05, staggerDirection: -1 },
   },
 };
 
@@ -322,6 +321,7 @@ export const FeaturedPublications = ({ publications }) => {
                       px="2"
                       fontSize="0.75rem"
                       fontWeight="normal"
+                      fontFamily={'heading'}
                     >
                       {publication.category?.name}
                     </Badge>
@@ -333,7 +333,7 @@ export const FeaturedPublications = ({ publications }) => {
                     textUnderlineOffset="3px"
                     href={publication.file ? `/publications/${publication.file.name}` : '#'}
                   >
-                    <Text fontSize={'0.875rem'} lineHeight={'short'}>
+                    <Text fontSize={'0.875rem'} fontFamily={'heading'} lineHeight={'short'}>
                       {publication.title}
                     </Text>
                   </InertiaChakraLinkOverlay>
@@ -548,7 +548,7 @@ export const Accordian = ({ data }) => {
           <li key={id} onClick={() => ChangeAccordianOpenState(id, open)}>
             <div className="accordian-item">
               <p>{name}</p>
-              {open ? <HiChevronDown size={'3rem'} /> : <HiChevronRight size={'3rem'} />}
+              {open ? <ChevronDownIcon size={'3rem'} /> : <ChevronRightIcon size={'3rem'} />}
             </div>
             {open ? (
               <div className="accordian-content">
@@ -568,9 +568,6 @@ export const Title = ({ title, ...rest }) => {
       as="h3"
       fontSize={'1.5rem'}
       fontWeight="bold"
-      fontFamily={
-        'Gotham Narrow SSm A,Gotham Narrow SSm B,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif'
-      }
       marginBottom={'3rem !important'}
       display={'flex'}
       alignItems={'center'}
@@ -640,7 +637,7 @@ export const ExploreButton = ({ text = 'Explore All', link, ...rest }) => {
         fontWeight={'normal'}
         onMouseEnter={() => setHovered(!hovered)}
         onMouseLeave={() => hovered && setHovered(!hovered)}
-        rightIcon={hovered ? <HiArrowRight /> : <HiChevronRight />}
+        rightIcon={hovered ? <ArrowForwardIcon /> : <ChevronRightIcon />}
         href={link ? link : '#'}
         size={'sm'}
         {...rest}

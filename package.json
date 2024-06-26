@@ -47,8 +47,6 @@
     "framer-motion": "^10.16.4",
     "install": "^0.13.0",
     "nprogress": "^0.2.0",
-    "react-hook-form": "^7.47.0",
-    "react-icons": "^4.11.0",
     "react-medium-image-zoom": "^5.1.8",
     "react-share": "^5.1.0",
     "reading-duration": "^1.1.2",

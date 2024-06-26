@@ -9,6 +9,7 @@
 /public/Featured_Events/*
 /public/storage
 /storage/*.key
+!/storage/app/public
 /build/*
 /vendor
 .env

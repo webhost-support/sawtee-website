@@ -1,20 +1,19 @@
+import { ArticleIcon, BookIcon, FileIcon } from '@/Components/Frontend/icons';
 import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
-import React from 'react';
 import {
-	Alert,
-	AlertIcon,
-	Box,
-	chakra,
-	Flex,
-	SimpleGrid,
-	Stat,
-	StatLabel,
-	StatNumber,
-	Text,
-	useColorModeValue,
+    Alert,
+    AlertIcon,
+    Box,
+    Flex,
+    SimpleGrid,
+    Stat,
+    StatLabel,
+    StatNumber,
+    Text,
+    chakra,
+    useColorModeValue,
 } from '@chakra-ui/react';
-import { FiBook, FiFileText, FiTrendingUp } from 'react-icons/fi';
+import { Head } from '@inertiajs/react';
 
 export default function Dashboard({ auth, posts, categories, publications, researchs, users }) {
 	return (
@@ -37,9 +36,9 @@ export default function Dashboard({ auth, posts, categories, publications, resea
 				</chakra.h1>
 
 				<SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
-					<StatsCard title={'posts'} stat={posts} icon={<FiTrendingUp size="2em" />} />
-					<StatsCard title={'publications'} stat={publications} icon={<FiBook size="2em" />} />
-					<StatsCard title={'Research'} stat={researchs} icon={<FiFileText size="2em" />} />
+					<StatsCard title={'posts'} stat={posts} icon={<ArticleIcon boxSize="2em" />} />
+					<StatsCard title={'publications'} stat={publications} icon={<BookIcon boxSize="2em" />} />
+					<StatsCard title={'Research'} stat={researchs} icon={<FileIcon boxSize="2em" />} />
 				</SimpleGrid>
 			</Box>
 		</AuthenticatedLayout>

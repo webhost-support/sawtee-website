@@ -1,18 +1,18 @@
 import {
-  HomeIcon,
-  TagIcon,
-  GridPlusIcon,
-  UserIcon,
-  PageIcon,
-  LayoutIcon,
-  SliderIcon,
-  SlideShowIcon,
-  FileIcon,
-  BookIcon,
-  FilterIcon,
-  ArticleIcon,
+    ArticleIcon,
+    BookIcon,
+    FileIcon,
+    FilterIcon,
+    GlobeIcon,
+    GridPlusIcon,
+    HomeIcon,
+    LayoutIcon,
+    PageIcon,
+    SliderIcon,
+    TagIcon,
+    UserGroup,
+    Users
 } from '@/Components/Frontend/icons';
-import { ViewIcon } from '@chakra-ui/icons';
 
 export const feature = {
   name: 'Reform Monitoring Platform',
@@ -24,9 +24,9 @@ const font_heading =
   'Figtree , ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", -apple-system, BlinkMacSystemFont, "Segoe UI Emoji",Segoe UI Symbol, "Noto Color Emoji"';
 
 const font_body =
-  'ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", -apple-system, BlinkMacSystemFont, "Segoe UI Emoji",Segoe UI Symbol, "Noto Color Emoji"';
+  'Inter, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", -apple-system, BlinkMacSystemFont, "Segoe UI Emoji",Segoe UI Symbol, "Noto Color Emoji"';
 
-const font_mono = "'Inconsolata', Consolas, monospace";
+const font_mono = "'IBM Plex Mono', Consolas, monospace";
 
 export const config = {
   initialColorMode: 'system',
@@ -240,7 +240,7 @@ export const DashBoardMenuItems = [
   },
   {
     name: 'Website',
-    icon: ViewIcon,
+    icon: GlobeIcon,
     route: 'home',
   },
   {
@@ -290,7 +290,7 @@ export const DashBoardMenuItems = [
   },
   {
     name: 'Team Members',
-    icon: UserIcon,
+    icon: Users,
     route: 'admin.teams.index',
   },
   ,
@@ -301,7 +301,7 @@ export const DashBoardMenuItems = [
   },
   {
     name: 'Subscribers',
-    icon: SlideShowIcon,
+    icon: UserGroup,
     route: 'admin.subscribers.list',
   },
 ];

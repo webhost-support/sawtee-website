@@ -1,31 +1,23 @@
+import { SocialMenu } from '@/Components/Frontend/header/social-menu';
+import { MapModel, StyledChakraLink } from '@/Components/Frontend/index';
 import {
   Box,
-  Stack,
-  Text,
-  useColorModeValue,
-  useDisclosure,
   Grid,
   GridItem,
+  ListIcon,
   ListItem,
+  Stack,
+  Text,
   Tooltip,
   UnorderedList,
   VStack,
-  ListIcon,
+  useColorModeValue,
+  useDisclosure,
 } from '@chakra-ui/react';
-import React from 'react';
-import { SocialMenu } from '@/Components/Frontend/header/social-menu';
-import { MapModel, StyledChakraLink } from '@/Components/Frontend/index';
-import { MailBoxIcon, PhoneIcon, LocationPin, EmailIcon, FaxIcon, CaretRightIcon } from '../icons';
+import { CaretRightIcon, EmailIcon, LocationPin, MailBoxIcon, PhoneIcon, PhoneOutlineIcon } from '../icons';
 
 const FooterSection = ({ children, ...rest }) => (
-  <Box
-    as="footer"
-    w="full"
-    pos="relative"
-    bg={useColorModeValue('blackAlpha.50', 'var(--color-darker)')}
-    mx={'auto'}
-    {...rest}
-  >
+  <Box as="footer" pos="relative" bg={useColorModeValue('blackAlpha.50', 'var(--color-darker)')} mx={'auto'} {...rest}>
     {children}
   </Box>
 );
@@ -99,7 +91,7 @@ const Widget = ({ item }) => {
                         color: linkcolor,
                         verticalAlign: 'middle',
                       }}
-                      as={FaxIcon}
+                      as={PhoneOutlineIcon}
                     />
                     <StyledChakraLink
                       href={url ? url : null}
@@ -166,6 +158,8 @@ const Widget = ({ item }) => {
                         verticalAlign: 'middle',
                       }}
                       as={MailBoxIcon}
+                      fill="none"
+                      strokeWidth={2}
                     />
                     <StyledChakraLink
                       href={url ? url : null}

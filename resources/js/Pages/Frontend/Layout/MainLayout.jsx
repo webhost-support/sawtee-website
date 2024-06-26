@@ -1,11 +1,11 @@
 import Footer from '@/Components/Frontend/footer';
 import Header from '@/Components/Frontend/header/header';
-import { Box, Button, Icon, SlideFade, ScaleFade } from '@chakra-ui/react';
-import { HiArrowNarrowUp } from 'react-icons/hi';
 import SkipLink from '@/Components/Frontend/styles/skip-link';
+import { FooterMenu, mobileMenu, socialMenu } from '@/Utils/data';
+import { ArrowUpIcon } from '@chakra-ui/icons';
+import { Box, Button, Icon, ScaleFade, SlideFade } from '@chakra-ui/react';
 import { usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
-import { FooterMenu, socialMenu, mobileMenu } from '@/Utils/data';
 
 export default function MainLayout({ children, ...rest }) {
   const [visible, setVisible] = useState(false);
@@ -42,7 +42,7 @@ export default function MainLayout({ children, ...rest }) {
           {children}
         </Box>
       </ScaleFade>
-      <Footer menu={footerMenu.length > 0 ? footerMenu : FooterMenu} socialMenu={socialMenu} />
+      <Footer menu={footerMenu && footerMenu.length > 0 ? footerMenu : FooterMenu} socialMenu={socialMenu} />
       <SlideFade in={visible} offsetY="40px">
         <Box
           as={Button}
@@ -61,7 +61,7 @@ export default function MainLayout({ children, ...rest }) {
           aria-label="scroll to top"
           onClick={scrollToTop}
         >
-          <Icon as={HiArrowNarrowUp} className="scroll-icon" />
+          <Icon as={ArrowUpIcon} className="scroll-icon" />
         </Box>
       </SlideFade>
     </>

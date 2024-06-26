@@ -1,21 +1,20 @@
 import {
-  Box,
-  Checkbox,
-  FormControl,
-  FormErrorMessage,
-  FormHelperText,
-  HStack,
-  Heading,
-  IconButton,
-  Input,
-  InputGroup,
-  InputRightElement,
-  Text,
-  useColorModeValue,
+    Box,
+    FormControl,
+    FormErrorMessage,
+    FormHelperText,
+    HStack,
+    Heading,
+    IconButton,
+    Input,
+    InputGroup,
+    InputRightElement,
+    Text,
+    useColorModeValue,
 } from '@chakra-ui/react';
 import { useForm } from '@inertiajs/react';
 import React from 'react';
-import { EmailIcon, SendPlaneIcon } from './icons';
+import { MailBoxIcon, SendPlaneIcon } from './icons';
 
 const SubscriptionCard = ({
   children,
@@ -30,7 +29,6 @@ const SubscriptionCard = ({
 }) => {
   const { data, setData, post, processing, errors, reset } = useForm({
     email: '',
-    consent: null,
   });
   const [message, setMessage] = React.useState(null);
 
@@ -65,9 +63,7 @@ const SubscriptionCard = ({
       textAlign="center"
       {...rest}
     >
-      {showIcon && (
-        <Box boxSize={'24'} mx="auto" as={EmailIcon} color={useColorModeValue('primary.500', 'primary.200')} />
-      )}
+      {showIcon && <Box boxSize={'24'} mx="auto" as={MailBoxIcon} color={useColorModeValue('gray.600', 'gray.400')} />}
       <Heading as="h4" fontSize={fontSize} textTransform="uppercase" color={useColorModeValue('gray.700', 'gray.300')}>
         {headingText}
       </Heading>
@@ -76,11 +72,7 @@ const SubscriptionCard = ({
           {subText}
         </Text>
       )}
-      <FormControl fontSize={['xs']} textAlign="center" fontStyle="italic" mb={2} isRequired>
-        <Checkbox defaultChecked={data.consent} colorScheme="blue" size="sm" spacing={4}>
-          {consentText}
-        </Checkbox>
-      </FormControl>
+
       {showChildren && <Box>{children}</Box>}
 
       <HStack className="sidebar-form" margin={'0 auto'} w="full" alignItems={'center'}>

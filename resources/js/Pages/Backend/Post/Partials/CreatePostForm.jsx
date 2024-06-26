@@ -2,37 +2,37 @@ import ContentEditor from '@/Components/Backend/ContentEditor';
 import FileUpload, { PreviewImage } from '@/Components/Backend/FileUpload';
 import ControlledMultiSelect from '@/Components/Backend/MultiSelect';
 import PrimaryButton from '@/Components/Backend/PrimaryButton';
+import { FileIcon } from '@/Components/Frontend/icons';
 import { createExcerpt } from '@/Utils/helpers';
 import { CloseIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
 import {
-    Accordion,
-    AccordionButton,
-    AccordionIcon,
-    AccordionItem,
-    AccordionPanel,
-    Box,
-    Button,
-    FormControl,
-    FormErrorMessage,
-    FormLabel,
-    Grid,
-    GridItem,
-    IconButton,
-    Input,
-    InputGroup,
-    InputLeftAddon,
-    InputRightAddon,
-    Radio,
-    Select,
-    Stack,
-    Textarea,
-    Tooltip,
-    VStack,
-    useToast,
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Button,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Grid,
+  GridItem,
+  IconButton,
+  Input,
+  InputGroup,
+  InputLeftAddon,
+  InputRightAddon,
+  Radio,
+  Select,
+  Stack,
+  Textarea,
+  Tooltip,
+  VStack,
+  useToast,
 } from '@chakra-ui/react';
 import { useForm } from '@inertiajs/react';
 import React from 'react';
-import { FiFile } from 'react-icons/fi';
 
 export default function CreatePostForm({ categories, themes, tags }) {
   const { data, setData, post, processing, errors } = useForm({
@@ -329,7 +329,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
                       <FormLabel htmlFor="file">File Upload</FormLabel>
 
                       <InputGroup cursor={'pointer'}>
-                        <InputLeftAddon children={<FiFile />} />
+                        <InputLeftAddon children={<FileIcon />} />
                         <Box position="relative">
                           <Input size="md" isReadOnly placeholder={filename ? filename : 'click to select file'} />
                           <Input

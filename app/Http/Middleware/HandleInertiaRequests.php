@@ -34,16 +34,26 @@ class HandleInertiaRequests extends Middleware
   public function share(Request $request): array
   {
     $experts = Team::orderBy('order', 'ASC')->take(6)->get();
-    $primaryMenu = MenuItem::with('children')
-      ->where('menu_id', Menu::where('location', 'header')->first()->id)
-      ->where('parent_id', null)
-      ->orderBy('order', 'ASC')
-      ->get();
-    $footerMenu = MenuItem::with('children')
-      ->where('menu_id', Menu::where('location', 'footer')->first()->id)
-      ->where('parent_id', null)
-      ->orderBy('order', 'ASC')
-      ->get();
+    $primaryMenu = Menu::where('location', 'header')->first();
+    $footerMenu = Menu::where('location', 'footer')->first();
+    $primaryMenuItems = null;
+    $footerMenuItems = null;
+    if ($primaryMenu) {
+      $primaryMenuItems = MenuItem::with('children')
+        ->where('menu_id', $primaryMenu->id)
+        ->where('parent_id', null)
+        ->orderBy('order', 'ASC')
+        ->get();
+    }
+
+    if ($footerMenu) {
+      $footerMenuItems = MenuItem::with('children')
+        ->where('menu_id', $footerMenu->id)
+        ->where('parent_id', null)
+        ->orderBy('order', 'ASC')
+        ->get();
+    }
+
     return array_merge(parent::share($request), [
       'auth' => [
         'user' => $request->user(),
@@ -52,8 +62,8 @@ class HandleInertiaRequests extends Middleware
         'message' => fn() => $request->session()->get('message'),
       ],
       'experts' => fn() => $experts->load('media'),
-      'primaryMenu' => fn() => $primaryMenu,
-      'footerMenu' => fn() => $footerMenu,
+      'primaryMenu' => fn() => $primaryMenuItems,
+      'footerMenu' => fn() => $footerMenuItems,
       'ziggy' => fn() => [...(new Ziggy())->toArray(), 'location' => $request->url()],
     ]);
   }

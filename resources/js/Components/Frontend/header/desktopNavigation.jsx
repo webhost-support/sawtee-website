@@ -1,28 +1,37 @@
 import { aboutMenuData } from '@/Utils/data';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import {
-  Avatar,
-  Box,
-  Button,
-  Divider,
-  Flex,
-  Grid,
-  GridItem,
-  Icon,
-  Menu,
-  MenuButton,
-  MenuDivider,
-  MenuList,
-  SimpleGrid,
-  Stack,
-  Text,
-  VStack,
-  useColorModeValue,
+    Avatar,
+    Box,
+    Button,
+    Divider,
+    Flex,
+    Grid,
+    GridItem,
+    Icon,
+    SimpleGrid,
+    Stack,
+    Text,
+    VStack,
+    useColorModeValue,
+    useDisclosure,
+    useOutsideClick,
 } from '@chakra-ui/react';
 import { Link, usePage } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import React from 'react';
 import InertiaChakraLink from '../styles/inertia-chakra-link';
+
+const MegaMenuWrapperVariants = {
+  open: {
+    opacity: 1,
+    y: 0,
+  },
+  closed: {
+    opacity: 0,
+    y: '-50px',
+  },
+};
 
 const ListVariants = {
   open: {
@@ -122,6 +131,8 @@ const AboutMegaMenu = ({ item, experts, introText, introImage, isOpen, ...rest }
                   key={child.title}
                   as={motion.li}
                   variants={ListVariants}
+                  // initial={"closed"}
+                  // whileInView={"open"}
                   fontSize={{ md: 'sm', xl: 'md' }}
                   fontWeight="medium"
                   position="relative"
@@ -207,7 +218,15 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
             {item.children[0].title}
           </InertiaChakraLink>
         </Text>
-        <SimpleGrid as={motion.ul} variants={ListContainerVariants} initial={'closed'} whileInView={'open'} columns={2}>
+        <SimpleGrid
+          as={motion.ul}
+          variants={ListContainerVariants}
+          initial={'closed'}
+          whileInView={'open'}
+          // styleType={"lower-roman"}
+          columns={2}
+          // placeItems="end"
+        >
           {item.children[0].children.map(grandChild => {
             return (
               <Box
@@ -302,96 +321,111 @@ const SiteMenuItem = ({ item, ...rest }) => {
   const { url } = usePage();
   const { experts } = usePage().props;
   const active = item.url == `${url}`;
-  return (
-    <Menu isLazy placement="bottom" gutter={30} {...rest}>
-      {({ isOpen }) => {
-        return (
-          <>
-            <Box
-              as="li"
-              role={'group'}
-              display={'block'}
-              fontSize={{ base: 'sm', md: 'sm' }}
-              rounded={'md'}
-              color={active ? 'white' : useColorModeValue('gray.800', 'gray.200')}
-              bg={active ? 'primary.500' : 'unset'}
-              _hover={{
-                bg: !active ? useColorModeValue('primary.50', 'primary.200') : 'primary.500',
-                color: !active ? 'gray.800' : 'unset',
-              }}
-              lineHeight={'1.1'}
-              transition="background .25s ease-in-out"
-            >
-              <Stack p={2} direction="row" alignItems={'center'}>
-                <InertiaChakraLink
-                  as={Link}
-                  transition={'all .3s ease'}
-                  href={item.url}
-                  textDecor={'none'}
-                  fontFamily={'heading'}
-                  _hover={{ textDecor: 'none' }}
-                >
-                  {item.name}
-                </InertiaChakraLink>
-                {item.children?.length && (
-                  <Flex justify={'flex-end'} align={'center'} flex={1}>
-                    <MenuButton
-                      isActive={isOpen}
-                      as={Button}
-                      variant="link"
-                      size={'1rem'}
-                      rounded={'none'}
-                      aria-label="Menu DropDown"
-                      _focus={{ boxShadow: 'none' }}
-                    >
-                      <Icon
-                        transform={isOpen ? 'rotate(180deg)' : ''}
-                        color={active ? 'white' : useColorModeValue('gray.800', 'gray.200')}
-                        _groupHover={{
-                          color: !active ? 'gray.800' : 'white',
-                        }}
-                        transition="all .25s ease-in-out"
-                        w={5}
-                        h={5}
-                        as={ChevronDownIcon}
-                      />
-                    </MenuButton>
-                  </Flex>
-                )}
-              </Stack>
-            </Box>
-            {item.name === 'Our Work' || item.name === 'Know Us' ? (
-              <MenuList
-                zIndex={5}
-                w={'100dvw'}
-                p={0}
-                bg="transparent"
-                boxShadow="none"
-                border={'none'}
-                rounded={'none'}
-                overflow={'hidden'}
-              >
-                <MegaMenu item={item} isOpen={isOpen} experts={experts} />
-              </MenuList>
-            ) : (
-              <MenuList zIndex={5} p={0} rounded={'lg'} overflow={'hidden'} mx="auto" shadow="dark-lg">
-                <Stack gap={1}>
-                  {item.children?.map(child => {
-                    return (
-                      <React.Fragment key={child.id}>
-                        <SiteMenuItem item={child} rounded="none" offset={[0, 10]} />
-                      </React.Fragment>
-                    );
-                  })}
-                </Stack>
-              </MenuList>
-            )}
+  const ref = React.useRef(null);
 
-            <MenuDivider m={0} />
-          </>
-        );
-      }}
-    </Menu>
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  useOutsideClick({
+    ref: ref,
+    handler: onClose,
+  });
+  return (
+    <>
+      <Box
+        as="li"
+        role={'group'}
+        display={'block'}
+        onMouseEnter={() => onOpen()}
+        //   onMouseLeave={() => onClose()}
+        fontSize={{ base: 'sm', md: 'sm' }}
+        rounded={'md'}
+        color={active ? 'white' : useColorModeValue('gray.800', 'gray.200')}
+        bg={active ? 'primary.500' : 'unset'}
+        _hover={{
+          bg: !active ? useColorModeValue('primary.50', 'primary.200') : 'primary.500',
+          color: !active ? 'gray.800' : 'unset',
+        }}
+        lineHeight={'1.1'}
+        transition="background .25s ease-in-out"
+        pos={'relative'}
+        {...rest}
+      >
+        <Stack p={2} direction="row" alignItems={'center'}>
+          <InertiaChakraLink
+            as={Link}
+            transition={'all .3s ease'}
+            href={item.url}
+            textDecor={'none'}
+            fontFamily={'heading'}
+            _hover={{ textDecor: 'none' }}
+          >
+            {item.name}
+          </InertiaChakraLink>
+          {item.children?.length && (
+            <Flex justify={'flex-end'} align={'center'} flex={1}>
+              <Button isActive={isOpen} variant="link" size={'1rem'} rounded={'none'} aria-label="Menu DropDown">
+                <Icon
+                  transform={isOpen ? 'rotate(180deg)' : ''}
+                  color={active ? 'white' : useColorModeValue('gray.800', 'gray.200')}
+                  _groupHover={{
+                    color: !active ? 'gray.800' : 'white',
+                  }}
+                  transition="all .25s ease-in-out"
+                  w={5}
+                  h={5}
+                  as={ChevronDownIcon}
+                />
+              </Button>
+            </Flex>
+          )}
+        </Stack>
+      </Box>
+      {item.name === 'Our Work' || item.name === 'Know Us' ? (
+        <Box
+          ref={ref}
+          as={motion.div}
+          zIndex={5}
+          w={'100dvw'}
+          p={0}
+          pos="absolute"
+          left={0}
+          top={'80px'}
+          display={isOpen ? 'block' : 'none'}
+          animate={isOpen ? 'open' : 'closed'}
+          variants={MegaMenuWrapperVariants}
+          bg="transparent"
+          boxShadow="none"
+          border={'none'}
+          rounded={'none'}
+          overflow={'hidden'}
+        >
+          <MegaMenu item={item} isOpen={isOpen} experts={experts} />
+        </Box>
+      ) : (
+        <Box
+          display={isOpen ? 'block' : 'none'}
+          zIndex={999}
+          p={0}
+          pos="absolute"
+          right={'450px'}
+          top={'0'}
+          rounded={'lg'}
+          overflow={'hidden'}
+          mx="auto"
+          bg="white"
+          shadow="dark-lg"
+        >
+          <Stack gap={1}>
+            {item.children?.map(child => {
+              return (
+                <React.Fragment key={child.id}>
+                  <SiteMenuItem item={child} rounded="none" />
+                </React.Fragment>
+              );
+            })}
+          </Stack>
+        </Box>
+      )}
+    </>
   );
 };
 

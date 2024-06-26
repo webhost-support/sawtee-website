@@ -4,7 +4,7 @@ import { formatDate } from '@/Utils/helpers';
 import { Box, Heading, LinkBox, LinkOverlay, Stack, Text } from '@chakra-ui/react';
 import { Link } from '@inertiajs/react';
 
-const DefaultArchive = ({ posts, headingColor, textColor, showFallbackImage, ...rest }) => {
+const DefaultArchive = ({ posts, showFallbackImage, ...rest }) => {
   if (!posts || posts.length <= 0) return 'No posts found';
   return posts.map(post => {
     const featured_image = post.media.filter(media => media.collection_name === 'post-featured-image')[0];
@@ -19,13 +19,7 @@ const DefaultArchive = ({ posts, headingColor, textColor, showFallbackImage, ...
         pos={'relative'}
         {...rest}
       >
-        <ArchivePost
-          post={post}
-          featured_image={featured_image}
-          headingColor={headingColor}
-          textColor={textColor}
-          showFallbackImage={showFallbackImage}
-        />
+        <ArchivePost post={post} featured_image={featured_image} showFallbackImage={showFallbackImage} />
       </GlassBox>
     );
   });

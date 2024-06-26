@@ -174,6 +174,8 @@ namespace App\Models{
  * @property-read int|null $media_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Section> $sections
  * @property-read int|null $sections_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Slider> $slider
+ * @property-read int|null $slider_count
  * @method static \Illuminate\Database\Eloquent\Builder|Page newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Page newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Page query()
@@ -256,6 +258,7 @@ namespace App\Models{
  * @property string|null $meta_description
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $published_at
  * @property-read \App\Models\Category $category
  * @property-read \App\Models\File|null $file
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $media
@@ -269,6 +272,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Publication whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Publication whereMetaDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Publication whereMetaTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Publication wherePublishedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Publication whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Publication whereSubtitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Publication whereTitle($value)
@@ -385,6 +389,8 @@ namespace App\Models{
  * @property string|null $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int $page_id
+ * @property-read \App\Models\Page $page
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Slide> $slides
  * @property-read int|null $slides_count
  * @method static \Illuminate\Database\Eloquent\Builder|Slider newModelQuery()
@@ -393,6 +399,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Slider whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Slider whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Slider whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Slider wherePageId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Slider whereUpdatedAt($value)
  */
 	class Slider extends \Eloquent {}
