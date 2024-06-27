@@ -25,7 +25,7 @@ register();
 
 createInertiaApp({
   title: title => `${appName} | ${title}`,
-  resolve: name => resolvePageComponent(`./Pages/${name}.jsx`, import.meta.glob('./Pages/**/*.jsx', { eager: true })),
+  resolve: name => resolvePageComponent(`./Pages/${name}.jsx`, import.meta.glob('./Pages/**/*.jsx')),
   setup({ el, App, props }) {
     const root = createRoot(el);
     root.render(
