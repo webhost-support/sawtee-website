@@ -6,7 +6,6 @@ import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { createInertiaApp } from '@inertiajs/react';
 import * as Sentry from '@sentry/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { hydrateRoot } from 'react-dom/client';
 import { register } from 'swiper/element/bundle';
 
 Sentry.init({
@@ -27,11 +26,10 @@ createInertiaApp({
   title: title => `${appName} | ${title}`,
   resolve: name => resolvePageComponent(`./Pages/${name}.jsx`, import.meta.glob('./Pages/**/*.jsx', { eager: true })),
   setup({ el, App, props }) {
-    const root = hydrateRoot(el);
-
+    const root = createRoot(el);
     root.render(
       <ChakraProvider resetCSS theme={{ config, ...theme }}>
-        <App {...props} />
+        const root = createRoot(el);
       </ChakraProvider>
     );
   },
