@@ -1,33 +1,15 @@
 import Section from '@/Components/Frontend/styles/section';
-import {
-    AspectRatio,
-    Box,
-    Button,
-    HStack,
-    Heading,
-    IconButton,
-    Image,
-    Link,
-    SimpleGrid,
-    Text,
-    VStack,
-} from '@chakra-ui/react';
+import { AspectRatio, Box, Button, Heading, Image, Link, SimpleGrid, Text, Tooltip, VStack } from '@chakra-ui/react';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 
-import {
-    FacebookIcon,
-    LinkedinIcon,
-    LocationPin,
-    PhoneIcon,
-    PhoneOutlineIcon,
-    TwitterIcon,
-    YoutubeIcon
-} from '@/Components/Frontend/icons';
-import { contactPageData } from '@/Utils/data';
+import { SocialMenu } from '@/Components/Frontend/header/social-menu';
+import { FaxIcon, LocationPin, PhoneIcon } from '@/Components/Frontend/icons';
 import { EmailIcon } from '@chakra-ui/icons';
+import { Fragment } from 'react';
 
-const Contact = () => {
+const Contact = ({ content, pageData }) => {
+  console.log(pageData);
   return (
     <Section px={['4', '8']} py="80px" maxW="5xl" paddingBlock="50px" className={'contact-page-content'}>
       <Box p={{ sm: 5, md: 5 }} borderRadius="xl" boxShadow="lg">
@@ -48,7 +30,7 @@ const Contact = () => {
                 <br />
                 <Text as="span" fontWeight={'semibold'} fontSize={'md'}>
                   Office hours:
-                  {' ' + contactPageData.opening_hours}
+                  {' ' + pageData.opening_hours}
                 </Text>
               </Heading>
               <VStack
@@ -59,188 +41,60 @@ const Contact = () => {
                   lg: 'start',
                 }}
               >
-                {contactPageData.phone_numbers.map(number => {
+                {pageData.phone_numbers.map(number => {
                   return (
-                    <Button key={number} variant="ghost" leftIcon={<PhoneIcon  />}>
-                      <Link
-                        as="a"
-                        _hover={{
-                          textDecoration: 'none',
-                        }}
-                        textDecoration={'none'}
-                        href={`tel:${number}`}
-                      >
+                    <Fragment key={number}>
+                      <ActionButton href={`tel:${number}`} icon={<PhoneIcon />}>
                         {number}
-                      </Link>
-                    </Button>
+                      </ActionButton>
+                    </Fragment>
                   );
                 })}
-                <Button size="md" height="48px" variant="ghost" leftIcon={<PhoneOutlineIcon  />}>
-                  <Link
-                    as="a"
-                    _hover={{
-                      textDecoration: 'none',
-                    }}
-                    textDecoration={'none'}
-                    href={`fax:${contactPageData.fax}`}
-                  >
-                    {contactPageData.fax}
-                  </Link>
-                </Button>
-                <Button size="md" height="48px" variant="ghost" leftIcon={<EmailIcon  />}>
-                  <Link
-                    as="a"
-                    _hover={{
-                      textDecoration: 'none',
-                    }}
-                    textDecoration={'none'}
-                    href={`mailto:${contactPageData.email}`}
-                  >
-                    {contactPageData.email}
-                  </Link>
-                </Button>
-                <Button size="md" height="48px" variant="ghost" leftIcon={<LocationPin />}>
-                  {contactPageData.address}
-                </Button>
+
+                <ActionButton icon={<FaxIcon />}>
+                  <Tooltip hasArrow placement="top" label="Fax Machine">
+                    {pageData.fax}
+                  </Tooltip>
+                </ActionButton>
+
+                <ActionButton href={`mailto:${pageData.email}`} icon={<EmailIcon />}>
+                  {pageData.email}
+                </ActionButton>
+                <ActionButton leftIcon={<LocationPin />}>{pageData.address}</ActionButton>
               </VStack>
-              <HStack
-                mt={4}
-                spacing={5}
-                px={5}
-                justifyContent={{
-                  base: 'center',
-                  lg: 'flex-start',
-                }}
-              >
-                {contactPageData.social_menus.map(({ name, link }) => {
-                  if (name === 'facebook') {
-                    return (
-                      <Link
-                        href={link}
-                        key={name}
-                        title={name.toUpperCase()}
-                        as="a"
-                        _hover={{
-                          textDecoration: 'none',
-                        }}
-                        textDecoration={'none'}
-                        target="_blank"
-                      >
-                        <IconButton
-                          aria-label={name}
-                          variant="ghost"
-                          size="lg"
-                          isRound={true}
-                          _hover={{
-                            bg: `${name}.600`,
-                            color: 'white',
-                          }}
-                          icon={<FacebookIcon size="28px" />}
-                        />
-                      </Link>
-                    );
-                  } else if (name === 'twitter') {
-                    return (
-                      <Link
-                        href={link}
-                        key={name}
-                        title={name.toUpperCase()}
-                        as="a"
-                        _hover={{
-                          textDecoration: 'none',
-                        }}
-                        textDecoration={'none'}
-                        target="_blank"
-                      >
-                        <IconButton
-                          aria-label={name}
-                          variant="ghost"
-                          size="lg"
-                          isRound={true}
-                          _hover={{
-                            bg: `${name}.600`,
-                            color: 'white',
-                          }}
-                          icon={<TwitterIcon size="28px" />}
-                        />
-                      </Link>
-                    );
-                  } else if (name === 'linkedin') {
-                    return (
-                      <Link
-                        href={link}
-                        key={name}
-                        title={name.toUpperCase()}
-                        as="a"
-                        _hover={{
-                          textDecoration: 'none',
-                        }}
-                        textDecoration={'none'}
-                        target="_blank"
-                      >
-                        <IconButton
-                          aria-label={name}
-                          variant="ghost"
-                          size="lg"
-                          isRound={true}
-                          _hover={{
-                            bg: `${name}.600`,
-                            color: 'white',
-                          }}
-                          icon={<LinkedinIcon size="28px" />}
-                        />
-                      </Link>
-                    );
-                  } else {
-                    return (
-                      <Link
-                        href={link}
-                        key={name}
-                        title={name.toUpperCase()}
-                        as="a"
-                        _hover={{
-                          textDecoration: 'none',
-                        }}
-                        textDecoration={'none'}
-                        target="_blank"
-                      >
-                        <IconButton
-                          aria-label={name}
-                          variant="ghost"
-                          size="lg"
-                          isRound={true}
-                          _hover={{
-                            bg: `red.600`,
-                            color: 'white',
-                          }}
-                          icon={<YoutubeIcon size="28px" />}
-                        />
-                      </Link>
-                    );
-                  }
-                })}
-              </HStack>
+
+              <SocialMenu ml="0" menu={pageData.social_menus} />
             </Box>
 
-            <Box bg="white" borderRadius="lg" m={8}>
+            <Box p={8}>
               <Zoom>
-                <Image width={'100%'} height="400px" src={'/assets/location-map-resized.webp'} />
+                <Image width={'100%'} height="400px" src={pageData.location_image} />
               </Zoom>
             </Box>
           </SimpleGrid>
-          <AspectRatio ration={16 / 9} mt="8">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3531.8576852768524!2d85.329329!3d27.72168!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1913dfb0b0b3%3A0x4d5d3519d24d3c38!2sSouth%20Asia%20Watch%20on%20Trade%2C%20Economics%20and%20Environment%20(SAWTEE)!5e0!3m2!1sen!2snp!4v1700216228197!5m2!1sen!2snp"
-              width="100%"
-              height="500"
-              allowfullscreen="true"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
-          </AspectRatio>
+          {pageData.map_url && (
+            <AspectRatio ration={16 / 9} mt="8">
+              <iframe
+                src={pageData.map_url}
+                width="100%"
+                height="500"
+                allowfullscreen="true"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </AspectRatio>
+          )}
         </Box>
       </Box>
     </Section>
+  );
+};
+
+const ActionButton = ({ href, children, icon, ...rest }) => {
+  return (
+    <Button variant="ghost" leftIcon={icon} {...rest}>
+      {href ? <Link href={href}>{children}</Link> : children}
+    </Button>
   );
 };
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Page;
+use File;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 
@@ -49,6 +50,17 @@ class PageController extends Controller
         if ($request->hasFile('image')) {
             $page->addMediaFromRequest('image')->toMediaCollection('page-media');
         }
+
+        if($request->file('file')){
+            $file = $request->file('file');
+            dd($file);
+            $filename = $file->getClientOriginalName();
+            $file->move(public_path('tmp'), $filename);
+            $jsonData = File::json(public_path('tmp/'. $filename ));
+            $page->pageData = $jsonData;
+            $page->save();
+        }
+
         return redirect(route('admin.pages.index'));
     }
 
@@ -89,6 +101,14 @@ class PageController extends Controller
         }
         if ($request->hasFile('image')) {
             $page->addMediaFromRequest('image')->toMediaCollection('page-media');
+        }
+        if($request->file('file')){
+            $file = $request->file('file');
+            $filename = $file->getClientOriginalName();
+            $file->move(public_path('tmp'), $filename);
+            $jsonData = File::json(public_path('tmp/'. $filename ));
+            // dd($jsonData);
+            $page->pageData = $jsonData;
         }
         $page->update($request->all());
         return redirect(route('admin.pages.index'));

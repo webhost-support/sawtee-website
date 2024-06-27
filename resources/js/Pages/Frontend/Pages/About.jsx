@@ -1,84 +1,82 @@
 import { Content } from '@/Components/Frontend/index';
-import {
-	Box,
-	Heading,
-	useColorModeValue,
-	Divider,
-	Tabs,
-	TabList,
-	Tab,
-	Link,
-	TabPanels,
-	TabPanel,
-	Accordion,
-	AccordionItem,
-	AccordionButton,
-	AccordionIcon,
-	AccordionPanel,
-	ListItem,
-	OrderedList,
-} from '@chakra-ui/react';
-import React from 'react';
 import { slugify } from '@/Utils/helpers';
-import { memberInstitutions } from '@/Utils/data';
+import {
+    Accordion,
+    AccordionButton,
+    AccordionIcon,
+    AccordionItem,
+    AccordionPanel,
+    Box,
+    Divider,
+    Heading,
+    Link,
+    ListItem,
+    OrderedList,
+    Tab,
+    TabList,
+    TabPanel,
+    TabPanels,
+    Tabs,
+    useColorModeValue,
+} from '@chakra-ui/react';
 
-export default function About({ sections }) {
-	return (
-		<Content className="page-content" px={{ base: '32px', md: '0' }} mx="auto" py={'80px'} maxW={'2xl'}>
-			{sections !== null &&
-				sections.map(section => {
-					if (section.parent_id === null) {
-						return <PageSection key={section.title} section={section} sections={sections} />;
-					}
-				})}
-			{memberInstitutions !== null && <Members memberInstitutions={memberInstitutions} />}
-		</Content>
-	);
+export default function About({ sections, content, pageData }) {
+  return (
+    <Content className="page-content" px={{ base: '32px', md: '0' }} mx="auto" py={'80px'} maxW={'2xl'}>
+      {sections &&
+        sections.map(section => {
+          if (section.parent_id === null) {
+            return <PageSection key={section.title} section={section} sections={sections} />;
+          }
+        })}
+      {pageData && <Members memberInstitutions={pageData} />}
+    </Content>
+  );
 }
 
 export const Members = ({ memberInstitutions }) => {
 	return (
-		<Box>
-			<Heading as="h3" fontSize={['xl', '2xl', '3xl']} py={'4'} mb="4">
-				{'Member Institutions'}
-			</Heading>
+    <Box>
+      <Heading as="h3" fontSize={['xl', '2xl', '3xl']} py={'4'} mb="4">
+        {'Member Institutions'}
+      </Heading>
 
-			<Accordion allowToggle>
-				{memberInstitutions?.map(({ country, institutes }, id) => {
-					return (
-						<AccordionItem key={id} border="none">
-							<AccordionButton
-								style={{
-									display: 'flex',
-									justifyContent: 'space-between',
-									marginBlock: '0',
-								}}
-								_expanded={{
-									bg: useColorModeValue('blackAlpha.200', 'blackAlpha.400'),
-								}}
-							>
-								{country}
-								<AccordionIcon />
-							</AccordionButton>
-							<AccordionPanel px={['5', '10']}>
-								<OrderedList spacing="3">
-									{institutes.map(({ member_name, member_website_link }) => {
-										return (
-											<ListItem key={member_name} style={{ margin: '0' }}>
-												<Link target="_blank" title={member_name} aria-label={member_name} href={member_website_link}>
-													{member_name}
-												</Link>
-											</ListItem>
-										);
-									})}
-								</OrderedList>
-							</AccordionPanel>
-						</AccordionItem>
-					);
-				})}
-			</Accordion>
-		</Box>
-	);
+      <Accordion allowToggle>
+        {memberInstitutions?.map(({ country, institutes, id }) => {
+          return (
+            <AccordionItem key={id} border="none">
+              <AccordionButton
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  marginBlock: '0',
+                }}
+                _expanded={{
+                  bg: useColorModeValue('blackAlpha.200', 'blackAlpha.400'),
+                }}
+              >
+                {country}
+                <AccordionIcon />
+              </AccordionButton>
+              <AccordionPanel px={['5', '10']}>
+                <OrderedList spacing="3">
+                  {institutes.map(({ member_name, member_website_link }) => {
+                    return (
+                      <ListItem key={member_name} style={{ margin: '0' }}>
+                        <Link target="_blank" title={member_name} aria-label={member_name} href={member_website_link}>
+                          {member_name}
+                        </Link>
+                      </ListItem>
+                    );
+                  })}
+                </OrderedList>
+              </AccordionPanel>
+            </AccordionItem>
+          );
+        })}
+      </Accordion>
+    </Box>
+  );
 };
 
 export const PageSection = ({ section, sections }) => {

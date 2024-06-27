@@ -1,8 +1,6 @@
-import { Box, VisuallyHidden, useColorModeValue } from '@chakra-ui/react';
-import React from 'react';
+import { Box, Link, VisuallyHidden, useColorModeValue } from '@chakra-ui/react';
+import { FacebookIcon, LinkedinIcon, TwitterIcon, YoutubeIcon } from '../icons';
 import { SiteMenu } from './desktopNav';
-import { Link } from '@inertiajs/react';
-import { LinkedinIcon, TwitterIcon, YoutubeIcon, FacebookIcon } from '../icons';
 
 // warning for showSocialLinks and menu.length
 export const SocialMenu = ({ menu, ...props }) => (
@@ -17,22 +15,22 @@ export const SocialMenu = ({ menu, ...props }) => (
 
 const SocialMenuItem = ({ icon, label, link, ...props }) => (
   <Box
+    as={Link}
     color={useColorModeValue('gray.800', 'whiteAlpha.900')}
     transition="all ease-out 0.3s"
     _hover={{
       color: 'white',
       bg: `${label}.600`,
     }}
-    as="li"
     listStyleType="none"
     p="1"
     margin="0"
     rounded={'full'}
+    href={link}
+    target="_blank"
     {...props}
   >
-    <Link href={link}>
-      <Box as={icon} boxSize="6" />
-    </Link>
+    <Box as={icon} boxSize="6" />
     <VisuallyHidden>{label}</VisuallyHidden>
   </Box>
 );

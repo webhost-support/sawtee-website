@@ -1,20 +1,20 @@
 import { SocialMenu } from '@/Components/Frontend/header/social-menu';
 import { MapModel, StyledChakraLink } from '@/Components/Frontend/index';
 import {
-  Box,
-  Grid,
-  GridItem,
-  ListIcon,
-  ListItem,
-  Stack,
-  Text,
-  Tooltip,
-  UnorderedList,
-  VStack,
-  useColorModeValue,
-  useDisclosure,
+    Box,
+    Grid,
+    GridItem,
+    ListIcon,
+    ListItem,
+    Stack,
+    Text,
+    Tooltip,
+    UnorderedList,
+    VStack,
+    useColorModeValue,
+    useDisclosure,
 } from '@chakra-ui/react';
-import { CaretRightIcon, EmailIcon, LocationPin, MailBoxIcon, PhoneIcon, PhoneOutlineIcon } from '../icons';
+import { CaretRightIcon, EmailIcon, FaxIcon, LocationPin, MailBoxIcon, PhoneIcon } from '../icons';
 
 const FooterSection = ({ children, ...rest }) => (
   <Box as="footer" pos="relative" bg={useColorModeValue('blackAlpha.50', 'var(--color-darker)')} mx={'auto'} {...rest}>
@@ -64,7 +64,7 @@ const Widget = ({ item }) => {
                     <Tooltip
                       label={'click to view map'}
                       hasArrow
-                      placement="bottom-end"
+                      placement="top-end"
                       openDelay={200}
                       closeDelay={250}
                     >
@@ -91,17 +91,18 @@ const Widget = ({ item }) => {
                         color: linkcolor,
                         verticalAlign: 'middle',
                       }}
-                      as={PhoneOutlineIcon}
+                      as={FaxIcon}
                     />
-                    <StyledChakraLink
-                      href={url ? url : null}
-                      color={linkcolor}
-                      _hover={{
-                        color: hoverColor,
-                      }}
-                    >
-                      {title}
-                    </StyledChakraLink>
+                    <Tooltip label={'Fax'} hasArrow placement="right-end">
+                      <StyledChakraLink
+                        color={linkcolor}
+                        _hover={{
+                          color: hoverColor,
+                        }}
+                      >
+                        {title}
+                      </StyledChakraLink>
+                    </Tooltip>
                   </ListItem>
                 );
               }
@@ -242,7 +243,7 @@ const Footer = ({ menu = null, socialMenu = null }) => {
         mt="16"
         gap={6}
       >
-        <FooterSectionItem colSpan={1} fontWeight="bold" fontFamily="heading" textTransform="uppercase" fontSize="md">
+        <FooterSectionItem colSpan={1} fontWeight="bold" fontFamily="mono" textTransform="uppercase" fontSize="md">
           © {new Date().getFullYear()} {'SAWTEE'}
         </FooterSectionItem>
 

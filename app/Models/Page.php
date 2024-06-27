@@ -18,7 +18,7 @@ class Page extends Model implements HasMedia
     use HasSlug;
     protected $fillable = ['name', 'slug', 'content', 'meta_title', 'meta_description'];
 
-
+    protected $casts = ['pageData' => 'json'];
     /**
      * Get the options for generating the slug.
      */

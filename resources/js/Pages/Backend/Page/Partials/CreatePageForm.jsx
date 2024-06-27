@@ -1,19 +1,24 @@
 import ContentEditor from '@/Components/Backend/ContentEditor';
 import FileUpload, { PreviewImage } from '@/Components/Backend/FileUpload';
 import PrimaryButton from '@/Components/Backend/PrimaryButton';
+import { FileIcon } from '@/Components/Frontend/icons';
 import { slugify } from '@/Utils/helpers';
+import { CloseIcon } from '@chakra-ui/icons';
 import {
-    Box,
-    Button,
-    FormControl,
-    FormErrorMessage,
-    FormLabel,
-    Input,
-    SimpleGrid,
-    Textarea,
-    VStack,
-    useColorModeValue,
-    useToast,
+  Box,
+  Button,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  IconButton,
+  Input,
+  InputGroup,
+  InputRightAddon,
+  SimpleGrid,
+  Textarea,
+  VStack,
+  useColorModeValue,
+  useToast,
 } from '@chakra-ui/react';
 import { useForm } from '@inertiajs/react';
 import React from 'react';
@@ -25,11 +30,14 @@ export default function CreatePageForm() {
     content: '',
     image: '',
     meta_title: '',
-    meta_description: '',
+      meta_description: '',
+    file: null,
   });
   const toast = useToast();
   const [slug, setSlug] = React.useState('');
   const [image, setImage] = React.useState(null);
+  const [filename, setFilename] = React.useState(null);
+
   const submit = e => {
     e.preventDefault();
 
@@ -168,6 +176,50 @@ export default function CreatePageForm() {
           </FileUpload>
         )}
         {errors.image && <FormErrorMessage mt={2}>{errors.image}</FormErrorMessage>}
+      </FormControl>
+
+      <FormControl mt={4}>
+        <FormLabel htmlFor="file">File Upload</FormLabel>
+
+        <InputGroup cursor={'pointer'}>
+          <InputLeftAddon children={<FileIcon />} />
+          <Box position="relative">
+            <Input size="md" isReadOnly placeholder={filename ? filename : 'click to select file'} />
+            <Input
+              type="file"
+              height="100%"
+              width="100%"
+              position="absolute"
+              cursor={'pointer'}
+              top="0"
+              left="0"
+              opacity="0"
+              aria-hidden="true"
+              accept=".json"
+              id="file"
+              name="file"
+              size="md"
+              onChange={e => {
+                setFilename(e.target.files[0].name);
+                setData('file', e.target.files[0]);
+              }}
+            />
+          </Box>
+          {filename && (
+            <InputRightAddon
+              children={
+                <IconButton
+                  icon={<CloseIcon />}
+                  color={'red.500'}
+                  onClick={() => {
+                    setFilename(null);
+                    setData('file', null);
+                  }}
+                />
+              }
+            />
+          )}
+        </InputGroup>
       </FormControl>
       <FormControl mt={4} isInvalid={errors.content}>
         <FormLabel htmlFor="content">Content</FormLabel>
