@@ -38,7 +38,7 @@ const VideoCarousel = ({
                 : null;
             return (
               <swiper-slide key={article.id} class="swiper-slide video-slide">
-                <LinkBox>
+                <LinkBox w="full" h="auto" maxH={'400px'}>
                   <IconButton
                     aria-label={'Play Button'}
                     variant={'ghost'}
@@ -57,10 +57,10 @@ const VideoCarousel = ({
                   />
                   <LinkOverlay target="_blank" href={article.link}>
                     <Image
+                      h="full"
+                      w="full"
                       alt={article.title}
                       src={media ? media.original_url : '/assets/SM-placeholder-1024x512.png'}
-                      w="full"
-                      h="400px"
                       fallbackSrc="/assets/SM-placeholder-1024x512.png"
                     />
                   </LinkOverlay>
@@ -84,8 +84,8 @@ const VideoCarousel = ({
             return (
               <swiper-slide key={article.id} class="thumb-slide">
                 <HStack w="full" spacing={4} cursor="pointer">
-                  <Box pos="relative">
-                    <IconButton
+                  <Box pos="relative" w="full" maxW={'120px'} aspectRatio={5 / 3}>
+                    {/* <IconButton
                       aria-label={'Play Button'}
                       variant={'ghost'}
                       color={'red.500'}
@@ -100,14 +100,14 @@ const VideoCarousel = ({
                       transition={'all .25s ease'}
                       transform={'translateX(-50%) translateY(-50%)'}
                       size={'xs'}
-                    />
+                    /> */}
                     <Image
-                      maxW={'120px'}
+                      w="full"
+                      h="full"
                       alt={article.title}
                       src={media ? media.original_url : null}
-                      aspectRatio={5 / 3}
                       rounded="md"
-                      fallbackSrc="/assets/SM-placeholder-150x150.png"
+                      fallbackSrc="/assets/SM-placeholder-300x150.png"
                     />
                   </Box>
 

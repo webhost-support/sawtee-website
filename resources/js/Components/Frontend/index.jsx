@@ -247,7 +247,7 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
                   </Box>
 
                   {featured_image && (
-                    <Box maxW="70%" boxSize={'90px'}>
+                    <Box maxW="90px" w="full" aspectRatio={3 / 2}>
                       <Image
                         src={featured_image}
                         alt={event.title}
@@ -256,7 +256,6 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
                         borderColor={'gray.400'}
                         p={1}
                         rounded="sm"
-                        aspectRatio={3 / 2}
                       />
                     </Box>
                   )}
@@ -300,9 +299,9 @@ export const InfocusSection = ({ data }) => {
   );
 };
 
-export const FeaturedPublications = ({ publications }) => {
+export const FeaturedPublications = ({ publications, ...rest }) => {
   return (
-    <GlassBox py={4}>
+    <GlassBox py={4} {...rest}>
       <SimpleList border="none" heading={'featured publications'}>
         {publications.map(publication => {
           const media = publication.media.length
@@ -392,10 +391,7 @@ export const PublicationsSection = ({ publications }) => {
                   alt={publication.title}
                   title={publication.title}
                   rounded="md"
-                  shadow="md"
-                  // border="1px solid"
-                  // borderColor={useColorModeValue('gray.600', 'gray.300')}
-                  // aspectRatio={3 / 4}
+                  shadow="xl"
                   mx="auto"
                   mb="2"
                 />

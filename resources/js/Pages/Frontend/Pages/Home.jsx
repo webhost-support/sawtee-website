@@ -65,7 +65,7 @@ const Home = ({
           gap={8}
           rowGap={20}
         >
-          <GridItem colSpan={{ base: 1, lg: 4 }}>
+          <GridItem colSpan={{ base: 1, lg: 4 }} shadow={'xl'} overflow={'hidden'}>
             <Box
               maxW="5xl"
               mx="auto"
@@ -83,7 +83,7 @@ const Home = ({
             </Box>
           </GridItem>
           <GridItem colSpan={{ base: 1, lg: 2 }} alignSelf={'center'}>
-            <FeaturedPublications publications={featuredPublications} />
+            <FeaturedPublications publications={featuredPublications} rounded="2xl" />
           </GridItem>
         </Grid>
       </Section>
