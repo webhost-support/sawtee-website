@@ -38,7 +38,7 @@ const VideoCarousel = ({
                 : null;
             return (
               <swiper-slide key={article.id} class="swiper-slide video-slide">
-                <LinkBox w="full" aspectRatio={5 / 3}>
+                <LinkBox w="full" h="100%">
                   <IconButton
                     aria-label={'Play Button'}
                     variant={'ghost'}
@@ -59,6 +59,7 @@ const VideoCarousel = ({
                     <Image
                       h="full"
                       w="full"
+                      objectFit={'cover'}
                       alt={article.title}
                       src={media ? media.original_url : '/assets/SM-placeholder-1024x512.png'}
                       fallbackSrc="/assets/SM-placeholder-1024x512.png"
@@ -70,7 +71,7 @@ const VideoCarousel = ({
           })}
         </swiper-container>
       </GridItem>
-      <GridItem colSpan={{ base: 1, lg: 2 }} placeSelf={'center'}>
+      <GridItem colSpan={{ base: 1, lg: 2 }}>
         <swiper-container
           class="thumbs-swiper"
           space-between="10"
