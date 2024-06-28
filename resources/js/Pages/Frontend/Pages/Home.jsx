@@ -1,14 +1,14 @@
 import {
-  AboutSection,
-  CarouselSection,
-  ExploreButton,
-  FeaturedPublications,
-  InfocusSection,
-  OutreachSection,
-  PublicationsSection,
-  ReformMonitorSection,
-  Title,
-  VideosSection,
+    AboutSection,
+    CarouselSection,
+    ExploreButton,
+    FeaturedPublications,
+    InfocusSection,
+    OutreachSection,
+    PublicationsSection,
+    ReformMonitorSection,
+    Title,
+    VideosSection,
 } from '@/Components/Frontend';
 import WebsiteHead from '@/Components/Frontend/Head';
 import { Newsletter } from '@/Components/Frontend/newsletter';
@@ -55,7 +55,12 @@ const Home = ({
         description="Explore South Asia's dynamic journey since the 1980s, navigating global integration and economic challenges."
         image={'/assets/logo-sawtee.webp'}
       />
-      <Section py={{ base: '5', lg: ' 5' }} className="carousel-section" pl={{ base: '24px', lg: '0' }}>
+      <Section
+        py={{ base: '5', lg: ' 5' }}
+        className="carousel-section"
+        paddingLeft={{ base: '24px', lg: '0' }}
+        paddingRight={{ base: '24px', lg: '40px' }}
+      >
         <Grid
           templateColumns={{
             base: '1fr',

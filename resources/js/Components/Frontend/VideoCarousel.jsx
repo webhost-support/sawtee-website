@@ -38,7 +38,7 @@ const VideoCarousel = ({
                 : null;
             return (
               <swiper-slide key={article.id} class="swiper-slide video-slide">
-                <LinkBox w="full" h="auto" maxH={'400px'}>
+                <LinkBox w="full" aspectRatio={5 / 3}>
                   <IconButton
                     aria-label={'Play Button'}
                     variant={'ghost'}

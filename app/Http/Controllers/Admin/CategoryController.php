@@ -19,7 +19,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::latest()->paginate(10);
+        $categories = Category::with('parent')->latest()->paginate(10);
         // dd($categories);
         return Inertia::render('Backend/Category/Index', [
             'categories' => $categories

@@ -15,136 +15,126 @@ use Spatie\Sluggable\SlugOptions;
 
 class Category extends Model implements HasMedia
 {
-    use InteractsWithMedia;
-    use HasFactory;
-    use HasSlug;
+  use InteractsWithMedia;
+  use HasFactory;
+  use HasSlug;
 
-    protected $fillable = ['name', 'slug', 'type', 'parent_id', 'meta_title', 'meta_description'];
-    protected $with = ['children'];
+  protected $fillable = ['name', 'slug', 'type', 'parent_id', 'meta_title', 'meta_description'];
+  protected $with = ['children'];
 
-    /**
-     * Get the options for generating the slug.
-     */
-    public function getSlugOptions() : SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug')
-            // ->skipGenerateWhen(fn () => $this->status !== "published")
-            ->startSlugSuffixFrom(2);
-    }
+  /**
+   * Get the options for generating the slug.
+   */
+  public function getSlugOptions(): SlugOptions
+  {
+    return SlugOptions::create()
+      ->generateSlugsFrom('name')
+      ->saveSlugsTo('slug')
+      // ->skipGenerateWhen(fn () => $this->status !== "published")
+      ->startSlugSuffixFrom(2);
+  }
 
-    public function children(): HasMany
-    {
-        return $this->hasMany(Category::class, 'parent_id', 'id');
-    }
+  public function children(): HasMany
+  {
+    return $this->hasMany(Category::class, 'parent_id', 'id');
+  }
 
-    public function parent(): BelongsTo
-    {
-        return $this->belongsTo(Category::class, 'parent_id', 'id');
-    }
+  public function parent(): BelongsTo
+  {
+    return $this->belongsTo(Category::class, 'parent_id', 'id');
+  }
 
-    public function posts(): HasMany
-    {
-        return $this->hasMany(Post::class);
-    }
+  public function posts(): HasMany
+  {
+    return $this->hasMany(Post::class);
+  }
 
-    public function publications(): HasMany
-    {
-        return $this->hasMany(Publication::class);
-    }
+  public function publications(): HasMany
+  {
+    return $this->hasMany(Publication::class);
+  }
 
-    public function research(): HasMany
-    {
-        return $this->hasMany(Publication::class);
-    }
+  public function research(): HasMany
+  {
+    return $this->hasMany(Publication::class);
+  }
 
+  public function registerMediaConversions(Media $media = null): void
+  {
+    $this->addMediaConversion('preview')
+      ->fit(Manipulations::FIT_MAX, 300, 100)
+      ->quality(75)
+      ->keepOriginalImageFormat()
+      ->nonQueued();
 
-    public function registerMediaConversions(Media $media = null): void
-    {
-        $this
-            ->addMediaConversion('preview')
-            ->fit(Manipulations::FIT_MAX, 300, 100)
-            ->quality(75)
-            ->keepOriginalImageFormat()
-            ->nonQueued();
+    $this->addMediaConversion('responsive')
+      ->fit(Manipulations::FIT_MAX, 1200, 400)
+      ->performOnCollections('category_media')
+      ->format(Manipulations::FORMAT_WEBP)
+      ->quality(75)
+      ->withResponsiveImages()
+      ->nonQueued();
+  }
 
-        $this
-            ->addMediaConversion('responsive')
-            ->fit(Manipulations::FIT_MAX, 1200, 400)
-            ->performOnCollections('category_media')
-            ->format(Manipulations::FORMAT_WEBP)
-            ->quality(75)
-            ->withResponsiveImages()
-            ->nonQueued();
-    }
+  // protected $with = ['media'];
 
-    // protected $with = ['media'];
+  public function registerMediaCollections(): void
+  {
+    $this->addMediaCollection('category_media')->singleFile();
+  }
 
-    public function registerMediaCollections(): void
-    {
-        $this->addMediaCollection('category_media')
-            ->singleFile();
-    }
-
-    public function getCategoriesIds($category)
-    {
-        if (!empty($category)) {
-            $array = array($category->id);
-            if (count($category->children) == 0)
-                return $array;
-            else
-                return array_merge($array, $this->getChildrenIds($category->children));
-        } else
-            return null;
-    }
-
-    public function getChildrenIds($children)
-    {
-        $array = array();
-        foreach ($children as $subcategory) {
-            array_push($array, $subcategory->id);
-            if (count($subcategory->children))
-                $array = array_merge($array, $this->getChildrenIds($subcategory->children));
-        }
+  public function getCategoriesIds($category)
+  {
+    if (!empty($category)) {
+      $array = [$category->id];
+      if (count($category->children) == 0) {
         return $array;
+      } else {
+        return array_merge($array, $this->getChildrenIds($category->children));
+      }
+    } else {
+      return null;
     }
+  }
 
-    public function getAllPublicationsPost($category)
-    {
-        if (!empty($category)) {
-            $array = array();
-            if (count($category->children) == 0)
-                return $array;
-            else
-                return array_merge($array, $this->getAllChildrenPosts($category->children));
-        } else
-            return null;
-
+  public function getChildrenIds($children)
+  {
+    $array = [];
+    foreach ($children as $subcategory) {
+      array_push($array, $subcategory->id);
+      if (count($subcategory->children)) {
+        $array = array_merge($array, $this->getChildrenIds($subcategory->children));
+      }
     }
+    return $array;
+  }
 
-    public function getAllChildrenPosts($children)
-    {
-        $array = array();
-        foreach ($children as $subcategory) {
-            $posts = $subcategory->publications()->orderByDesc('id')->take(4)->get();
-            $array[$subcategory->slug] = $posts->toArray();
-            if (count($subcategory->children))
-                $array = array_merge($array, $this->getAllChildrenPosts($subcategory->children));
-        }
+  public function getAllPublicationsPost($category)
+  {
+    if (!empty($category)) {
+      $array = [];
+      if (count($category->children) == 0) {
         return $array;
+      } else {
+        return array_merge($array, $this->getAllChildrenPosts($category->children));
+      }
+    } else {
+      return null;
     }
+  }
 
-
-
-    /**
-     * Get the route key for the model.
-     *
-    //  * @return string
-     */
-    // public function getRouteKeyName()
-    // {
-    //     return 'slug';
-    // }
-
+  public function getAllChildrenPosts($children)
+  {
+    $array = [];
+    foreach ($children as $subcategory) {
+      $posts = $subcategory->publications()->orderByDesc('id')->take(4)->get();
+      if($posts){
+        $array[$subcategory->slug] = $posts->toArray();
+      }
+      if (count($subcategory->children)) {
+        $array = array_merge($array, $this->getAllChildrenPosts($subcategory->children));
+      }
+    }
+    return $array;
+  }
 }

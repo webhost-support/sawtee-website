@@ -75,7 +75,7 @@ export const Newsletter = ({ data, props }) => {
             <SubscribeForm />
           </Box>
         </GridItem>
-        <GridItem colSpan={{ base: 1, md: 2 }} maxH="72" overflowY={'scroll'}>
+        <GridItem className='scroll-container' colSpan={{ base: 1, md: 2 }} maxH="72" overflowY={'scroll'}>
           <SimpleList heading={'e-newsletters'} my="10">
             {data.map(item => {
               const file = item.media.filter(m => m.collection_name === 'post-files')[0];

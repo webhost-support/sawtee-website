@@ -46,7 +46,7 @@ export default function Feature({ feature, ...rest }) {
           <br />
         </Heading>
         <Text color={useColorModeValue('gray.600', 'gray.300')} fontSize={{ base: 'xs', md: 'sm', lg: 'md' }}>
-          The <strong>Reform Monitoring Platform</strong> intends to strengthen
+          The <strong>Reform Monitoring Platform</strong> intends to strengthen{' '}
           <strong>monitoring and evaluation</strong> of the policy reform process through an online{' '}
           <strong>reform tracking system</strong> to increase transparency, inclusiveness, and accountability of{' '}
           <strong>trade and investment</strong> related reforms.
