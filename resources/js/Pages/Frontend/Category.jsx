@@ -51,7 +51,7 @@ export default function Category({
       <PageLayout featured_image={featured_image} srcSet={srcSet} title={category.name} showBackgroundPattern={false}>
         <Grid
           py={{ base: '24px', lg: '80px' }}
-          px={{ base: '0', md: '32px', lg: '80px' }}
+          px={{ base: '24px', md: '32px', lg: '40px' }}
           mx="auto"
           pt="50px"
           gridTemplateColumns={{

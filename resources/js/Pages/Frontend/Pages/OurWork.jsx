@@ -99,10 +99,14 @@ export default function OurWork({ themes, sections, content }) {
                 overflow={'hidden'}
                 position="relative"
                 role="group"
+                w="full"
+                aspectRatio={4 / 3}
+                minW="25rem"
+                minH="400px"
               >
                 <Image
-                  w="minmax(100%, 300px)"
-                  h={'400px'}
+                  w="full"
+                  h="full"
                   objectFit={'cover'}
                   src={media[0] ? media[0].original_url : '/assets/SM-placeholder-1024x512.png'}
                 />

@@ -41,6 +41,12 @@ const Home = ({
       link: '/category/covid',
     },
     // {
+    //   id: '3',
+    //   title: 'Reform Monitoring Platform',
+    //   image_src: '/assets/Policy-Reform-Banner-green-sized.webp',
+    //   link: '/reform-monitoring-platform',
+    // },
+    // {
     //     id: "3",
     //     title: "Advancing LDC's Trade Interests",
     //     image_src: "/assets/advancing-ldc_upscaled.webp",
@@ -65,12 +71,13 @@ const Home = ({
           templateColumns={{
             base: '1fr',
             lg: 'repeat(6, 1fr)',
+            xl: 'repeat(7, 1fr)',
           }}
           id="carousel-section"
           gap={8}
           rowGap={20}
         >
-          <GridItem colSpan={{ base: 1, lg: 4 }} shadow={'xl'} overflow={'hidden'}>
+          <GridItem colSpan={{ base: 1, lg: 4, xl: 4 }} shadow={'xl'} overflow={'hidden'}>
             <Box
               maxW="5xl"
               mx="auto"
@@ -80,15 +87,17 @@ const Home = ({
                 lg: '0 var(--chakra-radii-2xl) var(--chakra-radii-2xl) 0',
               }}
             >
-              <CarouselSection
-                slides={slides}
-                responsiveImages={slidesResponsiveImages}
-                carouselHeight={{ base: 'auto', md: '450px' }}
-              />
+              {slides && (
+                <CarouselSection
+                  slides={slides}
+                  responsiveImages={slidesResponsiveImages}
+                  carouselHeight={{ base: 'auto', md: '450px' }}
+                />
+              )}
             </Box>
           </GridItem>
-          <GridItem colSpan={{ base: 1, lg: 2 }} alignSelf={'center'}>
-            <FeaturedPublications publications={featuredPublications} rounded="2xl" />
+          <GridItem colSpan={{ base: 1, lg: 2, xl: 3 }} alignSelf={'center'}>
+            <FeaturedPublications publications={featuredPublications} mx="auto" rounded="2xl" maxW="lg" />
           </GridItem>
         </Grid>
       </Section>

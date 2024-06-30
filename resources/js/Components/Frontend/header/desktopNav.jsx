@@ -201,83 +201,91 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
       flexDirection={'column'}
       {...rest}
     >
-      <VStack spacing={10} align={'center'} justify="center">
-        <Text fontSize="2xl" fontFamily={'body'}>
-          <InertiaChakraLink as={Link} href={item.children[0].url}>
-            {item.children[0].title}
-          </InertiaChakraLink>
-        </Text>
-        <SimpleGrid as={motion.ul} variants={ListContainerVariants} initial={'closed'} whileInView={'open'} columns={2}>
-          {item.children[0].children.map(grandChild => {
-            return (
-              <Box
-                key={grandChild.title}
-                as={motion.li}
-                variants={ListVariants}
-                fontSize={{
-                  md: 'sm',
-                  xl: 'md',
-                }}
-                position="relative"
-                cursor="pointer"
-                pb={{ md: 3, xl: 6 }}
-                color={'gray.200'}
-              >
-                <InertiaChakraLink as={Link} href={grandChild.url}>
-                  {grandChild.title}
-                </InertiaChakraLink>
-              </Box>
-            );
+      <Box maxW="5xl" mx="auto">
+        <VStack spacing={10} align={'center'} justify="center">
+          <Text fontSize="2xl" fontFamily={'body'}>
+            <InertiaChakraLink as={Link} href={item.children[0].url}>
+              {item.children[0].title}
+            </InertiaChakraLink>
+          </Text>
+          <SimpleGrid
+            as={motion.ul}
+            variants={ListContainerVariants}
+            initial={'closed'}
+            whileInView={'open'}
+            columns={2}
+          >
+            {item.children[0].children.map(grandChild => {
+              return (
+                <Box
+                  key={grandChild.title}
+                  as={motion.li}
+                  variants={ListVariants}
+                  fontSize={{
+                    md: 'sm',
+                    xl: 'md',
+                  }}
+                  position="relative"
+                  cursor="pointer"
+                  pb={{ md: 3, xl: 6 }}
+                  color={'gray.200'}
+                >
+                  <InertiaChakraLink as={Link} href={grandChild.url}>
+                    {grandChild.title}
+                  </InertiaChakraLink>
+                </Box>
+              );
+            })}
+          </SimpleGrid>
+        </VStack>
+
+        <Divider my={4} borderBottomWidth="2px" />
+        <SimpleGrid columns={2} spacing={6}>
+          {item.children.map((grandChildren, idx) => {
+            if (idx !== 0) {
+              return (
+                <VStack spacing={10} key={grandChildren.title}>
+                  <InertiaChakraLink as={Link} href={grandChildren.url} fontSize="2xl">
+                    {grandChildren.title}
+                  </InertiaChakraLink>
+                  <SimpleGrid
+                    columns={2}
+                    spacing={6}
+                    as={motion.ul}
+                    variants={ListContainerVariants}
+                    initial={'closed'}
+                    whileInView={'open'}
+                  >
+                    {grandChildren.children &&
+                      grandChildren.children.map(child => {
+                        return (
+                          <Box
+                            key={child.title}
+                            as={motion.li}
+                            variants={ListVariants}
+                            fontSize={{
+                              md: 'sm',
+                              xl: 'md',
+                            }}
+                            fontWeight="medium"
+                            position="relative"
+                            cursor="pointer"
+                            pb={{ md: 3, xl: 6 }}
+                            color={'gray.200'}
+                          >
+                            <InertiaChakraLink as={Link} href={child.url}>
+                              {child.title}
+                            </InertiaChakraLink>
+                          </Box>
+                        );
+                      })}
+                  </SimpleGrid>
+                </VStack>
+              );
+            }
           })}
         </SimpleGrid>
-      </VStack>
-
-      <Divider borderBottomWidth="2px" />
-      <SimpleGrid columns={2} spacing={6}>
-        {item.children.map((grandChildren, idx) => {
-          if (idx !== 0) {
-            return (
-              <VStack spacing={10} key={grandChildren.title}>
-                <InertiaChakraLink as={Link} href={grandChildren.url} fontSize="2xl">
-                  {grandChildren.title}
-                </InertiaChakraLink>
-                <SimpleGrid
-                  columns={2}
-                  spacing={6}
-                  as={motion.ul}
-                  variants={ListContainerVariants}
-                  initial={'closed'}
-                  whileInView={'open'}
-                >
-                  {grandChildren.children &&
-                    grandChildren.children.map(child => {
-                      return (
-                        <Box
-                          key={child.title}
-                          as={motion.li}
-                          variants={ListVariants}
-                          fontSize={{
-                            md: 'sm',
-                            xl: 'md',
-                          }}
-                          fontWeight="medium"
-                          position="relative"
-                          cursor="pointer"
-                          pb={{ md: 3, xl: 6 }}
-                          color={'gray.200'}
-                        >
-                          <InertiaChakraLink as={Link} href={child.url}>
-                            {child.title}
-                          </InertiaChakraLink>
-                        </Box>
-                      );
-                    })}
-                </SimpleGrid>
-              </VStack>
-            );
-          }
-        })}
-      </SimpleGrid>
+      </Box>
     </Box>
   );
 };

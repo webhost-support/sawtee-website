@@ -134,7 +134,6 @@ export default function Index({ auth, posts, categories, categoryID }) {
             ))}
         </Select>
       </HStack>
-      {/* <DataTable defaultColumns={defaultColumns} data={posts} showSearch={true} /> */}
       <FrontDataTable defaultColumns={defaultColumns} data={posts}></FrontDataTable>
     </AuthenticatedLayout>
   );
