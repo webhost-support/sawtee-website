@@ -1,22 +1,20 @@
 import {
-  CarouselSection,
-  ExploreButton,
-  FeaturedPublications,
-  InfocusSection,
-  OutreachSection,
-  PublicationsSection,
-  ReformMonitorSection,
-  Title,
-  TwoColumnImageSection,
-  VideosSection,
+    CarouselSection,
+    ExploreButton,
+    FeaturedPublications,
+    InfocusSection,
+    OutreachSection,
+    PublicationsSection,
+    Title,
+    TwoColumnImageSection,
+    VideosSection,
 } from '@/Components/Frontend';
 import WebsiteHead from '@/Components/Frontend/Head';
 import { Newsletter } from '@/Components/Frontend/newsletter';
-import { feature } from '@/Utils/data';
 import { Box, Grid, GridItem, useColorModeValue } from '@chakra-ui/react';
 import MainLayout from '../Layout/MainLayout';
 
-const Home = ({
+const FrontPage = ({
   infocus,
   slides,
   events,
@@ -30,28 +28,32 @@ const Home = ({
   const AboutSectionData = [
     {
       id: '1',
+      title: 'Reform Monitoring Platform',
+      image_src: '/assets/Policy-Reform-Banner-green-sized.webp',
+      link: '/reform-monitoring-platform',
+    },
+    {
+      id: '2',
       title: 'Media Fellowship',
       image_src: '/assets/Media-Fellowship-banner.webp',
       link: '/media-fellows',
     },
+  ];
+
+  const COVIDLDCSectionData = [
     {
-      id: '2',
+      id: '1',
       title: "SAWTEE's Response to Covid-19",
       image_src: '/assets/COVID-19-South-Asia-and-LDCs.webp',
       link: '/category/covid',
     },
-    // {
-    //   id: '3',
-    //   title: 'Reform Monitoring Platform',
-    //   image_src: '/assets/Policy-Reform-Banner-green-sized.webp',
-    //   link: '/reform-monitoring-platform',
-    // },
-    // {
-    //     id: "3",
-    //     title: "Advancing LDC's Trade Interests",
-    //     image_src: "/assets/advancing-ldc_upscaled.webp",
-    //     link: "/advancing-ldcs’-interests-in-the-wto-strengthening-participation,-securing-priorities",
-    // },
+
+    {
+      id: '2',
+      title: "Advancing LDC's Trade Interests",
+      image_src: '/assets/advancing-ldc_upscaled.webp',
+      link: '/advancing-ldcs’-interests-in-the-wto-strengthening-participation,-securing-priorities',
+    },
   ];
 
   return (
@@ -101,19 +103,20 @@ const Home = ({
         </Grid>
       </Section>
 
-      {feature && (
+      {/* {feature && (
         <Section className="reform-section">
           <Box maxW="5xl" mx="auto">
             <ReformMonitorSection feature={feature} />
           </Box>
         </Section>
-      )}
+      )} */}
 
       {infocus && (
         <Section className="infocus-section">
           <Box maxW="5xl" mx="auto">
             <Title title={'In Focus'} />
-              <InfocusSection data={infocus} />
+            <InfocusSection data={infocus} />
+
             <ExploreButton size={['xs', 'sm']} text="More In Focus" px={10} mt="4" link={'/category/in-focus'} />
           </Box>
         </Section>
@@ -135,6 +138,10 @@ const Home = ({
           <Title title={'Outreach and Media'} />
           <OutreachSection sawteeInMedia={sawteeInMedia} events={events} />
         </Box>
+      </Section>
+
+      <Section className="about-section">
+        <TwoColumnImageSection data={COVIDLDCSectionData} />
       </Section>
 
       {/* <InfoSection /> */}
@@ -175,4 +182,4 @@ const Section = ({ children, title = null, bgDark, ...rest }) => {
   );
 };
 
-export default Home;
+export default FrontPage;

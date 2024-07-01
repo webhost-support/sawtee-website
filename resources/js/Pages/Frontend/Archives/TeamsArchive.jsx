@@ -33,7 +33,7 @@ const TeamsArchive = ({ category, teams, featured_image, srcSet }) => {
                 {teams.data.map(post => {
                   return (
                     <Fragment key={post.id}>
-                      <TeamMember member={post} color="gray.800" />
+                      <TeamMember member={post} />
                     </Fragment>
                   );
                 })}

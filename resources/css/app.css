@@ -66,16 +66,12 @@ body {
     color: var(--chakra-colors-gray-600);
     font: inherit;
     font-family: var(--chakra-fonts-body);
-    font-weight: normal;
-    /* font-size: 16px; */
-    line-height: 1.2;
     word-break: break-word;
     font-kerning: normal;
     text-rendering: optimizeLegibility;
     font-feature-settings: normal;
     -webkit-font-feature-settings: normal;
     -moz-font-feature-settings: normal;
-    overscroll-behavior: none;
 
 }
 

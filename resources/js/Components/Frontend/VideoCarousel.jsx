@@ -20,7 +20,7 @@ const VideoCarousel = ({
 
   return (
     <Grid maxW={'8xl'} mx="auto" gap={10} gridTemplateColumns={{ base: '1fr', lg: 'repeat(5, 1fr)' }}>
-      <GridItem colSpan={{ base: 1, lg: 3 }}>
+      <GridItem colSpan={{ base: 1, lg: 3 }} placeSelf={'center'}>
         <swiper-container
           ref={swiperElRef}
           slides-per-view={1}
@@ -38,7 +38,7 @@ const VideoCarousel = ({
                 : null;
             return (
               <swiper-slide key={article.id} class="swiper-slide video-slide">
-                <LinkBox w="full" h="100%">
+                <LinkBox w="full" aspectRatio={5 / 3} rounded={'xl'} overflow={'hidden'}>
                   <IconButton
                     aria-label={'Play Button'}
                     variant={'ghost'}
@@ -75,7 +75,7 @@ const VideoCarousel = ({
         <swiper-container
           class="thumbs-swiper"
           space-between="10"
-          slides-per-view="4"
+          slides-per-view="5"
           direction="vertical"
           free-mode="true"
           watch-slides-progress="true"

@@ -117,6 +117,65 @@ class FrontendController extends Controller
         ]);
     }
 
+    public function front()
+    {
+
+        $subcategorySlugs = ["trade-insight", "books", "issue-paper", "policy-brief"];
+        $publications = [];
+        $featured_publications = [];
+        // Retrieve the category named "publication" along with its subcategories
+        $category = Category::where('slug', 'publications')
+            ->with(['children' => function ($query) use ($subcategorySlugs) {
+                // Filter subcategories by the provided slugs
+                $query->whereIn('slug', $subcategorySlugs);
+            }])
+            ->first();
+
+        // Loop through each subcategory and retrieve 2 posts per subcategory
+        foreach ($category->children as $subcategory) {
+            // Retrieve 2 posts per subcategory
+            $featured_publications_array = Publication::with(['file', 'category'])->where('category_id', $subcategory->id)->orderBy('id', "DESC")->limit(1)->get();
+            $subcategoryPosts = Publication::with(['file', 'category'])->where('category_id', $subcategory->id)
+                ->orderBy('id', "DESC")
+                ->skip(1)
+                ->limit(3)
+                ->get();
+            $featured_publications = array_merge($featured_publications, $featured_publications_array->toArray());
+            // Merge posts into the main array
+            $publications = array_merge($publications, $subcategoryPosts->toArray());
+        }
+        $infocusId = Category::where('slug', 'in-focus')->first()->id;
+        $sawteeInMediaId = Category::where('slug', 'sawtee-in-media')->first()->id;
+        $eventsId = Category::where('slug', 'featured-events')->first()->id;
+        $newsletterCategoryId = Category::where('slug', 'newsletters')->first()->id;
+        $slider = Slider::where('page_id', Page::where('name', 'home')->first()->id,)->first();
+        $slides = Slide::where('slider_id', $slider->id)->orderBy('id', 'DESC')->get();
+        $slidesResponsiveImages = array();
+        foreach ($slides as $slide) {
+            $responsive = $slide->getFirstMedia('slides')?->getSrcSet('responsive');
+            if ($responsive) {
+                array_push($slidesResponsiveImages, $slide->getFirstMedia('slides')->getSrcSet('responsive'));
+            }
+        }
+        $infocus = Post::where('category_id', strval($infocusId))->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
+        $sawteeInMedia = Post::where('category_id', strval($sawteeInMediaId))->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
+        $events = Post::where('category_id', strval($eventsId))->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
+        $newsletters = Post::where('category_id', strval($newsletterCategoryId))->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
+        $webinars = Post::where('category_id', strval(Category::where('slug', 'webinar-series')->first()->id))->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
+
+        return Inertia::render('Frontend/Pages/FrontPage', [
+            'slides' => $slides->load(['media']),
+            'infocus' => $infocus->load(['category']),
+            'sawteeInMedia' => $sawteeInMedia->load(['category', 'media']),
+            'events' => $events->load(['category', 'media', 'tags']),
+            'featuredPublications' => $featured_publications,
+            'publications' => $publications,
+            'newsletters' => $newsletters->load(['category', 'media']),
+            'webinars' => $webinars->load(['media']),
+            'slidesResponsiveImages' => $slidesResponsiveImages
+        ]);
+    }
+
     /**
      * Retrieves a page by its slug and loads associated sections and themes if necessary.
      *
@@ -135,9 +194,9 @@ class FrontendController extends Controller
             $themes = Theme::all();
         }
 
-        if ($slug === 'home') {
-            return Redirect::route('home');
-        }
+        // if ($slug === 'home') {
+        //     return Redirect::route('home');
+        // }
 
 
         return Inertia::render('Frontend/Page', [

@@ -79,15 +79,15 @@ export const CarouselSection = ({ slides, responsiveImages, carouselHeight }) =>
   );
 };
 
-export const AboutSection = ({ data }) => {
+export const TwoColumnImageSection = ({ data }) => {
   return (
-    <SimpleGrid minChildWidth={'300px'} spacing={16} alignItems="center" maxW={'5xl'} mx="auto">
+    <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} alignItems="center" maxW={'5xl'} mx="auto">
       {data.map(item => {
         return (
-          <Box key={item.id} pos="relative">
+          <Box key={item.id} pos="relative" maxW="30rem">
             <Box
               pos="absolute"
-              border="4px solid"
+              border="2px solid"
               borderColor="blackAlpha.400"
               left={'25px'}
               top="-20px"
@@ -275,22 +275,20 @@ export const InfocusSection = ({ data }) => {
     <SimpleList heading={null} borderLeft={'none'}>
       {data.map(item => {
         return (
-          <ListItem key={item.id} mb="1rem">
+          <ListItem key={item.id} mb="1.5rem">
             <LinkBox>
-              <Box>
-                <InertiaChakraLinkOverlay
-                  as={Link}
-                  target="_blank"
-                  textDecor="underline"
-                  textUnderlineOffset="3px"
-                  href={`/category/in-focus/${item.slug}`}
-                >
-                  <Text lineHeight={'short'}>{item.title}</Text>
-                </InertiaChakraLinkOverlay>
-                <Text color={useColorModeValue('gray.600', 'gray.300')} fontSize={'.875rem'} mt={4}>
-                  {item.excerpt}
-                </Text>
-              </Box>
+              <InertiaChakraLinkOverlay
+                as={Link}
+                target="_blank"
+                textDecor="underline"
+                textUnderlineOffset="3px"
+                href={`/category/in-focus/${item.slug}`}
+              >
+                {item.title}
+              </InertiaChakraLinkOverlay>
+              <Text color={useColorModeValue('gray.600', 'gray.300')} fontSize={'.875rem'} mt={2}>
+                {item.excerpt}
+              </Text>
             </LinkBox>
           </ListItem>
         );

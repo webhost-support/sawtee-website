@@ -80,6 +80,7 @@ Route::get('/unsubscribe/{email}', [SubscriptionController::class, 'unsubscribe'
 Route::get('/search', [FrontendController::class, 'search'])->name('search');
 
 Route::get('/', [FrontendController::class, 'index'])->name('home');
+Route::get('/home', [FrontendController::class, 'front'])->name('front');
 Route::get('/{pages:slug}', [FrontendController::class, 'page'])->name('page.show');
 Route::get('/category/{categories:slug}/{subcategory?}/{post?}', [FrontendController::class, 'category'])->name('category.show');
 
