@@ -65,14 +65,14 @@ export default function PublicationsArchive({
   );
 }
 
-const ItemComponent = ({ item, publications }) => {
+const ItemComponent = ({ item, lastItem, publications, ...rest }) => {
   return (
     <Box
       key={item.name}
       py={12}
-      borderBottom={'2px solid'}
+      borderBottom={!lastItem ? '2px solid' : 'none'}
       borderColor={useColorModeValue('blackAlpha.400', 'whiteAlpha.400')}
-      border
+      {...rest}
     >
       <Text
         as="h3"
@@ -150,23 +150,25 @@ const ItemComponent = ({ item, publications }) => {
           })}
         </SimpleGrid>
       )}
+      {item.children && item.children.length > 0 && (
+        <React.Fragment key={item.id}>
+          <RenderItems items={item.children} publications={publications} ml={8} />
+        </React.Fragment>
+      )}
     </Box>
   );
 };
 
 // Recursive function to render items and their children
-const renderItems = (items, publications) => {
-  return items.map(item => (
+const RenderItems = ({ items, publications, ...rest }) => {
+  return items.map((item, i) => (
     <React.Fragment key={item.id}>
-      <ItemComponent item={item} publications={publications} />
-      {item.children && item.children.length > 0 && !item.children[0].children && (
-        <React.Fragment key={item.id}>renderItems(item.children, publications)</React.Fragment>
-      )}
+      <ItemComponent item={item} lastItem={i === items.length - 1} publications={publications} {...rest} />
     </React.Fragment>
   ));
 };
 
 // Main component that receives the data
 const ItemsList = ({ items, publications }) => {
-  return renderItems(items, publications);
+  return <RenderItems items={items} publications={publications} />;
 };

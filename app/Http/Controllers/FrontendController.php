@@ -241,7 +241,7 @@ class FrontendController extends Controller
         // If route is for publications category
         if ($slug === 'publications' && !$subcategory) {
             $publications = $category->getAllPublicationsPost($category);
-
+// dd($publications);
             return Inertia::render('Frontend/Archives/PublicationsArchive', [
                 'category' => $category,
                 'infocus' => $infocus,
@@ -279,12 +279,14 @@ class FrontendController extends Controller
             $category = Category::with('parent')->where('slug', $subcategory)->first();
             if($slug === 'publications'){
                 if ( count($category->children) > 0) {
-                    $subcategory_ids = array();
-                    foreach($category->children as $subcateogry){
-                        array_push($subcategory_ids, $subcateogry->id);
-                    }
-                    $publications = Publication::whereIn('category_id', $subcategory_ids)->orderByDesc('id')->paginate(12);
-
+                    $publications = $category->getAllPublicationsPost($category);
+                    return Inertia::render('Frontend/Archives/PublicationsArchive', [
+                        'category' => $category,
+                        'infocus' => $infocus,
+                        'sawteeInMedia' => $sawteeInMedia,
+                        'publications' => $publications,
+                        'srcSet' => $category_responsive_images
+                    ]);
                 }else {
                     $publications = Publication::where('category_id', $category->id)->orderByDesc('id')->paginate(12);
 

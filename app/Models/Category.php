@@ -128,10 +128,14 @@ class Category extends Model implements HasMedia
   {
     $array = [];
     foreach ($children as $subcategory) {
-        $posts = $subcategory->publications()->orderByDesc('id')->take(4)->get();
-        $array[$subcategory->slug] = $posts->toArray();
+
         if (count($subcategory->children) > 0) {
-            $array = array_merge($array, $this->getAllChildrenPosts($subcategory->children));
+            $posts = $subcategory->publications()->orderByDesc('id')->take(4)->get();
+            $array[$subcategory->slug] = $posts->toArray();
+           $array = array_merge($array, $this->getAllChildrenPosts($subcategory->children));
+        }else {
+            $posts = $subcategory->publications()->orderByDesc('id')->take(4)->get();
+            $array[$subcategory->slug] = $posts->toArray();
         }
     }
     return $array;
