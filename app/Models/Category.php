@@ -118,6 +118,7 @@ class Category extends Model implements HasMedia
       } else {
         return array_merge($array, $this->getAllChildrenPosts($category->children));
       }
+
     } else {
       return null;
     }
@@ -127,13 +128,12 @@ class Category extends Model implements HasMedia
   {
     $array = [];
     foreach ($children as $subcategory) {
-      $posts = $subcategory->publications()->orderByDesc('id')->take(4)->get();
-      if($posts){
-        $array[$subcategory->slug] = $posts->toArray();
-      }
-      if (count($subcategory->children)) {
-        $array = array_merge($array, $this->getAllChildrenPosts($subcategory->children));
-      }
+        $posts = $subcategory->publications()->orderByDesc('id')->take(4)->get();
+        if (count($subcategory->children) > 0) {
+            $array = array_merge($array, $this->getAllChildrenPosts($subcategory->children));
+        } else {
+            $array[$subcategory->slug] = $posts->toArray();
+        }
     }
     return $array;
   }

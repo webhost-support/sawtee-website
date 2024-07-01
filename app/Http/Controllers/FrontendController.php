@@ -60,7 +60,6 @@ class FrontendController extends Controller
      */
     public function index()
     {
-
         $subcategorySlugs = ["trade-insight", "books", "issue-paper", "policy-brief"];
         $publications = [];
         $featured_publications = [];
@@ -119,7 +118,6 @@ class FrontendController extends Controller
 
     public function front()
     {
-
         $subcategorySlugs = ["trade-insight", "books", "issue-paper", "policy-brief"];
         $publications = [];
         $featured_publications = [];
@@ -186,7 +184,6 @@ class FrontendController extends Controller
     public function page($slug)
     {
         $page = Page::where('slug', $slug)->firstOrFail();
-
         $sections = Section::where('page_id', $page->id)->get();
         $themes = null;
 
@@ -197,7 +194,6 @@ class FrontendController extends Controller
         // if ($slug === 'home') {
         //     return Redirect::route('home');
         // }
-
 
         return Inertia::render('Frontend/Page', [
             'page' => $page,
@@ -244,9 +240,8 @@ class FrontendController extends Controller
 
         // If route is for publications category
         if ($slug === 'publications' && !$subcategory) {
-
             $publications = $category->getAllPublicationsPost($category);
-            // dd($publications);
+
             return Inertia::render('Frontend/Archives/PublicationsArchive', [
                 'category' => $category,
                 'infocus' => $infocus,
@@ -269,8 +264,6 @@ class FrontendController extends Controller
 
         // if route is for category/subcategory/post eg: sawtee.org/programmes/ongoing-programmes/post-slug
         if ($subcategory && $post) {
-            // dd($post, $segments);
-
             $slug = $segments[3];
             $category = Category::where('slug', $subcategory)->firstOrFail();
             $post =
@@ -284,8 +277,19 @@ class FrontendController extends Controller
         // if route is for category/category-slug/subcategory eg: sawtee.org/category/programmes/ongoing-programmes/
         if ($subcategory) {
             $category = Category::with('parent')->where('slug', $subcategory)->first();
-            if ($slug === 'publications') {
-                $publications = Publication::where('category_id', $category->id)->orderByDesc('id')->paginate(12);
+            if($slug === 'publications'){
+                if ( count($category->children) > 0) {
+                    $subcategory_ids = array();
+                    foreach($category->children as $subcateogry){
+                        array_push($subcategory_ids, $subcateogry->id);
+                    }
+                    $publications = Publication::whereIn('category_id', $subcategory_ids)->orderByDesc('id')->paginate(12);
+
+                }else {
+                    $publications = Publication::where('category_id', $category->id)->orderByDesc('id')->paginate(12);
+
+                }
+
                 return Inertia::render('Frontend/Archives/PublicationCategory', [
                     'category' => $category,
                     'publications' => $publications,
@@ -294,6 +298,7 @@ class FrontendController extends Controller
                     'featured_image' => $featured_image,
                     'srcSet' => $category_responsive_images
                 ]);
+
             }
 
             if (!$category) {

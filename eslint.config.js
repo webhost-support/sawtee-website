@@ -1,4 +1,9 @@
-module.exports = {
+import globals from "globals";
+import pluginJs from "@eslint/js";
+import pluginReactConfig from "eslint-plugin-react/configs/recommended.js";
+
+
+export default [
   root: true,
   parserOptions: {
     ecmaVersion: 2020, // Use the latest ecmascript standard
@@ -42,4 +47,4 @@ module.exports = {
     'react/prop-types': 'off',
     'no-console': 2,
   },
-};
+];

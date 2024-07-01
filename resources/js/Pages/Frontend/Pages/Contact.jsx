@@ -11,9 +11,12 @@ import { Fragment } from 'react';
 const Contact = ({ content, pageData }) => {
   return (
     <Section px={['4', '8']} py="80px" w="5xl" maxW="full" paddingBlock="50px" className={'contact-page-content'}>
-      <Box p={{ sm: 5, md: 5 }} borderRadius="xl" boxShadow="lg">
-        <Box p={4}>
+      <Box p={{ sm: 5, md: 8 }} borderRadius="xl" boxShadow="lg">
+        <Heading as="h3" textAlign="center">
+        South Asia Watch on Trade, Economics and Environment (SAWTEE)
+        </Heading>
           <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={{ base: 20, sm: 3, md: 5, lg: 20 }}>
+
             <Box textAlign={{ base: 'center', lg: 'left' }}>
               <Heading as="h4" fontSize={{ base: 'xl', md: '2xl' }} textTransform={'uppercase'} pb="0.75rem">
                 <Text as="span" fontWeight={'semibold'}>
@@ -78,7 +81,6 @@ const Contact = ({ content, pageData }) => {
             </AspectRatio>
           )}
         </Box>
-      </Box>
     </Section>
   );
 };
