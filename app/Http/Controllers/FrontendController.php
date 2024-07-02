@@ -10,6 +10,7 @@ use App\Models\Research;
 use App\Models\Section;
 use App\Models\Slide;
 use App\Models\Slider;
+use App\Models\Tag;
 use App\Models\Team;
 use App\Models\Theme;
 use Illuminate\Http\Request;
@@ -60,113 +61,37 @@ class FrontendController extends Controller
      */
     public function index()
     {
-        $subcategorySlugs = ["trade-insight", "books", "issue-paper", "policy-brief"];
-        $publications = [];
-        $featured_publications = [];
-        // Retrieve the category named "publication" along with its subcategories
-        $category = Category::where('slug', 'publications')
-            ->with(['children' => function ($query) use ($subcategorySlugs) {
-                // Filter subcategories by the provided slugs
-                $query->whereIn('slug', $subcategorySlugs);
-            }])
-            ->first();
-
-        // Loop through each subcategory and retrieve 2 posts per subcategory
-        foreach ($category->children as $subcategory) {
-            // Retrieve 2 posts per subcategory
-            $featured_publications_array = Publication::with(['file', 'category'])->where('category_id', $subcategory->id)->orderBy('id', "DESC")->limit(1)->get();
-            $subcategoryPosts = Publication::with(['file', 'category'])->where('category_id', $subcategory->id)
-                ->orderBy('id', "DESC")
-                ->skip(1)
-                ->limit(3)
-                ->get();
-            $featured_publications = array_merge($featured_publications, $featured_publications_array->toArray());
-            // Merge posts into the main array
-            $publications = array_merge($publications, $subcategoryPosts->toArray());
-        }
-        $infocusId = Category::where('slug', 'in-focus')->first()->id;
-        $sawteeInMediaId = Category::where('slug', 'sawtee-in-media')->first()->id;
-        $eventsId = Category::where('slug', 'featured-events')->first()->id;
-        $newsletterCategoryId = Category::where('slug', 'newsletters')->first()->id;
-        $slider = Slider::where('page_id', Page::where('name', 'home')->first()->id,)->first();
-        $slides = Slide::where('slider_id', $slider->id)->orderBy('id', 'DESC')->get();
         $slidesResponsiveImages = array();
+        $featured = Tag::where('name', 'featured')->first();
+        $featured_publications = $featured->publications()->get();
+        $publications = Publication::with(['file', 'category'])
+        ->orderBy('id', "DESC")
+        ->limit(9)
+        ->get();
+
+        $slider = Slider::where('page_id', Page::where('name', 'home')->first()->id,)->first();
+        $slides = Slide::where('slider_id', $slider->id)->orderBy('id', 'DESC')->take(5)->get();
         foreach ($slides as $slide) {
             $responsive = $slide->getFirstMedia('slides')?->getSrcSet('responsive');
+            // dd($responsive);
+
             if ($responsive) {
                 array_push($slidesResponsiveImages, $slide->getFirstMedia('slides')->getSrcSet('responsive'));
             }
         }
-        $infocus = Post::where('category_id', strval($infocusId))->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
-        $sawteeInMedia = Post::where('category_id', strval($sawteeInMediaId))->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
-        $events = Post::where('category_id', strval($eventsId))->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
-        $newsletters = Post::where('category_id', strval($newsletterCategoryId))->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
-        $webinars = Post::where('category_id', strval(Category::where('slug', 'webinar-series')->first()->id))->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
+        // dd($slidesResponsiveImages, $slides);
+        $infocus = Category::where('slug', 'in-focus')->first()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
+        $sawteeInMedia = Category::where('slug', 'sawtee-in-media')->first()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
+        $events = Category::where('slug', 'featured-events')->first()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
+        $newsletters = Category::where('slug', 'newsletters')->first()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
+        $webinars = Category::where('slug', 'webinar-series')->first()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
 
         return Inertia::render('Frontend/Pages/Home', [
             'slides' => $slides->load(['media']),
             'infocus' => $infocus->load(['category']),
             'sawteeInMedia' => $sawteeInMedia->load(['category', 'media']),
             'events' => $events->load(['category', 'media', 'tags']),
-            'featuredPublications' => $featured_publications,
-            'publications' => $publications,
-            'newsletters' => $newsletters->load(['category', 'media']),
-            'webinars' => $webinars->load(['media']),
-            'slidesResponsiveImages' => $slidesResponsiveImages
-        ]);
-    }
-
-    public function front()
-    {
-        $subcategorySlugs = ["trade-insight", "books", "issue-paper", "policy-brief"];
-        $publications = [];
-        $featured_publications = [];
-        // Retrieve the category named "publication" along with its subcategories
-        $category = Category::where('slug', 'publications')
-            ->with(['children' => function ($query) use ($subcategorySlugs) {
-                // Filter subcategories by the provided slugs
-                $query->whereIn('slug', $subcategorySlugs);
-            }])
-            ->first();
-
-        // Loop through each subcategory and retrieve 2 posts per subcategory
-        foreach ($category->children as $subcategory) {
-            // Retrieve 2 posts per subcategory
-            $featured_publications_array = Publication::with(['file', 'category'])->where('category_id', $subcategory->id)->orderBy('id', "DESC")->limit(1)->get();
-            $subcategoryPosts = Publication::with(['file', 'category'])->where('category_id', $subcategory->id)
-                ->orderBy('id', "DESC")
-                ->skip(1)
-                ->limit(3)
-                ->get();
-            $featured_publications = array_merge($featured_publications, $featured_publications_array->toArray());
-            // Merge posts into the main array
-            $publications = array_merge($publications, $subcategoryPosts->toArray());
-        }
-        $infocusId = Category::where('slug', 'in-focus')->first()->id;
-        $sawteeInMediaId = Category::where('slug', 'sawtee-in-media')->first()->id;
-        $eventsId = Category::where('slug', 'featured-events')->first()->id;
-        $newsletterCategoryId = Category::where('slug', 'newsletters')->first()->id;
-        $slider = Slider::where('page_id', Page::where('name', 'home')->first()->id,)->first();
-        $slides = Slide::where('slider_id', $slider->id)->orderBy('id', 'DESC')->get();
-        $slidesResponsiveImages = array();
-        foreach ($slides as $slide) {
-            $responsive = $slide->getFirstMedia('slides')?->getSrcSet('responsive');
-            if ($responsive) {
-                array_push($slidesResponsiveImages, $slide->getFirstMedia('slides')->getSrcSet('responsive'));
-            }
-        }
-        $infocus = Post::where('category_id', strval($infocusId))->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
-        $sawteeInMedia = Post::where('category_id', strval($sawteeInMediaId))->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
-        $events = Post::where('category_id', strval($eventsId))->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
-        $newsletters = Post::where('category_id', strval($newsletterCategoryId))->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
-        $webinars = Post::where('category_id', strval(Category::where('slug', 'webinar-series')->first()->id))->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
-
-        return Inertia::render('Frontend/Pages/FrontPage', [
-            'slides' => $slides->load(['media']),
-            'infocus' => $infocus->load(['category']),
-            'sawteeInMedia' => $sawteeInMedia->load(['category', 'media']),
-            'events' => $events->load(['category', 'media', 'tags']),
-            'featuredPublications' => $featured_publications,
+            'featuredPublications' => $featured_publications->load(['category']),
             'publications' => $publications,
             'newsletters' => $newsletters->load(['category', 'media']),
             'webinars' => $webinars->load(['media']),
@@ -191,9 +116,9 @@ class FrontendController extends Controller
             $themes = Theme::all();
         }
 
-        // if ($slug === 'home') {
-        //     return Redirect::route('home');
-        // }
+        if ($slug === 'home') {
+            return Redirect::route('home');
+        }
 
         return Inertia::render('Frontend/Page', [
             'page' => $page,
@@ -217,22 +142,9 @@ class FrontendController extends Controller
     public function category($slug, $subcategory = null, $post = null)
     {
         $segments = request()->segments();
-        $eventsId = Category::where('slug', 'featured-events')->first()->id;
-        $infocusId = Category::where('slug', 'in-focus')->first()->id;
-        $sawteeInMediaId = Category::where('slug', 'sawtee-in-media')->first()->id;
-
-        $infocus = Post::where('category_id', strval($infocusId))
-            ->where('status', 'published')
-            ->orderBy('id', 'DESC')
-            ->take(5)->get();
-        $sawteeInMedia = Post::where('category_id', strval($sawteeInMediaId))
-            ->where('status', 'published')
-            ->orderBy('id', 'DESC')
-            ->take(5)->get();
-        $events = Post::where('category_id', strval($eventsId))
-            ->where('status', 'published')
-            ->orderBy('id', 'DESC')
-            ->take(5)->get();
+        $infocus = Category::where('slug', 'in-focus')->first()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
+        $sawteeInMedia = Category::where('slug', 'sawtee-in-media')->first()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
+        $events = Category::where('slug', 'featured-events')->first()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
         $category = Category::where('slug', $slug)->firstOrFail();
         $featured_image = $category->getFirstMediaUrl('category_media');
         $category_responsive_images = $category->getFirstMedia('category_media')?->getSrcset('responsive');
@@ -304,7 +216,6 @@ class FrontendController extends Controller
             }
 
             if (!$category) {
-
                 $category = Category::with('parent')->where('slug', $segments[1])->first();
                 $post = Post::where("category_id", $category->id)->where("status", "published")->where('slug', $segments[2])->firstOrFail();
                 $media = $post->getFirstMediaUrl('post-featured-image');

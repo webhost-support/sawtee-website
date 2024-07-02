@@ -12,10 +12,8 @@ const FullWidthCarousel = ({
   responsiveImages,
   pagination = true,
   navigation,
-  loop = true,
-  autoplay = true,
+  autoplay = false,
   effect = 'fade',
-  carouselHeight,
   ...rest
 }) => {
   useEffect(() => {
@@ -39,7 +37,6 @@ const FullWidthCarousel = ({
       navigation={navigation}
       centeredSlides={true}
       autoplay={autoplay}
-      loop={loop}
       effect={effect}
       className="full-width-carousel"
       id="full-width-carousel"
@@ -79,7 +76,7 @@ const FullWidthCarousel = ({
               mixBlendMode="overlay"
               loading="lazy"
               w="full"
-              h={carouselHeight}
+              h="full"
               fallbackSrc="/assets/SM-placeholder-1024x512.png"
             />
 

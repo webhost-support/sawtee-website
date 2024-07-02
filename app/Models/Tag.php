@@ -16,6 +16,9 @@ class Tag extends Model
     {
         return $this->belongsToMany(Post::class);
     }
-
+    public function publications(): BelongsToMany
+    {
+        return $this->belongsToMany(Publication::class);
+    }
 
 }

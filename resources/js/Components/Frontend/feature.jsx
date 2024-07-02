@@ -95,7 +95,15 @@ export default function Feature({ feature, ...rest }) {
           />
 
           <LinkOverlay href={feature.link}>
-            <Image alt={feature.name} fit={'cover'} align={'center'} w={'100%'} h={'100%'} src={feature.image} />
+            <Image
+              alt={feature.name}
+              loading="lazy"
+              fit={'cover'}
+              align={'center'}
+              w={'100%'}
+              h={'100%'}
+              src={feature.image}
+            />
           </LinkOverlay>
         </LinkBox>
       </Flex>

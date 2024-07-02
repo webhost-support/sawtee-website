@@ -68,10 +68,9 @@ class SlideController extends Controller
         $slide->update($request->all());
         $slider_id = $slide->slider_id;
         if ($request->hasFile('image')) {
-            $slide->image()->delete();
             $slide->addMediaFromRequest('image')->toMediaCollection('slides');
         }
-        $slider = Slider::find($slider_id);
+        $slider = Slider::findOrFail($slider_id);
         return to_route('admin.sliders.edit', ['slider' => $slider], 303);
     }
 

@@ -1,6 +1,8 @@
 import FileUpload, { PreviewImage } from '@/Components/Backend/FileUpload';
+import ControlledMultiSelect from '@/Components/Backend/MultiSelect';
 import PrimaryButton from '@/Components/Backend/PrimaryButton';
 import { FileIcon } from '@/Components/Frontend/icons';
+import { filterByReference } from '@/Utils/helpers';
 import { CloseIcon } from '@chakra-ui/icons';
 import {
   AspectRatio,
@@ -21,9 +23,9 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { useForm } from '@inertiajs/react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
-export default function EditPublicationForm({ publication, categories }) {
+export default function EditPublicationForm({ publication, categories, tags }) {
   const { data, setData, post, processing, errors } = useForm({
     category_id: publication.category_id,
     title: publication.title,
@@ -35,6 +37,48 @@ export default function EditPublicationForm({ publication, categories }) {
   const toast = useToast();
   const [filename, setFilename] = useState(data.file);
   const [image, setImage] = useState(data.image);
+
+  console.log(publication.tags);
+
+  const [postTags, setPostTags] = React.useState(() => {
+    let tagsarray = [];
+    publication.tags?.map(tag => {
+      tagsarray.push({
+        value: tag.id,
+        label: tag.name,
+      });
+    });
+
+    return tagsarray;
+  });
+
+  const [tagOptions, setTagOptions] = React.useState([]);
+
+  function setDataTags(e) {
+    let array = [];
+    setPostTags(e);
+    e.forEach(item =>
+      array.push({
+        tag_id: item.value,
+        publication_id: publication.id,
+      })
+    );
+
+    setData('tags', array);
+  }
+
+  React.useEffect(() => {
+    if (postTags && tags) {
+      const filteredTags = filterByReference(tags, postTags);
+      if (filteredTags.length > 0) {
+        let array = [];
+        filteredTags.map(item => {
+          array.push({ value: item.id, label: item.name });
+        });
+        setTagOptions([...array]);
+      }
+    }
+  }, [postTags, tags]);
 
   const submit = e => {
     e.preventDefault();
@@ -147,6 +191,25 @@ export default function EditPublicationForm({ publication, categories }) {
               </Select>
 
               {errors.category_id && <FormErrorMessage mt={2}>{errors.category_id}</FormErrorMessage>}
+            </FormControl>
+
+            <FormControl py={4} id={'tags'}>
+              <FormLabel htmlFor="tags">{' Add Tags'}</FormLabel>
+
+              <ControlledMultiSelect
+                isMulti
+                name={'tags'}
+                options={tagOptions}
+                variant="filled"
+                tagVariant="solid"
+                placeholder="Select Tags"
+                value={postTags}
+                onChange={e => {
+                  setPostTags(e);
+                  setDataTags(e);
+                }}
+                selectedOptionColorScheme="blue"
+              />
             </FormControl>
 
             <FormControl mt={4} isInvalid={errors.image}>

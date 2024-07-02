@@ -122,30 +122,21 @@ export const TwoColumnImageSection = ({ data }) => {
               />
 
               <LinkOverlay href={item.link}>
-                <Image src={item.image_src} alt={item.title} fit="cover" rounded="xl" align={'center'} />
+                <Image
+                  src={item.image_src}
+                  loading="lazy"
+                  fallbackSrc="assets/SM-placeholder-300x150.png"
+                  alt={item.title}
+                  fit="cover"
+                  rounded="xl"
+                  align={'center'}
+                />
               </LinkOverlay>
             </LinkBox>
           </Box>
         );
       })}
     </SimpleGrid>
-  );
-};
-
-export const SawteeInMediaSection = ({ articles, link }) => {
-  return (
-    <MultiPostsCarousel
-      posts={articles}
-      spacing={30}
-      pagination={false}
-      showCategoryTag={true}
-      scrollbar={true}
-      my={10}
-    >
-      <InertiaChakraLink as={Link} href={link}>
-        <ExploreButton size={['xs', 'sm']} text="More on sawtee in media " px={10} />
-      </InertiaChakraLink>
-    </MultiPostsCarousel>
   );
 };
 
@@ -166,7 +157,7 @@ export const InfoSection = () => {
           height="804"
           src="https://app.powerbi.com/view?r=eyJrIjoiOGRhNGUzNzUtYTk2NS00YzFjLWE3NDAtM2NjMjdjYTg1NmE1IiwidCI6IjIzM2IyYmFhLTdjNzUtNGI0YS04YjNiLTE3NTNkYmQzODBmOSIsImMiOjF9"
           allowFullScreen={true}
-        ></iframe>
+        />
       </SimpleGrid>
     </Box>
   );
@@ -256,6 +247,8 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
                         borderColor={'gray.400'}
                         p={1}
                         rounded="sm"
+                        fallbackSrc="assets/SM-placeholder-300x150.png"
+                        loading="lazy"
                       />
                     </Box>
                   )}
@@ -351,6 +344,8 @@ export const FeaturedPublications = ({ publications, ...rest }) => {
                       rounded="sm"
                       aspectRatio={3 / 4}
                       mx="auto"
+                      loading="lazy"
+                      fallbackSrc="/assets/SM-placeholder-150x150.png"
                     />
                   </Box>
                 )}
@@ -383,7 +378,7 @@ export const PublicationsSection = ({ publications }) => {
               <LinkBox textAlign="center">
                 <Image
                   src={media}
-                  fallbackSrc="/assets/SM-placeholder-150x150.png"
+                  fallbackSrc="/assets/SM-placeholder-300x150.png"
                   w="180px"
                   h={'240px'}
                   alt={publication.title}
@@ -392,6 +387,7 @@ export const PublicationsSection = ({ publications }) => {
                   shadow="xl"
                   mx="auto"
                   mb="2"
+                  loading="lazy"
                 />
                 <LinkOverlay fontSize={'xs'} href={`/publications/${publication.file.name}`}>
                   {publication.title}

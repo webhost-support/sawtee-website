@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Laravel\Scout\Searchable;
 use Spatie\Image\Manipulations;
@@ -43,6 +44,10 @@ class Publication extends Model implements HasMedia
         ];
     }
 
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class)->as("tags");
+    }
 
     public function file(): MorphOne
     {

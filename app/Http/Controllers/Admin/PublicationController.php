@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Publication;
 use App\Models\Category;
 use App\Models\File;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
@@ -29,7 +30,7 @@ class PublicationController extends Controller
   public function create()
   {
     $categories = Category::where('type', 'publication')->get()->all();
-    return Inertia::render('Backend/Publication/Create', ['categories' => $categories]);
+    return Inertia::render('Backend/Publication/Create', ['categories' => $categories, 'tags' => Tag::all()]);
   }
 
   /**
@@ -52,6 +53,9 @@ class PublicationController extends Controller
     $publication = Publication::create($validated);
     if ($request->hasFile('image')) {
       $publication->addMediaFromRequest('image')->toMediaCollection('publication_featured_image');
+    }
+    if ($request->has('tags')) {
+        $publication->tags()->attach($request->tags);
     }
 
     if ($request->file('file')) {
@@ -77,9 +81,8 @@ class PublicationController extends Controller
    */
   public function edit(Publication $publication)
   {
-    $publication->load('media', 'file');
     $categories = Category::where('type', 'publication')->get();
-    return Inertia::render('Backend/Publication/Edit', ['publication' => $publication, 'categories' => $categories]);
+    return Inertia::render('Backend/Publication/Edit', ['publication' => $publication->load('media', 'file', 'tags'), 'categories' => $categories, 'tags' => Tag::all()]);
   }
 
   /**
@@ -96,6 +99,10 @@ class PublicationController extends Controller
     ]);
     $slug = $validated['title'] . ' ' . $validated['subtitle'];
     $validated['slug'] = Str::slug($slug, '-');
+
+    if ($request->has('tags')) {
+        $publication->tags()->attach($request->tags);
+    }
 
     if ($request->hasFile('image')) {
       $publication->addMediaFromRequest('image')->toMediaCollection('publication_featured_image');
