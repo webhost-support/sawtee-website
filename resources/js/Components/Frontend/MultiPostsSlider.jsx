@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
-import { HStack, IconButton, useBreakpoint } from '@chakra-ui/react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
+import { HStack, IconButton, useBreakpoint } from '@chakra-ui/react';
+import { useEffect, useRef, useState } from 'react';
 
 // import required modules
 import 'swiper/css';

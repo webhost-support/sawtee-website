@@ -35,7 +35,8 @@ export default function ContentEditor(props) {
     min_height: 700,
     max_height: 900,
     width: '100%',
-    quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
+    quickbars_selection_toolbar:
+      'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
     noneditable_class: 'mceNonEditable',
     toolbar_mode: 'sliding',
     contextmenu: 'link image table',

@@ -76,7 +76,11 @@ export default function EditTheme({ themeId, themes, isOpen, onClose }) {
               required
             />
 
-            {errors.title && <FormErrorMessage className="mt-2">{errors.title}</FormErrorMessage>}
+            {errors.title && (
+              <FormErrorMessage className="mt-2">
+                {errors.title}
+              </FormErrorMessage>
+            )}
           </FormControl>
 
           <FormControl mt="4" isInvalid={errors.description}>
@@ -91,7 +95,11 @@ export default function EditTheme({ themeId, themes, isOpen, onClose }) {
               onChange={e => setData('description', e.target.value)}
             />
 
-            {errors.description && <FormErrorMessage className="mt-2">{errors.description}</FormErrorMessage>}
+            {errors.description && (
+              <FormErrorMessage className="mt-2">
+                {errors.description}
+              </FormErrorMessage>
+            )}
           </FormControl>
         </ModalBody>
         <ModalFooter>

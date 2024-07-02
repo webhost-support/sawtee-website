@@ -1,14 +1,14 @@
 import InertiaChakraLinkOverlay from '@/Components/Frontend/styles/inertia-chakra-link-overlay';
 import {
-    Box,
-    Collapse,
-    Container,
-    Heading,
-    Image,
-    LinkBox,
-    SimpleGrid,
-    Text,
-    useColorModeValue,
+  Box,
+  Collapse,
+  Container,
+  Heading,
+  Image,
+  LinkBox,
+  SimpleGrid,
+  Text,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { Link } from '@inertiajs/react';
 import React, { useEffect, useState } from 'react';
@@ -25,12 +25,31 @@ export default function OurWork({ themes, sections, content }) {
   const cardBackground = useColorModeValue('blackAlpha.100', 'blackAlpha.300');
 
   return (
-    <Container className="intro" pos="relative" py="80px" maxW="4xl" px={{ base: 5, md: 10 }} centerContent>
-      <Heading as={'h2'} fontSize={{ base: 'xl', md: '2xl', lg: '4xl' }} mb={6} textAlign="center">
+    <Container
+      className="intro"
+      pos="relative"
+      py="80px"
+      maxW="4xl"
+      px={{ base: 5, md: 10 }}
+      centerContent
+    >
+      <Heading
+        as={'h2'}
+        fontSize={{ base: 'xl', md: '2xl', lg: '4xl' }}
+        mb={6}
+        textAlign="center"
+      >
         Thematic Areas
       </Heading>
 
-      <Box display="flex" flexDir="column" justifyContent="center" alignItems="center" position="relative" mb={24}>
+      <Box
+        display="flex"
+        flexDir="column"
+        justifyContent="center"
+        alignItems="center"
+        position="relative"
+        mb={24}
+      >
         {intro && (
           <Text
             as="blockquote"
@@ -46,7 +65,12 @@ export default function OurWork({ themes, sections, content }) {
         )}
       </Box>
 
-      <SimpleGrid columns={{ base: 1, md: 2 }} placeItems="center" spacing={10} mb={4}>
+      <SimpleGrid
+        columns={{ base: 1, md: 2 }}
+        placeItems="center"
+        spacing={10}
+        mb={4}
+      >
         {themes.map((theme, index) => {
           const [show, setShow] = React.useState(false);
           const handleToggle = () => setShow(!show);
@@ -66,7 +90,12 @@ export default function OurWork({ themes, sections, content }) {
               transition={'all .25s ease'}
             >
               <Collapse in={show} startingHeight={'120px'} animateOpacity>
-                <Heading as="h3" mb={3} fontWeight="semibold" fontSize={['md', 'lg']}>
+                <Heading
+                  as="h3"
+                  mb={3}
+                  fontWeight="semibold"
+                  fontSize={['md', 'lg']}
+                >
                   {theme.title}
                 </Heading>
 
@@ -108,7 +137,11 @@ export default function OurWork({ themes, sections, content }) {
                   w="full"
                   h="full"
                   objectFit={'cover'}
-                  src={media[0] ? media[0].original_url : '/assets/SM-placeholder-1024x512.png'}
+                  src={
+                    media[0]
+                      ? media[0].original_url
+                      : '/assets/SM-placeholder-1024x512.png'
+                  }
                 />
                 <Box
                   backgroundColor={'hsl(0, 0%,  0%, 0.2)'}
@@ -131,7 +164,10 @@ export default function OurWork({ themes, sections, content }) {
                     textAlign={'center'}
                     py={{ base: 4, lg: 6 }}
                   >
-                    <InertiaChakraLinkOverlay as={Link} href={`/category/${link}`}>
+                    <InertiaChakraLinkOverlay
+                      as={Link}
+                      href={`/category/${link}`}
+                    >
                       {title}
                     </InertiaChakraLinkOverlay>
                   </Heading>

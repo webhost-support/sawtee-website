@@ -15,7 +15,12 @@ import { Blob } from './icons';
 
 export default function Feature({ feature, ...rest }) {
   return (
-    <Stack align={'center'} spacing={{ base: 8, md: 10 }} direction={{ base: 'column', lg: 'row' }} {...rest}>
+    <Stack
+      align={'center'}
+      spacing={{ base: 8, md: 10 }}
+      direction={{ base: 'column', lg: 'row' }}
+      {...rest}
+    >
       <Stack flex={1} spacing={{ base: 5, md: 10 }}>
         <Heading
           lineHeight={1.2}
@@ -45,14 +50,24 @@ export default function Feature({ feature, ...rest }) {
           </Text>
           <br />
         </Heading>
-        <Text color={useColorModeValue('gray.600', 'gray.300')} fontSize={{ base: 'xs', md: 'sm', lg: 'md' }}>
+        <Text
+          color={useColorModeValue('gray.600', 'gray.300')}
+          fontSize={{ base: 'xs', md: 'sm', lg: 'md' }}
+        >
           The <strong>Reform Monitoring Platform</strong> intends to strengthen{' '}
-          <strong>monitoring and evaluation</strong> of the policy reform process through an online{' '}
-          <strong>reform tracking system</strong> to increase transparency, inclusiveness, and accountability of{' '}
+          <strong>monitoring and evaluation</strong> of the policy reform
+          process through an online <strong>reform tracking system</strong> to
+          increase transparency, inclusiveness, and accountability of{' '}
           <strong>trade and investment</strong> related reforms.
         </Text>
       </Stack>
-      <Flex flex={1} justify={'center'} align={'center'} position={'relative'} my="10">
+      <Flex
+        flex={1}
+        justify={'center'}
+        align={'center'}
+        position={'relative'}
+        my="10"
+      >
         <Blob
           w={'100%'}
           h={'150%'}

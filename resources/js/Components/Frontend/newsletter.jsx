@@ -19,8 +19,8 @@ import { useForm } from '@inertiajs/react';
 import React from 'react';
 import { ExploreButton } from '.';
 import SimpleList from './SimpleList';
-import InertiaChakraLink from './styles/inertia-chakra-link';
 import { SendPlaneIcon } from './icons';
+import InertiaChakraLink from './styles/inertia-chakra-link';
 
 export const PatternBox = ({ showPattern = false, ...props }) => (
   <Box
@@ -65,23 +65,47 @@ export const Newsletter = ({ data, props }) => {
         mx="auto"
       >
         <GridItem colSpan={{ base: 1, md: 3 }}>
-          <Box position="relative" zIndex="1" overflow="hidden" textAlign="center" mx="auto" px={6}>
-            <Heading as="h4" fontSize={'2xl'} color="var(--color-text)" textTransform="uppercase">
+          <Box
+            position="relative"
+            zIndex="1"
+            overflow="hidden"
+            textAlign="center"
+            mx="auto"
+            px={6}
+          >
+            <Heading
+              as="h4"
+              fontSize={'2xl'}
+              color="var(--color-text)"
+              textTransform="uppercase"
+            >
               Never miss an update!
             </Heading>
             <Text mt={2} fontSize="sm" color="primary.500">
-              Receive the latest publication releases, update and monthly newsletter.
+              Receive the latest publication releases, update and monthly
+              newsletter.
             </Text>
             <SubscribeForm />
           </Box>
         </GridItem>
-        <GridItem className='scroll-container' colSpan={{ base: 1, md: 2 }} maxH="72" overflowY={'scroll'}>
+        <GridItem
+          className="scroll-container"
+          colSpan={{ base: 1, md: 2 }}
+          maxH="72"
+          overflowY={'scroll'}
+        >
           <SimpleList heading={'e-newsletters'} my="10">
             {data.map(item => {
-              const file = item.media.filter(m => m.collection_name === 'post-files')[0];
+              const file = item.media.filter(
+                m => m.collection_name === 'post-files'
+              )[0];
               return (
                 <ListItem key={item.id} mb="1rem">
-                  <InertiaChakraLink textDecor="underline" textUnderlineOffset="3px" href={file?.original_url}>
+                  <InertiaChakraLink
+                    textDecor="underline"
+                    textUnderlineOffset="3px"
+                    href={file?.original_url}
+                  >
                     <Text fontSize={'0.875rem'} lineHeight={'short'}>
                       {item.title}
                     </Text>
@@ -91,7 +115,11 @@ export const Newsletter = ({ data, props }) => {
             })}
           </SimpleList>
 
-          <ExploreButton size="sm" text="More newsletters" link={'/category/newsletters'} />
+          <ExploreButton
+            size="sm"
+            text="More newsletters"
+            link={'/category/newsletters'}
+          />
         </GridItem>
       </Grid>
     </PatternBox>
@@ -158,9 +186,13 @@ const SubscribeForm = ({ ...rest }) => {
             </InputRightElement>
           </InputGroup>
 
-          {errors.email && <FormErrorMessage mt={2}>{errors.email}</FormErrorMessage>}
+          {errors.email && (
+            <FormErrorMessage mt={2}>{errors.email}</FormErrorMessage>
+          )}
 
-          {message && <FormHelperText color={'green.500'}>{message}</FormHelperText>}
+          {message && (
+            <FormHelperText color={'green.500'}>{message}</FormHelperText>
+          )}
         </FormControl>
       </Flex>
     </Box>

@@ -8,18 +8,33 @@ import MediaFellows from './Pages/MediaFellows';
 import OurWork from './Pages/OurWork';
 import ReformMonitor from './Pages/ReformMonitor';
 
-export default function Page({ page, featured_image, srcSet, themes, sections }) {
+export default function Page({
+  page,
+  featured_image,
+  srcSet,
+  themes,
+  sections,
+}) {
   return (
     <>
       <WebsiteHead
         title={page.meta_title ? page.meta_title : page.name}
         description={page.meta_description}
-        image={featured_image ? featured_image.original_url : '/assets/logo-sawtee.webp'}
+        image={
+          featured_image
+            ? featured_image.original_url
+            : '/assets/logo-sawtee.webp'
+        }
       />
 
       <MainLayout>
         {page.slug !== 'reform-monitoring-platform' ? (
-          <PageLayout featured_image={featured_image} srcSet={srcSet} title={page.name} showBackgroundPattern={false}>
+          <PageLayout
+            featured_image={featured_image}
+            srcSet={srcSet}
+            title={page.name}
+            showBackgroundPattern={false}
+          >
             <PageContent page={page} sections={sections} themes={themes} />
           </PageLayout>
         ) : (
@@ -37,7 +52,14 @@ const PageContent = ({ page, sections, themes }) => {
       return <OurWork themes={themes} sections={sections} content={content} />;
 
     case 'about':
-      return <About sections={sections} content={content} pageData={pageData} size={'xl'} />;
+      return (
+        <About
+          sections={sections}
+          content={content}
+          pageData={pageData}
+          size={'xl'}
+        />
+      );
 
     case 'contact':
       return <Contact content={content} pageData={pageData} />;

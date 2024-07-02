@@ -50,7 +50,9 @@ export default function DeleteTag({ tags, isOpen, onClose, tag }) {
             <AlertIcon />
             <Box>
               <AlertTitle>This action is irreversible.</AlertTitle>
-              <AlertDescription>{'Are you sure you want to delete this tag?'}</AlertDescription>
+              <AlertDescription>
+                {'Are you sure you want to delete this tag?'}
+              </AlertDescription>
             </Box>
           </Alert>
         </ModalBody>

@@ -192,7 +192,7 @@ const AddToMenu = ({ options, name, menu, menuItems, pages = null }) => {
         url: pages ? `/${page.slug}#${slug}` : data.url,
       });
     }
-    if (parent == 0) {
+    if (parent === 0) {
       slug = slugify(selectedData.title || selectedData.name);
       setData({
         ...data,
@@ -245,7 +245,7 @@ const AddToMenu = ({ options, name, menu, menuItems, pages = null }) => {
                     placeholder={'Select ' + name}
                     value={selectedData ? selectedData.id : ''}
                     onChange={e => {
-                      const selected = options.filter(option => option.id == e.target.value)[0];
+                      const selected = options.filter(option => option.id === e.target.value)[0];
                       setSelectedData(selected);
                     }}
                   >
@@ -349,14 +349,14 @@ const MenuItemsList = ({ firstLevelMenuItems, menuItems, ...rest }) => {
   const [menuItem, setMenuItem] = useState(null);
   const handleEditMenuItem = (e, id) => {
     e.preventDefault();
-    const newMenuItem = menuItems.filter(MenuItem => MenuItem.id == id)[0];
+    const newMenuItem = menuItems.filter(MenuItem => MenuItem.id === id)[0];
     setMenuItem(newMenuItem);
     editMenuItem.onOpen();
   };
 
   const handleDeleteMenuItem = (e, id) => {
     e.preventDefault();
-    const newMenuItem = menuItems.filter(MenuItem => MenuItem.id == id)[0];
+    const newMenuItem = menuItems.filter(MenuItem => MenuItem.id === id)[0];
     setMenuItem(newMenuItem);
     deleteMenuItem.onOpen();
   };

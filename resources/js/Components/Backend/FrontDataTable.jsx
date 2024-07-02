@@ -1,38 +1,38 @@
 import {
-    ArrowBackIcon,
-    ArrowForwardIcon,
-    ArrowLeftIcon,
-    ArrowRightIcon,
-    TriangleDownIcon,
-    TriangleUpIcon,
+  ArrowBackIcon,
+  ArrowForwardIcon,
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  TriangleDownIcon,
+  TriangleUpIcon,
 } from '@chakra-ui/icons';
 import {
-    Checkbox,
-    HStack,
-    IconButton,
-    Input,
-    Select,
-    Stack,
-    Table,
-    TableContainer,
-    Tbody,
-    Td,
-    Text,
-    Th,
-    Thead,
-    Tr,
-    chakra,
-    useColorModeValue,
+  Checkbox,
+  HStack,
+  IconButton,
+  Input,
+  Select,
+  Stack,
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+  chakra,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { rankItem } from '@tanstack/match-sorter-utils';
 
 import {
-    flexRender,
-    getCoreRowModel,
-    getFilteredRowModel,
-    getPaginationRowModel,
-    getSortedRowModel,
-    useReactTable,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
 } from '@tanstack/react-table';
 import * as React from 'react';
 import { DebouncedInput } from '../Frontend/index';
@@ -87,7 +87,12 @@ export function FrontDataTable({
 
   return (
     <>
-      <Stack spacing={4} direction={'row'} justifyContent={showColumnFilters ? 'space-between' : 'end'} mb={4}>
+      <Stack
+        spacing={4}
+        direction={'row'}
+        justifyContent={showColumnFilters ? 'space-between' : 'end'}
+        mb={4}
+      >
         {showColumnFilters && (
           <Stack
             spacing={4}
@@ -133,15 +138,27 @@ export function FrontDataTable({
         borderColor={useColorModeValue('gray.200', 'whiteAlpha.700')}
         rounded={'xl'}
       >
-        <Table variant={'striped'} size={'sm'} colorScheme={'blackAlpha'} layout={'responsive'}>
+        <Table
+          variant={'striped'}
+          size={'sm'}
+          colorScheme={'blackAlpha'}
+          layout={'responsive'}
+        >
           <Thead>
             {table.getHeaderGroups().map(headerGroup => (
               <Tr key={headerGroup.id}>
                 {headerGroup.headers.map(header => {
                   const meta = header.column.columnDef.meta;
                   return (
-                    <Th key={header.id} onClick={header.column.getToggleSortingHandler()} isNumeric={meta?.isNumeric}>
-                      {flexRender(header.column.columnDef.header, header.getContext())}
+                    <Th
+                      key={header.id}
+                      onClick={header.column.getToggleSortingHandler()}
+                      isNumeric={meta?.isNumeric}
+                    >
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                       <chakra.span pl="4">
                         {header.column.getIsSorted() ? (
                           header.column.getIsSorted() === 'desc' ? (
@@ -168,8 +185,16 @@ export function FrontDataTable({
                 {row.getVisibleCells().map(cell => {
                   const meta = cell.column.columnDef.meta;
                   return (
-                    <Td maxW="72" overflow={'hidden'} key={cell.id} isNumeric={meta?.isNumeric}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    <Td
+                      maxW="72"
+                      overflow={'hidden'}
+                      key={cell.id}
+                      isNumeric={meta?.isNumeric}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
                     </Td>
                   );
                 })}
@@ -214,7 +239,8 @@ export function FrontDataTable({
             <HStack justify="center" spacing={4}>
               <Text>Page</Text>
               <strong>
-                {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+                {table.getState().pagination.pageIndex + 1} of{' '}
+                {table.getPageCount()}
               </strong>
             </HStack>
             <HStack justify="center" spacing={4}>

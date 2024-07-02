@@ -1,33 +1,33 @@
 import PrimaryButton from '@/Components/Backend/PrimaryButton';
 import {
-    Button,
-    FormControl,
-    FormErrorMessage,
-    FormLabel,
-    Input,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    ModalOverlay,
-    VStack,
-    useToast
+  Button,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  VStack,
+  useToast,
 } from '@chakra-ui/react';
 import { useForm } from '@inertiajs/react';
 
 export default function CreateMenuForm({ isOpen, onOpen, onClose }) {
-	const { data, setData, post, processing, errors, reset } = useForm({
-		title: '',
-		location: '',
-	});
-	const toast = useToast();
+  const { data, setData, post, processing, errors, reset } = useForm({
+    title: '',
+    location: '',
+  });
+  const toast = useToast();
 
-	const submit = e => {
-		e.preventDefault();
+  const submit = e => {
+    e.preventDefault();
 
-		post(route('admin.create.menu'), {
+    post(route('admin.create.menu'), {
       preserveScroll: true,
       onSuccess: () => {
         toast({
@@ -50,8 +50,8 @@ export default function CreateMenuForm({ isOpen, onOpen, onClose }) {
         }
       },
     });
-	};
-	return (
+  };
+  return (
     <Modal isOpen={isOpen} onClose={onClose} size={{ base: 'xs', md: 'md' }}>
       <ModalOverlay />
       <ModalContent as="form" onSubmit={submit}>
@@ -70,7 +70,9 @@ export default function CreateMenuForm({ isOpen, onOpen, onClose }) {
                 required
               />
 
-              {errors.title && <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>}
+              {errors.title && (
+                <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>
+              )}
             </FormControl>
 
             <FormControl mt="4" isInvalid={errors.location}>
@@ -84,13 +86,20 @@ export default function CreateMenuForm({ isOpen, onOpen, onClose }) {
                 required
               />
 
-              {errors.location && <FormErrorMessage mt={2}>{errors.location}</FormErrorMessage>}
+              {errors.location && (
+                <FormErrorMessage mt={2}>{errors.location}</FormErrorMessage>
+              )}
             </FormControl>
           </VStack>
         </ModalBody>
 
         <ModalFooter>
-          <PrimaryButton colorScheme="blue" type="submit" isLoading={processing} mr={3}>
+          <PrimaryButton
+            colorScheme="blue"
+            type="submit"
+            isLoading={processing}
+            mr={3}
+          >
             Add
           </PrimaryButton>
           <Button variant="ghost" onClick={onClose}>

@@ -1,6 +1,9 @@
 import { DataTable } from '@/Components/Backend/DataTable';
 import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import { TableDeleteAction, TableEditAction } from '@/Components/Backend/TableActions';
+import {
+  TableDeleteAction,
+  TableEditAction,
+} from '@/Components/Backend/TableActions';
 import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
 import { HStack, Text, useDisclosure } from '@chakra-ui/react';
 import { Head } from '@inertiajs/react';
@@ -48,7 +51,9 @@ export default function Index({ auth, tags }) {
           return (
             <HStack spacing={4}>
               <TableEditAction onClick={e => handleEdit(e, info.getValue())} />
-              <TableDeleteAction onClick={e => handleDelete(e, info.getValue())} />
+              <TableDeleteAction
+                onClick={e => handleDelete(e, info.getValue())}
+              />
             </HStack>
           );
         },
@@ -66,10 +71,24 @@ export default function Index({ auth, tags }) {
         Create New Tag
       </PrimaryButton>
       {tags.data && <DataTable defaultColumns={defaultColumns} data={tags} />}
-      {createTag.isOpen && <CreateTag isOpen={createTag.isOpen} onClose={createTag.onClose} />}
-      {editTag.isOpen && <EditTag tags={tags.data} tag={tag} isOpen={editTag.isOpen} onClose={editTag.onClose} />}
+      {createTag.isOpen && (
+        <CreateTag isOpen={createTag.isOpen} onClose={createTag.onClose} />
+      )}
+      {editTag.isOpen && (
+        <EditTag
+          tags={tags.data}
+          tag={tag}
+          isOpen={editTag.isOpen}
+          onClose={editTag.onClose}
+        />
+      )}
       {deleteTag.isOpen && (
-        <DeleteTag tags={tags.data} tag={tag} isOpen={deleteTag.isOpen} onClose={deleteTag.onClose} />
+        <DeleteTag
+          tags={tags.data}
+          tag={tag}
+          isOpen={deleteTag.isOpen}
+          onClose={deleteTag.onClose}
+        />
       )}
     </AuthenticatedLayout>
   );

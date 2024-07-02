@@ -1,23 +1,36 @@
 import { SocialMenu } from '@/Components/Frontend/header/social-menu';
 import { MapModel, StyledChakraLink } from '@/Components/Frontend/index';
 import {
-    Box,
-    Grid,
-    GridItem,
-    ListIcon,
-    ListItem,
-    Stack,
-    Text,
-    Tooltip,
-    UnorderedList,
-    VStack,
-    useColorModeValue,
-    useDisclosure,
+  Box,
+  Grid,
+  GridItem,
+  ListIcon,
+  ListItem,
+  Stack,
+  Text,
+  Tooltip,
+  UnorderedList,
+  VStack,
+  useColorModeValue,
+  useDisclosure,
 } from '@chakra-ui/react';
-import { CaretRightIcon, EmailIcon, FaxIcon, LocationPin, MailBoxIcon, PhoneIcon } from '../icons';
+import {
+  CaretRightIcon,
+  EmailIcon,
+  FaxIcon,
+  LocationPin,
+  MailBoxIcon,
+  PhoneIcon,
+} from '../icons';
 
 const FooterSection = ({ children, ...rest }) => (
-  <Box as="footer" pos="relative" bg={useColorModeValue('blackAlpha.50', 'var(--color-darker)')} mx={'auto'} {...rest}>
+  <Box
+    as="footer"
+    pos="relative"
+    bg={useColorModeValue('blackAlpha.50', 'var(--color-darker)')}
+    mx={'auto'}
+    {...rest}
+  >
     {children}
   </Box>
 );
@@ -28,11 +41,18 @@ const FooterSectionGroup = ({ children, ...rest }) => (
   </Grid>
 );
 
-const FooterSectionItem = ({ children, ...rest }) => <GridItem {...rest}>{children}</GridItem>;
+const FooterSectionItem = ({ children, ...rest }) => (
+  <GridItem {...rest}>{children}</GridItem>
+);
 
 const ListHeader = ({ children }) => {
   return (
-    <Text fontSize={{ base: 'xl', lg: '2xl' }} fontWeight={'medium'} fontFamily={'heading'} mb={2}>
+    <Text
+      fontSize={{ base: 'xl', lg: '2xl' }}
+      fontWeight={'medium'}
+      fontFamily={'heading'}
+      mb={2}
+    >
       {children}
     </Text>
   );
@@ -40,14 +60,25 @@ const ListHeader = ({ children }) => {
 
 const Widget = ({ item }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const linkcolor = useColorModeValue('var(--chakra-colors-gray-700)', 'var(--chakra-colors-whiteAlpha-700)');
-  const hoverColor = useColorModeValue('var(--chakra-colors-gray-900)', 'var(--chakra-colors-whiteAlpha-900)');
+  const linkcolor = useColorModeValue(
+    'var(--chakra-colors-gray-700)',
+    'var(--chakra-colors-whiteAlpha-700)'
+  );
+  const hoverColor = useColorModeValue(
+    'var(--chakra-colors-gray-900)',
+    'var(--chakra-colors-whiteAlpha-900)'
+  );
 
   if (item.title.includes('Contact')) {
     return (
       <Stack align="flex-start" id={item.title}>
         <ListHeader>{item.title}</ListHeader>
-        <VStack as={UnorderedList} style={{ listStyle: 'none', margin: 0 }} align="flex-start" spacing={3}>
+        <VStack
+          as={UnorderedList}
+          style={{ listStyle: 'none', margin: 0 }}
+          align="flex-start"
+          spacing={3}
+        >
           {item.children &&
             item.children.map(child_item => {
               const { url, title } = child_item;
@@ -182,7 +213,12 @@ const Widget = ({ item }) => {
     return (
       <Stack align="flex-start" id={item.title}>
         <ListHeader>{item.title}</ListHeader>
-        <VStack as={UnorderedList} style={{ listStyle: 'none', margin: 0 }} align={'flex-start'} spacing={3}>
+        <VStack
+          as={UnorderedList}
+          style={{ listStyle: 'none', margin: 0 }}
+          align={'flex-start'}
+          spacing={3}
+        >
           {item.children &&
             item.children.map(child_item => {
               const { url, title } = child_item;
@@ -227,7 +263,11 @@ const Footer = ({ menu = null, socialMenu = null }) => {
       >
         {Object.entries(menu).map(([key, item]) => {
           return (
-            <FooterSectionItem key={key} colSpan={{ base: 1, lg: 2 }} placeSelf={{ base: 'start', md: 'center' }}>
+            <FooterSectionItem
+              key={key}
+              colSpan={{ base: 1, lg: 2 }}
+              placeSelf={{ base: 'start', md: 'center' }}
+            >
               <Widget item={item} />
             </FooterSectionItem>
           );
@@ -243,7 +283,13 @@ const Footer = ({ menu = null, socialMenu = null }) => {
         mt="16"
         gap={6}
       >
-        <FooterSectionItem colSpan={1} fontWeight="bold" fontFamily="mono" textTransform="uppercase" fontSize="md">
+        <FooterSectionItem
+          colSpan={1}
+          fontWeight="bold"
+          fontFamily="mono"
+          textTransform="uppercase"
+          fontSize="md"
+        >
           © {new Date().getFullYear()} {'SAWTEE'}
         </FooterSectionItem>
 

@@ -1,43 +1,47 @@
 import FullWidthCarousel from '@/Components/Frontend/FullWidthCarousel';
 import MultiPostsCarousel from '@/Components/Frontend/MultiPostsSlider';
-import Feature from '@/Components/Frontend/feature';
 import InertiaChakraLink from '@/Components/Frontend/styles/inertia-chakra-link';
 import InertiaChakraLinkOverlay from '@/Components/Frontend/styles/inertia-chakra-link-overlay';
 import Section from '@/Components/Frontend/styles/section';
 import { formatDate } from '@/Utils/helpers';
-import { ArrowForwardIcon, ChevronDownIcon, ChevronRightIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 import {
-    Badge,
-    Box,
-    Button,
-    Flex,
-    Grid,
-    GridItem,
-    HStack,
-    Heading,
-    IconButton,
-    Image,
-    Input,
-    LinkBox,
-    LinkOverlay,
-    ListItem,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    ModalOverlay,
-    SimpleGrid,
-    Skeleton,
-    Text,
-    useColorModeValue,
+  ArrowForwardIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+  ExternalLinkIcon,
+} from '@chakra-ui/icons';
+import {
+  Badge,
+  Box,
+  Button,
+  Flex,
+  Grid,
+  GridItem,
+  HStack,
+  Heading,
+  IconButton,
+  Image,
+  Input,
+  LinkBox,
+  LinkOverlay,
+  ListItem,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  SimpleGrid,
+  Skeleton,
+  Text,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import { Link } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import SimpleList from './SimpleList';
-import VideoCarousel from './VideoCarousel';
+import { Blob } from './icons';
 
 export const ListItemVariant = {
   open: {
@@ -63,7 +67,11 @@ export const ListVariant = {
   },
 };
 
-export const CarouselSection = ({ slides, responsiveImages, carouselHeight }) => {
+export const CarouselSection = ({
+  slides,
+  responsiveImages,
+  carouselHeight,
+}) => {
   return (
     slides &&
     slides.length > 0 && (
@@ -79,24 +87,66 @@ export const CarouselSection = ({ slides, responsiveImages, carouselHeight }) =>
   );
 };
 
-export const TwoColumnImageSection = ({ data }) => {
+export const TwoColumnImageSection = ({
+  data,
+  showBlobIcon = false,
+  showBorderBox = false,
+  children,
+}) => {
   return (
-    <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} alignItems="center" maxW={'5xl'} mx="auto">
+    <SimpleGrid
+      columns={{ base: 1, md: 2 }}
+      spacing={10}
+      alignItems="center"
+      maxW={'5xl'}
+      mx="auto"
+    >
       {data.map(item => {
         return (
-          <Box key={item.id} pos="relative" maxW="30rem">
-            <Box
-              pos="absolute"
-              border="2px solid"
-              borderColor="blackAlpha.400"
-              left={'25px'}
-              top="-20px"
-              w="full"
-              h="full"
-              rounded={'2xl'}
-            />
+          <Flex
+            flex={1}
+            justify={'center'}
+            align={'center'}
+            my="10"
+            key={item.id}
+            pos="relative"
+            maxW="30rem"
+          >
+            {showBorderBox && (
+              <Box
+                pos="absolute"
+                border="2px solid"
+                borderColor={useColorModeValue(
+                  'blackAlpha.500',
+                  'whiteAlpha.500'
+                )}
+                left={'25px'}
+                top="-20px"
+                w="full"
+                h="full"
+                rounded={'2xl'}
+              />
+            )}
 
-            <LinkBox position={'relative'} rounded={'2xl'} overflow="hidden" boxShadow={'2xl'} role="group">
+            {showBlobIcon && (
+              <Blob
+                w={'100%'}
+                h={'150%'}
+                position={'absolute'}
+                top={'-20%'}
+                left={0}
+                color={useColorModeValue('primary.100', 'primary.400')}
+              />
+            )}
+            {children}
+
+            <LinkBox
+              position={'relative'}
+              rounded={'2xl'}
+              overflow="hidden"
+              boxShadow={'2xl'}
+              role="group"
+            >
               <Box
                 pos="absolute"
                 w="full"
@@ -133,7 +183,7 @@ export const TwoColumnImageSection = ({ data }) => {
                 />
               </LinkOverlay>
             </LinkBox>
-          </Box>
+          </Flex>
         );
       })}
     </SimpleGrid>
@@ -163,10 +213,6 @@ export const InfoSection = () => {
   );
 };
 
-export const ReformMonitorSection = ({ feature }) => {
-  return <Feature feature={feature} />;
-};
-
 export const OutreachSection = ({ sawteeInMedia, events }) => {
   return (
     <Grid gridTemplateColumns={{ base: '1fr', lg: 'repeat(6, 1fr)' }} gap={10}>
@@ -174,7 +220,9 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
         <SimpleList heading={'sawtee in media'}>
           {sawteeInMedia.map(item => {
             const hasContent = item.content !== null || '';
-            const file = item.media?.filter(media => media.collection_name === 'post-files')[0];
+            const file = item.media?.filter(
+              media => media.collection_name === 'post-files'
+            )[0];
 
             return (
               <ListItem key={item.id} mb="1rem">
@@ -182,7 +230,11 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
                   <InertiaChakraLink
                     as={hasContent ? Link : 'a'}
                     target={hasContent || !file ? '_self' : '_blank'}
-                    href={hasContent || !file ? `/category/${item.category.slug}/${item.slug}` : file?.original_url}
+                    href={
+                      hasContent || !file
+                        ? `/category/${item.category.slug}/${item.slug}`
+                        : file?.original_url
+                    }
                     textDecor="underline"
                     textUnderlineOffset="3px"
                   >
@@ -190,7 +242,11 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
                       {item.title}
                     </Text>
                   </InertiaChakraLink>
-                  <Text color={useColorModeValue('gray.600', 'gray.300')} fontSize={'.75rem'} mt={2}>
+                  <Text
+                    color={useColorModeValue('gray.600', 'gray.300')}
+                    fontSize={'.75rem'}
+                    mt={2}
+                  >
                     {formatDate(item.published_at)}
                   </Text>
                 </Box>
@@ -198,7 +254,11 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
             );
           })}
         </SimpleList>
-        <ExploreButton size={['xs', 'sm']} text="More in sawtee in media " link={`/category/sawtee-in-media`} />
+        <ExploreButton
+          size={['xs', 'sm']}
+          text="More in sawtee in media "
+          link={`/category/sawtee-in-media`}
+        />
       </GridItem>
 
       <GridItem colSpan={{ base: 1, md: 3 }}>
@@ -206,7 +266,9 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
           {events.map(event => {
             const featured_image =
               event.media.length > 0
-                ? event.media.filter(item => item.collection_name === 'post-featured-image')[0]?.original_url
+                ? event.media.filter(
+                    item => item.collection_name === 'post-featured-image'
+                  )[0]?.original_url
                 : '/assets/SM-placeholder-150x150.png';
             // const srcSet = featured_image
             //     ? featured_image.responsive_images.responsive.urls
@@ -232,7 +294,11 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
                         {event.title}
                       </Text>
                     </InertiaChakraLinkOverlay>
-                    <Text color={useColorModeValue('gray.600', 'gray.300')} fontSize={'.75rem'} mt={2}>
+                    <Text
+                      color={useColorModeValue('gray.600', 'gray.300')}
+                      fontSize={'.75rem'}
+                      mt={2}
+                    >
                       {formatDate(event.published_at)}
                     </Text>
                   </Box>
@@ -257,7 +323,11 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
             );
           })}
         </SimpleList>
-        <ExploreButton size={['xs', 'sm']} text="More on featured events" link={`/category/featured-events`} />
+        <ExploreButton
+          size={['xs', 'sm']}
+          text="More on featured events"
+          link={`/category/featured-events`}
+        />
       </GridItem>
     </Grid>
   );
@@ -279,7 +349,11 @@ export const InfocusSection = ({ data }) => {
               >
                 {item.title}
               </InertiaChakraLinkOverlay>
-              <Text color={useColorModeValue('gray.600', 'gray.300')} fontSize={'.875rem'} mt={2}>
+              <Text
+                color={useColorModeValue('gray.600', 'gray.300')}
+                fontSize={'.875rem'}
+                mt={2}
+              >
                 {item.excerpt}
               </Text>
             </LinkBox>
@@ -296,13 +370,17 @@ export const FeaturedPublications = ({ publications, ...rest }) => {
       <SimpleList border="none" heading={'featured publications'}>
         {publications.map(publication => {
           const media = publication.media.length
-            ? publication.media.filter(media => media.collection_name === 'publication_featured_image')[0].original_url
+            ? publication.media.filter(
+                media => media.collection_name === 'publication_featured_image'
+              )[0].original_url
             : '/assets/SM-placeholder-150x150.png';
           return (
             <ListItem key={publication.id} mb="1rem">
               <LinkBox as={HStack} justify="space-between" gap={6}>
                 <Box w="80%">
-                  <Link href={`category/publications/${publication.category?.slug}`}>
+                  <Link
+                    href={`category/publications/${publication.category?.slug}`}
+                  >
                     <Badge
                       size={'sm'}
                       colorScheme="gray"
@@ -321,13 +399,25 @@ export const FeaturedPublications = ({ publications, ...rest }) => {
                     target="_blank"
                     textDecor="underline"
                     textUnderlineOffset="3px"
-                    href={publication.file ? `/publications/${publication.file.name}` : '#'}
+                    href={
+                      publication.file
+                        ? `/publications/${publication.file.name}`
+                        : '#'
+                    }
                   >
-                    <Text fontSize={'0.875rem'} fontFamily={'heading'} lineHeight={'short'}>
+                    <Text
+                      fontSize={'0.875rem'}
+                      fontFamily={'heading'}
+                      lineHeight={'short'}
+                    >
                       {publication.title}
                     </Text>
                   </InertiaChakraLinkOverlay>
-                  <Text color={useColorModeValue('gray.600', 'gray.300')} fontSize={'.75rem'} mt={1}>
+                  <Text
+                    color={useColorModeValue('gray.600', 'gray.300')}
+                    fontSize={'.75rem'}
+                    mt={1}
+                  >
                     {publication.subtitle}
                   </Text>
                 </Box>
@@ -370,10 +460,15 @@ export const PublicationsSection = ({ publications }) => {
     >
       {publications.map(publication => {
         const media = publication.media.length
-          ? publication.media.filter(media => media.collection_name === 'publication_featured_image')[0].original_url
+          ? publication.media.filter(
+              media => media.collection_name === 'publication_featured_image'
+            )[0].original_url
           : '/assets/SM-placeholder-150x150.png';
         return (
-          <swiper-slide key={publication.id} class="swiper-slide publication-slide">
+          <swiper-slide
+            key={publication.id}
+            class="swiper-slide publication-slide"
+          >
             <Flex my={8} justify="center">
               <LinkBox textAlign="center">
                 <Image
@@ -389,7 +484,10 @@ export const PublicationsSection = ({ publications }) => {
                   mb="2"
                   loading="lazy"
                 />
-                <LinkOverlay fontSize={'xs'} href={`/publications/${publication.file.name}`}>
+                <LinkOverlay
+                  fontSize={'xs'}
+                  href={`/publications/${publication.file.name}`}
+                >
                   {publication.title}
                 </LinkOverlay>
               </LinkBox>
@@ -416,12 +514,13 @@ export const PublicationsSection = ({ publications }) => {
   );
 };
 
-export const VideosSection = ({ posts }) => {
-  return <VideoCarousel posts={posts} navigation={true} />;
-};
-
 // A debounced input react component
-export function DebouncedInput({ value: initialValue, onChange, debounce = 500, ...props }) {
+export function DebouncedInput({
+  value: initialValue,
+  onChange,
+  debounce = 500,
+  ...props
+}) {
   const [value, setValue] = useState(initialValue);
 
   useEffect(() => {
@@ -436,7 +535,9 @@ export function DebouncedInput({ value: initialValue, onChange, debounce = 500, 
     return () => clearTimeout(timeout);
   }, [value]);
 
-  return <Input {...props} value={value} onChange={e => setValue(e.target.value)} />;
+  return (
+    <Input {...props} value={value} onChange={e => setValue(e.target.value)} />
+  );
 }
 
 export const Content = styled(Section)`
@@ -538,7 +639,11 @@ export const Accordian = ({ data }) => {
           <li key={id} onClick={() => ChangeAccordianOpenState(id, open)}>
             <div className="accordian-item">
               <p>{name}</p>
-              {open ? <ChevronDownIcon size={'3rem'} /> : <ChevronRightIcon size={'3rem'} />}
+              {open ? (
+                <ChevronDownIcon size={'3rem'} />
+              ) : (
+                <ChevronRightIcon size={'3rem'} />
+              )}
             </div>
             {open ? (
               <div className="accordian-content">
@@ -577,7 +682,10 @@ export const Title = ({ title, ...rest }) => {
 };
 
 export const MapModel = ({ isOpen, onClose, mapLink }) => {
-  const modalContentColor = useColorModeValue('rgba(255, 255, 255, 0.7)', 'rgba(0, 0, 0, 0.7)');
+  const modalContentColor = useColorModeValue(
+    'rgba(255, 255, 255, 0.7)',
+    'rgba(0, 0, 0, 0.7)'
+  );
   const modelHeaderColor = useColorModeValue('gray.700', 'whiteAlpha.900');
   return (
     <Modal
@@ -594,7 +702,10 @@ export const MapModel = ({ isOpen, onClose, mapLink }) => {
         <ModalHeader color={modelHeaderColor}>Our Location</ModalHeader>
         <ModalCloseButton />
         <ModalBody margin={'0 auto'}>
-          <Image objectFit={'cover'} src={'/assets/location-map-resized.webp'} />
+          <Image
+            objectFit={'cover'}
+            src={'/assets/location-map-resized.webp'}
+          />
         </ModalBody>
 
         <ModalFooter>

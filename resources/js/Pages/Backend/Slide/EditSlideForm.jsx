@@ -19,7 +19,12 @@ import {
 import { useForm } from '@inertiajs/react';
 import React from 'react';
 
-export default function EditSlideForm({ isOpen, onClose, slide, setEditSlide }) {
+export default function EditSlideForm({
+  isOpen,
+  onClose,
+  slide,
+  setEditSlide,
+}) {
   const { data, setData, post, processing, errors, reset } = useForm({
     title: slide.title,
     subtitle: slide.subtitle,
@@ -62,7 +67,12 @@ export default function EditSlideForm({ isOpen, onClose, slide, setEditSlide }) 
   };
 
   return (
-    <Modal size={{ base: 'xs', md: 'md', lg: 'xl' }} isOpen={isOpen} onClose={onClose} initialFocusRef={titleRef}>
+    <Modal
+      size={{ base: 'xs', md: 'md', lg: 'xl' }}
+      isOpen={isOpen}
+      onClose={onClose}
+      initialFocusRef={titleRef}
+    >
       <ModalOverlay />
       <ModalContent as="form" onSubmit={submit}>
         <ModalHeader>Edit slide</ModalHeader>
@@ -100,7 +110,12 @@ export default function EditSlideForm({ isOpen, onClose, slide, setEditSlide }) 
 
               {image && (
                 <>
-                  <PreviewImage src={image} height="250px" rounded="lg" overflow="hidden" />
+                  <PreviewImage
+                    src={image}
+                    height="250px"
+                    rounded="lg"
+                    overflow="hidden"
+                  />
                   <Button
                     mt={4}
                     size={'sm'}
@@ -136,7 +151,9 @@ export default function EditSlideForm({ isOpen, onClose, slide, setEditSlide }) 
                   />
                 </FileUpload>
               )}
-              {errors.image && <FormErrorMessage mt={2}>{errors.image}</FormErrorMessage>}
+              {errors.image && (
+                <FormErrorMessage mt={2}>{errors.image}</FormErrorMessage>
+              )}
             </FormControl>
           </VStack>
         </ModalBody>

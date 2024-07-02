@@ -3,7 +3,14 @@ import { Box, Heading } from '@chakra-ui/react';
 
 const DefaultPage = ({ sections, content, ...rest }) => {
   return (
-    <Content className="page-content" px={{ base: '32px', md: '0' }} mx="auto" py={'80px'} maxW={'2xl'} {...rest}>
+    <Content
+      className="page-content"
+      px={{ base: '32px', md: '0' }}
+      mx="auto"
+      py={'80px'}
+      maxW={'2xl'}
+      {...rest}
+    >
       {content && (
         <Box>
           <Box>

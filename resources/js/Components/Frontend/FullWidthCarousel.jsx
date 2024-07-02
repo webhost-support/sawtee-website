@@ -1,8 +1,8 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { Box, Heading, IconButton, Image, Stack, Text } from '@chakra-ui/react';
-import { Swiper, SwiperSlide } from './Swiper';
 // Import Swiper styles
 import { useEffect } from 'react';
+import { Swiper, SwiperSlide } from './Swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import '../../../css/fullwidth-carousel.css';
@@ -43,7 +43,14 @@ const FullWidthCarousel = ({
       {...rest}
     >
       <div slot="container-start">
-        <Box position="absolute" top="50%" inset={0} transform="translateY( 45%)" w={'full'} zIndex={100}>
+        <Box
+          position="absolute"
+          top="50%"
+          inset={0}
+          transform="translateY( 45%)"
+          w={'full'}
+          zIndex={100}
+        >
           <IconButton
             position="absolute"
             colorScheme="blackAlpha"

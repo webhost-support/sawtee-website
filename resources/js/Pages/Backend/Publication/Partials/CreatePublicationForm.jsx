@@ -40,7 +40,7 @@ export default function CreatePublicationForm({ categories, tags }) {
   const [postTags, setPostTags] = useState([]);
 
   const [tagOptions, setTagOptions] = useState(() => {
-    let tagsarray = [];
+    const tagsarray = [];
     tags.map(tag => {
       tagsarray.push({
         value: tag.id,
@@ -52,9 +52,9 @@ export default function CreatePublicationForm({ categories, tags }) {
   });
 
   function setDataTags(e) {
-    let array = [];
+    const array = [];
     setPostTags(e);
-    e.forEach(item =>
+    e.map(item =>
       array.push({
         tag_id: item.value,
         publication_id: item.id,

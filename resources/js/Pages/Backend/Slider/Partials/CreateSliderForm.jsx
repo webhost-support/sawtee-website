@@ -1,19 +1,19 @@
 import PrimaryButton from '@/Components/Backend/PrimaryButton';
 import {
-    Button,
-    FormControl,
-    FormErrorMessage,
-    FormLabel,
-    Input,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    ModalOverlay,
-    Select,
-    useToast,
+  Button,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Select,
+  useToast,
 } from '@chakra-ui/react';
 import { useForm } from '@inertiajs/react';
 
@@ -65,7 +65,9 @@ export default function CreateSliderForm({ isOpen, onClose, pages }) {
               onChange={e => setData('name', e.target.value)}
             />
 
-            {errors.name && <FormErrorMessage mt={2}>{errors.name}</FormErrorMessage>}
+            {errors.name && (
+              <FormErrorMessage mt={2}>{errors.name}</FormErrorMessage>
+            )}
           </FormControl>
 
           <FormControl isInvalid={errors.page_id}>
@@ -77,7 +79,9 @@ export default function CreateSliderForm({ isOpen, onClose, pages }) {
                 </option>
               ))}
             </Select>
-            {errors.page_id && <FormErrorMessage mt={2}>{errors.page_id}</FormErrorMessage>}
+            {errors.page_id && (
+              <FormErrorMessage mt={2}>{errors.page_id}</FormErrorMessage>
+            )}
           </FormControl>
         </ModalBody>
         <ModalFooter>

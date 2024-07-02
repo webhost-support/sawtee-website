@@ -1,6 +1,9 @@
 import { DataTable } from '@/Components/Backend/DataTable';
 import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import { TableDeleteAction, TableEditAction } from '@/Components/Backend/TableActions';
+import {
+  TableDeleteAction,
+  TableEditAction,
+} from '@/Components/Backend/TableActions';
 import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
 import { HStack, Text, useDisclosure } from '@chakra-ui/react';
 import { Head } from '@inertiajs/react';
@@ -56,7 +59,9 @@ export default function Index({ auth, themes: data }) {
           return (
             <HStack spacing={4}>
               <TableEditAction onClick={e => handleEdit(e, info.getValue())} />
-              <TableDeleteAction onClick={e => handleDelete(e, info.getValue())} />
+              <TableDeleteAction
+                onClick={e => handleDelete(e, info.getValue())}
+              />
             </HStack>
           );
         },
@@ -70,7 +75,13 @@ export default function Index({ auth, themes: data }) {
     <AuthenticatedLayout user={auth.user}>
       <Head title="Themes" />
       {data.data.length <= 0 && (
-        <Alert mb="4" status="warning" p="4" rounded="md" variant={'left-accent'}>
+        <Alert
+          mb="4"
+          status="warning"
+          p="4"
+          rounded="md"
+          variant={'left-accent'}
+        >
           <AlertIcon />
           There are no themes available, please create new theme.
         </Alert>
@@ -82,7 +93,11 @@ export default function Index({ auth, themes: data }) {
       {data && <DataTable defaultColumns={defaultColumns} data={data} />}
 
       {createThemeModal.isOpen && (
-        <CreateThemeForm className="max-w-xl" isOpen={createThemeModal.isOpen} onClose={createThemeModal.onClose} />
+        <CreateThemeForm
+          className="max-w-xl"
+          isOpen={createThemeModal.isOpen}
+          onClose={createThemeModal.onClose}
+        />
       )}
       {editThemeModal.isOpen && (
         <EditThemeForm

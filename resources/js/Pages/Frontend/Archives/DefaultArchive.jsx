@@ -1,13 +1,22 @@
 import { PostImageWithOverlay } from '@/Components/Frontend/featured-post/components';
 import { ExploreButton, GlassBox } from '@/Components/Frontend/index';
 import { formatDate } from '@/Utils/helpers';
-import { Box, Heading, LinkBox, LinkOverlay, Stack, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Heading,
+  LinkBox,
+  LinkOverlay,
+  Stack,
+  Text,
+} from '@chakra-ui/react';
 import { Link } from '@inertiajs/react';
 
 const DefaultArchive = ({ posts, showFallbackImage, ...rest }) => {
   if (!posts || posts.length <= 0) return 'No posts found';
   return posts.map(post => {
-    const featured_image = post.media.filter(media => media.collection_name === 'post-featured-image')[0];
+    const featured_image = post.media.filter(
+      media => media.collection_name === 'post-featured-image'
+    )[0];
 
     return (
       <GlassBox
@@ -19,7 +28,11 @@ const DefaultArchive = ({ posts, showFallbackImage, ...rest }) => {
         pos={'relative'}
         {...rest}
       >
-        <ArchivePost post={post} featured_image={featured_image} showFallbackImage={showFallbackImage} />
+        <ArchivePost
+          post={post}
+          featured_image={featured_image}
+          showFallbackImage={showFallbackImage}
+        />
       </GlassBox>
     );
   });
@@ -62,15 +75,29 @@ const ArchivePost = ({ post, featured_image, showFallbackImage, ...rest }) => {
                 : `/category/${post.category.slug}/${post.slug}`
             }
           >
-            <Heading as="h3" fontSize={['sm', 'sm', 'sm', 'md']} fontWeight="normal">
+            <Heading
+              as="h3"
+              fontSize={['sm', 'sm', 'sm', 'md']}
+              fontWeight="normal"
+            >
               {post.title}
             </Heading>
           </LinkOverlay>
-          <Text fontSize={'xs'} mt={2} noOfLines={3} dangerouslySetInnerHTML={{ __html: post.excerpt }} />
+          <Text
+            fontSize={'xs'}
+            mt={2}
+            noOfLines={3}
+            dangerouslySetInnerHTML={{ __html: post.excerpt }}
+          />
         </Box>
 
         <Box mt="4">
-          <Stack justify="space-between" direction={'row'} flexWrap={'wrap'} alignItems={'center'}>
+          <Stack
+            justify="space-between"
+            direction={'row'}
+            flexWrap={'wrap'}
+            alignItems={'center'}
+          >
             <Text as="time" fontSize={'xs'} color="gray.600">
               {formatDate(post.published_at)}
             </Text>

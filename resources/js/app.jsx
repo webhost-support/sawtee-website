@@ -14,7 +14,8 @@ Sentry.init({
   integrations: [Sentry.replayIntegration()],
   // Session Replay
   // This sets the sample rate at 10%. You may want to change it to 100% while in development and then sample at a lower rate in production.
-  replaysSessionSampleRate: import.meta.env.VITE_APP_ENV === 'developement' ? 1 : 0.1,
+  replaysSessionSampleRate:
+    import.meta.env.VITE_APP_ENV === 'developement' ? 1 : 0.1,
   replaysOnErrorSampleRate: 1.0,
 });
 
@@ -25,7 +26,11 @@ register();
 
 createInertiaApp({
   title: title => `${appName} | ${title}`,
-  resolve: name => resolvePageComponent(`./Pages/${name}.jsx`, import.meta.glob('./Pages/**/*.jsx')),
+  resolve: name =>
+    resolvePageComponent(
+      `./Pages/${name}.jsx`,
+      import.meta.glob('./Pages/**/*.jsx')
+    ),
   setup({ el, App, props }) {
     const root = createRoot(el);
     root.render(

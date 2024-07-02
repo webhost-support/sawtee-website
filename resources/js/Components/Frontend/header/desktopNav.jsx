@@ -1,23 +1,23 @@
 import { aboutMenuData } from '@/Utils/data';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import {
-  Avatar,
-  Box,
-  Button,
-  Divider,
-  Flex,
-  Grid,
-  GridItem,
-  Icon,
-  Menu,
-  MenuButton,
-  MenuDivider,
-  MenuList,
-  SimpleGrid,
-  Stack,
-  Text,
-  VStack,
-  useColorModeValue,
+    Avatar,
+    Box,
+    Button,
+    Divider,
+    Flex,
+    Grid,
+    GridItem,
+    Icon,
+    Menu,
+    MenuButton,
+    MenuDivider,
+    MenuList,
+    SimpleGrid,
+    Stack,
+    Text,
+    VStack,
+    useColorModeValue,
 } from '@chakra-ui/react';
 import { Link, usePage } from '@inertiajs/react';
 import { motion } from 'framer-motion';
@@ -65,8 +65,19 @@ const ExpertCard = ({ expert }) => {
       maxW="40"
       mx="auto"
     >
-      <Box borderRadius="lg" p={3} display="flex" alignItems="center" justifyContent={'center'}>
-        <Avatar src={image} name={expert.name} borderRadius="full" boxSize="75px" />
+      <Box
+        borderRadius="lg"
+        p={3}
+        display="flex"
+        alignItems="center"
+        justifyContent={'center'}
+      >
+        <Avatar
+          src={image}
+          name={expert.name}
+          borderRadius="full"
+          boxSize="75px"
+        />
       </Box>
       <Box p={2} textAlign="center" mt={3} color="gray.200">
         <Text fontSize="sm" fontWeight="semibold">
@@ -94,9 +105,23 @@ export const SiteMenu = ({ ...styles }) => (
   />
 );
 
-const AboutMegaMenu = ({ item, experts, introText, introImage, isOpen, ...rest }) => {
+const AboutMegaMenu = ({
+  item,
+  experts,
+  introText,
+  introImage,
+  isOpen,
+  ...rest
+}) => {
   return (
-    <Box bg={'rgba(8, 126, 164,0.9)'} backdropFilter={'blur(5px)'} mx="auto" px={8} py={10} display={'flex'}>
+    <Box
+      bg={'rgba(8, 126, 164,0.9)'}
+      backdropFilter={'blur(5px)'}
+      mx="auto"
+      px={8}
+      py={10}
+      display={'flex'}
+    >
       <Grid
         templateColumns={{
           base: 1,
@@ -115,7 +140,12 @@ const AboutMegaMenu = ({ item, experts, introText, introImage, isOpen, ...rest }
         {...rest}
       >
         <GridItem colSpan={1} rowSpan={1} placeSelf="center">
-          <Box as={motion.ul} variants={ListContainerVariants} initial={'closed'} whileInView={'open'}>
+          <Box
+            as={motion.ul}
+            variants={ListContainerVariants}
+            initial={'closed'}
+            whileInView={'open'}
+          >
             {item.children.map(child => {
               return (
                 <Box
@@ -137,7 +167,12 @@ const AboutMegaMenu = ({ item, experts, introText, introImage, isOpen, ...rest }
             })}
           </Box>
         </GridItem>
-        <GridItem colSpan={{ md: 4, xl: 3 }} rowSpan={1} width="full" placeSelf="center">
+        <GridItem
+          colSpan={{ md: 4, xl: 3 }}
+          rowSpan={1}
+          width="full"
+          placeSelf="center"
+        >
           <Box
             position="relative"
             display="flex"
@@ -162,7 +197,15 @@ const AboutMegaMenu = ({ item, experts, introText, introImage, isOpen, ...rest }
               backgroundBlendMode: 'multiply',
             }}
           >
-            <Text fontSize={'sm'} color={'gray.200'} m="0" alignSelf={'center'} zIndex={1} px={6} lineHeight="taller">
+            <Text
+              fontSize={'sm'}
+              color={'gray.200'}
+              m="0"
+              alignSelf={'center'}
+              zIndex={1}
+              px={6}
+              lineHeight="taller"
+            >
               {introText}
             </Text>
           </Box>
@@ -245,7 +288,11 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
             if (idx !== 0) {
               return (
                 <VStack spacing={10} key={grandChildren.title}>
-                  <InertiaChakraLink as={Link} href={grandChildren.url} fontSize="2xl">
+                  <InertiaChakraLink
+                    as={Link}
+                    href={grandChildren.url}
+                    fontSize="2xl"
+                  >
                     {grandChildren.title}
                   </InertiaChakraLink>
                   <SimpleGrid
@@ -309,7 +356,7 @@ const MegaMenu = ({ item, experts = null, isOpen }) => {
 const SiteMenuItem = ({ item, ...rest }) => {
   const { url } = usePage();
   const { experts } = usePage().props;
-  const active = item.url == `${url}`;
+  const active = item.url === `${url}`;
   return (
     <Menu isLazy placement="bottom" gutter={30} {...rest}>
       {({ isOpen }) => {
@@ -321,10 +368,14 @@ const SiteMenuItem = ({ item, ...rest }) => {
               display={'block'}
               fontSize={{ base: 'sm', md: 'sm' }}
               rounded={'md'}
-              color={active ? 'white' : useColorModeValue('gray.800', 'gray.200')}
+              color={
+                active ? 'white' : useColorModeValue('gray.800', 'gray.200')
+              }
               bg={active ? 'primary.500' : 'unset'}
               _hover={{
-                bg: !active ? useColorModeValue('primary.50', 'primary.200') : 'primary.500',
+                bg: !active
+                  ? useColorModeValue('primary.50', 'primary.200')
+                  : 'primary.500',
                 color: !active ? 'gray.800' : 'unset',
               }}
               lineHeight={'1.1'}
@@ -354,7 +405,11 @@ const SiteMenuItem = ({ item, ...rest }) => {
                     >
                       <Icon
                         transform={isOpen ? 'rotate(180deg)' : ''}
-                        color={active ? 'white' : useColorModeValue('gray.800', 'gray.200')}
+                        color={
+                          active
+                            ? 'white'
+                            : useColorModeValue('gray.800', 'gray.200')
+                        }
                         _groupHover={{
                           color: !active ? 'gray.800' : 'white',
                         }}
@@ -382,12 +437,23 @@ const SiteMenuItem = ({ item, ...rest }) => {
                 <MegaMenu item={item} isOpen={isOpen} experts={experts} />
               </MenuList>
             ) : (
-              <MenuList zIndex={5} p={0} rounded={'lg'} overflow={'hidden'} mx="auto" shadow="dark-lg">
+              <MenuList
+                zIndex={5}
+                p={0}
+                rounded={'lg'}
+                overflow={'hidden'}
+                mx="auto"
+                shadow="dark-lg"
+              >
                 <Stack gap={1}>
                   {item.children?.map(child => {
                     return (
                       <React.Fragment key={child.id}>
-                        <SiteMenuItem item={child} rounded="none" offset={[0, 10]} />
+                        <SiteMenuItem
+                          item={child}
+                          rounded="none"
+                          offset={[0, 10]}
+                        />
                       </React.Fragment>
                     );
                   })}
@@ -405,7 +471,13 @@ const SiteMenuItem = ({ item, ...rest }) => {
 
 const DesktopNavigation = ({ menu, ...rest }) => {
   return (
-    <Box as="nav" width="100%" display={{ base: 'none', lg: 'flex' }} zIndex={'999'} {...rest}>
+    <Box
+      as="nav"
+      width="100%"
+      display={{ base: 'none', lg: 'flex' }}
+      zIndex={'999'}
+      {...rest}
+    >
       <SiteMenu ml="20px">
         {menu &&
           menu.map(navItem => {

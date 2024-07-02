@@ -5,9 +5,12 @@
     "commit": "cz",
     "dev": "vite",
     "build": "vite build && vite build --ssr",
-    "format": "prettier 'resources/{js,jsx}/**/*.{js,jsx}' --write"
+    "preety-format": "prettier 'resources/{js,jsx}/**/*.{js,jsx}' --write",
+    "format": "npx @biomejs/biome format './resources/**/*.{js,jsx}' --write './resources'",
+    "lint": "npx @biomejs/biome lint './resources/**/*.{js,jsx}' --write './resources'"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.8.3",
     "@inertiajs/react": "^1.0.0",
     "@vitejs/plugin-react": "^4.0.3",
     "autoprefixer": "^10.4.16",

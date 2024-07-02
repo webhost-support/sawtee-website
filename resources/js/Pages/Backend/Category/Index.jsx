@@ -1,6 +1,9 @@
 import { DataTable } from '@/Components/Backend/DataTable';
 import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import { TableDeleteAction, TableEditAction } from '@/Components/Backend/TableActions';
+import {
+  TableDeleteAction,
+  TableEditAction,
+} from '@/Components/Backend/TableActions';
 import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
 import { Box, HStack, useDisclosure } from '@chakra-ui/react';
 import { Head, Link, useForm } from '@inertiajs/react';
@@ -44,8 +47,14 @@ export default function Index({ auth, categories: data }) {
         cell: info => {
           return (
             <HStack spacing={4}>
-              <TableEditAction onClick={e => handleEdit(e, info.getValue())} isDisabled={processing} />
-              <TableDeleteAction onClick={e => handleDelete(e, info.getValue())} isDisabled={processing} />
+              <TableEditAction
+                onClick={e => handleEdit(e, info.getValue())}
+                isDisabled={processing}
+              />
+              <TableDeleteAction
+                onClick={e => handleDelete(e, info.getValue())}
+                isDisabled={processing}
+              />
             </HStack>
           );
         },
@@ -59,7 +68,11 @@ export default function Index({ auth, categories: data }) {
     <AuthenticatedLayout user={auth.user}>
       <Head title="Categories" />
 
-      <DeleteCategoryModal isOpen={isOpen} onClose={onClose} categoryId={categoryId} />
+      <DeleteCategoryModal
+        isOpen={isOpen}
+        onClose={onClose}
+        categoryId={categoryId}
+      />
 
       <Box mb={4}>
         <Link href={route('admin.categories.create')}>

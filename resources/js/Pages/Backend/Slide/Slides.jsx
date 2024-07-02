@@ -15,7 +15,7 @@ const Slides = ({ slides, slider }) => {
 
   const handleEdit = (e, id) => {
     e.preventDefault();
-    const slideToEdit = slides.data.filter(slide => slide.id == id)[0];
+    const slideToEdit = slides.data.filter(slide => slide.id === id)[0];
     if (slideToEdit) setEditSlide(slideToEdit);
     editSlideModal.onOpen();
   };

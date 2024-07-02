@@ -1,8 +1,17 @@
 import { DataTable } from '@/Components/Backend/DataTable';
 import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import { TableDeleteAction, TableEditAction } from '@/Components/Backend/TableActions';
+import {
+  TableDeleteAction,
+  TableEditAction,
+} from '@/Components/Backend/TableActions';
 import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
-import { Alert, AlertIcon, HStack, useDisclosure, useToast } from '@chakra-ui/react';
+import {
+  Alert,
+  AlertIcon,
+  HStack,
+  useDisclosure,
+  useToast,
+} from '@chakra-ui/react';
 import { Head, useForm } from '@inertiajs/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import React from 'react';
@@ -46,8 +55,14 @@ export default function Index({ auth, sliders, pages }) {
         cell: info => {
           return (
             <HStack spacing={4}>
-              <TableEditAction onClick={e => handleEdit(e, info.getValue())} isDisabled={processing} />
-              <TableDeleteAction onClick={e => handleDelete(e, info.getValue())} isDisabled={processing} />
+              <TableEditAction
+                onClick={e => handleEdit(e, info.getValue())}
+                isDisabled={processing}
+              />
+              <TableDeleteAction
+                onClick={e => handleDelete(e, info.getValue())}
+                isDisabled={processing}
+              />
             </HStack>
           );
         },
@@ -61,10 +76,16 @@ export default function Index({ auth, sliders, pages }) {
     <AuthenticatedLayout user={auth.user}>
       <Head title="Manage Sliders" />
       {sliders.data.length <= 0 && (
-        <Alert mb="4" status="warning" p="4" rounded="md" variant={'left-accent'}>
+        <Alert
+          mb="4"
+          status="warning"
+          p="4"
+          rounded="md"
+          variant={'left-accent'}
+        >
           <AlertIcon />
-          There are no sliders to add slides to, please create a slider first by clicking the add new slider button
-          below.
+          There are no sliders to add slides to, please create a slider first by
+          clicking the add new slider button below.
         </Alert>
       )}
       <PrimaryButton mb={4} onClick={() => createSliderModal.onOpen()}>
@@ -72,7 +93,11 @@ export default function Index({ auth, sliders, pages }) {
       </PrimaryButton>
       {sliders && <DataTable defaultColumns={defaultColumns} data={sliders} />}
       {createSliderModal.isOpen && (
-        <CreateSliderForm isOpen={createSliderModal.isOpen} onClose={createSliderModal.onClose} pages={pages} />
+        <CreateSliderForm
+          isOpen={createSliderModal.isOpen}
+          onClose={createSliderModal.onClose}
+          pages={pages}
+        />
       )}
     </AuthenticatedLayout>
   );

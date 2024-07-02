@@ -131,7 +131,9 @@ function CreateSlideForm({ isOpen, onClose, slider }) {
                   />
                 </FileUpload>
               )}
-              {errors.image && <FormErrorMessage mt={2}>{errors.image}</FormErrorMessage>}
+              {errors.image && (
+                <FormErrorMessage mt={2}>{errors.image}</FormErrorMessage>
+              )}
             </FormControl>
           </VStack>
         </ModalBody>

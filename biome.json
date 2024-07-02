@@ -1,38 +1,57 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
-  "organizeImports": {
-    "enabled": true
-  },
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "recommended": false
-    }
-  },
   "formatter": {
     "enabled": true,
     "formatWithErrors": false,
-    "ignore": [],
-    "attributePosition": "auto",
-    "indentStyle": "tab",
+    "indentStyle": "space",
     "indentWidth": 2,
+    "lineEnding": "lf",
     "lineWidth": 80,
-    "lineEnding": "lf"
+    "attributePosition": "auto",
+    "ignore": ["**/build", "**/coverage"]
   },
-  "javascript": {
-    "formatter": {
-      "arrowParentheses": "asNeeded",
-      "bracketSameLine": false,
-      "bracketSpacing": true,
-      "jsxQuoteStyle": "double",
-      "quoteProperties": "asNeeded",
-      "semicolons": "always",
-      "trailingCommas": "all"
+  "organizeImports": { "enabled": true },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": false,
+      "complexity": {
+        "noForEach": "error",
+        "noStaticOnlyClass": "error",
+        "noUselessSwitchCase": "error",
+        "useFlatMap": "error"
+      },
+      "style": {
+        "noNegationElse": "off",
+        "useForOf": "error",
+        "useNodejsImportProtocol": "error",
+        "useNumberNamespace": "error"
+      },
+      "suspicious": {
+        "noDoubleEquals": "error",
+        "noThenProperty": "error",
+        "useIsArray": "error"
+      }
     }
   },
-  "json": {
+  "overrides": [
+    {
+      "include": ["tests/**"],
+      "linter": { "rules": { "suspicious": { "noDoubleEquals": "off" } } }
+    }
+  ],
+  "javascript": {
+    "globals": ["Global1"],
     "formatter": {
-      "trailingCommas": "none"
+      "jsxQuoteStyle": "double",
+      "quoteProperties": "asNeeded",
+      "trailingCommas": "es5",
+      "semicolons": "always",
+      "arrowParentheses": "asNeeded",
+      "bracketSpacing": true,
+      "bracketSameLine": false,
+      "quoteStyle": "single",
+      "attributePosition": "auto"
     }
   }
 }

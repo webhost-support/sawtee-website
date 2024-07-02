@@ -61,7 +61,7 @@ export default function EditPostForm({ post: postData, categories, tags, themes 
   const [files, setFiles] = React.useState(postData.post_content_files);
 
   const [postTags, setPostTags] = React.useState(() => {
-    let tagsarray = [];
+    const tagsarray = [];
     postData.tags.map(tag => {
       tagsarray.push({
         value: tag.id,
@@ -75,9 +75,9 @@ export default function EditPostForm({ post: postData, categories, tags, themes 
   const [tagOptions, setTagOptions] = React.useState([]);
 
   function setDataTags(e) {
-    let array = [];
+    const array = [];
     setPostTags(e);
-    e.forEach(item =>
+    e.map(item =>
       array.push({
         tag_id: item.value,
         post_id: postData.id,
@@ -88,14 +88,14 @@ export default function EditPostForm({ post: postData, categories, tags, themes 
   }
 
   const [selectedCategory, setSelectedCategory] = React.useState(
-    categories ? categories.filter(cat => cat.id == data.category_id)[0].name : null
+    categories ? categories.filter(cat => cat.id === data.category_id)[0].name : null
   );
 
   React.useEffect(() => {
     if (postTags && tags) {
       const filteredTags = filterByReference(tags, postTags);
       if (filteredTags.length > 0) {
-        let array = [];
+        const array = [];
         filteredTags.map(item => {
           array.push({ value: item.id, label: item.name });
         });
@@ -465,7 +465,7 @@ export default function EditPostForm({ post: postData, categories, tags, themes 
                 value={data.category_id}
                 onChange={e => {
                   setData('category_id', e.target.value);
-                  setSelectedCategory(categories.filter(cat => cat.id == e.target.value)[0].name);
+                  setSelectedCategory(categories.filter(cat => cat.id === e.target.value)[0].name);
                 }}
               >
                 {categories &&

@@ -31,14 +31,19 @@ export default function Category({
   const isBlog = category.slug === 'blog';
   const isCovid = category.slug === 'covid';
   const isResearch = category.slug === 'research';
-  const isDefault = !isNewsletter && !isBlog && !isResearch && !isCovid && !isMedia;
+  const isDefault =
+    !isNewsletter && !isBlog && !isResearch && !isCovid && !isMedia;
 
   return (
     <MainLayout>
       <WebsiteHead
         title={category.meta_title ? category.meta_title : category.name}
         description={category.meta_description}
-        image={featured_image ? featured_image.original_url : '/assets/logo-sawtee.webp'}
+        image={
+          featured_image
+            ? featured_image.original_url
+            : '/assets/logo-sawtee.webp'
+        }
       >
         <script
           async
@@ -48,7 +53,12 @@ export default function Category({
           nonce="fqoExb8K"
         ></script>
       </WebsiteHead>
-      <PageLayout featured_image={featured_image} srcSet={srcSet} title={category.name} showBackgroundPattern={false}>
+      <PageLayout
+        featured_image={featured_image}
+        srcSet={srcSet}
+        title={category.name}
+        showBackgroundPattern={false}
+      >
         <Grid
           py={{ base: '24px', lg: '80px' }}
           px={{ base: '24px', md: '32px', lg: '40px' }}
@@ -72,7 +82,9 @@ export default function Category({
             colSpan={1}
             className="archive-list"
           >
-            {isDefault && <DefaultArchive posts={posts.data} showFallbackImage={isEvent} />}
+            {isDefault && (
+              <DefaultArchive posts={posts.data} showFallbackImage={isEvent} />
+            )}
             {isCovid && <CovidArchive posts={posts.data} />}
 
             {isResearch && <ResearchArchive posts={posts} />}
@@ -97,19 +109,41 @@ export default function Category({
           <GridItem colSpan={1} as="aside" className="sidebar">
             <VStack spacing={12}>
               {!isMedia && sawteeInMedia && (
-                <SidebarWidget array={sawteeInMedia} title={'Sawtee in Media'} link={'/category/sawtee-in-media'} />
+                <SidebarWidget
+                  array={sawteeInMedia}
+                  title={'Sawtee in Media'}
+                  link={'/category/sawtee-in-media'}
+                />
               )}
               {isInFocus && events && (
-                <SidebarWidget array={events} title={'Featured Events'} link={'/category/featured-events'} />
+                <SidebarWidget
+                  array={events}
+                  title={'Featured Events'}
+                  link={'/category/featured-events'}
+                />
               )}
               {isMedia && events && (
-                <SidebarWidget array={events} title={'Featured Events'} link={'/category/featured-events'} />
+                <SidebarWidget
+                  array={events}
+                  title={'Featured Events'}
+                  link={'/category/featured-events'}
+                />
               )}
               {!isInFocus && infocus && (
-                <SidebarWidget array={infocus} link={'/category/in-focus'} title={'In Focus'} />
+                <SidebarWidget
+                  array={infocus}
+                  link={'/category/in-focus'}
+                  title={'In Focus'}
+                />
               )}
               {showFacebookEmbed && (
-                <GlassBox py="4" px="4" rounded="xl" w="full" textAlign="center">
+                <GlassBox
+                  py="4"
+                  px="4"
+                  rounded="xl"
+                  w="full"
+                  textAlign="center"
+                >
                   <div id="fb-root"></div>
                   <div
                     className="fb-page"
@@ -122,9 +156,13 @@ export default function Category({
                     data-hide-cover="false"
                     data-show-facepile="false"
                   >
-                    <blockquote cite="https://www.facebook.com/sawteenp/" className="fb-xfbml-parse-ignore">
+                    <blockquote
+                      cite="https://www.facebook.com/sawteenp/"
+                      className="fb-xfbml-parse-ignore"
+                    >
                       <a href="https://www.facebook.com/sawteenp/">
-                        South Asia Watch on Trade, Economics and Environment (SAWTEE)
+                        South Asia Watch on Trade, Economics and Environment
+                        (SAWTEE)
                       </a>
                     </blockquote>
                   </div>

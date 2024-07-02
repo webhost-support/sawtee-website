@@ -8,7 +8,15 @@ import Section from '@/Components/Frontend/styles/section';
 import { Box, useColorModeValue } from '@chakra-ui/react';
 import readingDuration from 'reading-duration';
 
-const PostLayout = ({ children, showPattern, isProgramPost, isNewsletter, post, featured_image, srcSet }) => {
+const PostLayout = ({
+  children,
+  showPattern,
+  isProgramPost,
+  isNewsletter,
+  post,
+  featured_image,
+  srcSet,
+}) => {
   const postHeaderColor = useColorModeValue('gray.700', 'gray.200');
 
   const readingTime = post.content
@@ -36,7 +44,9 @@ const PostLayout = ({ children, showPattern, isProgramPost, isNewsletter, post, 
       {/* <PostProgressBar value={scroll} /> */}
 
       <Box maxW={{ base: 'full', md: '3xl', xl: '4xl' }} mx="auto" px={4}>
-        {!isProgramPost && featured_image && <FeaturedMedia src={featured_image} rounded={'xl'} srcSet={srcSet} />}
+        {!isProgramPost && featured_image && (
+          <FeaturedMedia src={featured_image} rounded={'xl'} srcSet={srcSet} />
+        )}
       </Box>
 
       {/* Look at the settings to see if we should include the featured image */}
@@ -49,7 +59,12 @@ const PostLayout = ({ children, showPattern, isProgramPost, isNewsletter, post, 
 
       {!isNewsletter && (
         <Content as={Section} size="md" pb="50px" className="post-content">
-          <PostMeta author={post.author} date={post.published_at} readingTime={readingTime} mt={4} />
+          <PostMeta
+            author={post.author}
+            date={post.published_at}
+            readingTime={readingTime}
+            mt={4}
+          />
           {children}
           <SocialShare url={shareUrl} />
         </Content>

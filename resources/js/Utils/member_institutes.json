@@ -8,7 +8,11 @@
         "member_name": "Bangladesh Environmental Lawyers’ Association (BELA), Dhaka",
         "member_website_link": "https://www.belabangla.org/"
       },
-      { "id": 2, "member_name": "Unnayan Shamannay, Dhaka", "member_website_link": "https://www.unsy.org/" }
+      {
+        "id": 2,
+        "member_name": "Unnayan Shamannay, Dhaka",
+        "member_website_link": "https://www.unsy.org/"
+      }
     ]
   },
   {

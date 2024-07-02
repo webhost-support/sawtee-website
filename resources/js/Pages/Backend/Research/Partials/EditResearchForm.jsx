@@ -3,72 +3,74 @@ import PrimaryButton from '@/Components/Backend/PrimaryButton';
 import { FileIcon } from '@/Components/Frontend/icons';
 import { CloseIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
 import {
-    Accordion,
-    AccordionButton,
-    AccordionIcon,
-    AccordionItem,
-    AccordionPanel,
-    AspectRatio,
-    Box,
-    Button,
-    FormControl,
-    FormErrorMessage,
-    FormLabel,
-    Grid,
-    GridItem,
-    Input,
-    InputGroup,
-    InputLeftAddon,
-    InputRightAddon,
-    Textarea,
-    Tooltip,
-    VStack,
-    useToast,
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  AspectRatio,
+  Box,
+  Button,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Grid,
+  GridItem,
+  Input,
+  InputGroup,
+  InputLeftAddon,
+  InputRightAddon,
+  Textarea,
+  Tooltip,
+  VStack,
+  useToast,
 } from '@chakra-ui/react';
 import { useForm } from '@inertiajs/react';
 import { useState } from 'react';
 
 export default function CreateResearchForm({ research }) {
-	const { data, setData, post, processing, errors } = useForm({
-		title: research.title,
-		subtitle: research.subtitle,
-		description: research.description,
-		year: research.year,
-		image: research.featured_image ? research.featured_image.name : null,
-		file: research.media[0] ? research.media[0].original_url : null,
-		meta_title: research.meta_title,
-		meta_description: research.meta_description,
-	});
-	const toast = useToast();
-	const [image, setImage] = useState(data.image);
-	const [filename, setFilename] = useState(research.file ? research.file.name : '');
+  const { data, setData, post, processing, errors } = useForm({
+    title: research.title,
+    subtitle: research.subtitle,
+    description: research.description,
+    year: research.year,
+    image: research.featured_image ? research.featured_image.name : null,
+    file: research.media[0] ? research.media[0].original_url : null,
+    meta_title: research.meta_title,
+    meta_description: research.meta_description,
+  });
+  const toast = useToast();
+  const [image, setImage] = useState(data.image);
+  const [filename, setFilename] = useState(
+    research.file ? research.file.name : ''
+  );
 
-	const submit = e => {
-		e.preventDefault();
-		post(
-			route('admin.research.update', {
-				_method: 'patch',
-				research: research.id,
-			}),
-			{
-				preserveScroll: true,
-				onSuccess: () =>
-					toast({
-						position: 'top-right',
-						title: 'Research Edited.',
-						description: `Research ${data.title} Successfully`,
-						status: 'success',
-						duration: 6000,
-						isClosable: true,
-					}),
-				onError: errors => {
-					console.error(errors);
-				},
-			}
-		);
-	};
+  const submit = e => {
+    e.preventDefault();
+    post(
+      route('admin.research.update', {
+        _method: 'patch',
+        research: research.id,
+      }),
+      {
+        preserveScroll: true,
+        onSuccess: () =>
+          toast({
+            position: 'top-right',
+            title: 'Research Edited.',
+            description: `Research ${data.title} Successfully`,
+            status: 'success',
+            duration: 6000,
+            isClosable: true,
+          }),
+        onError: errors => {
+          console.error(errors);
+        },
+      }
+    );
+  };
 
-	return (
+  return (
     <form onSubmit={submit}>
       <Grid
         templateColumns={{
@@ -94,7 +96,9 @@ export default function CreateResearchForm({ research }) {
                 onChange={e => setData('title', e.target.value)}
               />
 
-              {errors.title && <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>}
+              {errors.title && (
+                <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>
+              )}
             </FormControl>
 
             <FormControl isInvalid={errors.subtitle}>
@@ -111,7 +115,9 @@ export default function CreateResearchForm({ research }) {
                 onChange={e => setData('subtitle', e.target.value)}
               />
 
-              {errors.title && <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>}
+              {errors.title && (
+                <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>
+              )}
             </FormControl>
 
             <FormControl mt={4} isInvalid={errors.description}>
@@ -126,7 +132,9 @@ export default function CreateResearchForm({ research }) {
                 onChange={e => setData('description', e.target.value)}
               />
 
-              {errors.description && <FormErrorMessage mt={2}>{errors.description}</FormErrorMessage>}
+              {errors.description && (
+                <FormErrorMessage mt={2}>{errors.description}</FormErrorMessage>
+              )}
             </FormControl>
           </VStack>
         </GridItem>
@@ -141,9 +149,17 @@ export default function CreateResearchForm({ research }) {
                       color: 'white',
                     }}
                   >
-                    <Box as="span" flex="1" textAlign="left" fontWeight={'semibold'}>
+                    <Box
+                      as="span"
+                      flex="1"
+                      textAlign="left"
+                      fontWeight={'semibold'}
+                    >
                       {'SEO Meta Tags '}
-                      <Tooltip label="Add title and description for SEO" fontSize="xs">
+                      <Tooltip
+                        label="Add title and description for SEO"
+                        fontSize="xs"
+                      >
                         <QuestionOutlineIcon boxSize={3} />
                       </Tooltip>
                     </Box>
@@ -163,11 +179,16 @@ export default function CreateResearchForm({ research }) {
                         onChange={e => setData('meta_title', e.target.value)}
                       />
 
-                      <FormErrorMessage message={errors.meta_title} className="mt-2" />
+                      <FormErrorMessage
+                        message={errors.meta_title}
+                        className="mt-2"
+                      />
                     </FormControl>
 
                     <FormControl mt="4" isInvalid={errors.meta_description}>
-                      <FormLabel htmlFor="meta_description">Meta Description</FormLabel>
+                      <FormLabel htmlFor="meta_description">
+                        Meta Description
+                      </FormLabel>
 
                       <Textarea
                         id="meta_description"
@@ -176,10 +197,15 @@ export default function CreateResearchForm({ research }) {
                         value={data.meta_description}
                         rows={3}
                         resize="vertical"
-                        onChange={e => setData('meta_description', e.target.value)}
+                        onChange={e =>
+                          setData('meta_description', e.target.value)
+                        }
                       />
 
-                      <FormErrorMessage message={errors.meta_description} className="mt-2" />
+                      <FormErrorMessage
+                        message={errors.meta_description}
+                        className="mt-2"
+                      />
                     </FormControl>
                   </VStack>
                 </AccordionPanel>
@@ -189,8 +215,15 @@ export default function CreateResearchForm({ research }) {
               <FormLabel as="legend" htmlFor="year">
                 Year
               </FormLabel>
-              <Input name="year" id="year" value={data.year} onChange={e => setData('year', Number(e.target.value))} />
-              {errors.year && <FormErrorMessage mt={2}>{errors.year}</FormErrorMessage>}
+              <Input
+                name="year"
+                id="year"
+                value={data.year}
+                onChange={e => setData('year', Number(e.target.value))}
+              />
+              {errors.year && (
+                <FormErrorMessage mt={2}>{errors.year}</FormErrorMessage>
+              )}
             </FormControl>
 
             <FormControl mt={4} isInvalid={errors.image}>
@@ -238,14 +271,20 @@ export default function CreateResearchForm({ research }) {
                   />
                 </FileUpload>
               )}
-              {errors.image && <FormErrorMessage mt={2}>{errors.image}</FormErrorMessage>}
+              {errors.image && (
+                <FormErrorMessage mt={2}>{errors.image}</FormErrorMessage>
+              )}
             </FormControl>
             <FormControl mt={4} isInvalid={errors.file}>
               <FormLabel htmlFor="file">File Upload</FormLabel>
               <InputGroup>
                 <InputLeftAddon children={<FileIcon />} />
                 <Box position="relative">
-                  <Input size="md" isReadOnly placeholder={filename ? filename : 'No file selected'} />
+                  <Input
+                    size="md"
+                    isReadOnly
+                    placeholder={filename ? filename : 'No file selected'}
+                  />
                   <Input
                     type="file"
                     height="100%"
@@ -278,7 +317,9 @@ export default function CreateResearchForm({ research }) {
                   />
                 )}
               </InputGroup>
-              {errors.file && <FormErrorMessage mt={2}>{errors.file}</FormErrorMessage>}
+              {errors.file && (
+                <FormErrorMessage mt={2}>{errors.file}</FormErrorMessage>
+              )}
             </FormControl>
             <PrimaryButton type="submit" isLoading={processing} mt={4} w="64">
               Save

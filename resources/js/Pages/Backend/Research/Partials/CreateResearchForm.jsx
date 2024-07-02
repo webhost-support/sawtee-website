@@ -3,27 +3,27 @@ import PrimaryButton from '@/Components/Backend/PrimaryButton';
 import { FileIcon } from '@/Components/Frontend/icons';
 import { CloseIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
 import {
-    Accordion,
-    AccordionButton,
-    AccordionIcon,
-    AccordionItem,
-    AccordionPanel,
-    AspectRatio,
-    Box,
-    Button,
-    FormControl,
-    FormErrorMessage,
-    FormLabel,
-    Grid,
-    GridItem,
-    Input,
-    InputGroup,
-    InputLeftAddon,
-    InputRightAddon,
-    Textarea,
-    Tooltip,
-    VStack,
-    useToast,
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  AspectRatio,
+  Box,
+  Button,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Grid,
+  GridItem,
+  Input,
+  InputGroup,
+  InputLeftAddon,
+  InputRightAddon,
+  Textarea,
+  Tooltip,
+  VStack,
+  useToast,
 } from '@chakra-ui/react';
 import { useForm } from '@inertiajs/react';
 import { useState } from 'react';
@@ -90,7 +90,9 @@ export default function CreateResearchForm() {
                 onChange={e => setData('title', e.target.value)}
               />
 
-              {errors.title && <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>}
+              {errors.title && (
+                <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>
+              )}
             </FormControl>
 
             <FormControl isInvalid={errors.subtitle}>
@@ -107,7 +109,9 @@ export default function CreateResearchForm() {
                 onChange={e => setData('subtitle', e.target.value)}
               />
 
-              {errors.title && <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>}
+              {errors.title && (
+                <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>
+              )}
             </FormControl>
 
             <FormControl mt={4} isInvalid={errors.description}>
@@ -122,7 +126,9 @@ export default function CreateResearchForm() {
                 onChange={e => setData('description', e.target.value)}
               />
 
-              {errors.description && <FormErrorMessage mt={2}>{errors.description}</FormErrorMessage>}
+              {errors.description && (
+                <FormErrorMessage mt={2}>{errors.description}</FormErrorMessage>
+              )}
             </FormControl>
           </VStack>
         </GridItem>
@@ -137,9 +143,17 @@ export default function CreateResearchForm() {
                       color: 'white',
                     }}
                   >
-                    <Box as="span" flex="1" textAlign="left" fontWeight={'semibold'}>
+                    <Box
+                      as="span"
+                      flex="1"
+                      textAlign="left"
+                      fontWeight={'semibold'}
+                    >
                       {'SEO Meta Tags '}
-                      <Tooltip label="Add title and description for SEO" fontSize="xs">
+                      <Tooltip
+                        label="Add title and description for SEO"
+                        fontSize="xs"
+                      >
                         <QuestionOutlineIcon boxSize={3} />
                       </Tooltip>
                     </Box>
@@ -158,11 +172,16 @@ export default function CreateResearchForm() {
                         onChange={e => setData('meta_title', e.target.value)}
                       />
 
-                      <FormErrorMessage message={errors.meta_title} className="mt-2" />
+                      <FormErrorMessage
+                        message={errors.meta_title}
+                        className="mt-2"
+                      />
                     </FormControl>
 
                     <FormControl mt="4" isInvalid={errors.meta_description}>
-                      <FormLabel htmlFor="meta_description">Meta Description</FormLabel>
+                      <FormLabel htmlFor="meta_description">
+                        Meta Description
+                      </FormLabel>
 
                       <Textarea
                         id="meta_description"
@@ -170,10 +189,15 @@ export default function CreateResearchForm() {
                         placeholder="enter meta_description"
                         rows={3}
                         resize="vertical"
-                        onChange={e => setData('meta_description', e.target.value)}
+                        onChange={e =>
+                          setData('meta_description', e.target.value)
+                        }
                       />
 
-                      <FormErrorMessage message={errors.meta_description} className="mt-2" />
+                      <FormErrorMessage
+                        message={errors.meta_description}
+                        className="mt-2"
+                      />
                     </FormControl>
                   </VStack>
                 </AccordionPanel>
@@ -184,8 +208,14 @@ export default function CreateResearchForm() {
                 Year
               </FormLabel>
 
-              <Input name="year" id="year" onChange={e => setData('year', Number(e.target.value))} />
-              {errors.year && <FormErrorMessage mt={2}>{errors.year}</FormErrorMessage>}
+              <Input
+                name="year"
+                id="year"
+                onChange={e => setData('year', Number(e.target.value))}
+              />
+              {errors.year && (
+                <FormErrorMessage mt={2}>{errors.year}</FormErrorMessage>
+              )}
             </FormControl>
 
             <FormControl mt={4} isInvalid={errors.file}>
@@ -193,7 +223,11 @@ export default function CreateResearchForm() {
               <InputGroup>
                 <InputLeftAddon children={<FileIcon />} />
                 <Box position="relative">
-                  <Input size="md" isReadOnly placeholder={filename ? filename : 'click to select file'} />
+                  <Input
+                    size="md"
+                    isReadOnly
+                    placeholder={filename ? filename : 'click to select file'}
+                  />
                   <Input
                     type="file"
                     height="100%"
@@ -226,7 +260,9 @@ export default function CreateResearchForm() {
                   />
                 )}
               </InputGroup>
-              {errors.file && <FormErrorMessage mt={2}>{errors.file}</FormErrorMessage>}
+              {errors.file && (
+                <FormErrorMessage mt={2}>{errors.file}</FormErrorMessage>
+              )}
             </FormControl>
 
             <FormControl isInvalid={errors.link}>
@@ -243,7 +279,9 @@ export default function CreateResearchForm() {
                 onChange={e => setData('link', e.target.value)}
               />
 
-              {errors.link && <FormErrorMessage mt={2}>{errors.link}</FormErrorMessage>}
+              {errors.link && (
+                <FormErrorMessage mt={2}>{errors.link}</FormErrorMessage>
+              )}
             </FormControl>
 
             <FormControl mt={4} isInvalid={errors.image}>
@@ -291,7 +329,9 @@ export default function CreateResearchForm() {
                   />
                 </FileUpload>
               )}
-              {errors.image && <FormErrorMessage mt={2}>{errors.image}</FormErrorMessage>}
+              {errors.image && (
+                <FormErrorMessage mt={2}>{errors.image}</FormErrorMessage>
+              )}
             </FormControl>
 
             <PrimaryButton type="submit" disabled={processing} mt={4} w="64">

@@ -1,6 +1,9 @@
 import { DataTable } from '@/Components/Backend/DataTable';
 import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import { TableDeleteAction, TableEditAction } from '@/Components/Backend/TableActions';
+import {
+  TableDeleteAction,
+  TableEditAction,
+} from '@/Components/Backend/TableActions';
 import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
 import { Box, HStack, useDisclosure } from '@chakra-ui/react';
 import { Head, Link, useForm } from '@inertiajs/react';
@@ -46,8 +49,14 @@ export default function Index({ auth, publications: data }) {
         cell: info => {
           return (
             <HStack spacing={4}>
-              <TableEditAction onClick={e => handleEdit(e, info.getValue())} isDisabled={processing} />
-              <TableDeleteAction onClick={e => handleDelete(e, info.getValue())} isDisabled={processing} />
+              <TableEditAction
+                onClick={e => handleEdit(e, info.getValue())}
+                isDisabled={processing}
+              />
+              <TableDeleteAction
+                onClick={e => handleDelete(e, info.getValue())}
+                isDisabled={processing}
+              />
             </HStack>
           );
         },
@@ -60,7 +69,11 @@ export default function Index({ auth, publications: data }) {
   return (
     <AuthenticatedLayout user={auth.user}>
       <Head title="Manage Publications" />
-      <DeletePublicationModal isOpen={isOpen} onClose={onClose} id={publicationId} />
+      <DeletePublicationModal
+        isOpen={isOpen}
+        onClose={onClose}
+        id={publicationId}
+      />
       <Box mb={4}>
         <Link href={route('admin.publications.create')}>
           <PrimaryButton>Add New Publication</PrimaryButton>

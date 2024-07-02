@@ -37,7 +37,9 @@ export default function EditPageForm({ page }) {
 
   const toast = useToast();
   const [slug, setSlug] = React.useState(page.slug);
-  const [image, setImage] = React.useState(page.media[0] ? page.media[0].preview_url : null);
+  const [image, setImage] = React.useState(
+    page.media[0] ? page.media[0].preview_url : null
+  );
   const [filename, setFilename] = React.useState(null);
   const submit = e => {
     e.preventDefault();
@@ -134,7 +136,10 @@ export default function EditPageForm({ page }) {
               onChange={e => setData('meta_description', e.target.value)}
             />
 
-            <FormErrorMessage message={errors.meta_description} className="mt-2" />
+            <FormErrorMessage
+              message={errors.meta_description}
+              className="mt-2"
+            />
           </FormControl>
         </VStack>
       </SimpleGrid>
@@ -144,7 +149,11 @@ export default function EditPageForm({ page }) {
         <InputGroup cursor={'pointer'}>
           <InputLeftAddon children={<FileIcon />} />
           <Box position="relative">
-            <Input size="md" isReadOnly placeholder={filename ? filename : 'click to select file'} />
+            <Input
+              size="md"
+              isReadOnly
+              placeholder={filename ? filename : 'click to select file'}
+            />
             <Input
               type="file"
               height="100%"
@@ -191,7 +200,9 @@ export default function EditPageForm({ page }) {
           onChange={(evt, editor) => setData('content', editor.getContent())}
         />
 
-        {errors.content && <FormErrorMessage mt={2}>{errors.content}</FormErrorMessage>}
+        {errors.content && (
+          <FormErrorMessage mt={2}>{errors.content}</FormErrorMessage>
+        )}
       </FormControl>
       <FormControl mt={4} isInvalid={errors.image}>
         <FormLabel htmlFor="image">Featured Image</FormLabel>
@@ -236,7 +247,9 @@ export default function EditPageForm({ page }) {
             />
           </FileUpload>
         )}
-        {errors.image && <FormErrorMessage mt={2}>{errors.image}</FormErrorMessage>}
+        {errors.image && (
+          <FormErrorMessage mt={2}>{errors.image}</FormErrorMessage>
+        )}
       </FormControl>
 
       <Box display="flex" gap="4" mt="4">

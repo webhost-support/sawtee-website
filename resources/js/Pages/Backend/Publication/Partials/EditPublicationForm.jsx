@@ -5,22 +5,22 @@ import { FileIcon } from '@/Components/Frontend/icons';
 import { filterByReference } from '@/Utils/helpers';
 import { CloseIcon } from '@chakra-ui/icons';
 import {
-  AspectRatio,
-  Box,
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Grid,
-  GridItem,
-  Input,
-  InputGroup,
-  InputLeftAddon,
-  InputRightAddon,
-  Select,
-  Textarea,
-  VStack,
-  useToast,
+    AspectRatio,
+    Box,
+    Button,
+    FormControl,
+    FormErrorMessage,
+    FormLabel,
+    Grid,
+    GridItem,
+    Input,
+    InputGroup,
+    InputLeftAddon,
+    InputRightAddon,
+    Select,
+    Textarea,
+    VStack,
+    useToast,
 } from '@chakra-ui/react';
 import { useForm } from '@inertiajs/react';
 import React, { useState } from 'react';
@@ -41,7 +41,7 @@ export default function EditPublicationForm({ publication, categories, tags }) {
   console.log(publication.tags);
 
   const [postTags, setPostTags] = React.useState(() => {
-    let tagsarray = [];
+    const tagsarray = [];
     publication.tags?.map(tag => {
       tagsarray.push({
         value: tag.id,
@@ -55,9 +55,9 @@ export default function EditPublicationForm({ publication, categories, tags }) {
   const [tagOptions, setTagOptions] = React.useState([]);
 
   function setDataTags(e) {
-    let array = [];
+    const array = [];
     setPostTags(e);
-    e.forEach(item =>
+    e.map(item =>
       array.push({
         tag_id: item.value,
         publication_id: publication.id,
@@ -71,7 +71,7 @@ export default function EditPublicationForm({ publication, categories, tags }) {
     if (postTags && tags) {
       const filteredTags = filterByReference(tags, postTags);
       if (filteredTags.length > 0) {
-        let array = [];
+        const array = [];
         filteredTags.map(item => {
           array.push({ value: item.id, label: item.name });
         });
@@ -131,7 +131,9 @@ export default function EditPublicationForm({ publication, categories, tags }) {
                 onChange={e => setData('title', e.target.value)}
               />
 
-              {errors.title && <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>}
+              {errors.title && (
+                <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>
+              )}
             </FormControl>
 
             <FormControl isInvalid={errors.subtitle}>
@@ -148,7 +150,9 @@ export default function EditPublicationForm({ publication, categories, tags }) {
                 onChange={e => setData('subtitle', e.target.value)}
               />
 
-              {errors.title && <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>}
+              {errors.title && (
+                <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>
+              )}
             </FormControl>
 
             <FormControl mt={4} isInvalid={errors.description}>
@@ -163,13 +167,19 @@ export default function EditPublicationForm({ publication, categories, tags }) {
                 onChange={e => setData('description', e.target.value)}
               />
 
-              {errors.description && <FormErrorMessage mt={2}>{errors.description}</FormErrorMessage>}
+              {errors.description && (
+                <FormErrorMessage mt={2}>{errors.description}</FormErrorMessage>
+              )}
             </FormControl>
           </VStack>
         </GridItem>
         <GridItem colSpan={{ base: 1, xl: 2 }}>
           <VStack spacing={8}>
-            <FormControl isInvalid={errors.category_id} isRequired as="fieldset">
+            <FormControl
+              isInvalid={errors.category_id}
+              isRequired
+              as="fieldset"
+            >
               <FormLabel as="legend" htmlFor="category_id">
                 Category
               </FormLabel>
@@ -190,7 +200,9 @@ export default function EditPublicationForm({ publication, categories, tags }) {
                   ))}
               </Select>
 
-              {errors.category_id && <FormErrorMessage mt={2}>{errors.category_id}</FormErrorMessage>}
+              {errors.category_id && (
+                <FormErrorMessage mt={2}>{errors.category_id}</FormErrorMessage>
+              )}
             </FormControl>
 
             <FormControl py={4} id={'tags'}>
@@ -257,14 +269,21 @@ export default function EditPublicationForm({ publication, categories, tags }) {
                   />
                 </FileUpload>
               )}
-              {errors.image && <FormErrorMessage mt={2}>{errors.image}</FormErrorMessage>}
+              {errors.image && (
+                <FormErrorMessage mt={2}>{errors.image}</FormErrorMessage>
+              )}
             </FormControl>
             <FormControl mt={4} isInvalid={errors.file}>
               <FormLabel htmlFor="file">File Upload</FormLabel>
               <InputGroup>
                 <InputLeftAddon children={<FileIcon />} />
                 <Box position="relative">
-                  <Input size="md" rounded={'none'} isReadOnly value={filename ? filename : 'No file selected'} />
+                  <Input
+                    size="md"
+                    rounded={'none'}
+                    isReadOnly
+                    value={filename ? filename : 'No file selected'}
+                  />
                   <Input
                     type="file"
                     height="100%"
@@ -297,7 +316,9 @@ export default function EditPublicationForm({ publication, categories, tags }) {
                   />
                 )}
               </InputGroup>
-              {errors.file && <FormErrorMessage mt={2}>{errors.file}</FormErrorMessage>}
+              {errors.file && (
+                <FormErrorMessage mt={2}>{errors.file}</FormErrorMessage>
+              )}
             </FormControl>
             <PrimaryButton type="submit" isLoading={processing} mt={4} w="64">
               Save

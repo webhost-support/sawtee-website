@@ -29,7 +29,6 @@ export const UserIcon = createIcon({
   d: 'M18,19 C18,19.5522847 17.5522847,20 17,20 C16.4477153,20 16,19.5522847 16,19 L16,17 C16,15.3431458 14.6568542,14 13,14 L5,14 C3.34314575,14 2,15.3431458 2,17 L2,19 C2,19.5522847 1.55228475,20 1,20 C0.44771525,20 0,19.5522847 0,19 L0,17 C0,14.2385763 2.23857625,12 5,12 L13,12 C15.7614237,12 18,14.2385763 18,17 L18,19 Z M9,10 C6.23857625,10 4,7.76142375 4,5 C4,2.23857625 6.23857625,0 9,0 C11.7614237,0 14,2.23857625 14,5 C14,7.76142375 11.7614237,10 9,10 Z M9,8 C10.6568542,8 12,6.65685425 12,5 C12,3.34314575 10.6568542,2 9,2 C7.34314575,2 6,3.34314575 6,5 C6,6.65685425 7.34314575,8 9,8 Z',
 });
 
-
 export const Users = createIcon({
   displayName: 'Users',
   viewBox: '0 0 24 24',
@@ -145,7 +144,6 @@ export const FaxIcon = props => (
   </Icon>
 );
 
-
 export const LocationPin = createIcon({
   displayName: 'LocationPin',
   viewBox: '0 0 24 24',
@@ -252,7 +250,12 @@ export const MoonIcon = createIcon({
 });
 
 export const ToggleIcon = props => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    {...props}
+  >
     <path d="M8 7C5.23858 7 3 9.23858 3 12C3 14.7614 5.23858 17 8 17H16C18.7614 17 21 14.7614 21 12C21 9.23858 18.7614 7 16 7H8ZM8 5H16C19.866 5 23 8.13401 23 12C23 15.866 19.866 19 16 19H8C4.13401 19 1 15.866 1 12C1 8.13401 4.13401 5 8 5ZM8 15C6.34315 15 5 13.6569 5 12C5 10.3431 6.34315 9 8 9C9.65685 9 11 10.3431 11 12C11 13.6569 9.65685 15 8 15Z"></path>
   </svg>
 );
@@ -281,7 +284,13 @@ export const HomeIcon = props => (
 );
 
 export const PhoneOutlineIcon = props => (
-  <Icon aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" {...props}>
+  <Icon
+    aria-hidden="true"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    {...props}
+  >
     <path
       stroke="currentColor"
       strokeLinecap="round"
@@ -294,6 +303,9 @@ export const PhoneOutlineIcon = props => (
 
 export const CircleIcon = props => (
   <Icon viewBox="0 0 200 200" {...props}>
-    <path fill="currentColor" d="M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0" />
+    <path
+      fill="currentColor"
+      d="M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0"
+    />
   </Icon>
 );

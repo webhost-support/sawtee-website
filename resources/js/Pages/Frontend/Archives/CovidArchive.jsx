@@ -1,10 +1,25 @@
 import { GlassBox } from '@/Components/Frontend/index';
 import { DateFormat } from '@/Utils/helpers';
-import { Badge, Divider, HStack, Heading, Link, SimpleGrid, Text, VStack } from '@chakra-ui/react';
+import {
+  Badge,
+  Divider,
+  HStack,
+  Heading,
+  Link,
+  SimpleGrid,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
 
 const CovidArchive = ({ posts }) => {
   return (
-    <SimpleGrid w="full" px={[4, 8]} columns={{ base: 1, md: 2 }} gap={4} rowGap={10}>
+    <SimpleGrid
+      w="full"
+      px={[4, 8]}
+      columns={{ base: 1, md: 2 }}
+      gap={4}
+      rowGap={10}
+    >
       {posts.map(post => {
         return (
           <VStack
@@ -26,7 +41,13 @@ const CovidArchive = ({ posts }) => {
           >
             <HStack w="full" justify="space-between">
               {post.genre && (
-                <Badge colorScheme="gray" px={2} py={1} rounded="md" fontSize={'xs'}>
+                <Badge
+                  colorScheme="gray"
+                  px={2}
+                  py={1}
+                  rounded="md"
+                  fontSize={'xs'}
+                >
                   {post.genre}
                 </Badge>
               )}

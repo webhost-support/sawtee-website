@@ -2,25 +2,31 @@ import AirBnbCard from '@/Components/Frontend/AirBnbCard';
 import { GlassBox } from '@/Components/Frontend/index';
 import InertiaChakraLink from '@/Components/Frontend/styles/inertia-chakra-link';
 import {
-    Accordion,
-    AccordionButton,
-    AccordionIcon,
-    AccordionItem,
-    AccordionPanel,
-    Avatar,
-    Box,
-    HStack,
-    Heading,
-    ListItem,
-    SimpleGrid,
-    Text,
-    UnorderedList,
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Avatar,
+  Box,
+  HStack,
+  Heading,
+  ListItem,
+  SimpleGrid,
+  Text,
+  UnorderedList,
 } from '@chakra-ui/react';
 import { Fragment } from 'react';
 
 export default function MediaFellows({ content, pageData }) {
   return (
-    <Box className="page-content" px={{ base: '32px', md: '0' }} mx="auto" py={'80px'} maxW={'2xl'}>
+    <Box
+      className="page-content"
+      px={{ base: '32px', md: '0' }}
+      mx="auto"
+      py={'80px'}
+      maxW={'2xl'}
+    >
       <Box dangerouslySetInnerHTML={{ __html: content }} />
       <GlassBox mt={8} px={6}>
         {pageData &&
@@ -37,7 +43,8 @@ export default function MediaFellows({ content, pageData }) {
 }
 
 export const Fellows = ({ mediaFellow }) => {
-  const { id, name, avatar, designation, bio, published_stories, experience } = mediaFellow;
+  const { id, name, avatar, designation, bio, published_stories, experience } =
+    mediaFellow;
 
   return (
     <Box id={id} my={10}>
@@ -78,7 +85,14 @@ export const Fellows = ({ mediaFellow }) => {
               {published_stories &&
                 published_stories.length > 0 &&
                 published_stories.map(({ image_src, title, media_src }, i) => {
-                  return <AirBnbCard key={i} img={image_src} title={title} mediaSrc={media_src} />;
+                  return (
+                    <AirBnbCard
+                      key={i}
+                      img={image_src}
+                      title={title}
+                      mediaSrc={media_src}
+                    />
+                  );
                 })}
             </SimpleGrid>
           </AccordionPanel>

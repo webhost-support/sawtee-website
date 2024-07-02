@@ -2,7 +2,18 @@ import { ListItemVariant } from '@/Components/Frontend';
 import { NewspaperIcon } from '@/Components/Frontend/icons';
 import InertiaChakraLink from '@/Components/Frontend/styles/inertia-chakra-link';
 import { formatDate } from '@/Utils/helpers';
-import { Box, Container, Flex, HStack, Heading, Icon, List, Text, chakra, useColorModeValue } from '@chakra-ui/react';
+import {
+  Box,
+  Container,
+  Flex,
+  HStack,
+  Heading,
+  Icon,
+  List,
+  Text,
+  chakra,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 // Here we have used react-icons package for the icons
 
@@ -22,7 +33,8 @@ const NewsletterArchive = ({ posts }) => {
           Trade, Climate Change and Development Monitor
         </Heading>
         <Text as={'span'} fontSize={'sm'}>
-          Monthly E-Newsletter of South Asia Watch on Trade, Economics and Environment
+          Monthly E-Newsletter of South Asia Watch on Trade, Economics and
+          Environment
         </Text>
       </Box>
       <List>
@@ -76,7 +88,12 @@ const Card = ({ title, category, excerpt, published_at, media }) => {
         display: 'block',
       }}
     >
-      <Icon as={NewspaperIcon} w={10} h={10} color={useColorModeValue('primary.500', 'primary.200')} />
+      <Icon
+        as={NewspaperIcon}
+        w={10}
+        h={10}
+        color={useColorModeValue('primary.500', 'primary.200')}
+      />
       <Box flex={1}>
         {category && (
           <HStack spacing={2} justify={'space-between'} mb={1}>
@@ -84,8 +101,16 @@ const Card = ({ title, category, excerpt, published_at, media }) => {
             <Text fontSize="xs">{formatDate(published_at)}</Text>
           </HStack>
         )}
-        <Heading as={'h3'} fontSize="lg" lineHeight={1.2} fontWeight="bold" w="100%">
-          <InertiaChakraLink href={file ? file.original_url : ''}>{title}</InertiaChakraLink>
+        <Heading
+          as={'h3'}
+          fontSize="lg"
+          lineHeight={1.2}
+          fontWeight="bold"
+          w="100%"
+        >
+          <InertiaChakraLink href={file ? file.original_url : ''}>
+            {title}
+          </InertiaChakraLink>
         </Heading>
       </Box>
     </HStack>

@@ -1,17 +1,17 @@
 import FileUpload, { PreviewImage } from '@/Components/Backend/FileUpload';
 import PrimaryButton from '@/Components/Backend/PrimaryButton';
 import {
-    Box,
-    Button,
-    FormControl,
-    FormErrorMessage,
-    FormLabel,
-    Input,
-    Select,
-    SimpleGrid,
-    Textarea,
-    VStack,
-    useToast,
+  Box,
+  Button,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Input,
+  Select,
+  SimpleGrid,
+  Textarea,
+  VStack,
+  useToast,
 } from '@chakra-ui/react';
 import { useForm } from '@inertiajs/react';
 import React from 'react';
@@ -28,7 +28,9 @@ export default function EditCategoryForm({ category, categories }) {
   });
 
   const toast = useToast();
-  const [image, setImage] = React.useState(category.media[0] ? category.media[0].preview_url : null);
+  const [image, setImage] = React.useState(
+    category.media[0] ? category.media[0].preview_url : null
+  );
 
   const submit = e => {
     e.preventDefault();
@@ -71,7 +73,9 @@ export default function EditCategoryForm({ category, categories }) {
           required
         />
 
-        {errors.name && <FormErrorMessage mt="2">{errors.name}</FormErrorMessage>}
+        {errors.name && (
+          <FormErrorMessage mt="2">{errors.name}</FormErrorMessage>
+        )}
       </FormControl>
       <SimpleGrid columns={2} spacing={10} w="full">
         <FormControl>
@@ -154,7 +158,9 @@ export default function EditCategoryForm({ category, categories }) {
             />
           </FileUpload>
         )}
-        {errors.image && <FormErrorMessage mt={2}>{errors.image}</FormErrorMessage>}
+        {errors.image && (
+          <FormErrorMessage mt={2}>{errors.image}</FormErrorMessage>
+        )}
       </FormControl>
       <FormControl isInvalid={errors.meta_title}>
         <FormLabel htmlFor="meta_title">meta title</FormLabel>
@@ -166,7 +172,9 @@ export default function EditCategoryForm({ category, categories }) {
           onChange={e => setData('meta_title', e.target.value)}
         />
 
-        {errors.meta_title && <FormErrorMessage mt="2">{errors.meta_title}</FormErrorMessage>}
+        {errors.meta_title && (
+          <FormErrorMessage mt="2">{errors.meta_title}</FormErrorMessage>
+        )}
       </FormControl>
 
       <FormControl isInvalid={errors.meta_description}>
@@ -181,7 +189,9 @@ export default function EditCategoryForm({ category, categories }) {
           onChange={e => setData('meta_description', e.target.value)}
         />
 
-        {errors.meta_description && <FormErrorMessage mt="2">{errors.meta_description}</FormErrorMessage>}
+        {errors.meta_description && (
+          <FormErrorMessage mt="2">{errors.meta_description}</FormErrorMessage>
+        )}
       </FormControl>
 
       <PrimaryButton type="submit" isLoading={processing} minW="64">

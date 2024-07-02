@@ -1,17 +1,17 @@
 import {
-    ArticleIcon,
-    BookIcon,
-    FileIcon,
-    FilterIcon,
-    GlobeIcon,
-    GridPlusIcon,
-    HomeIcon,
-    LayoutIcon,
-    PageIcon,
-    SliderIcon,
-    TagIcon,
-    UserGroup,
-    Users
+  ArticleIcon,
+  BookIcon,
+  FileIcon,
+  FilterIcon,
+  GlobeIcon,
+  GridPlusIcon,
+  HomeIcon,
+  LayoutIcon,
+  PageIcon,
+  SliderIcon,
+  TagIcon,
+  UserGroup,
+  Users,
 } from '@/Components/Frontend/icons';
 
 export const feature = {
@@ -106,7 +106,8 @@ export const memberInstitutions = [
     institutes: [
       {
         id: 1,
-        member_name: 'Bangladesh Environmental Lawyers’ Association (BELA), Dhaka',
+        member_name:
+          'Bangladesh Environmental Lawyers’ Association (BELA), Dhaka',
         member_website_link: 'https://www.belabangla.org/',
       },
       {
@@ -143,12 +144,14 @@ export const memberInstitutions = [
     institutes: [
       {
         id: 1,
-        member_name: 'Society for Legal and Environmental Analysis and Development Research (LEADERS), Kathmandu',
+        member_name:
+          'Society for Legal and Environmental Analysis and Development Research (LEADERS), Kathmandu',
         member_website_link: 'https://leadersnepal.org.np/',
       },
       {
         id: 2,
-        member_name: 'Forum for Protection of Public Interest (Pro Public), Kathmandu',
+        member_name:
+          'Forum for Protection of Public Interest (Pro Public), Kathmandu',
         member_website_link: 'http://propublic.org/',
       },
     ],
@@ -159,12 +162,14 @@ export const memberInstitutions = [
     institutes: [
       {
         id: 1,
-        member_name: 'Journalists for Democracy and Human Rights (JDHR), Islamabad',
+        member_name:
+          'Journalists for Democracy and Human Rights (JDHR), Islamabad',
         member_website_link: 'http://www.jdhr.org/',
       },
       {
         id: 2,
-        member_name: 'Sustainable Development Policy Institute (SDPI), Islamabad',
+        member_name:
+          'Sustainable Development Policy Institute (SDPI), Islamabad',
         member_website_link: 'https://sdpi.org/',
       },
     ],
@@ -342,7 +347,8 @@ export const primarMenu = [
             children: null,
           },
           {
-            title: 'Agriculture policies, biodiversity management and food security',
+            title:
+              'Agriculture policies, biodiversity management and food security',
             url: '/our-work#theme4',
             children: null,
           },
@@ -708,4 +714,3 @@ export const mobileMenu = [
     children: null,
   },
 ];
-

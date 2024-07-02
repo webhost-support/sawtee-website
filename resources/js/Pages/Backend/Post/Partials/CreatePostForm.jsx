@@ -61,7 +61,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
   const [postTags, setPostTags] = React.useState([]);
 
   const [tagOptions, setTagOptions] = React.useState(() => {
-    let tagsarray = [];
+    const tagsarray = [];
     tags.map(tag => {
       tagsarray.push({
         value: tag.id,
@@ -73,9 +73,9 @@ export default function CreatePostForm({ categories, themes, tags }) {
   });
 
   function setDataTags(e) {
-    let array = [];
+    const array = [];
     setPostTags(e);
-    e.forEach(item =>
+    e.map(item =>
       array.push({
         tag_id: item.value,
         post_id: item.id,
@@ -438,7 +438,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
                 onChange={e => {
                   setData('category_id', e.target.value);
 
-                  setSelectedCategory(categories.filter(cat => cat.id == e.target.value)[0].name);
+                  setSelectedCategory(categories.filter(cat => cat.id === e.target.value)[0].name);
                 }}
               >
                 {categories &&

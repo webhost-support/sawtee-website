@@ -15,7 +15,10 @@
       {
         "title": "युरोपको बजार जोगाउन छैन तयारी ",
         "link": "https://nagariknews.nagariknetwork.com/economy/1332491-1698452894.html",
-        "image_src": ["/assets/himal-news-2-page-1.jpg", "/assets/himal-news-2-page-2.jpg"],
+        "image_src": [
+          "/assets/himal-news-2-page-1.jpg",
+          "/assets/himal-news-2-page-2.jpg"
+        ],
         "media_src": null
       }
     ],
@@ -110,7 +113,10 @@
       {
         "title": "बंगलादेश निर्यातमा उच्च कर मुख्य समस्या",
         "link": "https://www.karobardaily.com/news/239769",
-        "image_src": ["/assets/saru-news-2-page-1.jpg", "/assets/saru-news-2-page-2.jpg"],
+        "image_src": [
+          "/assets/saru-news-2-page-1.jpg",
+          "/assets/saru-news-2-page-2.jpg"
+        ],
         "media_src": null
       }
     ],

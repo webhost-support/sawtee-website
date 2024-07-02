@@ -36,7 +36,13 @@ import {
 import * as React from 'react';
 import { DebouncedInput } from '../Frontend/index';
 
-export function DataTable({ data, defaultColumns, showColumnFilters = true, pagination = true, showSearch = true }) {
+export function DataTable({
+  data,
+  defaultColumns,
+  showColumnFilters = true,
+  pagination = true,
+  showSearch = true,
+}) {
   const [sorting, setSorting] = React.useState([]);
   const [columns] = React.useState(defaultColumns);
   const [columnVisibility, setColumnVisibility] = React.useState({});
@@ -144,8 +150,15 @@ export function DataTable({ data, defaultColumns, showColumnFilters = true, pagi
                 {headerGroup.headers.map(header => {
                   const meta = header.column.columnDef.meta;
                   return (
-                    <Th key={header.id} onClick={header.column.getToggleSortingHandler()} isNumeric={meta?.isNumeric}>
-                      {flexRender(header.column.columnDef.header, header.getContext())}
+                    <Th
+                      key={header.id}
+                      onClick={header.column.getToggleSortingHandler()}
+                      isNumeric={meta?.isNumeric}
+                    >
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                       <Text as="span" pl="4">
                         {header.column.getIsSorted() ? (
                           header.column.getIsSorted() === 'desc' ? (
@@ -172,8 +185,16 @@ export function DataTable({ data, defaultColumns, showColumnFilters = true, pagi
                 {row.getVisibleCells().map(cell => {
                   const meta = cell.column.columnDef.meta;
                   return (
-                    <Td key={cell.id} isNumeric={meta?.isNumeric} maxW={'48'} overflow="hidden">
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    <Td
+                      key={cell.id}
+                      isNumeric={meta?.isNumeric}
+                      maxW={'48'}
+                      overflow="hidden"
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
                     </Td>
                   );
                 })}

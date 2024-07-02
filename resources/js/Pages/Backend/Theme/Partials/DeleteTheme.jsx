@@ -50,7 +50,9 @@ export default function DeleteTheme({ themeId, themes, isOpen, onClose }) {
             <AlertIcon />
             <Box>
               <AlertTitle>This action is irreversible.</AlertTitle>
-              <AlertDescription>{'Are you sure you want to delete this theme?'}</AlertDescription>
+              <AlertDescription>
+                {'Are you sure you want to delete this theme?'}
+              </AlertDescription>
             </Box>
           </Alert>
         </ModalBody>

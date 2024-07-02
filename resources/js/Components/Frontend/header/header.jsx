@@ -1,4 +1,14 @@
-import { Box, Collapse, Flex, IconButton, Image, Show, Text, useColorModeValue, useDisclosure } from '@chakra-ui/react';
+import {
+  Box,
+  Collapse,
+  Flex,
+  IconButton,
+  Image,
+  Show,
+  Text,
+  useColorModeValue,
+  useDisclosure,
+} from '@chakra-ui/react';
 import React from 'react';
 import MobileMenu from '../mobileMenu';
 
@@ -97,7 +107,13 @@ const Header = ({
             <Flex ml={{ base: -2 }} align="center">
               <IconButton
                 onClick={onToggle}
-                icon={isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />}
+                icon={
+                  isOpen ? (
+                    <CloseIcon w={3} h={3} />
+                  ) : (
+                    <HamburgerIcon w={5} h={5} />
+                  )
+                }
                 variant={'ghost'}
                 aria-label={'Toggle Navigation'}
               />
@@ -128,8 +144,17 @@ const Header = ({
           </SearchModal>
         </Flex>
       </SiteHeaderInner>
-      <Collapse in={isOpen} animateOpacity transition={{ enter: { duration: 0.5 } }} style={{ overflow: 'scroll' }}>
-        <MobileMenu menu={mobileMenu} socialLinks={socialLinks} showSocialLinks={true} />
+      <Collapse
+        in={isOpen}
+        animateOpacity
+        transition={{ enter: { duration: 0.5 } }}
+        style={{ overflow: 'scroll' }}
+      >
+        <MobileMenu
+          menu={mobileMenu}
+          socialLinks={socialLinks}
+          showSocialLinks={true}
+        />
       </Collapse>
     </SiteHeader>
   );

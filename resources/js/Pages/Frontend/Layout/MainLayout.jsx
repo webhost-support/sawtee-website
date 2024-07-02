@@ -36,13 +36,20 @@ export default function MainLayout({ children, ...rest }) {
         Skip to main content
       </SkipLink>
 
-      <Header menu={primaryMenu} mobileMenu={mobileMenu} socialLinks={socialMenu} />
+      <Header
+        menu={primaryMenu}
+        mobileMenu={mobileMenu}
+        socialLinks={socialMenu}
+      />
       <ScaleFade in={url} initialScale={0.9}>
         <Box as="main" isolation={'isolate'} {...rest}>
           {children}
         </Box>
       </ScaleFade>
-      <Footer menu={footerMenu && footerMenu.length > 0 ? footerMenu : FooterMenu} socialMenu={socialMenu} />
+      <Footer
+        menu={footerMenu && footerMenu.length > 0 ? footerMenu : FooterMenu}
+        socialMenu={socialMenu}
+      />
       <SlideFade in={visible} offsetY="40px">
         <Box
           as={Button}

@@ -62,14 +62,14 @@ class FrontendController extends Controller
     public function index()
     {
         $slidesResponsiveImages = array();
-        $featured = Tag::where('name', 'featured')->first();
+        $featured = Tag::where('name', 'featured')->firstOrFail();
         $featured_publications = $featured->publications()->get();
         $publications = Publication::with(['file', 'category'])
         ->orderBy('id', "DESC")
         ->limit(9)
         ->get();
 
-        $slider = Slider::where('page_id', Page::where('name', 'home')->first()->id,)->first();
+        $slider = Slider::where('page_id', Page::where('name', 'home')->first()->id,)->firstOrFail();
         $slides = Slide::where('slider_id', $slider->id)->orderBy('id', 'DESC')->take(5)->get();
         foreach ($slides as $slide) {
             $responsive = $slide->getFirstMedia('slides')?->getSrcSet('responsive');
@@ -80,11 +80,11 @@ class FrontendController extends Controller
             }
         }
         // dd($slidesResponsiveImages, $slides);
-        $infocus = Category::where('slug', 'in-focus')->first()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
-        $sawteeInMedia = Category::where('slug', 'sawtee-in-media')->first()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
-        $events = Category::where('slug', 'featured-events')->first()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
-        $newsletters = Category::where('slug', 'newsletters')->first()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
-        $webinars = Category::where('slug', 'webinar-series')->first()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
+        $infocus = Category::where('slug', 'in-focus')->firstOrFail()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
+        $sawteeInMedia = Category::where('slug', 'sawtee-in-media')->firstOrFail()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
+        $events = Category::where('slug', 'featured-events')->firstOrFail()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
+        $newsletters = Category::where('slug', 'newsletters')->firstOrFail()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
+        $webinars = Category::where('slug', 'webinar-series')->firstOrFail()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
 
         return Inertia::render('Frontend/Pages/Home', [
             'slides' => $slides->load(['media']),
@@ -142,9 +142,9 @@ class FrontendController extends Controller
     public function category($slug, $subcategory = null, $post = null)
     {
         $segments = request()->segments();
-        $infocus = Category::where('slug', 'in-focus')->first()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
-        $sawteeInMedia = Category::where('slug', 'sawtee-in-media')->first()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
-        $events = Category::where('slug', 'featured-events')->first()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
+        $infocus = Category::where('slug', 'in-focus')->firstOrFail()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
+        $sawteeInMedia = Category::where('slug', 'sawtee-in-media')->firstOrFail()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
+        $events = Category::where('slug', 'featured-events')->firstOrFail()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
         $category = Category::where('slug', $slug)->firstOrFail();
         $featured_image = $category->getFirstMediaUrl('category_media');
         $category_responsive_images = $category->getFirstMedia('category_media')?->getSrcset('responsive');
@@ -216,7 +216,7 @@ class FrontendController extends Controller
             }
 
             if (!$category) {
-                $category = Category::with('parent')->where('slug', $segments[1])->first();
+                $category = Category::with('parent')->where('slug', $segments[1])->firstOrFail();
                 $post = Post::where("category_id", $category->id)->where("status", "published")->where('slug', $segments[2])->firstOrFail();
                 $media = $post->getFirstMediaUrl('post-featured-image');
                 $srcSet = $post->getFirstMedia('post-featured-image')?->getSrcSet('responsive');

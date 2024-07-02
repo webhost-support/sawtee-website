@@ -73,7 +73,11 @@ export default function EditTag({ tag, tags, isOpen, onClose }) {
               required
             />
 
-            {errors.name && <FormErrorMessage className="mt-2">{errors.name}</FormErrorMessage>}
+            {errors.name && (
+              <FormErrorMessage className="mt-2">
+                {errors.name}
+              </FormErrorMessage>
+            )}
           </FormControl>
         </ModalBody>
         <ModalFooter>

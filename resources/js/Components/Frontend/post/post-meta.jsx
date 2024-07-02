@@ -3,7 +3,14 @@ import { Box, HStack, Text } from '@chakra-ui/react';
 
 const PostMeta = ({ author, date, readingTime, ...rest }) => (
   <Box className="post-meta" {...rest}>
-    <HStack rowGap="2" columnGap="8" justify={'start'} align={'center'} flexWrap={'wrap'} fontSize={'sm'}>
+    <HStack
+      rowGap="2"
+      columnGap="8"
+      justify={'start'}
+      align={'center'}
+      flexWrap={'wrap'}
+      fontSize={'sm'}
+    >
       {readingTime && <Text p={0}>Reading Time: {readingTime}</Text>}
       {author && <Text p={0}>Author: {author}</Text>}
       {date && (

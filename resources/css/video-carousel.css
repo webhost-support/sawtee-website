@@ -17,4 +17,9 @@
 .thumbs-swiper .thumb-slide {
    width: 100% !important;
    height: auto !important;
+   opacity: 0.4;
+}
+
+.thumbs-swiper .swiper-slide-thumb-active {
+   opacity: 1;
 }

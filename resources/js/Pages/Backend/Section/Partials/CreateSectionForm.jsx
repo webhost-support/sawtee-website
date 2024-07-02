@@ -2,24 +2,24 @@ import ContentEditor from '@/Components/Backend/ContentEditor';
 import FileUpload, { PreviewImage } from '@/Components/Backend/FileUpload';
 import PrimaryButton from '@/Components/Backend/PrimaryButton';
 import {
-    Box,
-    Button,
-    FormControl,
-    FormErrorMessage,
-    FormLabel,
-    HStack,
-    Input,
-    NumberDecrementStepper,
-    NumberIncrementStepper,
-    NumberInput,
-    NumberInputField,
-    NumberInputStepper,
-    Radio,
-    Select,
-    SimpleGrid,
-    Stack,
-    VStack,
-    useToast,
+  Box,
+  Button,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  HStack,
+  Input,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  Radio,
+  Select,
+  SimpleGrid,
+  Stack,
+  VStack,
+  useToast,
 } from '@chakra-ui/react';
 import { useForm } from '@inertiajs/react';
 import React from 'react';
@@ -62,7 +62,12 @@ export default function CreateSectionForm({ sections, pages }) {
   return (
     <form onSubmit={submit}>
       <VStack spacing={8} position={'sticky'} top={'2rem'}>
-        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} alignItems={'start'} w="full">
+        <SimpleGrid
+          columns={{ base: 1, md: 2 }}
+          spacing={10}
+          alignItems={'start'}
+          w="full"
+        >
           <FormControl isInvalid={errors.title} isRequired>
             <FormLabel htmlFor="title">Section Title</FormLabel>
 
@@ -76,7 +81,9 @@ export default function CreateSectionForm({ sections, pages }) {
               onChange={e => setData('title', e.target.value)}
             />
 
-            {errors.title && <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>}
+            {errors.title && (
+              <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>
+            )}
           </FormControl>
 
           <HStack gap={10}>
@@ -93,19 +100,28 @@ export default function CreateSectionForm({ sections, pages }) {
                 onChange={e => setData('link', e.target.value)}
               />
 
-              {errors.link && <FormErrorMessage mt={2}>{errors.link}</FormErrorMessage>}
+              {errors.link && (
+                <FormErrorMessage mt={2}>{errors.link}</FormErrorMessage>
+              )}
             </FormControl>
 
             <FormControl maxW="32" isRequired isInvalid={errors.order}>
               <FormLabel htmlFor="order">Order</FormLabel>
-              <NumberInput id="order" name="order" defaultValue={0} onChange={e => setData('order', e.target.value)}>
+              <NumberInput
+                id="order"
+                name="order"
+                defaultValue={0}
+                onChange={e => setData('order', e.target.value)}
+              >
                 <NumberInputField />
                 <NumberInputStepper>
                   <NumberIncrementStepper />
                   <NumberDecrementStepper />
                 </NumberInputStepper>
               </NumberInput>
-              {errors.order && <FormErrorMessage mt={2}>{errors.order}</FormErrorMessage>}
+              {errors.order && (
+                <FormErrorMessage mt={2}>{errors.order}</FormErrorMessage>
+              )}
             </FormControl>
           </HStack>
         </SimpleGrid>
@@ -164,7 +180,9 @@ export default function CreateSectionForm({ sections, pages }) {
               })}
             </Stack>
 
-            {errors.type && <FormErrorMessage mt={2}>{errors.type}</FormErrorMessage>}
+            {errors.type && (
+              <FormErrorMessage mt={2}>{errors.type}</FormErrorMessage>
+            )}
           </FormControl>
 
           {data.type !== 'default' && (
@@ -235,7 +253,9 @@ export default function CreateSectionForm({ sections, pages }) {
               />
             </FileUpload>
           )}
-          {errors.image && <FormErrorMessage mt={2}>{errors.image}</FormErrorMessage>}
+          {errors.image && (
+            <FormErrorMessage mt={2}>{errors.image}</FormErrorMessage>
+          )}
         </FormControl>
 
         <FormControl mt={4} isInvalid={errors.description}>
@@ -245,10 +265,14 @@ export default function CreateSectionForm({ sections, pages }) {
             name="description"
             id="description"
             initialValue=""
-            onChange={(evt, editor) => setData('description', editor.getContent())}
+            onChange={(evt, editor) =>
+              setData('description', editor.getContent())
+            }
           />
 
-          {errors.description && <FormErrorMessage mt={2}>{errors.description}</FormErrorMessage>}
+          {errors.description && (
+            <FormErrorMessage mt={2}>{errors.description}</FormErrorMessage>
+          )}
         </FormControl>
 
         <Box display="flex" gap="4" mt="4">

@@ -8,7 +8,14 @@ export const SocialMenu = ({ menu, ...props }) => (
     {menu &&
       menu.map(item => {
         const SocialIcon = icons[item.name];
-        return <SocialMenuItem key={item.name} label={item.name} link={item.link} icon={SocialIcon} />;
+        return (
+          <SocialMenuItem
+            key={item.name}
+            label={item.name}
+            link={item.link}
+            icon={SocialIcon}
+          />
+        );
       })}
   </SiteMenu>
 );

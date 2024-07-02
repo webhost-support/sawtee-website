@@ -1,8 +1,17 @@
 import { RightQuotesIcon } from '@/Components/Frontend/icons';
-import { Avatar, Icon, Stack, Text, VStack, useColorModeValue } from '@chakra-ui/react';
+import {
+  Avatar,
+  Icon,
+  Stack,
+  Text,
+  VStack,
+  useColorModeValue,
+} from '@chakra-ui/react';
 
 const TeamMember = ({ member, ...rest }) => {
-  const avatar = member.media.filter(media => media.collection_name === 'avatar')[0];
+  const avatar = member.media.filter(
+    media => media.collection_name === 'avatar'
+  )[0];
   return (
     <VStack
       spacing={3}
@@ -27,7 +36,12 @@ const TeamMember = ({ member, ...rest }) => {
       />
       <Text>{member.bio}</Text>
       <Stack direction="column" w="full" spacing={0}>
-        <Text fontWeight="semibold" fontSize="lg" align="right" mr="3rem !important">
+        <Text
+          fontWeight="semibold"
+          fontSize="lg"
+          align="right"
+          mr="3rem !important"
+        >
           {member.name}
         </Text>
         <Text fontSize="sm" align="right" mr="3rem !important">

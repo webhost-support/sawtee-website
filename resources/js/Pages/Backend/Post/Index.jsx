@@ -1,6 +1,9 @@
 import { FrontDataTable } from '@/Components/Backend/FrontDataTable';
 import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import { TableDeleteAction, TableEditAction } from '@/Components/Backend/TableActions';
+import {
+  TableDeleteAction,
+  TableEditAction,
+} from '@/Components/Backend/TableActions';
 import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
 import { HStack, Select, Tag, useDisclosure } from '@chakra-ui/react';
 import { Head, Link, router, useForm } from '@inertiajs/react';
@@ -81,7 +84,11 @@ export default function Index({ auth, posts, categories, categoryID }) {
         header: 'Tags',
       }),
       columnHelper.accessor('status', {
-        cell: info => <Tag colorScheme={getStatusColor(info.getValue())}>{info.getValue()}</Tag>,
+        cell: info => (
+          <Tag colorScheme={getStatusColor(info.getValue())}>
+            {info.getValue()}
+          </Tag>
+        ),
         header: 'Status',
       }),
       columnHelper.accessor('author', {
@@ -98,7 +105,9 @@ export default function Index({ auth, posts, categories, categoryID }) {
                 isDisabled={processing}
               />
               <TableDeleteAction
-                onClick={e => handleDelete(e, info.getValue(), selectedCategory)}
+                onClick={e =>
+                  handleDelete(e, info.getValue(), selectedCategory)
+                }
                 isDisabled={processing}
               />
             </HStack>
@@ -113,7 +122,12 @@ export default function Index({ auth, posts, categories, categoryID }) {
   return (
     <AuthenticatedLayout user={auth.user}>
       <Head title="Posts" />
-      <DeletePostModal isOpen={isOpen} onClose={onClose} postId={postId} categoryId={selectedCategory} />
+      <DeletePostModal
+        isOpen={isOpen}
+        onClose={onClose}
+        postId={postId}
+        categoryId={selectedCategory}
+      />
       <HStack mb={4}>
         <Link href={route('admin.posts.create', selectedCategory)}>
           <PrimaryButton>Create New Post</PrimaryButton>
@@ -134,7 +148,10 @@ export default function Index({ auth, posts, categories, categoryID }) {
             ))}
         </Select>
       </HStack>
-      <FrontDataTable defaultColumns={defaultColumns} data={posts}></FrontDataTable>
+      <FrontDataTable
+        defaultColumns={defaultColumns}
+        data={posts}
+      ></FrontDataTable>
     </AuthenticatedLayout>
   );
 }

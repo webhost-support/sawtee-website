@@ -30,7 +30,7 @@ export default function CreatePageForm() {
     content: '',
     image: '',
     meta_title: '',
-      meta_description: '',
+    meta_description: '',
     file: null,
   });
   const toast = useToast();
@@ -84,7 +84,9 @@ export default function CreatePageForm() {
               }}
             />
 
-            {errors.name && <FormErrorMessage mt={2}>{errors.name}</FormErrorMessage>}
+            {errors.name && (
+              <FormErrorMessage mt={2}>{errors.name}</FormErrorMessage>
+            )}
           </FormControl>
 
           <FormControl mt="4" isInvalid={errors.slug}>
@@ -100,7 +102,9 @@ export default function CreatePageForm() {
               display="flex"
               mt={1}
             />
-            {errors.slug && <FormErrorMessage mt={2}>{errors.slug}</FormErrorMessage>}
+            {errors.slug && (
+              <FormErrorMessage mt={2}>{errors.slug}</FormErrorMessage>
+            )}
           </FormControl>
         </VStack>
         <VStack gap="6" alignItems="start">
@@ -130,7 +134,10 @@ export default function CreatePageForm() {
               onChange={e => setData('meta_description', e.target.value)}
             />
 
-            <FormErrorMessage message={errors.meta_description} className="mt-2" />
+            <FormErrorMessage
+              message={errors.meta_description}
+              className="mt-2"
+            />
           </FormControl>
         </VStack>
       </SimpleGrid>
@@ -175,7 +182,9 @@ export default function CreatePageForm() {
             />
           </FileUpload>
         )}
-        {errors.image && <FormErrorMessage mt={2}>{errors.image}</FormErrorMessage>}
+        {errors.image && (
+          <FormErrorMessage mt={2}>{errors.image}</FormErrorMessage>
+        )}
       </FormControl>
 
       <FormControl mt={4}>
@@ -184,7 +193,11 @@ export default function CreatePageForm() {
         <InputGroup cursor={'pointer'}>
           <InputLeftAddon children={<FileIcon />} />
           <Box position="relative">
-            <Input size="md" isReadOnly placeholder={filename ? filename : 'click to select file'} />
+            <Input
+              size="md"
+              isReadOnly
+              placeholder={filename ? filename : 'click to select file'}
+            />
             <Input
               type="file"
               height="100%"
@@ -230,7 +243,9 @@ export default function CreatePageForm() {
           onChange={(evt, editor) => setData('content', editor.getContent())}
         />
 
-        {errors.content && <FormErrorMessage mt={2}>{errors.content}</FormErrorMessage>}
+        {errors.content && (
+          <FormErrorMessage mt={2}>{errors.content}</FormErrorMessage>
+        )}
       </FormControl>
 
       <Box display="flex" gap="4" mt="4">

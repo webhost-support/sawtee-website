@@ -5,7 +5,17 @@ import InertiaChakraLink from '@/Components/Frontend/styles/inertia-chakra-link'
 import InertiaChakraLinkOverlay from '@/Components/Frontend/styles/inertia-chakra-link-overlay';
 import Section from '@/Components/Frontend/styles/section';
 import SubscriptionCard from '@/Components/Frontend/subscriptionCard';
-import { Box, Grid, GridItem, Image, LinkBox, SimpleGrid, Text, VStack, useColorModeValue } from '@chakra-ui/react';
+import {
+  Box,
+  Grid,
+  GridItem,
+  Image,
+  LinkBox,
+  SimpleGrid,
+  Text,
+  VStack,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import { Link } from '@inertiajs/react';
 import React from 'react';
 import MainLayout from '../Layout/MainLayout';
@@ -25,21 +35,48 @@ export default function PublicationsArchive({
       <WebsiteHead
         title={category.meta_title ? category.meta_title : category.name}
         description={category.meta_description}
-        image={featured_image ? featured_image.original_url : '/assets/logo-sawtee.webp'}
+        image={
+          featured_image
+            ? featured_image.original_url
+            : '/assets/logo-sawtee.webp'
+        }
       />
-      <PageLayout featured_image={featured_image} srcSet={srcSet} title={category.name} showBackgroundPattern={false}>
-        <Section pb="80px" py={{ base: '24px', lg: '80px' }} px={{ base: '32px', lg: '80px' }} size={'full'} mx="auto">
+      <PageLayout
+        featured_image={featured_image}
+        srcSet={srcSet}
+        title={category.name}
+        showBackgroundPattern={false}
+      >
+        <Section
+          pb="80px"
+          py={{ base: '24px', lg: '80px' }}
+          px={{ base: '32px', lg: '80px' }}
+          size={'full'}
+          mx="auto"
+        >
           <Grid
             templateColumns={{ base: '1fr', xl: 'repeat(6, 1fr)' }}
             gap={10}
             pos={'relative'}
             placeContent={'center'}
           >
-            <GridItem colSpan={{ base: 1, xl: 4 }} px={4} className="publication-slider-wrapper">
-              <ItemsList items={category.children} publications={publications} />
+            <GridItem
+              colSpan={{ base: 1, xl: 4 }}
+              px={4}
+              className="publication-slider-wrapper"
+            >
+              <ItemsList
+                items={category.children}
+                publications={publications}
+              />
             </GridItem>
 
-            <GridItem colSpan={{ base: 1, xl: 2 }} as={VStack} spacing={12} className="sidebar">
+            <GridItem
+              colSpan={{ base: 1, xl: 2 }}
+              as={VStack}
+              spacing={12}
+              className="sidebar"
+            >
               {sawteeInMedia && (
                 <SidebarWidget
                   array={sawteeInMedia}
@@ -49,7 +86,12 @@ export default function PublicationsArchive({
                 />
               )}
               {infocus && (
-                <SidebarWidget array={infocus} title={'Infocus'} link={'/category/infocus'} maxW={['md', 'lg', 'xl']} />
+                <SidebarWidget
+                  array={infocus}
+                  title={'Infocus'}
+                  link={'/category/infocus'}
+                  maxW={['md', 'lg', 'xl']}
+                />
               )}
 
               {showSubscriptionBox && (
@@ -84,7 +126,10 @@ const ItemComponent = ({ item, lastItem, publications, ...rest }) => {
         mb={30}
       >
         {
-          <Link title={`Explore ${item.name}`} href={`/category/publications/${item.slug}`}>
+          <Link
+            title={`Explore ${item.name}`}
+            href={`/category/publications/${item.slug}`}
+          >
             {item.name}
           </Link>
         }
@@ -117,7 +162,11 @@ const ItemComponent = ({ item, lastItem, publications, ...rest }) => {
                 >
                   <InertiaChakraLinkOverlay
                     title={publication.title}
-                    href={publication.file ? `/publications/${publication.file.name}` : '#'}
+                    href={
+                      publication.file
+                        ? `/publications/${publication.file.name}`
+                        : '#'
+                    }
                     target="_blank"
                   >
                     <Image
@@ -134,8 +183,15 @@ const ItemComponent = ({ item, lastItem, publications, ...rest }) => {
                   </InertiaChakraLinkOverlay>
                 </LinkBox>
                 {publication.title && (
-                  <InertiaChakraLink href={`/publications/${publication.file.name}`}>
-                    <Text mt={4} fontSize="sm" fontWeight="semibold" textAlign="center">
+                  <InertiaChakraLink
+                    href={`/publications/${publication.file.name}`}
+                  >
+                    <Text
+                      mt={4}
+                      fontSize="sm"
+                      fontWeight="semibold"
+                      textAlign="center"
+                    >
                       {publication.title}
                     </Text>
                     {publication.subtitle && (
@@ -152,7 +208,11 @@ const ItemComponent = ({ item, lastItem, publications, ...rest }) => {
       )}
       {item.children && item.children.length > 0 && (
         <React.Fragment key={item.id}>
-          <RenderItems items={item.children} publications={publications} ml={8} />
+          <RenderItems
+            items={item.children}
+            publications={publications}
+            ml={8}
+          />
         </React.Fragment>
       )}
     </Box>
@@ -163,7 +223,12 @@ const ItemComponent = ({ item, lastItem, publications, ...rest }) => {
 const RenderItems = ({ items, publications, ...rest }) => {
   return items.map((item, i) => (
     <React.Fragment key={item.id}>
-      <ItemComponent item={item} lastItem={i === items.length - 1} publications={publications} {...rest} />
+      <ItemComponent
+        item={item}
+        lastItem={i === items.length - 1}
+        publications={publications}
+        {...rest}
+      />
     </React.Fragment>
   ));
 };
