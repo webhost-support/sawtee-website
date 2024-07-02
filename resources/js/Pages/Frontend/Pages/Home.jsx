@@ -1,14 +1,14 @@
 import {
     CarouselSection,
+    ExploreButton,
     FeaturedPublications,
     InfocusSection,
     OutreachSection,
     PublicationsSection,
     Title,
     TwoColumnImageSection,
-    VideosSection,
+    VideosSection
 } from "@/Components/Frontend";
-import { ExploreButton } from "@/Components/Frontend/ExploreButton";
 import WebsiteHead from "@/Components/Frontend/Head";
 import { Newsletter } from "@/Components/Frontend/newsletter";
 import { Box, Grid, GridItem, useColorModeValue } from "@chakra-ui/react";
