@@ -12,16 +12,16 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { Link } from '@inertiajs/react';
-import React from 'react';
 import { GlassBox } from '..';
 import InertiaChakraLinkOverlay from '../styles/inertia-chakra-link-overlay';
 
-const SearchModal = ({ posts, query, children, ...rest }) => (
+const SearchModal = ({ posts, query, isOpen, children, ...rest }) => (
   <Modal
     isCentered
     size={{ base: 'lg', md: 'xl', lg: '3xl' }}
     scrollBehavior="inside"
     motionPreset="scale"
+    isOpen={isOpen}
     {...rest}
   >
     <ModalOverlay

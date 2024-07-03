@@ -47,11 +47,10 @@ const Contact = ({ content, pageData }) => {
               <Text as="span" fontWeight={'semibold'}>
                 Working days:{' ' + 'Monday-Friday'}
               </Text>
-              <Text as="span" fontWeight={'semibold'}></Text>
               <br />
               <Text as="span" fontWeight={'semibold'} fontSize={'md'}>
                 Office hours:
-                {' ' + pageData.opening_hours}
+                {` ${pageData.opening_hours}`}
               </Text>
             </Heading>
             <VStack
@@ -92,11 +91,11 @@ const Contact = ({ content, pageData }) => {
             <SocialMenu ml="0" menu={pageData.social_menus} />
           </Box>
 
-          <Box p={8}>
+          <Box p={8} maxH="400px">
             <Zoom>
               <Image
-                width={'100%'}
-                height="400px"
+                width="full"
+                height="inherit"
                 src={pageData.location_image}
               />
             </Zoom>
@@ -108,10 +107,11 @@ const Contact = ({ content, pageData }) => {
               src={pageData.map_url}
               width="100%"
               height="500"
-              allowfullscreen="true"
+              allowFullScreen="true"
               loading="lazy"
+              title="map"
               referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
+            />
           </AspectRatio>
         )}
       </Box>

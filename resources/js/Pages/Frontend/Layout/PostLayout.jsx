@@ -26,8 +26,8 @@ const PostLayout = ({
       })
     : null;
 
-  const shareUrl = isProgramPost
-    ? `https://ankursingh.com.np/programme/${post.category.slug}/${post.slug}`
+  const shareUrl = post.category.parent
+    ? `https://ankursingh.com.np/${post.category.parent.slug}/${post.category.slug}/${post.slug}`
     : `https://ankursingh.com.np/${post.category.slug}/${post.slug}`;
 
   return (
@@ -66,7 +66,11 @@ const PostLayout = ({
             mt={4}
           />
           {children}
-          <SocialShare url={shareUrl} />
+          <SocialShare
+            url={shareUrl}
+            title={post.title}
+            excerpt={post.excerpt}
+          />
         </Content>
       )}
     </LightPatternBox>

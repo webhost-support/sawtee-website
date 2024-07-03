@@ -58,7 +58,7 @@ class Handler extends ExceptionHandler
         $response = parent::render($request, $e);
         $status = $response->getStatusCode();
 
-        if (app()->environment(['local', 'testing'])) {
+        if (app()->environment(['local', 'testing', 'development'])) {
             return $response;
         }
 

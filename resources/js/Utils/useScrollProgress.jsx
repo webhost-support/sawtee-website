@@ -8,7 +8,7 @@ import {
 import { debounce } from './helpers';
 
 // check if we're in a browser or server environment
-const isBrowser = typeof window !== `undefined`;
+const isBrowser = typeof window !== 'undefined';
 
 // use the correct effect
 const useEnhancedEffect = isBrowser ? useLayoutEffect : useEffect;

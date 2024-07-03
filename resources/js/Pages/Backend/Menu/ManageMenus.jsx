@@ -34,7 +34,7 @@ import EditMenuForm from './Partials/EditMenu';
 
 export default function ManageMenu({ auth, categories, sections, menus, pages, desiredMenu, menuItems }) {
   const editMenu = useDisclosure();
-  const [firstLevelMenuItems, setFirstLevelMenuItems] = useState(menuItems);
+  const [firstLevelMenuItems, setFirstLevelMenuItems] = useState(null);
   const { get } = useForm();
 
   const handleMenuSlected = (e, id) => {
@@ -44,10 +44,9 @@ export default function ManageMenu({ auth, categories, sections, menus, pages, d
 
   useEffect(() => {
     const newMenuItems = [];
-    menuItems &&
       menuItems
         .toSorted((a, b) => a.order - b.order)
-        .map(menuItem => {
+        ?.map(menuItem => {
           if (!menuItem.parent_id) {
             newMenuItems.push(menuItem);
           }
@@ -60,7 +59,12 @@ export default function ManageMenu({ auth, categories, sections, menus, pages, d
       <Head title="Manage Menus" />
 
       {editMenu.isOpen && (
-        <EditMenuForm isOpen={editMenu.isOpen} onOpen={editMenu.onOpen} onClose={editMenu.onClose} menu={desiredMenu} />
+        <EditMenuForm
+          isOpen={editMenu.isOpen}
+          onOpen={editMenu.onOpen}
+          onClose={editMenu.onClose}
+          menu={desiredMenu}
+        />
       )}
 
       <GlassBox mb={6} p={6}>
@@ -79,7 +83,11 @@ export default function ManageMenu({ auth, categories, sections, menus, pages, d
                 ))}
               </Select>
             </Box>
-            <Button variant={'outline'} colorScheme="blue" onClick={editMenu.onOpen}>
+            <Button
+              variant={'outline'}
+              colorScheme="blue"
+              onClick={editMenu.onOpen}
+            >
               Edit selected menu
             </Button>
           </HStack>
@@ -96,8 +104,16 @@ export default function ManageMenu({ auth, categories, sections, menus, pages, d
         gridGap={10}
       >
         <GridItem colSpan={1}>
-          <Box borderBottom={'5px solid'} borderColor={useColorModeValue('primary.300', 'primary.500')}>
-            <Box p={2} bg={useColorModeValue('primary.500', 'primary.700')} w="max-content" color="white">
+          <Box
+            borderBottom={'5px solid'}
+            borderColor={useColorModeValue('primary.300', 'primary.500')}
+          >
+            <Box
+              p={2}
+              bg={useColorModeValue('primary.500', 'primary.700')}
+              w="max-content"
+              color="white"
+            >
               Add Menu Items
             </Box>
           </Box>
@@ -107,37 +123,57 @@ export default function ManageMenu({ auth, categories, sections, menus, pages, d
                 options={categories}
                 name="categories"
                 menu={desiredMenu}
-                menuItems={menuItems ? menuItems : null}
+                menuItems={menuItems}
               />
 
-              <AddToMenu options={pages} name="pages" menu={desiredMenu} menuItems={menuItems ? menuItems : null} />
+              <AddToMenu
+                options={pages}
+                name="pages"
+                menu={desiredMenu}
+                menuItems={menuItems}
+              />
 
               <AddToMenu
                 options={sections}
                 name="sections"
                 menu={desiredMenu}
                 pages={pages}
-                menuItems={menuItems ? menuItems : null}
+                menuItems={menuItems}
               />
 
-              <AddToMenu name="custom link" menu={desiredMenu} menuItems={menuItems ? menuItems : null} />
+              <AddToMenu
+                name="custom link"
+                menu={desiredMenu}
+                menuItems={menuItems}
+              />
             </Box>
           )}
         </GridItem>
         <GridItem colSpan={1}>
-          <Box borderBottom={'5px solid'} borderColor={useColorModeValue('primary.300', 'primary.500')}>
-            <Box p={2} bg={useColorModeValue('primary.500', 'primary.700')} w="max-content" color="white">
+          <Box
+            borderBottom={'5px solid'}
+            borderColor={useColorModeValue('primary.300', 'primary.500')}
+          >
+            <Box
+              p={2}
+              bg={useColorModeValue('primary.500', 'primary.700')}
+              w="max-content"
+              color="white"
+            >
               Menu Structure
             </Box>
           </Box>
-          <MenuStructure firstLevelMenuItems={firstLevelMenuItems} menuItems={menuItems} />
+          <MenuStructure
+            firstLevelMenuItems={firstLevelMenuItems}
+            menuItems={menuItems}
+          />
         </GridItem>
       </Grid>
     </AuthenticatedLayout>
   );
 }
 
-const AddToMenu = ({ options, name, menu, menuItems, pages = null }) => {
+const AddToMenu = ({ options, name, menu, menuItems }) => {
   const [selectedData, setSelectedData] = useState(null);
   const [parent, setParent] = useState(null);
 
@@ -146,61 +182,39 @@ const AddToMenu = ({ options, name, menu, menuItems, pages = null }) => {
     title: '',
     name: '',
     url: '',
-    order: menuItems.filter(menuItem => !menuItem.parent_id).length + 1,
-    parent_id: 0,
+    order: '',
+    parent_id: '',
   });
   const toast = useToast();
 
-  useEffect(() => {
-    if (selectedData) {
-      let url = '';
-      switch (name) {
-        case 'pages':
-          url = `/${selectedData.slug}`;
-          break;
-        case 'sections':
-          const slug = slugify(selectedData.title);
-          url = `/#${slug}`;
-          break;
-        case 'categories':
-          url = selectedData.parent
-            ? `/category/${selectedData.parent.slug}/${selectedData.slug}`
-            : `/category/${selectedData.slug}`;
-          break;
-        default:
-          url = `/${selectedData.slug}`;
+  function handleSelected(selected) {
+    let url = '';
+    switch (name) {
+      case 'pages':
+        url = `/${selected.slug}`;
+        break;
+      case 'sections': {
+        const slug = slugify(selected.title);
+        url = `/#${slug}`;
+        break;
       }
+      case 'categories':
+        url = selected.parent
+          ? `/category/${selected.parent.slug}/${selected.slug}`
+          : `/category/${selected.slug}`;
+        break;
+      default:
+        url = `/${selected.slug}`;
+    }
 
-      setData({
-        menu_id: menu.id,
-        title: selectedData.name || selectedData.title,
-        order: data.order,
-        name: selectedData.name || selectedData.title,
-        url: url,
-      });
-    }
-  }, [selectedData]);
-
-  useEffect(() => {
-    let slug = '';
-    if (parent) {
-      slug = pages ? slugify(selectedData.title || selectedData.name) : '';
-      const page = pages?.filter(page => page.id === selectedData.page_id)[0];
-      setData({
-        ...data,
-        order: menuItems.filter(menuItem => menuItem.id === parent)[0].children.length + 1,
-        url: pages ? `/${page.slug}#${slug}` : data.url,
-      });
-    }
-    if (parent === 0) {
-      slug = slugify(selectedData.title || selectedData.name);
-      setData({
-        ...data,
-        order: menuItems.filter(menuItem => !menuItem.parent_id).length + 1,
-        url: pages ? `/#${slug}` : data.url,
-      });
-    }
-  }, [parent]);
+    setData({
+      ...data,
+      title: selected.name || selected.title,
+      name: selected.name || selected.title,
+      order: menuItems.filter(menuItem => !menuItem.parent_id).length + 1,
+      url: url,
+    });
+  }
 
   const addToMenu = e => {
     e.preventDefault();
@@ -229,7 +243,12 @@ const AddToMenu = ({ options, name, menu, menuItems, pages = null }) => {
       <Accordion allowToggle>
         <AccordionItem>
           <AccordionButton>
-            <Box as="span" flex="1" textAlign="left" textTransform={'capitalize'}>
+            <Box
+              as="span"
+              flex="1"
+              textAlign="left"
+              textTransform={'capitalize'}
+            >
               Add {name}
             </Box>
             <AccordionIcon />
@@ -242,41 +261,64 @@ const AddToMenu = ({ options, name, menu, menuItems, pages = null }) => {
                   <Select
                     name={name}
                     id={name}
-                    placeholder={'Select ' + name}
+                    placeholder={`Select ${name}`}
                     value={selectedData ? selectedData.id : ''}
                     onChange={e => {
-                      const selected = options.filter(option => option.id === e.target.value)[0];
+                      const selected = options.filter(
+                        option => option.id === Number(e.target.value)
+                      )[0];
                       setSelectedData(selected);
+                      handleSelected(selected);
                     }}
                   >
-                    {options &&
-                      options.map(option => {
-                        return (
-                          <option key={option.id} value={option.id}>
-                            {option.name || option.title}
-                          </option>
-                        );
-                      })}
+                    {options?.map(option => {
+                      return (
+                        <option key={option.id} value={option.id}>
+                          {option.name || option.title}
+                        </option>
+                      );
+                    })}
                   </Select>
                 </FormControl>
               )}
 
               <FormControl isRequired isInvalid={errors.title}>
                 <FormLabel htmlFor="title">Title</FormLabel>
-                <Input name="title" id="title" value={data.title} onChange={e => setData('title', e.target.value)} />
-                {errors.title && <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>}
+                <Input
+                  name="title"
+                  id="title"
+                  value={data.title}
+                  onChange={e => setData('title', e.target.value)}
+                />
+                {errors.title && (
+                  <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>
+                )}
               </FormControl>
 
               <FormControl isRequired isInvalid={errors.name}>
                 <FormLabel htmlFor="name">Name</FormLabel>
-                <Input name="name" id="name" value={data.name} onChange={e => setData('name', e.target.value)} />
-                {errors.name && <FormErrorMessage mt={2}>{errors.name}</FormErrorMessage>}
+                <Input
+                  name="name"
+                  id="name"
+                  value={data.name}
+                  onChange={e => setData('name', e.target.value)}
+                />
+                {errors.name && (
+                  <FormErrorMessage mt={2}>{errors.name}</FormErrorMessage>
+                )}
               </FormControl>
 
               <FormControl isRequired isInvalid={errors.url}>
                 <FormLabel htmlFor="url">URL</FormLabel>
-                <Input name="url" id="url" value={data.url} onChange={e => setData('url', e.target.value)} />
-                {errors.url && <FormErrorMessage mt={2}>{errors.url}</FormErrorMessage>}
+                <Input
+                  name="url"
+                  id="url"
+                  value={data.url}
+                  onChange={e => setData('url', e.target.value)}
+                />
+                {errors.url && (
+                  <FormErrorMessage mt={2}>{errors.url}</FormErrorMessage>
+                )}
               </FormControl>
 
               <FormControl isInvalid={errors.order}>
@@ -288,30 +330,40 @@ const AddToMenu = ({ options, name, menu, menuItems, pages = null }) => {
                   value={data.order}
                   onChange={e => setData('order', e.target.value)}
                 />
-                {errors.order && <FormErrorMessage mt={2}>{errors.order}</FormErrorMessage>}
+                {errors.order && (
+                  <FormErrorMessage mt={2}>{errors.order}</FormErrorMessage>
+                )}
               </FormControl>
-              {menuItems && (
-                <FormControl isInvalid={errors.parent_id}>
-                  <FormLabel htmlFor="parent_id">Select parent menu item</FormLabel>
-                  <Select
-                    name="parent_id"
-                    id="parent_id"
-                    placeholder="Select parent"
-                    value={parent ? parent : ''}
-                    onChange={e => {
-                      setParent(Number(e.target.value));
-                      setData('parent_id', e.target.value);
-                    }}
-                  >
-                    {menuItems.map(menuItem => (
-                      <option key={menuItem.id} value={menuItem.id}>
-                        {menuItem.title}
-                      </option>
-                    ))}
-                  </Select>
-                  {errors.parent_id && <FormErrorMessage mt={2}>{errors.parent_id}</FormErrorMessage>}
-                </FormControl>
-              )}
+              <FormControl isInvalid={errors.parent_id}>
+                <FormLabel htmlFor="parent_id">
+                  Select parent menu item
+                </FormLabel>
+                <Select
+                  name="parent_id"
+                  id="parent_id"
+                  placeholder="Select parent"
+                  value={data.parent_id}
+                  onChange={e => {
+                    const order = menuItems.filter(
+                      menuItem => menuItem.id === Number(e.target.value)
+                    )[0].children.length + 1;
+                    setData({
+                      ...data,
+                      order: order,
+                      parent_id: e.target.value,
+                    });
+                  }}
+                >
+                  {menuItems?.map(menuItem => (
+                    <option key={menuItem.id} value={menuItem.id}>
+                      {menuItem.title}
+                    </option>
+                  ))}
+                </Select>
+                {errors.parent_id && (
+                  <FormErrorMessage mt={2}>{errors.parent_id}</FormErrorMessage>
+                )}
+              </FormControl>
 
               <Button
                 mt={4}
@@ -383,9 +435,9 @@ const MenuItemsList = ({ firstLevelMenuItems, menuItems, ...rest }) => {
       )}
 
       <List display="flex" flexDir={'column'} gap="3" {...rest}>
-        {firstLevelMenuItems?.map((item, idx) => {
+        {firstLevelMenuItems?.map(item => {
           return (
-            <Accordion allowToggle>
+            <Accordion allowToggle key={item.name}>
               <AccordionItem p={2}>
                 <ListItem key={item.id}>
                   <HStack justify={'space-between'}>
@@ -429,8 +481,6 @@ const MenuItemsList = ({ firstLevelMenuItems, menuItems, ...rest }) => {
                       <MenuItemsList
                         firstLevelMenuItems={item.children}
                         menuItems={menuItems}
-                        handleDeleteMenuItem={handleDeleteMenuItem}
-                        handleEditMenuItem={handleEditMenuItem}
                         ml={6}
                         px={6}
                         gap="2"

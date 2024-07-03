@@ -9,8 +9,11 @@
 
     <!-- Loads default(Inter) google fonts -->
     @googlefonts
-    @googlefonts('figtree')
+    {{-- @googlefonts('figtree') --}}
     @googlefonts('code')
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
     <!-- Load nprogress style -->
     <link defer rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
     @routes

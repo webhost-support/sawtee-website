@@ -1,5 +1,6 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+  "organizeImports": { "enabled": true },
   "formatter": {
     "enabled": true,
     "formatWithErrors": false,
@@ -10,11 +11,11 @@
     "attributePosition": "auto",
     "ignore": ["**/build", "**/coverage"]
   },
-  "organizeImports": { "enabled": true },
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": false,
+      "recommended": true,
+
       "complexity": {
         "noForEach": "error",
         "noStaticOnlyClass": "error",
@@ -37,7 +38,11 @@
   "overrides": [
     {
       "include": ["tests/**"],
-      "linter": { "rules": { "suspicious": { "noDoubleEquals": "off" } } }
+      "linter": {
+        "rules": {
+          "suspicious": { "noDoubleEquals": "off" }
+        }
+      }
     }
   ],
   "javascript": {

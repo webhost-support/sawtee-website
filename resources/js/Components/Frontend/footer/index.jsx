@@ -69,171 +69,36 @@ const Widget = ({ item }) => {
     'var(--chakra-colors-whiteAlpha-900)'
   );
 
-  if (item.title.includes('Contact')) {
-    return (
-      <Stack align="flex-start" id={item.title}>
-        <ListHeader>{item.title}</ListHeader>
-        <VStack
-          as={UnorderedList}
-          style={{ listStyle: 'none', margin: 0 }}
-          align="flex-start"
-          spacing={3}
-        >
-          {item.children &&
-            item.children.map(child_item => {
-              const { url, title } = child_item;
-              if (title.includes('Address')) {
-                return (
-                  <ListItem key={title}>
-                    <ListIcon
-                      style={{
-                        color: linkcolor,
-                        verticalAlign: 'middle',
-                      }}
-                      as={LocationPin}
-                    />
-                    <Tooltip
-                      label={'click to view map'}
-                      hasArrow
-                      placement="top-end"
-                      openDelay={200}
-                      closeDelay={250}
-                    >
-                      <StyledChakraLink
-                        onClick={onOpen}
-                        color={linkcolor}
-                        _hover={{
-                          color: hoverColor,
-                        }}
-                      >
-                        {title}
-                      </StyledChakraLink>
-                    </Tooltip>
-                    <MapModel isOpen={isOpen} onClose={onClose} mapLink={url} />
-                  </ListItem>
-                );
-              }
-
-              if (title.includes('Fax')) {
-                return (
-                  <ListItem key={title}>
-                    <ListIcon
-                      style={{
-                        color: linkcolor,
-                        verticalAlign: 'middle',
-                      }}
-                      as={FaxIcon}
-                    />
-                    <Tooltip label={'Fax'} hasArrow placement="right-end">
-                      <StyledChakraLink
-                        color={linkcolor}
-                        _hover={{
-                          color: hoverColor,
-                        }}
-                      >
-                        {title}
-                      </StyledChakraLink>
-                    </Tooltip>
-                  </ListItem>
-                );
-              }
-              if (title.includes('Phone')) {
-                return (
-                  <ListItem key={title}>
-                    <ListIcon
-                      style={{
-                        color: linkcolor,
-                        verticalAlign: 'middle',
-                      }}
-                      as={PhoneIcon}
-                    />
-                    <StyledChakraLink
-                      href={url ? url : null}
-                      color={linkcolor}
-                      _hover={{
-                        color: hoverColor,
-                      }}
-                    >
-                      {title}
-                    </StyledChakraLink>
-                  </ListItem>
-                );
-              }
-              if (title.includes('Email')) {
-                return (
-                  <ListItem key={title}>
-                    <ListIcon
-                      style={{
-                        color: linkcolor,
-                        verticalAlign: 'middle',
-                      }}
-                      as={EmailIcon}
-                    />
-                    <StyledChakraLink
-                      href={url ? url : null}
-                      color={linkcolor}
-                      _hover={{
-                        color: hoverColor,
-                      }}
-                    >
-                      {title}
-                    </StyledChakraLink>
-                  </ListItem>
-                );
-              }
-              if (title.includes('Box')) {
-                return (
-                  <ListItem key={title}>
-                    <ListIcon
-                      style={{
-                        color: linkcolor,
-                        verticalAlign: 'middle',
-                      }}
-                      as={MailBoxIcon}
-                      fill="none"
-                      strokeWidth={2}
-                    />
-                    <StyledChakraLink
-                      href={url ? url : null}
-                      color={linkcolor}
-                      _hover={{
-                        color: hoverColor,
-                      }}
-                    >
-                      {title}
-                    </StyledChakraLink>
-                  </ListItem>
-                );
-              }
-            })}
-        </VStack>
-      </Stack>
-    );
-  } else {
-    return (
-      <Stack align="flex-start" id={item.title}>
-        <ListHeader>{item.title}</ListHeader>
-        <VStack
-          as={UnorderedList}
-          style={{ listStyle: 'none', margin: 0 }}
-          align={'flex-start'}
-          spacing={3}
-        >
-          {item.children &&
-            item.children.map(child_item => {
-              const { url, title } = child_item;
-
-              return (
-                <ListItem key={title}>
-                  <ListIcon
-                    as={CaretRightIcon}
-                    style={{
-                      verticalAlign: 'middle',
-                      color: linkcolor,
-                    }}
-                  />
+  item.title.includes('Contact') ? (
+    <Stack align="flex-start" id={item.title}>
+      <ListHeader>{item.title}</ListHeader>
+      <VStack
+        as={UnorderedList}
+        style={{ listStyle: 'none', margin: 0 }}
+        align="flex-start"
+        spacing={3}
+      >
+        {item.children?.map(child_item => {
+          const { url, title } = child_item;
+          if (title.includes('Address')) {
+            return (
+              <ListItem key={title}>
+                <ListIcon
+                  style={{
+                    color: linkcolor,
+                    verticalAlign: 'middle',
+                  }}
+                  as={LocationPin}
+                />
+                <Tooltip
+                  label={'click to view map'}
+                  hasArrow
+                  placement="top-end"
+                  openDelay={200}
+                  closeDelay={250}
+                >
                   <StyledChakraLink
-                    href={url}
+                    onClick={onOpen}
                     color={linkcolor}
                     _hover={{
                       color: hoverColor,
@@ -241,13 +106,143 @@ const Widget = ({ item }) => {
                   >
                     {title}
                   </StyledChakraLink>
-                </ListItem>
-              );
-            })}
-        </VStack>
-      </Stack>
-    );
-  }
+                </Tooltip>
+                <MapModel isOpen={isOpen} onClose={onClose} mapLink={url} />
+              </ListItem>
+            );
+          }
+
+          if (title.includes('Fax')) {
+            return (
+              <ListItem key={title}>
+                <ListIcon
+                  style={{
+                    color: linkcolor,
+                    verticalAlign: 'middle',
+                  }}
+                  as={FaxIcon}
+                />
+                <Tooltip label={'Fax'} hasArrow placement="right-end">
+                  <StyledChakraLink
+                    href={url ? url : null}
+                    color={linkcolor}
+                    _hover={{
+                      color: hoverColor,
+                    }}
+                  >
+                    {title}
+                  </StyledChakraLink>
+                </Tooltip>
+              </ListItem>
+            );
+          }
+          if (title.includes('Phone')) {
+            return (
+              <ListItem key={title}>
+                <ListIcon
+                  style={{
+                    color: linkcolor,
+                    verticalAlign: 'middle',
+                  }}
+                  as={PhoneIcon}
+                />
+                <StyledChakraLink
+                  href={url ? url : null}
+                  color={linkcolor}
+                  _hover={{
+                    color: hoverColor,
+                  }}
+                >
+                  {title}
+                </StyledChakraLink>
+              </ListItem>
+            );
+          }
+          if (title.includes('Email')) {
+            return (
+              <ListItem key={title}>
+                <ListIcon
+                  style={{
+                    color: linkcolor,
+                    verticalAlign: 'middle',
+                  }}
+                  as={EmailIcon}
+                />
+                <StyledChakraLink
+                  href={url ? url : null}
+                  color={linkcolor}
+                  _hover={{
+                    color: hoverColor,
+                  }}
+                >
+                  {title}
+                </StyledChakraLink>
+              </ListItem>
+            );
+          }
+          if (title.includes('Box')) {
+            return (
+              <ListItem key={title}>
+                <ListIcon
+                  style={{
+                    color: linkcolor,
+                    verticalAlign: 'middle',
+                  }}
+                  as={MailBoxIcon}
+                  fill="none"
+                  strokeWidth={2}
+                />
+                <StyledChakraLink
+                  href={url ? url : null}
+                  color={linkcolor}
+                  _hover={{
+                    color: hoverColor,
+                  }}
+                >
+                  {title}
+                </StyledChakraLink>
+              </ListItem>
+            );
+          }
+        })}
+      </VStack>
+    </Stack>
+  ) : (
+    <Stack align="flex-start" id={item.title}>
+      <ListHeader>{item.title}</ListHeader>
+      <VStack
+        as={UnorderedList}
+        style={{ listStyle: 'none', margin: 0 }}
+        align={'flex-start'}
+        spacing={3}
+      >
+        {item.children?.map(child_item => {
+          const { url, title } = child_item;
+
+          return (
+            <ListItem key={title}>
+              <ListIcon
+                as={CaretRightIcon}
+                style={{
+                  verticalAlign: 'middle',
+                  color: linkcolor,
+                }}
+              />
+              <StyledChakraLink
+                href={url}
+                color={linkcolor}
+                _hover={{
+                  color: hoverColor,
+                }}
+              >
+                {title}
+              </StyledChakraLink>
+            </ListItem>
+          );
+        })}
+      </VStack>
+    </Stack>
+  )
 };
 
 const Footer = ({ menu = null, socialMenu = null }) => {

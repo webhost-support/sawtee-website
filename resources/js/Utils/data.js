@@ -259,7 +259,6 @@ export const DashBoardMenuItems = [
     icon: Users,
     route: 'admin.teams.index',
   },
-  ,
   {
     name: 'Slider',
     icon: SliderIcon,

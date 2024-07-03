@@ -72,7 +72,9 @@ export default function Index({ auth, posts, categories, categoryID }) {
         header: 'Title',
       }),
       columnHelper.accessor('category.name', {
-        cell: info => <Tag colorScheme="green">{info.getValue()}</Tag>,
+        cell: info => {
+          <Tag colorScheme="green">{info.getValue()}</Tag>;
+        },
         header: 'Category',
       }),
       columnHelper.accessor('theme.title', {
@@ -80,7 +82,9 @@ export default function Index({ auth, posts, categories, categoryID }) {
         header: 'Theme',
       }),
       columnHelper.accessor('tags', {
-        cell: info => <TagsColumn tags={info.getValue()} />,
+        cell: info => {
+          <TagsColumn tags={info.getValue()} />;
+        },
         header: 'Tags',
       }),
       columnHelper.accessor('status', {
@@ -116,7 +120,7 @@ export default function Index({ auth, posts, categories, categoryID }) {
         header: 'Actions',
       }),
     ],
-    []
+    [selectedCategory, processing]
   );
 
   return (
@@ -140,18 +144,14 @@ export default function Index({ auth, posts, categories, categoryID }) {
           onChange={e => handleCategoryFilter(e, e.target.value)}
           defaultValue={selectedCategory}
         >
-          {categories &&
-            categories.map(category => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
+          {categories?.map(category => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
         </Select>
       </HStack>
-      <FrontDataTable
-        defaultColumns={defaultColumns}
-        data={posts}
-      ></FrontDataTable>
+      <FrontDataTable defaultColumns={defaultColumns} data={posts} />
     </AuthenticatedLayout>
   );
 }

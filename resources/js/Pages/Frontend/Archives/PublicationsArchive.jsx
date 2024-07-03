@@ -7,6 +7,7 @@ import Section from '@/Components/Frontend/styles/section';
 import SubscriptionCard from '@/Components/Frontend/subscriptionCard';
 import {
   Box,
+  Divider,
   Grid,
   GridItem,
   Image,
@@ -55,16 +56,15 @@ export default function PublicationsArchive({
           mx="auto"
         >
           <Grid
-            templateColumns={{ base: '1fr', xl: 'repeat(6, 1fr)' }}
+            templateColumns={{
+              base: '1fr',
+              md: 'repeat(4, 1fr)',
+              xl: 'repeat(6, 1fr)',
+            }}
             gap={10}
-            pos={'relative'}
             placeContent={'center'}
           >
-            <GridItem
-              colSpan={{ base: 1, xl: 4 }}
-              px={4}
-              className="publication-slider-wrapper"
-            >
+            <GridItem as="section" colSpan={{ base: 1, md: 2, xl: 4 }}>
               <ItemsList
                 items={category.children}
                 publications={publications}
@@ -72,10 +72,13 @@ export default function PublicationsArchive({
             </GridItem>
 
             <GridItem
-              colSpan={{ base: 1, xl: 2 }}
-              as={VStack}
-              spacing={12}
+              colSpan={{ base: 1, md: 2, xl: 2 }}
+              as={'aside'}
+              display={'flex'}
+              flexDirection={'column'}
+              alignItems={'center'}
               className="sidebar"
+              gap={12}
             >
               {sawteeInMedia && (
                 <SidebarWidget
@@ -107,38 +110,29 @@ export default function PublicationsArchive({
   );
 }
 
-const ItemComponent = ({ item, lastItem, publications, ...rest }) => {
+const ItemComponent = ({ item, publications, ...rest }) => {
   return (
-    <Box
-      key={item.name}
-      py={12}
-      borderBottom={!lastItem ? '2px solid' : 'none'}
-      borderColor={useColorModeValue('blackAlpha.400', 'whiteAlpha.400')}
-      {...rest}
-    >
-      <Text
-        as="h3"
-        id={item.name}
-        fontSize={{ base: 'xl', lg: '2xl' }}
-        fontFamily="heading"
-        fontWeight={'bold'}
-        color={'var(--color-text)'}
-        mb={30}
+    <Box key={item.name} w="full" {...rest}>
+      <InertiaChakraLink
+        as={Link}
+        title={`Explore ${item.name}`}
+        textDecor="underline"
+        href={`/category/publications/${item.slug}`}
       >
-        {
-          <Link
-            title={`Explore ${item.name}`}
-            href={`/category/publications/${item.slug}`}
-          >
-            {item.name}
-          </Link>
-        }
-      </Text>
+        <Text
+          as="h3"
+          id={item.name}
+          fontSize={{ base: 'xl', lg: '2xl' }}
+          pb={8}
+        >
+          {item.name}
+        </Text>
+      </InertiaChakraLink>
       {publications[item.slug] && publications[item.slug].length > 0 && (
         <SimpleGrid minChildWidth={'140px'} spacing={10}>
           {publications[item.slug].map(publication => {
             return (
-              <Box>
+              <Box key={publication.id}>
                 <LinkBox
                   as="article"
                   maxW={'140px'}
@@ -148,7 +142,7 @@ const ItemComponent = ({ item, lastItem, publications, ...rest }) => {
                     position: 'absolute',
                     top: 0,
                     left: 0,
-                    width: `100%`,
+                    width: '100%',
                     height: '100%',
                     borderRadius: 'var(--chakra-radii-md)',
                     background: 'rgba(0,0,0,0.1)',
@@ -161,6 +155,7 @@ const ItemComponent = ({ item, lastItem, publications, ...rest }) => {
                   }}
                 >
                   <InertiaChakraLinkOverlay
+                    as={Link}
                     title={publication.title}
                     href={
                       publication.file
@@ -184,6 +179,7 @@ const ItemComponent = ({ item, lastItem, publications, ...rest }) => {
                 </LinkBox>
                 {publication.title && (
                   <InertiaChakraLink
+                    as={Link}
                     href={`/publications/${publication.file.name}`}
                   >
                     <Text
@@ -208,10 +204,11 @@ const ItemComponent = ({ item, lastItem, publications, ...rest }) => {
       )}
       {item.children && item.children.length > 0 && (
         <React.Fragment key={item.id}>
-          <RenderItems
+          <ItemsList
             items={item.children}
             publications={publications}
             ml={8}
+            pt={0}
           />
         </React.Fragment>
       )}
@@ -219,21 +216,24 @@ const ItemComponent = ({ item, lastItem, publications, ...rest }) => {
   );
 };
 
-// Recursive function to render items and their children
-const RenderItems = ({ items, publications, ...rest }) => {
-  return items.map((item, i) => (
-    <React.Fragment key={item.id}>
-      <ItemComponent
-        item={item}
-        lastItem={i === items.length - 1}
-        publications={publications}
-        {...rest}
-      />
-    </React.Fragment>
-  ));
-};
-
 // Main component that receives the data
-const ItemsList = ({ items, publications }) => {
-  return <RenderItems items={items} publications={publications} />;
+const ItemsList = ({ items, publications, ...rest }) => {
+  return (
+    <VStack spacing={4} pos="sticky" top="8rem">
+      {items.map((item, i) => (
+        <React.Fragment key={item.id}>
+          <ItemComponent item={item} publications={publications} {...rest} />
+          {i < items.length - 1 && (
+            <Divider
+              my={12}
+              borderColor={useColorModeValue(
+                'blackAlpha.400',
+                'whiteAlpha.400'
+              )}
+            />
+          )}
+        </React.Fragment>
+      ))}
+    </VStack>
+  );
 };

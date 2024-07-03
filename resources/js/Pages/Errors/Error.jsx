@@ -2,7 +2,7 @@ import Page404 from '@/Components/Frontend/page404';
 import { Head } from '@inertiajs/react';
 import MainLayout from '../Frontend/Layout/MainLayout';
 
-const Error = ({ status, message }) => {
+const ErrorPage = ({ status, message }) => {
   return (
     <MainLayout>
       <Head>
@@ -13,4 +13,4 @@ const Error = ({ status, message }) => {
   );
 };
 
-export default Error;
+export default ErrorPage;

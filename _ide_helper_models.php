@@ -170,6 +170,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $content
+ * @property array|null $pageData
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $media
  * @property-read int|null $media_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Section> $sections
@@ -185,6 +186,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Page whereMetaDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Page whereMetaTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Page whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Page wherePageData($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Page whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Page whereUpdatedAt($value)
  */
@@ -258,11 +260,12 @@ namespace App\Models{
  * @property string|null $meta_description
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property string|null $published_at
  * @property-read \App\Models\Category $category
  * @property-read \App\Models\File|null $file
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $media
  * @property-read int|null $media_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tag> $tags
+ * @property-read int|null $tags_count
  * @method static \Illuminate\Database\Eloquent\Builder|Publication newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Publication newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Publication query()
@@ -272,7 +275,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Publication whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Publication whereMetaDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Publication whereMetaTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Publication wherePublishedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Publication whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Publication whereSubtitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Publication whereTitle($value)
@@ -445,6 +447,8 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Post> $posts
  * @property-read int|null $posts_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Publication> $publications
+ * @property-read int|null $publications_count
  * @method static \Database\Factories\TagFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Tag newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Tag newQuery()

@@ -18,20 +18,20 @@ function generateGradient() {
   ];
 
   function populate(a) {
+    let b;
     for (let i = 0; i < 6; i++) {
       const x = Math.round(Math.random() * 14);
       const y = hexValues[x];
-      a += y;
+      b = a + y;
     }
-    return a;
+    return b;
   }
 
   const newColor1 = populate('#');
   const newColor2 = populate('#');
   const angle = Math.round(Math.random() * 240);
 
-  const gradient =
-    'linear-gradient(' + angle + 'deg, ' + newColor1 + ', ' + newColor2 + ')';
+  const gradient = `linear-gradient(' + ${angle} + 'deg, ' + ${newColor1} + ', ' + ${newColor2} + ')`;
 
   return gradient;
 }

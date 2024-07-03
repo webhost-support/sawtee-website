@@ -10,24 +10,31 @@ import {
   XIcon,
 } from 'react-share';
 
-const SocialShare = ({ url }) => {
+const SocialShare = ({ url, title, excerpt }) => {
   return (
     <Box mt="8">
       <HStack>
         <Text fontSize={'2xl'} fontWeight={'semibold'}>
           Share:{' '}
         </Text>
-        <FacebookShareButton
-          url={url}
-          children={<FacebookIcon size="28px" />}
-        />
-        <TwitterShareButton url={url} children={<XIcon size="28px" />} />
+        <FacebookShareButton url={url}>
+          <FacebookIcon size="28px" />
+        </FacebookShareButton>
+        <TwitterShareButton url={url} title={title} related={['SAWTEENP']}>
+          <XIcon size="28px" />
+        </TwitterShareButton>
         <LinkedinShareButton
           url={url}
-          children={<LinkedinIcon size="28px" />}
-        />
+          title={title}
+          summary={excerpt}
+          source="SAWTEE"
+        >
+          <LinkedinIcon size="28px" />{' '}
+        </LinkedinShareButton>
 
-        <EmailShareButton url={url} children={<EmailIcon size="28px" />} />
+        <EmailShareButton url={url}>
+          <EmailIcon size="28px" />
+        </EmailShareButton>
       </HStack>
     </Box>
   );

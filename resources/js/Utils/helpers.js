@@ -118,6 +118,7 @@ const formatDay = day => {
       break;
     case '3':
       result = `${day}<sup>rd</sup>`;
+      break;
     default:
       result = `${day}<sup>th</sup>`;
       break;

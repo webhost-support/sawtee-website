@@ -62,7 +62,6 @@ class MenuController extends Controller
     {
         $desiredMenu = $id ? Menu::where('id', $id)->firstOrFail() : Menu::orderby('id', 'DESC')->first();
         $menu_items = $desiredMenu ? Menuitem::with(['children' ])->where('menu_id', $desiredMenu->id)->orderBy('order', 'ASC')->get() : null;
-
         // $categories =
         // dd($menu_items);
         return Inertia::render('Backend/Menu/ManageMenus', [

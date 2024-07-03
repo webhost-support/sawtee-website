@@ -1,6 +1,5 @@
 import PrimaryButton from '@/Components/Backend/PrimaryButton';
 import {
-  Box,
   Button,
   FormControl,
   FormErrorMessage,
@@ -19,7 +18,7 @@ import {
 import { useForm } from '@inertiajs/react';
 
 export default function EditMenuForm({ isOpen, onClose, menu }) {
-  const { data, setData, patch, processing, errors, reset } = useForm({
+  const { data, setData, post, processing, errors, reset } = useForm({
     title: menu.title,
     location: menu.location,
   });
@@ -28,28 +27,34 @@ export default function EditMenuForm({ isOpen, onClose, menu }) {
   const submit = e => {
     e.preventDefault();
 
-    patch(route('admin.update.menu', menu), {
-      preserveScroll: true,
-      onSuccess: () => {
-        toast({
-          position: 'top-right',
-          title: 'Menu edited.',
-          description: 'Menu edited Successfully',
-          status: 'success',
-          duration: 6000,
-          isClosable: true,
-        });
-        onClose();
-      },
-      onError: errors => {
-        if (errors.title) {
-          reset('title');
-        }
-        if (errors.location) {
-          reset('location');
-        }
-      },
-    });
+    post(
+      route('admin.update.menu', {
+        _method: 'patch',
+        menu: menu,
+      }),
+      {
+        preserveScroll: true,
+        onSuccess: () => {
+          toast({
+            position: 'top-right',
+            title: 'Menu edited.',
+            description: 'Menu edited Successfully',
+            status: 'success',
+            duration: 6000,
+            isClosable: true,
+          });
+          onClose();
+        },
+        onError: errors => {
+          if (errors.title) {
+            reset('title');
+          }
+          if (errors.location) {
+            reset('location');
+          }
+        },
+      }
+    );
   };
 
   return (

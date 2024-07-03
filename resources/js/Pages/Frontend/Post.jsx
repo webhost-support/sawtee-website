@@ -16,7 +16,7 @@ export default function Post({ post, featured_image, srcSet, file }) {
   return (
     <MainLayout>
       <WebsiteHead
-        title={category.name + ' | ' + title}
+        title={`${category.name} | ${title}`}
         description={post.meta_description}
         image={featured_image ? featured_image : '/assets/logo-sawtee.webp'}
       />
@@ -33,6 +33,7 @@ export default function Post({ post, featured_image, srcSet, file }) {
         {isDefault && (
           <Box maxW="5xl" className="default_post_content">
             <Text
+              // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
               dangerouslySetInnerHTML={{
                 __html: content,
               }}

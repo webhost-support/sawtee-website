@@ -6,7 +6,6 @@ import Section from '@/Components/Frontend/styles/section';
 import { formatDate } from '@/Utils/helpers';
 import {
   ArrowForwardIcon,
-  ChevronDownIcon,
   ChevronRightIcon,
   ExternalLinkIcon,
 } from '@chakra-ui/icons';
@@ -29,7 +28,6 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
   SimpleGrid,
@@ -40,6 +38,7 @@ import {
 import styled from '@emotion/styled';
 import { Link } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
+import Zoom from 'react-medium-image-zoom';
 import SimpleList from './SimpleList';
 import { Blob } from './icons';
 
@@ -257,7 +256,7 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
         <ExploreButton
           size={['xs', 'sm']}
           text="More in sawtee in media "
-          link={`/category/sawtee-in-media`}
+          link={'/category/sawtee-in-media'}
         />
       </GridItem>
 
@@ -326,7 +325,7 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
         <ExploreButton
           size={['xs', 'sm']}
           text="More on featured events"
-          link={`/category/featured-events`}
+          link={'/category/featured-events'}
         />
       </GridItem>
     </Grid>
@@ -529,11 +528,11 @@ export function DebouncedInput({
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      onChange(value);
+      setValue(value);
     }, debounce);
 
     return () => clearTimeout(timeout);
-  }, [value]);
+  }, [value, debounce]);
 
   return (
     <Input {...props} value={value} onChange={e => setValue(e.target.value)} />
@@ -608,54 +607,6 @@ export const GlassBox = ({ children, ...rest }) => {
   );
 };
 
-export const Accordian = ({ data }) => {
-  const [accordianData, setAccordianData] = useState([...data]);
-
-  const ChangeAccordianOpenState = (id, open) => {
-    const newState = accordianData.map(obj => {
-      // 👇️ if id equals 2d, update open property
-      if (obj.open === true) {
-        return { ...obj, open: false };
-      }
-      if (obj.id === id) {
-        return { ...obj, open: !open };
-      }
-
-      // 👇️ otherwise return object as is
-      return obj;
-    });
-
-    setAccordianData(newState);
-  };
-
-  function createMarkup(content) {
-    return { __html: `${content}` };
-  }
-
-  return (
-    <Wrapper>
-      {accordianData.map(({ name, content, id, open }) => {
-        return (
-          <li key={id} onClick={() => ChangeAccordianOpenState(id, open)}>
-            <div className="accordian-item">
-              <p>{name}</p>
-              {open ? (
-                <ChevronDownIcon size={'3rem'} />
-              ) : (
-                <ChevronRightIcon size={'3rem'} />
-              )}
-            </div>
-            {open ? (
-              <div className="accordian-content">
-                <p dangerouslySetInnerHTML={createMarkup(content)} />
-              </div>
-            ) : null}
-          </li>
-        );
-      })}
-    </Wrapper>
-  );
-};
 
 export const Title = ({ title, ...rest }) => {
   return (
@@ -695,32 +646,33 @@ export const MapModel = ({ isOpen, onClose, mapLink }) => {
       motionPreset="slideInBottom"
       closeOnOverlayClick={true}
       scrollBehavior="inside"
-      size={'xl'}
+      size={'full'}
     >
       <ModalOverlay />
       <ModalContent bg={modalContentColor}>
         <ModalHeader color={modelHeaderColor}>Our Location</ModalHeader>
         <ModalCloseButton />
-        <ModalBody margin={'0 auto'}>
-          <Image
-            objectFit={'cover'}
-            src={'/assets/location-map-resized.webp'}
-          />
-        </ModalBody>
+        <ModalBody px="8">
+          <Flex gap={2}>
+            <Zoom>
+              <Image
+                objectFit={'cover'}
+                src={'/assets/location-map-resized.webp'}
+              />
+            </Zoom>
 
-        <ModalFooter>
-          <Button
-            as={InertiaChakraLink}
-            size="sm"
-            variant="solid"
-            colorScheme={'primary'}
-            href="https://goo.gl/maps/fwZuwNSbjN5jwZia7"
-            target="_blank"
-            onClick={onClose}
-          >
-            Open in Google Map
-          </Button>
-        </ModalFooter>
+            <iframe
+              src={
+                'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3531.8576852768524!2d85.329329!3d27.72168!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1913dfb0b0b3%3A0x4d5d3519d24d3c38!2sSouth%20Asia%20Watch%20on%20Trade%2C%20Economics%20and%20Environment%20(SAWTEE)!5e0!3m2!1sen!2snp!4v1700216228197!5m2!1sen!2snp'
+              }
+              width="100%"
+              allowFullScreen="true"
+              loading="lazy"
+              title="sawtee location map"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </Flex>
+        </ModalBody>
       </ModalContent>
     </Modal>
   );

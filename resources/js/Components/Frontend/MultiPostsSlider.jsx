@@ -50,7 +50,7 @@ const MultiPostsCarousel = ({
       });
       Object.assign(swiperElRef.current, params);
     }
-  }, [windowSize]);
+  }, []);
 
   return (
     <swiper-container
@@ -60,7 +60,7 @@ const MultiPostsCarousel = ({
       navigation={false}
       pagination={pagination}
       keyboard={true}
-      scrollbar={scrollbar ? true : false}
+      scrollbar={scrollbar}
       space-between={spacing}
       grab-cursor={true}
       direction={direction ? direction : 'horizontal'}

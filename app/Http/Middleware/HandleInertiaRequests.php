@@ -34,8 +34,8 @@ class HandleInertiaRequests extends Middleware
   public function share(Request $request): array
   {
     $experts = Team::orderBy('order', 'ASC')->take(6)->get();
-    $primaryMenu = Menu::where('location', 'header')->first();
-    $footerMenu = Menu::where('location', 'footer')->first();
+    $primaryMenu = Menu::where('location', 'header')->firstOrFail();
+    $footerMenu = Menu::where('location', 'footer')->firstOrFail();
     $primaryMenuItems = null;
     $footerMenuItems = null;
     if ($primaryMenu) {
@@ -49,10 +49,11 @@ class HandleInertiaRequests extends Middleware
     if ($footerMenu) {
       $footerMenuItems = MenuItem::with('children')
         ->where('menu_id', $footerMenu->id)
-        ->where('parent_id', null)
+        ->where('parent_id', 0)
         ->orderBy('order', 'ASC')
         ->get();
     }
+
 
     return array_merge(parent::share($request), [
       'auth' => [

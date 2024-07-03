@@ -30,7 +30,7 @@ export const PatternBox = ({ showPattern = false, ...props }) => (
     borderTop="10px solid"
     borderColor={'primary.500'}
     {...(showPattern && {
-      bgImage: `url(/assets/pattern-tile-green.svg)`,
+      bgImage: 'url(/assets/pattern-tile-green.svg)',
       bgSize: '1018px',
       bgPos: 'top center',
     })}

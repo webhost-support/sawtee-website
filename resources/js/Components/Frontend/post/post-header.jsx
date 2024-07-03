@@ -1,5 +1,4 @@
-import { Box, Heading, useColorModeValue } from '@chakra-ui/react';
-import React from 'react';
+import { Box, Heading } from '@chakra-ui/react';
 import PostCategories from './post-categories';
 
 const PostHeader = ({
@@ -28,8 +27,9 @@ const PostHeader = ({
       color={color}
       my={{ base: '10px', lg: '20px' }}
       textTransform="capitalize"
-      dangerouslySetInnerHTML={{ __html: heading }}
-    />
+    >
+      {heading}
+    </Heading>
 
     {/* {description && <Text>{description}</Text>} */}
   </Box>
