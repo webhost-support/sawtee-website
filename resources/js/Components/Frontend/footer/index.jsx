@@ -68,8 +68,7 @@ const Widget = ({ item }) => {
     'var(--chakra-colors-gray-900)',
     'var(--chakra-colors-whiteAlpha-900)'
   );
-
-  item.title.includes('Contact') ? (
+  return item.title.includes('Contact') ? (
     <Stack align="flex-start" id={item.title}>
       <ListHeader>{item.title}</ListHeader>
       <VStack
@@ -242,7 +241,7 @@ const Widget = ({ item }) => {
         })}
       </VStack>
     </Stack>
-  )
+  );
 };
 
 const Footer = ({ menu = null, socialMenu = null }) => {
