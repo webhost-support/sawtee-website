@@ -11,6 +11,9 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+/**
+ * @mixin IdeHelperPage
+ */
 class Page extends Model implements HasMedia
 {
     use HasFactory;

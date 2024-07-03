@@ -5,11 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
-// use App\Models\Subscriber;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Support\Str;
 
 
 class CategoryController extends Controller
@@ -20,7 +18,6 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::with('parent')->latest()->paginate(10);
-        // dd($categories);
         return Inertia::render('Backend/Category/Index', [
             'categories' => $categories
         ]);
@@ -49,7 +46,6 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request): RedirectResponse
     {
         $validated = $request->validated();
-        $validated['slug'] = Str::slug($validated['name'], '-');
 
         if (!$request->meta_title) {
             $validated['meta_title'] = $validated['name'];
@@ -57,7 +53,7 @@ class CategoryController extends Controller
 
         $category = Category::create($validated);
 
-        if ($request->hasFile('image')) {
+        if ($request->image) {
             $category->addMediaFromRequest('image')->toMediaCollection('category_media');
         }
 
@@ -98,11 +94,11 @@ class CategoryController extends Controller
             'meta_description' => 'nullable|string|max:255',
         ]);
 
-        if ($request->meta_title === null) {
+        if (!$request->meta_title) {
             $validated['meta_title'] = $validated['name'];
         }
 
-        if ($request->hasFile('image')) {
+        if ($request->image) {
             $category->addMediaFromRequest('image')->toMediaCollection('category_media');
         }
 

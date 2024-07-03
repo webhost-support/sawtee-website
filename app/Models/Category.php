@@ -13,6 +13,9 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
+/**
+ * @mixin IdeHelperCategory
+ */
 class Category extends Model implements HasMedia
 {
   use InteractsWithMedia;
@@ -61,12 +64,14 @@ class Category extends Model implements HasMedia
 
   public function registerMediaConversions(Media $media = null): void
   {
+    // @phpstan-ignore-next-line
     $this->addMediaConversion('preview')
       ->fit(Manipulations::FIT_MAX, 300, 100)
       ->quality(75)
       ->keepOriginalImageFormat()
       ->nonQueued();
 
+    // @phpstan-ignore-next-line
     $this->addMediaConversion('responsive')
       ->fit(Manipulations::FIT_MAX, 1200, 400)
       ->performOnCollections('category_media')

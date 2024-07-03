@@ -28,7 +28,7 @@ class HandleInertiaRequests extends Middleware
 
   /**
    * Define the props that are shared by default.
-   *
+   * @param  \Illuminate\Http\Request  $request
    * @return array<string, mixed>
    */
   public function share(Request $request): array
@@ -38,21 +38,17 @@ class HandleInertiaRequests extends Middleware
     $footerMenu = Menu::where('location', 'footer')->firstOrFail();
     $primaryMenuItems = null;
     $footerMenuItems = null;
-    if ($primaryMenu) {
       $primaryMenuItems = MenuItem::with('children')
         ->where('menu_id', $primaryMenu->id)
         ->where('parent_id', null)
         ->orderBy('order', 'ASC')
         ->get();
-    }
 
-    if ($footerMenu) {
       $footerMenuItems = MenuItem::with('children')
         ->where('menu_id', $footerMenu->id)
         ->where('parent_id', 0)
         ->orderBy('order', 'ASC')
         ->get();
-    }
 
 
     return array_merge(parent::share($request), [

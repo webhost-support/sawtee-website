@@ -32,6 +32,9 @@ class PageController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @param Request $request The HTTP request object.
+     * @return \Illuminate\Http\RedirectResponse The redirect response.
      */
     public function store(Request $request)
     {
@@ -43,17 +46,17 @@ class PageController extends Controller
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string|max:255',
         ]);
-        if ($request->meta_title == null) {
+        if (!$request->meta_title) {
             $validated["meta_title"] = $validated['name'];
         }
+
         $page = Page::create($validated);
-        if ($request->hasFile('image')) {
+        if ($request->image) {
             $page->addMediaFromRequest('image')->toMediaCollection('page-media');
         }
 
-        if($request->file('file')){
-            $file = $request->file('file');
-            dd($file);
+        if($request->file){
+            $file = $request->file;
             $filename = $file->getClientOriginalName();
             $file->move(public_path('tmp'), $filename);
             $jsonData = File::json(public_path('tmp/'. $filename ));
@@ -87,6 +90,9 @@ class PageController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @param Request $request The HTTP request object.
+     * @param Page $page The model to update.
+     * @return \Illuminate\Http\RedirectResponse The redirect response.
      */
     public function update(Request $request, Page $page)
     {
@@ -96,21 +102,21 @@ class PageController extends Controller
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string|max:255',
         ]);
-        if ($request->meta_title == null) {
+        if (!$request->meta_title) {
             $validated["meta_title"] = $validated['name'];
         }
-        if ($request->hasFile('image')) {
+        if ($request->image) {
             $page->addMediaFromRequest('image')->toMediaCollection('page-media');
         }
-        if($request->file('file')){
-            $file = $request->file('file');
+        if($request->file){
+            $file = $request->file;
             $filename = $file->getClientOriginalName();
             $file->move(public_path('tmp'), $filename);
             $jsonData = File::json(public_path('tmp/'. $filename ));
-            // dd($jsonData);
             $page->pageData = $jsonData;
+            $page->save();
         }
-        $page->update($request->all());
+        $page->update($validated);
         return redirect(route('admin.pages.index'));
     }
 

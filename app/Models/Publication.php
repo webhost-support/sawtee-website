@@ -16,6 +16,9 @@ use Laravel\Scout\Attributes\SearchUsingFullText;
 use Laravel\Scout\Attributes\SearchUsingPrefix;
 
 
+/**
+ * @mixin IdeHelperPublication
+ */
 class Publication extends Model implements HasMedia
 {
     use HasFactory;

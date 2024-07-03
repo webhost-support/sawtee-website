@@ -16,6 +16,9 @@ use Laravel\Scout\Attributes\SearchUsingFullText;
 use Laravel\Scout\Attributes\SearchUsingPrefix;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+/**
+ * @mixin IdeHelperPost
+ */
 class Post extends Model implements HasMedia
 {
     use InteractsWithMedia;
@@ -81,12 +84,14 @@ class Post extends Model implements HasMedia
 
     public function registerMediaConversions(Media $media = null): void
     {
+        // @phpstan-ignore-next-line
         $this->addMediaConversion("preview")
             ->fit(Manipulations::FIT_MAX, 300, 200)
             ->format(Manipulations::FORMAT_WEBP)
             ->quality(75)
             ->nonQueued();
 
+        // @phpstan-ignore-next-line
         $this->addMediaConversion("responsive")
             ->fit(Manipulations::FIT_MAX, 1200, 800)
             ->performOnCollections("post-featured-image")

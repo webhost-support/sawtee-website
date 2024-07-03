@@ -46,8 +46,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
-	class Category extends \Eloquent implements \Spatie\MediaLibrary\HasMedia {}
+	class IdeHelperCategory {}
 }
 
 namespace App\Models{
@@ -72,8 +73,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|File whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|File wherePath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|File whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
-	class File extends \Eloquent {}
+	class IdeHelperFile {}
 }
 
 namespace App\Models{
@@ -99,8 +101,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image wherePath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
-	class Image extends \Eloquent {}
+	class IdeHelperImage {}
 }
 
 namespace App\Models{
@@ -122,8 +125,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Menu whereLocation($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Menu whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Menu whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
-	class Menu extends \Eloquent {}
+	class IdeHelperMenu {}
 }
 
 namespace App\Models{
@@ -154,8 +158,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|MenuItem whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MenuItem whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MenuItem whereUrl($value)
+ * @mixin \Eloquent
  */
-	class MenuItem extends \Eloquent {}
+	class IdeHelperMenuItem {}
 }
 
 namespace App\Models{
@@ -170,7 +175,6 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $content
- * @property array|null $pageData
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $media
  * @property-read int|null $media_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Section> $sections
@@ -186,11 +190,11 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Page whereMetaDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Page whereMetaTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Page whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Page wherePageData($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Page whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Page whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
-	class Page extends \Eloquent implements \Spatie\MediaLibrary\HasMedia {}
+	class IdeHelperPage {}
 }
 
 namespace App\Models{
@@ -242,8 +246,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereThemeId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
-	class Post extends \Eloquent implements \Spatie\MediaLibrary\HasMedia {}
+	class IdeHelperPost {}
 }
 
 namespace App\Models{
@@ -279,8 +284,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Publication whereSubtitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Publication whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Publication whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
-	class Publication extends \Eloquent implements \Spatie\MediaLibrary\HasMedia {}
+	class IdeHelperPublication {}
 }
 
 namespace App\Models{
@@ -316,8 +322,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Research whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Research whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Research whereYear($value)
+ * @mixin \Eloquent
  */
-	class Research extends \Eloquent implements \Spatie\MediaLibrary\HasMedia {}
+	class IdeHelperResearch {}
 }
 
 namespace App\Models{
@@ -353,8 +360,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Section whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Section whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Section whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
-	class Section extends \Eloquent implements \Spatie\MediaLibrary\HasMedia {}
+	class IdeHelperSection {}
 }
 
 namespace App\Models{
@@ -379,8 +387,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Slide whereSubtitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Slide whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Slide whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
-	class Slide extends \Eloquent implements \Spatie\MediaLibrary\HasMedia {}
+	class IdeHelperSlide {}
 }
 
 namespace App\Models{
@@ -403,8 +412,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Slider whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Slider wherePageId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Slider whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
-	class Slider extends \Eloquent {}
+	class IdeHelperSlider {}
 }
 
 namespace App\Models{
@@ -433,8 +443,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Subscriber whereVerifiedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Subscriber withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Subscriber withoutTrashed()
+ * @mixin \Eloquent
  */
-	class Subscriber extends \Eloquent {}
+	class IdeHelperSubscriber {}
 }
 
 namespace App\Models{
@@ -457,8 +468,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
-	class Tag extends \Eloquent {}
+	class IdeHelperTag {}
 }
 
 namespace App\Models{
@@ -486,8 +498,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Team whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Team whereOrder($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Team whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
-	class Team extends \Eloquent implements \Spatie\MediaLibrary\HasMedia {}
+	class IdeHelperTeam {}
 }
 
 namespace App\Models{
@@ -510,8 +523,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Theme whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Theme whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Theme whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
-	class Theme extends \Eloquent {}
+	class IdeHelperTheme {}
 }
 
 namespace App\Models{
@@ -542,7 +556,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
-	class User extends \Eloquent {}
+	class IdeHelperUser {}
 }
 

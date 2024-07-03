@@ -13,6 +13,7 @@ import {
   IconButton,
   Input,
   InputGroup,
+  InputLeftAddon,
   InputRightAddon,
   SimpleGrid,
   Textarea,
@@ -191,7 +192,9 @@ export default function CreatePageForm() {
         <FormLabel htmlFor="file">File Upload</FormLabel>
 
         <InputGroup cursor={'pointer'}>
-          <InputLeftAddon children={<FileIcon />} />
+          <InputLeftAddon>
+            <FileIcon />
+          </InputLeftAddon>
           <Box position="relative">
             <Input
               size="md"
@@ -219,18 +222,16 @@ export default function CreatePageForm() {
             />
           </Box>
           {filename && (
-            <InputRightAddon
-              children={
-                <IconButton
-                  icon={<CloseIcon />}
-                  color={'red.500'}
-                  onClick={() => {
-                    setFilename(null);
-                    setData('file', null);
-                  }}
-                />
-              }
-            />
+            <InputRightAddon>
+              <IconButton
+                icon={<CloseIcon />}
+                color={'red.500'}
+                onClick={() => {
+                  setFilename(null);
+                  setData('file', null);
+                }}
+              />
+            </InputRightAddon>
           )}
         </InputGroup>
       </FormControl>
