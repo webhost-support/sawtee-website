@@ -279,15 +279,14 @@ const Footer = ({ menu = null, socialMenu = null }) => {
       >
         <FooterSectionItem
           colSpan={1}
-          fontWeight="bold"
-          fontFamily="mono"
+          fontWeight="semibold"
           textTransform="uppercase"
           fontSize="md"
         >
           © {new Date().getFullYear()} {'SAWTEE'}
         </FooterSectionItem>
 
-        <FooterSectionItem colSpan={1} borderColor="accent.400">
+        <FooterSectionItem colSpan={1}>
           <SocialMenu ml="0" menu={socialMenu} />
         </FooterSectionItem>
       </Stack>

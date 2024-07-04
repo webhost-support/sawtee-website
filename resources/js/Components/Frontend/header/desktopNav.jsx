@@ -50,6 +50,24 @@ const ListContainerVariants = {
   },
 };
 
+
+const MenuLink = ({ text, link, ...rest }) => {
+  return (
+    <InertiaChakraLink
+      as={Link}
+      href={link}
+      textDecor="none"
+      _hover={{
+        textDecor: 'none',
+        color: 'white',
+      }}
+      {...rest}
+    >
+      {text}
+    </InertiaChakraLink>
+  );
+}
+
 const ExpertCard = ({ expert }) => {
   const image = expert.media[0].original_url;
   return (
@@ -159,9 +177,7 @@ const AboutMegaMenu = ({
                   pb={{ md: 3, xl: 6 }}
                   color={'gray.200'}
                 >
-                  <InertiaChakraLink as={Link} href={child.url}>
-                    {child.title}
-                  </InertiaChakraLink>
+                  <MenuLink link={child.url} text={child.title} />
                 </Box>
               );
             })}
@@ -273,9 +289,7 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                   pb={{ md: 3, xl: 6 }}
                   color={'gray.200'}
                 >
-                  <InertiaChakraLink as={Link} href={grandChild.url}>
-                    {grandChild.title}
-                  </InertiaChakraLink>
+                  <MenuLink text={grandChild.title} link={grandChild.url} />
                 </Box>
               );
             })}
@@ -288,13 +302,12 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
             if (idx !== 0) {
               return (
                 <VStack spacing={10} key={grandChildren.title}>
-                  <InertiaChakraLink
-                    as={Link}
-                    href={grandChildren.url}
+                  <MenuLink
+                    link={grandChildren.url}
+                    text={grandChildren.title}
                     fontSize="2xl"
-                  >
-                    {grandChildren.title}
-                  </InertiaChakraLink>
+                  />
+
                   <SimpleGrid
                     columns={2}
                     spacing={6}
@@ -303,29 +316,26 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                     initial={'closed'}
                     whileInView={'open'}
                   >
-                    {grandChildren.children &&
-                      grandChildren.children.map(child => {
-                        return (
-                          <Box
-                            key={child.title}
-                            as={motion.li}
-                            variants={ListVariants}
-                            fontSize={{
-                              md: 'sm',
-                              xl: 'md',
-                            }}
-                            fontWeight="medium"
-                            position="relative"
-                            cursor="pointer"
-                            pb={{ md: 3, xl: 6 }}
-                            color={'gray.200'}
-                          >
-                            <InertiaChakraLink as={Link} href={child.url}>
-                              {child.title}
-                            </InertiaChakraLink>
-                          </Box>
-                        );
-                      })}
+                    {grandChildren.children?.map(child => {
+                      return (
+                        <Box
+                          key={child.title}
+                          as={motion.li}
+                          variants={ListVariants}
+                          fontSize={{
+                            md: 'sm',
+                            xl: 'md',
+                          }}
+                          fontWeight="medium"
+                          position="relative"
+                          cursor="pointer"
+                          pb={{ md: 3, xl: 6 }}
+                          color={'gray.200'}
+                        >
+                          <MenuLink link={child.url} text={child.title} />
+                        </Box>
+                      );
+                    })}
                   </SimpleGrid>
                 </VStack>
               );
@@ -348,7 +358,8 @@ const MegaMenu = ({ item, experts = null, isOpen }) => {
         isOpen={isOpen}
       />
     );
-  } else if (item.name === 'Our Work') {
+  }
+  if (item.name === 'Our Work') {
     return <OurWorkMegaMenu item={item} isOpen={isOpen} />;
   }
 };
@@ -479,14 +490,13 @@ const DesktopNavigation = ({ menu, ...rest }) => {
       {...rest}
     >
       <SiteMenu ml="20px">
-        {menu &&
-          menu.map(navItem => {
-            return (
-              <React.Fragment key={navItem.title}>
-                <SiteMenuItem item={navItem} />
-              </React.Fragment>
-            );
-          })}
+        {menu?.map(navItem => {
+          return (
+            <React.Fragment key={navItem.title}>
+              <SiteMenuItem item={navItem} />
+            </React.Fragment>
+          );
+        })}
       </SiteMenu>
     </Box>
   );

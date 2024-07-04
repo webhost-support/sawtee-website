@@ -38,7 +38,6 @@ import {
 import styled from '@emotion/styled';
 import { Link } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
-import Zoom from 'react-medium-image-zoom';
 import SimpleList from './SimpleList';
 import { Blob } from './icons';
 
@@ -303,15 +302,20 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
                   </Box>
 
                   {featured_image && (
-                    <Box maxW="90px" w="full" aspectRatio={3 / 2}>
+                    <Box
+                      maxW="90px"
+                      w="full"
+                      aspectRatio={3 / 2}
+                      border="1px solid"
+                      borderColor={'gray.400'}
+                      p={1}
+                      rounded="md"
+                      overflow="hidden"
+                    >
                       <Image
                         src={featured_image}
-                        alt={event.title}
-                        w="full"
-                        border="1px solid"
-                        borderColor={'gray.400'}
-                        p={1}
-                        rounded="sm"
+                        objectFit="cover"
+                        alt={'Event cover image'}
                         fallbackSrc="assets/SM-placeholder-300x150.png"
                         loading="lazy"
                       />
@@ -367,14 +371,17 @@ export const FeaturedPublications = ({ publications, ...rest }) => {
   return (
     <GlassBox py={4} {...rest}>
       <SimpleList border="none" heading={'featured publications'}>
-        {publications.map(publication => {
+        {publications.map((publication, idx) => {
           const media = publication.media.length
             ? publication.media.filter(
                 media => media.collection_name === 'publication_featured_image'
               )[0].original_url
             : '/assets/SM-placeholder-150x150.png';
           return (
-            <ListItem key={publication.id} mb="1rem">
+            <ListItem
+              key={publication.id}
+              mb={idx === publications.length - 1 ? 0 : '1rem'}
+            >
               <LinkBox as={HStack} justify="space-between" gap={6}>
                 <Box w="80%">
                   <Link
@@ -405,9 +412,9 @@ export const FeaturedPublications = ({ publications, ...rest }) => {
                     }
                   >
                     <Text
-                      fontSize={'0.875rem'}
-                      fontFamily={'heading'}
-                      lineHeight={'short'}
+                      fontSize="0.875rem"
+                      fontFamily="heading"
+                      lineHeight="short"
                     >
                       {publication.title}
                     </Text>
@@ -422,17 +429,21 @@ export const FeaturedPublications = ({ publications, ...rest }) => {
                 </Box>
 
                 {media && (
-                  <Box w="20%">
+                  <Box
+                    w="20%"
+                    maxW="80px"
+                    aspectRatio={3 / 4}
+                    overflow="hidden"
+                    border="1px solid"
+                    borderColor="gray.400"
+                    rounded="md"
+                    mx="auto"
+                    p={1}
+                  >
                     <Image
                       src={media}
-                      alt={publication.title}
-                      w="60px"
-                      border="1px solid"
-                      borderColor={'gray.400'}
-                      p={1}
-                      rounded="sm"
-                      aspectRatio={3 / 4}
-                      mx="auto"
+                      objectFit="cover"
+                      alt="Publication Cover"
                       loading="lazy"
                       fallbackSrc="/assets/SM-placeholder-150x150.png"
                     />
@@ -451,9 +462,9 @@ export const PublicationsSection = ({ publications }) => {
   return (
     <MultiPostsCarousel
       spacing={30}
-      pagination={'false'}
-      navigation={'true'}
-      scrollbar={'false'}
+      pagination={false}
+      navigation={true}
+      scrollbar={true}
       link={'/category/publications'}
       text={'More in publications'}
     >
@@ -654,13 +665,10 @@ export const MapModel = ({ isOpen, onClose, mapLink }) => {
         <ModalCloseButton />
         <ModalBody px="8">
           <Flex gap={2}>
-            <Zoom>
-              <Image
-                objectFit={'cover'}
-                src={'/assets/location-map-resized.webp'}
-              />
-            </Zoom>
-
+            <Image
+              objectFit={'cover'}
+              src={'/assets/location-map-resized.webp'}
+            />
             <iframe
               src={
                 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3531.8576852768524!2d85.329329!3d27.72168!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1913dfb0b0b3%3A0x4d5d3519d24d3c38!2sSouth%20Asia%20Watch%20on%20Trade%2C%20Economics%20and%20Environment%20(SAWTEE)!5e0!3m2!1sen!2snp!4v1700216228197!5m2!1sen!2snp'

@@ -1,5 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
-import { HStack, IconButton, useBreakpoint } from '@chakra-ui/react';
+import { HStack, IconButton } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 
 // import required modules
@@ -19,7 +19,6 @@ const MultiPostsCarousel = ({
   ...rest
 }) => {
   const swiperElRef = useRef(null);
-  const windowSize = useBreakpoint();
   const [progressValue, setProgressValue] = useState(0);
   const params = {
     breakpoints: {

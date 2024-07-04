@@ -15,7 +15,6 @@ use App\Models\Team;
 use App\Models\Theme;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Redirect;
 
 // use Spatie\Newsletter\Facades\Newsletter;
 
@@ -53,7 +52,6 @@ function getPosts($category, $slug)
 
 class FrontendController extends Controller
 {
-
     /**
      * Retrieves data for the home page and renders the 'Frontend/Pages/Home' view.
      *
@@ -117,7 +115,7 @@ class FrontendController extends Controller
         }
 
         if ($slug === 'home') {
-            return Redirect::route('home');
+            return to_route('home');
         }
 
         return Inertia::render('Frontend/Page', [
@@ -153,7 +151,7 @@ class FrontendController extends Controller
         // If route is for publications category
         if ($slug === 'publications' && !$subcategory) {
             $publications = $category->getAllPublicationsPost($category);
-// dd($publications);
+            // dd($publications);
             return Inertia::render('Frontend/Archives/PublicationsArchive', [
                 'category' => $category,
                 'infocus' => $infocus,
@@ -189,8 +187,8 @@ class FrontendController extends Controller
         // if route is for category/category-slug/subcategory eg: sawtee.org/category/programmes/ongoing-programmes/
         if ($subcategory) {
             $category = Category::with('parent')->where('slug', $subcategory)->first();
-            if($slug === 'publications'){
-                if ( count($category->children) > 0) {
+            if ($slug === 'publications') {
+                if (count($category->children) > 0) {
                     $publications = $category->getAllPublicationsPost($category);
                     return Inertia::render('Frontend/Archives/PublicationsArchive', [
                         'category' => $category,
@@ -199,7 +197,7 @@ class FrontendController extends Controller
                         'publications' => $publications,
                         'srcSet' => $category_responsive_images
                     ]);
-                }else {
+                } else {
                     $publications = Publication::where('category_id', $category->id)->orderByDesc('id')->paginate(12);
 
                 }
