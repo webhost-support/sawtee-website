@@ -1,0 +1,79 @@
+Template-Type: ReDIF-Series 1.0
+Name: Working Papers
+Provider-Name: South Asia Watch on Trade, Economics and Environment
+Provider-Homepage: https://sawtee.org/
+Provider-Institution: RePEc:edi:sawtenp
+Maintainer-Name: Ankur Singh
+Maintainer-Email: ankur.singh@sawtee.org
+Type: ReDIF-Paper
+Handle: RePEc:saw:wpaper
+
+Template-Type: ReDIF-Series 1.0
+Name: Issue Brief
+Provider-Name: South Asia Watch on Trade, Economics and Environment
+Provider-Homepage: https://sawtee.org/
+Provider-Institution: RePEc:edi:sawtenp
+Maintainer-Name: Ankur Singh
+Maintainer-Email: ankur.singh@sawtee.org
+Type: ReDIF-Paper
+Handle: RePEc:saw:ibrief
+
+Template-Type: ReDIF-Series 1.0
+Name: Policy Briefs
+Provider-Name: South Asia Watch on Trade, Economics and Environment
+Provider-Homepage: https://sawtee.org/
+Provider-Institution: RePEc:edi:sawtenp
+Maintainer-Name: Ankur Singh
+Maintainer-Email: ankur.singh@sawtee.org
+Type: ReDIF-Paper
+Handle: RePEc:saw:pbrief
+
+Template-Type: ReDIF-Series 1.0
+Name: Research Papers
+Provider-Name: South Asia Watch on Trade, Economics and Environment
+Provider-Homepage: https://sawtee.org/
+Provider-Institution: RePEc:edi:sawtenp
+Maintainer-Name: Ankur Singh
+Maintainer-Email: ankur.singh@sawtee.org
+Type: ReDIF-Paper
+Handle: RePEc:saw:rpaper
+
+Template-Type: ReDIF-Series 1.0
+Name: Books
+Provider-Name: South Asia Watch on Trade, Economics and Environment
+Provider-Homepage: https://sawtee.org/
+Provider-Institution: RePEc:edi:sawtenp
+Maintainer-Name: Ankur Singh
+Maintainer-Email: ankur.singh@sawtee.org
+Type: ReDIF-Book
+Handle: RePEc:saw:wbooks
+
+Template-Type: ReDIF-Series 1.0
+Name: South Asian cooperation: Issues old and new (Edited volume)
+Provider-Name: South Asia Watch on Trade, Economics and Environment
+Provider-Homepage: https://sawtee.org/
+Provider-Institution: RePEc:edi:sawtenp
+Maintainer-Name: Ankur Singh
+Maintainer-Email: ankur.singh@sawtee.org
+Type: ReDIF-Chapter
+Handle: RePEc:saw:SACSER
+
+Template-Type: ReDIF-Series 1.0
+Name: Regional Economic Integration: Challenges for South Asia during turbulent times (Edited volume)
+Provider-Name: South Asia Watch on Trade, Economics and Environment
+Provider-Homepage: https://sawtee.org/
+Provider-Institution: RePEc:edi:sawtenp
+Maintainer-Name: Ankur Singh
+Maintainer-Email: ankur.singh@sawtee.org
+Type: ReDIF-Chapter
+Handle: RePEc:saw:REISER
+
+Template-Type: ReDIF-Series 1.0
+Name: Initiating Dialogue on Post-Disaster Reconstruction (Edited volume)
+Provider-Name: South Asia Watch on Trade, Economics and Environment
+Provider-Homepage: https://sawtee.org/
+Provider-Institution: RePEc:edi:sawtenp
+Maintainer-Name: Ankur Singh
+Maintainer-Email: ankur.singh@sawtee.org
+Type: ReDIF-Chapter
+Handle: RePEc:saw:PDRSER

@@ -70,6 +70,13 @@ return [
             "visibility" => "public",
             "throw" => false,
         ],
+        "archive" => [
+            "driver" => "local",
+            "root" => public_path("archive"),
+            "url" => env("APP_URL") . "/archive",
+            "visibility" => "public",
+            "throw" => false,
+        ],
         "tmp" => [
             "driver" => "local",
             "root" => public_path("tmp"),
