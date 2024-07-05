@@ -437,7 +437,7 @@ const SiteMenuItem = ({ item, ...rest }) => {
             {item.name === 'Our Work' || item.name === 'Know Us' ? (
               <MenuList
                 zIndex={5}
-                w={'100dvw'}
+                w={'100vw'}
                 p={0}
                 bg="transparent"
                 boxShadow="none"
