@@ -1,0 +1,30 @@
+<?php
+/**
+ * Template Name: Documents
+ * Created by PhpStorm.
+ * User: Ultrabyte
+ * Date: 9/24/2017
+ * Time: 4:58 AM
+ */
+get_header();
+?>
+<div class="content-wrap inner clearfix">
+    <div class="container">
+        <div class="breadcrumb">
+            <ol>
+                <?php custom_breadcrumbs(); ?>
+            </ol>
+        </div>
+        <div class="gallery-wrap">
+            <h2 class="heading"><?php the_title(); ?>
+                <small class="icon-holder"><i class="fa fa-gg" aria-hidden="true"></i></small>
+            </h2>
+            <div class="row">
+                <?php the_content(); ?>
+                <div class="clear"></div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<?php get_footer(); ?>
