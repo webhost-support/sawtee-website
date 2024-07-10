@@ -1,5 +1,6 @@
 import { ArticleIcon, BookIcon, FileIcon } from '@/Components/Frontend/icons';
 import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
+import { Button } from '@/components/ui/button';
 import {
   Alert,
   AlertIcon,
@@ -44,6 +45,8 @@ export default function Dashboard({
         <chakra.h1 fontSize={'3xl'} pb={10} fontWeight={'bold'}>
           Hello, {auth.user.name}.
         </chakra.h1>
+
+        <Button>Shadcn Button</Button>
 
         <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
           <StatsCard

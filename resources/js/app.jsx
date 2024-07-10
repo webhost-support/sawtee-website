@@ -1,4 +1,5 @@
 import '../css/app.css';
+import '../css/index.css';
 import './bootstrap';
 
 import { config, customTheme } from '@/Utils/data';
