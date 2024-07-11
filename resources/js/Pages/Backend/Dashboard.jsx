@@ -1,20 +1,12 @@
-import { ArticleIcon, BookIcon, FileIcon } from '@/Components/Frontend/icons';
 import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
-import { Button } from '@/components/ui/button';
-import {
-  Alert,
-  AlertIcon,
-  Box,
-  Flex,
-  SimpleGrid,
-  Stat,
-  StatLabel,
-  StatNumber,
-  Text,
-  chakra,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Head } from '@inertiajs/react';
+import {
+  BookOpenIcon,
+  FileArchiveIcon,
+  FilesIcon,
+  MessageCircleWarningIcon,
+} from 'lucide-react';
 
 export default function Dashboard({
   auth,
@@ -27,81 +19,93 @@ export default function Dashboard({
   return (
     <AuthenticatedLayout user={auth.user}>
       <Head title="Dashboard" />
-      <Box maxW="7xl" mx={'auto'} px={{ base: 2, sm: 12, md: 17 }}>
+      <div className="max-w-5xl mx-auto">
         {auth.user.email_verified_at == null && (
-          <Alert status="warning" variant="left-accent" fontSize={'sm'} mb={3}>
-            <AlertIcon />
-            <Text fontWeight={'bold'}>
-              Seems like you have not verified your email address,&nbsp;
-            </Text>
-            <Text>
-              please verify your email by clicking the verification link sent to
-              your email(
+          <Alert>
+            <MessageCircleWarningIcon className="h-4 w-4" />
+            <AlertTitle>Not verified!</AlertTitle>
+            <AlertDescription>
+              Seems like you have not verified your email address,&nbsp; please
+              verify your email by clicking the verification link sent to your
+              email(
               {auth.user.email}).
-            </Text>
+            </AlertDescription>
           </Alert>
         )}
 
-        <chakra.h1 fontSize={'3xl'} pb={10} fontWeight={'bold'}>
-          Hello, {auth.user.name}.
-        </chakra.h1>
-
-        <Button className="bg-cyan-500">Shadcn Button</Button>
-
-        <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
-          <StatsCard
-            title={'posts'}
-            stat={posts}
-            icon={<ArticleIcon boxSize="2em" />}
-          />
-          <StatsCard
-            title={'publications'}
-            stat={publications}
-            icon={<BookIcon boxSize="2em" />}
-          />
-          <StatsCard
-            title={'Research'}
-            stat={researchs}
-            icon={<FileIcon boxSize="2em" />}
-          />
-        </SimpleGrid>
-      </Box>
+        <h1>Hello, {auth.user.name}.</h1>
+        <div className="flex flex-wrap -mx-3 mb-5 removable">
+          <div className="w-full max-w-full px-3 mb-6 lg:w-1/3 sm:flex-none xl:mb-0">
+            <StatsCard
+              title={'posts'}
+              stat={posts}
+              icon={
+                <FileArchiveIcon
+                  w="2em"
+                  h="2em"
+                  className="text-lg leading-none relative top-3.5 text-white"
+                />
+              }
+            />
+          </div>
+          <div className="w-full max-w-full px-3 mb-6 lg:w-1/3 sm:flex-none xl:mb-0">
+            <StatsCard
+              title={'publications'}
+              stat={publications}
+              icon={
+                <BookOpenIcon
+                  w="2em"
+                  h="2em"
+                  className="text-lg leading-none relative top-3.5 text-white"
+                />
+              }
+            />
+          </div>
+          <div className="w-full max-w-full px-3 mb-6 lg:w-1/3 sm:flex-none xl:mb-0">
+            <StatsCard
+              title={'Research'}
+              stat={researchs}
+              icon={
+                <FilesIcon
+                  w="2em"
+                  h="2em"
+                  className="text-lg leading-none relative top-3.5 text-white"
+                />
+              }
+            />
+          </div>
+        </div>
+      </div>
     </AuthenticatedLayout>
   );
 }
 
 const StatsCard = ({ title, stat, icon }) => {
   return (
-    <Stat
-      px={{ base: 2, md: 4 }}
-      py={'5'}
-      shadow={'xl'}
-      border={'1px solid'}
-      borderColor={useColorModeValue('gray.800', 'gray.500')}
-      rounded={'lg'}
-    >
-      <Flex justifyContent={'space-between'}>
-        <Box pl={{ base: 2, md: 4 }}>
-          <StatLabel
-            fontWeight="medium"
-            fontSize="xl"
-            textTransform={'uppercase'}
-            isTruncated
-          >
-            {title}
-          </StatLabel>
-          <StatNumber fontSize={'xl'} fontWeight={'semibold'}>
-            {stat}
-          </StatNumber>
-        </Box>
-        <Box
-          my={'auto'}
-          color={useColorModeValue('gray.800', 'gray.200')}
-          alignContent={'center'}
-        >
-          {icon}
-        </Box>
-      </Flex>
-    </Stat>
+    <div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border mb-4">
+      <div class="flex-auto p-4">
+        <div class="flex flex-row -mx-3">
+          <div class="flex-none w-2/3 max-w-full px-3">
+            <div>
+              <p class="mb-0 font-sans font-semibold leading-normal text-sm">
+                {title}
+              </p>
+              <h5 class="mb-0 font-bold">
+                {' '}
+                {stat}{' '}
+                <span class="leading-normal text-sm font-weight-bolder text-lime-500">
+                  +55%
+                </span>
+              </h5>
+            </div>
+          </div>
+          <div class="px-3 text-right basis-1/3">
+            <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500 shadow-soft-2xl">
+              {icon}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };

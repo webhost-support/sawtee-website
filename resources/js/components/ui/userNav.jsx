@@ -20,7 +20,7 @@ export default function UserNav({ user }) {
           variant="ghost"
           className={cn('relative h-14 w-14 rounded-full')}
         >
-          <Avatar className="h-5 w-5">
+          <Avatar>
             <AvatarImage
               src={'/assets/SM-placeholder-150x150.png'}
               alt={user.name}
