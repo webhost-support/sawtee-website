@@ -46,7 +46,7 @@ export default function Dashboard({
           Hello, {auth.user.name}.
         </chakra.h1>
 
-        <Button>Shadcn Button</Button>
+        <Button className="bg-cyan-500">Shadcn Button</Button>
 
         <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
           <StatsCard

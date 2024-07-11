@@ -1,12 +1,4 @@
-import {
-  Box,
-  Flex,
-  Icon,
-  Image,
-  Show,
-  Text,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Box, Flex, Icon, Image, Text } from '@chakra-ui/react';
 import { Link } from '@inertiajs/react';
 
 export const NavItem = props => {
@@ -72,20 +64,19 @@ export default function Sidebar({ menu, isOpen, props }) {
         </Text>
       </Flex>
       <Flex direction="column" as="nav" aria-label="Main Navigation">
-        {menu &&
-          menu.map(item => {
-            return (
-              <Box key={item.name} role="group">
-                <Link
-                  href={route(item.route)}
-                  preserveState={true}
-                  preserveScroll={true}
-                >
-                  <NavItem icon={item.icon}>{item.name}</NavItem>
-                </Link>
-              </Box>
-            );
-          })}
+        {menu?.map(item => {
+          return (
+            <Box key={item.name} role="group">
+              <Link
+                href={route(item.route)}
+                preserveState={true}
+                preserveScroll={true}
+              >
+                <NavItem icon={item.icon}>{item.name}</NavItem>
+              </Link>
+            </Box>
+          );
+        })}
       </Flex>
     </Box>
   );

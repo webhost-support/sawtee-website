@@ -10,7 +10,7 @@ const WebsiteHead = ({ title, description, image, children }) => {
       <meta
         head-key="og:title"
         property="og:title"
-        content={'SAWTEE | ' + title}
+        content={`SAWTEE | ${title}`}
       />
       <meta head-key="og:type" property="og:type" content="post page" />
       <meta
