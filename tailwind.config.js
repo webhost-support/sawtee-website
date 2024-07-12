@@ -1,3 +1,8 @@
+
+import forms from '@tailwindcss/forms';
+import typograpgy from '@tailwindcss/typography';
+import defaultTheme from 'tailwindcss/defaultTheme';
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ['class'],
@@ -5,10 +10,10 @@ module.exports = {
     './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
     './storage/framework/views/*.php',
     './resources/views/**/*.blade.php',
-    './resources/js/**/*.tsx',
+    './resources/js/**/*.jsx',
   ],
-  prefix: '',
   theme: {
+    ...defaultTheme,
     container: {
       center: true,
       padding: '2rem',
@@ -57,6 +62,9 @@ module.exports = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      fontFamily: {
+        sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+      },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
@@ -73,5 +81,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [forms, typograpgy, require('tailwindcss-animate')],
 };

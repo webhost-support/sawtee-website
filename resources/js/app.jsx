@@ -3,8 +3,8 @@ import '../css/index.css';
 import '../css/theme.css';
 import './bootstrap';
 
-import { config, customTheme } from '@/Utils/data';
-import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import { customTheme } from '@/Utils/data';
+import { extendTheme } from '@chakra-ui/react';
 import { createInertiaApp } from '@inertiajs/react';
 import * as Sentry from '@sentry/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
@@ -36,9 +36,9 @@ createInertiaApp({
   setup({ el, App, props }) {
     const root = createRoot(el);
     root.render(
-      <ChakraProvider resetCSS theme={{ config, ...theme }}>
-        <App {...props} />
-      </ChakraProvider>
+      //   <ChakraProvider resetCSS theme={{ config, ...theme }}>
+      <App {...props} />
+      //   </ChakraProvider>
     );
   },
   progress: {

@@ -1,6 +1,7 @@
 import { DashBoardMenuItems } from '@/Utils/data';
 import Header from '@/components/ui/header';
 import Sidebar from '@/components/ui/sidebar';
+import { cn } from '@/lib/utils';
 import { useWindowWidth } from '@react-hook/window-size';
 import React from 'react';
 
@@ -15,34 +16,23 @@ export default function Authenticated({ user, children }) {
     }
 
   return (
-    <div className={'min-h-screen w-full bg-white text-black'}>
-      <Sidebar
-        isCollapsed={mobileWidth ? true : isCollapsed}
-        setIsCollapsed={setIsCollapsed}
-        menu={DashBoardMenuItems}
-      />
-      <Header
-        user={user}
-        isCollapsed={mobileWidth ? true : isCollapsed}
-        toggleSidebar={toggleSidebar}
-      />
-
+    <div className="min-h-screen w-full grid grid-rows-[auto] grid-cols-[auto,repeat(4,1fr)] gap-4 px-4">
       <div
-        style={
-          isCollapsed || mobileWidth
-            ? {
-                width: 'calc(100% - 3.5rem)',
-                marginLeft: '5rem',
-                marginTop: '3.5rem',
-              }
-            : {
-                width: 'calc(100% - 16rem)',
-                marginLeft: '16rem',
-                marginTop: '3.5rem',
-              }
-        }
-        className={'px-6 py-6 min-h-dvh mt-14 text-slate-500'}
+        className={cn(
+          isCollapsed ? 'w-14' : 'w-64',
+          'px-2 w-full mx-auto rounded-xl row-span-3 border-r-2 col-span-1'
+        )}
       >
+        <Sidebar
+          isCollapsed={mobileWidth ? true : isCollapsed}
+          setIsCollapsed={setIsCollapsed}
+          menu={DashBoardMenuItems}
+        />
+      </div>
+      <div className=" bg-white sticky top-0 z-50 p-4 w-full col-span-4 rounded-xl">
+        <Header user={user} toggleSidebar={toggleSidebar} />
+      </div>
+      <div className="p-6 w-full rounded-xl row-span-2 col-span-4 min-h-dvh mt-4 text-slate-500">
         {children}
       </div>
     </div>

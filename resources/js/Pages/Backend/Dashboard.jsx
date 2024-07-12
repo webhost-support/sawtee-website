@@ -1,12 +1,8 @@
 import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { WarningIcon } from '@chakra-ui/icons';
 import { Head } from '@inertiajs/react';
-import {
-  BookOpenIcon,
-  FileArchiveIcon,
-  FilesIcon,
-  MessageCircleWarningIcon,
-} from 'lucide-react';
+import { BookOpenIcon, FileArchiveIcon, FilesIcon } from 'lucide-react';
 
 export default function Dashboard({
   auth,
@@ -19,16 +15,19 @@ export default function Dashboard({
   return (
     <AuthenticatedLayout user={auth.user}>
       <Head title="Dashboard" />
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {auth.user.email_verified_at == null && (
-          <Alert>
-            <MessageCircleWarningIcon className="h-4 w-4" />
-            <AlertTitle>Not verified!</AlertTitle>
+          <Alert className="bg-orange-400 mb-4 max-w-2xl mx-auto">
+            <AlertTitle className="flex items-center gap-2 font-bold text-primary mb-2">
+              Not verified!
+              <WarningIcon className="h-6 w-6" />
+            </AlertTitle>
             <AlertDescription>
-              Seems like you have not verified your email address,&nbsp; please
-              verify your email by clicking the verification link sent to your
-              email(
-              {auth.user.email}).
+              <p className="text-primary leading-3 font-medium text-lg m-0">
+                Seems like you have not verified your email address,&nbsp;
+                please verify your email by clicking the verification link sent
+                to your email ({auth.user.email}).
+              </p>
             </AlertDescription>
           </Alert>
         )}
@@ -82,25 +81,25 @@ export default function Dashboard({
 
 const StatsCard = ({ title, stat, icon }) => {
   return (
-    <div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border mb-4">
-      <div class="flex-auto p-4">
-        <div class="flex flex-row -mx-3">
-          <div class="flex-none w-2/3 max-w-full px-3">
+    <div className="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border mb-4">
+      <div className="flex-auto p-4">
+        <div className="flex flex-row -mx-3">
+          <div className="flex-none w-2/3 max-w-full px-3">
             <div>
-              <p class="mb-0 font-sans font-semibold leading-normal text-sm">
+              <p className="mb-0 font-sans font-semibold leading-normal text-sm">
                 {title}
               </p>
-              <h5 class="mb-0 font-bold">
+              <h5 className="mb-0 font-bold">
                 {' '}
                 {stat}{' '}
-                <span class="leading-normal text-sm font-weight-bolder text-lime-500">
+                <span className="leading-normal text-sm font-weight-bolder text-lime-500">
                   +55%
                 </span>
               </h5>
             </div>
           </div>
-          <div class="px-3 text-right basis-1/3">
-            <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500 shadow-soft-2xl">
+          <div className="px-3 text-right basis-1/3">
+            <div className="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500 shadow-soft-2xl">
               {icon}
             </div>
           </div>
