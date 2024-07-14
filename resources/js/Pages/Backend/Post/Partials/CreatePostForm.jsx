@@ -1,42 +1,43 @@
-import ContentEditor from '@/Components/Backend/ContentEditor';
-import FileUpload, { PreviewImage } from '@/Components/Backend/FileUpload';
-import ControlledMultiSelect from '@/Components/Backend/MultiSelect';
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import { FileIcon } from '@/Components/Frontend/icons';
-import { createExcerpt } from '@/Utils/helpers';
-import { CloseIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
+import ContentEditor from '@/components/Backend/ContentEditor';
+import InputError from '@/components/Backend/InputError';
+import { MultiSelect } from '@/components/Backend/MultiSelect';
+
+import PrimaryButton from '@/components/Backend/PrimaryButton';
 import {
   Accordion,
-  AccordionButton,
-  AccordionIcon,
+  AccordionContent,
   AccordionItem,
-  AccordionPanel,
-  Box,
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Grid,
-  GridItem,
-  IconButton,
-  Input,
-  InputGroup,
-  InputLeftAddon,
-  InputRightAddon,
-  Radio,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import {
   Select,
-  Stack,
-  Textarea,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import {
   Tooltip,
-  VStack,
-  useToast,
-} from '@chakra-ui/react';
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import { useToast } from '@/components/ui/use-toast';
+import { createExcerpt } from '@/lib/helpers';
 import { useForm } from '@inertiajs/react';
+import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
 import React from 'react';
 
 export default function CreatePostForm({ categories, themes, tags }) {
-  const { data, setData, post, processing, errors } = useForm({
-    category_id: '',
+  const { data, setData, post, processing, errors, reset } = useForm({
+    category_id: 2,
     theme_id: '',
     title: '',
     slug: '',
@@ -47,43 +48,26 @@ export default function CreatePostForm({ categories, themes, tags }) {
     image: '',
     file: '',
     files: [],
+    tags: [],
     link: null,
     genre: '',
     published_at: null,
     meta_title: '',
     meta_description: '',
   });
-  const toast = useToast();
-  const [filename, setFilename] = React.useState(null);
-  const [files, setFiles] = React.useState([]);
-  const [image, setImage] = React.useState(null);
+  const { toast } = useToast();
   const [selectedCategory, setSelectedCategory] = React.useState(null);
-  const [postTags, setPostTags] = React.useState([]);
+  const [tagOptions, setTagOptions] = React.useState([]);
+  const [imageUrl, setImageUrl] = React.useState(null);
 
-  const [tagOptions, setTagOptions] = React.useState(() => {
-    const tagsarray = [];
+  React.useEffect(() => {
     tags.map(tag => {
-      tagsarray.push({
-        value: tag.id,
-        label: tag.name,
-      });
+      setTagOptions(prev => [
+        ...prev,
+        { value: tag.id, label: tag.name, icon: null },
+      ]);
     });
-
-    return tagsarray;
-  });
-
-  function setDataTags(e) {
-    const array = [];
-    setPostTags(e);
-    e.map(item =>
-      array.push({
-        tag_id: item.value,
-        post_id: item.id,
-      })
-    );
-
-    setData('tags', array);
-  }
+  }, [tags]);
 
   const submit = e => {
     e.preventDefault();
@@ -92,22 +76,23 @@ export default function CreatePostForm({ categories, themes, tags }) {
       preserveState: true,
       onSuccess: () =>
         toast({
-          position: 'top-right',
           title: 'Post Created.',
           description: `${data.title} post was created successfully`,
-          status: 'success',
-          duration: 6000,
-          isClosable: true,
         }),
       onError: errors => {
-        console.error(errors);
+        for (const key in errors) {
+          if (Object.hasOwnProperty.call(errors, key)) {
+            const value = errors[key];
+            reset(key);
+            return toast({
+              title: `${key.toUpperCase()} field error`,
+              description: value,
+            });
+          }
+        }
       },
     });
   };
-
-  React.useEffect(() => {
-    files.length && setData('files', files);
-  }, [files]);
 
   React.useEffect(() => {
     const content = data.content
@@ -118,504 +103,431 @@ export default function CreatePostForm({ categories, themes, tags }) {
       .replace('<p>', '');
     const excerpt = createExcerpt(content, 30);
     excerpt && setData('excerpt', excerpt);
-  }, [data.content]);
+  }, [data.content, setData]);
 
   return (
     <form onSubmit={submit}>
-      <Grid
-        templateColumns={{
-          base: '1fr',
-          xl: 'repeat(7, minmax(auto, 1fr))',
-        }}
-        autoRows={'auto'}
-        gap={8}
-      >
-        <GridItem colSpan={{ base: 1, xl: 5 }}>
-          <VStack spacing={8} position={'sticky'} top={'2rem'}>
-            <FormControl isInvalid={errors.title} isRequired>
-              <FormLabel htmlFor="title">Title</FormLabel>
-              <Input
-                type="text"
-                id="title"
-                name="title"
-                placeholder="Add Post title here"
-                display="flex"
-                mt={1}
-                autoComplete="title"
-                onChange={e => {
-                  setData('title', e.target.value);
-                }}
-              />
+      <div className="grid grid-cols-12 gap-4">
+        <div className="flex flex-col gap-8 col-span-12 md:col-span-8 px-4">
+          <div>
+            <Label htmlFor="title">Title</Label>
+            <Input
+              id="title"
+              className="mt-1 block w-full"
+              value={data.title}
+              onChange={e => setData('title', e.target.value)}
+              required
+              autoComplete="title"
+            />
+            {errors.title && (
+              <InputError className="mt-2" message={errors.title} />
+            )}
+          </div>
+          <div mt={4}>
+            <Label htmlFor="content">Content</Label>
 
-              {errors.title && <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>}
-            </FormControl>
+            <ContentEditor
+              // type="classic"
+              name="content"
+              initialValue=""
+              id="content"
+              onChange={(evt, editor) =>
+                setData('content', editor.getContent())
+              }
+            />
 
-            <FormControl mt={4} isInvalid={errors.content}>
-              <FormLabel htmlFor="content">Content</FormLabel>
+            {errors.content && (
+              <InputError className={'mt-2'}>{errors.content}</InputError>
+            )}
+          </div>
+          <div>
+            <Label htmlFor="excerpt">Excerpt</Label>
+            <Textarea
+              id="excerpt"
+              className="mt-1 block w-full"
+              rows={8}
+              onChange={e => setData('excerpt', e.target.value)}
+              required
+            />
 
-              <ContentEditor
-                // type="classic"
-                name="content"
-                initialValue=""
-                id="content"
-                onChange={(evt, editor) => setData('content', editor.getContent())}
-              />
+            {errors.excerpt && (
+              <InputError className={'mt-2'}>{errors.excerpt}</InputError>
+            )}
+          </div>
+        </div>
 
-              {errors.content && <FormErrorMessage mt={2}>{errors.content}</FormErrorMessage>}
-            </FormControl>
+        <div className="flex flex-col gap-8 col-span-12 px-3 md:col-span-4">
+          <Accordion type="single" collapsible className="w-full">
+            <AccordionItem value="item-1">
+              <AccordionTrigger>
+                <div className="flex gap-2">
+                  SEO Meta Tags
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <QuestionMarkCircledIcon className="w-3 h-3" />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Add meta-title and meta-description for SEO</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="flex flex-col justify-start gap-4">
+                  <div>
+                    <Label htmlFor="meta_title">Meta Title</Label>
+                    <Input
+                      id="meta_title"
+                      name="meta_title"
+                      className="block mt-1"
+                      placeholder="enter meta title"
+                      onChange={e => setData('meta_title', e.target.value)}
+                    />
 
-            <FormControl isInvalid={errors.excerpt}>
-              <FormLabel htmlFor="excerpt">Excerpt/Short Description</FormLabel>
+                    <InputError className="mt-2">
+                      {errors.meta_title}
+                    </InputError>
+                  </div>
 
-              <Textarea
-                id="excerpt"
-                name="excerpt"
-                display="flex"
-                isInvalid={errors.excerpt}
-                resize={'vertical'}
-                placeholder="Short Description"
-                value={data.excerpt}
-                rows={6}
-                mt={1}
-                autoComplete="excerpt"
-                onChange={e => setData('excerpt', e.target.value)}
-              />
+                  <div className="mt-4">
+                    <Label htmlFor="meta_description">Meta Description</Label>
 
-              {errors.excerpt && <FormErrorMessage mt={2}>{errors.excerpt}</FormErrorMessage>}
-            </FormControl>
-          </VStack>
-        </GridItem>
-        <GridItem colSpan={{ base: 1, xl: 2 }}>
-          <VStack spacing={8} position={'sticky'} top={'2rem'}>
-            <Accordion allowToggle w="full">
-              <AccordionItem>
-                <h2>
-                  <AccordionButton
-                    _expanded={{
-                      bg: 'gray.600',
-                      color: 'white',
-                    }}
-                  >
-                    <Box as="span" flex="1" textAlign="left" fontWeight={'semibold'}>
-                      {'SEO Meta Tags'}
-                      <Tooltip label="Add meta-title and meta-description for SEO" fontSize="xs">
-                        <QuestionOutlineIcon ml="2" boxSize={3} />
-                      </Tooltip>
-                    </Box>
-                    <AccordionIcon />
-                  </AccordionButton>
-                </h2>
-                <AccordionPanel pb={4}>
-                  <VStack gap="6" alignItems={'start'}>
-                    <FormControl mt="4" isInvalid={errors.meta_title}>
-                      <FormLabel htmlFor="meta_title">Meta Title</FormLabel>
+                    <Textarea
+                      id="meta_description"
+                      name="meta_description"
+                      className="block mt-1"
+                      placeholder="enter meta_description"
+                      rows={3}
+                      onChange={e =>
+                        setData('meta_description', e.target.value)
+                      }
+                    />
+                    <InputError className="mt-2">
+                      {errors.meta_description}
+                    </InputError>
+                  </div>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+          <Accordion type="single" collapsible className="w-full">
+            <AccordionItem value="item-2">
+              <AccordionTrigger>
+                <div className="flex gap-2">
+                  Optional Fields
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <QuestionMarkCircledIcon className="w-3 h-3" />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Add theme and post tags for this post</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="flex flex-col justify-start gap-4">
+                  <fieldset>
+                    <Label as="legend" htmlFor="theme_id">
+                      Theme
+                    </Label>
 
-                      <Input
-                        id="meta_title"
-                        name="meta_title"
-                        placeholder="enter meta title"
-                        onChange={e => setData('meta_title', e.target.value)}
-                      />
-
-                      <FormErrorMessage message={errors.meta_title} className="mt-2" />
-                    </FormControl>
-
-                    <FormControl mt="4" isInvalid={errors.meta_description}>
-                      <FormLabel htmlFor="meta_description">Meta Description</FormLabel>
-
-                      <Textarea
-                        id="meta_description"
-                        name="meta_description"
-                        placeholder="enter meta_description"
-                        rows={3}
-                        resize="vertical"
-                        onChange={e => setData('meta_description', e.target.value)}
-                      />
-
-                      <FormErrorMessage message={errors.meta_description} className="mt-2" />
-                    </FormControl>
-                  </VStack>
-                </AccordionPanel>
-              </AccordionItem>
-            </Accordion>
-
-            <Accordion allowToggle w="full">
-              <AccordionItem>
-                <h2>
-                  <AccordionButton
-                    _expanded={{
-                      bg: 'gray.600',
-                      color: 'white',
-                    }}
-                  >
-                    <Box as="span" flex="1" textAlign="left" fontWeight={'semibold'}>
-                      {'Optional Fields'}
-                      <Tooltip label="Add theme and post tags for this post" fontSize="xs">
-                        <QuestionOutlineIcon ml="2" boxSize={3} />
-                      </Tooltip>
-                    </Box>
-                    <AccordionIcon />
-                  </AccordionButton>
-                </h2>
-                <AccordionPanel pb={4}>
-                  <VStack gap="6" alignItems={'start'}>
-                    <FormControl isInvalid={errors.theme_id} as="fieldset">
-                      <FormLabel as="legend" htmlFor="theme_id">
-                        Theme
-                      </FormLabel>
-
-                      <Select
-                        name="theme_id"
-                        placeholder="Select theme"
-                        onChange={e => {
-                          setData('theme_id', e.target.value);
-                        }}
-                      >
-                        {themes &&
-                          themes.map(theme => (
-                            <option key={theme.id} value={theme.id}>
-                              {theme.title}
-                            </option>
-                          ))}
-                      </Select>
-
-                      {errors.theme_id && <FormErrorMessage mt={2}>{errors.theme_id}</FormErrorMessage>}
-                    </FormControl>
-
-                    <FormControl py={4} id={'tags'}>
-                      <FormLabel htmlFor="tags">{' Add Tags'}</FormLabel>
-
-                      <ControlledMultiSelect
-                        isMulti
-                        name={'tags'}
-                        options={tagOptions}
-                        variant="filled"
-                        tagVariant="solid"
-                        placeholder="Select Tags"
-                        value={postTags}
-                        onChange={e => {
-                          setPostTags(e);
-                          setDataTags(e);
-                        }}
-                        selectedOptionColorScheme="blue"
-                      />
-                    </FormControl>
-                  </VStack>
-                </AccordionPanel>
-              </AccordionItem>
-            </Accordion>
-
-            <Accordion allowToggle w="full">
-              <AccordionItem>
-                <h2>
-                  <AccordionButton
-                    _expanded={{
-                      bg: 'gray.600',
-                      color: 'white',
-                    }}
-                  >
-                    <Box as="span" flex="1" textAlign="left" fontWeight={'semibold'}>
-                      {'Upload files'}
-                      <Tooltip label="Upload files associated with this post" fontSize="xs">
-                        <QuestionOutlineIcon ml="2" boxSize={3} />
-                      </Tooltip>
-                    </Box>
-                    <AccordionIcon />
-                  </AccordionButton>
-                </h2>
-                <AccordionPanel pb={4}>
-                  <VStack gap="6" alignItems={'start'}>
-                    <FormControl mt={4}>
-                      <FormLabel htmlFor="file">File Upload</FormLabel>
-
-                      <InputGroup cursor={'pointer'}>
-                        <InputLeftAddon children={<FileIcon />} />
-                        <Box position="relative">
-                          <Input size="md" isReadOnly placeholder={filename ? filename : 'click to select file'} />
-                          <Input
-                            type="file"
-                            height="100%"
-                            width="100%"
-                            position="absolute"
-                            cursor={'pointer'}
-                            top="0"
-                            left="0"
-                            opacity="0"
-                            aria-hidden="true"
-                            accept=".pdf,.docx,.pptx"
-                            id="file"
-                            name="file"
-                            size="md"
-                            onChange={e => {
-                              setFilename(e.target.files[0].name);
-                              setData('file', e.target.files[0]);
-                            }}
-                          />
-                        </Box>
-                        {filename && (
-                          <InputRightAddon
-                            children={
-                              <IconButton
-                                icon={<CloseIcon />}
-                                color={'red.500'}
-                                onClick={() => {
-                                  setFilename(null);
-                                  setData('file', null);
-                                }}
-                              />
-                            }
-                          />
-                        )}
-                      </InputGroup>
-                    </FormControl>
-
-                    <FormControl mt={4}>
-                      <FormLabel htmlFor="files">Content Files Upload</FormLabel>
-
-                      <FileUpload text="Drop files here or click to select" accept=".pdf,.doc,.docx,.ppt,.pptx">
-                        <Input
-                          type="file"
-                          height="100%"
-                          width="100%"
-                          position="absolute"
-                          multiple
-                          top="0"
-                          left="0"
-                          opacity="0"
-                          cursor={'pointer'}
-                          aria-hidden="true"
-                          accept=".pdf,.doc,.docx,.ppt,.pptx"
-                          id="files"
-                          name="files"
-                          size="md"
-                          onChange={e => {
-                            setFiles(Array.from(e.target.files));
-                          }}
-                        />
-                      </FileUpload>
-
-                      <VStack spacing={4} mt={2}>
-                        {files.length &&
-                          files.map(file => {
-                            return (
-                              <InputGroup key={file.name}>
-                                <InputLeftAddon children={<FiFile />} />
-
-                                <Input size="md" isReadOnly placeholder={file.name} />
-                                {file.name && (
-                                  <InputRightAddon
-                                    children={
-                                      <IconButton
-                                        icon={<CloseIcon />}
-                                        color={'red.500'}
-                                        onClick={() => {
-                                          const newfiles = files.filter(prevfile => prevfile.name !== file.name);
-
-                                          setFiles(newfiles);
-                                        }}
-                                      />
-                                    }
-                                  />
-                                )}
-                              </InputGroup>
-                            );
-                          })}
-                      </VStack>
-                    </FormControl>
-                  </VStack>
-                </AccordionPanel>
-              </AccordionItem>
-            </Accordion>
-
-            <FormControl isInvalid={errors.category_id} isRequired as="fieldset">
-              <FormLabel as="legend" htmlFor="category_id">
-                Category
-              </FormLabel>
-
-              <Select
-                name="category_id"
-                placeholder="Select Category"
-                onChange={e => {
-                  setData('category_id', e.target.value);
-
-                  setSelectedCategory(categories.filter(cat => cat.id === e.target.value)[0].name);
-                }}
-              >
-                {categories &&
-                  categories.map(category => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
-                    </option>
-                  ))}
-              </Select>
-
-              {errors.category_id && <FormErrorMessage mt={2}>{errors.category_id}</FormErrorMessage>}
-            </FormControl>
-
-            <FormControl isInvalid={errors.published_at}>
-              <FormLabel as="legend" htmlFor="published_at">
-                Published At
-              </FormLabel>
-
-              <Input
-                type="date"
-                placeholder="Select Date"
-                id="published_at"
-                name="published_at"
-                onChange={e => {
-                  const newDate = new Date(e.target.value);
-
-                  setData('published_at', e.target.value);
-                }}
-              />
-
-              {errors.published_at && <FormErrorMessage mt={2}>{errors.published_at}</FormErrorMessage>}
-            </FormControl>
-
-            <FormControl mt={4} isInvalid={errors.status} isRequired as="fieldset">
-              <FormLabel as="legend" htmlFor="status">
-                Status
-              </FormLabel>
-
-              <Stack direction="row" flexWrap={'wrap'} spacing={4}>
-                {['unpublished', 'draft', 'published'].map(item => {
-                  return (
-                    <Radio
-                      key={item}
-                      name="status"
-                      isChecked={data.status === item}
-                      value={item}
-                      size={'sm'}
-                      onChange={e => {
-                        setData('status', e.target.value);
+                    <Select
+                      name="theme_id"
+                      value={data.theme_id}
+                      onValueChange={value => {
+                        setData('theme_id', Number(value));
                       }}
                     >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select theme" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>Themes</SelectLabel>
+                          {themes?.map(theme => (
+                            <SelectItem key={theme.id} value={theme.id}>
+                              {theme.title}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+
+                    {errors.theme_id && (
+                      <InputError className={'mt-2'}>
+                        {errors.theme_id}
+                      </InputError>
+                    )}
+                  </fieldset>
+
+                  <div className={'py-4'}>
+                    <Label htmlFor="tags">{' Add Tags'}</Label>
+
+                    <MultiSelect
+                      name={'tags'}
+                      id="tags"
+                      //   ref={tabsRef}
+                      options={tagOptions}
+                      placeholder="Select Tags"
+                      variant="inverted"
+                      maxCount={2}
+                      setData={setData}
+                    />
+                  </div>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+          <Accordion type="single" collapsible className="w-full">
+            <AccordionItem value="item-3">
+              <AccordionTrigger>
+                <div className="flex gap-2">
+                  Upload File/Files
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <QuestionMarkCircledIcon className="w-3 h-3" />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Add post and post content attachments </p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="flex flex-col gap-8 justify-start">
+                  <div>
+                    <Label htmlFor="file">File Upload</Label>
+
+                    <div className=" flex relative">
+                      <Input
+                        type="file"
+                        accept=".pdf,.docx,.pptx"
+                        className=" mt-1"
+                        id="file"
+                        name="file"
+                        onChange={e => {
+                          setData('file', e.target.files[0]);
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="files">Content Files Upload</Label>
+
+                    <Input
+                      type="file"
+                      multiple
+                      className=" mt-1"
+                      accept=".pdf,.doc,.docx,.ppt,.pptx"
+                      id="files"
+                      name="files"
+                      onChange={e => {
+                        setData('files', Array.from(e.target.files));
+                      }}
+                    />
+                  </div>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+          <fieldset required>
+            <Label as="legend" htmlFor="category_id">
+              Category
+            </Label>
+
+            <Select
+              name="category_id"
+              value={data.category_id}
+              onValueChange={value => {
+                setData('category_id', Number(value));
+
+                setSelectedCategory(
+                  categories.filter(cat => cat.id === Number(value))[0]?.name
+                );
+              }}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select Category" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Categories</SelectLabel>
+                </SelectGroup>
+
+                {categories.map(category => (
+                  <SelectItem key={category.id} value={category.id}>
+                    {category.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            {errors.category_id && (
+              <InputError className={'mt-2'}>{errors.category_id}</InputError>
+            )}
+          </fieldset>
+          <div>
+            <Label as="legend" htmlFor="published_at">
+              Published At
+            </Label>
+
+            <Input
+              type="date"
+              className="block mt-1"
+              placeholder="Select Date"
+              id="published_at"
+              name="published_at"
+              onChange={e => {
+                setData('published_at', e.target.value);
+              }}
+            />
+
+            {errors.published_at && (
+              <InputError className={'mt-2'}>{errors.published_at}</InputError>
+            )}
+          </div>
+          <fieldset  required>
+            <Label as="legend" htmlFor="status">
+              Status
+            </Label>
+
+            <RadioGroup
+              className="flex gap-4 flex-wrap mt-1"
+              defaultValue={data.status}
+              onValueChange={value => {
+                setData('status', value);
+              }}
+            >
+              {['unpublished', 'draft', 'published'].map(item => {
+                return (
+                  <div
+                    key={item}
+                    className="flex w-[auto] items-center space-x-2"
+                  >
+                    <RadioGroupItem value={item} id={item} />
+                    <Label className="capitalize" htmlFor={item}>
                       {item}
-                    </Radio>
-                  );
-                })}
-              </Stack>
+                    </Label>
+                  </div>
+                );
+              })}
+            </RadioGroup>
 
-              {errors.status && <FormErrorMessage mt={2}>{errors.status}</FormErrorMessage>}
-            </FormControl>
-
-            {selectedCategory === ('Covid' || 'Opinion in Lead' || 'Blog') && (
-              <FormControl isInvalid={errors.author} mt={4}>
-                <FormLabel htmlFor="author">
+            {errors.status && (
+              <InputError className={'mt-2'}>{errors.status}</InputError>
+            )}
+          </fieldset>
+          {selectedCategory === ('Covid' || 'Opinion in Lead' || 'Blog') && (
+            <div >
+              <TooltipProvider>
+                <Label htmlFor="author">
                   {'Author/s '}
-                  <Tooltip
-                    label="Add author name, if multple authors use comma seperated format. Eg: Paras Kharel, Dikshya Singh, Kshitiz Dahal"
-                    fontSize="xs"
-                    float={'right'}
-                  >
-                    <QuestionOutlineIcon boxSize={3} />
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <QuestionMarkCircledIcon className="w-3 h-3" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      Add author name, if multple authors use comma seperated
+                      format. Eg: Paras Kharel, Dikshya Singh, Kshitiz Dahal
+                    </TooltipContent>
                   </Tooltip>
-                </FormLabel>
+                </Label>
+              </TooltipProvider>
+              <Input
+                type="text"
+                id="author"
+                name="author"
+                className="block  mt-1"
+                placeholder="Add author full name"
+                autoComplete="author"
+                onChange={e => setData('author', e.target.value)}
+              />
 
-                <Input
-                  type="text"
-                  id="author"
-                  name="author"
-                  display="block"
-                  placeholder="Add author full name"
-                  w="full"
-                  mt={1}
-                  autoComplete="author"
-                  onChange={e => setData('author', e.target.value)}
-                />
-
-                {errors.author && <FormErrorMessage mt={2}>{errors.author}</FormErrorMessage>}
-              </FormControl>
-            )}
-
-            {selectedCategory === 'Covid' && (
-              <FormControl isInvalid={errors.genre} mt={4}>
-                <FormLabel htmlFor="genre">Genre</FormLabel>
-
-                <Input
-                  type="text"
-                  id="genre"
-                  name="genre"
-                  display="block"
-                  w="full"
-                  mt={1}
-                  autoComplete="genre"
-                  onChange={e => setData('genre', e.target.value)}
-                />
-
-                {errors.genre && <FormErrorMessage mt={2}>{errors.genre}</FormErrorMessage>}
-              </FormControl>
-            )}
-
-            {selectedCategory === ('Covid' || 'Opinion in Lead' || 'Webinar Series') && (
-              <FormControl isInvalid={errors.link} mt={4}>
-                <FormLabel htmlFor="link">External Link</FormLabel>
-
-                <Input
-                  type="text"
-                  id="link"
-                  name="link"
-                  display="block"
-                  w="full"
-                  mt={1}
-                  autoComplete="link"
-                  onChange={e => setData('link', e.target.value)}
-                />
-
-                {errors.author && <FormErrorMessage mt={2}>{errors.author}</FormErrorMessage>}
-              </FormControl>
-            )}
-
-            <FormControl mt={4}>
-              <FormLabel htmlFor="image">Featured Image</FormLabel>
-
-              {image && (
-                <>
-                  <PreviewImage src={image} />
-                  <Button
-                    mt={4}
-                    size={'sm'}
-                    colorScheme="red"
-                    onClick={() => {
-                      setImage(null);
-                    }}
-                  >
-                    Remove/Change Image
-                  </Button>
-                </>
+              {errors.author && (
+                <InputError className={'mt-2'}>{errors.author}</InputError>
               )}
+            </div>
+          )}
+          {selectedCategory === 'Covid' && (
+            <div >
+              <Label htmlFor="genre">Genre</Label>
 
-              {!image && (
-                <FileUpload accept="image/.png,.jpg,.jpeg,.webp">
-                  <Input
-                    type="file"
-                    height="100%"
-                    width="100%"
-                    position="absolute"
-                    top="0"
-                    left="0"
-                    opacity="0"
-                    cursor={'pointer'}
-                    aria-hidden="true"
-                    accept="image/.png,.jpg,.jpeg,.webp"
-                    id="image"
-                    name="image"
-                    size="md"
-                    onChange={e => {
-                      setData('image', e.target.files[0]);
-                      setImage(URL.createObjectURL(e.target.files[0]));
-                    }}
+              <Input
+                type="text"
+                id="genre"
+                name="genre"
+                className="block mt-1"
+                autoComplete="genre"
+                onChange={e => setData('genre', e.target.value)}
+              />
+
+              {errors.genre && (
+                <InputError className={'mt-2'}>{errors.genre}</InputError>
+              )}
+            </div>
+          )}
+          {selectedCategory ===
+            ('Covid' || 'Opinion in Lead' || 'Webinar Series') && (
+            <div >
+              <Label htmlFor="link">External Link</Label>
+
+              <Input
+                type="text"
+                id="link"
+                name="link"
+                className="block  mt-1"
+                autoComplete="link"
+                onChange={e => setData('link', e.target.value)}
+              />
+
+              {errors.author && (
+                <InputError className={'mt-2'}>{errors.author}</InputError>
+              )}
+            </div>
+          )}
+          <div >
+            <Label htmlFor="image">Featured Image</Label>
+
+            {imageUrl && (
+              <div className="w-[minmax(auto, 450px)]">
+                <AspectRatio ratio={16 / 9}>
+                  <img
+                    src={imageUrl}
+                    alt="featured"
+                    className="rounded-md object-cover"
                   />
-                </FileUpload>
-              )}
-            </FormControl>
+                </AspectRatio>
+              </div>
+            )}
 
-            <PrimaryButton type="submit" isLoading={processing} mt={4} w="md" maxW="full">
-              Save
-            </PrimaryButton>
-          </VStack>
-        </GridItem>
-      </Grid>
+            <Input
+              type="file"
+              accept="image/.png,.jpg,.jpeg,.webp"
+              id="image"
+              className="mt-8"
+              name="image"
+              onChange={e => {
+                setData('image', e.target.files[0]);
+              }}
+            />
+          </div>
+          <PrimaryButton
+            type="submit"
+            className="text-center"
+            disabled={processing}
+          >
+            Save
+          </PrimaryButton>
+        </div>
+      </div>
     </form>
   );
 }

@@ -1,43 +1,126 @@
-import { ChevronLeftCircleIcon, SearchIcon } from 'lucide-react';
-import { Button } from './button';
-import UserNav from './userNav';
+import { ChevronLeftCircleIcon } from "lucide-react";
+import { Button } from "./button";
+import UserNav from "./userNav";
+import { useState } from "react";
+import ResponsiveNavLink from "@/components/shared/ResponsiveNavLink";
+import ApplicationLogo from "@/components/shared/ApplicationLogo";
+import { Link } from "@inertiajs/react";
 
-export default function Header({ user, toggleSidebar }) {
+export default function Header({ user, menu, toggleSidebar }) {
+  const [showingNavigationDropdown, setShowingNavigationDropdown] =
+    useState(false);
   return (
-    <header className={' transition-all border-b duration-200 shadow-md mt-4'}>
-      <nav
-        className="relative bg-white ease-soft-in-out flex flex-wrap px-4 items-center justify-between *:transition-all shadow-none duration-250 ease-soft-in rounded-2xl lg:flex-nowrap lg:justify-start"
-        id="navbarTop"
-        navbar-scroll="true"
-        data-navbar="true"
-        data-navbar-value="null"
-      >
-        <Button
-          className="rounded-full sm:hidden lg:inline-flex p-0"
-          variant="ghost"
-        >
-          <ChevronLeftCircleIcon onClick={toggleSidebar} className="w-6 h-6" />
-        </Button>
-        <div className="flex items-center justify-between py-1 lg:w-full flex-wrap-inherit">
-          <div className="flex items-center mt-2 sm:mt-0 grow sm:mr-6 md:mr-0 lg:flex lg:basis-auto">
-            <div className="flex items-center md:ml-auto md:pr-4">
-              <div className="relative flex flex-wrap items-stretch w-full transition-all rounded-lg ease-soft">
-                <span className="text-sm ease-soft leading-5.6 absolute z-50 -ml-px flex h-full items-center whitespace-nowrap rounded-lg rounded-tr-none rounded-br-none border border-r-0 border-transparent bg-transparent py-2 px-2.5 text-center font-normal text-slate-500 transition-all">
-                  <SearchIcon className="w-4 h-4" />
-                </span>
-                <input
-                  type="text"
-                  className="pl-8.75 text-sm focus:shadow-soft-primary-outline ease-soft w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-primary-300 focus:outline-none focus:transition-shadow"
-                  placeholder="Type here..."
-                />
+    <header className={" transition-all border-b duration-200 shadow-md"}>
+      <nav className="bg-white dark:bg-gray-800 border-b border-slate-100 dark:border-slate-700">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between h-16">
+            <div className="flex">
+              <div className="shrink-0 flex items-center">
+                <Link href="/">
+                  <ApplicationLogo className="block sm:hidden h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                </Link>
+                <Button
+                  className="rounded-full hidden lg:inline-flex p-0"
+                  variant="ghost"
+                >
+                  <ChevronLeftCircleIcon
+                    onClick={toggleSidebar}
+                    className="w-6 h-6"
+                  />
+                </Button>
               </div>
             </div>
-            <UserNav user={user} />
+
+            <div className="hidden sm:flex sm:items-center sm:ml-6">
+              <div className="ml-3 relative">
+                <UserNav user={user} />
+              </div>
+            </div>
+
+            <div className="-mr-2 flex items-center sm:hidden">
+              <button
+                onClick={() =>
+                  setShowingNavigationDropdown(
+                    (previousState) => !previousState,
+                  )
+                }
+                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out"
+              >
+                <svg
+                  className="h-6 w-6"
+                  stroke="currentColor"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    className={
+                      !showingNavigationDropdown ? "inline-flex" : "hidden"
+                    }
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                  <path
+                    className={
+                      showingNavigationDropdown ? "inline-flex" : "hidden"
+                    }
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          className={
+            (showingNavigationDropdown ? "block" : "hidden") + " sm:hidden"
+          }
+        >
+          <div className="pt-2 pb-3 space-y-1">
+            {menu?.map((menuItem) => {
+              return (
+                <div key={menuItem.name}>
+                  <ResponsiveNavLink
+                    href={route(menuItem.route)}
+                    active={route().current(menuItem.route)}
+                  >
+                    {menuItem.name}
+                  </ResponsiveNavLink>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
+            <div className="px-4">
+              <div className="font-medium text-base text-gray-800 dark:text-gray-200">
+                {user.name}
+              </div>
+              <div className="font-medium text-sm text-gray-500">
+                {user.email}
+              </div>
+            </div>
+
+            <div className="mt-3 space-y-1">
+              <ResponsiveNavLink href={route("admin.profile.edit")}>
+                Profile
+              </ResponsiveNavLink>
+              <ResponsiveNavLink
+                method="post"
+                href={route("logout")}
+                as="button"
+              >
+                Log Out
+              </ResponsiveNavLink>
+            </div>
           </div>
         </div>
       </nav>
     </header>
   );
 }
-
-

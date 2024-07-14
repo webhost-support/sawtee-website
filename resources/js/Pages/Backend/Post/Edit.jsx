@@ -1,8 +1,8 @@
-import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
+import AuthenticatedLayout from "@/components/Layouts/AuthenticatedLayout";
 
-import { Box } from '@chakra-ui/react';
-import { Head } from '@inertiajs/react';
-import EditPostForm from './Partials/EditPostForm';
+import { Box } from "@chakra-ui/react";
+import { Head } from "@inertiajs/react";
+import EditPostForm from "./Partials/EditPostForm";
 
 export default function Edit({
   post,

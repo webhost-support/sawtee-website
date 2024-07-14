@@ -1,114 +1,94 @@
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import GuestLayout from '@/Pages/Backend/Layouts/GuestLayout';
-import { Head, useForm } from '@inertiajs/react';
-import { useEffect } from 'react';
+import { useEffect } from "react";
+import GuestLayout from "@/components/Layouts/GuestLayout";
+import InputError from "@/components/Backend/InputError";
+import InputLabel from "@/components/Backend/InputLabel";
+import PrimaryButton from "@/components/Backend/PrimaryButton";
+import TextInput from "@/components/Backend/TextInput";
+import { Head, useForm } from "@inertiajs/react";
 
 export default function ResetPassword({ token, email }) {
   const { data, setData, post, processing, errors, reset } = useForm({
     token: token,
     email: email,
-    password: '',
-    password_confirmation: '',
+    password: "",
+    password_confirmation: "",
   });
 
   useEffect(() => {
     return () => {
-      reset('password', 'password_confirmation');
+      reset("password", "password_confirmation");
     };
   }, []);
 
-  const submit = e => {
+  const submit = (e) => {
     e.preventDefault();
 
-    post(route('password.store'));
+    post(route("password.store"));
   };
 
   return (
     <GuestLayout>
       <Head title="Reset Password" />
-      <Container maxW="7xl" p={{ base: 5, md: 10 }}>
-        <Center>
-          <Stack spacing={4} boxSize={{ base: 'sm', sm: 'md', md: 'lg' }}>
-            <VStack
-              boxSize={{ base: 'sm', sm: 'md', md: 'lg' }}
-              h="max-content !important"
-              bg={useColorModeValue('white', 'gray.700')}
-              rounded="lg"
-              boxShadow="lg"
-              p={{ base: 5, sm: 10 }}
-              spacing={8}
-              as={'form'}
-              onSubmit={submit}
-            >
-              <VStack spacing={4} w="100%">
-                <FormControl>
-                  <FormLabel htmlFor="email">Email</FormLabel>
 
-                  <Input
-                    id="email"
-                    type="email"
-                    name="email"
-                    value={data.email}
-                    placeholder="Email"
-                    mt={1}
-                    w={'full'}
-                    onChange={e => setData('email', e.target.value)}
-                  />
+      <form onSubmit={submit}>
+        <div>
+          <InputLabel htmlFor="email" value="Email" />
 
-                  {errors.email && (
-                    <FormErrorMessage>{errors.email}</FormErrorMessage>
-                  )}
-                </FormControl>
-                <FormControl>
-                  <FormLabel htmlFor="password">Password</FormLabel>
+          <TextInput
+            id="email"
+            type="email"
+            name="email"
+            value={data.email}
+            className="mt-1 block w-full"
+            autoComplete="username"
+            onChange={(e) => setData("email", e.target.value)}
+          />
 
-                  <Input
-                    id="password"
-                    type="password"
-                    name="password"
-                    value={data.password}
-                    mt={1}
-                    w={'full'}
-                    onChange={e => setData('password', e.target.value)}
-                  />
+          <InputError message={errors.email} className="mt-2" />
+        </div>
 
-                  {errors.password && (
-                    <FormErrorMessage>{errors.password}</FormErrorMessage>
-                  )}
-                </FormControl>
+        <div className="mt-4">
+          <InputLabel htmlFor="password" value="Password" />
 
-                <FormControl>
-                  <FormLabel htmlFor="password_confirmation">
-                    Confirm Password
-                  </FormLabel>
+          <TextInput
+            id="password"
+            type="password"
+            name="password"
+            value={data.password}
+            className="mt-1 block w-full"
+            autoComplete="new-password"
+            isFocused={true}
+            onChange={(e) => setData("password", e.target.value)}
+          />
 
-                  <Input
-                    id="password_confirmation"
-                    type="password_confirmation"
-                    name="password_confirmation"
-                    value={data.password_confirmation}
-                    mt={1}
-                    w={'full'}
-                    onChange={e =>
-                      setData('password_confirmation', e.target.value)
-                    }
-                  />
+          <InputError message={errors.password} className="mt-2" />
+        </div>
 
-                  {errors.password_confirmation && (
-                    <FormErrorMessage>
-                      {errors.password_confirmation}
-                    </FormErrorMessage>
-                  )}
-                </FormControl>
+        <div className="mt-4">
+          <InputLabel
+            htmlFor="password_confirmation"
+            value="Confirm Password"
+          />
 
-                <PrimaryButton ml={4} disabled={processing}>
-                  Reset Password
-                </PrimaryButton>
-              </VStack>
-            </VStack>
-          </Stack>
-        </Center>
-      </Container>
+          <TextInput
+            type="password"
+            id="password_confirmation"
+            name="password_confirmation"
+            value={data.password_confirmation}
+            className="mt-1 block w-full"
+            autoComplete="new-password"
+            onChange={(e) => setData("password_confirmation", e.target.value)}
+          />
+
+          <InputError message={errors.password_confirmation} className="mt-2" />
+        </div>
+
+        <div className="flex items-center justify-end mt-4">
+          <PrimaryButton className="ms-4" disabled={processing}>
+            Reset Password
+          </PrimaryButton>
+        </div>
+      </form>
     </GuestLayout>
   );
 }
