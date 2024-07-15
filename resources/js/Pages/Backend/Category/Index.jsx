@@ -18,16 +18,22 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
 import { Head, Link, useForm } from '@inertiajs/react';
-import React from 'react';
-
-import { Dialog, DialogTrigger } from '@/components/ui/dialog';
+import React, { useEffect, useState } from 'react';
 import CreateCategoryForm from './Partials/CreateCategoryForm';
-export default function Index({ auth, categories: data }) {
+import EditCategoryForm from './Partials/EditCategoryForm';
+
+export default function Index({ auth, categories }) {
   const { processing, get, delete: destroy } = useForm();
+  const [createFormOpen, setCreateFormOpen] = useState(false);
+  const [editFormOpen, setEditFormOpen] = useState(false);
+  const [category, setCatgory] = useState(undefined);
   const { toast } = useToast();
   const handleEdit = (e, id) => {
     e.preventDefault();
-    get(route('admin.categories.edit', id));
+    // get(route('admin.categories.edit', id));
+    const cat = categories.find(c => c.id === id);
+    setCatgory(cat);
+    setEditFormOpen(!editFormOpen);
   };
 
   const handleDelete = (e, id) => {
@@ -112,7 +118,7 @@ export default function Index({ auth, categories: data }) {
                 <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                 <AlertDialogDescription>
                   This action cannot be undone. This will permanently delete
-                  this item and remove it from the servers.
+                  this item and remove it from the database.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
@@ -135,16 +141,26 @@ export default function Index({ auth, categories: data }) {
   return (
     <AuthenticatedLayout user={auth.user}>
       <Head title="Categories" />
-      <Dialog>
-        <DialogTrigger asChild>
-          <PrimaryButton>Create New Category</PrimaryButton>
-        </DialogTrigger>
-        <CreateCategoryForm categories={data} />
-      </Dialog>
-      {data && (
+      {/* <Link href={route('admin.categories.create')}> */}
+      <PrimaryButton onClick={() => setCreateFormOpen(!createFormOpen)}>
+        Create New Category
+      </PrimaryButton>
+      <CreateCategoryForm
+        open={createFormOpen}
+        setOpen={setCreateFormOpen}
+        categories={categories}
+      />
+      <EditCategoryForm
+        open={editFormOpen}
+        setOpen={setEditFormOpen}
+        category={category}
+        categories={categories}
+      />
+      {/* </Link> */}
+      {categories && (
         <DataTable
           defaultColumns={defaultColumns}
-          data={data}
+          data={categories}
           showTypeFilter={false}
         />
       )}

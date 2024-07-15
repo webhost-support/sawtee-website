@@ -1,13 +1,13 @@
-import { useRef, useState } from "react";
-import DangerButton from "@/components/DangerButton";
-import InputError from "@/components/InputError";
-import InputLabel from "@/components/InputLabel";
-import Modal from "@/components/Modal";
-import SecondaryButton from "@/components/SecondaryButton";
-import TextInput from "@/components/TextInput";
-import { useForm } from "@inertiajs/react";
+import DangerButton from '@/components/Backend/DangerButton';
+import InputError from '@/components/Backend/InputError';
+import InputLabel from '@/components/Backend/InputLabel';
+import Modal from '@/components/Backend/Modal';
+import SecondaryButton from '@/components/Backend/SecondaryButton';
+import TextInput from '@/components/Backend/TextInput';
+import { useForm } from '@inertiajs/react';
+import { useRef, useState } from 'react';
 
-export default function DeleteUserForm({ className = "" }) {
+export default function DeleteUserForm({ className = '' }) {
   const [confirmingUserDeletion, setConfirmingUserDeletion] = useState(false);
   const passwordInput = useRef();
 
@@ -19,17 +19,17 @@ export default function DeleteUserForm({ className = "" }) {
     reset,
     errors,
   } = useForm({
-    password: "",
+    password: '',
   });
 
   const confirmUserDeletion = () => {
     setConfirmingUserDeletion(true);
   };
 
-  const deleteUser = (e) => {
+  const deleteUser = e => {
     e.preventDefault();
 
-    destroy(route("profile.destroy"), {
+    destroy(route('profile.destroy'), {
       preserveScroll: true,
       onSuccess: () => closeModal(),
       onError: () => passwordInput.current.focus(),
@@ -82,7 +82,7 @@ export default function DeleteUserForm({ className = "" }) {
               name="password"
               ref={passwordInput}
               value={data.password}
-              onChange={(e) => setData("password", e.target.value)}
+              onChange={e => setData('password', e.target.value)}
               className="mt-1 block w-3/4"
               isFocused
               placeholder="Password"

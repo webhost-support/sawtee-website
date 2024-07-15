@@ -11,7 +11,7 @@ import {
 import { router } from '@inertiajs/react';
 import { useState } from 'react';
 export function CustomFilter({ table, column }) {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(undefined);
   return (
     <Input
       placeholder={`Filter using ${column} field...`}
