@@ -1,10 +1,10 @@
 import {
-  TitleFilter,
+  CustomFilter,
   GlobalFilter,
-  CategoryFilter,
-} from "@/components/Backend/DataTableFilters";
-import { DataTablePagination } from "@/components/Backend/DataTablePagination";
-import { DataTableViewOptions } from "@/components/Backend/DataTableViewOptions";
+  TypeFilter,
+} from '@/components/Backend/DataTableFilters';
+import { DataTablePagination } from '@/components/Backend/DataTablePagination';
+import { DataTableViewOptions } from '@/components/Backend/DataTableViewOptions';
 import {
   Table,
   TableBody,
@@ -13,7 +13,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from '@/components/ui/table';
 import {
   flexRender,
   getCoreRowModel,
@@ -21,21 +21,23 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table";
-import * as React from "react";
-export function FrontDataTable({
+} from '@tanstack/react-table';
+import * as React from 'react';
+export function DataTable({
   data,
   defaultColumns,
-  filterOption,
+  showTypeFilter = true,
+  typeFilterOptions,
   showColumnFilters = true,
+  customFilterColumn,
   pagination = true,
-  showGlobalSearch = false,
-  showTitleSearch = true,
+  showGlobalFilter = false,
+  showCustomFilter = true,
 }) {
   const [sorting, setSorting] = React.useState([]);
   const [columns, setColumns] = React.useState([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
-  const [globalFilter, setGlobalFilter] = React.useState("");
+  const [globalFilter, setGlobalFilter] = React.useState('');
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [rowSelection, setRowSelection] = React.useState({});
 
@@ -67,28 +69,36 @@ export function FrontDataTable({
   return (
     <div>
       <div className="flex items-center gap-4 py-4">
-        {showTitleSearch && table && <TitleFilter table={table} />}
-        {showGlobalSearch && (
+        {showCustomFilter && table && (
+          <CustomFilter
+            table={table}
+            column={customFilterColumn ? customFilterColumn : 'title'}
+          />
+        )}
+        {showGlobalFilter && (
           <GlobalFilter
             globalFilter={globalFilter}
             setGlobalFilter={setGlobalFilter}
           />
         )}
-        <CategoryFilter
-          categories={filterOption.iterable}
-          label={"categories"}
-          value={filterOption.selectedId}
-        />
+        {showTypeFilter && (
+          <TypeFilter
+            data={typeFilterOptions.iterable}
+            label={'categories'}
+            value={typeFilterOptions.selectedId}
+            route={typeFilterOptions.route}
+          />
+        )}
         {showColumnFilters && (
-          <DataTableViewOptions table={table} label={"Select columns"} />
+          <DataTableViewOptions table={table} label={'Select columns'} />
         )}
       </div>
       <div className="rounded-md border">
         <Table>
           <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
+            {table.getHeaderGroups().map(headerGroup => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
+                {headerGroup.headers.map(header => {
                   return (
                     <TableHead
                       key={Math.random() + header.id}
@@ -98,7 +108,7 @@ export function FrontDataTable({
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext(),
+                            header.getContext()
                           )}
                     </TableHead>
                   );
@@ -108,21 +118,21 @@ export function FrontDataTable({
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
+              table.getRowModel().rows.map(row => (
                 <TableRow
                   key={`row_${row.id}`}
-                  data-state={row.getIsSelected() && "selected"}
+                  data-state={row.getIsSelected() && 'selected'}
                 >
-                  {row.getVisibleCells().map((cell) => {
+                  {row.getVisibleCells().map(cell => {
                     return (
                       <TableCell
                         key={Math.random() + cell.id}
                         className="max-w-72"
                       >
-                        {" "}
+                        {' '}
                         {flexRender(
                           cell.column.columnDef.cell,
-                          cell.getContext(),
+                          cell.getContext()
                         )}
                       </TableCell>
                     );

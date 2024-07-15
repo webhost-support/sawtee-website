@@ -1,4 +1,4 @@
-import { Input } from "@/components/ui/input";
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -7,17 +7,21 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { router } from "@inertiajs/react";
-import { useState } from "react";
-export function TitleFilter({ table }) {
-  const [value, setValue] = useState("");
+} from '@/components/ui/select';
+import { router } from '@inertiajs/react';
+import { useState } from 'react';
+export function CustomFilter({ table, column }) {
+  const [value, setValue] = useState('');
   return (
     <Input
-      placeholder="Filter posts using title..."
+      placeholder={`Filter using ${column} field...`}
       value={value}
-      onChange={(event) =>
-        setValue(table.getColumn("title")?.setFilterValue(event.target.value))
+      onChange={event =>
+        setValue(
+          table
+            .getColumn(column ? column : 'title')
+            ?.setFilterValue(event.target.value)
+        )
       }
       className="max-w-sm"
     />
@@ -27,27 +31,27 @@ export function TitleFilter({ table }) {
 export function GlobalFilter({ globalFilter, setGlobalFilter }) {
   return (
     <Input
-      placeholder="Filter posts using title, author, tags, themes..."
+      placeholder="Filter using any column field..."
       value={globalFilter}
-      onChange={(event) => setGlobalFilter(event.target.value.toString())}
+      onChange={event => setGlobalFilter(event.target.value.toString())}
       className="max-w-sm"
     />
   );
 }
 
-export function CategoryFilter({ categories, value, label }) {
-  const [selectedCategory, setSelectedCategory] = useState(value);
-  function handleCategoryFilter(id) {
-    setSelectedCategory(id);
-    router.visit("/admin/posts", {
+export function TypeFilter({ data, value, label, route }) {
+  const [selectedType, setSelectedType] = useState(value);
+  function handleTypeFilter(id) {
+    setSelectedType(id);
+    router.visit(route, {
       data: { category_id: id },
       preserveState: true,
     });
   }
   return (
     <Select
-      onValueChange={(value) => {
-        handleCategoryFilter(value);
+      onValueChange={value => {
+        handleTypeFilter(value);
       }}
       value={value}
     >
@@ -57,9 +61,9 @@ export function CategoryFilter({ categories, value, label }) {
       <SelectContent>
         <SelectGroup>
           <SelectLabel>{label}</SelectLabel>
-          {categories?.map((category) => (
-            <SelectItem key={category.id} value={category.id}>
-              {category.name}
+          {data?.map(item => (
+            <SelectItem key={item.id} value={item.id}>
+              {item.name}
             </SelectItem>
           ))}
         </SelectGroup>
