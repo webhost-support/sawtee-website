@@ -1,31 +1,26 @@
-import FileUpload, { PreviewImage } from '@/Components/Backend/FileUpload';
-import ControlledMultiSelect from '@/Components/Backend/MultiSelect';
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import { FileIcon } from '@/Components/Frontend/icons';
-import { CloseIcon } from '@chakra-ui/icons';
+import InputError from '@/components/Backend/InputError';
+import { MultiSelect } from '@/components/Backend/MultiSelect';
+import PrimaryButton from '@/components/Backend/PrimaryButton';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
-  AspectRatio,
-  Box,
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Grid,
-  GridItem,
-  Input,
-  InputGroup,
-  InputLeftAddon,
-  InputRightAddon,
   Select,
-  Textarea,
-  VStack,
-  useToast,
-} from '@chakra-ui/react';
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/components/ui/use-toast';
+
 import { useForm } from '@inertiajs/react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 export default function CreatePublicationForm({ categories, tags }) {
-  const { data, setData, post, processing, errors } = useForm({
+  const { data, setData, post, processing, errors, reset } = useForm({
     category_id: '',
     title: '',
     subtitle: '',
@@ -34,35 +29,19 @@ export default function CreatePublicationForm({ categories, tags }) {
     file: '',
     tags: [],
   });
-  const toast = useToast();
-  const [filename, setFilename] = useState(data.file.name || '');
   const [image, setImage] = useState(null);
   const [postTags, setPostTags] = useState([]);
+  const [tagOptions, setTagOptions] = useState([]);
+  const { toast } = useToast();
 
-  const [tagOptions, setTagOptions] = useState(() => {
-    const tagsarray = [];
+  React.useEffect(() => {
     tags.map(tag => {
-      tagsarray.push({
-        value: tag.id,
-        label: tag.name,
-      });
+      setTagOptions(prev => [
+        ...prev,
+        { value: tag.id, label: tag.name, icon: null },
+      ]);
     });
-
-    return tagsarray;
-  });
-
-  function setDataTags(e) {
-    const array = [];
-    setPostTags(e);
-    e.map(item =>
-      array.push({
-        tag_id: item.value,
-        publication_id: item.id,
-      })
-    );
-
-    setData('tags', array);
-  }
+  }, [tags]);
 
   const submit = e => {
     e.preventDefault();
@@ -70,216 +49,177 @@ export default function CreatePublicationForm({ categories, tags }) {
       preserveScroll: true,
       onSuccess: () =>
         toast({
-          position: 'top-right',
           title: 'Publication Created.',
           description: `Publication ${data.title} Successfully`,
-          status: 'success',
-          duration: 6000,
-          isClosable: true,
         }),
-      onError: errors => {
-        console.log(errors);
+      onError: () => {
+        for (const key in errors) {
+          if (Object.hasOwnProperty.call(errors, key)) {
+            const value = errors[key];
+            reset([key], { keepErrors: true });
+            return toast({
+              title: `${key.toUpperCase()} field error`,
+              description: value,
+            });
+          }
+        }
       },
     });
   };
 
   return (
     <form onSubmit={submit}>
-      <Grid
-        templateColumns={{
-          base: '1fr',
-          xl: 'repeat(6, minmax(100px, 1fr))',
-        }}
-        autoRows={'auto'}
-        gap={8}
-      >
-        <GridItem colSpan={{ base: 1, xl: 4 }}>
-          <VStack spacing={8} position={'sticky'} top={'2rem'}>
-            <FormControl isInvalid={errors.title} isRequired>
-              <FormLabel htmlFor="title">Title/Issue</FormLabel>
+      <div className="grid grid-cols-12 gap-4">
+        <div className="flex flex-col gap-8 col-span-12 self-center md:col-span-8 px-4">
+          <div className="mx-2">
+            <Label htmlFor="title">Title/Issue</Label>
+            <Input
+              type="text"
+              required
+              id="title"
+              name="title"
+              className="mt-1"
+              autoComplete="title"
+              onChange={e => setData('title', e.target.value)}
+            />
 
-              <Input
-                type="text"
-                id="title"
-                name="title"
-                display="flex"
-                mt={1}
-                autoComplete="title"
-                onChange={e => setData('title', e.target.value)}
-              />
+            {errors.title && (
+              <InputError className="mt-2">{errors.title}</InputError>
+            )}
+          </div>
+          <div className="mx-2">
+            <Label htmlFor="subtitle">Subtitle</Label>
+            <Input
+              type="text"
+              id="subtitle"
+              name="subtitle"
+              className="mt-1"
+              autoComplete="subtitle"
+              onChange={e => setData('subtitle', e.target.value)}
+            />
 
-              {errors.title && <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>}
-            </FormControl>
+            {errors.title && (
+              <InputError className="mt-2">{errors.title}</InputError>
+            )}
+          </div>
+          <div className="mx-2">
+            <Label htmlFor="description">Description</Label>
 
-            <FormControl isInvalid={errors.subtitle}>
-              <FormLabel htmlFor="subtitle">Subtitle</FormLabel>
+            <Textarea
+              name="description"
+              id="description"
+              rows={10}
+              placeholder="Write something about your publication"
+              onChange={e => setData('description', e.target.value)}
+            />
 
-              <Input
-                type="text"
-                id="subtitle"
-                name="subtitle"
-                display="flex"
-                mt={1}
-                autoComplete="subtitle"
-                onChange={e => setData('subtitle', e.target.value)}
-              />
+            {errors.description && (
+              <InputError className="mt-2">{errors.description}</InputError>
+            )}
+          </div>
+        </div>
+        <div className="flex flex-col gap-8 self-center col-span-12 px-3 md:col-span-4">
+          <fieldset className="mx-2">
+            <Label as="legend" htmlFor="category_id">
+              Category
+            </Label>
 
-              {errors.title && <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>}
-            </FormControl>
+            <Select
+              name="category_id"
+              value={data.category_id}
+              onValueChange={value => {
+                setData('category_id', Number(value));
+              }}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select Category" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Categories</SelectLabel>
+                </SelectGroup>
 
-            <FormControl mt={4} isInvalid={errors.description}>
-              <FormLabel htmlFor="description">Description</FormLabel>
+                {categories.map(category => (
+                  <SelectItem key={category.id} value={category.id}>
+                    {category.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
 
-              <Textarea
-                name="description"
-                id="description"
-                rows={6}
-                resize={'vertical'}
-                placeholder="Write something about your publication"
-                onChange={e => setData('description', e.target.value)}
-              />
+            {errors.category_id && (
+              <InputError className={'mt-2'}>{errors.category_id}</InputError>
+            )}
+          </fieldset>
 
-              {errors.description && <FormErrorMessage mt={2}>{errors.description}</FormErrorMessage>}
-            </FormControl>
-          </VStack>
-        </GridItem>
-        <GridItem colSpan={{ base: 1, xl: 2 }}>
-          <VStack spacing={8}>
-            <FormControl isInvalid={errors.category_id} isRequired as="fieldset">
-              <FormLabel as="legend" htmlFor="category_id">
-                Category
-              </FormLabel>
-
-              <Select
-                name="category_id"
-                placeholder="Select Category"
-                onChange={e => {
-                  setData('category_id', e.target.value);
-                }}
-              >
-                {categories &&
-                  categories.map(item => (
-                    <option key={item.id} value={item.id}>
-                      {item.name}
-                    </option>
-                  ))}
-              </Select>
-
-              {errors.category_id && <FormErrorMessage mt={2}>{errors.category_id}</FormErrorMessage>}
-            </FormControl>
-
-            <FormControl py={4} id={'tags'}>
-              <FormLabel htmlFor="tags">{' Add Tags'}</FormLabel>
-
-              <ControlledMultiSelect
-                isMulti
-                name={'tags'}
-                options={tagOptions}
-                variant="filled"
-                tagVariant="solid"
-                placeholder="Select Tags"
-                value={postTags}
-                onChange={e => {
-                  setPostTags(e);
-                  setDataTags(e);
-                }}
-                selectedOptionColorScheme="blue"
-              />
-            </FormControl>
-
-            <FormControl mt={4} isInvalid={errors.image}>
-              <FormLabel htmlFor="image">Featured Image</FormLabel>
-
-              {image && (
-                <>
-                  <AspectRatio w={'64'} ratio={3 / 4}>
-                    <PreviewImage src={image} />
-                  </AspectRatio>
-                  <Button
-                    mt={4}
-                    size={'sm'}
-                    colorScheme="red"
-                    onClick={() => {
-                      setImage(null);
-                    }}
-                  >
-                    Remove/Change Image
-                  </Button>
-                </>
-              )}
-
-              {!image && (
-                <FileUpload accept="image/.png,.jpg,.jpeg,.webp">
-                  <Input
-                    type="file"
-                    height="100%"
-                    width="100%"
-                    position="absolute"
-                    top="0"
-                    left="0"
-                    opacity="0"
-                    aria-hidden="true"
-                    accept="image/.png,.jpg,.jpeg,.webp"
-                    id="image"
-                    name="image"
-                    placeholder="Browse Image"
-                    size="md"
-                    onChange={e => {
-                      setData('image', e.target.files[0]);
-
-                      setImage(URL.createObjectURL(e.target.files[0]));
-                    }}
+          <div id={'tags'} className="mx-2">
+            <Label htmlFor="tags">{' Add Tags'}</Label>
+            <MultiSelect
+              name={'tags'}
+              options={tagOptions}
+              defaultValue={postTags}
+              placeholder="Select Tags"
+              variant="inverted"
+              maxCount={2}
+              setData={setData}
+            />
+          </div>
+          <div className="mx-2">
+            <Label htmlFor="image">Featured Image</Label>
+            {image && (
+              <div className="w-[minmax(auto, 450px)]">
+                <AspectRatio ratio={16 / 9}>
+                  <img
+                    src={image}
+                    alt="featured"
+                    className="rounded-md object-cover"
                   />
-                </FileUpload>
-              )}
-              {errors.image && <FormErrorMessage mt={2}>{errors.image}</FormErrorMessage>}
-            </FormControl>
-            <FormControl mt={4} isInvalid={errors.file} isRequired>
-              <FormLabel htmlFor="file">File Upload</FormLabel>
-              <InputGroup>
-                <InputLeftAddon children={<FileIcon />} />
-                <Box position="relative">
-                  <Input size="md" isReadOnly placeholder={filename ? filename : 'No file selected'} />
-                  <Input
-                    type="file"
-                    height="100%"
-                    width="100%"
-                    position="absolute"
-                    top="0"
-                    left="0"
-                    opacity="0"
-                    aria-hidden="true"
-                    accept=".pdf,.doc,.docx,.ppt,.pptx"
-                    id="file"
-                    name="file"
-                    size="md"
-                    onChange={e => {
-                      setFilename(e.target.files[0].name);
-                      setData('file', e.target.files[0]);
-                    }}
-                  />
-                </Box>
-                {filename && (
-                  <InputRightAddon
-                    children={
-                      <CloseIcon
-                        color={'red.500'}
-                        onClick={() => {
-                          setFilename(null);
-                        }}
-                      />
-                    }
-                  />
-                )}
-              </InputGroup>
-              {errors.file && <FormErrorMessage mt={2}>{errors.file}</FormErrorMessage>}
-            </FormControl>
-            <PrimaryButton type="submit" isLoading={processing} mt={4} w="64">
-              Save
-            </PrimaryButton>
-          </VStack>
-        </GridItem>
-      </Grid>
+                </AspectRatio>
+              </div>
+            )}
+
+            <Input
+              type="file"
+              accept="image/.png,.jpg,.jpeg,.webp"
+              id="image"
+              className="mt-1"
+              name="image"
+              onChange={e => {
+                setData('image', e.target.files[0]);
+                setImage(URL.createObjectURL(e.target.files[0]));
+              }}
+            />
+
+            {errors.image && (
+              <FormErrorMessage className="mt-2">
+                {errors.image}
+              </FormErrorMessage>
+            )}
+          </div>
+
+          <div className="mx-2">
+            <Label htmlFor="file">File Upload</Label>
+            <Input
+              type="file"
+              accept=".pdf,.doc,.docx,.ppt,.pptx"
+              id="file"
+              className="mt-1"
+              name="file"
+              onChange={e => {
+                setData('file', e.target.files[0]);
+              }}
+            />
+
+            {errors.file && (
+              <InputError className="mt-2">{errors.file}</InputError>
+            )}
+          </div>
+
+          <PrimaryButton type="submit" disabled={processing}>
+            Add
+          </PrimaryButton>
+        </div>
+      </div>
     </form>
   );
 }

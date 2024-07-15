@@ -1,6 +1,4 @@
-import AuthenticatedLayout from "@/components/Layouts/AuthenticatedLayout";
-
-import { Box } from "@chakra-ui/react";
+import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
 import { Head } from "@inertiajs/react";
 import EditPostForm from "./Partials/EditPostForm";
 
@@ -16,15 +14,13 @@ export default function Edit({
     <AuthenticatedLayout user={auth.user}>
       <Head title="Edit Post" />
 
-      <Box py={6}>
-        <EditPostForm
-          post={post}
-          categories={categories}
-          tags={tags}
-          themes={themes}
-          categoryID={categoryID}
-        />
-      </Box>
+      <EditPostForm
+        post={post}
+        categories={categories}
+        tags={tags}
+        themes={themes}
+        categoryID={categoryID}
+      />
     </AuthenticatedLayout>
   );
 }

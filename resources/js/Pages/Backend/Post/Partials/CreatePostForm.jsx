@@ -1,7 +1,6 @@
 import ContentEditor from '@/components/Backend/ContentEditor';
 import InputError from '@/components/Backend/InputError';
 import { MultiSelect } from '@/components/Backend/MultiSelect';
-
 import PrimaryButton from '@/components/Backend/PrimaryButton';
 import {
   Accordion,
@@ -83,7 +82,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
         for (const key in errors) {
           if (Object.hasOwnProperty.call(errors, key)) {
             const value = errors[key];
-            reset(key);
+            reset([key], { keepErrors: true });
             return toast({
               title: `${key.toUpperCase()} field error`,
               description: value,
@@ -113,7 +112,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
             <Label htmlFor="title">Title</Label>
             <Input
               id="title"
-              className="mt-1 block w-full"
+              className={`${errors.title ? 'border-red-500' : ''}`}
               value={data.title}
               onChange={e => setData('title', e.target.value)}
               required
@@ -157,7 +156,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
         </div>
 
         <div className="flex flex-col gap-8 col-span-12 px-3 md:col-span-4">
-          <Accordion type="single" collapsible className="w-full">
+          <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
               <AccordionTrigger>
                 <div className="flex gap-2">
@@ -176,12 +175,12 @@ export default function CreatePostForm({ categories, themes, tags }) {
               </AccordionTrigger>
               <AccordionContent>
                 <div className="flex flex-col justify-start gap-4">
-                  <div>
+                  <div className="mx-2">
                     <Label htmlFor="meta_title">Meta Title</Label>
                     <Input
                       id="meta_title"
                       name="meta_title"
-                      className="block mt-1"
+                      className="mt-1"
                       placeholder="enter meta title"
                       onChange={e => setData('meta_title', e.target.value)}
                     />
@@ -191,9 +190,8 @@ export default function CreatePostForm({ categories, themes, tags }) {
                     </InputError>
                   </div>
 
-                  <div className="mt-4">
+                  <div className="mx-2">
                     <Label htmlFor="meta_description">Meta Description</Label>
-
                     <Textarea
                       id="meta_description"
                       name="meta_description"
@@ -231,7 +229,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
               </AccordionTrigger>
               <AccordionContent>
                 <div className="flex flex-col justify-start gap-4">
-                  <fieldset>
+                  <fieldset className="mx-2">
                     <Label as="legend" htmlFor="theme_id">
                       Theme
                     </Label>
@@ -265,7 +263,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
                     )}
                   </fieldset>
 
-                  <div className={'py-4'}>
+                  <div className="mx-2">
                     <Label htmlFor="tags">{' Add Tags'}</Label>
 
                     <MultiSelect
@@ -302,24 +300,21 @@ export default function CreatePostForm({ categories, themes, tags }) {
               </AccordionTrigger>
               <AccordionContent>
                 <div className="flex flex-col gap-8 justify-start">
-                  <div>
+                  <div className="mx-2">
                     <Label htmlFor="file">File Upload</Label>
-
-                    <div className=" flex relative">
-                      <Input
-                        type="file"
-                        accept=".pdf,.docx,.pptx"
-                        className=" mt-1"
-                        id="file"
-                        name="file"
-                        onChange={e => {
-                          setData('file', e.target.files[0]);
-                        }}
-                      />
-                    </div>
+                    <Input
+                      type="file"
+                      accept=".pdf,.docx,.pptx"
+                      className=" mt-1"
+                      id="file"
+                      name="file"
+                      onChange={e => {
+                        setData('file', e.target.files[0]);
+                      }}
+                    />
                   </div>
 
-                  <div>
+                  <div className="mx-2">
                     <Label htmlFor="files">Content Files Upload</Label>
 
                     <Input
@@ -338,7 +333,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
-          <fieldset required>
+          <fieldset required className="mx-2">
             <Label as="legend" htmlFor="category_id">
               Category
             </Label>
@@ -374,7 +369,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
               <InputError className={'mt-2'}>{errors.category_id}</InputError>
             )}
           </fieldset>
-          <div>
+          <div className="mx-2">
             <Label as="legend" htmlFor="published_at">
               Published At
             </Label>
@@ -394,7 +389,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
               <InputError className={'mt-2'}>{errors.published_at}</InputError>
             )}
           </div>
-          <fieldset  required>
+          <fieldset required className="mx-2">
             <Label as="legend" htmlFor="status">
               Status
             </Label>
@@ -426,7 +421,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
             )}
           </fieldset>
           {selectedCategory === ('Covid' || 'Opinion in Lead' || 'Blog') && (
-            <div >
+            <div className="mx-2">
               <TooltipProvider>
                 <Label htmlFor="author">
                   {'Author/s '}
@@ -457,7 +452,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
             </div>
           )}
           {selectedCategory === 'Covid' && (
-            <div >
+            <div className="mx-2">
               <Label htmlFor="genre">Genre</Label>
 
               <Input
@@ -476,7 +471,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
           )}
           {selectedCategory ===
             ('Covid' || 'Opinion in Lead' || 'Webinar Series') && (
-            <div >
+            <div className="mx-2">
               <Label htmlFor="link">External Link</Label>
 
               <Input
@@ -493,7 +488,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
               )}
             </div>
           )}
-          <div >
+          <div className="mx-2">
             <Label htmlFor="image">Featured Image</Label>
 
             {imageUrl && (

@@ -1,6 +1,6 @@
 import DataTableActions from '@/components/Backend/DataTableActions';
 import { DataTableColumnHeader } from '@/components/Backend/DatatableColumnHelper';
-import { FrontDataTable } from '@/components/Backend/FrontDataTable';
+import { DataTable } from '@/components/Backend/FrontDataTable';
 import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils';
 import { Head, Link, useForm } from '@inertiajs/react';
 import React from 'react';
 
+import PrimaryButton from '@/components/Backend/PrimaryButton';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -176,17 +177,18 @@ export default function Index({ auth, posts, categories, categoryID }) {
   return (
     <AuthenticatedLayout user={auth.user}>
       <Head title="Posts" />
-      {/* <DeletePostModal isOpen={isOpen} onClose={onClose} postId={postId} /> */}
 
-      <div className="flex items-center justify-start gap-4">
-        <Link href={route('admin.posts.create')}>
-          <Button>Create New Post</Button>
-        </Link>
-      </div>
-      <FrontDataTable
+      <Link href={route('admin.posts.create')}>
+        <PrimaryButton>Create New Post</PrimaryButton>
+      </Link>
+      <DataTable
         defaultColumns={defaultColumns}
         data={posts}
-        filterOption={{ iterable: categories, selectedId: categoryID }}
+        typeFilterOptions={{
+          iterable: categories,
+          selectedId: categoryID,
+          route: '/admin/posts',
+        }}
       />
     </AuthenticatedLayout>
   );

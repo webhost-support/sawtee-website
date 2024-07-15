@@ -1,9 +1,9 @@
-import FullWidthCarousel from '@/Components/Frontend/FullWidthCarousel';
-import MultiPostsCarousel from '@/Components/Frontend/MultiPostsSlider';
-import InertiaChakraLink from '@/Components/Frontend/styles/inertia-chakra-link';
-import InertiaChakraLinkOverlay from '@/Components/Frontend/styles/inertia-chakra-link-overlay';
-import Section from '@/Components/Frontend/styles/section';
-import { formatDate } from '@/Utils/helpers';
+import FullWidthCarousel from '@/components/Frontend/FullWidthCarousel';
+import MultiPostsCarousel from '@/components/Frontend/MultiPostsSlider';
+import InertiaChakraLink from '@/components/Frontend/styles/inertia-chakra-link';
+import InertiaChakraLinkOverlay from '@/components/Frontend/styles/inertia-chakra-link-overlay';
+import Section from '@/components/Frontend/styles/section';
+import { formatDate } from '@/lib/helpers';
 import {
   ArrowForwardIcon,
   ChevronRightIcon,
@@ -617,7 +617,6 @@ export const GlassBox = ({ children, ...rest }) => {
     </Box>
   );
 };
-
 
 export const Title = ({ title, ...rest }) => {
   return (

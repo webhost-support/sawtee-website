@@ -43,7 +43,6 @@ import { cn } from '@/lib/utils';
 import { useForm } from '@inertiajs/react';
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
-import { XIcon } from 'lucide-react';
 import React from 'react';
 
 export default function EditPostForm({
@@ -168,7 +167,7 @@ export default function EditPostForm({
     <form onSubmit={submit}>
       <div className="grid grid-cols-12 gap-4">
         <div className="flex flex-col gap-8 col-span-12 md:col-span-8 px-4">
-          <div>
+          <div className="mx-2">
             <Label htmlFor="title">Title</Label>
             <Input
               id="title"
@@ -182,7 +181,7 @@ export default function EditPostForm({
               <InputError className="mt-2" message={errors.title} />
             )}
           </div>
-          <div mt={4}>
+          <div className="mx-2">
             <Label htmlFor="content">Content</Label>
 
             <ContentEditor
@@ -199,7 +198,7 @@ export default function EditPostForm({
               <InputError className={'mt-2'}>{errors.content}</InputError>
             )}
           </div>
-          <div>
+          <div className="mx-2">
             <Label htmlFor="excerpt">Excerpt</Label>
             <Textarea
               id="excerpt"
@@ -217,7 +216,7 @@ export default function EditPostForm({
         </div>
 
         <div className="flex flex-col gap-8 col-span-12 px-3 md:col-span-4">
-          <Accordion type="single" collapsible className="w-full">
+          <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
               <AccordionTrigger>
                 <div className="flex gap-2">
@@ -236,7 +235,7 @@ export default function EditPostForm({
               </AccordionTrigger>
               <AccordionContent>
                 <div className="flex flex-col justify-start gap-4">
-                  <div>
+                  <div className="mx-2">
                     <Label htmlFor="meta_title">Meta Title</Label>
                     <Input
                       id="meta_title"
@@ -252,7 +251,7 @@ export default function EditPostForm({
                     </InputError>
                   </div>
 
-                  <div className="mt-4">
+                  <div className="mx-2">
                     <Label htmlFor="meta_description">Meta Description</Label>
 
                     <Textarea
@@ -274,7 +273,7 @@ export default function EditPostForm({
               </AccordionContent>
             </AccordionItem>
           </Accordion>
-          <Accordion type="single" collapsible className="w-full">
+          <Accordion type="single" collapsible>
             <AccordionItem value="item-2">
               <AccordionTrigger>
                 <div className="flex gap-2">
@@ -293,7 +292,7 @@ export default function EditPostForm({
               </AccordionTrigger>
               <AccordionContent>
                 <div className="flex flex-col justify-start gap-4">
-                  <fieldset>
+                  <fieldset className="mx-2">
                     <Label as="legend" htmlFor="theme_id">
                       Theme
                     </Label>
@@ -327,7 +326,7 @@ export default function EditPostForm({
                     )}
                   </fieldset>
 
-                  <div className={'py-4'}>
+                  <div className="mx-2">
                     <Label htmlFor="tags">{' Add Tags'}</Label>
 
                     <MultiSelect
@@ -346,7 +345,7 @@ export default function EditPostForm({
               </AccordionContent>
             </AccordionItem>
           </Accordion>
-          <Accordion type="single" collapsible className="w-full">
+          <Accordion type="single" collapsible>
             <AccordionItem value="item-3">
               <AccordionTrigger>
                 <div className="flex gap-2">
@@ -366,7 +365,7 @@ export default function EditPostForm({
               </AccordionTrigger>
               <AccordionContent>
                 <div className="flex flex-col gap-8 justify-start">
-                  <div>
+                  <div className="mx-2">
                     <Label htmlFor="file">File Upload</Label>
                     {filename && (
                       <Input className="mt-1" readOnly value={filename} />
@@ -386,7 +385,7 @@ export default function EditPostForm({
                     </div>
                   </div>
 
-                  <div>
+                  <div className="mx-2">
                     <Label htmlFor="files">Content Files Upload</Label>
 
                     {files?.map(file => {
@@ -417,7 +416,7 @@ export default function EditPostForm({
               </AccordionContent>
             </AccordionItem>
           </Accordion>
-          <fieldset required>
+          <fieldset required className="mx-2">
             <Label as="legend" htmlFor="category_id">
               Category
             </Label>
@@ -453,7 +452,7 @@ export default function EditPostForm({
               <InputError className={'mt-2'}>{errors.category_id}</InputError>
             )}
           </fieldset>
-          <div>
+          <div className="mx-2">
             <Label as="legend" htmlFor="published_at">
               Published At
             </Label>
@@ -498,7 +497,7 @@ export default function EditPostForm({
               <InputError className={'mt-2'}>{errors.published_at}</InputError>
             )}
           </div>
-          <fieldset required>
+          <fieldset required className="mx-2">
             <Label as="legend" htmlFor="status">
               Status
             </Label>
@@ -530,7 +529,7 @@ export default function EditPostForm({
             )}
           </fieldset>
           {selectedCategory === ('Covid' || 'Opinion in Lead' || 'Blog') && (
-            <div>
+            <div className="mx-2">
               <TooltipProvider>
                 <Label htmlFor="author">
                   {'Author/s '}
@@ -562,7 +561,7 @@ export default function EditPostForm({
             </div>
           )}
           {selectedCategory === 'Covid' && (
-            <div>
+            <div className="mx-2">
               <Label htmlFor="genre">Genre</Label>
 
               <Input
@@ -582,7 +581,7 @@ export default function EditPostForm({
           )}
           {selectedCategory ===
             ('Covid' || 'Opinion in Lead' || 'Webinar Series') && (
-            <div>
+            <div className="mx-2">
               <Label htmlFor="link">External Link</Label>
 
               <Input
@@ -600,7 +599,7 @@ export default function EditPostForm({
               )}
             </div>
           )}
-          <div>
+          <div className="mx-2">
             <Label htmlFor="image">Featured Image</Label>
 
             {imageUrl && (

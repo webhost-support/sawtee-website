@@ -1,6 +1,6 @@
-// import "../css/app.css";
 import '../css/index.css';
 // import "../css/theme.css";
+import '../css/app.css';
 import './bootstrap';
 
 import { config, customTheme } from '@/lib/data';

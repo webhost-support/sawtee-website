@@ -16,12 +16,25 @@ class PublicationController extends Controller
   /**
    * Display a listing of the resource.
    */
-  public function index()
+    public function index(Request $request)
   {
-    $publications = Publication::with(['category'])
-      ->latest()
-      ->paginate(10);
-    return Inertia::render('Backend/Publication/Index', ['publications' => $publications]);
+        $publications = null;
+        $category = Category::where('type', 'publication')->where('parent_id', null)->first();
+        $subcategory = $request->category_id ? Category::where('type', 'publication')->find($request->category_id) : $category->children()->first();
+        $childrenIDs = $subcategory->children->pluck('id')->toArray();
+        $parent_and_subcategory_ids = array_merge(array($subcategory->id), $childrenIDs);
+
+        $publications = Publication::with(['category', 'tags'])
+        ->whereIn('category_id', $parent_and_subcategory_ids)
+            ->orderByDesc('id')
+            ->get();
+
+        // dd($publications, $category->children, $subcategory->id);
+        return Inertia::render('Backend/Publication/Index', [
+            'publications' => $publications,
+            'categories' => $category->children,
+            'categoryID' => $subcategory->id,
+        ]);
   }
 
   /**

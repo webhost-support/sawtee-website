@@ -4,11 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Research;
-use App\Models\Image;
 use App\Models\File;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Intervention\Image\Facades\Image as ResizeImage;
 use Illuminate\Support\Str;
 
 class ResearchController extends Controller
@@ -18,7 +16,7 @@ class ResearchController extends Controller
      */
     public function index()
     {
-        $researchs = Research::with(['media'])->latest()->paginate(10);
+        $researchs = Research::with(['media'])->latest()->get();
         return Inertia::render('Backend/Research/Index', ['researchs' => $researchs]);
     }
 
