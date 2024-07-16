@@ -26,7 +26,7 @@ import * as React from 'react';
 export function DataTable({
   data,
   defaultColumns,
-  showTypeFilter = true,
+  showTypeFilter = false,
   typeFilterOptions,
   showColumnFilters = true,
   customFilterColumn,
@@ -127,7 +127,7 @@ export function DataTable({
                     return (
                       <TableCell
                         key={Math.random() + cell.id}
-                        className="max-w-72"
+                        className="max-w-72 "
                       >
                         {' '}
                         {flexRender(

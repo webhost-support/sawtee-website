@@ -145,10 +145,10 @@ export default function Index({
       <Link href={route('admin.publications.create')}>
         <PrimaryButton>Add New Publication</PrimaryButton>
       </Link>
-      {/* {data.data && <DataTable defaultColumns={defaultColumns} data={data} />} */}
       <DataTable
         defaultColumns={defaultColumns}
         data={data}
+        showTypeFilter={true}
         typeFilterOptions={{
           iterable: categories,
           selectedId: categoryID,

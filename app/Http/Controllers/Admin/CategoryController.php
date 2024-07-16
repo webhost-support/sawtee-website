@@ -17,7 +17,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::with(['parent', 'media'])->latest()->get();
+        $categories = Category::whereIn('type', ['post', 'publication'])->with(['parent', 'media'])->latest()->get();
         return Inertia::render('Backend/Category/Index', [
             'categories' => $categories
         ]);

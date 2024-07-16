@@ -21,8 +21,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 export default function Index({ auth, posts, categories, categoryID }) {
-  const { get } = useForm();
-  const { delete: destroy } = useForm();
+  const { get, delete: destroy } = useForm();
   const { toast } = useToast();
 
   const handleDelete = (e, id) => {
@@ -184,6 +183,7 @@ export default function Index({ auth, posts, categories, categoryID }) {
       <DataTable
         defaultColumns={defaultColumns}
         data={posts}
+        showTypeFilter={true}
         typeFilterOptions={{
           iterable: categories,
           selectedId: categoryID,

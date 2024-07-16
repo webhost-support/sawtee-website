@@ -17,13 +17,13 @@ import { buttonVariants } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
-import { Head, Link, useForm } from '@inertiajs/react';
-import React, { useEffect, useState } from 'react';
+import { Head, useForm } from '@inertiajs/react';
+import React, { useState } from 'react';
 import CreateCategoryForm from './Partials/CreateCategoryForm';
 import EditCategoryForm from './Partials/EditCategoryForm';
 
 export default function Index({ auth, categories }) {
-  const { processing, get, delete: destroy } = useForm();
+  const { delete: destroy } = useForm();
   const [createFormOpen, setCreateFormOpen] = useState(false);
   const [editFormOpen, setEditFormOpen] = useState(false);
   const [category, setCatgory] = useState(undefined);
@@ -150,12 +150,14 @@ export default function Index({ auth, categories }) {
         setOpen={setCreateFormOpen}
         categories={categories}
       />
-      <EditCategoryForm
-        open={editFormOpen}
-        setOpen={setEditFormOpen}
-        category={category}
-        categories={categories}
-      />
+      {category && editFormOpen && (
+        <EditCategoryForm
+          open={editFormOpen}
+          setOpen={setEditFormOpen}
+          category={category}
+          categories={categories}
+        />
+      )}
       {/* </Link> */}
       {categories && (
         <DataTable

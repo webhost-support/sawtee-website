@@ -1,27 +1,25 @@
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
+import PrimaryButton from '@/components/Backend/PrimaryButton';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useToast } from '@/components/ui/use-toast';
+
+import InputError from '@/components/Backend/InputError';
+import { Button } from '@/components/ui/button';
 import {
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  useToast,
-} from '@chakra-ui/react';
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+
 import { useForm } from '@inertiajs/react';
 
-export default function EditTag({ tag, tags, isOpen, onClose }) {
-  const Tag = tags.filter(t => t.id === tag)[0];
+export default function EditTag({ tag, open, setOpen }) {
   const { data, setData, post, processing, errors, reset } = useForm({
-    name: Tag.name,
+    name: tag.name,
   });
-  const toast = useToast();
+  const { toast } = useToast();
 
   const submit = e => {
     e.preventDefault();
@@ -29,20 +27,16 @@ export default function EditTag({ tag, tags, isOpen, onClose }) {
     post(
       route('admin.tags.update', {
         _method: 'patch',
-        tag: Tag,
+        tag: tag,
       }),
       {
         onSuccess: () => {
           toast({
-            position: 'top-right',
             title: 'Tag edited.',
             description: 'Tag edited Successfully',
-            status: 'success',
-            duration: 6000,
-            isClosable: true,
           });
           reset('name');
-          onClose();
+          setOpen(!open);
         },
         onError: errors => {
           if (errors.name) {
@@ -55,40 +49,41 @@ export default function EditTag({ tag, tags, isOpen, onClose }) {
   };
 
   return (
-    <Modal size={'xl'} isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay />
-      <ModalContent as="form" onSubmit={submit}>
-        <ModalHeader>Edit tag</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <FormControl mt="4" isInvalid={errors.name}>
-            <FormLabel htmlFor="name">Name</FormLabel>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Edit tag</DialogTitle>
+          <DialogDescription>{`Edit tag: ${tag.name}`}</DialogDescription>
+        </DialogHeader>
 
-            <Input
-              id="name"
-              name="name"
-              placeholder="enter tag name"
-              value={data.name}
-              onChange={e => setData('name', e.target.value)}
-              required
-            />
+        <form onSubmit={submit}>
+          <div className="flex gap-2 items-end">
+            <div className="w-2/3">
+              <Label htmlFor="name">Name</Label>
+              <Input
+                id="name"
+                name="name"
+                value={data.name}
+                placeholder="enter tag name"
+                onChange={e => setData('name', e.target.value)}
+                required
+              />
 
-            {errors.name && (
-              <FormErrorMessage className="mt-2">
-                {errors.name}
-              </FormErrorMessage>
-            )}
-          </FormControl>
-        </ModalBody>
-        <ModalFooter>
-          <PrimaryButton type="submit" isLoading={processing} mr={3}>
-            Save
-          </PrimaryButton>
-          <Button variant="solid" colorScheme="red" onClick={onClose}>
-            Cancel
-          </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+              {errors.name && (
+                <InputError className="mt-2">{errors.name}</InputError>
+              )}
+            </div>
+            <div className="w-1/3 flex gap-2">
+              <Button variant="outline" onClick={() => setOpen(!open)}>
+                Cancel
+              </Button>
+              <PrimaryButton type="submit" isLoading={processing}>
+                Save
+              </PrimaryButton>
+            </div>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 }
