@@ -157,7 +157,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
           </div>
         </div>
 
-        <div className="flex flex-col gap-8 col-span-12 px-3 md:col-span-4">
+        <div className="flex flex-col gap-8 col-span-12 px-3 md:col-span-4 lg:sticky lg:top-16">
           <fieldset required className="mx-2">
             <Label as="legend" htmlFor="category_id">
               Category

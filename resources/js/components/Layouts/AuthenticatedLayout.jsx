@@ -5,6 +5,7 @@ import { DashBoardMenuItems } from '@/lib/data';
 import { cn } from "@/lib/utils";
 import { useWindowWidth } from "@react-hook/window-size";
 import React from 'react';
+import Footer from '../ui/footer';
 
 export default function Authenticated({ user, children }) {
   const onlyWidth = useWindowWidth();
@@ -18,39 +19,27 @@ export default function Authenticated({ user, children }) {
 
   return (
     <div className="min-h-screen">
-      <div className="max-h-screen w-full grid grid-rows-[auto] grid-cols-[auto,repeat(4,1fr)]">
-        {!mobileWidth && (
-          <div
-            className={cn(
-              isCollapsed ? "w-14" : "w-64",
-              "px-2 w-full mx-auto row-span-3 border-r-2 col-span-1 bg-white",
-            )}
-          >
-            <Sidebar isCollapsed={isCollapsed} menu={DashBoardMenuItems} />
-          </div>
-        )}
-        <div
-          className={cn(
-            mobileWidth ? "col-span-5" : "col-span-4",
-            " bg-white sticky top-0 z-50 w-full ",
-          )}
-        >
-          <Header
-            user={user}
-            menu={DashBoardMenuItems}
-            toggleSidebar={toggleSidebar}
-          />
-        </div>
-        <div
-          className={cn(
-            mobileWidth ? "col-span-5" : "col-span-4",
-            "p-6 w-full row-span-2 min-h-dvh mt-4",
-          )}
-        >
-          <Toaster />
+      <Toaster />
 
+      <Sidebar
+        isCollapsed={mobileWidth ? true : isCollapsed}
+        menu={DashBoardMenuItems}
+      />
+      <Header
+        user={user}
+        isCollapsed={mobileWidth ? true : isCollapsed}
+        toggleSidebar={toggleSidebar}
+      />
+      <div
+        className={cn(
+          mobileWidth || isCollapsed ? 'ml-20' : 'ml-64',
+          'relative transition-all duration-200 mb-4'
+        )}
+      >
+        <div class="w-full px-6 py-12  mx-auto rounded-xl min-h-screen">
           {children}
         </div>
+        <Footer />
       </div>
     </div>
   );

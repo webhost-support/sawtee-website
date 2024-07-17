@@ -1,123 +1,49 @@
-import { ChevronLeftCircleIcon } from "lucide-react";
-import { Button } from "./button";
-import UserNav from "./userNav";
-import { useState } from "react";
-import ResponsiveNavLink from "@/components/shared/ResponsiveNavLink";
-import ApplicationLogo from "@/components/shared/ApplicationLogo";
-import { Link } from "@inertiajs/react";
+import { cn } from '@/lib/utils';
+import { Link } from '@inertiajs/react';
+import { Button } from './button';
+import UserNav from './userNav';
 
-export default function Header({ user, menu, toggleSidebar }) {
-  const [showingNavigationDropdown, setShowingNavigationDropdown] =
-    useState(false);
+export default function Header({ user, isCollapsed, toggleSidebar }) {
   return (
-    <header className={" transition-all border-b duration-200 shadow-md"}>
-      <nav className="bg-white dark:bg-gray-800 border-b border-slate-100 dark:border-slate-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex">
-              <div className="shrink-0 flex items-center">
-                <Link href="/">
-                  <ApplicationLogo className="block sm:hidden h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
-                </Link>
-                <Button
-                  className="rounded-full hidden lg:inline-flex p-0"
-                  variant="ghost"
-                >
-                  <ChevronLeftCircleIcon
-                    onClick={toggleSidebar}
-                    className="w-6 h-6"
-                  />
-                </Button>
-              </div>
-            </div>
-
-            <div className="hidden sm:flex sm:items-center sm:ml-6">
-              <div className="ml-3 relative">
-                <UserNav user={user} />
-              </div>
-            </div>
-
-            <div className="-mr-2 flex items-center sm:hidden">
-              <button
-                onClick={() =>
-                  setShowingNavigationDropdown(
-                    (previousState) => !previousState,
-                  )
-                }
-                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out"
+    <header className={'sticky top-0 z-50'}>
+      <nav className=" flex flex-wrap w-full items-center justify-between px-0 py-2 transition-all shadow-xl duration-250 ease-soft-in  lg:flex-nowrap lg:justify-start bg-white border-b-2 border-b-slate-700 dark:bg-gray-800 dark:border-slate-700 ">
+        <div className={cn('flex justify-between w-full h-16 px-6')}>
+          <Link
+            href={route('admin.dashboard')}
+            className="p-4 m-0 text-sm flex items-center whitespace-nowrap text-slate-700"
+          >
+            <span
+              className={
+                'font-semibold transition-all duration-200 ease-nav-brand'
+              }
+            >
+              SAWTEE CMS
+            </span>
+          </Link>
+          <div className={cn('shrink-0 flex gap-4 items-center')}>
+            <Button
+              className="p-2 hidden sm:inline"
+              variant="ghost"
+              onClick={toggleSidebar}
+            >
+              <svg
+                className="w-6 h-6"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <svg
-                  className="h-6 w-6"
-                  stroke="currentColor"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    className={
-                      !showingNavigationDropdown ? "inline-flex" : "hidden"
-                    }
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                  <path
-                    className={
-                      showingNavigationDropdown ? "inline-flex" : "hidden"
-                    }
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div
-          className={
-            (showingNavigationDropdown ? "block" : "hidden") + " sm:hidden"
-          }
-        >
-          <div className="pt-2 pb-3 space-y-1">
-            {menu?.map((menuItem) => {
-              return (
-                <div key={menuItem.name}>
-                  <ResponsiveNavLink
-                    href={route(menuItem.route)}
-                    active={route().current(menuItem.route)}
-                  >
-                    {menuItem.name}
-                  </ResponsiveNavLink>
-                </div>
-              );
-            })}
+                <path
+                  fill-rule="evenodd"
+                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                  clip-rule="evenodd"
+                />
+                <title>Sidebar Toggle</title>
+              </svg>
+            </Button>
           </div>
 
-          <div className="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
-            <div className="px-4">
-              <div className="font-medium text-base text-gray-800 dark:text-gray-200">
-                {user.name}
-              </div>
-              <div className="font-medium text-sm text-gray-500">
-                {user.email}
-              </div>
-            </div>
-
-            <div className="mt-3 space-y-1">
-              <ResponsiveNavLink href={route("admin.profile.edit")}>
-                Profile
-              </ResponsiveNavLink>
-              <ResponsiveNavLink
-                method="post"
-                href={route("logout")}
-                as="button"
-              >
-                Log Out
-              </ResponsiveNavLink>
-            </div>
+          <div className="ml-auto mr-6 relative flex sm:items-center">
+            <UserNav user={user} />
           </div>
         </div>
       </nav>
