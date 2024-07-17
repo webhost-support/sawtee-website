@@ -1,18 +1,13 @@
-import { DataTable } from '@/Components/Backend/DataTable';
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import {
-  TableDeleteAction,
-  TableEditAction,
-} from '@/Components/Backend/TableActions';
-import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
-import { Box, HStack, Text, useToast } from '@chakra-ui/react';
+import DataTableActions from '@/components/Backend/DataTableActions';
+import { DataTableColumnHeader } from '@/components/Backend/DatatableColumnHelper';
+import { DataTable } from '@/components/Backend/FrontDataTable';
+import PrimaryButton from '@/components/Backend/PrimaryButton';
+import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
+import { useToast } from '@/components/ui/use-toast';
 import { Head, Link, useForm } from '@inertiajs/react';
-import { createColumnHelper } from '@tanstack/react-table';
 import React from 'react';
-
-export default function Index({ auth, sections: data }) {
-  const toast = useToast();
-  const columnHelper = createColumnHelper();
+export default function Index({ auth, sections }) {
+  const { toast } = useToast();
   const { processing, delete: destroy, get } = useForm();
 
   const handleEdit = (e, id) => {
@@ -26,75 +21,80 @@ export default function Index({ auth, sections: data }) {
       preserveScroll: true,
       onSuccess: () =>
         toast({
-          position: 'top-right',
           title: 'Category deleted.',
           description: 'Category deleted Successfully',
-          status: 'error',
-          duration: 6000,
-          isClosable: true,
         }),
       onError: () => console.log('Error while deleting'),
     });
   };
 
-  const defaultColumns = React.useMemo(
-    () => [
-      columnHelper.accessor('title', {
-        cell: info => info.getValue(),
-        header: 'Title',
-      }),
-      columnHelper.accessor('type', {
-        cell: info => info.getValue(),
-        header: 'Type',
-      }),
-      columnHelper.accessor('description', {
-        cell: info => (
-          <Text maxW={'64'} noOfLines={1}>
-            {info.getValue()}
-          </Text>
-        ),
-        header: 'Description',
-      }),
-      columnHelper.accessor('parent_id', {
-        cell: info =>
-          data.data.filter(item => item.id === info.getValue())[0]?.title,
-        header: 'Parent Section',
-      }),
-      columnHelper.accessor('page.name', {
-        cell: info => info.getValue(),
-        header: 'Belongs to Page',
-      }),
-      columnHelper.accessor('id', {
-        cell: info => {
-          return (
-            <HStack spacing={4}>
-              <TableEditAction
-                onClick={e => handleEdit(e, info.getValue())}
-                isDisabled={processing}
-              />
-              <TableDeleteAction
-                onClick={e => handleDelete(e, info.getValue())}
-                isDisabled={processing}
-              />
-            </HStack>
-          );
-        },
-        header: 'Actions',
-      }),
-    ],
-    []
-  );
+  const defaultColumns = [
+    {
+      accessorKey: 'id',
+      header: ({ column }) => {
+        return <DataTableColumnHeader column={column} title="ID" />;
+      },
+    },
+    {
+      accessorKey: 'title',
+      header: ({ column }) => {
+        return <DataTableColumnHeader column={column} title="Title" />;
+      },
+    },
+    {
+      accessorKey: 'type',
+      header: ({ column }) => {
+        return <DataTableColumnHeader column={column} title="Type" />;
+      },
+    },
+    {
+      accessorKey: 'description',
+      header: 'Description',
+      cell: ({ row }) => (
+        <p className="text-sm line-clamp-2">{row.getValue('description')}</p>
+      ),
+    },
+    {
+      accessorKey: 'parent_id',
+      header: 'Parent Section',
+      cell: ({ row }) => {
+        return sections.find(
+          section => section.id === row.getValue('parent_id')
+        )?.title;
+      },
+      enableSorting: false,
+    },
+    {
+      accessorKey: 'page.name',
+      header: ({ column }) => {
+        return <DataTableColumnHeader column={column} title="For Page" />;
+      },
+    },
+    {
+      accessorKey: 'id',
+      header: 'Actions',
+      cell: ({ row }) => (
+        <DataTableActions
+          id={row.original.id}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+        />
+      ),
+      enableHiding: false,
+      enableSorting: false,
+    },
+  ];
 
   return (
     <AuthenticatedLayout user={auth.user}>
       <Head title="Sections" />
 
-      <Box mb={4}>
-        <Link href={route('admin.sections.create')}>
-          <PrimaryButton>Create New Section</PrimaryButton>
-        </Link>
-      </Box>
-      {data && <DataTable defaultColumns={defaultColumns} data={data} />}
+      <Link href={route('admin.sections.create')}>
+        <PrimaryButton>Create New Section</PrimaryButton>
+      </Link>
+      {sections && (
+        <DataTable defaultColumns={defaultColumns} data={sections} />
+      )}
     </AuthenticatedLayout>
   );
 }

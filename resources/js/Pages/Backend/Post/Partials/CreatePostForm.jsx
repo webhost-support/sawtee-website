@@ -29,9 +29,9 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { useToast } from '@/components/ui/use-toast';
-import { createExcerpt } from '@/lib/helpers';
 import { useForm } from '@inertiajs/react';
 import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
+import { XCircleIcon } from 'lucide-react';
 import React from 'react';
 
 export default function CreatePostForm({ categories, themes, tags }) {
@@ -58,15 +58,17 @@ export default function CreatePostForm({ categories, themes, tags }) {
   const [selectedCategory, setSelectedCategory] = React.useState(null);
   const [tagOptions, setTagOptions] = React.useState([]);
   const [imageUrl, setImageUrl] = React.useState(null);
-
-  React.useEffect(() => {
-    tags.map(tag => {
-      setTagOptions(prev => [
-        ...prev,
-        { value: tag.id, label: tag.name, icon: null },
-      ]);
+  const [postTags, setPostTags] = React.useState([]);
+  function setDataTags(selectedValues) {
+    const array = [];
+    selectedValues.map(item => {
+      array.push({
+        post_id: item.id,
+        tag_id: item.value,
+      });
     });
-  }, [tags]);
+    setData('tags', array);
+  }
 
   const submit = e => {
     e.preventDefault();
@@ -94,15 +96,15 @@ export default function CreatePostForm({ categories, themes, tags }) {
   };
 
   React.useEffect(() => {
-    const content = data.content
-      .toString()
-      .replace(/\-\-+/g, '-')
-      .replace(/^-+/, '')
-      .replace(/-+$/, '')
-      .replace('<p>', '');
-    const excerpt = createExcerpt(content, 30);
-    excerpt && setData('excerpt', excerpt);
-  }, [data.content, setData]);
+    tags.map(tag => {
+      setTagOptions(prev => [
+        ...prev,
+        { value: tag.id, label: tag.name, id: undefined },
+      ]);
+    });
+  }, [tags]);
+
+
 
   return (
     <form onSubmit={submit}>
@@ -156,6 +158,197 @@ export default function CreatePostForm({ categories, themes, tags }) {
         </div>
 
         <div className="flex flex-col gap-8 col-span-12 px-3 md:col-span-4">
+          <fieldset required className="mx-2">
+            <Label as="legend" htmlFor="category_id">
+              Category
+            </Label>
+
+            <Select
+              name="category_id"
+              value={data.category_id}
+              onValueChange={value => {
+                setData('category_id', Number(value));
+
+                setSelectedCategory(
+                  categories.filter(cat => cat.id === Number(value))[0]?.name
+                );
+              }}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select Category" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Categories</SelectLabel>
+                </SelectGroup>
+
+                {categories.map(category => (
+                  <SelectItem key={category.id} value={category.id}>
+                    {category.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            {errors.category_id && (
+              <InputError className={'mt-2'}>{errors.category_id}</InputError>
+            )}
+          </fieldset>
+          <div className="mx-2">
+            <Label as="legend" htmlFor="published_at">
+              Published At
+            </Label>
+
+            <Input
+              type="date"
+              className="block mt-1"
+              placeholder="Select Date"
+              id="published_at"
+              name="published_at"
+              onChange={e => {
+                setData('published_at', e.target.value);
+              }}
+            />
+
+            {errors.published_at && (
+              <InputError className={'mt-2'}>{errors.published_at}</InputError>
+            )}
+          </div>
+          <fieldset required className="mx-2">
+            <Label as="legend" htmlFor="status">
+              Status
+            </Label>
+
+            <RadioGroup
+              className="flex gap-4 flex-wrap mt-1"
+              defaultValue={data.status}
+              onValueChange={value => {
+                setData('status', value);
+              }}
+            >
+              {['unpublished', 'draft', 'published'].map(item => {
+                return (
+                  <div
+                    key={item}
+                    className="flex w-[auto] items-center space-x-2"
+                  >
+                    <RadioGroupItem value={item} id={item} />
+                    <Label className="capitalize" htmlFor={item}>
+                      {item}
+                    </Label>
+                  </div>
+                );
+              })}
+            </RadioGroup>
+
+            {errors.status && (
+              <InputError className={'mt-2'}>{errors.status}</InputError>
+            )}
+          </fieldset>
+          <div className="mx-2">
+            <Label htmlFor="image">Featured Image</Label>
+            {imageUrl && (
+              <div className="w-[minmax(auto, 450px)] relative">
+                <AspectRatio ratio={16 / 9}>
+                  <img
+                    src={imageUrl}
+                    alt="post hero"
+                    className="rounded-md object-cover w-full h-full"
+                  />
+                </AspectRatio>
+                <XCircleIcon
+                  className="absolute top-0 right-0 cursor-pointer text-white"
+                  onClick={() => {
+                    setImageUrl(null);
+                    setData('image', null);
+                  }}
+                  title="Remove image"
+                  aria-hidden="true"
+                />
+              </div>
+            )}
+            <Input
+              type="file"
+              accept="image/.png,.jpg,.jpeg,.webp"
+              id="image"
+              className="mt-8"
+              placeholder="Select image"
+              name="image"
+              onChange={e => {
+                setData('image', e.target.files[0]);
+                setImageUrl(URL.createObjectURL(e.target.files[0]));
+              }}
+            />
+          </div>
+          {selectedCategory === ('Covid' || 'Opinion in Lead' || 'Blog') && (
+            <div className="mx-2">
+              <TooltipProvider>
+                <Label htmlFor="author">
+                  {'Author/s '}
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <QuestionMarkCircledIcon className="w-3 h-3" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      Add author name, if multple authors use comma seperated
+                      format. Eg: Paras Kharel, Dikshya Singh, Kshitiz Dahal
+                    </TooltipContent>
+                  </Tooltip>
+                </Label>
+              </TooltipProvider>
+              <Input
+                type="text"
+                id="author"
+                name="author"
+                className="block  mt-1"
+                placeholder="Add author full name"
+                autoComplete="author"
+                onChange={e => setData('author', e.target.value)}
+              />
+
+              {errors.author && (
+                <InputError className={'mt-2'}>{errors.author}</InputError>
+              )}
+            </div>
+          )}
+          {selectedCategory === 'Covid' && (
+            <div className="mx-2">
+              <Label htmlFor="genre">Genre</Label>
+
+              <Input
+                type="text"
+                id="genre"
+                name="genre"
+                className="block mt-1"
+                autoComplete="genre"
+                onChange={e => setData('genre', e.target.value)}
+              />
+
+              {errors.genre && (
+                <InputError className={'mt-2'}>{errors.genre}</InputError>
+              )}
+            </div>
+          )}
+          {selectedCategory ===
+            ('Covid' || 'Opinion in Lead' || 'Webinar Series') && (
+            <div className="mx-2">
+              <Label htmlFor="link">External Link</Label>
+
+              <Input
+                type="text"
+                id="link"
+                name="link"
+                className="block  mt-1"
+                autoComplete="link"
+                onChange={e => setData('link', e.target.value)}
+              />
+
+              {errors.author && (
+                <InputError className={'mt-2'}>{errors.author}</InputError>
+              )}
+            </div>
+          )}
+
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
               <AccordionTrigger>
@@ -269,12 +462,13 @@ export default function CreatePostForm({ categories, themes, tags }) {
                     <MultiSelect
                       name={'tags'}
                       id="tags"
-                      //   ref={tabsRef}
+                      defaultValue={postTags}
                       options={tagOptions}
                       placeholder="Select Tags"
                       variant="inverted"
                       maxCount={2}
-                      setData={setData}
+                      onValueChange={setPostTags}
+                      setValues={setDataTags}
                     />
                   </div>
                 </div>
@@ -333,187 +527,6 @@ export default function CreatePostForm({ categories, themes, tags }) {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
-          <fieldset required className="mx-2">
-            <Label as="legend" htmlFor="category_id">
-              Category
-            </Label>
-
-            <Select
-              name="category_id"
-              value={data.category_id}
-              onValueChange={value => {
-                setData('category_id', Number(value));
-
-                setSelectedCategory(
-                  categories.filter(cat => cat.id === Number(value))[0]?.name
-                );
-              }}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select Category" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Categories</SelectLabel>
-                </SelectGroup>
-
-                {categories.map(category => (
-                  <SelectItem key={category.id} value={category.id}>
-                    {category.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-
-            {errors.category_id && (
-              <InputError className={'mt-2'}>{errors.category_id}</InputError>
-            )}
-          </fieldset>
-          <div className="mx-2">
-            <Label as="legend" htmlFor="published_at">
-              Published At
-            </Label>
-
-            <Input
-              type="date"
-              className="block mt-1"
-              placeholder="Select Date"
-              id="published_at"
-              name="published_at"
-              onChange={e => {
-                setData('published_at', e.target.value);
-              }}
-            />
-
-            {errors.published_at && (
-              <InputError className={'mt-2'}>{errors.published_at}</InputError>
-            )}
-          </div>
-          <fieldset required className="mx-2">
-            <Label as="legend" htmlFor="status">
-              Status
-            </Label>
-
-            <RadioGroup
-              className="flex gap-4 flex-wrap mt-1"
-              defaultValue={data.status}
-              onValueChange={value => {
-                setData('status', value);
-              }}
-            >
-              {['unpublished', 'draft', 'published'].map(item => {
-                return (
-                  <div
-                    key={item}
-                    className="flex w-[auto] items-center space-x-2"
-                  >
-                    <RadioGroupItem value={item} id={item} />
-                    <Label className="capitalize" htmlFor={item}>
-                      {item}
-                    </Label>
-                  </div>
-                );
-              })}
-            </RadioGroup>
-
-            {errors.status && (
-              <InputError className={'mt-2'}>{errors.status}</InputError>
-            )}
-          </fieldset>
-          {selectedCategory === ('Covid' || 'Opinion in Lead' || 'Blog') && (
-            <div className="mx-2">
-              <TooltipProvider>
-                <Label htmlFor="author">
-                  {'Author/s '}
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <QuestionMarkCircledIcon className="w-3 h-3" />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      Add author name, if multple authors use comma seperated
-                      format. Eg: Paras Kharel, Dikshya Singh, Kshitiz Dahal
-                    </TooltipContent>
-                  </Tooltip>
-                </Label>
-              </TooltipProvider>
-              <Input
-                type="text"
-                id="author"
-                name="author"
-                className="block  mt-1"
-                placeholder="Add author full name"
-                autoComplete="author"
-                onChange={e => setData('author', e.target.value)}
-              />
-
-              {errors.author && (
-                <InputError className={'mt-2'}>{errors.author}</InputError>
-              )}
-            </div>
-          )}
-          {selectedCategory === 'Covid' && (
-            <div className="mx-2">
-              <Label htmlFor="genre">Genre</Label>
-
-              <Input
-                type="text"
-                id="genre"
-                name="genre"
-                className="block mt-1"
-                autoComplete="genre"
-                onChange={e => setData('genre', e.target.value)}
-              />
-
-              {errors.genre && (
-                <InputError className={'mt-2'}>{errors.genre}</InputError>
-              )}
-            </div>
-          )}
-          {selectedCategory ===
-            ('Covid' || 'Opinion in Lead' || 'Webinar Series') && (
-            <div className="mx-2">
-              <Label htmlFor="link">External Link</Label>
-
-              <Input
-                type="text"
-                id="link"
-                name="link"
-                className="block  mt-1"
-                autoComplete="link"
-                onChange={e => setData('link', e.target.value)}
-              />
-
-              {errors.author && (
-                <InputError className={'mt-2'}>{errors.author}</InputError>
-              )}
-            </div>
-          )}
-          <div className="mx-2">
-            <Label htmlFor="image">Featured Image</Label>
-
-            {imageUrl && (
-              <div className="w-[minmax(auto, 450px)]">
-                <AspectRatio ratio={16 / 9}>
-                  <img
-                    src={imageUrl}
-                    alt="featured"
-                    className="rounded-md object-cover"
-                  />
-                </AspectRatio>
-              </div>
-            )}
-
-            <Input
-              type="file"
-              accept="image/.png,.jpg,.jpeg,.webp"
-              id="image"
-              className="mt-8"
-              name="image"
-              onChange={e => {
-                setData('image', e.target.files[0]);
-              }}
-            />
-          </div>
           <PrimaryButton
             type="submit"
             className="text-center"

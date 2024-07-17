@@ -3,11 +3,8 @@ import { DataTableColumnHeader } from '@/components/Backend/DatatableColumnHelpe
 import { DataTable } from '@/components/Backend/FrontDataTable';
 import PrimaryButton from '@/components/Backend/PrimaryButton';
 import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
-
-import { buttonVariants } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/components/ui/use-toast';
-import { cn } from '@/lib/utils';
 import { Head, useForm } from '@inertiajs/react';
 import React, { useState } from 'react';
 import CreateTheme from './Partials/CreateTheme';
@@ -82,7 +79,7 @@ export default function Index({ auth, themes: data }) {
     {
       accessorKey: 'title',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Name" />
+        <DataTableColumnHeader column={column} title="Title" />
       ),
     },
     {
@@ -110,6 +107,7 @@ export default function Index({ auth, themes: data }) {
           />
         );
       },
+      enableHiding: false,
     },
   ];
 

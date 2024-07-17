@@ -1,24 +1,10 @@
-import PrimaryButton from '@/components/Backend/PrimaryButton';
-
 import DataTableActions from '@/components/Backend/DataTableActions';
 import { DataTableColumnHeader } from '@/components/Backend/DatatableColumnHelper';
 import { DataTable } from '@/components/Backend/FrontDataTable';
+import PrimaryButton from '@/components/Backend/PrimaryButton';
 import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
-import { buttonVariants } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import { ToastAction } from '@/components/ui/toast';
 import { useToast } from '@/components/ui/use-toast';
-import { cn } from '@/lib/utils';
 import { Head, Link, useForm } from '@inertiajs/react';
 import React from 'react';
 
@@ -29,7 +15,7 @@ export default function Index({
   categoryID,
 }) {
   const { get, delete: destroy } = useForm();
-  const toast = useToast();
+  const { toast } = useToast();
   const handleEdit = (e, id) => {
     e.preventDefault();
     get(route('admin.publications.edit', id));
@@ -42,13 +28,11 @@ export default function Index({
         toast({
           title: 'Publication Deleted',
           description: `Publication ID:${id} deleted successfully`,
-          action: <ToastAction altText="Close">Close</ToastAction>,
         }),
       onError: toast({
         variant: 'destructive',
         title: 'Uh oh! Something went wrong.',
         description: 'There was a problem with your request.',
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
       }),
     });
   };
@@ -109,33 +93,41 @@ export default function Index({
       ),
     },
     {
+      accessorKey: 'tags',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Tags" />
+      ),
+      cell: ({ row }) => {
+        return (
+          <div className="flex items-center gap-1">
+            {row.original.tags?.map(tag => (
+              <span
+                key={tag.id}
+                className="
+                inline-flex items-center rounded-md  px-2 py-1 text-xs font-medium  ring-1 ring-inset
+                bg-blue-50 text-blue-600 ring-blue-500/10
+                "
+              >
+                {tag.name}
+              </span>
+            ))}
+          </div>
+        );
+      },
+    },
+    {
       accessorKey: 'id',
       header: 'Actions',
       cell: ({ row }) => {
         return (
-          <AlertDialog>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  This action cannot be undone. This will permanently delete
-                  this item and remove it from the servers.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction
-                  className={cn(buttonVariants({ variant: 'destructive' }))}
-                  onClick={e => handleDelete(e, row.original.id)}
-                >
-                  Continue
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-            <DataTableActions id={row.original.id} handleEdit={handleEdit} />
-          </AlertDialog>
+          <DataTableActions
+            id={row.original.id}
+            handleDelete={handleDelete}
+            handleEdit={handleEdit}
+          />
         );
       },
+      enableHiding: false,
     },
   ];
 

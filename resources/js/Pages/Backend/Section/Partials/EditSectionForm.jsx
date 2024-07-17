@@ -1,6 +1,6 @@
-import ContentEditor from '@/Components/Backend/ContentEditor';
-import FileUpload, { PreviewImage } from '@/Components/Backend/FileUpload';
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
+import ContentEditor from '@/components/Backend/ContentEditor';
+import FileUpload, { PreviewImage } from '@/components/Backend/FileUpload';
+import PrimaryButton from '@/components/Backend/PrimaryButton';
 import {
   AspectRatio,
   Box,

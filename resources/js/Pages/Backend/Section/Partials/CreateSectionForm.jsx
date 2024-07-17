@@ -1,6 +1,6 @@
-import ContentEditor from '@/Components/Backend/ContentEditor';
-import FileUpload, { PreviewImage } from '@/Components/Backend/FileUpload';
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
+import ContentEditor from '@/components/Backend/ContentEditor';
+import FileUpload, { PreviewImage } from '@/components/Backend/FileUpload';
+import PrimaryButton from '@/components/Backend/PrimaryButton';
 import {
   Box,
   Button,
@@ -61,6 +61,44 @@ export default function CreateSectionForm({ sections, pages }) {
 
   return (
     <form onSubmit={submit}>
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4">
+        <FormControl isInvalid={errors.title} isRequired>
+          <FormLabel htmlFor="title">Section Title</FormLabel>
+
+          <Input
+            type="text"
+            id="title"
+            name="title"
+            display="flex"
+            mt={1}
+            autoComplete="title"
+            onChange={e => setData('title', e.target.value)}
+          />
+
+          {errors.title && (
+            <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>
+          )}
+        </FormControl>
+
+        <FormControl maxW="32" isRequired isInvalid={errors.order}>
+          <FormLabel htmlFor="order">Order</FormLabel>
+          <NumberInput
+            id="order"
+            name="order"
+            defaultValue={0}
+            onChange={e => setData('order', e.target.value)}
+          >
+            <NumberInputField />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
+          {errors.order && (
+            <FormErrorMessage mt={2}>{errors.order}</FormErrorMessage>
+          )}
+        </FormControl>
+      </div>
       <VStack spacing={8} position={'sticky'} top={'2rem'}>
         <SimpleGrid
           columns={{ base: 1, md: 2 }}
@@ -68,24 +106,6 @@ export default function CreateSectionForm({ sections, pages }) {
           alignItems={'start'}
           w="full"
         >
-          <FormControl isInvalid={errors.title} isRequired>
-            <FormLabel htmlFor="title">Section Title</FormLabel>
-
-            <Input
-              type="text"
-              id="title"
-              name="title"
-              display="flex"
-              mt={1}
-              autoComplete="title"
-              onChange={e => setData('title', e.target.value)}
-            />
-
-            {errors.title && (
-              <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>
-            )}
-          </FormControl>
-
           <HStack gap={10}>
             <FormControl isInvalid={errors.link}>
               <FormLabel htmlFor="link">Link</FormLabel>
@@ -102,25 +122,6 @@ export default function CreateSectionForm({ sections, pages }) {
 
               {errors.link && (
                 <FormErrorMessage mt={2}>{errors.link}</FormErrorMessage>
-              )}
-            </FormControl>
-
-            <FormControl maxW="32" isRequired isInvalid={errors.order}>
-              <FormLabel htmlFor="order">Order</FormLabel>
-              <NumberInput
-                id="order"
-                name="order"
-                defaultValue={0}
-                onChange={e => setData('order', e.target.value)}
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-              {errors.order && (
-                <FormErrorMessage mt={2}>{errors.order}</FormErrorMessage>
               )}
             </FormControl>
           </HStack>

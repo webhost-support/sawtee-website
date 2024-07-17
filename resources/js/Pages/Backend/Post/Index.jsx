@@ -2,24 +2,14 @@ import DataTableActions from '@/components/Backend/DataTableActions';
 import { DataTableColumnHeader } from '@/components/Backend/DatatableColumnHelper';
 import { DataTable } from '@/components/Backend/FrontDataTable';
 import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
-import { buttonVariants } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/components/ui/use-toast';
-import { cn } from '@/lib/utils';
 import { Head, Link, useForm } from '@inertiajs/react';
 import React from 'react';
 
 import PrimaryButton from '@/components/Backend/PrimaryButton';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
+import TWTags from '@/components/shared/TWTags';
+
 export default function Index({ auth, posts, categories, categoryID }) {
   const { get, delete: destroy } = useForm();
   const { toast } = useToast();
@@ -117,15 +107,9 @@ export default function Index({ auth, posts, categories, categoryID }) {
         return (
           <div className="flex items-center gap-1">
             {row.original.tags?.map(tag => (
-              <span
-                key={tag.id}
-                className="
-                inline-flex items-center rounded-md  px-2 py-1 text-xs font-medium  ring-1 ring-inset
-                bg-blue-50 text-blue-600 ring-blue-500/10
-                "
-              >
+              <TWTags key={tag.id} colorScheme="blue">
                 {tag.name}
-              </span>
+              </TWTags>
             ))}
           </div>
         );
@@ -147,29 +131,14 @@ export default function Index({ auth, posts, categories, categoryID }) {
       header: 'Actions',
       cell: ({ row }) => {
         return (
-          <AlertDialog>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  This action cannot be undone. This will permanently delete
-                  this item and remove it from the servers.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction
-                  className={cn(buttonVariants({ variant: 'destructive' }))}
-                  onClick={e => handleDelete(e, row.original.id)}
-                >
-                  Continue
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-            <DataTableActions id={row.original.id} handleEdit={handleEdit} />
-          </AlertDialog>
+          <DataTableActions
+            id={row.original.id}
+            handleDelete={handleDelete}
+            handleEdit={handleEdit}
+          />
         );
       },
+      enableHiding: false,
     },
   ];
 

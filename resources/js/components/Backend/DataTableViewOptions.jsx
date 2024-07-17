@@ -25,7 +25,7 @@ export function DataTableViewOptions({ table, label }) {
           {label || 'View'}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[150px]">
+      <DropdownMenuContent align="end" className="w-[180px]">
         <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {table
@@ -42,7 +42,7 @@ export function DataTableViewOptions({ table, label }) {
                 checked={column.getIsVisible()}
                 onCheckedChange={value => column.toggleVisibility(!!value)}
               >
-                {column.id}
+                {column.id.replace('_', ' ')}
               </DropdownMenuCheckboxItem>
             );
           })}

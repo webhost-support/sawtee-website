@@ -32,13 +32,14 @@ export default function CreatePublicationForm({ categories, tags }) {
   const [image, setImage] = useState(null);
   const [postTags, setPostTags] = useState([]);
   const [tagOptions, setTagOptions] = useState([]);
+  const [publicationTags, setPublicationTags] = React.useState([]);
   const { toast } = useToast();
 
   React.useEffect(() => {
     tags.map(tag => {
       setTagOptions(prev => [
         ...prev,
-        { value: tag.id, label: tag.name, icon: null },
+        { value: tag.id, label: tag.name, id: undefined },
       ]);
     });
   }, [tags]);
@@ -66,6 +67,17 @@ export default function CreatePublicationForm({ categories, tags }) {
       },
     });
   };
+
+  function setDataTags(selectedValues) {
+    const array = [];
+    selectedValues.map(item => {
+      array.push({
+        post_id: item.id,
+        tag_id: item.value,
+      });
+    });
+    setData('tags', array);
+  }
 
   return (
     <form onSubmit={submit}>
@@ -157,11 +169,12 @@ export default function CreatePublicationForm({ categories, tags }) {
             <MultiSelect
               name={'tags'}
               options={tagOptions}
-              defaultValue={postTags}
+              defaultValue={publicationTags}
               placeholder="Select Tags"
               variant="inverted"
               maxCount={2}
-              setData={setData}
+              onValueChange={setPublicationTags}
+              setValues={setDataTags}
             />
           </div>
           <div className="mx-2">

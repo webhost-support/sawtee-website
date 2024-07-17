@@ -1,4 +1,4 @@
-import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
+import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import React from 'react';
 import CreateSectionForm from './Partials/CreateSectionForm';

@@ -32,8 +32,8 @@ export default function ContentEditor(props) {
     images_reuse_filename: true,
     image_file_types: 'jpeg,webp,png',
     file_picker_types: 'image',
-    min_height: 700,
-    max_height: 900,
+    min_height: 600,
+    max_height: 750,
     width: '100%',
     quickbars_selection_toolbar:
       'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
@@ -51,7 +51,9 @@ export default function ContentEditor(props) {
       ref={editorRef}
       licenseKey="gpl"
       initialValue={initialValue}
-      onInit={(evt, editor) => (editorRef.current = editor)}
+      onInit={(evt, editor) => {
+        editorRef.current = editor;
+      }}
       init={editorConfig}
       tinymceScriptSrc="/assets/tinymce/tinymce.min.js"
       scriptLoading={{ async: true, defer: true }}

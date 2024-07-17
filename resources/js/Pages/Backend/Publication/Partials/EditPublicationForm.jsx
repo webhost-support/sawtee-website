@@ -31,12 +31,13 @@ export default function EditPublicationForm({ publication, categories, tags }) {
   const { toast } = useToast();
   const [image, setImage] = useState(data.image);
   const [tagOptions, setTagOptions] = useState([]);
-  const [postTags, setPostTags] = React.useState(() => {
+  const [publicationTags, setPublicationTags] = React.useState(() => {
     const tagsarray = [];
     publication.tags?.map(tag => {
       tagsarray.push({
         value: tag.id,
         label: tag.name,
+        id: publication.id,
       });
     });
 
@@ -46,16 +47,22 @@ export default function EditPublicationForm({ publication, categories, tags }) {
     tags.map(tag => {
       setTagOptions(prev => [
         ...prev,
-        { value: tag.id, label: tag.name, icon: null },
+        { value: tag.id, label: tag.name, id: publication.id },
       ]);
     });
-  }, [tags]);
+  }, [tags, publication]);
 
-  React.useEffect(() => {
-    publication.tags?.map(tag => {
-      setPostTags(prev => [...prev, { value: tag.id, label: tag.name }]);
+
+  function setDataTags(selectedValues) {
+    const array = [];
+    selectedValues.map(item => {
+      array.push({
+        publication_id: item.id,
+        tag_id: item.value,
+      });
     });
-  }, [publication]);
+    setData('tags', array);
+  }
 
   const submit = e => {
     e.preventDefault();
@@ -183,11 +190,12 @@ export default function EditPublicationForm({ publication, categories, tags }) {
             <MultiSelect
               name={'tags'}
               options={tagOptions}
-              defaultValue={postTags}
+              defaultValue={publicationTags}
               placeholder="Select Tags"
               variant="inverted"
               maxCount={2}
-              setData={setData}
+              onValueChange={setPublicationTags}
+              setValues={setDataTags}
             />
           </div>
           <div className="mx-2">

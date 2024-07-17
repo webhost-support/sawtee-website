@@ -42,6 +42,7 @@ export const MultiSelect = React.forwardRef(
     {
       options,
       onValueChange,
+      setValues,
       variant,
       defaultValue = [],
       placeholder = 'Select options',
@@ -50,7 +51,6 @@ export const MultiSelect = React.forwardRef(
       modalPopover = true,
       asChild = false,
       className,
-      setData,
       ...props
     },
     ref
@@ -69,20 +69,30 @@ export const MultiSelect = React.forwardRef(
         ? selectedValues.filter(v => v !== value)
         : [...selectedValues, value];
       setSelectedValues(newSelectedValues);
-      setData('tags', newSelectedValues);
+      onValueChange(newSelectedValues);
+      setValues(newSelectedValues);
     };
 
     const handleClear = () => {
       setSelectedValues([]);
+      onValueChange([]);
+      setValues([]);
+    };
+
+    const clearExtraOptions = () => {
+      const newSelectedValues = selectedValues.slice(0, maxCount);
+      setSelectedValues(newSelectedValues);
+      onValueChange(newSelectedValues);
+      setValues(newSelectedValues);
     };
 
     const toggleAll = () => {
       if (selectedValues.length === options.length) {
         handleClear();
       } else {
-        const allValues = options.map(option => option);
-        setSelectedValues(allValues);
-        setData('tags', allValues);
+        setSelectedValues(options);
+        onValueChange(options);
+        setValues(options);
       }
     };
 
@@ -97,7 +107,10 @@ export const MultiSelect = React.forwardRef(
             <div className="flex justify-between items-center w-full">
               <div className="flex flex-wrap items-center">
                 {selectedValues.slice(0, maxCount).map(value => {
-                  const option = options.find(o => o === value);
+                  const option = options.find(o => {
+                    return o.value === value.value;
+                  });
+
                   return (
                     <Badge
                       key={Math.random() + option.value}
@@ -179,10 +192,11 @@ export const MultiSelect = React.forwardRef(
               Select All
             </DropdownMenuCheckboxItem>
             {options.map(option => {
+              const selected = selectedValues.find(v => v.value === option.value);
               return (
                 <DropdownMenuCheckboxItem
                   key={Math.random() + option.value}
-                  checked={selectedValues.includes(option)}
+                  checked={selected !== undefined}
                   onCheckedChange={() => toggleOption(option)}
                   className="cursor-pointer"
                 >

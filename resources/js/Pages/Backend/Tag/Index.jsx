@@ -102,6 +102,7 @@ export default function Index({ auth, tags }) {
           />
         );
       },
+      enableHiding: false,
     },
   ];
 
@@ -112,7 +113,13 @@ export default function Index({ auth, tags }) {
       <PrimaryButton onClick={() => setCreateTag(!createTag)}>
         Create New Tag
       </PrimaryButton>
-      {tags && <DataTable defaultColumns={defaultColumns} data={tags} />}
+      {tags && (
+        <DataTable
+          defaultColumns={defaultColumns}
+          data={tags}
+          customFilterColumn={'name'}
+        />
+      )}
       {createTag && <CreateTag open={createTag} setOpen={setCreateTag} />}
       {editTag && <EditTag tag={tag} open={editTag} setOpen={setEditTag} />}
     </AuthenticatedLayout>

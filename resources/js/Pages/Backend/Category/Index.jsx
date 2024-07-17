@@ -3,20 +3,8 @@ import { DataTableColumnHeader } from '@/components/Backend/DatatableColumnHelpe
 import { DataTable } from '@/components/Backend/FrontDataTable';
 import PrimaryButton from '@/components/Backend/PrimaryButton';
 import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
-import { buttonVariants } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/components/ui/use-toast';
-import { cn } from '@/lib/utils';
 import { Head, useForm } from '@inertiajs/react';
 import React, { useState } from 'react';
 import CreateCategoryForm from './Partials/CreateCategoryForm';
@@ -44,7 +32,6 @@ export default function Index({ auth, categories }) {
         toast({
           title: `Category ID:${id} deleted.`,
           description: 'Category deleted successfully.',
-          action: <ToastAction altTxt="Dismiss">Dismiss</ToastAction>,
         });
       },
       onError: () => {
@@ -52,7 +39,6 @@ export default function Index({ auth, categories }) {
           variant: 'destructive',
           title: 'Error.',
           description: 'Something went wrong. Please try again.',
-          action: <ToastAction altTxt="Dismiss">Dismiss</ToastAction>,
         });
       },
     });
@@ -112,29 +98,14 @@ export default function Index({ auth, categories }) {
       header: 'Actions',
       cell: ({ row }) => {
         return (
-          <AlertDialog>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  This action cannot be undone. This will permanently delete
-                  this item and remove it from the database.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction
-                  className={cn(buttonVariants({ variant: 'destructive' }))}
-                  onClick={e => handleDelete(e, row.original.id)}
-                >
-                  Continue
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-            <DataTableActions id={row.original.id} handleEdit={handleEdit} />
-          </AlertDialog>
+          <DataTableActions
+            id={row.original.id}
+            handleDelete={handleDelete}
+            handleEdit={handleEdit}
+          />
         );
       },
+      enableHiding: false,
     },
   ];
 
@@ -163,7 +134,7 @@ export default function Index({ auth, categories }) {
         <DataTable
           defaultColumns={defaultColumns}
           data={categories}
-          showTypeFilter={false}
+          customFilterColumn={'name'}
         />
       )}
     </AuthenticatedLayout>

@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Image;
 use Illuminate\Http\Request;
 use App\Models\Section;
 use App\Models\Page;
 use Inertia\Inertia;
-use Intervention\Image\Facades\Image as ResizeImage;
 
 class SectionController extends Controller
 {
@@ -17,7 +15,7 @@ class SectionController extends Controller
      */
     public function index()
     {
-        $sections = Section::with('page')->orderBy('id', 'DESC')->paginate(10);
+        $sections = Section::with('page', 'parent')->orderBy('id', 'DESC')->get();
         return Inertia::render('Backend/Section/Index', [
             'sections' => $sections
         ]);
