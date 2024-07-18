@@ -1,21 +1,22 @@
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import { SmallAddIcon } from '@chakra-ui/icons';
+import InputError from '@/components/Backend/InputError';
+import PrimaryButton from '@/components/Backend/PrimaryButton';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
-  Alert,
-  AlertIcon,
-  Box,
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  HStack,
-  Input,
   Select,
-  SimpleGrid,
-  useDisclosure,
-  useToast,
-} from '@chakra-ui/react';
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { useToast } from '@/components/ui/use-toast';
 import { useForm } from '@inertiajs/react';
+import { AlertCircleIcon, PlusIcon } from 'lucide-react';
+import { useState } from 'react';
 import CreateSlideForm from '../../Slide/CreateSlideForm';
 import Slides from '../../Slide/Slides';
 
@@ -24,8 +25,8 @@ export default function EditSliderForm({ slider, slides, pages }) {
     name: slider.name,
     page_id: slider.page_id,
   });
-  const toast = useToast();
-  const createSlideForm = useDisclosure();
+  const { toast } = useToast();
+  const [createSlideFormShow, setCreateSlideFormShow] = useState(false);
 
   const submit = e => {
     e.preventDefault();
@@ -38,12 +39,8 @@ export default function EditSliderForm({ slider, slides, pages }) {
         preserveScroll: true,
         onSuccess: () => {
           toast({
-            position: 'top-right',
-            title: 'Slider Created.',
-            description: 'Slider Created Successfully',
-            status: 'success',
-            duration: 6000,
-            isClosable: true,
+            title: 'Slider edited.',
+            description: 'Slider changes saved Successfully',
           });
         },
         onError: errors => {
@@ -57,23 +54,17 @@ export default function EditSliderForm({ slider, slides, pages }) {
   };
   return (
     <>
-      {slides.data.length < 1 && (
-        <Alert
-          mb="4"
-          status="warning"
-          p="4"
-          rounded="md"
-          variant={'left-accent'}
-        >
-          <AlertIcon />
-          No slides added yet.
+      {slides.length < 1 && (
+        <Alert variant="destructive">
+          <AlertCircleIcon />
+          <AlertTitle>No Slides</AlertTitle>
+          <AlertDescription>No slides added yet.</AlertDescription>
         </Alert>
       )}
-
       <form onSubmit={submit}>
-        <SimpleGrid gap="4" columns={{ base: 1, md: 3 }} alignItems={'end'}>
-          <FormControl isInvalid={errors.name}>
-            <FormLabel htmlFor="name">Name</FormLabel>
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          <div className="col-span-2">
+            <Label htmlFor="name">Name</Label>
             <Input
               id="name"
               name="name"
@@ -81,55 +72,62 @@ export default function EditSliderForm({ slider, slides, pages }) {
               onChange={e => setData('name', e.target.value)}
             />
             {errors.name && (
-              <FormErrorMessage mt={2}>{errors.name}</FormErrorMessage>
+              <InputError className="mt-2">{errors.name}</InputError>
             )}
-          </FormControl>
-          <FormControl isInvalid={errors.page_id}>
-            <FormLabel htmlFor="pages">Pages</FormLabel>
+          </div>
+          <div className="col-span-1">
+            <Label htmlFor="pages">Pages</Label>
             <Select
               id="pages"
               name="pages"
               value={data.page_id}
               placeholder="Select pages"
-              onChange={e => setData('page_id', e.target.value)}
+              onValueChange={value => setData('page_id', value)}
             >
-              {pages.map(page => (
-                <option key={page.id} value={page.id}>
-                  {page.name}
-                </option>
-              ))}
+              <SelectTrigger>
+                <SelectValue placeholder="Select pages" />
+              </SelectTrigger>
+              <SelectContent className="w-[280px]">
+                <SelectGroup>
+                  <SelectLabel>Pages</SelectLabel>
+
+                  {pages.map(page => (
+                    <SelectItem key={page.id} value={page.id}>
+                      {page.name}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
             </Select>
             {errors.page_id && (
-              <FormErrorMessage mt={2}>{errors.page_id}</FormErrorMessage>
+              <InputError className="mt-2">{errors.page_id}</InputError>
             )}
-          </FormControl>
-          <HStack gap={4} justify={'center'}>
+          </div>
+          <div className="col-span-1 flex gap-4 items-end ">
             <Button
-              onClick={createSlideForm.onOpen}
-              leftIcon={<SmallAddIcon />}
+              variant="outline"
+              className="inline-flex"
+              onClick={() => setCreateSlideFormShow(!createSlideFormShow)}
             >
               Add slide
+              <PlusIcon className="ml-2 w-4 h-4" />
             </Button>
+
             <PrimaryButton type="submit" disabled={processing}>
               Save slider
             </PrimaryButton>
-          </HStack>
-        </SimpleGrid>
+          </div>
+        </div>
       </form>
 
-      {slides.data.length > 0 && (
-        <Box mt={6}>
-          <Slides slides={slides} slider={slider} />
-        </Box>
-      )}
-
-      {createSlideForm.isOpen && (
+      {createSlideFormShow && (
         <CreateSlideForm
-          isOpen={createSlideForm.isOpen}
-          onClose={createSlideForm.onClose}
+          open={createSlideFormShow}
+          setOpen={setCreateSlideFormShow}
           slider={slider}
         />
       )}
+      {slides.length > 0 && <Slides slides={slides} slider={slider} />}
     </>
   );
 }

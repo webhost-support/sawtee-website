@@ -1,75 +1,71 @@
 import AuthenticatedLayout from "@/components/Layouts/AuthenticatedLayout";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { WarningIcon } from "@chakra-ui/icons";
+import { useToast } from '@/components/ui/use-toast';
 import { Head } from "@inertiajs/react";
 import { BookOpenIcon, FileArchiveIcon, FilesIcon } from "lucide-react";
+import React from 'react';
 
 export default function Dashboard({ auth, posts, publications, researchs }) {
-  return (
-    <AuthenticatedLayout user={auth.user}>
-      <Head title="Dashboard" />
-      <div className="max-w-6xl mx-auto">
-        {auth.user.email_verified_at == null && (
-          <Alert className="bg-orange-400 mb-4 max-w-2xl mx-auto">
-            <AlertTitle className="flex items-center gap-2 font-bold text-primary mb-2">
-              Not verified!
-              <WarningIcon className="h-6 w-6" />
-            </AlertTitle>
-            <AlertDescription>
-              <p className="text-primary leading-3 font-medium text-lg m-0">
-                Seems like you have not verified your email address,&nbsp;
-                please verify your email by clicking the verification link sent
-                to your email ({auth.user.email}).
-              </p>
-            </AlertDescription>
-          </Alert>
-        )}
+    const { toast } = useToast();
 
-        <h1 className="text-2xl font-bold">Hello, {auth.user.name}.</h1>
-        <div className="flex flex-wrap -mx-3 mb-5 removable">
-          <div className="w-full max-w-full px-3 mb-6 lg:w-1/3 sm:flex-none xl:mb-0">
-            <StatsCard
-              title={"posts"}
-              stat={posts}
-              icon={
-                <FileArchiveIcon
-                  w="2em"
-                  h="2em"
-                  className="text-lg leading-none relative text-white mx-auto"
-                />
-              }
-            />
-          </div>
-          <div className="w-full max-w-full px-3 mb-6 lg:w-1/3 sm:flex-none xl:mb-0">
-            <StatsCard
-              title={"publications"}
-              stat={publications}
-              icon={
-                <BookOpenIcon
-                  w="2em"
-                  h="2em"
-                  className="text-lg leading-none relative text-white mx-auto"
-                />
-              }
-            />
-          </div>
-          <div className="w-full max-w-full px-3 mb-6 lg:w-1/3 sm:flex-none xl:mb-0">
-            <StatsCard
-              title={"Research"}
-              stat={researchs}
-              icon={
-                <FilesIcon
-                  w="2em"
-                  h="2em"
-                  className="text-lg leading-none relative text-white mx-auto"
-                />
-              }
-            />
+    React.useState(() => {
+      if (auth.user.email_verified_at == null) {
+        return toast({
+          title: 'Not verified!',
+          description: `Seems like you have not verified your email address, please verify your email by clicking the verification link sent to your email (${auth.user.email}).`,
+          variant: 'destructive',
+        });
+      }
+    }, [auth]);
+
+    return (
+      <AuthenticatedLayout user={auth.user}>
+        <Head title="Dashboard" />
+        <div className="px-8 mx-auto">
+          <h1 className="text-2xl font-bold">Hello, {auth.user.name}.</h1>
+          <div className="flex flex-wrap -mx-3 mb-5 removable">
+            <div className="w-full max-w-full px-3 mb-6 lg:w-1/3 sm:flex-none xl:mb-0">
+              <StatsCard
+                title={'posts'}
+                stat={posts}
+                icon={
+                  <FileArchiveIcon
+                    w="2em"
+                    h="2em"
+                    className="text-lg leading-none relative text-white mx-auto"
+                  />
+                }
+              />
+            </div>
+            <div className="w-full max-w-full px-3 mb-6 lg:w-1/3 sm:flex-none xl:mb-0">
+              <StatsCard
+                title={'publications'}
+                stat={publications}
+                icon={
+                  <BookOpenIcon
+                    w="2em"
+                    h="2em"
+                    className="text-lg leading-none relative text-white mx-auto"
+                  />
+                }
+              />
+            </div>
+            <div className="w-full max-w-full px-3 mb-6 lg:w-1/3 sm:flex-none xl:mb-0">
+              <StatsCard
+                title={'Research'}
+                stat={researchs}
+                icon={
+                  <FilesIcon
+                    w="2em"
+                    h="2em"
+                    className="text-lg leading-none relative text-white mx-auto"
+                  />
+                }
+              />
+            </div>
           </div>
         </div>
-      </div>
-    </AuthenticatedLayout>
-  );
+      </AuthenticatedLayout>
+    );
 }
 
 const StatsCard = ({ title, stat, icon }) => {

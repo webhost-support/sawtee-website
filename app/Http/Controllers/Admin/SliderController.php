@@ -16,7 +16,7 @@ class SliderController extends Controller
      */
     public function index()
     {
-        $sliders = Slider::latest()->paginate(10);
+        $sliders = Slider::latest()->get();
         $pages = Page::all();
         return Inertia::render('Backend/Slider/Index', ['sliders' => $sliders, "pages" => $pages]);
     }
@@ -59,7 +59,7 @@ class SliderController extends Controller
         $slides = Slide::where(
             'slider_id',
             $slider->id
-        )->paginate();
+        )->get();
         return Inertia::render('Backend/Slider/Edit', ['slider' => $slider, 'slides' => $slides, 'pages' => $pages]);
 
     }

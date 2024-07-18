@@ -1,27 +1,23 @@
 import ContentEditor from '@/components/Backend/ContentEditor';
-import FileUpload, { PreviewImage } from '@/components/Backend/FileUpload';
+import DropZone from '@/components/Backend/DropZone';
+import InputError from '@/components/Backend/InputError';
 import PrimaryButton from '@/components/Backend/PrimaryButton';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
-  Box,
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  HStack,
-  Input,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  Radio,
   Select,
-  SimpleGrid,
-  Stack,
-  VStack,
-  useToast,
-} from '@chakra-ui/react';
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { useToast } from '@/components/ui/use-toast';
+
 import { useForm } from '@inertiajs/react';
+import { XCircleIcon } from 'lucide-react';
 import React from 'react';
 
 export default function CreateSectionForm({ sections, pages }) {
@@ -35,9 +31,11 @@ export default function CreateSectionForm({ sections, pages }) {
     order: null,
     image: '',
   });
-  const toast = useToast();
+  const { toast } = useToast();
   const sectionTypes = ['default', 'tabs', 'accordian', 'members'];
   const [image, setImage] = React.useState(null);
+
+
 
   const submit = e => {
     e.preventDefault();
@@ -46,225 +44,179 @@ export default function CreateSectionForm({ sections, pages }) {
       preserveState: true,
       onSuccess: () =>
         toast({
-          position: 'top-right',
           title: 'Section Created.',
           description: `Section ${data.title} created Successfully`,
-          status: 'success',
-          duration: 6000,
-          isClosable: true,
         }),
       onError: errors => {
-        console.log(errors);
+        for (const key in errors) {
+          if (Object.hasOwnProperty.call(errors, key)) {
+            const value = errors[key];
+            reset([key], { keepErrors: true });
+            return toast({
+              title: `${key.toUpperCase()} field error`,
+              description: value,
+            });
+          }
+        }
       },
     });
   };
 
   return (
     <form onSubmit={submit}>
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4">
-        <FormControl isInvalid={errors.title} isRequired>
-          <FormLabel htmlFor="title">Section Title</FormLabel>
+      <div className="grid lg:grid-cols-[repeat(4,minmax(100px,1fr))] grid-rows-[minmax(auto, 1fr)] gap-4">
+        <div className="col-span-4">
+          <Label htmlFor="title">Section Title</Label>
 
           <Input
             type="text"
             id="title"
             name="title"
-            display="flex"
-            mt={1}
             autoComplete="title"
+            className="mt-1"
             onChange={e => setData('title', e.target.value)}
           />
 
-          {errors.title && (
-            <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>
+          {errors.title && <InputError mt={2}>{errors.title}</InputError>}
+        </div>
+
+        <div class="col-span-2">
+          <DropZone htmlFor={'image'} image={image} setImage={setImage} />
+
+          {errors.image && (
+            <InputError className="mt-2">{errors.image}</InputError>
           )}
-        </FormControl>
+        </div>
+        <div className="col-span-2 grid grid-cols-subgrid w-full gap-4">
+          <div className="col-span-1">
+            <fieldset>
+              <Label as="legend" htmlFor="page_id">
+                For Page
+              </Label>
 
-        <FormControl maxW="32" isRequired isInvalid={errors.order}>
-          <FormLabel htmlFor="order">Order</FormLabel>
-          <NumberInput
-            id="order"
-            name="order"
-            defaultValue={0}
-            onChange={e => setData('order', e.target.value)}
-          >
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-          {errors.order && (
-            <FormErrorMessage mt={2}>{errors.order}</FormErrorMessage>
-          )}
-        </FormControl>
-      </div>
-      <VStack spacing={8} position={'sticky'} top={'2rem'}>
-        <SimpleGrid
-          columns={{ base: 1, md: 2 }}
-          spacing={10}
-          alignItems={'start'}
-          w="full"
-        >
-          <HStack gap={10}>
-            <FormControl isInvalid={errors.link}>
-              <FormLabel htmlFor="link">Link</FormLabel>
+              <Select
+                name="page_id"
+                id="page_id"
+                onValueChange={value => {
+                  setData('page_id', Number(value));
+                }}
+              >
+                <SelectTrigger className="mt-1">
+                  <SelectValue placeholder="Select Page" />
+                </SelectTrigger>
+                <SelectContent className="w-[300px]">
+                  <SelectGroup>
+                    <SelectLabel>Pages</SelectLabel>
+                    {pages &&
+                      pages.length > 0 &&
+                      pages.map(item => (
+                        <SelectItem key={item.id} value={item.id.toString()}>
+                          {item.name}
+                        </SelectItem>
+                      ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </fieldset>
+          </div>
 
-              <Input
-                type="text"
-                id="link"
-                name="link"
-                display="flex"
-                mt={1}
-                autoComplete="link"
-                onChange={e => setData('link', e.target.value)}
-              />
-
-              {errors.link && (
-                <FormErrorMessage mt={2}>{errors.link}</FormErrorMessage>
-              )}
-            </FormControl>
-          </HStack>
-        </SimpleGrid>
-
-        <SimpleGrid
-          columns={{ base: 1, md: data.type !== 'default' ? 3 : 2 }}
-          spacing={10}
-          alignItems={'center'}
-          justifyContent="start"
-          w="full"
-        >
-          <FormControl isRequired as="fieldset">
-            <FormLabel as="legend" htmlFor="page_id">
-              For Page
-            </FormLabel>
-
-            <Select
-              name="page_id"
-              id="page_id"
-              placeholder="Select Page"
+          <div className="col-span-1">
+            <Label htmlFor="order">Order</Label>
+            <Input
+              type="number"
+              id="order"
+              name="order"
+              className="mt-1"
+              defaultValue={0}
               onChange={e => {
-                setData('page_id', e.target.value);
+                setData('order', Number(e.target.value));
               }}
-            >
-              <option value={null}>{'None'}</option>
-              {pages &&
-                pages.length > 0 &&
-                pages.map(item => (
-                  <option key={item.id} value={item.id}>
-                    {item.name}
-                  </option>
-                ))}
-            </Select>
-          </FormControl>
+            />
+            {errors.order && <InputError mt={2}>{errors.order}</InputError>}
+          </div>
 
-          <FormControl isInvalid={errors.type} isRequired as="fieldset">
-            <FormLabel as="fieldset" htmlFor="type">
-              Section Type
-            </FormLabel>
+          <div className="col-span-2">
+            <Label htmlFor="link">Link</Label>
 
-            <Stack direction="row" flexWrap="wrap" spacing={8}>
-              {sectionTypes.map(item => {
-                return (
-                  <Radio
-                    key={item}
-                    name="type"
-                    isChecked={data.type === item}
-                    value={item}
-                    onChange={e => {
-                      setData('type', e.target.value);
-                    }}
-                  >
-                    {item}
-                  </Radio>
-                );
-              })}
-            </Stack>
+            <Input
+              type="text"
+              id="link"
+              name="link"
+              className="mt-1"
+              autoComplete="link"
+              onChange={e => setData('link', e.target.value)}
+            />
 
-            {errors.type && (
-              <FormErrorMessage mt={2}>{errors.type}</FormErrorMessage>
+            {errors.link && (
+              <InputError className="mt-2">{errors.link}</InputError>
             )}
-          </FormControl>
+          </div>
 
-          {data.type !== 'default' && (
-            <FormControl as="fieldset">
-              <FormLabel as="legend" htmlFor="parent_id">
+          <div className="col-span-1">
+            <fieldset>
+              <Label htmlFor="type">Section Type</Label>
+
+              <Select
+                name="type"
+                id="type"
+                onValueChange={value => setData('type', value)}
+              >
+                <SelectTrigger className="mt-1">
+                  <SelectValue placeholder="Select Section Type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Section Types</SelectLabel>
+                    {sectionTypes.map(item => (
+                      <SelectItem key={item} value={item.toString()}>
+                        {item}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+
+              {errors.type && <InputError mt={2}>{errors.type}</InputError>}
+            </fieldset>
+          </div>
+          <div className="col-span-1">
+            <fieldset>
+              <Label as="legend" htmlFor="parent_id">
                 Parent Section
-              </FormLabel>
+              </Label>
 
               <Select
                 name="parent_id"
                 id="parent_id"
-                placeholder="Select Parent"
-                onChange={e => {
-                  setData('parent_id', e.target.value);
+                disabled={data.type === 'default'}
+                onValueChange={value => {
+                  setData('parent_id', value);
                 }}
               >
-                <option value={null}>{'None'}</option>
-                {sections &&
-                  sections.length > 0 &&
-                  sections.map(item => (
-                    <option key={item.id} value={item.id}>
-                      {item.title}
-                    </option>
-                  ))}
+                <SelectTrigger className="mt-1">
+                  <SelectValue placeholder="Select Parent" />
+                </SelectTrigger>
+                <SelectContent className="w-[300px]">
+                  <SelectGroup>
+                    <SelectLabel>Sections</SelectLabel>
+                    {sections?.map(item => (
+                      <SelectItem key={item.id} value={item.id.toString()}>
+                        {item.title}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
               </Select>
-            </FormControl>
-          )}
-        </SimpleGrid>
+            </fieldset>
+          </div>
+        </div>
 
-        <FormControl mt={4}>
-          <FormLabel htmlFor="image">Image</FormLabel>
-
-          {image && (
-            <>
-              <PreviewImage src={image} aspectRatio={16 / 9} />
-              <Button
-                mt={4}
-                size={'sm'}
-                colorScheme="red"
-                onClick={() => {
-                  setImage(null);
-                }}
-              >
-                Remove/Change Image
-              </Button>
-            </>
-          )}
-
-          {!image && (
-            <FileUpload accept="image/.png,.jpg,.jpeg,.webp">
-              <Input
-                type="file"
-                height="100%"
-                width="100%"
-                position="absolute"
-                top="0"
-                left="0"
-                opacity="0"
-                aria-hidden="true"
-                accept="image/.png,.jpg,.jpeg,.webp"
-                id="image"
-                name="image"
-                size="md"
-                onChange={e => {
-                  setData('image', e.target.files[0]);
-                  setImage(URL.createObjectURL(e.target.files[0]));
-                }}
-              />
-            </FileUpload>
-          )}
-          {errors.image && (
-            <FormErrorMessage mt={2}>{errors.image}</FormErrorMessage>
-          )}
-        </FormControl>
-
-        <FormControl mt={4} isInvalid={errors.description}>
-          <FormLabel htmlFor="description">Description</FormLabel>
-
+        <div className="col-span-4">
+          <Label htmlFor="description">Description</Label>
           <ContentEditor
             name="description"
             id="description"
+            className="mt-1"
             initialValue=""
             onChange={(evt, editor) =>
               setData('description', editor.getContent())
@@ -272,16 +224,13 @@ export default function CreateSectionForm({ sections, pages }) {
           />
 
           {errors.description && (
-            <FormErrorMessage mt={2}>{errors.description}</FormErrorMessage>
+            <InputError mt={2}>{errors.description}</InputError>
           )}
-        </FormControl>
-
-        <Box display="flex" gap="4" mt="4">
-          <PrimaryButton type="submit" isLoading={processing}>
-            Save
-          </PrimaryButton>
-        </Box>
-      </VStack>
+        </div>
+        <PrimaryButton type="submit" isLoading={processing}>
+          Save
+        </PrimaryButton>
+      </div>
     </form>
   );
 }

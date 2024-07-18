@@ -1,39 +1,33 @@
-import FileUpload, { PreviewImage } from '@/Components/Backend/FileUpload';
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import {
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  VStack,
-  useToast,
-} from '@chakra-ui/react';
-import { useForm } from '@inertiajs/react';
-import React from 'react';
+import PrimaryButton from '@/components/Backend/PrimaryButton';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useToast } from '@/components/ui/use-toast';
 
-export default function EditSlideForm({
-  isOpen,
-  onClose,
-  slide,
-  setEditSlide,
-}) {
+import DropZone from '@/components/Backend/DropZone';
+import InputError from '@/components/Backend/InputError';
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { useForm } from '@inertiajs/react';
+import React, { useEffect, useState } from 'react';
+
+export default function EditSlideForm({ open, setOpen, slide, setEditSlide }) {
   const { data, setData, post, processing, errors, reset } = useForm({
     title: slide.title,
     subtitle: slide.subtitle,
     slider_id: slide.slider_id,
     image: slide.media[0] ? slide.media[0].original_url : null,
   });
-  const titleRef = React.useRef(null);
-  const toast = useToast();
+  const { toast } = useToast();
   const [image, setImage] = React.useState(data.image);
+  const [filename, setFilename] = useState(
+    slide.media[0] ? slide.media[0].file_name : null
+  );
 
   const submit = e => {
     e.preventDefault();
@@ -47,15 +41,11 @@ export default function EditSlideForm({
         preserveScroll: true,
         onSuccess: () => {
           toast({
-            position: 'top-right',
             title: 'Slide Created.',
             description: 'Slide Created Successfully',
-            status: 'success',
-            duration: 6000,
-            isClosable: true,
           });
           setEditSlide(null);
-          onClose();
+          setOpen(!open);
         },
         onError: errors => {
           if (errors.title) {
@@ -67,105 +57,66 @@ export default function EditSlideForm({
   };
 
   return (
-    <Modal
-      size={{ base: 'xs', md: 'md', lg: 'xl' }}
-      isOpen={isOpen}
-      onClose={onClose}
-      initialFocusRef={titleRef}
-    >
-      <ModalOverlay />
-      <ModalContent as="form" onSubmit={submit}>
-        <ModalHeader>Edit slide</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <VStack>
-            <FormControl mt="4" isInvalid={errors.title}>
-              <FormLabel htmlFor="title">Title</FormLabel>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Edit Slide</DialogTitle>
+          <DialogDescription>Change slide data.</DialogDescription>
+        </DialogHeader>
+        <form onSubmit={submit}>
+          <div className="flex flex-col gap-4">
+            <div>
+              <Label htmlFor="title">Title</Label>
 
               <Input
-                ref={titleRef}
                 id="title"
                 name="title"
-                value={data.title || ''}
+                placeholder="enter title"
+                value={data.title}
                 onChange={e => setData('title', e.target.value)}
               />
 
-              <FormErrorMessage message={errors.title} className="mt-2" />
-            </FormControl>
+              {errors.title && (
+                <InputError className="mt-2">{errors.title}</InputError>
+              )}
+            </div>
 
-            <FormControl mt="4">
-              <FormLabel htmlFor="subtitle">Subtitle</FormLabel>
+            <div>
+              <Label htmlFor="subtitle">Subtitle</Label>
 
               <Input
                 id="subtitle"
                 name="subtitle"
-                value={data.subtitle || ''}
+                placeholder="enter subtitle"
+                value={data.subtitle}
                 onChange={e => setData('subtitle', e.target.value)}
               />
-              <FormErrorMessage message={errors.subtitle} className="mt-2" />
-            </FormControl>
-
-            <FormControl mt={4} isRequired>
-              <FormLabel htmlFor="image">Slide Image</FormLabel>
-
-              {image && (
-                <>
-                  <PreviewImage
-                    src={image}
-                    height="250px"
-                    rounded="lg"
-                    overflow="hidden"
-                  />
-                  <Button
-                    mt={4}
-                    size={'sm'}
-                    colorScheme="red"
-                    onClick={() => {
-                      setImage(null);
-                    }}
-                  >
-                    Remove/Change Image
-                  </Button>
-                </>
+              {errors.subtitle && (
+                <InputError className="mt-2">{errors.subtitle}</InputError>
               )}
+            </div>
 
-              {!image && (
-                <FileUpload accept="image/.png,.jpg,.jpeg,.webp">
-                  <Input
-                    type="file"
-                    height="100%"
-                    width="100%"
-                    position="absolute"
-                    top="0"
-                    left="0"
-                    opacity="0"
-                    aria-hidden="true"
-                    accept="image/.png,.jpg,.jpeg,.webp"
-                    id="image"
-                    name="image"
-                    size="md"
-                    onChange={e => {
-                      setData('image', e.target.files[0]);
-                      setImage(URL.createObjectURL(e.target.files[0]));
-                    }}
-                  />
-                </FileUpload>
-              )}
-              {errors.image && (
-                <FormErrorMessage mt={2}>{errors.image}</FormErrorMessage>
-              )}
-            </FormControl>
-          </VStack>
-        </ModalBody>
-        <ModalFooter>
-          <PrimaryButton type="submit" isLoading={processing} mr={3}>
+            <div>
+              <Label htmlFor="image">Slide Image</Label>
+              <DropZone setImage={setImage} image={image} htmlFor={'image'} filename={filename} />
+              {errors.image && <InputError mt={2}>{errors.image}</InputError>}
+            </div>
+          </div>
+        </form>
+
+        <div>
+          <PrimaryButton type="submit" isLoading={processing}>
             Save
           </PrimaryButton>
-          <Button variant="solid" colorScheme="red" onClick={onClose}>
+          <Button
+            variant="solid"
+            colorScheme="red"
+            onClick={() => setOpen(!open)}
+          >
             Cancel
           </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }
