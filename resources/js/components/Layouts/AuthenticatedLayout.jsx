@@ -36,7 +36,7 @@ export default function Authenticated({ user, children }) {
           'relative transition-all duration-200 mb-4'
         )}
       >
-        <div class="w-full px-6 py-12  mx-auto rounded-xl min-h-screen">
+        <div className="w-full px-6 py-12  mx-auto rounded-xl min-h-screen">
           {children}
         </div>
         <Footer />

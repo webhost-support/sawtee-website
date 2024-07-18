@@ -17,6 +17,7 @@ import {
 import { useToast } from '@/components/ui/use-toast';
 
 import { useForm } from '@inertiajs/react';
+import { setDate } from 'date-fns';
 import { XCircleIcon } from 'lucide-react';
 import React from 'react';
 
@@ -33,7 +34,7 @@ export default function CreateSectionForm({ sections, pages }) {
   });
   const { toast } = useToast();
   const sectionTypes = ['default', 'tabs', 'accordian', 'members'];
-  const [image, setImage] = React.useState(null);
+  const [files, setFiles] = React.useState([]);
 
 
 
@@ -62,6 +63,10 @@ export default function CreateSectionForm({ sections, pages }) {
     });
   };
 
+
+  function setDataImage(array) {
+    setData('image', array[0]);
+  }
   return (
     <form onSubmit={submit}>
       <div className="grid lg:grid-cols-[repeat(4,minmax(100px,1fr))] grid-rows-[minmax(auto, 1fr)] gap-4">
@@ -80,8 +85,13 @@ export default function CreateSectionForm({ sections, pages }) {
           {errors.title && <InputError mt={2}>{errors.title}</InputError>}
         </div>
 
-        <div class="col-span-2">
-          <DropZone htmlFor={'image'} image={image} setImage={setImage} />
+        <div className="col-span-2">
+          <DropZone
+            htmlFor={'image'}
+            onValueChange={setDataImage}
+            files={files}
+            setFiles={setFiles}
+          />
 
           {errors.image && (
             <InputError className="mt-2">{errors.image}</InputError>
@@ -98,7 +108,8 @@ export default function CreateSectionForm({ sections, pages }) {
                 name="page_id"
                 id="page_id"
                 onValueChange={value => {
-                  setData('page_id', Number(value));
+                  console.log(value);
+                  setData('page_id', value);
                 }}
               >
                 <SelectTrigger className="mt-1">

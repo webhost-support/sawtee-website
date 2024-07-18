@@ -78,8 +78,9 @@ class SectionController extends Controller
      */
     public function update(Request $request, Section $section)
     {
-        if ($request->hasFile('image'))
+        if ($request->hasFile('image')) {
             $section->addMediaFromRequest('image')->toMediaCollection('section-media');
+        }
         $section->update($request->all());
         return redirect()->route('admin.sections.index');
     }

@@ -1,7 +1,9 @@
 import ContentEditor from '@/components/Backend/ContentEditor';
+import DropZone from '@/components/Backend/DropZone';
 import InputError from '@/components/Backend/InputError';
 import PrimaryButton from '@/components/Backend/PrimaryButton';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
@@ -16,7 +18,7 @@ import {
 import { useToast } from '@/components/ui/use-toast';
 
 import { useForm } from '@inertiajs/react';
-import { XCircleIcon } from 'lucide-react';
+import { XCircleIcon, XIcon } from 'lucide-react';
 import React from 'react';
 
 export default function EditSectionForm({ sections, section, pages }) {
@@ -24,17 +26,19 @@ export default function EditSectionForm({ sections, section, pages }) {
     title: section.title,
     description: section.description,
     type: section.type,
-    link: section.link,
-    parent_id: section.parent_id,
+    link: section.link || '',
+    parent_id: section.parent_id || '',
     order: section.order || 0,
     page_id: section.page_id,
   });
 
   const { toast } = useToast();
   const sectionTypes = ['default', 'tabs', 'accordian', 'members'];
+  const [files, setFiles] = React.useState([]);
   const [image, setImage] = React.useState(
-    section.media[0] ? section.media[0].original_url : null
+    section.media.length > 0 ? section.media[0].preview_url : null
   );
+
 
   const submit = e => {
     e.preventDefault();
@@ -65,6 +69,9 @@ export default function EditSectionForm({ sections, section, pages }) {
       }
     );
   };
+  function setDataImage(array) {
+    setData('image', array[0]);
+  }
 
   return (
     <form onSubmit={submit}>
@@ -85,77 +92,34 @@ export default function EditSectionForm({ sections, section, pages }) {
           {errors.title && <InputError mt={2}>{errors.title}</InputError>}
         </div>
 
-        <div class="col-span-2">
-          <div className="col-span-1">
-            <Label
-              htmlFor="image"
-              className="relative flex flex-col items-center justify-center w-full h-72 border-2 border-slate-700 border-dashed rounded-xl overflow-hidden cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 "
-            >
-              <div>
-                {!image && (
-                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                    <svg
-                      className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 20 16"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                      />
-                    </svg>
-                    <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                      <span className="font-semibold">Click to upload</span> or
-                      drag and drop
-                    </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      PNG, JPG or webp (MAX. 800x400px)
-                    </p>
-                  </div>
-                )}
-                {image && (
-                  <div className="w-full absolute inset-0">
-                    <AspectRatio ratio={16 / 9}>
-                      <img
-                        src={image}
-                        alt="section hero"
-                        className="rounded-md object-cover w-full h-full"
-                      />
-                    </AspectRatio>
-                    <XCircleIcon
-                      className="absolute top-0 right-0 cursor-pointer text-white"
-                      onClick={() => {
-                        setImage(null);
-                        setData('image', null);
-                      }}
-                      title="Remove image"
-                      aria-hidden="true"
-                    />
-                  </div>
-                )}
-              </div>
-              <Input
-                id="image"
-                name="image"
-                type="file"
-                accept="image/.png,.jpg,.jpeg,.webp"
-                className="hidden"
-                onChange={e => {
-                  setData('image', e.target.files[0]);
-                  setImage(URL.createObjectURL(e.target.files[0]));
-                }}
-              />
-            </Label>
+        <div className="col-span-2">
+          <DropZone
+            htmlFor={'image'}
+            onValueChange={setDataImage}
+            files={files}
+            setFiles={setFiles}
+            className={image ? 'hidden' : ''}
+          />
 
-            {errors.image && (
-              <InputError className="mt-2">{errors.image}</InputError>
-            )}
-          </div>
+          {image && (
+            <div className="relative  flex flex-col items-center justify-center w-full h-72 rounded-xl overflow-hidden cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-200 p-4 border-2 border-slate-700 border-dashed dark:border-gray-600 dark:hover:border-gray-500 ">
+              <div className="w-full h-full absolute inset-0">
+                <AspectRatio ratio={5 / 3}>
+                  <img
+                    src={image}
+                    alt="section hero"
+                    className="rounded-md object-cover w-full h-full "
+                  />
+                </AspectRatio>
+                <Button
+                  className="absolute top-2 right-2 rounded-lg"
+                  onClick={() => setImage(null)}
+                >
+                  <XIcon className=" w-6 h-6 " />
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
         <div className="col-span-2 grid grid-cols-subgrid w-full gap-4">
           <div className="col-span-1">
