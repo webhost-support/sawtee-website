@@ -1,28 +1,25 @@
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
+import InputError from '@/components/Backend/InputError';
+import PrimaryButton from '@/components/Backend/PrimaryButton';
+import { Button } from '@/components/ui/button';
 import {
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  VStack,
-  useToast,
-} from '@chakra-ui/react';
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useToast } from '@/components/ui/use-toast';
 import { useForm } from '@inertiajs/react';
 
-export default function EditMenuForm({ isOpen, onClose, menu }) {
+export default function EditMenuForm({ open, setOpen, menu }) {
   const { data, setData, post, processing, errors, reset } = useForm({
     title: menu.title,
     location: menu.location,
   });
-  const toast = useToast();
+  const { toast } = useToast();
 
   const submit = e => {
     e.preventDefault();
@@ -36,14 +33,10 @@ export default function EditMenuForm({ isOpen, onClose, menu }) {
         preserveScroll: true,
         onSuccess: () => {
           toast({
-            position: 'top-right',
             title: 'Menu edited.',
             description: 'Menu edited Successfully',
-            status: 'success',
-            duration: 6000,
-            isClosable: true,
           });
-          onClose();
+          setOpen(!open);
         },
         onError: errors => {
           if (errors.title) {
@@ -58,15 +51,16 @@ export default function EditMenuForm({ isOpen, onClose, menu }) {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size={{ base: 'xs', md: 'md' }}>
-      <ModalOverlay />
-      <ModalContent as="form" onSubmit={submit}>
-        <ModalHeader>Edit Menu</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <VStack gap="6" alignItems={'start'}>
-            <FormControl mt="4" isInvalid={errors.title} isRequired>
-              <FormLabel htmlFor="title">Title</FormLabel>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Edit Menu</DialogTitle>
+          <DialogDescription>Manage menu</DialogDescription>
+        </DialogHeader>
+        <form onSubmit={submit}>
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="title">Title</Label>
               <Input
                 id="title"
                 name="title"
@@ -75,12 +69,12 @@ export default function EditMenuForm({ isOpen, onClose, menu }) {
               />
 
               {errors.title && (
-                <FormErrorMessage mt="2">{errors.title}</FormErrorMessage>
+                <InputError className="mt-2">{errors.title}</InputError>
               )}
-            </FormControl>
+            </div>
 
-            <FormControl mt="4" isInvalid={errors.location} isRequired>
-              <FormLabel htmlFor="location">location</FormLabel>
+            <div>
+              <Label htmlFor="location">location</Label>
 
               <Input
                 id="location"
@@ -90,21 +84,20 @@ export default function EditMenuForm({ isOpen, onClose, menu }) {
               />
 
               {errors.location && (
-                <FormErrorMessage mt="2">{errors.location}</FormErrorMessage>
+                <InputError className="mt-2">{errors.location}</InputError>
               )}
-            </FormControl>
-          </VStack>
-        </ModalBody>
-
-        <ModalFooter>
-          <PrimaryButton type="submit" isLoading={processing}>
-            Save
-          </PrimaryButton>
-          <Button variant="ghost" onClick={onClose}>
-            Cancel
-          </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+            </div>
+            <DialogFooter>
+              <PrimaryButton type="submit" isLoading={processing}>
+                Save
+              </PrimaryButton>
+              <Button variant="ghost" onClick={() => setOpen(!open)}>
+                Cancel
+              </Button>
+            </DialogFooter>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 }

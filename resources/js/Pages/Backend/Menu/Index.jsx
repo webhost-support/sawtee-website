@@ -1,24 +1,19 @@
-import { DataTable } from '@/Components/Backend/DataTable';
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import {
-  TableDeleteAction,
-  TableEditAction,
-} from '@/Components/Backend/TableActions';
-import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
-import { Box, HStack, useDisclosure } from '@chakra-ui/react';
+import { DataTableColumnHeader } from '@/components/Backend/DatatableColumnHelper';
+
+import DataTableActions from '@/components/Backend/DataTableActions';
+import { DataTable } from '@/components/Backend/FrontDataTable';
+import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
 import { Head, useForm } from '@inertiajs/react';
-import { createColumnHelper } from '@tanstack/react-table';
 import React, { useState } from 'react';
 import CreateMenuForm from './Partials/CreateMenu';
-import DeleteMenu from './Partials/DeleteMenu';
-
+import CreateMenu from './Partials/CreateMenu';
 export default function Index({ auth, menus }) {
-  const columnHelper = createColumnHelper();
-  const { processing, get } = useForm();
-  const createMenu = useDisclosure();
-  const deleteMenu = useDisclosure();
-
-  const [menuItem, setMenuItem] = useState(null);
+  const { processing, get, delete: destroy } = useForm();
+  const [createMenu, setCreateMenu] = useState(false);
+  const { toast } = useToast();
 
   const handleEdit = (e, id) => {
     e.preventDefault();
@@ -27,81 +22,72 @@ export default function Index({ auth, menus }) {
 
   const handleDelete = (e, id) => {
     e.preventDefault();
-    setMenuItem(id);
-    deleteMenu.onOpen();
+    destroy(route('admin.manage.menus', id), {
+      preserveState: true,
+      preserveScroll: true,
+      onSuccess: () => {
+        toast({
+          title: 'Menu deleted',
+          description: `Menu ID:${id} deleted Successfully`,
+        });
+      },
+      onError: () => {
+        toast({
+          title: 'Uh oh, Something went wrong',
+          description: `Menu ID:${id} was not deleted, try again.`,
+        });
+      },
+    });
   };
 
-  const defaultColumns = React.useMemo(
-    () => [
-      columnHelper.accessor('title', {
-        cell: info => info.getValue(),
-        header: 'Title',
-      }),
-      columnHelper.accessor('location', {
-        cell: info => info.getValue(),
-        header: 'Location',
-      }),
+  const defaultColumns = [
+    {
+      accessorKey: 'id',
+      header: ({ column }) => {
+        return <DataTableColumnHeader column={column} title="ID" />;
+      },
+    },
+    {
+      accessorKey: 'title',
+      header: ({ column }) => {
+        return <DataTableColumnHeader column={column} title="Title" />;
+      },
+    },
+    {
+      accessorKey: 'location',
+      header: ({ column }) => {
+        return <DataTableColumnHeader column={column} title="Location" />;
+      },
+    },
 
-      columnHelper.accessor('id', {
-        cell: info => {
-          return (
-            <HStack spacing={4}>
-              <TableEditAction
-                onClick={e => handleEdit(e, info.getValue())}
-                isDisabled={processing}
-              />
-              <TableDeleteAction
-                onClick={e => handleDelete(e, info.getValue())}
-                isDisabled={processing}
-              />
-            </HStack>
-          );
-        },
-        header: 'Actions',
-      }),
-    ],
-    []
-  );
+    {
+      accessorKey: 'id',
+      header: 'Actions',
+      cell: ({ row }) => (
+        <DataTableActions
+          id={row.original.id}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+        />
+      ),
+    },
+  ];
 
   return (
     <AuthenticatedLayout user={auth.user}>
       <Head title="Menus" />
-      {menus.length <= 0 && (
-        <HStack spacing={4} variant="left-accent">
-          <Alert status="warning">
-            <AlertIcon />
-            <AlertTitle>No menu!</AlertTitle>
-            <AlertDescription>
-              Create a menu to add menu items.
-            </AlertDescription>
-          </Alert>
+      {/* {menus.length <= 0 && (
+        <Alert>
+          <AlertTitle>No menu!</AlertTitle>
+          <AlertDescription>Create a menu to add menu items. </AlertDescription>
+        </Alert>
+      )} */}
 
-          <Button onClick={onOpen}>Create new menu</Button>
-        </HStack>
-      )}
-
-      {menus && (
-        <>
-          <Box mb={4}>
-            <PrimaryButton onClick={createMenu.onOpen}>
-              Add New Menu
-            </PrimaryButton>
-          </Box>
-          <DataTable defaultColumns={defaultColumns} data={menus} />
-        </>
-      )}
-
-      <CreateMenuForm
-        onOpen={createMenu.onOpen}
-        isOpen={createMenu.isOpen}
-        onClose={createMenu.onClose}
-      />
-      <DeleteMenu
-        onOpen={deleteMenu.onOpen}
-        isOpen={deleteMenu.isOpen}
-        onClose={deleteMenu.onClose}
-        menu={menuItem}
-      />
+      <Button onMouseEnter={() => setCreateMenu(!createMenu)}>
+        Add New Menu
+      </Button>
+      {menus && <DataTable defaultColumns={defaultColumns} data={menus} />}
+      {createMenu && <CreateMenu open={createMenu} setOpen={setCreateMenu} />}
     </AuthenticatedLayout>
   );
 }

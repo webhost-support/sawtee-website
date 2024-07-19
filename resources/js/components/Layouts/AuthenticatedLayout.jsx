@@ -18,7 +18,7 @@ export default function Authenticated({ user, children }) {
   }
 
   return (
-    <div className="min-h-screen">
+    <main className="min-h-screen">
       <Toaster />
 
       <Sidebar
@@ -33,14 +33,14 @@ export default function Authenticated({ user, children }) {
       <div
         className={cn(
           mobileWidth || isCollapsed ? 'ml-20' : 'ml-64',
-          'relative transition-all duration-200 mb-4'
+          'relative transition-all duration-200'
         )}
       >
-        <div className="w-full px-6 py-12  mx-auto rounded-xl min-h-screen">
+        <div className="w-full px-6 py-12 min-h-screen  mx-auto rounded-xl">
           {children}
         </div>
         <Footer />
       </div>
-    </div>
+    </main>
   );
 }

@@ -1,4 +1,4 @@
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
+import PrimaryButton from '@/components/Backend/PrimaryButton';
 import {
   Alert,
   AlertDescription,

@@ -32,13 +32,15 @@ export default function EditSectionForm({ sections, section, pages }) {
     page_id: section.page_id,
   });
 
+
   const { toast } = useToast();
   const sectionTypes = ['default', 'tabs', 'accordian', 'members'];
-  const [files, setFiles] = React.useState([]);
-  const [image, setImage] = React.useState(
-    section.media.length > 0 ? section.media[0].preview_url : null
+  const [files, setFiles] = React.useState(
+    section.media.length > 0 ? section.media : []
   );
-
+  const [image, setImage] = React.useState(
+    section.media.length > 0 ? section.media[0].preview_url : ''
+  );
 
   const submit = e => {
     e.preventDefault();
@@ -69,9 +71,16 @@ export default function EditSectionForm({ sections, section, pages }) {
       }
     );
   };
+
   function setDataImage(array) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      setImage(e.target.result);
+    };
+    reader.readAsDataURL(array[0]);
     setData('image', array[0]);
   }
+
 
   return (
     <form onSubmit={submit}>
@@ -98,7 +107,7 @@ export default function EditSectionForm({ sections, section, pages }) {
             onValueChange={setDataImage}
             files={files}
             setFiles={setFiles}
-            className={image ? 'hidden' : ''}
+            className={image ? 'hidden' : 'h-72'}
           />
 
           {image && (
@@ -113,7 +122,11 @@ export default function EditSectionForm({ sections, section, pages }) {
                 </AspectRatio>
                 <Button
                   className="absolute top-2 right-2 rounded-lg"
-                  onClick={() => setImage(null)}
+                  onClick={() => {
+                    setImage(null);
+                    setFiles([]);
+                    setData('image', null);
+                  }}
                 >
                   <XIcon className=" w-6 h-6 " />
                 </Button>

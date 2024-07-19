@@ -16,7 +16,7 @@ import {
 import { useToast } from '@/components/ui/use-toast';
 import { useForm } from '@inertiajs/react';
 import { AlertCircleIcon, PlusIcon } from 'lucide-react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import CreateSlideForm from '../../Slide/CreateSlideForm';
 import Slides from '../../Slide/Slides';
 
@@ -26,7 +26,7 @@ export default function EditSliderForm({ slider, slides, pages }) {
     page_id: slider.page_id,
   });
   const { toast } = useToast();
-  const [createSlideFormShow, setCreateSlideFormShow] = useState(false);
+  const [createSlide, setCreateSlide] = React.useState(false);
 
   const submit = e => {
     e.preventDefault();
@@ -61,69 +61,67 @@ export default function EditSliderForm({ slider, slides, pages }) {
           <AlertDescription>No slides added yet.</AlertDescription>
         </Alert>
       )}
-      <form onSubmit={submit}>
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          <div className="col-span-2">
-            <Label htmlFor="name">Name</Label>
-            <Input
-              id="name"
-              name="name"
-              value={data.name}
-              onChange={e => setData('name', e.target.value)}
-            />
-            {errors.name && (
-              <InputError className="mt-2">{errors.name}</InputError>
-            )}
-          </div>
-          <div className="col-span-1">
-            <Label htmlFor="pages">Pages</Label>
-            <Select
-              id="pages"
-              name="pages"
-              value={data.page_id}
-              placeholder="Select pages"
-              onValueChange={value => setData('page_id', value)}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select pages" />
-              </SelectTrigger>
-              <SelectContent className="w-[280px]">
-                <SelectGroup>
-                  <SelectLabel>Pages</SelectLabel>
+      <div className="grid lg:grid-cols-5 gap-4 items-end">
+        <form onSubmit={submit} className="col-span-4">
+          <div className="grid grid-cols-1 lg:grid-cols-4 w-full gap-6 items-end">
+            <div className="col-span-2">
+              <Label htmlFor="name">Name</Label>
+              <Input
+                id="name"
+                name="name"
+                value={data.name}
+                onChange={e => setData('name', e.target.value)}
+              />
+              {errors.name && (
+                <InputError className="mt-2">{errors.name}</InputError>
+              )}
+            </div>
+            <div className="col-span-1">
+              <Label htmlFor="pages">Page</Label>
+              <Select
+                id="pages"
+                name="pages"
+                value={data.page_id}
+                placeholder="Select pages"
+                onValueChange={value => setData('page_id', value)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select pages" />
+                </SelectTrigger>
+                <SelectContent className="w-[280px]">
+                  <SelectGroup>
+                    <SelectLabel>Pages</SelectLabel>
 
-                  {pages.map(page => (
-                    <SelectItem key={page.id} value={page.id}>
-                      {page.name}
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-            {errors.page_id && (
-              <InputError className="mt-2">{errors.page_id}</InputError>
-            )}
-          </div>
-          <div className="col-span-1 flex gap-4 items-end ">
-            <Button
-              variant="outline"
-              className="inline-flex"
-              onClick={() => setCreateSlideFormShow(!createSlideFormShow)}
-            >
-              Add slide
-              <PlusIcon className="ml-2 w-4 h-4" />
-            </Button>
-
+                    {pages.map(page => (
+                      <SelectItem key={page.id} value={page.id}>
+                        {page.name}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              {errors.page_id && (
+                <InputError className="mt-2">{errors.page_id}</InputError>
+              )}
+            </div>
             <PrimaryButton type="submit" disabled={processing}>
               Save slider
             </PrimaryButton>
           </div>
-        </div>
-      </form>
-
-      {createSlideFormShow && (
+        </form>
+        <Button
+          variant="outline"
+          className="inline-flex"
+          onClick={() => setCreateSlide(!createSlide)}
+        >
+          Add slide
+          <PlusIcon className="ml-2 w-4 h-4" />
+        </Button>
+      </div>
+      {createSlide && (
         <CreateSlideForm
-          open={createSlideFormShow}
-          setOpen={setCreateSlideFormShow}
+          open={createSlide}
+          setOpen={setCreateSlide}
           slider={slider}
         />
       )}

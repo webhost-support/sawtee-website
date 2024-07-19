@@ -1,30 +1,33 @@
-import { TableDeleteAction, TableEditAction } from '@/Components/Backend/TableActions';
-import { GlassBox } from '@/Components/Frontend';
-import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
-import { slugify } from '@/Utils/helpers';
 import {
-    Accordion,
-    AccordionButton,
-    AccordionIcon,
-    AccordionItem,
-    AccordionPanel,
-    Box,
-    Button,
-    FormControl,
-    FormErrorMessage,
-    FormLabel,
-    Grid,
-    GridItem,
-    HStack,
-    Input,
-    List,
-    ListItem,
-    Select,
-    Text,
-    VStack,
-    useColorModeValue,
-    useDisclosure,
-    useToast,
+  TableDeleteAction,
+  TableEditAction,
+} from '@/components/Backend/TableActions';
+import { GlassBox } from '@/components/Frontend';
+import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
+import { slugify } from '@/lib/helpers';
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Button,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Grid,
+  GridItem,
+  HStack,
+  Input,
+  List,
+  ListItem,
+  Select,
+  Text,
+  VStack,
+  useColorModeValue,
+  useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
 import { Head, useForm } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
@@ -32,10 +35,19 @@ import DeleteMenuItem from '../MenuItem/DeleteMenuItem';
 import EditMenuItem from '../MenuItem/EditMenuItem';
 import EditMenuForm from './Partials/EditMenu';
 
-export default function ManageMenu({ auth, categories, sections, menus, pages, desiredMenu, menuItems }) {
-  const editMenu = useDisclosure();
+export default function ManageMenu({
+  auth,
+  categories,
+  sections,
+  menus,
+  pages,
+  desiredMenu,
+  menuItems,
+}) {
+  //   const editMenu = useDisclosure();
   const [firstLevelMenuItems, setFirstLevelMenuItems] = useState(null);
   const { get } = useForm();
+  const [editMenu, setEditMenu] = useState(false);
 
   const handleMenuSlected = (e, id) => {
     e.preventDefault();
@@ -44,13 +56,13 @@ export default function ManageMenu({ auth, categories, sections, menus, pages, d
 
   useEffect(() => {
     const newMenuItems = [];
-      menuItems
-        .toSorted((a, b) => a.order - b.order)
-        ?.map(menuItem => {
-          if (!menuItem.parent_id) {
-            newMenuItems.push(menuItem);
-          }
-        });
+    menuItems
+      .toSorted((a, b) => a.order - b.order)
+      ?.map(menuItem => {
+        if (!menuItem.parent_id) {
+          newMenuItems.push(menuItem);
+        }
+      });
     setFirstLevelMenuItems(newMenuItems);
   }, [menuItems]);
 
@@ -58,11 +70,10 @@ export default function ManageMenu({ auth, categories, sections, menus, pages, d
     <AuthenticatedLayout user={auth.user}>
       <Head title="Manage Menus" />
 
-      {editMenu.isOpen && (
+      {editMenu && (
         <EditMenuForm
-          isOpen={editMenu.isOpen}
-          onOpen={editMenu.onOpen}
-          onClose={editMenu.onClose}
+          open={editMenu}
+          setOpen={setEditMenu}
           menu={desiredMenu}
         />
       )}
@@ -86,7 +97,7 @@ export default function ManageMenu({ auth, categories, sections, menus, pages, d
             <Button
               variant={'outline'}
               colorScheme="blue"
-              onClick={editMenu.onOpen}
+              onClick={() => setEditMenu(true)}
             >
               Edit selected menu
             </Button>
@@ -344,9 +355,10 @@ const AddToMenu = ({ options, name, menu, menuItems }) => {
                   placeholder="Select parent"
                   value={data.parent_id}
                   onChange={e => {
-                    const order = menuItems.filter(
-                      menuItem => menuItem.id === Number(e.target.value)
-                    )[0].children.length + 1;
+                    const order =
+                      menuItems.filter(
+                        menuItem => menuItem.id === Number(e.target.value)
+                      )[0].children.length + 1;
                     setData({
                       ...data,
                       order: order,
@@ -389,7 +401,10 @@ const MenuStructure = ({ firstLevelMenuItems, menuItems }) => {
   return (
     <GlassBox mt={6} p={6}>
       {firstLevelMenuItems && firstLevelMenuItems.length > 0 && (
-        <MenuItemsList firstLevelMenuItems={firstLevelMenuItems} menuItems={menuItems} />
+        <MenuItemsList
+          firstLevelMenuItems={firstLevelMenuItems}
+          menuItems={menuItems}
+        />
       )}
     </GlassBox>
   );

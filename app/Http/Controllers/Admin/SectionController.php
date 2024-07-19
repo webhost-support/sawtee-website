@@ -46,8 +46,9 @@ class SectionController extends Controller
             'image' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048'
         ]);
         $section = Section::create($validatedData);
-        if ($request->hasFile('image'))
-            $section->addMediaFromRequest('image')->toMediaCollection('featured-image');
+        if ($request->image) {
+            $section->addMediaFromRequest('image')->toMediaCollection('section-media');
+        }
         return redirect()->route('admin.sections.index');
     }
 
@@ -91,7 +92,6 @@ class SectionController extends Controller
     public function destroy(Section $section)
     {
         $section->delete();
-
         return redirect()->route('admin.sections.index');
     }
 }

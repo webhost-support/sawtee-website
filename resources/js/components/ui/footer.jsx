@@ -1,4 +1,4 @@
-import { Heart, HeartIcon } from 'lucide-react';
+import { HeartIcon } from 'lucide-react';
 import React from 'react';
 
 export default function Footer() {
@@ -8,10 +8,15 @@ export default function Footer() {
         <div className="flex flex-wrap items-center justify-center">
           <div className="w-full max-w-full px-3 mt-0 mb-6 shrink-0 lg:mb-0 lg:w-1/2 lg:flex-none">
             <div className="leading-normal text-center text-md lg:text-left">
-              © {new Date().getFullYear()} made with&nbsp;
-              <HeartIcon className="w-6 h-6 inline cursor-pointer animate-pulse" />
+              © {new Date().getFullYear()} SAWTEE made with&nbsp;
+              <HeartIcon className="w-6 h-6 inline cursor-pointer motion-safe:animate-pulse hover:animate-bounce" />
               &nbsp;by&nbsp;
-              <a href="/" target="_blank" rel="noreferrer">
+              <a
+                href="/"
+                target="_blank"
+                rel="noreferrer"
+                className="text-slate-500"
+              >
                 Ankur Singh
               </a>
             </div>

@@ -104,12 +104,14 @@ export function DataTable({
                       key={Math.random() + header.id}
                       onClick={header.column.getToggleSortingHandler()}
                     >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                      <div className="first-of-type:ml-4">
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </div>
                     </TableHead>
                   );
                 })}
@@ -129,11 +131,13 @@ export function DataTable({
                         key={Math.random() + cell.id}
                         className="max-w-72 "
                       >
-                        {' '}
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
+                        <p className="first-of-type:ml-4">
+                          {' '}
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </p>
                       </TableCell>
                     );
                   })}

@@ -5,6 +5,7 @@ import { useToast } from '@/components/ui/use-toast';
 
 import DropZone from '@/components/Backend/DropZone';
 import InputError from '@/components/Backend/InputError';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -14,6 +15,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { useForm } from '@inertiajs/react';
+import { XIcon } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 
 export default function EditSlideForm({ open, setOpen, slide, setEditSlide }) {
@@ -25,9 +27,16 @@ export default function EditSlideForm({ open, setOpen, slide, setEditSlide }) {
   });
   const { toast } = useToast();
   const [image, setImage] = React.useState(data.image);
-  const [filename, setFilename] = useState(
-    slide.media[0] ? slide.media[0].file_name : null
-  );
+  const [files, setFiles] = useState(slide.media[0] ? slide.media : []);
+
+  function setDataImage(array) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      setImage(e.target.result);
+    };
+    reader.readAsDataURL(array[0]);
+    setData('image', array[0]);
+  }
 
   const submit = e => {
     e.preventDefault();
@@ -98,24 +107,52 @@ export default function EditSlideForm({ open, setOpen, slide, setEditSlide }) {
 
             <div>
               <Label htmlFor="image">Slide Image</Label>
-              <DropZone setImage={setImage} image={image} htmlFor={'image'} filename={filename} />
+              <DropZone
+                htmlFor={'image'}
+                onValueChange={setDataImage}
+                files={files}
+                setFiles={setFiles}
+                className={image ? 'hidden' : 'h-48'}
+              />
+              {image && (
+                <div className="relative  flex flex-col items-center justify-center w-full h-48 rounded-xl overflow-hidden cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-200 p-4 border-2 border-slate-700 border-dashed dark:border-gray-600 dark:hover:border-gray-500 ">
+                  <div className="w-full h-full absolute inset-0">
+                    <AspectRatio ratio={5 / 3}>
+                      <img
+                        src={image}
+                        alt="section hero"
+                        className="rounded-md object-cover w-full h-full "
+                      />
+                    </AspectRatio>
+                    <Button
+                      className="absolute top-2 right-2 rounded-lg"
+                      onClick={() => {
+                        setImage(null);
+                        setFiles([]);
+                        setData('image', null);
+                      }}
+                    >
+                      <XIcon className=" w-6 h-6 " />
+                    </Button>
+                  </div>
+                </div>
+              )}
               {errors.image && <InputError mt={2}>{errors.image}</InputError>}
+            </div>
+            <div>
+              <PrimaryButton type="submit" isLoading={processing}>
+                Save
+              </PrimaryButton>
+              <Button
+                variant="solid"
+                colorScheme="red"
+                onClick={() => setOpen(!open)}
+              >
+                Cancel
+              </Button>
             </div>
           </div>
         </form>
-
-        <div>
-          <PrimaryButton type="submit" isLoading={processing}>
-            Save
-          </PrimaryButton>
-          <Button
-            variant="solid"
-            colorScheme="red"
-            onClick={() => setOpen(!open)}
-          >
-            Cancel
-          </Button>
-        </div>
       </DialogContent>
     </Dialog>
   );

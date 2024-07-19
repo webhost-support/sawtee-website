@@ -5,8 +5,8 @@ import { DataTableColumnHeader } from '@/components/Backend/DatatableColumnHelpe
 import { DataTable } from '@/components/Backend/FrontDataTable';
 import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
-import { HStack, useDisclosure } from '@chakra-ui/react';
 import { Head, useForm } from '@inertiajs/react';
 import React from 'react';
 import CreateSliderForm from './Partials/CreateSliderForm';
@@ -14,7 +14,7 @@ import CreateSliderForm from './Partials/CreateSliderForm';
 export default function Index({ auth, sliders, pages }) {
   const { toast } = useToast();
   const { processing, delete: destroy, get } = useForm();
-  const createSliderModal = useDisclosure();
+  const [sliderModal, setSliderModal] = React.useState(false);
 
   const handleEdit = (e, id) => {
     e.preventDefault();
@@ -83,9 +83,9 @@ export default function Index({ auth, sliders, pages }) {
           </AlertDescription>
         </Alert>
       )}
-      <PrimaryButton mb={4} onClick={() => createSliderModal.onOpen()}>
+      <Button onClick={() => setSliderModal(!sliderModal)}>
         Create Slider
-      </PrimaryButton>
+      </Button>
       {sliders && (
         <DataTable
           defaultColumns={defaultColumns}
@@ -93,10 +93,10 @@ export default function Index({ auth, sliders, pages }) {
           customFilterColumn={'name'}
         />
       )}
-      {createSliderModal.isOpen && (
+      {sliderModal && (
         <CreateSliderForm
-          isOpen={createSliderModal.isOpen}
-          onClose={createSliderModal.onClose}
+          open={sliderModal}
+          setOpen={setSliderModal}
           pages={pages}
         />
       )}
