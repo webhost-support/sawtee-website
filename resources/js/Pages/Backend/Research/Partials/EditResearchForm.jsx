@@ -49,15 +49,20 @@ export default function CreateResearchForm({ research }) {
         preserveScroll: true,
         onSuccess: () =>
           toast({
-            position: 'top-right',
             title: 'Research Edited.',
             description: `Research ${data.title} Successfully`,
-            status: 'success',
-            duration: 6000,
-            isClosable: true,
           }),
         onError: errors => {
-          console.error(errors);
+          for (const key in errors) {
+            if (Object.hasOwnProperty.call(errors, key)) {
+              const value = errors[key];
+              reset(key);
+              return toast( {
+                title: 'Uh oh, Something went wrong',
+                description: `${key.toUpperCase()} field error` + `: ${value}`,
+              });
+            }
+          }
         },
       }
     );

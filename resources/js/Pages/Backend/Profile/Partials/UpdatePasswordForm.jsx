@@ -2,13 +2,16 @@ import InputError from '@/components/Backend/InputError';
 import InputLabel from '@/components/Backend/InputLabel';
 import PrimaryButton from '@/components/Backend/PrimaryButton';
 import TextInput from '@/components/Backend/TextInput';
+import { useToast } from '@/components/ui/use-toast';
 import { Transition } from '@headlessui/react';
 import { useForm } from '@inertiajs/react';
+
 import { useRef } from 'react';
 
 export default function UpdatePasswordForm({ className = '' }) {
   const passwordInput = useRef();
   const currentPasswordInput = useRef();
+  const { toast } = useToast();
 
   const { data, setData, errors, put, reset, processing, recentlySuccessful } =
     useForm({
@@ -22,8 +25,19 @@ export default function UpdatePasswordForm({ className = '' }) {
 
     put(route('password.update'), {
       preserveScroll: true,
-      onSuccess: () => reset(),
+      onSuccess: () => {
+        toast({
+          title: 'Password updated.',
+          description: 'Your password has been updated.',
+        });
+        reset();
+      },
       onError: errors => {
+        toast({
+          title: 'Uh oh, Something went wrong',
+          description: 'Your password could not be updated. Please try again.',
+          variant: 'destructive',
+        });
         if (errors.password) {
           reset('password', 'password_confirmation');
           passwordInput.current.focus();
@@ -100,16 +114,6 @@ export default function UpdatePasswordForm({ className = '' }) {
 
         <div className="flex items-center gap-4">
           <PrimaryButton disabled={processing}>Save</PrimaryButton>
-
-          <Transition
-            show={recentlySuccessful}
-            enter="transition ease-in-out"
-            enterFrom="opacity-0"
-            leave="transition ease-in-out"
-            leaveTo="opacity-0"
-          >
-            <p className="text-sm text-gray-600">Saved.</p>
-          </Transition>
         </div>
       </form>
     </section>

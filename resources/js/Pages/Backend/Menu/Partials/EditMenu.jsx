@@ -64,6 +64,7 @@ export default function EditMenuForm({ open, setOpen, menu }) {
               <Input
                 id="title"
                 name="title"
+                autoFocus
                 value={data.title}
                 onChange={e => setData('title', e.target.value)}
               />

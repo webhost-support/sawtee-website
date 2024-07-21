@@ -75,21 +75,17 @@ export default function EditPublicationForm({ publication, categories, tags }) {
         preserveScroll: true,
         onSuccess: () =>
           toast({
-            position: 'top-right',
             title: 'Publication Edited.',
             description: `Publication ${data.title} Successfully`,
-            status: 'success',
-            duration: 6000,
-            isClosable: true,
           }),
         onError: () => {
           for (const key in errors) {
             if (Object.hasOwnProperty.call(errors, key)) {
               const value = errors[key];
-              reset([key], { keepErrors: true });
+              reset(key);
               return toast({
-                title: `${key.toUpperCase()} field error`,
-                description: value,
+                title: 'Uh oh, Something went wrong',
+                description: `${key.toUpperCase()} field error` + `: ${value}`,
               });
             }
           }
@@ -109,8 +105,8 @@ export default function EditPublicationForm({ publication, categories, tags }) {
               required
               id="title"
               name="title"
+              autoFocus
               className="mt-1"
-              autoComplete="title"
               value={data.title}
               onChange={e => setData('title', e.target.value)}
             />

@@ -15,15 +15,15 @@ export default function Header({ user, toggleSidebar }) {
             href={route('admin.dashboard')}
             className="p-4 m-0 text-sm flex items-center whitespace-nowrap text-slate-700"
           >
-            <span
+            {/* <span
               className={
                 'font-semibold transition-all duration-200 ease-nav-brand text-center font-display text-xl md:text-3xl tracking-[-0.02em] drop-shadow-sm md:leading-[5rem]'
               }
             >
               SAWTEE CMS
-            </span>
+            </span> */}
 
-            {/* <StaggeredLetterPullUp className="md:text-3xl font-bold" /> */}
+            <StaggeredLetterPullUp className="md:text-3xl font-bold" />
           </Link>
           <div className={cn('shrink-0 flex gap-4 items-center')}>
             <Button

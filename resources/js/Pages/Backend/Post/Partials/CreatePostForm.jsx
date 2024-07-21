@@ -1,17 +1,17 @@
-import ContentEditor from '@/components/Backend/ContentEditor';
-import InputError from '@/components/Backend/InputError';
-import { MultiSelect } from '@/components/Backend/MultiSelect';
-import PrimaryButton from '@/components/Backend/PrimaryButton';
+import ContentEditor from "@/components/Backend/ContentEditor";
+import InputError from "@/components/Backend/InputError";
+import { MultiSelect } from "@/components/Backend/MultiSelect";
+import PrimaryButton from "@/components/Backend/PrimaryButton";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+} from "@/components/ui/accordion";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Select,
   SelectContent,
@@ -20,74 +20,89 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { useToast } from '@/components/ui/use-toast';
-import { useForm } from '@inertiajs/react';
-import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
-import { XCircleIcon } from 'lucide-react';
-import React from 'react';
+} from "@/components/ui/tooltip";
+import { useToast } from "@/components/ui/use-toast";
+import { useForm } from "@inertiajs/react";
+import { QuestionMarkCircledIcon } from "@radix-ui/react-icons";
+import { XCircleIcon } from "lucide-react";
+import React from "react";
+import DropZone from "@/components/Backend/DropZone";
 
 export default function CreatePostForm({ categories, themes, tags }) {
   const { data, setData, post, processing, errors, reset } = useForm({
     category_id: 2,
-    theme_id: '',
-    title: '',
-    slug: '',
-    content: '',
-    excerpt: '',
-    author: '',
-    status: 'unpublished',
-    image: '',
-    file: '',
+    theme_id: "",
+    title: "",
+    slug: "",
+    content: "",
+    excerpt: "",
+    author: "",
+    status: "unpublished",
+    image: "",
+    file: "",
     files: [],
     tags: [],
     link: null,
-    genre: '',
+    genre: "",
     published_at: null,
-    meta_title: '',
-    meta_description: '',
+    meta_title: "",
+    meta_description: "",
   });
   const { toast } = useToast();
   const [selectedCategory, setSelectedCategory] = React.useState(null);
   const [tagOptions, setTagOptions] = React.useState([]);
-  const [imageUrl, setImageUrl] = React.useState(null);
+  const [image, setImage] = React.useState(null);
   const [postTags, setPostTags] = React.useState([]);
   function setDataTags(selectedValues) {
     const array = [];
-    selectedValues.map(item => {
+    selectedValues.map((item) => {
       array.push({
         post_id: item.id,
         tag_id: item.value,
       });
     });
-    setData('tags', array);
+    setData("tags", array);
   }
 
-  const submit = e => {
+  function setDataImage(image) {
+    if (image) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImage(e.target.result);
+      };
+      reader.readAsDataURL(image);
+      setData("image", image);
+    } else {
+      setImage(null);
+      setData("image", null);
+    }
+  }
+
+  const submit = (e) => {
     e.preventDefault();
-    post(route('admin.posts.store'), {
+    post(route("admin.posts.store"), {
       preserveScroll: true,
       preserveState: true,
       onSuccess: () =>
         toast({
-          title: 'Post Created.',
+          title: "Post Created.",
           description: `${data.title} post was created successfully`,
         }),
-      onError: errors => {
+      onError: (errors) => {
         for (const key in errors) {
           if (Object.hasOwnProperty.call(errors, key)) {
             const value = errors[key];
-            reset([key], { keepErrors: true });
+            reset(key);
             return toast({
-              title: `${key.toUpperCase()} field error`,
-              description: value,
+              title: "Uh oh, Something went wrong",
+              description: `${key.toUpperCase()} field error ` + `: ${value}`,
             });
           }
         }
@@ -96,15 +111,13 @@ export default function CreatePostForm({ categories, themes, tags }) {
   };
 
   React.useEffect(() => {
-    tags.map(tag => {
-      setTagOptions(prev => [
+    tags.map((tag) => {
+      setTagOptions((prev) => [
         ...prev,
         { value: tag.id, label: tag.name, id: undefined },
       ]);
     });
   }, [tags]);
-
-
 
   return (
     <form onSubmit={submit}>
@@ -114,11 +127,10 @@ export default function CreatePostForm({ categories, themes, tags }) {
             <Label htmlFor="title">Title</Label>
             <Input
               id="title"
-              className={`${errors.title ? 'border-red-500' : ''}`}
+              className={`${errors.title ? "border-red-500" : ""}`}
               value={data.title}
-              onChange={e => setData('title', e.target.value)}
+              onChange={(e) => setData("title", e.target.value)}
               required
-              autoComplete="title"
             />
             {errors.title && (
               <InputError className="mt-2" message={errors.title} />
@@ -133,12 +145,12 @@ export default function CreatePostForm({ categories, themes, tags }) {
               initialValue=""
               id="content"
               onChange={(evt, editor) =>
-                setData('content', editor.getContent())
+                setData("content", editor.getContent())
               }
             />
 
             {errors.content && (
-              <InputError className={'mt-2'}>{errors.content}</InputError>
+              <InputError className={"mt-2"}>{errors.content}</InputError>
             )}
           </div>
           <div>
@@ -147,12 +159,12 @@ export default function CreatePostForm({ categories, themes, tags }) {
               id="excerpt"
               className="mt-1 block w-full"
               rows={8}
-              onChange={e => setData('excerpt', e.target.value)}
+              onChange={(e) => setData("excerpt", e.target.value)}
               required
             />
 
             {errors.excerpt && (
-              <InputError className={'mt-2'}>{errors.excerpt}</InputError>
+              <InputError className={"mt-2"}>{errors.excerpt}</InputError>
             )}
           </div>
         </div>
@@ -166,11 +178,11 @@ export default function CreatePostForm({ categories, themes, tags }) {
             <Select
               name="category_id"
               value={data.category_id}
-              onValueChange={value => {
-                setData('category_id', Number(value));
+              onValueChange={(value) => {
+                setData("category_id", Number(value));
 
                 setSelectedCategory(
-                  categories.filter(cat => cat.id === Number(value))[0]?.name
+                  categories.filter((cat) => cat.id === Number(value))[0]?.name,
                 );
               }}
             >
@@ -182,7 +194,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
                   <SelectLabel>Categories</SelectLabel>
                 </SelectGroup>
 
-                {categories.map(category => (
+                {categories.map((category) => (
                   <SelectItem key={category.id} value={category.id}>
                     {category.name}
                   </SelectItem>
@@ -191,7 +203,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
             </Select>
 
             {errors.category_id && (
-              <InputError className={'mt-2'}>{errors.category_id}</InputError>
+              <InputError className={"mt-2"}>{errors.category_id}</InputError>
             )}
           </fieldset>
           <div className="mx-2">
@@ -205,13 +217,13 @@ export default function CreatePostForm({ categories, themes, tags }) {
               placeholder="Select Date"
               id="published_at"
               name="published_at"
-              onChange={e => {
-                setData('published_at', e.target.value);
+              onChange={(e) => {
+                setData("published_at", e.target.value);
               }}
             />
 
             {errors.published_at && (
-              <InputError className={'mt-2'}>{errors.published_at}</InputError>
+              <InputError className={"mt-2"}>{errors.published_at}</InputError>
             )}
           </div>
           <fieldset required className="mx-2">
@@ -222,11 +234,11 @@ export default function CreatePostForm({ categories, themes, tags }) {
             <RadioGroup
               className="flex gap-4 flex-wrap mt-1"
               defaultValue={data.status}
-              onValueChange={value => {
-                setData('status', value);
+              onValueChange={(value) => {
+                setData("status", value);
               }}
             >
-              {['unpublished', 'draft', 'published'].map(item => {
+              {["unpublished", "draft", "published"].map((item) => {
                 return (
                   <div
                     key={item}
@@ -242,49 +254,23 @@ export default function CreatePostForm({ categories, themes, tags }) {
             </RadioGroup>
 
             {errors.status && (
-              <InputError className={'mt-2'}>{errors.status}</InputError>
+              <InputError className={"mt-2"}>{errors.status}</InputError>
             )}
           </fieldset>
           <div className="mx-2">
             <Label htmlFor="image">Featured Image</Label>
-            {imageUrl && (
-              <div className="w-[minmax(auto, 450px)] relative">
-                <AspectRatio ratio={16 / 9}>
-                  <img
-                    src={imageUrl}
-                    alt="post hero"
-                    className="rounded-md object-cover w-full h-full"
-                  />
-                </AspectRatio>
-                <XCircleIcon
-                  className="absolute top-0 right-0 cursor-pointer text-white"
-                  onClick={() => {
-                    setImageUrl(null);
-                    setData('image', null);
-                  }}
-                  title="Remove image"
-                  aria-hidden="true"
-                />
-              </div>
-            )}
-            <Input
-              type="file"
-              accept="image/.png,.jpg,.jpeg,.webp"
-              id="image"
-              className="mt-8"
-              placeholder="Select image"
-              name="image"
-              onChange={e => {
-                setData('image', e.target.files[0]);
-                setImageUrl(URL.createObjectURL(e.target.files[0]));
-              }}
+
+            <DropZone
+              htmlFor={"image"}
+              onValueChange={setDataImage}
+              defaultValue={image}
             />
           </div>
-          {selectedCategory === ('Covid' || 'Opinion in Lead' || 'Blog') && (
+          {selectedCategory === ("Covid" || "Opinion in Lead" || "Blog") && (
             <div className="mx-2">
               <TooltipProvider>
                 <Label htmlFor="author">
-                  {'Author/s '}
+                  {"Author/s "}
                   <Tooltip>
                     <TooltipTrigger>
                       <QuestionMarkCircledIcon className="w-3 h-3" />
@@ -303,15 +289,15 @@ export default function CreatePostForm({ categories, themes, tags }) {
                 className="block  mt-1"
                 placeholder="Add author full name"
                 autoComplete="author"
-                onChange={e => setData('author', e.target.value)}
+                onChange={(e) => setData("author", e.target.value)}
               />
 
               {errors.author && (
-                <InputError className={'mt-2'}>{errors.author}</InputError>
+                <InputError className={"mt-2"}>{errors.author}</InputError>
               )}
             </div>
           )}
-          {selectedCategory === 'Covid' && (
+          {selectedCategory === "Covid" && (
             <div className="mx-2">
               <Label htmlFor="genre">Genre</Label>
 
@@ -321,16 +307,16 @@ export default function CreatePostForm({ categories, themes, tags }) {
                 name="genre"
                 className="block mt-1"
                 autoComplete="genre"
-                onChange={e => setData('genre', e.target.value)}
+                onChange={(e) => setData("genre", e.target.value)}
               />
 
               {errors.genre && (
-                <InputError className={'mt-2'}>{errors.genre}</InputError>
+                <InputError className={"mt-2"}>{errors.genre}</InputError>
               )}
             </div>
           )}
           {selectedCategory ===
-            ('Covid' || 'Opinion in Lead' || 'Webinar Series') && (
+            ("Covid" || "Opinion in Lead" || "Webinar Series") && (
             <div className="mx-2">
               <Label htmlFor="link">External Link</Label>
 
@@ -340,11 +326,11 @@ export default function CreatePostForm({ categories, themes, tags }) {
                 name="link"
                 className="block  mt-1"
                 autoComplete="link"
-                onChange={e => setData('link', e.target.value)}
+                onChange={(e) => setData("link", e.target.value)}
               />
 
               {errors.author && (
-                <InputError className={'mt-2'}>{errors.author}</InputError>
+                <InputError className={"mt-2"}>{errors.author}</InputError>
               )}
             </div>
           )}
@@ -375,7 +361,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
                       name="meta_title"
                       className="mt-1"
                       placeholder="enter meta title"
-                      onChange={e => setData('meta_title', e.target.value)}
+                      onChange={(e) => setData("meta_title", e.target.value)}
                     />
 
                     <InputError className="mt-2">
@@ -391,8 +377,8 @@ export default function CreatePostForm({ categories, themes, tags }) {
                       className="block mt-1"
                       placeholder="enter meta_description"
                       rows={3}
-                      onChange={e =>
-                        setData('meta_description', e.target.value)
+                      onChange={(e) =>
+                        setData("meta_description", e.target.value)
                       }
                     />
                     <InputError className="mt-2">
@@ -430,8 +416,8 @@ export default function CreatePostForm({ categories, themes, tags }) {
                     <Select
                       name="theme_id"
                       value={data.theme_id}
-                      onValueChange={value => {
-                        setData('theme_id', Number(value));
+                      onValueChange={(value) => {
+                        setData("theme_id", Number(value));
                       }}
                     >
                       <SelectTrigger>
@@ -440,7 +426,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
                       <SelectContent>
                         <SelectGroup>
                           <SelectLabel>Themes</SelectLabel>
-                          {themes?.map(theme => (
+                          {themes?.map((theme) => (
                             <SelectItem key={theme.id} value={theme.id}>
                               {theme.title}
                             </SelectItem>
@@ -450,17 +436,17 @@ export default function CreatePostForm({ categories, themes, tags }) {
                     </Select>
 
                     {errors.theme_id && (
-                      <InputError className={'mt-2'}>
+                      <InputError className={"mt-2"}>
                         {errors.theme_id}
                       </InputError>
                     )}
                   </fieldset>
 
                   <div className="mx-2">
-                    <Label htmlFor="tags">{' Add Tags'}</Label>
+                    <Label htmlFor="tags">{" Add Tags"}</Label>
 
                     <MultiSelect
-                      name={'tags'}
+                      name={"tags"}
                       id="tags"
                       defaultValue={postTags}
                       options={tagOptions}
@@ -502,8 +488,8 @@ export default function CreatePostForm({ categories, themes, tags }) {
                       className=" mt-1"
                       id="file"
                       name="file"
-                      onChange={e => {
-                        setData('file', e.target.files[0]);
+                      onChange={(e) => {
+                        setData("file", e.target.files[0]);
                       }}
                     />
                   </div>
@@ -514,12 +500,12 @@ export default function CreatePostForm({ categories, themes, tags }) {
                     <Input
                       type="file"
                       multiple
-                      className=" mt-1"
+                      className="mt-1"
                       accept=".pdf,.doc,.docx,.ppt,.pptx"
                       id="files"
                       name="files"
-                      onChange={e => {
-                        setData('files', Array.from(e.target.files));
+                      onChange={(e) => {
+                        setData("files", Array.from(e.target.files));
                       }}
                     />
                   </div>

@@ -20,6 +20,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { useForm } from '@inertiajs/react';
 import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 export default function CreateResearchForm() {
   const { data, setData, post, processing, errors, reset } = useForm({
@@ -49,10 +50,10 @@ export default function CreateResearchForm() {
         for (const key in errors) {
           if (Object.hasOwnProperty.call(errors, key)) {
             const value = errors[key];
-            reset([key], { keepErrors: true });
+            reset(key);
             return toast({
-              title: `${key.toUpperCase()} field error`,
-              description: value,
+              title: 'Uh oh, Something went wrong',
+              description: `${key.toUpperCase()} field error` + `: ${value}`,
             });
           }
         }

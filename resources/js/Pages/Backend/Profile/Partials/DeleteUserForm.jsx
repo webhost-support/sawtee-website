@@ -4,12 +4,14 @@ import InputLabel from '@/components/Backend/InputLabel';
 import Modal from '@/components/Backend/Modal';
 import SecondaryButton from '@/components/Backend/SecondaryButton';
 import TextInput from '@/components/Backend/TextInput';
+import { useToast } from '@/components/ui/use-toast';
 import { useForm } from '@inertiajs/react';
 import { useRef, useState } from 'react';
 
 export default function DeleteUserForm({ className = '' }) {
   const [confirmingUserDeletion, setConfirmingUserDeletion] = useState(false);
   const passwordInput = useRef();
+  const { toast } = useToast();
 
   const {
     data,
@@ -31,7 +33,13 @@ export default function DeleteUserForm({ className = '' }) {
 
     destroy(route('profile.destroy'), {
       preserveScroll: true,
-      onSuccess: () => closeModal(),
+      onSuccess: () => {
+        toast({
+          title: 'Password updated.',
+          description: 'Your password has been updated.',
+        });
+        closeModal();
+      },
       onError: () => passwordInput.current.focus(),
       onFinish: () => reset(),
     });

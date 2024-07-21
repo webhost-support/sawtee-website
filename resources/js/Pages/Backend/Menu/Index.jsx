@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { Head, useForm } from '@inertiajs/react';
 import React, { useState } from 'react';
-import CreateMenuForm from './Partials/CreateMenu';
 import CreateMenu from './Partials/CreateMenu';
 export default function Index({ auth, menus }) {
   const { processing, get, delete: destroy } = useForm();
@@ -22,7 +21,7 @@ export default function Index({ auth, menus }) {
 
   const handleDelete = (e, id) => {
     e.preventDefault();
-    destroy(route('admin.manage.menus', id), {
+    destroy(route('admin.delete.menu', id), {
       preserveState: true,
       preserveScroll: true,
       onSuccess: () => {
@@ -76,16 +75,14 @@ export default function Index({ auth, menus }) {
   return (
     <AuthenticatedLayout user={auth.user}>
       <Head title="Menus" />
-      {/* {menus.length <= 0 && (
+      {menus.length <= 0 && (
         <Alert>
           <AlertTitle>No menu!</AlertTitle>
           <AlertDescription>Create a menu to add menu items. </AlertDescription>
         </Alert>
-      )} */}
+      )}
 
-      <Button onMouseEnter={() => setCreateMenu(!createMenu)}>
-        Add New Menu
-      </Button>
+      <Button onClick={() => setCreateMenu(!createMenu)}>Add New Menu</Button>
       {menus && <DataTable defaultColumns={defaultColumns} data={menus} />}
       {createMenu && <CreateMenu open={createMenu} setOpen={setCreateMenu} />}
     </AuthenticatedLayout>

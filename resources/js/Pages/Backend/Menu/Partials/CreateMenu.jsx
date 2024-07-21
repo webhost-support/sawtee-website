@@ -3,8 +3,10 @@ import PrimaryButton from '@/components/Backend/PrimaryButton';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
@@ -44,12 +46,13 @@ export default function CreateMenu({ open, setOpen }) {
     });
   };
   return (
-    <Dialog oepn={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Create Menu</DialogTitle>
           <DialogDescription>Add new menu.</DialogDescription>
         </DialogHeader>
+        <DialogClose />
         <form onSubmit={submit}>
           <div className="space-y-4">
             <div>
@@ -59,6 +62,7 @@ export default function CreateMenu({ open, setOpen }) {
                 id="title"
                 name="title"
                 placeholder="enter menu title"
+                autoFocus
                 onChange={e => setData('title', e.target.value)}
                 required
               />
@@ -83,14 +87,15 @@ export default function CreateMenu({ open, setOpen }) {
                 <InputError className="mt-2">{errors.location}</InputError>
               )}
             </div>
+            <DialogFooter>
+              <PrimaryButton type="submit" isLoading={processing}>
+                Add
+              </PrimaryButton>
+              <Button variant="outline" onClick={() => setOpen(!open)}>
+                Cancel
+              </Button>
+            </DialogFooter>
           </div>
-
-          <PrimaryButton type="submit" isLoading={processing}>
-            Add
-          </PrimaryButton>
-          <Button variant="outline" onClick={() => setOpen(!open)}>
-            Cancel
-          </Button>
         </form>
       </DialogContent>
     </Dialog>

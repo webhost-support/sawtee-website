@@ -112,7 +112,6 @@ export default function Index({ auth, categories }) {
   return (
     <AuthenticatedLayout user={auth.user}>
       <Head title="Categories" />
-      {/* <Link href={route('admin.categories.create')}> */}
       <PrimaryButton onClick={() => setCreateFormOpen(!createFormOpen)}>
         Create New Category
       </PrimaryButton>
@@ -129,7 +128,6 @@ export default function Index({ auth, categories }) {
           categories={categories}
         />
       )}
-      {/* </Link> */}
       {categories && (
         <DataTable
           defaultColumns={defaultColumns}

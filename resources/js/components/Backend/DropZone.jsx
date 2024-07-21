@@ -1,72 +1,42 @@
-import { AspectRatio } from '@/components/ui/aspect-ratio';
-import { cn } from '@/lib/utils';
-import { XIcon } from 'lucide-react';
-import React from 'react';
-import { Button } from '../ui/button';
-import { Input } from '../ui/input';
-import { Label } from '../ui/label';
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { cn } from "@/lib/utils";
+import { XIcon } from "lucide-react";
+import React from "react";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 
 export default function DropZone({
   htmlFor,
-  accept = 'image/.png,.jpg,.jpeg,.webp',
-  placeholder = 'Drag and drop an image here, or click to select an image',
-  files = [],
-  setFiles,
-  multiple = false,
+  accept = "image/.png,.jpg,.jpeg,.webp",
+  placeholder = "Drag and drop image here, or click to select an image",
+  defaultValue = null,
   onValueChange,
   ...props
 }) {
-  const handleDragOver = event => {
+  const handleDragOver = (event) => {
     event.stopPropagation();
     event.preventDefault();
   };
-  const handleDrop = event => {
+  const handleDrop = (event) => {
     event.stopPropagation();
     event.preventDefault();
-    const droppedFiles = Array.from(e.dataTransfer.files);
-    setFiles([...files, ...droppedFiles]);
-    !multiple &&
-      droppedFiles.length > 0 &&
-      setImage(URL.createObjectURL(Array.from(e.dataTransfer.files[0])));
-    onValueChange(droppedFiles);
+    onValueChange(Array.from(event.dataTransfer.files)[0]);
   };
-  const handleFileSelect = event => {
+  const handleFileSelect = (event) => {
     event.stopPropagation();
-    const newfiles = Array.from(event.target.files);
-    if (multiple) {
-      setFiles([...files, ...newfiles]);
-      onValueChange(newfiles);
-    } else {
-      setFiles(newfiles);
-      onValueChange(newfiles);
-    }
+    onValueChange(Array.from(event.target.files)[0]);
   };
-  const handleRemoveFile = file => {
-    if (multiple) {
-      const index = files.indexOf(file);
-      const updatedFiles = [...files];
-      updatedFiles.splice(index, 1);
-      setFiles(updatedFiles);
-      onValueChange(updatedFiles);
-    }
-    setFiles([]);
-    onValueChange([]);
-    setImage(null);
+  const handleRemoveFile = () => {
+    onValueChange(null);
   };
 
   return (
-    <div
-      className={cn(
-        'rounded-xl p-4 border-2 border-slate-700 border-dashed dark:border-gray-600 dark:hover:border-gray-500  ',
-        props.className
-      )}
-    >
-      {files.length <= 0 && (
+    <div className={cn("h-48", props.className)}>
+      {!defaultValue && (
         <Label
           htmlFor={htmlFor}
-          className={cn(
-            'relative flex flex-col items-center justify-center w-full h-full rounded-xl overflow-hidden cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-200'
-          )}
+          className=" rounded-xl border-2 border-slate-700 border-dashed dark:border-gray-600 dark:hover:border-gray-500 h-full relative flex flex-col items-center justify-center w-full overflow-hidden cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-200"
         >
           <div className="flex flex-col items-center justify-center pt-5 pb-6">
             <svg
@@ -94,7 +64,6 @@ export default function DropZone({
             id={htmlFor}
             name={htmlFor}
             type="file"
-            multiple={multiple}
             placeholder={placeholder}
             accept={accept}
             onDragOver={handleDragOver}
@@ -104,32 +73,21 @@ export default function DropZone({
           />
         </Label>
       )}
-      {files.length > 0 && (
-        <div className="mt-4 space-y-2">
-          {files?.map((file, index) => (
-            <div
-              key={file.name + Math.random().toString(16).slice(2)}
-              className="flex items-center justify-between bg-muted rounded-md p-2"
-            >
-              <div className="flex items-center px-4 gap-2">
-                <div>
-                  <p className="font-medium">{file.name}</p>
-                  {file && (
-                    <p className="text-sm text-muted-foreground">
-                      {(file.size / 1024).toFixed(2)} KB
-                    </p>
-                  )}
-                </div>
-              </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => handleRemoveFile(file)}
-              >
-                <XIcon className="w-4 h-4 text-muted-foreground" />
-              </Button>
-            </div>
-          ))}
+      {defaultValue && (
+        <div className="relative  flex flex-col items-center justify-center w-full h-full rounded-xl overflow-hidden cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-200 p-4 border-2 border-slate-700 border-dashed dark:border-gray-600 dark:hover:border-gray-500 ">
+          <AspectRatio ratio={16 / 9}>
+            <img
+              src={defaultValue}
+              alt="section hero"
+              className="rounded-md object-cover w-full h-full "
+            />
+          </AspectRatio>
+          <Button
+            className="absolute top-2 right-2 rounded-lg"
+            onClick={handleRemoveFile}
+          >
+            <XIcon className=" w-6 h-6 " />
+          </Button>
         </div>
       )}
     </div>

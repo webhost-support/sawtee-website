@@ -62,7 +62,6 @@ export default function CreateCategoryForm({ open, setOpen, categories }) {
           title: 'Category Created.',
           description: 'Category Created Successfully',
         });
-
         reset(
           'name',
           'slug',
@@ -80,9 +79,10 @@ export default function CreateCategoryForm({ open, setOpen, categories }) {
             const value = errors[key];
             reset(key);
             return toast({
-              title: `${key.toUpperCase()} field error`,
-              description: value,
-            });
+                title: "Uh oh, Something went wrong",
+                description: `${key.toUpperCase()} field error` + `: ${value}`,
+              });
+
           }
         }
       },

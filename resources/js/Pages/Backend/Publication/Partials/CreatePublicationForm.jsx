@@ -57,10 +57,10 @@ export default function CreatePublicationForm({ categories, tags }) {
         for (const key in errors) {
           if (Object.hasOwnProperty.call(errors, key)) {
             const value = errors[key];
-            reset([key], { keepErrors: true });
+            reset(key);
             return toast({
-              title: `${key.toUpperCase()} field error`,
-              description: value,
+              title: 'Uh oh, Something went wrong',
+              description: `${key.toUpperCase()} field error` + `: ${value}`,
             });
           }
         }
@@ -90,8 +90,8 @@ export default function CreatePublicationForm({ categories, tags }) {
               required
               id="title"
               name="title"
+              autoFoucs
               className="mt-1"
-              autoComplete="title"
               onChange={e => setData('title', e.target.value)}
             />
 
@@ -106,7 +106,6 @@ export default function CreatePublicationForm({ categories, tags }) {
               id="subtitle"
               name="subtitle"
               className="mt-1"
-              autoComplete="subtitle"
               onChange={e => setData('subtitle', e.target.value)}
             />
 

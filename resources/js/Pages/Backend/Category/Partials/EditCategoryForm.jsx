@@ -79,8 +79,8 @@ export default function EditCategoryForm({
               const value = errors[key];
               reset(key);
               return toast({
-                title: `${key.toUpperCase()} field error`,
-                description: value,
+                title: 'Uh oh, Something went wrong',
+                description: `${key.toUpperCase()} field error` + `: ${value}`,
               });
             }
           }
