@@ -1,9 +1,7 @@
 import {
-  Box,
-  Collapse,
+
   Flex,
-  IconButton,
-  Show,
+
   useDisclosure,
 } from '@chakra-ui/react';
 import React from 'react';
@@ -13,8 +11,8 @@ import { cn } from '@/lib/utils';
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
 import { Link } from '@inertiajs/react';
 import { SearchButton, SearchForm, SearchModal } from '../search';
-import Nav from './Nav';
-import DesktopNavigation from './desktopNav';
+import Nav from './DesktopNavigation';
+import DesktopNavigation from './DesktopNavigation';
 import ThemeToggle from './themeToggle';
 
 const SiteHeader = props => (
@@ -37,7 +35,7 @@ const SiteHeaderInner = ({ className, children }) => (
 
 const Logo = ({ text = 'SAWTEE', src }) => {
   if (src) {
-    return <img src={src} alt="Logo" width="120px" />;
+    return <img src={src} alt="Logo" className="w-[120px] h-full" />;
   }
     return (
       <P className={'font-bold font-sans uppercase text-center md:text-left'}>
@@ -69,14 +67,18 @@ const Header = ({
   children,
   ...props
 }) => {
-  const { isOpen, onToggle } = useDisclosure();
   const searchModal = useDisclosure();
   const [posts, setPosts] = React.useState(null);
   const [query, setQuery] = React.useState(null);
   return (
     <SiteHeader {...props}>
       <SiteHeaderInner>
-        <Flex flex={{ base: 1 }} align="center" justify={'space-between'}>
+        <div
+          className="flex justify-between w-full"
+          flex={{ base: 1 }}
+          align="center"
+          justify={'space-between'}
+        >
           {/* <Show below="lg">
             <Flex ml={{ base: -2 }} align="center">
               <IconButton
@@ -95,7 +97,7 @@ const Header = ({
           </Show> */}
           <SiteLogo src={'/assets/logo-sawtee.svg'} established={null} />
           {/* <DesktopNavigation menu={menu} /> */}
-          <Nav menu={menu} />
+          <DesktopNavigation menu={menu} />
           <div className="flex">
             <ThemeToggle />
             <SearchButton onClick={searchModal.onOpen} />
@@ -111,7 +113,7 @@ const Header = ({
           >
             <SearchForm setPosts={setPosts} setQuery={setQuery} />
           </SearchModal>
-        </Flex>
+        </div>
       </SiteHeaderInner>
       {/* <Collapse
         in={isOpen}

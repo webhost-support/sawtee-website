@@ -175,10 +175,10 @@ h1, h2, h3, h4, h5, h6 {
     text-decoration: underline;
 }
 
-.post-content a:hover, .page-content a:hover, .primary-link:hover, a:hover {
+.post-content a:hover, .page-content a:hover, .primary-link:hover{
     text-decoration: underline;
     text-underline-offset: 3px;
-    color: var(--chakra-colors-primary-500);
+    /* color: var(--chakra-colors-primary-500); */
 }
 
 .post-meta p {

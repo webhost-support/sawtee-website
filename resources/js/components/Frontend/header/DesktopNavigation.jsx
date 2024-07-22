@@ -11,7 +11,8 @@ import {
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
+import MegaMenu from './MegaMenu';
 
 const components = [
   {
@@ -51,27 +52,38 @@ const components = [
   },
 ];
 
-export default function Nav({ menu }) {
+export default function DesktopNavigation({ menu }) {
+  const { url, props } = usePage();
+  const { experts } = props;
   return (
     <NavigationMenu>
-      <NavigationMenuList>
+      <NavigationMenuList className="gap-2 ">
         {menu.map(menuItem => {
+          const active = menuItem.url === `${url}`;
+
+          const hasMegaMenu =
+            menuItem.name === 'Our Work' || menuItem.name === 'Know Us';
+
           return (
             <NavigationMenuItem key={menuItem.title}>
-              <Link href={menuItem.href}>
-                <NavigationMenuLink>
-                  {menuItem.name === 'Our Work' ||
-                  menuItem.name === 'Know Us' ||
-                  menuItem.children.length ? (
+              <Link href={menuItem.url}>
+                {menuItem.children.length ? (
+                  <NavigationMenuLink>
                     <NavigationMenuTrigger>
                       {menuItem.title}
                     </NavigationMenuTrigger>
-                  ) : (
-                    menuItem.title
-                  )}
-                </NavigationMenuLink>
+                  </NavigationMenuLink>
+                ) : (
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    {menuItem.title}
+                  </NavigationMenuLink>
+                )}
               </Link>
-              {menuItem.name === 'Our Work' || menuItem.name === 'Know Us' ? (
+              {hasMegaMenu ? (
+                <NavigationMenuContent className="left-0 ">
+                  <MegaMenu item={menuItem} experts={experts} />
+                </NavigationMenuContent>
+              ) : (
                 <NavigationMenuContent>
                   <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                     <li className="row-span-3">
@@ -106,7 +118,7 @@ export default function Nav({ menu }) {
                     </ListItem>
                   </ul>
                 </NavigationMenuContent>
-              ) : null}
+              )}
             </NavigationMenuItem>
           );
         })}
