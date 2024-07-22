@@ -1,98 +1,74 @@
-import { Content } from '@/Components/Frontend/index';
-import { slugify } from '@/Utils/helpers';
 import {
   Accordion,
-  AccordionButton,
-  AccordionIcon,
+  AccordionContent,
   AccordionItem,
-  AccordionPanel,
-  Box,
-  Divider,
-  Heading,
-  Link,
-  ListItem,
-  OrderedList,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-  useColorModeValue,
-} from '@chakra-ui/react';
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { Card, CardContent } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { slugify } from '@/lib/helpers';
+import { Divider, useColorModeValue } from '@chakra-ui/react';
 
 export default function About({ sections, content, pageData }) {
   return (
-    <Content
-      className="page-content"
-      px={{ base: '32px', md: '0' }}
-      mx="auto"
-      py={'80px'}
-      maxW={'2xl'}
-    >
-      {sections &&
-        sections.map(section => {
-          if (section.parent_id === null) {
-            return (
-              <PageSection
-                key={section.title}
-                section={section}
-                sections={sections}
-              />
-            );
-          }
-        })}
+    <div className="page-content px-[32px] md:px-0 mx-auto py-[80px] max-w-2xl leading-8 text-lg ">
+      {sections?.map(section => {
+        if (section.parent_id === null) {
+          return (
+            <PageSection
+              key={section.title}
+              section={section}
+              sections={sections}
+            />
+          );
+        }
+      })}
       {pageData && <Members memberInstitutions={pageData} />}
-    </Content>
+    </div>
   );
 }
 
 export const Members = ({ memberInstitutions }) => {
   return (
-    <Box>
-      <Heading as="h3" fontSize={['xl', '2xl', '3xl']} py={'4'} mb="4">
+    <div>
+      <h3 className="text-lg md:text-xl lg:text-2xl font-bold  font-sans py-4 mb-4">
         {'Member Institutions'}
-      </Heading>
+      </h3>
 
-      <Accordion allowToggle>
-        {memberInstitutions?.map(({ country, institutes, id }) => {
-          return (
-            <AccordionItem key={id} border="none">
-              <AccordionButton
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  marginBlock: '0',
-                }}
-                _expanded={{
-                  bg: useColorModeValue('blackAlpha.200', 'blackAlpha.400'),
-                }}
-              >
-                {country}
-                <AccordionIcon />
-              </AccordionButton>
-              <AccordionPanel px={['5', '10']}>
-                <OrderedList spacing="3">
+      {memberInstitutions?.map(({ country, institutes, id }) => {
+        return (
+          <Accordion key={id} collapsible className="w-full">
+            <AccordionItem border="none" value={country}>
+              <AccordionTrigger>
+                <p className="font-bold font-sans text-lg md:text-xl">
+                  {country}
+                </p>
+              </AccordionTrigger>
+              <AccordionContent className="ml-6">
+                <ol className="space-y-2 text-muted-foreground list-decimal">
                   {institutes.map(({ member_name, member_website_link }) => {
                     return (
-                      <ListItem key={member_name} style={{ margin: '0' }}>
-                        <Link
+                      <li key={member_name}>
+                        <a
                           target="_blank"
                           title={member_name}
-                          aria-label={member_name}
+                          ariaLabel={member_name}
                           href={member_website_link}
+                          rel="noreferrer"
                         >
                           {member_name}
-                        </Link>
-                      </ListItem>
+                        </a>
+                      </li>
                     );
                   })}
-                </OrderedList>
-              </AccordionPanel>
+                </ol>
+              </AccordionContent>
             </AccordionItem>
-          );
-        })}
-      </Accordion>
-    </Box>
+          </Accordion>
+        );
+      })}
+    </div>
   );
 };
 
@@ -108,8 +84,9 @@ export const PageSection = ({ section, sections }) => {
 
   const childSections = sections.filter(sec => sec.parent_id === section.id);
   return (
-    <Box id={sectionID}>
-      <Heading
+    <div id={sectionID}>
+      <h2
+        className="font-bold text-lg md:text-xl lg:text-2xl py-4 mb-4 font-sans"
         as="h2"
         fontSize={['lg', 'xl', '2xl']}
         py={'4'}
@@ -117,95 +94,70 @@ export const PageSection = ({ section, sections }) => {
         fontFamily="heading"
       >
         {title}
-      </Heading>
+      </h2>
 
       {isTabs && childSections.length > 0 && (
-        <Box px="6" py="4">
-          <Tabs variant="enclosed" isFitted>
-            <TabList>
+        <div className="px-6 py-4">
+          <Tabs defaultValue={childSections[0].title} orientation="vertical">
+            <TabsList className="grid w-full grid-cols-3">
               {childSections.map(({ title }) => (
-                <Tab
-                  as="h3"
-                  key={title}
-                  style={{ marginBlock: '0' }}
-                  _selected={{
-                    borderColor: useColorModeValue('gray.700', 'gray.300'),
-                    borderBottomColor: 'transparent',
-                  }}
-                >
+                <TabsTrigger key={title} value={title}>
                   {title}
-                </Tab>
+                </TabsTrigger>
               ))}
-            </TabList>
-            <TabPanels
-              border="1px solid"
-              borderColor={useColorModeValue('gray.700', 'gray.300')}
-            >
-              {childSections.map(({ description, title }) => (
-                <TabPanel
-                  key={title}
-                  bg={tabColor}
-                  p={6}
-                  transition="all 0.4s ease-in"
-                >
-                  <Box
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    dangerouslySetInnerHTML={{
-                      __html: description,
-                    }}
-                  />
-                </TabPanel>
-              ))}
-            </TabPanels>
+            </TabsList>
+            {childSections.map(({ description, title }) => (
+              <TabsContent key={title} value={title}>
+                <Card>
+                  <CardContent className="space-y-2 leading-8 p-6 text-muted-foreground">
+                    {description && (
+                      <p
+                        className="px-4 list-decimal"
+                        dangerouslySetInnerHTML={{ __html: description }}
+                      />
+                    )}
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            ))}
           </Tabs>
-        </Box>
+        </div>
       )}
 
-      {isAccordian && (
-        <Accordion allowToggle>
-          {childSections.map(({ title, description }) => {
-            return (
-              <AccordionItem key={title} border="none">
-                <AccordionButton
-                  size="md"
-                  _expanded={{
-                    bg: useColorModeValue('blackAlpha.200', 'blackAlpha.400'),
-                  }}
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    marginBlock: '0',
-                  }}
-                  w="full"
-                >
-                  {title}
-                  <AccordionIcon />
-                </AccordionButton>
-                <AccordionPanel px={['5', '10']}>
-                  <Box
+      {isAccordian &&
+        childSections?.map(({ title, description }) => {
+          return (
+            <Accordion key={title} collapsible className="w-full">
+              <AccordionItem value={title}>
+                <AccordionTrigger>
+                  <p className="font-bold font-sans text-lg md:text-xl">
+                    {title}
+                  </p>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div
+                    className="leading-8 p-6 text-lg text-muted-foreground"
+                    // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
                     dangerouslySetInnerHTML={{
                       __html: description,
                     }}
                   />
-                </AccordionPanel>
+                </AccordionContent>
               </AccordionItem>
-            );
-          })}
-        </Accordion>
-      )}
+            </Accordion>
+          );
+        })}
 
       {isDefault && (
-        <Box>
-          <Box
-            dangerouslySetInnerHTML={{
-              __html: description,
-            }}
-          />
-        </Box>
+        <div
+          className="text-muted-foreground"
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+          dangerouslySetInnerHTML={{
+            __html: description,
+          }}
+        />
       )}
-      <Divider my="60px" />
-    </Box>
+      <Separator className="my-20" />
+    </div>
   );
 };

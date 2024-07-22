@@ -1,4 +1,4 @@
-import WebsiteHead from '@/Components/Frontend/Head';
+import WebsiteHead from '@/components/Frontend/Head';
 import MainLayout from './Layout/MainLayout';
 import { PageLayout } from './Layout/PageLayout';
 import About from './Pages/About';

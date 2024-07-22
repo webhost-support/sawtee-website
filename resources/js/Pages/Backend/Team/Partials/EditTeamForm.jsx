@@ -1,22 +1,11 @@
-import FileUpload, { PreviewImage } from '@/Components/Backend/FileUpload';
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import {
-  Box,
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  HStack,
-  Input,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  Textarea,
-  VStack,
-  useToast,
-} from '@chakra-ui/react';
+import DropZone from '@/components/Backend/DropZone';
+import InputError from '@/components/Backend/InputError';
+import PrimaryButton from '@/components/Backend/PrimaryButton';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/components/ui/use-toast';
+
 import { useForm } from '@inertiajs/react';
 import React from 'react';
 
@@ -30,10 +19,24 @@ export default function EditTeamForm({ team }) {
     image: '',
   });
 
-  const toast = useToast();
+  const { toast } = useToast();
   const [image, setImage] = React.useState(
     team.media[0] ? team.media[0].original_url : null
   );
+
+  function setDataImage(image) {
+    if (image) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        setImage(e.target.result);
+      };
+      reader.readAsDataURL(image);
+      setData('image', image);
+    } else {
+      setImage(null);
+      setData('image', null);
+    }
+  }
 
   const submit = e => {
     e.preventDefault();
@@ -47,12 +50,8 @@ export default function EditTeamForm({ team }) {
         preserveScroll: true,
         onSuccess: () =>
           toast({
-            position: 'top-right',
             title: 'Member edited.',
             description: 'Member edited Successfully',
-            status: 'success',
-            duration: 6000,
-            isClosable: true,
           }),
         onError: errors => {
           if (errors.name) {
@@ -64,15 +63,10 @@ export default function EditTeamForm({ team }) {
   };
 
   return (
-    <VStack as="form" onSubmit={submit} gap="10" alignItems={'start'}>
-      <HStack
-        w="full"
-        gap={8}
-        justifyContent="space-evenly"
-        alignItems="center"
-      >
-        <FormControl isRequired isInvalid={errors.name}>
-          <FormLabel htmlFor="name">Name</FormLabel>
+    <form onSubmit={submit}>
+      <div className="grid grid-cols-4 gap-4">
+        <div className="col-span-3">
+          <Label htmlFor="name">Name</Label>
 
           <Input
             id="name"
@@ -83,11 +77,11 @@ export default function EditTeamForm({ team }) {
             required
           />
 
-          <FormErrorMessage message={errors.name} className="mt-2" />
-        </FormControl>
+          {errors.name && <InputError mt={2}>{errors.name}</InputError>}
+        </div>
 
-        <FormControl isInvalid={errors.email}>
-          <FormLabel htmlFor="email">email</FormLabel>
+        <div className="col-span-1">
+          <Label htmlFor="email">email</Label>
 
           <Input
             type="email"
@@ -98,11 +92,11 @@ export default function EditTeamForm({ team }) {
             onChange={e => setData('email', e.target.value)}
           />
 
-          <FormErrorMessage message={errors.email} mt={2} />
-        </FormControl>
+          {errors.email && <InputError>{errors.email}</InputError>}
+        </div>
 
-        <FormControl isRequired as="fieldset">
-          <FormLabel htmlFor="designation">Designation</FormLabel>
+        <div className="col-span-2">
+          <Label htmlFor="designation">Designation</Label>
           <Input
             id="designation"
             name="designation"
@@ -110,97 +104,50 @@ export default function EditTeamForm({ team }) {
             placeholder="enter member designation"
             onChange={e => setData('designation', e.target.value)}
           />
-          <FormErrorMessage mt={2} message={errors.designation} />
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel htmlFor="order">Order</FormLabel>
-          <NumberInput
+          {errors.designation && (
+            <InputError mt={2}>{errors.designation}</InputError>
+          )}
+        </div>
+        <div className="col-span-1">
+          <Label htmlFor="order">Order</Label>
+          <Input
+            type="number"
             id="order"
             name="order"
             value={data.order}
-            onChange={e => setData('order', Number(e))}
-          >
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-          <FormErrorMessage message={errors.order} />
-        </FormControl>
-      </HStack>
-
-      <HStack
-        w="full"
-        gap={8}
-        justifyContent="space-between"
-        alignItems="center"
-      >
-        <FormControl>
-          <FormLabel htmlFor="bio">Bio</FormLabel>
+            defaultValue={data.order}
+            onChange={e => setData('order', e.target.value)}
+          />
+          {errors.order && <InputError mt={2}>{errors.order}</InputError>}
+        </div>
+        <div className="col-span-2">
+          <Label htmlFor="bio">Bio</Label>
           <Textarea
             id="bio"
             name="bio"
             placeholder="enter member bio"
             value={data.bio}
-            rows={10}
-            resize={'vertical'}
+            rows={8}
             onChange={e => setData('bio', e.target.value)}
           />
-          <FormErrorMessage message={errors.bio} mt={2} />
-        </FormControl>
+          {errors.bio && <InputError mt={2}>{errors.bio}</InputError>}
+        </div>
 
-        <FormControl>
-          <FormLabel htmlFor="image">Image</FormLabel>
+        <div className="col-span-2">
+          <DropZone
+            id="image"
+            name="image"
+            accept="image/.png,.jpg,.jpeg,.webp"
+            defaultValue={image}
+            onValueChange={setDataImage}
+          />
 
-          {image && (
-            <>
-              <Box w="48">
-                <PreviewImage src={image} aspectRatio={3 / 4} />
-              </Box>
-              <Button
-                mt={4}
-                size={'sm'}
-                colorScheme="red"
-                onClick={() => {
-                  setImage(null);
-                }}
-              >
-                Remove/Change Image
-              </Button>
-            </>
-          )}
-
-          {!image && (
-            <FileUpload accept="image/.png,.jpg,.jpeg,.webp">
-              <Input
-                type="file"
-                height="100%"
-                width="100%"
-                position="absolute"
-                top="0"
-                left="0"
-                opacity="0"
-                aria-hidden="true"
-                accept="image/.png,.jpg,.jpeg,.webp"
-                id="image"
-                name="image"
-                size="md"
-                onChange={e => {
-                  setData('image', e.target.files[0]);
-                  setImage(URL.createObjectURL(e.target.files[0]));
-                }}
-              />
-            </FileUpload>
-          )}
-          {errors.image && (
-            <FormErrorMessage mt={2}>{errors.image}</FormErrorMessage>
-          )}
-        </FormControl>
-      </HStack>
-      <PrimaryButton type="submit" isLoading={processing} minW="64">
-        Save
-      </PrimaryButton>
-    </VStack>
+          {errors.image && <InputError mt={2}>{errors.image}</InputError>}
+        </div>
+        <PrimaryButton type="submit" isLoading={processing}>
+          Save
+        </PrimaryButton>
+      </div>
+    </form>
   );
 }

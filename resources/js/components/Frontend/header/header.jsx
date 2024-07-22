@@ -3,87 +3,61 @@ import {
   Collapse,
   Flex,
   IconButton,
-  Image,
   Show,
-  Text,
-  useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react';
 import React from 'react';
 import MobileMenu from '../mobileMenu';
 
+import { cn } from '@/lib/utils';
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
 import { Link } from '@inertiajs/react';
 import { SearchButton, SearchForm, SearchModal } from '../search';
+import Nav from './Nav';
 import DesktopNavigation from './desktopNav';
 import ThemeToggle from './themeToggle';
 
 const SiteHeader = props => (
-  <Box
-    as="header"
-    transition="transform ease .25s"
-    width="100%"
-    pos="sticky"
-    top="0"
-    left="0"
-    bg={useColorModeValue('var(--color-bg)', 'var(--color-darker)')}
-    zIndex="90"
-    boxShadow="md"
-    justifyContent="space-between"
+  <header
+    className="flex justify-between items-center bg-[var(--color-bg)] dark:bg-[var(--color-darker)] sticky top-0 left-0 shadow-md z-50 transition-transform ease 0.25s"
     {...props}
   />
 );
 
-const SiteHeaderInner = props => (
-  <Flex
-    width={{ base: 'auto', sm: '92%' }}
-    mx="auto"
-    minH={'5rem'}
-    py={{ base: 2 }}
-    px={{ base: 4 }}
-    borderBottom={1}
-    borderStyle={'solid'}
-    align="center"
-    justify={'space-between'}
-    borderColor={useColorModeValue('gray.200', 'gray.900')}
-    {...props}
-  />
+const SiteHeaderInner = ({ className, children }) => (
+  <div
+    className={cn(
+      'flex justify-between items-center py-2 px-4 min-h-[5rem] w-full mx-8',
+      className
+    )}
+  >
+    {children}
+  </div>
 );
 
 const Logo = ({ text = 'SAWTEE', src }) => {
   if (src) {
-    return <Image src={src} alt="Logo Image" w="120px" />;
-  } else {
-    return (
-      <Text
-        textAlign={useBreakpointValue({
-          base: 'center',
-          md: 'left',
-        })}
-        fontFamily={'heading'}
-        textTransform="uppercase"
-        color={useColorModeValue('primary.700', 'primary.300')}
-      >
-        {text}
-      </Text>
-    );
+    return <img src={src} alt="Logo" width="120px" />;
   }
+    return (
+      <P className={'font-bold font-sans uppercase text-center md:text-left'}>
+        {text}
+      </P>
+    );
 };
 
 const SiteLogo = ({ src, established }) => {
   // check if the logo is a url,
   // we assume, if it's a url, it points to an image, else it's a text
   return (
-    <Box display="block" flexShrink="0" textAlign="center">
+    <div className="block shrink-0 text-center">
       <Link href="/" aria-label="logo">
         <Logo src={src} />
       </Link>
       {established && (
-        <Text fontSize={'.65rem'} fontWeight={'semibold'}>
-          Estd: {established}
-        </Text>
+        <p className="text-xs font-semibold">Estd: {established}</p>
       )}
-    </Box>
+    </div>
   );
 };
 
@@ -103,7 +77,7 @@ const Header = ({
     <SiteHeader {...props}>
       <SiteHeaderInner>
         <Flex flex={{ base: 1 }} align="center" justify={'space-between'}>
-          <Show below="lg">
+          {/* <Show below="lg">
             <Flex ml={{ base: -2 }} align="center">
               <IconButton
                 onClick={onToggle}
@@ -118,19 +92,14 @@ const Header = ({
                 aria-label={'Toggle Navigation'}
               />
             </Flex>
-          </Show>
-          <Flex justify="center">
-            <SiteLogo src={'/assets/logo-sawtee.svg'} established={null} />
-          </Flex>
-          <Show above="lg">
-            <Flex justify="center">
-              <DesktopNavigation menu={menu} />
-            </Flex>
-          </Show>
-          <Box as="div" display={'flex'}>
+          </Show> */}
+          <SiteLogo src={'/assets/logo-sawtee.svg'} established={null} />
+          {/* <DesktopNavigation menu={menu} /> */}
+          <Nav menu={menu} />
+          <div className="flex">
             <ThemeToggle />
             <SearchButton onClick={searchModal.onOpen} />
-          </Box>
+          </div>
           <SearchModal
             isOpen={searchModal.isOpen}
             onClose={() => {
@@ -144,7 +113,7 @@ const Header = ({
           </SearchModal>
         </Flex>
       </SiteHeaderInner>
-      <Collapse
+      {/* <Collapse
         in={isOpen}
         animateOpacity
         transition={{ enter: { duration: 0.5 } }}
@@ -155,7 +124,7 @@ const Header = ({
           socialLinks={socialLinks}
           showSocialLinks={true}
         />
-      </Collapse>
+      </Collapse> */}
     </SiteHeader>
   );
 };

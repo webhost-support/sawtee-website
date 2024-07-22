@@ -18,7 +18,7 @@ class SubscriptionController extends Controller
 
     public function index()
     {
-        $subscribers = Subscriber::all();
+        $subscribers = Subscriber::orderBy('id', 'desc')->get();
         return Inertia::render("Backend/Subscriber/Index", ['subscribers' => $subscribers]);
     }
     public function store(SubscribeRequest $request)

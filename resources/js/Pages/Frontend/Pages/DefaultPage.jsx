@@ -1,4 +1,4 @@
-import { Content } from '@/Components/Frontend/index';
+import { Content } from '@/components/Frontend/index';
 import { Box, Heading } from '@chakra-ui/react';
 
 const DefaultPage = ({ sections, content, ...rest }) => {
@@ -24,24 +24,23 @@ const DefaultPage = ({ sections, content, ...rest }) => {
         </Box>
       )}
 
-      {sections &&
-        sections.map(({ title, description }) => {
-          return (
+      {sections?.map(({ title, description }) => {
+        return (
+          <Box>
+            <Heading as="h3" fontSize={['lg', 'xl', '2xl']} py={'4'} mb="4">
+              {title}
+            </Heading>
             <Box>
-              <Heading as="h3" fontSize={['lg', 'xl', '2xl']} py={'4'} mb="4">
-                {title}
-              </Heading>
-              <Box>
-                <Box
-                  as="p"
-                  dangerouslySetInnerHTML={{
-                    __html: description,
-                  }}
-                />
-              </Box>
+              <Box
+                as="p"
+                dangerouslySetInnerHTML={{
+                  __html: description,
+                }}
+              />
             </Box>
-          );
-        })}
+          </Box>
+        );
+      })}
     </Content>
   );
 };

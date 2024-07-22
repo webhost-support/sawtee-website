@@ -33,10 +33,10 @@ export default function Authenticated({ user, children }) {
       <div
         className={cn(
           mobileWidth || isCollapsed ? 'ml-20' : 'ml-64',
-          'relative transition-all duration-200'
+          'relative transition-all duration-200  border-l-2 shadow-xl border-slate-700'
         )}
       >
-        <div className="w-full px-6 py-12 min-h-screen  mx-auto rounded-xl">
+        <div className="w-full px-6 py-12 min-h-screen mx-auto rounded-xl">
           {children}
         </div>
         <Footer />

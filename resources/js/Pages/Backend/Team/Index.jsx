@@ -1,18 +1,15 @@
-import { DataTable } from '@/Components/Backend/DataTable';
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import {
-  TableDeleteAction,
-  TableEditAction,
-} from '@/Components/Backend/TableActions';
-import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
-import { Box, HStack, Image, Text, useToast } from '@chakra-ui/react';
+import PrimaryButton from '@/components/Backend/PrimaryButton';
+
+import DataTableActions from '@/components/Backend/DataTableActions';
+import { DataTableColumnHeader } from '@/components/Backend/DatatableColumnHelper';
+import { DataTable } from '@/components/Backend/FrontDataTable';
+import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
+import { useToast } from '@/components/ui/use-toast';
 import { Head, Link, useForm } from '@inertiajs/react';
-import { createColumnHelper } from '@tanstack/react-table';
 import React from 'react';
 
 export default function Index({ auth, teams, images }) {
-  const toast = useToast();
-  const columnHelper = createColumnHelper();
+  const { toast } = useToast();
   const { processing, delete: destroy, get } = useForm();
 
   const handleEdit = (e, id) => {
@@ -26,72 +23,73 @@ export default function Index({ auth, teams, images }) {
       preserveScroll: true,
       onSuccess: () =>
         toast({
-          position: 'top-right',
           title: 'Team member deleted.',
           description: 'Team member deleted Successfully',
-          status: 'error',
-          duration: 6000,
-          isClosable: true,
         }),
       onError: () => console.log('Error while deleting'),
     });
   };
 
-  const defaultColumns = React.useMemo(
-    () => [
-      columnHelper.accessor('name', {
-        cell: info => info.getValue(),
-        header: 'Name',
-      }),
-      columnHelper.accessor('email', {
-        cell: info => info.getValue(),
-        header: 'Email',
-      }),
-      columnHelper.accessor('designation', {
-        cell: info => info.getValue(),
-        header: 'Designation',
-      }),
-      columnHelper.display({
-        id: 'image',
-        cell: info => (
-          <Image
-            // width={"50px"}
-            aspectRatio={3 / 4}
-            src={images[info.row.original.id]}
+  const defaultColumns = [
+    {
+      accessorKey: 'id',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="ID" />
+      ),
+    },
+    {
+      accessorKey: 'name',
+      header: ({ column }) => {
+        return <DataTableColumnHeader column={column} title="Name" />;
+      },
+    },
+    {
+      accessorKey: 'email',
+      header: ({ column }) => {
+        return <DataTableColumnHeader column={column} title="Email" />;
+      },
+    },
+    {
+      accessorKey: 'designation',
+      header: ({ column }) => {
+        return <DataTableColumnHeader column={column} title="Designation" />;
+      },
+    },
+    {
+      accessorKey: 'media',
+      header: ({ column }) => {
+        return <DataTableColumnHeader column={column} title="Image" />;
+      },
+      cell: ({ row }) => {
+        return (
+          <img
+            src={row.original.media[0]?.preview_url}
+            alt={row.original.name}
+            className="w-8 h-8 rounded-full"
           />
-        ),
-        header: 'Image',
-      }),
-      columnHelper.accessor('id', {
-        cell: info => {
-          return (
-            <HStack spacing={4}>
-              <TableEditAction
-                onClick={e => handleEdit(e, info.getValue())}
-                isDisabled={processing}
-              />
-              <TableDeleteAction
-                onClick={e => handleDelete(e, info.getValue())}
-                isDisabled={processing}
-              />
-            </HStack>
-          );
-        },
-        header: 'Actions',
-      }),
-    ],
-    []
-  );
+        );
+      },
+    },
+    {
+      accessorKey: 'id',
+      header: 'Actions',
+      cell: ({ row }) => (
+        <DataTableActions
+          id={row.original.id}
+          handleEdit={handleEdit}
+          handleDelete={handleDelete}
+        />
+      ),
+    },
+  ];
 
   return (
     <AuthenticatedLayout user={auth.user}>
       <Head title="Team Members" />
 
-      <Box mb={4}>
-        <Link href={route('admin.teams.create')}>
-          <PrimaryButton>Create New Member</PrimaryButton>
-        </Link>
-      </Box>
+      <Link href={route('admin.teams.create')}>
+        <PrimaryButton>Add New Member</PrimaryButton>
+      </Link>
       {teams && <DataTable defaultColumns={defaultColumns} data={teams} />}
     </AuthenticatedLayout>
   );

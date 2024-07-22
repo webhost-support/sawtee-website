@@ -1,4 +1,4 @@
-import Section from '@/Components/Frontend/styles/section';
+import Section from '@/components/Frontend/styles/section';
 
 const ReformMonitor = ({ content, ...rest }) => {
   return (
@@ -15,7 +15,7 @@ const ReformMonitor = ({ content, ...rest }) => {
         width="100%"
         height="1200"
         allowFullScreen="allowfullscreen"
-      ></iframe>
+      />
     </Section>
   );
 };

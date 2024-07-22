@@ -7,10 +7,10 @@ import {
   PublicationsSection,
   Title,
   TwoColumnImageSection,
-} from '@/Components/Frontend';
-import WebsiteHead from '@/Components/Frontend/Head';
-import VideoCarousel from '@/Components/Frontend/VideoCarousel';
-import { Newsletter } from '@/Components/Frontend/newsletter';
+} from '@/components/Frontend';
+import WebsiteHead from '@/components/Frontend/Head';
+import VideoCarousel from '@/components/Frontend/VideoCarousel';
+import { Newsletter } from '@/components/Frontend/newsletter';
 import { Box, Grid, GridItem, useColorModeValue } from '@chakra-ui/react';
 import MainLayout from '../Layout/MainLayout';
 

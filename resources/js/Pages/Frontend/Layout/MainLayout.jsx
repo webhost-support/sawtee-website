@@ -1,7 +1,7 @@
-import Footer from '@/Components/Frontend/footer';
-import Header from '@/Components/Frontend/header/header';
-import SkipLink from '@/Components/Frontend/styles/skip-link';
-import { FooterMenu, mobileMenu, socialMenu } from '@/Utils/data';
+import Footer from '@/components/Frontend/footer';
+import Header from '@/components/Frontend/header/header';
+import SkipLink from '@/components/Frontend/styles/skip-link';
+import { FooterMenu, mobileMenu, socialMenu } from '@/lib/data';
 import { ArrowUpIcon } from '@chakra-ui/icons';
 import { Box, Button, Icon, ScaleFade, SlideFade } from '@chakra-ui/react';
 import { usePage } from '@inertiajs/react';
@@ -29,7 +29,6 @@ export default function MainLayout({ children, ...rest }) {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
 
   return (
     <>

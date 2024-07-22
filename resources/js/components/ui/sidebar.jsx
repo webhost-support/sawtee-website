@@ -13,10 +13,10 @@ export default function Sidebar({ isCollapsed, menu }) {
       <aside
         className={cn(
           isCollapsed ? 'w-20' : 'w-64',
-          'ease-nav-brand fixed z-40 min-h-screen top-20 pt-4 flex flex-wrap items-start justify-center border-r-2 border-slate-700 bg-white antialiased transition-transform duration-200 shadow-xl left-0 translate-x-0'
+          ' absolute top-20 z-40 ease-nav-brand  bg-white   antialiased transition-transform duration-200 left-0 translate-x-0'
         )}
       >
-        <ScrollArea className="h-screen w-full px-4">
+        <ScrollArea className="w-full p-4 h-screen ">
           <ul className="flex flex-col gap-1 pl-0 mb-0">
             {menu?.map(menuItem => {
               const routeLink = route(menuItem.route);

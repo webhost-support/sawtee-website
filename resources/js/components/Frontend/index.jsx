@@ -554,13 +554,7 @@ export const Content = styled(Section)`
   word-break: break-word;
   white-space: collapse balance;
 
-  line-height: var(--chakra-lineHeights-taller);
-
-  p {
-    padding-block: 10px;
-    font-size: 16px;
-    line-height: var(--chakra-lineHeights-tall);
-  }
+//   line-height: var(--chakra-lineHeights-taller);
 
   * {
     max-width: 100%;
@@ -568,6 +562,7 @@ export const Content = styled(Section)`
 
   ul,
   ol {
+  list-style: inherit;
     padding: 0;
     margin-left: 1rem;
   }

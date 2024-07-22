@@ -112,7 +112,7 @@ export default function MenuItemsList({
                     <MenuItemsList
                       firstLevelMenuItems={item.children}
                       menuItems={menuItems}
-                      className="px-4 mt-4 border-l-2 border-accent-foreground "
+                      className="ml-1 px-4 mt-4 border-l border-text-foreground "
                     />
                   </AccordionContent>
                 )}

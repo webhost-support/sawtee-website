@@ -1,4 +1,4 @@
-import InertiaChakraLinkOverlay from '@/Components/Frontend/styles/inertia-chakra-link-overlay';
+import InertiaChakraLinkOverlay from '@/components/Frontend/styles/inertia-chakra-link-overlay';
 import {
   Box,
   Collapse,

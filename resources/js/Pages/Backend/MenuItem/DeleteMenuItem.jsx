@@ -43,7 +43,6 @@ export default function DeleteMenuItem({ isOpen, onClose, item, setMenuItem }) {
           >
             <p class="font-bold">Be Warned</p>
             <p>
-              {' '}
               {item.children.length > 0
                 ? 'This menu item has sub items. All sub items will also be deleted. Are you sure you want to delete'
                 : 'Are you sure you want to delete this menu item ?'}
@@ -51,12 +50,7 @@ export default function DeleteMenuItem({ isOpen, onClose, item, setMenuItem }) {
           </div>
 
           <DialogFooter>
-            <PrimaryButton
-              colorScheme="red"
-              type="submit"
-              isLoading={processing}
-              mr={3}
-            >
+            <PrimaryButton type="submit" isLoading={processing}>
               Delete
             </PrimaryButton>
             <Button

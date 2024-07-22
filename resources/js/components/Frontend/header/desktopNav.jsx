@@ -1,4 +1,4 @@
-import { aboutMenuData } from '@/Utils/data';
+import { aboutMenuData } from '@/lib/data';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import {
     Avatar,

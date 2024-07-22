@@ -64,6 +64,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+        serif: ['Inter', ...defaultTheme.fontFamily.serif],
       },
       keyframes: {
         'accordion-down': {

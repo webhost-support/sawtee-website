@@ -1,4 +1,4 @@
-import Section from '@/Components/Frontend/styles/section';
+import Section from '@/components/Frontend/styles/section';
 import {
   AspectRatio,
   Box,
@@ -14,8 +14,8 @@ import {
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 
-import { SocialMenu } from '@/Components/Frontend/header/social-menu';
-import { FaxIcon, LocationPin, PhoneIcon } from '@/Components/Frontend/icons';
+import { SocialMenu } from '@/components/Frontend/header/social-menu';
+import { FaxIcon, LocationPin, PhoneIcon } from '@/components/Frontend/icons';
 import { EmailIcon } from '@chakra-ui/icons';
 import { Fragment } from 'react';
 

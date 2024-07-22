@@ -45,7 +45,7 @@ const CardsCarousel = ({ slides, navigation }) => {
                   p="1"
                   border={'1px solid var(--color-text)'}
                 >
-                  {slide.title + ' '}
+                  {`${slide.title} `}
                   {/* {slide.subtitle && slide.subtitle} */}
                 </InertiaChakraLink>
 
@@ -67,8 +67,8 @@ const CardsCarousel = ({ slides, navigation }) => {
         (slides.length === 0 &&
           ['1', '2', '3'].map(item => {
             return (
-              <SwiperSlide className="card-swiper-slide" key={'Item ' + item}>
-                {'Book ' + item}
+              <SwiperSlide className="card-swiper-slide" key={`Item ${item}`}>
+                {`Book ${item}`}
               </SwiperSlide>
             );
           }))}

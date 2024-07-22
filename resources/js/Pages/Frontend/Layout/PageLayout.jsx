@@ -1,6 +1,6 @@
-import FeaturedMedia from '@/Components/Frontend/post/featured-media';
-import PostHeader from '@/Components/Frontend/post/post-header';
-import { LightPatternBox } from '@/Components/Frontend/styles/pattern-box';
+import FeaturedMedia from '@/components/Frontend/post/featured-media';
+import PostHeader from '@/components/Frontend/post/post-header';
+import { LightPatternBox } from '@/components/Frontend/styles/pattern-box';
 import { Box, useColorModeValue } from '@chakra-ui/react';
 
 export const PageLayout = ({
@@ -55,8 +55,8 @@ export const PageLayout = ({
               bgPos: 'top center',
               bgBlendMode: 'overlay',
               bgImage: useColorModeValue(
-                `url(/assets/pattern-tile-green.svg)`,
-                `url(/assets/pattern-tile-light-fade.svg)`
+                'url(/assets/pattern-tile-green.svg)',
+                'url(/assets/pattern-tile-light-fade.svg)'
               ),
             }}
           />

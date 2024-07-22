@@ -1,6 +1,6 @@
-import AirBnbCard from '@/Components/Frontend/AirBnbCard';
-import { GlassBox } from '@/Components/Frontend/index';
-import InertiaChakraLink from '@/Components/Frontend/styles/inertia-chakra-link';
+import AirBnbCard from '@/components/Frontend/AirBnbCard';
+import { GlassBox } from '@/components/Frontend/index';
+import InertiaChakraLink from '@/components/Frontend/styles/inertia-chakra-link';
 import {
   Accordion,
   AccordionButton,

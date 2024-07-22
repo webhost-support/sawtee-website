@@ -1,4 +1,4 @@
-import { SocialMenu } from '@/Components/Frontend/header/social-menu';
+import { SocialMenu } from '@/components/Frontend/header/social-menu';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import {
   Box,

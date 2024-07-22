@@ -1,5 +1,5 @@
-import { SocialMenu } from '@/Components/Frontend/header/social-menu';
-import { MapModel, StyledChakraLink } from '@/Components/Frontend/index';
+import { SocialMenu } from '@/components/Frontend/header/social-menu';
+import { MapModel, StyledChakraLink } from '@/components/Frontend/index';
 import {
   Box,
   Grid,

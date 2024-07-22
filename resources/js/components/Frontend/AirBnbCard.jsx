@@ -10,7 +10,7 @@ export default function AirBnbCard({
   return img.length > 0 ? (
     img.map(image_src => {
       return (
-        <Box w="full">
+        <Box w="full" key={image_src}>
           <Zoom>
             <Image
               w="full"
@@ -36,7 +36,7 @@ export default function AirBnbCard({
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         referrerPolicy="strict-origin-when-cross-origin"
         allowfullscreen
-      ></iframe>
+      />
     </Box>
   );
 }
