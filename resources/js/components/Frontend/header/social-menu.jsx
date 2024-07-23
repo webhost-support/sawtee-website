@@ -1,49 +1,44 @@
+import { Button } from '@/components/ui/button';
 import { Box, Link, VisuallyHidden, useColorModeValue } from '@chakra-ui/react';
+import { XIcon } from 'react-share';
 import { FacebookIcon, LinkedinIcon, TwitterIcon, YoutubeIcon } from '../icons';
 import { SiteMenu } from './desktopNav';
 
 // warning for showSocialLinks and menu.length
 export const SocialMenu = ({ menu, ...props }) => (
-  <SiteMenu spacing="20px" ml="24px" position={{ sm: 'relative' }} {...props}>
-    {menu &&
-      menu.map(item => {
-        const SocialIcon = icons[item.name];
-        return (
-          <SocialMenuItem
-            key={item.name}
-            label={item.name}
-            link={item.link}
-            icon={SocialIcon}
-          />
-        );
-      })}
-  </SiteMenu>
+  <ul
+    className="flex gap-5 ml-6 relative list-none items-center text-white"
+    {...props}
+  >
+    {menu?.map(item => {
+      console.log(item);
+      const SocialIcon = icons[item.name];
+      return (
+        <SocialMenuItem
+          key={item.name}
+          label={item.name}
+          link={item.link}
+          icon={SocialIcon}
+        />
+      );
+    })}
+  </ul>
 );
 
 const SocialMenuItem = ({ icon, label, link, ...props }) => (
-  <Box
-    as={Link}
-    color={useColorModeValue('gray.800', 'whiteAlpha.900')}
-    transition="all ease-out 0.3s"
-    _hover={{
-      color: 'white',
-      bg: `${label}.600`,
-    }}
-    listStyleType="none"
-    p="1"
-    margin="0"
-    rounded={'full'}
+  <Link
+    className="p-1 m-0 rounded-full transition-all ease-out 0.25s text-gray-800 dark:text-gray-200 bg-gray-200 dark:bg-gray-800 "
     href={link}
     target="_blank"
     {...props}
   >
-    <Box as={icon} boxSize="6" />
-    <VisuallyHidden>{label}</VisuallyHidden>
-  </Box>
+    <Button variant="unstyled">{icon}</Button>
+    <p className="sr-only">{label}</p>
+  </Link>
 );
 
 const icons = {
-  twitter: TwitterIcon,
+  twitter: XIcon,
   linkedin: LinkedinIcon,
   facebook: FacebookIcon,
   youtube: YoutubeIcon,

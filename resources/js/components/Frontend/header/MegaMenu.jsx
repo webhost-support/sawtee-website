@@ -1,6 +1,8 @@
 import { Separator } from '@/components/ui/separator';
+import { aboutMenuData } from '@/lib/data';
 import { Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
+import ExpertCard from './ExpertCard';
 
 const ListVariants = {
   open: {
@@ -30,77 +32,38 @@ const ListContainerVariants = {
 
 const AboutMegaMenu = ({ item, experts, introText, introImage, ...rest }) => {
   return (
-    <Box
-      bg={'rgba(8, 126, 164,0.9)'}
-      backdropFilter={'blur(5px)'}
-      mx="auto"
-      px={8}
-      py={10}
-      display={'flex'}
+    <ul
+      className="relative grid gap-6 px-6 mx-auto md:grid-cols-5 lg:grid-cols-7 grid-rows-auto md:grid-rows-[repeat(2, minmax(auto, 250px))] xl:grid-rows-[auto] p-4 w-[85vw] grid-cols-1 px-8 py-10 gap-4  bg-opacity-90 backdrop-filter backdrop-blur-lg place-items-center"
+      {...rest}
     >
-      <Grid
-        templateColumns={{
-          base: 1,
-          md: 'repeat(5, 1fr)',
-          xl: 'repeat(7, 1fr)',
-        }}
-        templateRows={{
-          base: 'auto',
-          md: 'repeat(2, minmax(auto, 250px))',
-          xl: 'auto',
-        }}
-        pos="relative"
-        gap={6}
-        px={6}
-        mx="auto"
-        {...rest}
-      >
-        <GridItem colSpan={1} rowSpan={1} placeSelf="center">
-          <Box
-            as={motion.ul}
-            variants={ListContainerVariants}
-            initial={'closed'}
-            whileInView={'open'}
-          >
-            {item.children.map(child => {
-              return (
-                <Box
-                  key={child.title}
-                  as={motion.li}
-                  variants={ListVariants}
-                  fontSize={{ md: 'sm', xl: 'md' }}
-                  fontWeight="medium"
-                  position="relative"
-                  cursor="pointer"
-                  pb={{ md: 3, xl: 6 }}
-                  color={'gray.200'}
-                >
-                  <MenuLink link={child.url} text={child.title} />
-                </Box>
-              );
-            })}
-          </Box>
-        </GridItem>
-        <GridItem
-          colSpan={{ md: 4, xl: 3 }}
-          rowSpan={1}
-          width="full"
-          placeSelf="center"
+      <div className="col-span-1 self-center">
+        <motion.ul
+          variants={ListContainerVariants}
+          initial={'closed'}
+          whileInView={'open'}
         >
-          <Box
-            position="relative"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            overflow="hidden"
-            rounded="xl"
-            backgroundImage={`url(${introImage})`}
-            backgroundSize="cover"
-            bgRepeat={'no-repeat'}
-            bgPos={'center center'}
-            px={6}
-            py={{ md: 12, xl: 16 }}
-            _after={{
+          {item.children.map(child => {
+            return (
+              <motion.li
+                key={child.title}
+                as={motion.li}
+                variants={ListVariants}
+                className="text-sm text-left lg:text-md font-medium relative cursor-pointer pb-4"
+              >
+                <Link className=" font-serif" link={child.url}>
+                  {child.title}
+                </Link>
+              </motion.li>
+            );
+          })}
+        </motion.ul>
+      </div>
+      <div className="md:col-span-3 xl:col-span-3 place-center mx-auto">
+        <div
+          className="relative flex justify-center items-center overflow-hidden rounded-xl bg-no-repeat bg-cover bg-center px-6 py-12"
+          style={{
+            backgroundImage: `url(${introImage})`,
+            after: {
               content: "''",
               position: 'absolute',
               inset: 0,
@@ -109,46 +72,34 @@ const AboutMegaMenu = ({ item, experts, introText, introImage, ...rest }) => {
               backdropFilter: 'blur(3px)',
               backgroundColor: 'rgba(0,0,0,0.5)',
               backgroundBlendMode: 'multiply',
-            }}
-          >
-            <Text
-              fontSize={'sm'}
-              color={'gray.200'}
-              m="0"
-              alignSelf={'center'}
-              zIndex={1}
-              px={6}
-              lineHeight="taller"
-            >
-              {introText}
-            </Text>
-          </Box>
-        </GridItem>
-        <GridItem colSpan={{ md: 5, xl: 3 }} rowSpan={{ md: 1, xl: 1 }} gap={4}>
-          <Text fontSize="xl" pb={4} fontWeight={'semibold'}>
-            Our Experts
-          </Text>
-          <SimpleGrid columns={{ base: 6, md: 6, xl: 3 }} gap={2}>
-            {experts &&
-              experts.length > 0 &&
-              experts.map(expert => {
-                return (
-                  <Box key={expert.name} colSpan={1}>
-                    <ExpertCard expert={expert} />
-                  </Box>
-                );
-              })}
-          </SimpleGrid>
-        </GridItem>
-      </Grid>
-    </Box>
+            },
+          }}
+        >
+          <p className="text-sm text-gray-200 m-0 self-center z-20 px-6 leading-8">
+            {introText}
+          </p>
+        </div>
+      </div>
+      <div className=" md:col-span-5 xl:col-span-3 row-span-1 gap-4">
+        <p className="text-xl pb-4 font-semibold">Our Experts</p>
+        <div className="grid md:grid-cols-6 xl:grid-cols-3 gap-4">
+          {experts?.map(expert => {
+            return (
+              <div key={expert.name} className="col-span-1">
+                <ExpertCard expert={expert} />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </ul>
   );
 };
 
 const OurWorkMegaMenu = ({ item, ...rest }) => {
   return (
     <ul
-      className="grid p-4 w-[900px] grid-cols-1 px-8 py-10 gap-4  bg-opacity-90 backdrop-filter backdrop-blur-lg"
+      className="grid p-4 w-[85vw] grid-cols-1 px-8 py-10 gap-4  bg-opacity-90 backdrop-filter backdrop-blur-lg"
       {...rest}
     >
       <div className="w-full flex flex-col gap-10 justify-center items-center mx-auto">
@@ -181,7 +132,7 @@ const OurWorkMegaMenu = ({ item, ...rest }) => {
           {item.children.map((grandChildren, idx) => {
             if (idx !== 0) {
               return (
-                <div className="flex flex-col gap-6" key={grandChildren.title}>
+                <div className="col-span-1 space-y-6" key={grandChildren.title}>
                   <Link
                     href={grandChildren.url}
                     className="no-underline text-2xl"
@@ -190,7 +141,7 @@ const OurWorkMegaMenu = ({ item, ...rest }) => {
                   </Link>
 
                   <motion.ul
-                    className="gird grid-cols-2 gap-6"
+                    className="grid grid-cols-2 gap-6"
                     variants={ListContainerVariants}
                     initial={'closed'}
                     whileInView={'open'}
@@ -200,7 +151,7 @@ const OurWorkMegaMenu = ({ item, ...rest }) => {
                         <motion.li
                           key={child.title}
                           variants={ListVariants}
-                          className="text-sm md:text-md relative cursor-pointer pb-3 text-primary-foreground"
+                          className="text-sm col-span-1 md:text-md relative cursor-pointer pb-3"
                         >
                           <Link href={child.url} className="no-underline">
                             {child.title}
