@@ -1,7 +1,7 @@
-import { ListItemVariant } from '@/Components/Frontend';
-import { NewspaperIcon } from '@/Components/Frontend/icons';
-import InertiaChakraLink from '@/Components/Frontend/styles/inertia-chakra-link';
-import { formatDate } from '@/Utils/helpers';
+import { ListItemVariant } from '@/components/Frontend';
+import { NewspaperIcon } from '@/components/Frontend/icons';
+import InertiaChakraLink from '@/components/Frontend/styles/inertia-chakra-link';
+import { formatDate } from '@/lib/helpers';
 import {
   Box,
   Container,

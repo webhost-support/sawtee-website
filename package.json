@@ -65,6 +65,7 @@
     "@tanstack/match-sorter-utils": "^8.15.1",
     "@tanstack/react-table": "^8.10.6",
     "@tinymce/tinymce-react": "^4.3.0",
+    "animejs": "^3.2.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",

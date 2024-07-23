@@ -1,10 +1,10 @@
-import { GlassBox } from '@/Components/Frontend';
-import WebsiteHead from '@/Components/Frontend/Head';
-import SidebarWidget from '@/Components/Frontend/sidebarWidget';
-import InertiaChakraLink from '@/Components/Frontend/styles/inertia-chakra-link';
-import InertiaChakraLinkOverlay from '@/Components/Frontend/styles/inertia-chakra-link-overlay';
-import Section from '@/Components/Frontend/styles/section';
-import SubscriptionCard from '@/Components/Frontend/subscriptionCard';
+import { GlassBox } from '@/components/Frontend';
+import WebsiteHead from '@/components/Frontend/Head';
+import SidebarWidget from '@/components/Frontend/sidebarWidget';
+import InertiaChakraLink from '@/components/Frontend/styles/inertia-chakra-link';
+import InertiaChakraLinkOverlay from '@/components/Frontend/styles/inertia-chakra-link-overlay';
+import Section from '@/components/Frontend/styles/section';
+import SubscriptionCard from '@/components/Frontend/subscriptionCard';
 import {
   Box,
   Divider,

@@ -1,8 +1,8 @@
-import { GlassBox } from '@/Components/Frontend';
-import WebsiteHead from '@/Components/Frontend/Head';
-import Pagination from '@/Components/Frontend/Pagination';
-import SidebarWidget from '@/Components/Frontend/sidebarWidget';
-import SubscriptionCard from '@/Components/Frontend/subscriptionCard';
+import { GlassBox } from '@/components/Frontend';
+import WebsiteHead from '@/components/Frontend/Head';
+import Pagination from '@/components/Frontend/Pagination';
+import SidebarWidget from '@/components/Frontend/sidebarWidget';
+import SubscriptionCard from '@/components/Frontend/subscriptionCard';
 import { Grid, GridItem, VStack } from '@chakra-ui/react';
 import BlogArchive from './Archives/BlogArchive';
 import CovidArchive from './Archives/CovidArchive';
@@ -51,7 +51,7 @@ export default function Category({
           crossOrigin="anonymous"
           src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v20.0"
           nonce="fqoExb8K"
-        ></script>
+        />
       </WebsiteHead>
       <PageLayout
         featured_image={featured_image}

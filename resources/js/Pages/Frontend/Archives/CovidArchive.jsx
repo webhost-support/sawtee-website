@@ -1,5 +1,5 @@
-import { GlassBox } from '@/Components/Frontend/index';
-import { DateFormat } from '@/Utils/helpers';
+import { GlassBox } from '@/components/Frontend/index';
+import { DateFormat } from '@/lib/helpers';
 import {
   Badge,
   Divider,

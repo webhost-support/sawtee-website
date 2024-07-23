@@ -1,4 +1,4 @@
-import { formatDate } from '@/Utils/helpers';
+import { formatDate } from '@/lib/helpers';
 import {
   Box,
   Flex,

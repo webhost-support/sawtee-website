@@ -1,5 +1,5 @@
-import { ExploreButton, GlassBox } from '@/Components/Frontend/index';
-import { formatDate, slugify } from '@/Utils/helpers';
+import { ExploreButton, GlassBox } from '@/components/Frontend/index';
+import { formatDate, slugify } from '@/lib/helpers';
 import {
   Box,
   Flex,

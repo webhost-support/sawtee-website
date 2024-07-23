@@ -1,5 +1,5 @@
-import { GlassBox } from '@/Components/Frontend';
-import { PDFFileIcon } from '@/Components/Frontend/icons';
+import { GlassBox } from '@/components/Frontend';
+import { PDFFileIcon } from '@/components/Frontend/icons';
 import {
   Box,
   Circle,

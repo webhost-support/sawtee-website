@@ -1,7 +1,7 @@
-import { PostImageWithOverlay } from '@/Components/Frontend/featured-post/components';
-import { GlassBox } from '@/Components/Frontend/index';
-import PostCategories from '@/Components/Frontend/post/post-categories';
-import { formatDate } from '@/Utils/helpers';
+import { PostImageWithOverlay } from '@/components/Frontend/featured-post/components';
+import { GlassBox } from '@/components/Frontend/index';
+import PostCategories from '@/components/Frontend/post/post-categories';
+import { formatDate } from '@/lib/helpers';
 import {
   Box,
   Flex,

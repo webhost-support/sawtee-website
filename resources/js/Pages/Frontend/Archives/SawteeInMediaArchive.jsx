@@ -1,5 +1,5 @@
-import { ExploreButton, GlassBox } from '@/Components/Frontend/index';
-import { formatDate } from '@/Utils/helpers';
+import { ExploreButton, GlassBox } from '@/components/Frontend/index';
+import { formatDate } from '@/lib/helpers';
 import {
   Box,
   Heading,
@@ -15,13 +15,14 @@ const SawteeInMediaArchive = ({ posts, ...rest }) => {
   if (!posts || posts.length <= 0) return 'No posts found';
 
   return posts.map(
-    ({ title, slug, media, content, category, excerpt, published_at }) => {
+    ({ id, title, slug, media, content, category, excerpt, published_at }) => {
       const file = media.filter(
         media => media.collection_name === 'post-files'
       )[0];
       const hasContent = content !== null || '';
       return (
         <GlassBox
+          key={id}
           as={motion.article}
           whileHover={{
             y: '-10px',

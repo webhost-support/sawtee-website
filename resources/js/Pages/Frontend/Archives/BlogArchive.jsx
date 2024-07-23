@@ -1,6 +1,6 @@
-import PostPreviewCard from '@/Components/Frontend/PostPreviewCard';
-import { FeaturedPostSection } from '@/Components/Frontend/featured-post';
-import { splitPosts } from '@/Utils/helpers';
+import PostPreviewCard from '@/components/Frontend/PostPreviewCard';
+import { FeaturedPostSection } from '@/components/Frontend/featured-post';
+import { splitPosts } from '@/lib/helpers';
 import { Box, Heading, SimpleGrid, useColorModeValue } from '@chakra-ui/react';
 import React from 'react';
 

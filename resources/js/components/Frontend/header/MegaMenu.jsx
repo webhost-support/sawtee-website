@@ -2,6 +2,7 @@ import { Separator } from '@/components/ui/separator';
 import { aboutMenuData } from '@/lib/data';
 import { Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
+import Globeanime from '../globeanime';
 import ExpertCard from './ExpertCard';
 
 const ListVariants = {
@@ -59,23 +60,15 @@ const AboutMegaMenu = ({ item, experts, introText, introImage, ...rest }) => {
         </motion.ul>
       </div>
       <div className="md:col-span-3 xl:col-span-3 place-center mx-auto">
-        <div
-          className="relative flex justify-center items-center overflow-hidden rounded-xl bg-no-repeat bg-cover bg-center px-6 py-12"
+        {/* <div
+          className="relative flex justify-center items-center overflow-hidden rounded-xl bg-no-repeat bg-cover bg-center px-6 py-12 after:content:' ' after:absolute after:inset-0 after:w-full after:z-10 after:h-full after:bg-[#000]/[0.4] bg-blend-multiply blur-[1px]"
           style={{
             backgroundImage: `url(${introImage})`,
-            after: {
-              content: "''",
-              position: 'absolute',
-              inset: 0,
-              width: '100%',
-              height: '100%',
-              backdropFilter: 'blur(3px)',
-              backgroundColor: 'rgba(0,0,0,0.5)',
-              backgroundBlendMode: 'multiply',
-            },
           }}
-        >
-          <p className="text-sm text-gray-200 m-0 self-center z-20 px-6 leading-8">
+        > */}
+        <div className="relative flex justify-center items-center overflow-hidden rounded-xl bg-no-repeat bg-cover bg-center  bg-slate-950/90 w-full aspect-[16/9]">
+          <Globeanime />
+          <p className="flex h-full w-full px-6 items-center justify-center text-justify text-sm text-gray-200 m-0 self-center z-20 leading-6 bg-slate-50/10">
             {introText}
           </p>
         </div>

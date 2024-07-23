@@ -1,6 +1,6 @@
-import { PostImageWithOverlay } from '@/Components/Frontend/featured-post/components';
-import { ExploreButton, GlassBox } from '@/Components/Frontend/index';
-import { formatDate } from '@/Utils/helpers';
+import { PostImageWithOverlay } from '@/components/Frontend/featured-post/components';
+import { ExploreButton, GlassBox } from '@/components/Frontend/index';
+import { formatDate } from '@/lib/helpers';
 import {
   Box,
   Heading,
@@ -53,7 +53,7 @@ const ArchivePost = ({ post, featured_image, showFallbackImage, ...rest }) => {
             borderRadius: 'var(--chakra-radii-md) var(--chakra-radii-md) 0 0',
             cusrsor: 'pointer',
           }}
-          src={featured_image && featured_image.original_url}
+          src={featured_image?.original_url}
           srcSet={
             featured_image
               ? ''

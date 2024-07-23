@@ -11,7 +11,6 @@ export const SocialMenu = ({ menu, ...props }) => (
     {...props}
   >
     {menu?.map(item => {
-      console.log(item);
       const SocialIcon = icons[item.name];
       return (
         <SocialMenuItem
