@@ -14,7 +14,7 @@ const ExpertCard = ({ expert }) => {
           <AvatarImage src={image} alt={expert.name} />
           <AvatarFallback>{initials}</AvatarFallback>
         </Avatar>
-        <div className="text-xs font-normal text-left self-start">
+        <div className="text-xs font-normal ">
           <p className="font-semibold">{expert.name}</p>
           <p>{expert.designation}</p>
         </div>

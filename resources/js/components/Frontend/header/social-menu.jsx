@@ -1,8 +1,7 @@
 import { Button } from '@/components/ui/button';
-import { Box, Link, VisuallyHidden, useColorModeValue } from '@chakra-ui/react';
+import { Box, Link} from '@chakra-ui/react';
 import { XIcon } from 'react-share';
 import { FacebookIcon, LinkedinIcon, TwitterIcon, YoutubeIcon } from '../icons';
-import { SiteMenu } from './desktopNav';
 
 // warning for showSocialLinks and menu.length
 export const SocialMenu = ({ menu, ...props }) => (

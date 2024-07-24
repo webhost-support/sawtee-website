@@ -1,23 +1,15 @@
-import {
-
-  Flex,
-
-  useDisclosure,
-} from '@chakra-ui/react';
 import React from 'react';
 import MobileMenu from '../mobileMenu';
 
 import { cn } from '@/lib/utils';
-import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
 import { Link } from '@inertiajs/react';
-import { SearchButton, SearchForm, SearchModal } from '../search';
-import Nav from './DesktopNavigation';
 import DesktopNavigation from './DesktopNavigation';
-import ThemeToggle from './themeToggle';
+import { ModeToggle } from './mode-toggle';
+import SearchModal from './searchModal';
 
 const SiteHeader = props => (
   <header
-    className="flex justify-between items-center bg-[var(--color-bg)] dark:bg-[var(--color-darker)] sticky top-0 left-0 shadow-md z-50 transition-transform ease 0.25s"
+    className="flex justify-between items-center bg-white/60 backdrop-blur-md sticky top-0 left-0 shadow-md z-40 transition-transform ease 0.25s dark:bg-black/90"
     {...props}
   />
 );
@@ -67,9 +59,7 @@ const Header = ({
   children,
   ...props
 }) => {
-  const searchModal = useDisclosure();
-  const [posts, setPosts] = React.useState(null);
-  const [query, setQuery] = React.useState(null);
+
   return (
     <SiteHeader {...props}>
       <SiteHeaderInner>
@@ -79,40 +69,14 @@ const Header = ({
           align="center"
           justify={'space-between'}
         >
-          {/* <Show below="lg">
-            <Flex ml={{ base: -2 }} align="center">
-              <IconButton
-                onClick={onToggle}
-                icon={
-                  isOpen ? (
-                    <CloseIcon w={3} h={3} />
-                  ) : (
-                    <HamburgerIcon w={5} h={5} />
-                  )
-                }
-                variant={'ghost'}
-                aria-label={'Toggle Navigation'}
-              />
-            </Flex>
-          </Show> */}
           <SiteLogo src={'/assets/logo-sawtee.svg'} established={null} />
           {/* <DesktopNavigation menu={menu} /> */}
           <DesktopNavigation menu={menu} />
-          <div className="flex">
-            <ThemeToggle />
-            <SearchButton onClick={searchModal.onOpen} />
+          <div className="flex gap-4">
+            <ModeToggle />
+
+            <SearchModal />
           </div>
-          <SearchModal
-            isOpen={searchModal.isOpen}
-            onClose={() => {
-              setPosts(null);
-              searchModal.onClose();
-            }}
-            posts={posts}
-            query={query}
-          >
-            <SearchForm setPosts={setPosts} setQuery={setQuery} />
-          </SearchModal>
         </div>
       </SiteHeaderInner>
       {/* <Collapse

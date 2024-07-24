@@ -1,6 +1,5 @@
 import Footer from '@/components/Frontend/footer';
 import Header from '@/components/Frontend/header/header';
-import SkipLink from '@/components/Frontend/styles/skip-link';
 import { FooterMenu, mobileMenu, socialMenu } from '@/lib/data';
 import { ArrowUpIcon } from '@chakra-ui/icons';
 import { Box, Button, Icon, ScaleFade, SlideFade } from '@chakra-ui/react';
@@ -32,19 +31,15 @@ export default function MainLayout({ children, ...rest }) {
 
   return (
     <>
-      <SkipLink as="button" className="skip-link" onClick={e => handleClick(e)}>
-        Skip to main content
-      </SkipLink>
-
       <Header
         menu={primaryMenu}
         mobileMenu={mobileMenu}
         socialLinks={socialMenu}
       />
       <ScaleFade in={url} initialScale={0.9}>
-        <Box as="main" isolation={'isolate'} {...rest}>
+        <div id="main" className="min-h-screen" {...rest}>
           {children}
-        </Box>
+        </div>
       </ScaleFade>
       <Footer
         menu={footerMenu && footerMenu.length > 0 ? footerMenu : FooterMenu}

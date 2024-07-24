@@ -23,6 +23,7 @@
 </head>
 
 <body>
+    <a  href='#main' class="absolute px-3 py-2 transition-all -translate-y-full focus:translate-y-0 bg-sky-800 text-gray-100 text-base font-medium rounded-b-lg mx-4 focus:outline-none focus:ring-4 focus:ring-sky-500  hover:no-underline hover:bg-sky-900 hover:text-white z-[50]">skip to main content</a>
     @inertia
 </body>
 

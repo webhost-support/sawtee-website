@@ -1,6 +1,5 @@
 import React from 'react';
 
-// import { Icons } from '@/components/ui/icons';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -8,7 +7,6 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  NavigationMenuViewport,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
@@ -25,24 +23,38 @@ export default function DesktopNavigation({ menu }) {
       <NavigationMenuList className="gap-4">
         {menu.map(menuItem => {
           const active = menuItem.url === `${url}`;
-
           const hasMegaMenu =
             menuItem.name === 'Our Work' || menuItem.name === 'Know Us';
-
+            const hasChildren = menuItem.children.length > 0;
           return (
             <NavigationMenuItem key={menuItem.title}>
               <Link href={menuItem.url}>
-                {menuItem.children.length ? (
-                  <NavigationMenuLink>
-                    <NavigationMenuTrigger>
+                <NavigationMenuLink
+                  active={active}
+                  className={
+                    !hasMegaMenu && !hasChildren
+                      ? cn(
+                          navigationMenuTriggerStyle(),
+                          active
+                            ? 'dark:bg-sky-700/50 dark:text-white '
+                            : 'dark:text-white '
+                        )
+                      : cn('')
+                  }
+                >
+                  {hasChildren ? (
+                    <NavigationMenuTrigger
+                      className={cn(
+                        active && 'bg-sky-500/20 dark:bg-sky-700/50 ',
+                        'dark:text-white'
+                      )}
+                    >
                       {menuItem.title}
                     </NavigationMenuTrigger>
-                  </NavigationMenuLink>
-                ) : (
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    {menuItem.title}
-                  </NavigationMenuLink>
-                )}
+                  ) : (
+                    menuItem.title
+                  )}
+                </NavigationMenuLink>
               </Link>
               {hasMegaMenu ? (
                 <NavigationMenuContent>

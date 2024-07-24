@@ -1,12 +1,12 @@
 :root {
     --scrollbarBG: #cfd8dc;
     --thumbBG: #90a4ae;
-    --color-black: #000;
-    --color-bg: #fff;
+    --color-black: 0 0 0%;
+    --color-bg: 0 0 100%;
     --color-bg-reverse: var(--color-dark);
     --color-body-bg: var(--color-white);
     --color-dark: #262626;
-    --color-darker: #1f1f1f;
+    --color-darker: 0 0% 12.16%;
     --color-dark-acc: #404040;
     --color-grey-darker: #595959;
     --color-grey-dark: #737373;

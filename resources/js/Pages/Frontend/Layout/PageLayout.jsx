@@ -16,8 +16,8 @@ export const PageLayout = ({
     'var(--color-light)'
   );
   return (
-    <LightPatternBox showPattern={showBackgroundPattern} pt="0">
-      <Box pos="relative">
+    <div>
+      <div class="relative">
         {hasFeaturedImage ? (
           <FeaturedMedia
             mt="0"
@@ -37,29 +37,16 @@ export const PageLayout = ({
             }}
           />
         ) : (
-          <Box
-            pos="relative"
-            bg={useColorModeValue('blackAlpha.50', 'blackAlpha.500')}
-            height="350px"
-            zIndex={0}
-            _before={{
-              content: `""`,
-              width: '100%',
-              height: '100%',
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              zIndex: -1,
-              display: 'block',
-              bgSize: '1018px',
-              bgPos: 'top center',
-              bgBlendMode: 'overlay',
-              bgImage: useColorModeValue(
-                'url(/assets/pattern-tile-green.svg)',
-                'url(/assets/pattern-tile-light-fade.svg)'
-              ),
-            }}
-          />
+          <div className="relative z-0 h-80 bg-gray-400/20 dark:bg-black/85 ">
+            <div
+              className="w-full h-full absolute inset-0 -z-[1] bg-[url(/assets/pattern-tile-green.svg)] dark:bg-[url(/assets/pattern-tile-light-fade.svg)] "
+              style={{
+                backgroundSize: '1018px',
+                backgroundPosition: 'top center',
+                backgroundBlendMode: 'overlay',
+              }}
+            />
+          </div>
         )}
         <PostHeader
           px={10}
@@ -69,8 +56,8 @@ export const PageLayout = ({
           bottom="1rem"
           left="3rem"
         />
-      </Box>
+      </div>
       {children}
-    </LightPatternBox>
+    </div>
   );
 };
