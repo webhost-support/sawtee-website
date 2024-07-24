@@ -1,10 +1,12 @@
 'use client';
 import anime from 'animejs';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTheme } from '../theme-provider';
 
 const Globeanime = () => {
   const ref = useRef(null);
-  const [darkMode, setDarkMode] = useState(false); // State to manage dark mode
+  const { theme } = useTheme();
+  const [darkMode, setDarkMode] = useState(theme === 'dark'); // State to manage dark mode
 
   const dots = [
     {
@@ -145,8 +147,8 @@ const Globeanime = () => {
         -left-28 top-4 w-[150%] md:w-[150%] aspect-[978/678]
         sm:-left-32 sm:-top-2
         md:-left-44
-        lg:-left-10 lg:-top-10 lg:w-[130%]
-        xl:-left-32 xl:w-[130%]
+        lg:-left-10 lg:-top-10 lg:w-[150%]
+        xl:-left-32 xl:w-[150%]
       "
     >
       {/* Animated svgs in globe */}
@@ -179,21 +181,9 @@ const Globeanime = () => {
               gradientUnits="userSpaceOnUse"
             >
               {/* Define colors for both light and dark modes */}
-              <stop
-                offset="0"
-                stopColor={darkMode ? '#000000' : '#FFFFFF'}
-                stopOpacity="0"
-              />
-              <stop
-                offset="0.5"
-                stopColor={darkMode ? '#000000' : '#FFFFFF'}
-                stopOpacity="0.6"
-              />
-              <stop
-                offset="1"
-                stopColor={darkMode ? '#000000' : '#FFFFFF'}
-                stopOpacity="0"
-              />
+              <stop offset="0" stopColor={'#FFFFFF'} stopOpacity="0" />
+              <stop offset="0.5" stopColor={'#FFFFFF'} stopOpacity="0.6" />
+              <stop offset="1" stopColor={'#FFFFFF'} stopOpacity="0" />
             </linearGradient>
           </defs>
         </svg>
@@ -220,19 +210,19 @@ const Globeanime = () => {
         alt="globe wireframe"
         width={400}
         height={400}
-        className={`w-full h-full ${darkMode ? 'hidden' : 'block'}`} // Hide/show based on dark mode
+        className={'w-full h-full '} // Hide/show based on dark mode
         // quality={100}
         // priority
       />
-      <img
+      {/* <img
         src="/assets/globe.svg"
         alt="globe wireframe"
-        // width={400}
-        // height={400}
+        width={400}
+        height={400}
         className={`w-full h-full ${darkMode ? 'block' : 'hidden'}`} // Hide/show based on dark mode
         // quality={100}
         // priority
-      />
+      /> */}
     </div>
   );
 };

@@ -1,29 +1,21 @@
-import { Box, Image } from '@chakra-ui/react';
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { cn } from "@/lib/utils";
 
-const FeaturedMedia = ({
-  src,
-  srcSet,
-  alt,
-  objectFit,
-  rounded,
-  media,
-  ...rest
-}) => {
+const FeaturedMedia = ({ src, srcSet, alt, className }) => {
   return (
-    <Box as="picture" rounded={rounded ? rounded : 'none'} {...rest}>
-      <Image
-        boxSize="100%"
-        aspectRatio={16 / 9}
-        maxH="450px"
-        objectFit={objectFit ? objectFit : 'cover'}
+    <picutre>
+      <img
+        className={cn(
+          "relative w-full h-full object-cover aspect-video",
+          className,
+        )}
         src={src}
         srcSet={srcSet}
-        borderRadius={rounded ? rounded : 'none'}
         sizes="(min-width: 1200px) 50vw,100vw"
-        alt={alt || 'Hero Image'}
+        alt={alt || "Hero Image"}
         loading="lazy"
       />
-    </Box>
+    </picutre>
   );
 };
 

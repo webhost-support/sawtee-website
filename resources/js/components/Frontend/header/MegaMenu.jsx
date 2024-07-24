@@ -34,7 +34,7 @@ const ListContainerVariants = {
 const AboutMegaMenu = ({ item, experts, introText, introImage, ...rest }) => {
   return (
     <ul
-      className="relative grid gap-6 px-6 mx-auto md:grid-cols-5 lg:grid-cols-7 grid-rows-auto md:grid-rows-[repeat(2, minmax(auto, 250px))] xl:grid-rows-[auto] p-4 w-[85vw] grid-cols-1 px-8 py-10 gap-4  bg-opacity-90 backdrop-filter backdrop-blur-lg place-items-center"
+      className="relative  grid gap-6 px-6 mx-auto md:grid-cols-5 lg:grid-cols-7 grid-rows-auto md:grid-rows-[repeat(2, minmax(auto, 250px))] xl:grid-rows-[auto] p-4 w-[85vw] grid-cols-1 px-8 py-10 gap-4    place-items-center"
       {...rest}
     >
       <div className="col-span-1 self-center">
@@ -51,7 +51,7 @@ const AboutMegaMenu = ({ item, experts, introText, introImage, ...rest }) => {
                 variants={ListVariants}
                 className="text-sm text-left lg:text-md font-medium relative cursor-pointer pb-4"
               >
-                <Link className=" font-serif" link={child.url}>
+                <Link className=" font-serif text-gray-200" link={child.url}>
                   {child.title}
                 </Link>
               </motion.li>
@@ -66,15 +66,15 @@ const AboutMegaMenu = ({ item, experts, introText, introImage, ...rest }) => {
             backgroundImage: `url(${introImage})`,
           }}
         > */}
-        <div className="relative flex justify-center items-center overflow-hidden rounded-xl bg-no-repeat bg-cover bg-center  bg-slate-950/90 w-full aspect-[16/9]">
+        <div className="relative flex justify-center items-center overflow-hidden rounded-xl bg-no-repeat bg-cover bg-right-bottom  bg-black/40 w-full aspect-[16/9]">
           <Globeanime />
-          <p className="flex h-full w-full px-6 items-center justify-center text-justify text-sm text-gray-200 m-0 self-center z-20 leading-6 bg-slate-50/10">
+          <p className="flex h-full w-full px-6 items-center justify-center text-justify text-sm text-gray-200 m-0 self-center z-20 leading-6 bg-[rgba(0,0,0,0.3)]">
             {introText}
           </p>
         </div>
       </div>
       <div className=" md:col-span-5 xl:col-span-3 row-span-1 gap-4">
-        <p className="text-xl pb-4 font-semibold">Our Experts</p>
+        <p className="text-xl pb-4 font-semibold text-gray-200">Our Experts</p>
         <div className="grid md:grid-cols-6 xl:grid-cols-3 gap-4">
           {experts?.map(expert => {
             return (
@@ -91,12 +91,12 @@ const AboutMegaMenu = ({ item, experts, introText, introImage, ...rest }) => {
 
 const OurWorkMegaMenu = ({ item, ...rest }) => {
   return (
-    <ul
-      className="grid p-4 w-[85vw] grid-cols-1 px-8 py-10 gap-4  bg-opacity-90 backdrop-filter backdrop-blur-lg"
-      {...rest}
-    >
+    <ul className="grid p-4 w-[85vw] grid-cols-1 px-8 py-10 gap-4" {...rest}>
       <div className="w-full flex flex-col gap-10 justify-center items-center mx-auto">
-        <Link className="text-2xl font-serif" href={item.children[0].url}>
+        <Link
+          className="text-2xl font-serif text-gray-200"
+          href={item.children[0].url}
+        >
           {item.children[0].title}
         </Link>
         <motion.ul
@@ -112,7 +112,10 @@ const OurWorkMegaMenu = ({ item, ...rest }) => {
                 variants={ListVariants}
                 className="text-sm md:text-md col-span-1 relative cursor-pointer pb-3 "
               >
-                <Link href={grandChild.url} className="no-underline">
+                <Link
+                  href={grandChild.url}
+                  className="no-underline text-gray-200"
+                >
                   {grandChild.title}{' '}
                 </Link>
               </motion.li>
@@ -128,7 +131,7 @@ const OurWorkMegaMenu = ({ item, ...rest }) => {
                 <div className="col-span-1 space-y-6" key={grandChildren.title}>
                   <Link
                     href={grandChildren.url}
-                    className="no-underline text-2xl"
+                    className="no-underline text-2xl text-gray-200"
                   >
                     {grandChildren.title}
                   </Link>
@@ -146,7 +149,10 @@ const OurWorkMegaMenu = ({ item, ...rest }) => {
                           variants={ListVariants}
                           className="text-sm col-span-1 md:text-md relative cursor-pointer pb-3"
                         >
-                          <Link href={child.url} className="no-underline">
+                          <Link
+                            href={child.url}
+                            className="no-underline text-gray-200"
+                          >
                             {child.title}
                           </Link>
                         </motion.li>

@@ -1,4 +1,4 @@
-import { Box, Heading } from '@chakra-ui/react';
+import { cn } from '@/lib/utils';
 import PostCategories from './post-categories';
 
 const PostHeader = ({
@@ -6,11 +6,11 @@ const PostHeader = ({
   categories = null,
   description,
   color,
+  className,
   ...rest
 }) => (
-  <Box
-    className="post-header"
-    textAlign={{ base: 'left', md: 'center' }}
+  <div
+    className={cn('post-header text-left md:text-center', className)}
     {...rest}
   >
     {categories && (
@@ -21,18 +21,12 @@ const PostHeader = ({
         size={'xs'}
       />
     )}
-    <Heading
-      as="h1"
-      fontSize={{ base: '2xl', md: '3xl', lg: '4xl' }}
-      color={color}
-      my={{ base: '10px', lg: '20px' }}
-      textTransform="capitalize"
-    >
+    <h1 className="captialize text-2xl md:text-3xl xl:text-4xl my-3 lg:my-5">
       {heading}
-    </Heading>
+    </h1>
 
     {/* {description && <Text>{description}</Text>} */}
-  </Box>
+  </div>
 );
 
 export default PostHeader;

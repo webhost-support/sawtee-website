@@ -3,17 +3,17 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion';
-import { Card, CardContent } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { slugify } from '@/lib/helpers';
-import { Divider, useColorModeValue } from '@chakra-ui/react';
+} from "@/components/ui/accordion";
+import { Card, CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { slugify } from "@/lib/helpers";
+import { Divider, useColorModeValue } from "@chakra-ui/react";
 
 export default function About({ sections, content, pageData }) {
   return (
     <div className="page-content px-[32px] md:px-0 mx-auto py-[80px] max-w-2xl leading-8 text-lg ">
-      {sections?.map(section => {
+      {sections?.map((section) => {
         if (section.parent_id === null) {
           return (
             <PageSection
@@ -33,7 +33,7 @@ export const Members = ({ memberInstitutions }) => {
   return (
     <div>
       <h3 className="text-lg md:text-xl lg:text-2xl font-bold  font-sans py-4 mb-4">
-        {'Member Institutions'}
+        {"Member Institutions"}
       </h3>
 
       {memberInstitutions?.map(({ country, institutes, id }) => {
@@ -75,49 +75,42 @@ export const Members = ({ memberInstitutions }) => {
 export const PageSection = ({ section, sections }) => {
   const { title, slug, description } = section;
 
-  const isTabs = section.type === 'tabs';
-  const isAccordian = section.type === 'accordian';
-  const isDefault = section.type === 'default';
-  const tabColor = useColorModeValue('blackAlpha', 'whiteAlpha');
+  const isTabs = section.type === "tabs";
+  const isAccordian = section.type === "accordian";
+  const isDefault = section.type === "default";
+  const tabColor = useColorModeValue("blackAlpha", "whiteAlpha");
 
   const sectionID = slugify(title);
 
-  const childSections = sections.filter(sec => sec.parent_id === section.id);
+  const childSections = sections.filter((sec) => sec.parent_id === section.id);
   return (
     <div id={sectionID}>
-      <h2
-        className="font-bold text-lg md:text-xl lg:text-2xl py-4 mb-4 font-sans"
-        as="h2"
-        fontSize={['lg', 'xl', '2xl']}
-        py={'4'}
-        mb="4"
-        fontFamily="heading"
-      >
+      <h2 className="font-bold text-lg md:text-xl lg:text-2xl py-4 mb-4 font-sans text-primary">
         {title}
       </h2>
 
       {isTabs && childSections.length > 0 && (
         <div className="px-6 py-4">
           <Tabs defaultValue={childSections[0].title} orientation="vertical">
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid w-full grid-cols-3 dark:bg-[rgba(0,0,0,0.1)] bg-opacity-60 ">
               {childSections.map(({ title }) => (
-                <TabsTrigger key={title} value={title}>
+                <TabsTrigger key={title} value={title} className="">
                   {title}
                 </TabsTrigger>
               ))}
             </TabsList>
             {childSections.map(({ description, title }) => (
-              <TabsContent key={title} value={title}>
-                <Card>
-                  <CardContent className="space-y-2 leading-8 p-6 text-muted-foreground">
-                    {description && (
-                      <p
-                        className="px-4 list-decimal"
-                        dangerouslySetInnerHTML={{ __html: description }}
-                      />
-                    )}
-                  </CardContent>
-                </Card>
+              <TabsContent
+                key={title}
+                value={title}
+                className="bg-[rgba(0,0,0,0.1)] bg-opacity-60 space-y-2 rounded-xl leading-8 p-6 text-muted-foreground"
+              >
+                {description && (
+                  <p
+                    className="px-4 list-decimal"
+                    dangerouslySetInnerHTML={{ __html: description }}
+                  />
+                )}
               </TabsContent>
             ))}
           </Tabs>
@@ -130,7 +123,7 @@ export const PageSection = ({ section, sections }) => {
             <Accordion key={title} collapsible className="w-full">
               <AccordionItem value={title}>
                 <AccordionTrigger>
-                  <p className="font-bold font-sans text-lg md:text-xl">
+                  <p className="font-bold text-primary font-sans text-lg md:text-xl">
                     {title}
                   </p>
                 </AccordionTrigger>

@@ -7,13 +7,12 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
+  NavigationMenuViewport,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
 import { Link, usePage } from '@inertiajs/react';
 import MegaMenu from './MegaMenu';
-
-
 
 export default function DesktopNavigation({ menu }) {
   const { url, props } = usePage();
@@ -25,7 +24,7 @@ export default function DesktopNavigation({ menu }) {
           const active = menuItem.url === `${url}`;
           const hasMegaMenu =
             menuItem.name === 'Our Work' || menuItem.name === 'Know Us';
-            const hasChildren = menuItem.children.length > 0;
+          const hasChildren = menuItem.children.length > 0;
           return (
             <NavigationMenuItem key={menuItem.title}>
               <Link href={menuItem.url}>
@@ -36,7 +35,7 @@ export default function DesktopNavigation({ menu }) {
                       ? cn(
                           navigationMenuTriggerStyle(),
                           active
-                            ? 'dark:bg-sky-700/50 dark:text-white '
+                            ? 'dark:bg-sky-800/90 dark:text-white '
                             : 'dark:text-white '
                         )
                       : cn('')
@@ -45,7 +44,7 @@ export default function DesktopNavigation({ menu }) {
                   {hasChildren ? (
                     <NavigationMenuTrigger
                       className={cn(
-                        active && 'bg-sky-500/20 dark:bg-sky-700/50 ',
+                        active && 'bg-sky-500/20 dark:bg-sky-800/90 ',
                         'dark:text-white'
                       )}
                     >
@@ -57,11 +56,11 @@ export default function DesktopNavigation({ menu }) {
                 </NavigationMenuLink>
               </Link>
               {hasMegaMenu ? (
-                <NavigationMenuContent>
+                <NavigationMenuContent className="border-none">
                   <MegaMenu item={menuItem} experts={experts} />
                 </NavigationMenuContent>
               ) : (
-                <NavigationMenuContent>
+                <NavigationMenuContent className="bg-sky-800/95 backdrop-blur-md border-none">
                   <DropDown menu={menuItem.children} />
                 </NavigationMenuContent>
               )}
@@ -129,4 +128,4 @@ const DropDown = menu => {
       </NavigationMenuList>
     </NavigationMenu>
   );
-}
+};
