@@ -9,7 +9,7 @@ import SearchModal from './searchModal';
 
 const SiteHeader = props => (
   <header
-    className="flex justify-between items-center bg-white/60 backdrop-blur-md sticky top-0 left-0 shadow-md z-40 transition-transform ease 0.25s dark:bg-black/90"
+    className="flex justify-between items-center py-2 bg-zinc-50/50 dark:bg-bgDarker/95 backdrop-blur-xl sticky top-0 left-0 shadow-md z-40 transition-transform ease 0.25s"
     {...props}
   />
 );

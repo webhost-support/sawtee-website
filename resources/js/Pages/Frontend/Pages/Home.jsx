@@ -11,6 +11,7 @@ import {
 import WebsiteHead from '@/components/Frontend/Head';
 import VideoCarousel from '@/components/Frontend/VideoCarousel';
 import { Newsletter } from '@/components/Frontend/newsletter';
+import { cn } from '@/lib/utils';
 import { Box, Grid, GridItem, useColorModeValue } from '@chakra-ui/react';
 import MainLayout from '../Layout/MainLayout';
 
@@ -65,52 +66,26 @@ const Home = ({
       />
       <Section
         py={4}
-        className="carousel-section"
-        paddingLeft={{ base: '24px', lg: '0' }}
-        paddingRight={{ base: '24px', lg: '40px' }}
+        className="carousel-section lg:py-4 px-6 lg:pl-0 lg:pr-10"
       >
-        <Grid
-          templateColumns={{
-            base: '1fr',
-            lg: 'repeat(6, 1fr)',
-          }}
+        <div
+          className="grid grid-cols-1 lg:grid-cols-6 gap-10 "
           id="carousel-section"
-          gap={8}
-          rowGap={20}
         >
-          <GridItem
-            colSpan={{ base: 1, lg: 4 }}
-            shadow={'xl'}
-            overflow="hidden"
-            borderRadius={{
-              base: 'var(--chakra-radii-xl)',
-              lg: '0 var(--chakra-radii-xl) var(--chakra-radii-xl) 0',
-            }}
-          >
-            <Box
-              w="full"
-              maxW="5xl"
-              mx="auto"
-              aspectRatio={16 / 9}
-              h={{ base: 'unset', md: 'full', xl: 'unset' }}
-            >
+          <div className="lg:col-span-4 overflow-hidden shadow-xl rounded-[0_1rem_1rem_0]">
+            <div className="w-full max-w-5xl mx-auto h-auto aspect-video">
               {slides && (
                 <CarouselSection
                   slides={slides}
                   responsiveImages={slidesResponsiveImages}
                 />
               )}
-            </Box>
-          </GridItem>
-          <GridItem colSpan={{ base: 1, lg: 2 }} alignSelf={'center'}>
-            <FeaturedPublications
-              publications={featuredPublications}
-              mx="auto"
-              rounded="xl"
-              maxW="lg"
-            />
-          </GridItem>
-        </Grid>
+            </div>
+          </div>
+          <div className="lg:col-span-2 self-center">
+            <FeaturedPublications publications={featuredPublications} />
+          </div>
+        </div>
       </Section>
 
       {/* {feature && (
@@ -122,8 +97,8 @@ const Home = ({
           )} */}
 
       {infocus && (
-        <Section className="infocus-section" bgDark={true}>
-          <Box maxW="5xl" mx="auto">
+        <Section className="infocus-section" dark>
+          <div className="max-w-5xl mx-auto">
             <Title title={'In Focus'} />
             <InfocusSection data={infocus} />
             <ExploreButton
@@ -133,7 +108,7 @@ const Home = ({
               mt="4"
               link={'/category/in-focus'}
             />
-          </Box>
+          </div>
         </Section>
       )}
       <Section className="about-section">
@@ -141,11 +116,11 @@ const Home = ({
       </Section>
 
       {/* Add publication section here  */}
-      <Section className="publications-section" bgDark={true}>
-        <Box maxW={'5xl'} mx="auto">
+      <Section className="publications-section" dark>
+        <div className="max-w-5xl mx-auto">
           <Title title={'Latest in Pubications'} />
           <PublicationsSection publications={publications} />
-        </Box>
+        </div>
       </Section>
 
       <Section className="about-section">
@@ -154,18 +129,18 @@ const Home = ({
           showBorderBox={true}
         />
       </Section>
-      <Section className="outreach-section" bgDark={true}>
-        <Box maxW={'5xl'} mx="auto">
+      <Section className="outreach-section" dark>
+        <div className="max-w-5xl mx-auto">
           <Title title={'Outreach and Media'} />
           <OutreachSection sawteeInMedia={sawteeInMedia} events={events} />
-        </Box>
+        </div>
       </Section>
 
       <Section className="section videos-section">
-        <Box maxW="5xl" mx="auto">
+        <div className="max-w-5xl mx-auto">
           <Title title={'Webinar Series'} />
           <VideoCarousel posts={webinars} />
-        </Box>
+        </div>
       </Section>
       <Section
         py={{ base: '6', md: '12', lg: '16' }}
@@ -178,24 +153,18 @@ const Home = ({
   );
 };
 
-const Section = ({ children, title = null, bgDark, ...rest }) => {
+const Section = ({ children, title = null, className, dark }) => {
   return (
-    <Box
-      as="section"
-      mx="auto"
-      py={{ base: 12, md: 20 }}
-      px={{ base: '24px', md: '80px' }}
-      bg={
-        bgDark
-          ? useColorModeValue('blackAlpha.50', 'var(--color-darker)')
-          : 'unset'
-      }
-      className="section"
-      {...rest}
+    <section
+      className={cn(
+        'w-full px-6 md:px-20 py-12 md:py-20 mx-auto',
+        dark ? 'bg-bgDarker' : 'bg-background',
+        className
+      )}
     >
       {title && <Title title={title} />}
       {children}
-    </Box>
+    </section>
   );
 };
 

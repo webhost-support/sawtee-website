@@ -3,12 +3,10 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Card, CardContent } from "@/components/ui/card";
+} from '@/components/ui/accordion';
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { slugify } from "@/lib/helpers";
-import { Divider, useColorModeValue } from "@chakra-ui/react";
+import { slugify } from '@/lib/helpers';
 
 export default function About({ sections, content, pageData }) {
   return (
@@ -32,8 +30,8 @@ export default function About({ sections, content, pageData }) {
 export const Members = ({ memberInstitutions }) => {
   return (
     <div>
-      <h3 className="text-lg md:text-xl lg:text-2xl font-bold  font-sans py-4 mb-4">
-        {"Member Institutions"}
+      <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-primary font-sans py-4 mb-4">
+        {'Member Institutions'}
       </h3>
 
       {memberInstitutions?.map(({ country, institutes, id }) => {
@@ -41,12 +39,12 @@ export const Members = ({ memberInstitutions }) => {
           <Accordion key={id} collapsible className="w-full">
             <AccordionItem border="none" value={country}>
               <AccordionTrigger>
-                <p className="font-bold font-sans text-lg md:text-xl">
+                <p className="font-bold font-sans text-lg md:text-xl text-primary">
                   {country}
                 </p>
               </AccordionTrigger>
               <AccordionContent className="ml-6">
-                <ol className="space-y-2 text-muted-foreground list-decimal">
+                <ol className="space-y-2 text-zinc-700 dark:text-zinc-300 list-decimal">
                   {institutes.map(({ member_name, member_website_link }) => {
                     return (
                       <li key={member_name}>
@@ -75,14 +73,13 @@ export const Members = ({ memberInstitutions }) => {
 export const PageSection = ({ section, sections }) => {
   const { title, slug, description } = section;
 
-  const isTabs = section.type === "tabs";
-  const isAccordian = section.type === "accordian";
-  const isDefault = section.type === "default";
-  const tabColor = useColorModeValue("blackAlpha", "whiteAlpha");
+  const isTabs = section.type === 'tabs';
+  const isAccordian = section.type === 'accordian';
+  const isDefault = section.type === 'default';
 
   const sectionID = slugify(title);
 
-  const childSections = sections.filter((sec) => sec.parent_id === section.id);
+  const childSections = sections.filter(sec => sec.parent_id === section.id);
   return (
     <div id={sectionID}>
       <h2 className="font-bold text-lg md:text-xl lg:text-2xl py-4 mb-4 font-sans text-primary">
@@ -103,7 +100,7 @@ export const PageSection = ({ section, sections }) => {
               <TabsContent
                 key={title}
                 value={title}
-                className="bg-[rgba(0,0,0,0.1)] bg-opacity-60 space-y-2 rounded-xl leading-8 p-6 text-muted-foreground"
+                className="bg-[rgba(0,0,0,0.1)] bg-opacity-60 space-y-2 rounded-xl leading-8 p-6 text-zinc-700 dark:text-zinc-300"
               >
                 {description && (
                   <p
@@ -129,7 +126,7 @@ export const PageSection = ({ section, sections }) => {
                 </AccordionTrigger>
                 <AccordionContent>
                   <div
-                    className="leading-8 p-6 text-lg text-muted-foreground"
+                    className="leading-8 p-6 text-lg text-zinc-700 dark:text-zinc-300"
                     // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
                     dangerouslySetInnerHTML={{
                       __html: description,
@@ -143,7 +140,7 @@ export const PageSection = ({ section, sections }) => {
 
       {isDefault && (
         <div
-          className="text-muted-foreground"
+          className="text-zinc-700 dark:text-zinc-300"
           // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
           dangerouslySetInnerHTML={{
             __html: description,

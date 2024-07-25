@@ -1,27 +1,18 @@
-import {
-  Box,
-  Divider,
-  Heading,
-  List,
-  useColorModeValue,
-} from '@chakra-ui/react';
-import React from 'react';
-import { GlassBox } from '.';
+import { cn } from '@/lib/utils';
 
-export default function SimpleList({ heading, children, ...rest }) {
+
+export default function SimpleList({ heading, children, className, ...rest }) {
   return (
-    <Box
-      px={6}
-      borderLeft={'2px solid'}
-      borderColor={useColorModeValue('blackAlpha.400', 'whiteAlpha.400')}
+    <div
+      className={cn('px-6 border-l-2 border-gray-500/70', className)}
       {...rest}
     >
       {heading && (
-        <Heading as="h3" fontSize={'md'} textTransform="uppercase" mb="1rem">
+        <h3 className="text-md uppercase mb-4 dark:text-secondary-foreground font-semibold">
           {heading}
-        </Heading>
+        </h3>
       )}
-      <List as="ul">{children}</List>
-    </Box>
+      <ul>{children}</ul>
+    </div>
   );
 }

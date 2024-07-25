@@ -24,7 +24,7 @@ const SidebarWidget = ({ array, title, link, ...rest }) => {
       rounded="md"
       {...rest}
     >
-      <SimpleList heading={title} px="8" py={4} spacing={4}>
+      <SimpleList className={'border-none px-8'} heading={title}>
         {array.length <= 0 && (
           <Box display={'flex'} flexDir={'column'} gap={2}>
             <Skeleton w="full" height="30px" />
@@ -37,7 +37,7 @@ const SidebarWidget = ({ array, title, link, ...rest }) => {
         {array.length > 0 &&
           array.map((post, index) => {
             return (
-              <ListItem key={post.id} mb="1rem">
+              <li className="mb-4" key={post.id}>
                 <Box>
                   <ChakraLink
                     as={Link}
@@ -57,15 +57,10 @@ const SidebarWidget = ({ array, title, link, ...rest }) => {
                     {formatDate(post.published_at)}
                   </Text>
                 </Box>
-              </ListItem>
+              </li>
             );
           })}
-        <ExploreButton
-          size={['xs', 'sm']}
-          text={`More ${title}`}
-          link={link}
-          p={0}
-        />
+        <ExploreButton text={`More ${title}`} link={link} className="p-0 " />
       </SimpleList>
     </GlassBox>
   );

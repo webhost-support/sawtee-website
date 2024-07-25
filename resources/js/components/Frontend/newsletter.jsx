@@ -100,7 +100,7 @@ export const Newsletter = ({ data, props }) => {
                 m => m.collection_name === 'post-files'
               )[0];
               return (
-                <ListItem key={item.id} mb="1rem">
+                <li className="mb-4" key={item.id}>
                   <InertiaChakraLink
                     textDecor="underline"
                     textUnderlineOffset="3px"
@@ -110,7 +110,7 @@ export const Newsletter = ({ data, props }) => {
                       {item.title}
                     </Text>
                   </InertiaChakraLink>
-                </ListItem>
+                </li>
               );
             })}
           </SimpleList>

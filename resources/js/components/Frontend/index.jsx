@@ -4,15 +4,14 @@ import InertiaChakraLink from '@/components/Frontend/styles/inertia-chakra-link'
 import InertiaChakraLinkOverlay from '@/components/Frontend/styles/inertia-chakra-link-overlay';
 import Section from '@/components/Frontend/styles/section';
 import { formatDate } from '@/lib/helpers';
+import { cn } from '@/lib/utils';
 import {
   ArrowForwardIcon,
   ChevronRightIcon,
   ExternalLinkIcon,
 } from '@chakra-ui/icons';
 import {
-  Badge,
   Box,
-  Button,
   Flex,
   Grid,
   GridItem,
@@ -37,7 +36,10 @@ import {
 } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import { Link } from '@inertiajs/react';
+import { ExternalLink } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { Badge } from '../ui/badge';
+import { Button } from '../ui/button';
 import SimpleList from './SimpleList';
 import { Blob } from './icons';
 
@@ -71,17 +73,14 @@ export const CarouselSection = ({
   carouselHeight,
 }) => {
   return (
-    slides &&
-    slides.length > 0 && (
-      <FullWidthCarousel
-        slides={slides}
-        navigation={false}
-        loop={true}
-        rewind={true}
-        carouselHeight={carouselHeight}
-        responsiveImages={responsiveImages}
-      />
-    )
+    <FullWidthCarousel
+      slides={slides}
+      navigation={false}
+      loop={true}
+      rewind={true}
+      carouselHeight={carouselHeight}
+      responsiveImages={responsiveImages}
+    />
   );
 };
 
@@ -92,38 +91,15 @@ export const TwoColumnImageSection = ({
   children,
 }) => {
   return (
-    <SimpleGrid
-      columns={{ base: 1, md: 2 }}
-      spacing={10}
-      alignItems="center"
-      maxW={'5xl'}
-      mx="auto"
-    >
+    <div className="grid grid-cols-2 gap-10 max-w-5xl mx-auto justify-center items-center">
       {data.map(item => {
         return (
-          <Flex
-            flex={1}
-            justify={'center'}
-            align={'center'}
-            my="10"
+          <div
             key={item.id}
-            pos="relative"
-            maxW="30rem"
+            className="flex flex-1 justify-center items-center my-10 relative max-w-[30rem]"
           >
             {showBorderBox && (
-              <Box
-                pos="absolute"
-                border="2px solid"
-                borderColor={useColorModeValue(
-                  'blackAlpha.500',
-                  'whiteAlpha.500'
-                )}
-                left={'25px'}
-                top="-20px"
-                w="full"
-                h="full"
-                rounded={'2xl'}
-              />
+              <div className="absolute border-4 left-6 -top-5 w-full h-full rounded-2xl" />
             )}
 
             {showBlobIcon && (
@@ -138,66 +114,40 @@ export const TwoColumnImageSection = ({
             )}
             {children}
 
-            <LinkBox
-              position={'relative'}
-              rounded={'2xl'}
-              overflow="hidden"
-              boxShadow={'2xl'}
-              role="group"
+            <Link
+              href={item.link}
+              className="group relative rounded-2xl overflow-hidden shadow-2xl"
             >
-              <Box
-                pos="absolute"
-                w="full"
-                h="full"
-                bg={'blackAlpha.400'}
-                _groupHover={{ bg: 'blackAlpha.200' }}
-                transition="all 0.25s ease"
-                inset="0"
-              />
+              <div className="absolute w-full h-full inset-0 bg-black/20 group-hover:bg-black/10 transition-all duration-200 ease" />
 
-              <IconButton
+              <ExternalLink
                 aria-label={'Play Button'}
-                variant={'ghost'}
-                _groupHover={{ color: 'white' }}
-                icon={<ExternalLinkIcon w={12} h={12} />}
-                size={'lg'}
-                color={'whiteAlpha.700'}
-                position={'absolute'}
-                left={'50%'}
-                top={'50%'}
-                transition="all 0.25s ease"
-                transform={'translateX(-50%) translateY(-50%)'}
+                className="absolute w-12 h-12 text-white/60 z-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ease group-hover:text-white/100 "
               />
 
-              <LinkOverlay href={item.link}>
-                <Image
-                  src={item.image_src}
-                  loading="lazy"
-                  fallbackSrc="assets/SM-placeholder-300x150.png"
-                  alt={item.title}
-                  fit="cover"
-                  rounded="xl"
-                  align={'center'}
-                />
-              </LinkOverlay>
-            </LinkBox>
-          </Flex>
+              <Image
+                src={item.image_src}
+                loading="lazy"
+                fallbackSrc="assets/SM-placeholder-300x150.png"
+                alt={item.title}
+                fit="cover"
+                rounded="xl"
+                align={'center'}
+              />
+            </Link>
+          </div>
         );
       })}
-    </SimpleGrid>
+    </div>
   );
 };
 
 export const InfoSection = () => {
   return (
-    <Box className="section">
-      <SimpleGrid
+    <div className="section">
+      <div
+        className="grid grid-cols-2 justify-center items-center p-6 lg:p-8 min-h-96"
         id="chart-wrapper"
-        p={{ base: '6', lg: '8' }}
-        columns={2}
-        justifyContent="center"
-        alignItems="center"
-        minH={'500px'}
       >
         <iframe
           title="Reform Meter Dashboard_revised"
@@ -206,15 +156,15 @@ export const InfoSection = () => {
           src="https://app.powerbi.com/view?r=eyJrIjoiOGRhNGUzNzUtYTk2NS00YzFjLWE3NDAtM2NjMjdjYTg1NmE1IiwidCI6IjIzM2IyYmFhLTdjNzUtNGI0YS04YjNiLTE3NTNkYmQzODBmOSIsImMiOjF9"
           allowFullScreen={true}
         />
-      </SimpleGrid>
-    </Box>
+      </div>
+    </div>
   );
 };
 
 export const OutreachSection = ({ sawteeInMedia, events }) => {
   return (
-    <Grid gridTemplateColumns={{ base: '1fr', lg: 'repeat(6, 1fr)' }} gap={10}>
-      <GridItem colSpan={{ base: 1, md: 3 }}>
+    <div className="grid lg:grid-cols-6 gap-10">
+      <div className="md:col-span-3">
         <SimpleList heading={'sawtee in media'}>
           {sawteeInMedia.map(item => {
             const hasContent = item.content !== null || '';
@@ -223,32 +173,31 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
             )[0];
 
             return (
-              <ListItem key={item.id} mb="1rem">
-                <Box>
-                  <InertiaChakraLink
-                    as={hasContent ? Link : 'a'}
-                    target={hasContent || !file ? '_self' : '_blank'}
-                    href={
-                      hasContent || !file
-                        ? `/category/${item.category.slug}/${item.slug}`
-                        : file?.original_url
-                    }
-                    textDecor="underline"
-                    textUnderlineOffset="3px"
-                  >
-                    <Text fontSize={'0.875rem'} lineHeight={'short'}>
-                      {item.title}
-                    </Text>
-                  </InertiaChakraLink>
-                  <Text
-                    color={useColorModeValue('gray.600', 'gray.300')}
-                    fontSize={'.75rem'}
-                    mt={2}
-                  >
+              <li className="mb-4 group" key={item.id}>
+                <div>
+                  {file && !hasContent && (
+                    <a
+                      href={file?.original_url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="underline underline-offset-2 text-secondary-foreground group-hover:underline-offset-4 group-hover:text-primary/80 dark:group-hover:text-secondary-foreground/80"
+                    >
+                      <p className="text-sm leading-5">{item.title}</p>
+                    </a>
+                  )}
+                  {hasContent && (
+                    <Link
+                      href={`/category/${item.category.slug}/${item.slug}`}
+                      className="underline underline-offset-2 text-secondary-foreground group-hover:underline-offset-4 group-hover:text-primary/80 dark:group-hover:text-secondary-foreground/80"
+                    >
+                      <p className="text-sm leading-5">{item.title}</p>
+                    </Link>
+                  )}
+                  <p className="text-muted-foreground text-xs mt-2">
                     {formatDate(item.published_at)}
-                  </Text>
-                </Box>
-              </ListItem>
+                  </p>
+                </div>
+              </li>
             );
           })}
         </SimpleList>
@@ -257,9 +206,9 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
           text="More in sawtee in media "
           link={'/category/sawtee-in-media'}
         />
-      </GridItem>
+      </div>
 
-      <GridItem colSpan={{ base: 1, md: 3 }}>
+      <div className="md:col-span-3">
         <SimpleList heading={'Featured Events'}>
           {events.map(event => {
             const featured_image =
@@ -273,56 +222,37 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
             //     : null;
 
             return (
-              <ListItem key={event.id} className="list-tem" mb="1rem">
-                <LinkBox
-                  as={HStack}
+              <li
+                key={event.id}
+                className="group flex w-full justify-between items-center gap-4 mb-4"
+              >
+                <Link
                   // w="full"
-                  align="center"
-                  justify="space-between"
-                  gap={4}
+                  href={`/category/featured-events/${event.slug}`}
+                  className=" flex gap-2 w-2/3 grow"
                 >
-                  <Box flexGrow={1} maxW="70%">
-                    <InertiaChakraLinkOverlay
-                      as={Link}
-                      textDecor="underline"
-                      textUnderlineOffset="3px"
-                      href={`/category/featured-events/${event.slug}`}
-                    >
-                      <Text fontSize={'0.875rem'} lineHeight={'short'}>
-                        {event.title}
-                      </Text>
-                    </InertiaChakraLinkOverlay>
-                    <Text
-                      color={useColorModeValue('gray.600', 'gray.300')}
-                      fontSize={'.75rem'}
-                      mt={2}
-                    >
+                  <div className="flex flex-col w-full ">
+                    <p className="text-sm font-sans text-secondary-foreground underline underline-offset-2 group-hover:underline-offset-4 group-hover:text-primary/80 dark:group-hover:text-secondary-foreground/80 leading-5">
+                      {event.title}
+                    </p>
+
+                    <p className="text-muted-foreground text-xs mt-2">
                       {formatDate(event.published_at)}
-                    </Text>
-                  </Box>
+                    </p>
+                  </div>
 
                   {featured_image && (
-                    <Box
-                      maxW="90px"
-                      w="full"
-                      aspectRatio={3 / 2}
-                      border="1px solid"
-                      borderColor={'gray.400'}
-                      p={1}
-                      rounded="md"
-                      overflow="hidden"
-                    >
-                      <Image
+                    <div className="max-w-[90px] w-full aspect-auto rounded-md overflow-hidden p-1 border">
+                      <img
                         src={featured_image}
-                        objectFit="cover"
-                        alt={'Event cover image'}
-                        fallbackSrc="assets/SM-placeholder-300x150.png"
+                        className="w-full h-full object-cover"
+                        alt={'Event cover'}
                         loading="lazy"
                       />
-                    </Box>
+                    </div>
                   )}
-                </LinkBox>
-              </ListItem>
+                </Link>
+              </li>
             );
           })}
         </SimpleList>
@@ -331,8 +261,8 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
           text="More on featured events"
           link={'/category/featured-events'}
         />
-      </GridItem>
-    </Grid>
+      </div>
+    </div>
   );
 };
 
@@ -341,36 +271,34 @@ export const InfocusSection = ({ data }) => {
     <SimpleList heading={null} borderLeft={'none'}>
       {data.map(item => {
         return (
-          <ListItem key={item.id} mb="1.5rem">
-            <LinkBox>
-              <InertiaChakraLinkOverlay
-                as={Link}
-                target="_blank"
-                textDecor="underline"
-                textUnderlineOffset="3px"
-                href={`/category/in-focus/${item.slug}`}
-              >
+          <li
+            className="mb-6 flex flex-col w-full gap-3 text-zinc-700 dark:text-zinc-300"
+            key={item.id}
+          >
+            <Link
+              className="underline underline-offset-2 hover:underline-offset-4"
+              target="_blank"
+              href={`/category/in-focus/${item.slug}`}
+            >
+              <h3 className="text-lg font-semibold font-sans text-primary dark:text-secondary-foreground hover:text-primary/80 dark:hover:text-secondary-foreground/80">
                 {item.title}
-              </InertiaChakraLinkOverlay>
-              <Text
-                color={useColorModeValue('gray.600', 'gray.300')}
-                fontSize={'.875rem'}
-                mt={2}
-              >
-                {item.excerpt}
-              </Text>
-            </LinkBox>
-          </ListItem>
+              </h3>
+            </Link>
+            <p className="text-sm">{item.excerpt}</p>
+          </li>
         );
       })}
     </SimpleList>
   );
 };
 
-export const FeaturedPublications = ({ publications, ...rest }) => {
+export const FeaturedPublications = ({ publications }) => {
   return (
-    <GlassBox py={4} {...rest}>
-      <SimpleList border="none" heading={'featured publications'}>
+    <GlassBox className="bg-white dark:bg-bgDarker">
+      <SimpleList
+        className="border-none mx-auto rounded-xl max-w-lg"
+        heading={'featured publications'}
+      >
         {publications.map((publication, idx) => {
           const media = publication.media.length
             ? publication.media.filter(
@@ -378,55 +306,34 @@ export const FeaturedPublications = ({ publications, ...rest }) => {
               )[0].original_url
             : '/assets/SM-placeholder-150x150.png';
           return (
-            <ListItem
+            <li
+              className={idx === publications.length - 1 ? 'mb-0' : 'mb-4'}
               key={publication.id}
-              mb={idx === publications.length - 1 ? 0 : '1rem'}
             >
-              <LinkBox as={HStack} justify="space-between" gap={6}>
-                <Box w="80%">
-                  <Link
-                    href={`category/publications/${publication.category?.slug}`}
+              <Link
+                className="group flex w-full justify-between gap-6 items-center"
+                href={`category/publications/${publication.category?.slug}`}
+              >
+                <div className="w-2/3">
+                  <Badge
+                    variant="outline"
+                    className="mb-2 px-2 font-sans"
+                    size={'sm'}
                   >
-                    <Badge
-                      size={'sm'}
-                      colorScheme="gray"
-                      mb={2}
-                      rounded="md"
-                      px="2"
-                      fontSize="0.75rem"
-                      fontWeight="normal"
-                      fontFamily={'heading'}
-                    >
-                      {publication.category?.name}
-                    </Badge>
-                  </Link>
-                  <InertiaChakraLinkOverlay
-                    // as={Link}
-                    target="_blank"
-                    textDecor="underline"
-                    textUnderlineOffset="3px"
-                    href={
-                      publication.file
-                        ? `/publications/${publication.file.name}`
-                        : '#'
-                    }
+                    {publication.category?.name}
+                  </Badge>
+
+                  <p
+                    className="group-hover:underline text-sm font-sans leading-4"
+                    fontSize="0.875rem"
+                    fontFamily="heading"
+                    lineHeight="short"
                   >
-                    <Text
-                      fontSize="0.875rem"
-                      fontFamily="heading"
-                      lineHeight="short"
-                    >
-                      {publication.title}
-                    </Text>
-                  </InertiaChakraLinkOverlay>
-                  <Text
-                    color={useColorModeValue('gray.600', 'gray.300')}
-                    fontSize={'.75rem'}
-                    mt={1}
-                  >
-                    {publication.subtitle}
-                  </Text>
-                </Box>
+                    {publication.title}
+                  </p>
+
+                  <p className="text-xs mt-1 ">{publication.subtitle}</p>
+                </div>
 
                 {media && (
                   <Box
@@ -449,8 +356,8 @@ export const FeaturedPublications = ({ publications, ...rest }) => {
                     />
                   </Box>
                 )}
-              </LinkBox>
-            </ListItem>
+              </Link>
+            </li>
           );
         })}
       </SimpleList>
@@ -596,32 +503,24 @@ export const Content = styled(Section)`
   }
 `;
 
-export const GlassBox = ({ children, ...rest }) => {
+export const GlassBox = ({ children, className, ...rest }) => {
   return (
-    <Box
-      border="1px solid"
-      borderColor={useColorModeValue('#ebebeb', '#333')}
-      rounded="md"
-      shadow="md"
-      w="full"
-      maxW="full"
-      bg={useColorModeValue('whiteAlpha.200', 'var(--color-darker)')}
+    <div
+      className={cn(
+        'w-full rounded-md border py-4 bg-bgDarker dark:text-muted-foreground shadow-md',
+        className
+      )}
       {...rest}
     >
       {children}
-    </Box>
+    </div>
   );
 };
 
 export const Title = ({ title, ...rest }) => {
   return (
-    <Heading
-      as="h3"
-      fontSize={'1.5rem'}
-      fontWeight="bold"
-      marginBottom={'3rem !important'}
-      display={'flex'}
-      alignItems={'center'}
+    <h3
+      className="text-3xl font-bold mb-12 text-primary flex items-center"
       _after={{
         content: `""`,
         height: '2px',
@@ -633,7 +532,8 @@ export const Title = ({ title, ...rest }) => {
       {...rest}
     >
       {title}
-    </Heading>
+      <div className="border-t-2 border-gray-500/70 ml-4 grow" />
+    </h3>
   );
 };
 
@@ -680,26 +580,33 @@ export const MapModel = ({ isOpen, onClose, mapLink }) => {
   );
 };
 
-export const ExploreButton = ({ text = 'Explore All', link, ...rest }) => {
+export const ExploreButton = ({
+  text = 'Explore All',
+  link,
+  className,
+  ...rest
+}) => {
   const [hovered, setHovered] = useState(false);
 
   return (
-    <InertiaChakraLink as={Link} href={link ? link : '#'}>
-      <Button
-        variant={'link'}
-        colorScheme={'primary'}
-        aria-label={text}
-        fontWeight={'normal'}
-        onMouseEnter={() => setHovered(!hovered)}
-        onMouseLeave={() => hovered && setHovered(!hovered)}
-        rightIcon={hovered ? <ArrowForwardIcon /> : <ChevronRightIcon />}
-        href={link ? link : '#'}
-        size={'sm'}
-        {...rest}
-      >
-        {text}
-      </Button>
-    </InertiaChakraLink>
+    <Link
+      type="button"
+      role="button"
+      href={link ? link : '#'}
+      className={cn(
+        'flex max-w-max gap-1 items-center px-6 py-2 underline underline-offset-2 rounded-md text-sm font-medium text-primary hover:underline-offset-4 hover:text-primary/70',
+        className
+      )}
+      onMouseEnter={() => setHovered(!hovered)}
+      onMouseLeave={() => hovered && setHovered(!hovered)}
+    >
+      {text}
+      {hovered ? (
+        <ArrowForwardIcon className="w-4 h-4" />
+      ) : (
+        <ChevronRightIcon className="w-4 h-4" />
+      )}
+    </Link>
   );
 };
 

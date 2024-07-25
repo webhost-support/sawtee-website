@@ -1,5 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -17,6 +31,7 @@ import MegaMenu from './MegaMenu';
 export default function DesktopNavigation({ menu }) {
   const { url, props } = usePage();
   const { experts } = props;
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <NavigationMenu className="max-w-full justify-center ">
       <NavigationMenuList className="gap-4">
@@ -40,6 +55,9 @@ export default function DesktopNavigation({ menu }) {
                         )
                       : cn('')
                   }
+                  onMouseEnter={() =>
+                    !hasMegaMenu && !hasChildren && setIsOpen(!isOpen)
+                  }
                 >
                   {hasChildren ? (
                     <NavigationMenuTrigger
@@ -60,9 +78,11 @@ export default function DesktopNavigation({ menu }) {
                   <MegaMenu item={menuItem} experts={experts} />
                 </NavigationMenuContent>
               ) : (
-                <NavigationMenuContent className="bg-sky-800/95 backdrop-blur-md border-none">
-                  <DropDown menu={menuItem.children} />
-                </NavigationMenuContent>
+                <DropDown
+                  menu={menuItem.children}
+                  isOpen={isOpen}
+                  onToggle={setIsOpen}
+                />
               )}
             </NavigationMenuItem>
           );
@@ -73,59 +93,35 @@ export default function DesktopNavigation({ menu }) {
   );
 }
 
-const ListItem = React.forwardRef(
-  ({ className, title, hasChildren, ...props }, ref) => {
-    return (
-      <li>
-        <NavigationMenuLink asChild>
-          <Link
-            ref={ref}
-            // className={cn(
-            //   'block select-none text-left space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
-            //   className
-            // )}
-            {...props}
-          >
-            {hasChildren ? (
-              <NavigationMenuLink>
-                <NavigationMenuTrigger>{title}</NavigationMenuTrigger>
-              </NavigationMenuLink>
-            ) : (
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                {title}
-              </NavigationMenuLink>
-            )}
-          </Link>
-        </NavigationMenuLink>
-      </li>
-    );
-  }
-);
-ListItem.displayName = 'ListItem';
 
-const DropDown = menu => {
+const DropDown = ({ menu, isOpen, onToggle }) => {
+  console.log(isOpen);
   return (
-    <NavigationMenu className="flex w-[400px] p-2 justify-start">
-      <NavigationMenuList className="flex-col w-full items-start content-start">
-        {menu.menu?.map(menuItem => {
-          return (
-            <NavigationMenuItem key={menuItem.title}>
-              <ListItem
-                key={menuItem.title}
-                href={menuItem.url}
-                title={menuItem.title}
-                hasChildren={menuItem.children.length > 0}
-              />
-
-              {menuItem.children.length > 0 && (
-                <NavigationMenuContent>
-                  <DropDown menu={menuItem.children} />
-                </NavigationMenuContent>
-              )}
-            </NavigationMenuItem>
-          );
-        })}
-      </NavigationMenuList>
-    </NavigationMenu>
+    <DropdownMenu open={isOpen} onOpenChange={onToggle}>
+      {menu.menu?.map(menuItem => {
+        return (
+          <DropdownMenuItem key={menuItem.title}>
+            {menuItem.children.length > 0 ? (
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <Link href={menuItem.url}>{menuItem.title}</Link>
+                </DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    {menuItem.children.map(child => (
+                      <DropdownMenuItem key={child.title}>
+                        {child.title}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+            ) : (
+              <Link href={menuItem.url}>{menuItem.title}</Link>
+            )}
+          </DropdownMenuItem>
+        );
+      })}
+    </DropdownMenu>
   );
 };
