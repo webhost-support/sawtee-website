@@ -1,5 +1,5 @@
-import { DataTable } from '@/components/Backend/DataTable';
 import { DataTableColumnHeader } from '@/components/Backend/DatatableColumnHelper';
+import { DataTable } from '@/components/Backend/FrontDataTable';
 import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
 import TWTags from '@/components/shared/TWTags';
 import { Head } from '@inertiajs/react';
@@ -11,19 +11,19 @@ export default function Index({ auth, subscribers }) {
     {
       accessorKey: 'id',
       header: ({ column }) => {
-        <DataTableColumnHeader column={column} title="ID" />;
+        return <DataTableColumnHeader column={column} title="ID" />;
       },
     },
     {
       accessorKey: 'email',
       header: ({ column }) => {
-        <DataTableColumnHeader column={column} title="Email" />;
+        return <DataTableColumnHeader column={column} title="Email" />;
       },
     },
     {
       accessorKey: 'verified_at',
       header: ({ column }) => {
-        <DataTableColumnHeader column={column} title="Verified" />;
+        return <DataTableColumnHeader column={column} title="Verified" />;
       },
       cell: ({ row }) => {
         return (
@@ -42,7 +42,11 @@ export default function Index({ auth, subscribers }) {
         <p className="text-center text-gray-500">No Subscribers Found</p>
       )}
       {subscribers.length > 0 && (
-        <DataTable defaultColumns={defaultColumns} data={subscribers} />
+        <DataTable
+          defaultColumns={defaultColumns}
+          data={subscribers}
+          customFilterColumn={'email'}
+        />
       )}
     </AuthenticatedLayout>
   );

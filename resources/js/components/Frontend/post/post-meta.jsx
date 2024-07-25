@@ -1,25 +1,17 @@
 import { formatDate } from '@/lib/helpers';
-import { Box, HStack, Text } from '@chakra-ui/react';
 
 const PostMeta = ({ author, date, readingTime, ...rest }) => (
-  <Box className="post-meta" {...rest}>
-    <HStack
-      rowGap="2"
-      columnGap="8"
-      justify={'start'}
-      align={'center'}
-      flexWrap={'wrap'}
-      fontSize={'sm'}
-    >
-      {readingTime && <Text p={0}>Reading Time: {readingTime}</Text>}
-      {author && <Text p={0}>Author: {author}</Text>}
+  <div className="post-meta" {...rest}>
+    <div className="flex gap-2 space-y-8 justify-start items-center flex-wrap text-sm">
+      {readingTime && <p className="p-0">Reading Time: {readingTime}</p>}
+      {author && <p className="p-0">Author: {author}</p>}
       {date && (
-        <Text fontSize={'sm'} p={0} as={'time'} dateTime={date}>
+        <time className="text-sm p-0" dateTime={date}>
           Published date: {formatDate(date)}
-        </Text>
+        </time>
       )}
-    </HStack>
-  </Box>
+    </div>
+  </div>
 );
 
 export default PostMeta;

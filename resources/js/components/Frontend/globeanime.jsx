@@ -3,10 +3,8 @@ import anime from 'animejs';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTheme } from '../theme-provider';
 
-const Globeanime = () => {
+const Globeanime = ({ darkMode = false }) => {
   const ref = useRef(null);
-  const { theme } = useTheme();
-  const [darkMode, setDarkMode] = useState(theme === 'dark'); // State to manage dark mode
 
   const dots = [
     {
@@ -181,9 +179,21 @@ const Globeanime = () => {
               gradientUnits="userSpaceOnUse"
             >
               {/* Define colors for both light and dark modes */}
-              <stop offset="0" stopColor={'#FFFFFF'} stopOpacity="0" />
-              <stop offset="0.5" stopColor={'#FFFFFF'} stopOpacity="0.6" />
-              <stop offset="1" stopColor={'#FFFFFF'} stopOpacity="0" />
+              <stop
+                offset="0"
+                stopColor={darkMode ? '#000000' : '#FFFFFF'}
+                stopOpacity="0"
+              />
+              <stop
+                offset="0.5"
+                stopColor={darkMode ? '#000000' : '#FFFFFF'}
+                stopOpacity="0.6"
+              />
+              <stop
+                offset="1"
+                stopColor={darkMode ? '#000000' : '#FFFFFF'}
+                stopOpacity="0"
+              />
             </linearGradient>
           </defs>
         </svg>
@@ -210,19 +220,19 @@ const Globeanime = () => {
         alt="globe wireframe"
         width={400}
         height={400}
-        className={'w-full h-full '} // Hide/show based on dark mode
-        // quality={100}
-        // priority
+        className={`w-full h-full ${darkMode ? 'hidden' : 'block'}`} // Hide/show based on dark mode
+        quality={100}
+        priority
       />
-      {/* <img
+      <img
         src="/assets/globe.svg"
         alt="globe wireframe"
         width={400}
         height={400}
         className={`w-full h-full ${darkMode ? 'block' : 'hidden'}`} // Hide/show based on dark mode
-        // quality={100}
-        // priority
-      /> */}
+        quality={100}
+        priority
+      />
     </div>
   );
 };

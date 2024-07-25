@@ -49,9 +49,7 @@ export default function DesktopNavigation({ menu }) {
                     !hasMegaMenu && !hasChildren
                       ? cn(
                           navigationMenuTriggerStyle(),
-                          active
-                            ? 'dark:bg-sky-800/90 dark:text-white '
-                            : 'dark:text-white '
+                          active ? ' dark:text-white ' : 'dark:text-white '
                         )
                       : cn('')
                   }
@@ -61,10 +59,7 @@ export default function DesktopNavigation({ menu }) {
                 >
                   {hasChildren ? (
                     <NavigationMenuTrigger
-                      className={cn(
-                        active && 'bg-sky-500/20 dark:bg-sky-800/90 ',
-                        'dark:text-white'
-                      )}
+                      className={cn(active && ' ', 'dark:text-white')}
                     >
                       {menuItem.title}
                     </NavigationMenuTrigger>
@@ -78,11 +73,13 @@ export default function DesktopNavigation({ menu }) {
                   <MegaMenu item={menuItem} experts={experts} />
                 </NavigationMenuContent>
               ) : (
-                <DropDown
-                  menu={menuItem.children}
-                  isOpen={isOpen}
-                  onToggle={setIsOpen}
-                />
+                <NavigationMenuContent className="border-none">
+                  <DropDown
+                    menu={menuItem.children}
+                    isOpen={isOpen}
+                    onToggle={setIsOpen}
+                  />
+                </NavigationMenuContent>
               )}
             </NavigationMenuItem>
           );

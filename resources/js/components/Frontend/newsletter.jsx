@@ -23,17 +23,18 @@ import { SendPlaneIcon } from './icons';
 import InertiaChakraLink from './styles/inertia-chakra-link';
 
 export const PatternBox = ({ showPattern = false, ...props }) => (
-  <Box
-    as="section"
-    bg={useColorModeValue('primary.50', 'primary.700')}
-    backdropFilter={'blur(5px)'}
-    borderTop="10px solid"
-    borderColor={'primary.500'}
-    {...(showPattern && {
-      bgImage: 'url(/assets/pattern-tile-green.svg)',
-      bgSize: '1018px',
-      bgPos: 'top center',
-    })}
+  <section
+    className="bg-sky-100 dark:bg-sky-700/80 border-t-[10px] border-sky-500"
+    style={
+      showPattern
+        ? {
+            backgroundImage: 'url(assets/pattern-tile-green.svg)',
+            backgroundSize: '1018px',
+            backgroundPosition: 'top center',
+            //   backgroundBlendMode: 'overlay',
+          }
+        : {}
+    }
     {...props}
   />
 );

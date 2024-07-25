@@ -1,8 +1,7 @@
-import React from 'react';
-import MobileMenu from '../mobileMenu';
-
 import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
+import React from 'react';
+import MobileMenu from '../mobileMenu';
 import DesktopNavigation from './DesktopNavigation';
 import { ModeToggle } from './mode-toggle';
 import SearchModal from './searchModal';

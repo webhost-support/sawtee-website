@@ -241,12 +241,12 @@ swiper-container {
     border-left: 8px solid var(--chakra-colors-primary-500);
     line-height: 1.5;
     position: relative;
-    background: var(--chakra-colors-blackAlpha-100);
+    /* background: var(--chakra-colors-blackAlpha-100); */
     backdrop-filter: blur(3px);
 }
 
 .chakra-ui-dark .blockquote {
-    background: var(--chakra-colors-blackAlpha-300);
+    /* background: var(--chakra-colors-blackAlpha-300); */
 }
 
 .blockquote::after {

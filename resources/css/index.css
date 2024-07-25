@@ -6,6 +6,8 @@
   :root {
     --background: 0 0% 100%;
     --background-darker: 0 0% 96%;
+    --theme-color: 195 100% 25%;
+    --mega_menu_bg: 194 85% 32%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 15%;

@@ -9,6 +9,7 @@ import {
   TwoColumnImageSection,
 } from '@/components/Frontend';
 import WebsiteHead from '@/components/Frontend/Head';
+import NewsletterCallout from '@/components/Frontend/NewsletterCallout';
 import VideoCarousel from '@/components/Frontend/VideoCarousel';
 import { Newsletter } from '@/components/Frontend/newsletter';
 import { cn } from '@/lib/utils';
@@ -147,7 +148,8 @@ const Home = ({
         px={{ base: '10', md: '16', lg: '20' }}
         className="subscribe-section"
       >
-        <Newsletter data={newsletters} />
+        {/* <Newsletter data={newsletters} /> */}
+        <NewsletterCallout />
       </Section>
     </MainLayout>
   );

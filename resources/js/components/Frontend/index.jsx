@@ -182,7 +182,9 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
                       rel="noreferrer"
                       className="underline underline-offset-2 text-secondary-foreground group-hover:underline-offset-4 group-hover:text-primary/80 dark:group-hover:text-secondary-foreground/80"
                     >
-                      <p className="text-sm leading-5">{item.title}</p>
+                      <p className="text-sm md:text-md lg:text-lg leading-5">
+                        {item.title}
+                      </p>
                     </a>
                   )}
                   {hasContent && (
@@ -190,7 +192,9 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
                       href={`/category/${item.category.slug}/${item.slug}`}
                       className="underline underline-offset-2 text-secondary-foreground group-hover:underline-offset-4 group-hover:text-primary/80 dark:group-hover:text-secondary-foreground/80"
                     >
-                      <p className="text-sm leading-5">{item.title}</p>
+                      <p className="text-sm md:text-md lg:text-lg leading-5">
+                        {item.title}
+                      </p>
                     </Link>
                   )}
                   <p className="text-muted-foreground text-xs mt-2">
@@ -232,7 +236,7 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
                   className=" flex gap-2 w-2/3 grow"
                 >
                   <div className="flex flex-col w-full ">
-                    <p className="text-sm font-sans text-secondary-foreground underline underline-offset-2 group-hover:underline-offset-4 group-hover:text-primary/80 dark:group-hover:text-secondary-foreground/80 leading-5">
+                    <p className="text-sm md:text-md lg:text-lg font-sans text-secondary-foreground underline underline-offset-2 group-hover:underline-offset-4 group-hover:text-primary/80 dark:group-hover:text-secondary-foreground/80 leading-5">
                       {event.title}
                     </p>
 
@@ -323,12 +327,7 @@ export const FeaturedPublications = ({ publications }) => {
                     {publication.category?.name}
                   </Badge>
 
-                  <p
-                    className="group-hover:underline text-sm font-sans leading-4"
-                    fontSize="0.875rem"
-                    fontFamily="heading"
-                    lineHeight="short"
-                  >
+                  <p className="group-hover:underline text-sm md:text-md font-sans leading-4">
                     {publication.title}
                   </p>
 
@@ -520,15 +519,7 @@ export const GlassBox = ({ children, className, ...rest }) => {
 export const Title = ({ title, ...rest }) => {
   return (
     <h3
-      className="text-3xl font-bold mb-12 text-primary flex items-center"
-      _after={{
-        content: `""`,
-        height: '2px',
-        bg: useColorModeValue('blackAlpha.400', 'whiteAlpha.400'),
-        ml: '1rem',
-        borderRadius: '4px',
-        flexGrow: 1,
-      }}
+      className="text-xl md:text-2xl lg:text-3xl xl:text-4xl  font-bold mb-12 text-primary flex items-center"
       {...rest}
     >
       {title}
