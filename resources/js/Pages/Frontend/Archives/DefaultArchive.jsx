@@ -1,6 +1,7 @@
 import { PostImageWithOverlay } from '@/components/Frontend/featured-post/components';
 import { ExploreButton, GlassBox } from '@/components/Frontend/index';
 import { formatDate } from '@/lib/helpers';
+import { htmlToText } from '@/lib/utils';
 import {
   Box,
   Heading,
@@ -21,11 +22,7 @@ const DefaultArchive = ({ posts, showFallbackImage, ...rest }) => {
     return (
       <GlassBox
         key={post.id}
-        role="group"
-        w={{ base: 'xs', sm: 'md', md: 'lg', lg: 'xl' }}
-        as={'article'}
-        _hover={{ boxShadow: 'xl' }}
-        pos={'relative'}
+        className={'group relative max-w-sm md:max-w-lg lg:max-w-xl hover:shadow-xl'}
         {...rest}
       >
         <ArchivePost
@@ -42,7 +39,13 @@ export default DefaultArchive;
 
 const ArchivePost = ({ post, featured_image, showFallbackImage, ...rest }) => {
   return (
-    <LinkBox {...rest}>
+    <Link
+            href={
+              post.category.parent
+                ? `/category/${post.category.parent.slug}/${post.category.slug}/${post.slug}`
+                : `/category/${post.category.slug}/${post.slug}`
+            }
+          >
       {showFallbackImage && (
         <PostImageWithOverlay
           height="240px"
@@ -65,55 +68,33 @@ const ArchivePost = ({ post, featured_image, showFallbackImage, ...rest }) => {
           }
         />
       )}
-      <Box p={[2, 4]}>
-        <Box>
-          <LinkOverlay
-            as={Link}
-            href={
-              post.category.parent
-                ? `/category/${post.category.parent.slug}/${post.category.slug}/${post.slug}`
-                : `/category/${post.category.slug}/${post.slug}`
-            }
-          >
-            <Heading
+        <div className='px-4 pt-4'>
+            <h3
               as="h3"
-              fontSize={['sm', 'sm', 'sm', 'md']}
-              fontWeight="normal"
+              className="text-lg font-medium"
             >
               {post.title}
-            </Heading>
-          </LinkOverlay>
-          <Text
-            fontSize={'xs'}
-            mt={2}
-            noOfLines={3}
-            dangerouslySetInnerHTML={{ __html: post.excerpt }}
-          />
-        </Box>
+            </h3>
+          {/* <p
+          className='text-sm text-zinc-600 mt-2 line-clamp-3'
 
-        <Box mt="4">
-          <Stack
-            justify="space-between"
-            direction={'row'}
-            flexWrap={'wrap'}
-            alignItems={'center'}
-          >
-            <Text as="time" fontSize={'xs'} color="gray.600">
+
+          >{htmlToText(post.excerpt)}</p> */}
+
+        <div className='flex flex-wrap justify-between items-center gap-4 '>
+            <time className='text-sm text-zinc-600'>
               {formatDate(post.published_at)}
-            </Text>
+            </time>
 
             <ExploreButton
               size="xs"
               text="Read more"
               aria-label={'Read More'}
-              colorScheme={'gray'}
-              w="full"
-              variant={'solid'}
               link={`/category/${post.category.slug}/${post.slug}`}
             />
-          </Stack>
-        </Box>
-      </Box>
-    </LinkBox>
+        </div>
+        </div>
+      </Link>
+
   );
 };

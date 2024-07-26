@@ -138,11 +138,8 @@ export default function Category({
               )}
               {showFacebookEmbed && (
                 <GlassBox
-                  py="4"
-                  px="4"
-                  rounded="xl"
-                  w="full"
-                  textAlign="center"
+                className={'w-full text-center'}
+
                 >
                   <div id="fb-root"></div>
                   <div
@@ -170,7 +167,7 @@ export default function Category({
               )}
 
               {showSubscriptionBox && (
-                <GlassBox py="4" px="4" rounded="xl" w="full">
+                <GlassBox className={'p-4 w-full '}>
                   <SubscriptionCard />
                 </GlassBox>
               )}

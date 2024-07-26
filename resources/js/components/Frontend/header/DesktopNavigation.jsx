@@ -69,11 +69,11 @@ export default function DesktopNavigation({ menu }) {
                 </NavigationMenuLink>
               </Link>
               {hasMegaMenu ? (
-                <NavigationMenuContent className="border-none">
+                <NavigationMenuContent className="border-none bg-megaMenuBg/90 backdrop-blur-xl">
                   <MegaMenu item={menuItem} experts={experts} />
                 </NavigationMenuContent>
               ) : (
-                <NavigationMenuContent className="border-none">
+                <NavigationMenuContent className="border-none bg-megaMenuBg/90 backdrop-blur-xl">
                   <DropDown
                     menu={menuItem.children}
                     isOpen={isOpen}

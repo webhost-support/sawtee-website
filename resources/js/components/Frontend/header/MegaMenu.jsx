@@ -34,7 +34,7 @@ const ListContainerVariants = {
 const AboutMegaMenu = ({ item, experts, introText, introImage, ...rest }) => {
   return (
     <ul
-      className="relative  grid gap-6 px-6 mx-auto md:grid-cols-5 lg:grid-cols-7 grid-rows-auto md:grid-rows-[repeat(2, minmax(auto, 250px))] xl:grid-rows-[auto] p-4 w-[85vw] grid-cols-1 px-8 py-10 gap-4    place-items-center"
+      className="relative grid gap-6 px-6 mx-auto md:grid-cols-5 lg:grid-cols-7 grid-rows-auto md:grid-rows-[repeat(2, minmax(auto, 250px))] xl:grid-rows-[auto] p-4 w-[90vw] grid-cols-1 px-8 py-10 gap-4    place-items-center"
       {...rest}
     >
       <div className="col-span-1 self-center">
@@ -91,7 +91,7 @@ const AboutMegaMenu = ({ item, experts, introText, introImage, ...rest }) => {
 
 const OurWorkMegaMenu = ({ item, ...rest }) => {
   return (
-    <ul className="grid p-4 w-[85vw] grid-cols-1 px-8 py-10 gap-4" {...rest}>
+    <ul className="grid p-4 w-[90vw] grid-cols-1 px-8 py-10 gap-4" {...rest}>
       <div className="w-full flex flex-col gap-10 justify-center items-center mx-auto">
         <Link
           className="text-2xl font-serif text-gray-200"

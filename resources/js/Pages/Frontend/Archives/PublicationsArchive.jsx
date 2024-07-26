@@ -85,7 +85,6 @@ export default function PublicationsArchive({
                   array={sawteeInMedia}
                   title={'SAWTEE in Media'}
                   link={'/category/sawtee-in-media'}
-                  maxW={['md', 'lg', 'xl']}
                 />
               )}
               {infocus && (
@@ -93,12 +92,11 @@ export default function PublicationsArchive({
                   array={infocus}
                   title={'Infocus'}
                   link={'/category/infocus'}
-                  maxW={['md', 'lg', 'xl']}
                 />
               )}
 
               {showSubscriptionBox && (
-                <GlassBox maxW={['md', 'lg', 'xl']} py="4" px="8" rounded="xl">
+                <GlassBox className={'p-4 w-full '}>
                   <SubscriptionCard />
                 </GlassBox>
               )}

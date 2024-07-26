@@ -21,7 +21,7 @@ const PostHeader = ({
         size={'xs'}
       />
     )}
-    <h1 className="captialize text-2xl md:text-3xl xl:text-4xl my-3 lg:my-5">
+    <h1 className="captialize font-bold text-2xl md:text-3xl xl:text-5xl my-3 lg:my-5">
       {heading}
     </h1>
 

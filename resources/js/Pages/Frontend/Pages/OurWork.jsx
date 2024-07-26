@@ -1,3 +1,4 @@
+import { htmlToText } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
 import React, { useEffect, useState } from 'react';
 import CardWithEffect from '../CardWithEffect';
@@ -6,7 +7,7 @@ export default function OurWork({ themes, sections, content }) {
   const [intro, setIntro] = useState(null);
   const [sectors, setSectors] = useState(null);
   useEffect(() => {
-    const intro = sections.filter(section => section.title === 'Intro')[0];
+    const intro = sections.find(section => section.title === 'Intro');
     const sectors = sections.filter(section => section.parent_id !== null);
     intro && setIntro(intro);
     sectors && setSectors(sectors);
@@ -20,12 +21,9 @@ export default function OurWork({ themes, sections, content }) {
 
       <div className="flex flex-col max-w-4xl mx-auto gap-8 justify-center items-center relative mb-24">
         {intro && (
-          <blockquote
-            className="blockquote text-xl bg-bgDarker/90 m-0 py-10 dark:text-zinc-400 self-center"
-            dangerouslySetInnerHTML={{
-              __html: intro.description,
-            }}
-          />
+          <blockquote className="blockquote text-xl bg-bgDarker/90 m-0 py-10 dark:text-zinc-400 self-center">
+            {htmlToText(intro.description)}
+          </blockquote>
         )}
       </div>
 
@@ -34,14 +32,14 @@ export default function OurWork({ themes, sections, content }) {
           return (
             <div
               key={theme.title}
-              className={`w-full p-8 last:border-b-0 border-b md:w-1/2 ${(index + 1) % 3 === 0 ? 'md:border-r-0' : 'border-r'} md:border-r lg:w-1/3 hover:shadow-md transition-all duration-300 ease-in-out`}
+              className={`w-full bg-bgDarker p-8 border-zinc-500 last:border-b-0 border-b md:w-1/2 ${(index + 1) % 3 === 0 ? 'md:border-r-0' : 'border-r'} md:border-r lg:w-1/3 hover:shadow-md transition-all duration-300 ease-in-out`}
             >
               <div className="flex items-center mb-6">
                 <div className="ml-4 text-xl dark:text-zinc-200">
                   {theme.title}
                 </div>
               </div>
-              <p className="leading-loose text-zinc-400 line-clamp-3 dark:text-gray-200 text-md">
+              <p className="leading-normal text-zinc-700 line-clamp-3 dark:text-gray-200 text-md">
                 {theme.description}
               </p>
             </div>
@@ -63,11 +61,14 @@ export default function OurWork({ themes, sections, content }) {
               />
               <Link
                 href={`/category/${link}`}
-                className="absolute group inset-0 w-full h-full bg-[rgba(0,0,0,0.2)] bg-blend-lighten"
+                className="absolute group inset-0 flex flex-col justify-between items-center w-full h-full bg-bgDarker bg-blend-lighten"
               >
-                <h2 className="title text-center dark:text-zinc-300 py-6 text-lg md:text-2xl w-full group-hover:bg-theme-500/50">
+                <h2 className="title text-center self-start dark:text-zinc-300 py-6 text-lg md:text-2xl w-full group-hover:bg-theme-500/50">
                   {title}
                 </h2>
+                <p className="grow flex w-full h-full px-6 dark:text-gray-200 justify-center items-center">
+                  {description || 'Random text to check the positioning'}
+                </p>
               </Link>
             </CardWithEffect>
           );

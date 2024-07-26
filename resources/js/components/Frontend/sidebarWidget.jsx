@@ -16,12 +16,8 @@ import ChakraLink from './styles/inertia-chakra-link';
 const SidebarWidget = ({ array, title, link, ...rest }) => {
   return (
     <GlassBox
-      className="sidebar_widget"
-      height="max-content"
-      shadow="none"
-      border="none"
-      position="relative"
-      rounded="md"
+      className="sidebar_widget relative max-h-max overflow-y-auto shadow-none border-none "
+
       {...rest}
     >
       <SimpleList className={'border-none px-8'} heading={title}>
