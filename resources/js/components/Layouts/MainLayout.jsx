@@ -1,9 +1,11 @@
-import Footer from '@/components/Frontend/footer';
+// import Footer from '@/components/Frontend/footer';
+import Footer from '@/components/Frontend/footer/footer';
 import Header from '@/components/Frontend/header/header';
+import { Button } from '@/components/ui/button';
 import { FooterMenu, mobileMenu, socialMenu } from '@/lib/data';
-import { ArrowUpIcon } from '@chakra-ui/icons';
-import { Box, Button, Icon, ScaleFade, SlideFade } from '@chakra-ui/react';
+import { cn } from '@/lib/utils';
 import { usePage } from '@inertiajs/react';
+import { ArrowUpToLineIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 export default function MainLayout({ children, ...rest }) {
@@ -36,36 +38,28 @@ export default function MainLayout({ children, ...rest }) {
         mobileMenu={mobileMenu}
         socialLinks={socialMenu}
       />
-      <ScaleFade in={url} initialScale={0.9}>
-        <div id="main" className="min-h-screen" {...rest}>
-          {children}
-        </div>
-      </ScaleFade>
-      <Footer
+      <main id="main" className="min-h-screen" {...rest}>
+        {children}
+      </main>
+      {/* <Footer
         menu={footerMenu && footerMenu.length > 0 ? footerMenu : FooterMenu}
         socialMenu={socialMenu}
+      /> */}
+      <Footer
+        menu={footerMenu?.length > 0 ? footerMenu : FooterMenu}
+        socialMenu={socialMenu}
       />
-      <SlideFade in={visible} offsetY="40px">
-        <Box
-          as={Button}
-          pos={'fixed'}
-          width={'50px'}
-          height={'50px'}
-          rounded={'full'}
-          cursor={'pointer'}
-          shadow={'lg'}
-          right={'40px'}
-          bottom={'40px'}
-          zIndex={'100'}
-          transform={'translateY(-60px)'}
-          transition="all 0.5s ease-in-out"
-          colorScheme={'primary'}
-          aria-label="scroll to top"
-          onClick={scrollToTop}
-        >
-          <Icon as={ArrowUpIcon} className="scroll-icon" />
-        </Box>
-      </SlideFade>
+      <Button
+        className={cn(
+          'scroll-to-top fixed bottom-20 right-12 z-50 h-16 p-2 flex items-center justify-center transition-all duration-300 ease-in-out rounded-full bg-bgDarker/80 hover:bg-bgDarker/90 focus:bg-bgDarker/90 text-primary dark:text-white hover:text-white backdrop-blur-md',
+          visible ? 'translate-y-0' : 'translate-y-60'
+        )}
+        aria-label="scroll to top"
+        onClick={scrollToTop}
+        size="icon"
+      >
+        <ArrowUpToLineIcon className="scroll-icon w-6 h-6 animate-bounce" />
+      </Button>
     </>
   );
 }

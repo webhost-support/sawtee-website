@@ -6,13 +6,13 @@ import { Input } from '../ui/input';
 
 export default function NewsletterCallout() {
   return (
-    <div className="px-6 py-6 bg-theme-700/90 rounded-lg dark:bg-theme-900/70 md:py-12 md:px-12 lg:py-16 lg:px-16 xl:flex xl:items-center">
+    <div className="px-6 py-6 bg-theme-50/50 rounded-lg dark:bg-theme-700/90 md:py-12 md:px-12 lg:py-16 lg:px-16 xl:flex xl:items-center">
       <div className="xl:w-0 xl:flex-1">
-        <h2 className="text-2xl font-extrabold leading-8 tracking-tight text-gray-200 sm:text-3xl sm:leading-9">
+        <h2 className="text-2xl font-extrabold leading-8 tracking-tight text-slate-600 dark:text-slate-300/80 sm:text-3xl sm:leading-9">
           Receive the latest publication releases, events and monthly
           newsletter.
         </h2>
-        <p className="max-w-3xl mt-3 text-lg leading-6 text-zinc-300 dark:text-zinc-400">
+        <p className="max-w-3xl mt-3 text-lg leading-6 text-slate-500 dark:text-slate-400">
           In order to receive the newsletter, you must be subscribed to the
           mailing list.
         </p>
@@ -21,7 +21,7 @@ export default function NewsletterCallout() {
         <div className="mt-3 sm:mt-0 sm:ml-3 sm:flex-shrink-0">
           <SubscribeForm />
         </div>
-        <p className="mt-3 text-sm leading-5 text-zinc-300 dark:text-zinc-400">
+        <p className="mt-3 text-sm leading-5 text-slate-500 dark:text-slate-400">
           We care about the protection of your data. Your data is safe and never
           used for commercial purposes.
         </p>
@@ -69,7 +69,7 @@ const SubscribeForm = ({ ...rest }) => {
         type="email"
         id="email"
         name="email"
-        className="p-3 h-9 text-sm placeholder:text-zinc-300 dark:border-theme-700/60 focus-visible:appearance-none focus-visible:border-theme-400 focus-visible:ring-0"
+        className="p-3 h-9 text-sm "
         placeholder="Enter your email address"
         value={data.email}
         onChange={e => {
@@ -80,8 +80,9 @@ const SubscribeForm = ({ ...rest }) => {
 
       <PrimaryButton
         type="submit"
+        variant="primary"
         isLoading={processing}
-        className="flex items-center justify-center w-full px-5 py-3 text-base font-medium leading-6 text-zinc-200 transition duration-150 ease-in-out bg-theme-500/60 border border-transparent rounded-md hover:bg-theme-600/50 focus:outline-none focus:bg-theme-600/50"
+        className="flex items-center justify-center w-full px-5 py-3 text-base font-medium leading-6 transition duration-150 ease-in-out bg-theme-500 hover:bg-theme-500/90"
       >
         Subscribe
       </PrimaryButton>

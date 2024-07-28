@@ -4,14 +4,14 @@ import Pagination from '@/components/Frontend/Pagination';
 import SidebarWidget from '@/components/Frontend/sidebarWidget';
 import SubscriptionCard from '@/components/Frontend/subscriptionCard';
 import { Grid, GridItem, VStack } from '@chakra-ui/react';
+import MainLayout from '../../components/Layouts/MainLayout';
+import PageLayout from '../../components/Layouts/PageLayout';
 import BlogArchive from './Archives/BlogArchive';
 import CovidArchive from './Archives/CovidArchive';
 import DefaultArchive from './Archives/DefaultArchive';
 import NewsletterArchive from './Archives/NewsletterArchive';
 import ResearchArchive from './Archives/ResearchArchive';
 import SawteeInMediaArchive from './Archives/SawteeInMediaArchive';
-import MainLayout from './Layout/MainLayout';
-import { PageLayout } from './Layout/PageLayout';
 
 export default function Category({
   category,
@@ -59,29 +59,8 @@ export default function Category({
         title={category.name}
         showBackgroundPattern={false}
       >
-        <Grid
-          py={{ base: '24px', lg: '80px' }}
-          px={{ base: '24px', md: '32px', lg: '40px' }}
-          mx="auto"
-          pt="50px"
-          gridTemplateColumns={{
-            base: '1fr',
-            lg: 'repeat(2, 1fr)',
-            xl: 'minmax(var(--chakra-sizes-xl), 1fr) minmax(var(--chakra-sizes-sm), var(--chakra-sizes-md))',
-          }}
-          templateRows={'auto'}
-          gap={12}
-          rowGap={10}
-        >
-          <GridItem
-            as="section"
-            display="flex"
-            flexDir="column"
-            alignItems="center"
-            gap={12}
-            colSpan={1}
-            className="archive-list"
-          >
+        <div className="grid  md:grid-cols-2 lg:grid-cols-6 gap-12 px-8 md:px-10 py-8 md:py-20 mx-auto">
+          <section className="flex flex-col items-center gap-12 col-span-1 lg:col-span-4 archive-list">
             {isDefault && (
               <DefaultArchive posts={posts.data} showFallbackImage={isEvent} />
             )}
@@ -105,9 +84,9 @@ export default function Category({
                 width="full"
               />
             )}
-          </GridItem>
-          <GridItem colSpan={1} as="aside" className="sidebar">
-            <VStack spacing={12}>
+          </section>
+          <aside className="sidebar col-span-1 lg:col-span-2">
+            <div className="flex flex-col gap-12">
               {!isMedia && sawteeInMedia && (
                 <SidebarWidget
                   array={sawteeInMedia}
@@ -137,11 +116,8 @@ export default function Category({
                 />
               )}
               {showFacebookEmbed && (
-                <GlassBox
-                className={'w-full text-center'}
-
-                >
-                  <div id="fb-root"></div>
+                <GlassBox className={'w-full text-center'}>
+                  <div id="fb-root" />
                   <div
                     className="fb-page"
                     data-href="https://www.facebook.com/sawteenp/"
@@ -171,9 +147,9 @@ export default function Category({
                   <SubscriptionCard />
                 </GlassBox>
               )}
-            </VStack>
-          </GridItem>
-        </Grid>
+            </div>
+          </aside>
+        </div>
       </PageLayout>
     </MainLayout>
   );

@@ -1,6 +1,6 @@
 import WebsiteHead from '@/components/Frontend/Head';
-import MainLayout from './Layout/MainLayout';
-import { PageLayout } from './Layout/PageLayout';
+import MainLayout from '../../components/Layouts/MainLayout';
+import PageLayout from '../../components/Layouts/PageLayout';
 import About from './Pages/About';
 import Contact from './Pages/Contact';
 import DefaultPage from './Pages/DefaultPage';

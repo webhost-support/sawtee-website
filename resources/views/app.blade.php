@@ -9,12 +9,9 @@
 
     <!-- Loads default(Inter) google fonts -->
     @googlefonts
-    {{-- @googlefonts('figtree') --}}
+    @googlefonts('figtree')
     @googlefonts('code')
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-    <!-- Load nprogress style -->
+
     <link defer rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
     @routes
     @viteReactRefresh
@@ -22,8 +19,8 @@
     @inertiaHead
 </head>
 
-<body>
-    <a  href='#main' class="absolute px-3 py-2 transition-all -translate-y-full focus:translate-y-0 bg-sky-800 text-gray-100 text-base font-medium rounded-b-lg mx-4 focus:outline-none focus:ring-4 focus:ring-sky-500  hover:no-underline hover:bg-sky-900 hover:text-white z-[50]">skip to main content</a>
+<body class="antialiased bg-zinc-50 dark:bg-background">
+    <a  href='#main' class="absolute px-3 py-2 transition-all -translate-y-full focus:translate-y-0 bg-theme-500 text-gray-100 text-base font-medium rounded-b-lg mx-4 focus:outline-none focus:ring-4 focus:ring-sky-500  hover:no-underline hover:bg-theme-700 hover:text-white z-[50]">skip to main content</a>
     @inertia
 </body>
 

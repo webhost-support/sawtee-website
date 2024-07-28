@@ -1,61 +1,34 @@
 import { ExploreButton, GlassBox } from '@/components/Frontend/index';
-import { formatDate, slugify } from '@/lib/helpers';
-import {
-  Box,
-  Flex,
-  ListItem,
-  Skeleton,
-  Text,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { formatDate } from '@/lib/helpers';
+
 import { Link } from '@inertiajs/react';
 import React from 'react';
 import SimpleList from './SimpleList';
-import ChakraLink from './styles/inertia-chakra-link';
 
 const SidebarWidget = ({ array, title, link, ...rest }) => {
   return (
     <GlassBox
       className="sidebar_widget relative max-h-max overflow-y-auto shadow-none border-none "
-
       {...rest}
     >
       <SimpleList className={'border-none px-8'} heading={title}>
-        {array.length <= 0 && (
-          <Box display={'flex'} flexDir={'column'} gap={2}>
-            <Skeleton w="full" height="30px" />
-            <Box display={'flex'} justifyContent={'space-between'}>
-              <Skeleton w="80px" height="15px" />
-              <Skeleton w="80px" height="15px" />
-            </Box>
-          </Box>
-        )}
-        {array.length > 0 &&
-          array.map((post, index) => {
-            return (
-              <li className="mb-4" key={post.id}>
-                <Box>
-                  <ChakraLink
-                    as={Link}
-                    textDecor="underline"
-                    textUnderlineOffset="3px"
-                    href={`${link}/${post.slug}`}
-                  >
-                    <Text fontSize={'0.875rem'} lineHeight={'short'}>
-                      {post.title}
-                    </Text>
-                  </ChakraLink>
-                  <Text
-                    color={useColorModeValue('gray.600', 'gray.300')}
-                    fontSize={'.75rem'}
-                    mt={2}
-                  >
-                    {formatDate(post.published_at)}
-                  </Text>
-                </Box>
-              </li>
-            );
-          })}
+        {array?.map(post => {
+          return (
+            <li className="mb-4 group" key={post.id}>
+              <Link
+                className="underline underline-offset-2 text-secondary-foreground group-hover:underline-offset-4 group-hover:text-primary/80 dark:group-hover:text-secondary-foreground/80"
+                href={`${link}/${post.slug}`}
+              >
+                <p className="text-sm md:text-md lg:text-lg leading-5">
+                  {post.title}
+                </p>
+              </Link>
+              <p className="text-muted-foreground text-xs mt-2">
+                {formatDate(post.published_at)}
+              </p>
+            </li>
+          );
+        })}
         <ExploreButton text={`More ${title}`} link={link} className="p-0 " />
       </SimpleList>
     </GlassBox>

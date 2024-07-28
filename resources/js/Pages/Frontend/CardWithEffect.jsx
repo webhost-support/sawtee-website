@@ -13,7 +13,7 @@ const CardWithEffect = ({ children }) => {
   return (
     <div
       className={cn(
-        'relative bg-bgDarker flex-1 rounded-xl border border-[#33313d] cursor-pointer p-4 overflow-hidden',
+        'relative bg-bgDarker flex-1 rounded-xl border dark:border-[#33313d] cursor-pointer p-4 overflow-hidden',
         cn
       )}
       onMouseMove={handleMouseMove}

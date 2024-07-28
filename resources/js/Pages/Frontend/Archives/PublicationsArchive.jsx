@@ -19,8 +19,8 @@ import {
 } from '@chakra-ui/react';
 import { Link } from '@inertiajs/react';
 import React from 'react';
-import MainLayout from '../Layout/MainLayout';
-import { PageLayout } from '../Layout/PageLayout';
+import MainLayout from '../../../components/Layouts/MainLayout';
+import PageLayout from '../../../components/Layouts/PageLayout';
 
 export default function PublicationsArchive({
   category,

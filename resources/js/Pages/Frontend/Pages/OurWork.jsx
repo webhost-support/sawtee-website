@@ -49,7 +49,7 @@ export default function OurWork({ themes, sections, content }) {
       <div className="page_content grid md:grid-cols-2 mx-auto px-8 md:px-4 py-12 gap-8 items-center max-w-5xl">
         {sectors?.map(({ id, title, description, media, link }) => {
           return (
-            <CardWithEffect key={id} className="cards  p-0">
+            <CardWithEffect key={id} className="cards max-w-lg  p-0">
               <img
                 className="w-full h-full object-cover aspect-square"
                 alt="sector cover"

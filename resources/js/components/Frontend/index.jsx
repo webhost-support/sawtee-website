@@ -104,6 +104,9 @@ export const TwoColumnImageSection = ({
 
             {showBlobIcon && (
               <Blob
+                className={
+                  'w-full h-[150%] absolute -top-[20%] left-0 text-theme-100 dark:text-theme-400 '
+                }
                 w={'100%'}
                 h={'150%'}
                 position={'absolute'}
@@ -373,60 +376,8 @@ export const PublicationsSection = ({ publications }) => {
       scrollbar={true}
       link={'/category/publications'}
       text={'More in publications'}
-    >
-      {publications.map(publication => {
-        const media = publication.media.length
-          ? publication.media.filter(
-              media => media.collection_name === 'publication_featured_image'
-            )[0].original_url
-          : '/assets/SM-placeholder-150x150.png';
-        return (
-          <swiper-slide
-            key={publication.id}
-            class="swiper-slide publication-slide"
-          >
-            <Flex my={8} justify="center">
-              <LinkBox textAlign="center">
-                <Image
-                  src={media}
-                  fallbackSrc="/assets/SM-placeholder-300x150.png"
-                  w="180px"
-                  h={'240px'}
-                  alt={publication.title}
-                  title={publication.title}
-                  rounded="md"
-                  shadow="xl"
-                  mx="auto"
-                  mb="2"
-                  loading="lazy"
-                />
-                <LinkOverlay
-                  fontSize={'xs'}
-                  href={`/publications/${publication.file.name}`}
-                >
-                  {publication.title}
-                </LinkOverlay>
-              </LinkBox>
-            </Flex>
-          </swiper-slide>
-        );
-      })}
-      {publications.length <= 0 &&
-        [1, 2, 3].map(item => (
-          <Box my={8} key={item}>
-            <swiper-slide class="swiper-slide publication-slide">
-              <Skeleton
-                w="180px"
-                height={'240px'}
-                alt={publication.title}
-                rounded="md"
-                // aspectRatio={3 / 4}
-                mx="auto"
-              />
-            </swiper-slide>
-          </Box>
-        ))}
-    </MultiPostsCarousel>
+      data={publications}
+    />
   );
 };
 
@@ -518,13 +469,15 @@ export const GlassBox = ({ children, className, ...rest }) => {
 
 export const Title = ({ title, ...rest }) => {
   return (
-    <h3
-      className="text-xl md:text-2xl lg:text-3xl xl:text-4xl  font-bold mb-12 text-primary flex items-center"
-      {...rest}
-    >
-      {title}
-      <div className="border-t-2 border-gray-500/70 ml-4 grow" />
-    </h3>
+    <div className="mb-12">
+      <h3
+        className="text-xl md:text-2xl lg:text-3xl xl:text-4xl  font-bold text-primary flex items-center"
+        {...rest}
+      >
+        {title}
+      </h3>
+      <div className="h-2 w-[8%] bg-theme-500 " />
+    </div>
   );
 };
 

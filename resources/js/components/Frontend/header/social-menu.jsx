@@ -1,51 +1,63 @@
-import { Button } from '@/components/ui/button';
-import { Box, Link} from '@chakra-ui/react';
-import { XIcon } from 'react-share';
+import { cn } from '@/lib/utils';
 import { FacebookIcon, LinkedinIcon, TwitterIcon, YoutubeIcon } from '../icons';
 
 // warning for showSocialLinks and menu.length
 export const SocialMenu = ({ menu, ...props }) => (
-  <ul
-    className="flex gap-5 ml-6 relative list-none items-center text-white"
-    {...props}
-  >
+  <ul className="flex mt-4 space-x-4 sm:justify-center lg:mt-0 " {...props}>
     {menu?.map(item => {
       const SocialIcon = icons[item.name];
+      const styles = () => {
+        if (item.name === 'twitter') {
+          return 'bg-brand-twitter hover:bg-brand-twitter/80';
+        }
+        if (item.name === 'youtube') {
+          return 'bg-brand-youtube hover:bg-brand-youtube/80';
+        }
+        if (item.name === 'linkedin') {
+          return 'bg-brand-linkedin hover:bg-brand-linkedin/80';
+        }
+        if (item.name === 'facebook') {
+          return 'bg-brand-facebook hover:bg-brand-facebook/80';
+        }
+      };
       return (
-        <SocialMenuItem
-          key={item.name}
-          label={item.name}
-          link={item.link}
-          icon={SocialIcon}
-        />
+        <SocialMenuItem key={item.name} className={styles()} link={item.link}>
+          <SocialIcon className="w-5 h-5 text-white" />
+        </SocialMenuItem>
       );
     })}
   </ul>
 );
 
-const SocialMenuItem = ({ icon, label, link, ...props }) => (
-  <Link
-    className="p-1 m-0 rounded-full transition-all ease-out 0.25s text-gray-800 dark:text-gray-200 bg-gray-200 dark:bg-gray-800 "
-    href={link}
-    target="_blank"
-    {...props}
+const SocialMenuItem = ({ link, className, children }) => (
+  <li
+    className={cn(
+      ' bg-gray-700 hover:bg-gray-700/90  rounded-full ',
+      className
+    )}
   >
-    <Button variant="unstyled">{icon}</Button>
-    <p className="sr-only">{label}</p>
-  </Link>
+    <a
+      href={link}
+      className="w-9 h-9 flex justify-center items-center "
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {children}
+    </a>
+  </li>
 );
 
 const icons = {
-  twitter: XIcon,
+  twitter: TwitterIcon,
   linkedin: LinkedinIcon,
   facebook: FacebookIcon,
   youtube: YoutubeIcon,
 };
 
-const SocialNav = ({ menu, ...props }) => (
-  <Box ml="auto" display={{ base: 'none', lg: 'block' }} {...props}>
+const SocialNav = ({ menu, className }) => (
+  <div className={cn('block ml-auto', className)}>
     <SocialMenu menu={menu} />
-  </Box>
+  </div>
 );
 
 export default SocialNav;

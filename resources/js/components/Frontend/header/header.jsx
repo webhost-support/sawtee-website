@@ -26,10 +26,14 @@ const SiteHeaderInner = ({ className, children }) => (
 
 const Logo = ({ text = 'SAWTEE', src }) => {
   if (src) {
-    return <img src={src} alt="Logo" className="w-[120px] h-full" />;
+    return <img src={src} alt="Logo" className="w-32 object-cover" />;
   }
     return (
-      <P className={'font-bold font-sans uppercase text-center md:text-left'}>
+      <P
+        className={
+          'font-bold text-theme-500 font-sans uppercase text-center md:text-left'
+        }
+      >
         {text}
       </P>
     );
@@ -40,7 +44,7 @@ const SiteLogo = ({ src, established }) => {
   // we assume, if it's a url, it points to an image, else it's a text
   return (
     <div className="block shrink-0 text-center">
-      <Link href="/" aria-label="logo">
+      <Link href="/" className=" " aria-label="logo">
         <Logo src={src} />
       </Link>
       {established && (
@@ -69,11 +73,9 @@ const Header = ({
           justify={'space-between'}
         >
           <SiteLogo src={'/assets/logo-sawtee.svg'} established={null} />
-          {/* <DesktopNavigation menu={menu} /> */}
           <DesktopNavigation menu={menu} />
           <div className="flex gap-4">
             <ModeToggle />
-
             <SearchModal />
           </div>
         </div>

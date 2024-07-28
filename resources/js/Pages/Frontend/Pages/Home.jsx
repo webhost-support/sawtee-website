@@ -6,15 +6,13 @@ import {
   OutreachSection,
   PublicationsSection,
   Title,
-  TwoColumnImageSection,
 } from '@/components/Frontend';
 import WebsiteHead from '@/components/Frontend/Head';
 import NewsletterCallout from '@/components/Frontend/NewsletterCallout';
 import VideoCarousel from '@/components/Frontend/VideoCarousel';
-import { Newsletter } from '@/components/Frontend/newsletter';
+import FeaturedSection from '@/components/Frontend/feature';
 import { cn } from '@/lib/utils';
-import { Box, Grid, GridItem, useColorModeValue } from '@chakra-ui/react';
-import MainLayout from '../Layout/MainLayout';
+import MainLayout from '../../../components/Layouts/MainLayout';
 
 const Home = ({
   infocus,
@@ -27,7 +25,7 @@ const Home = ({
   webinars,
   slidesResponsiveImages,
 }) => {
-  const AboutSectionData = [
+  const features = [
     {
       id: '1',
       title: 'Reform Monitoring Platform',
@@ -40,23 +38,21 @@ const Home = ({
       image_src: '/assets/Media-Fellowship-banner.webp',
       link: '/media-fellows',
     },
-  ];
-
-  const COVIDLDCSectionData = [
     {
-      id: '1',
+      id: '3',
       title: "SAWTEE's Response to Covid-19",
       image_src: '/assets/COVID-19-South-Asia-and-LDCs.webp',
       link: '/category/covid',
     },
 
     {
-      id: '2',
+      id: '4',
       title: "Advancing LDC's Trade Interests",
       image_src: '/assets/advancing-ldc_upscaled.webp',
       link: '/advancing-ldcs’-interests-in-the-wto-strengthening-participation,-securing-priorities',
     },
   ];
+
 
   return (
     <MainLayout>
@@ -89,14 +85,6 @@ const Home = ({
         </div>
       </Section>
 
-      {/* {feature && (
-            <Section className="reform-section">
-              <Box maxW="5xl" mx="auto">
-                <ReformMonitorSection feature={feature} />
-              </Box>
-            </Section>
-          )} */}
-
       {infocus && (
         <Section className="infocus-section" dark>
           <div className="max-w-5xl mx-auto">
@@ -112,9 +100,14 @@ const Home = ({
           </div>
         </Section>
       )}
-      <Section className="about-section">
-        <TwoColumnImageSection data={AboutSectionData} showBlobIcon={true} />
-      </Section>
+
+      {features && (
+        <Section className="reform-section">
+          <div className="max-w-7xl mx-auto">
+            <FeaturedSection features={features} />
+          </div>
+        </Section>
+      )}
 
       {/* Add publication section here  */}
       <Section className="publications-section" dark>
@@ -124,20 +117,14 @@ const Home = ({
         </div>
       </Section>
 
-      <Section className="about-section">
-        <TwoColumnImageSection
-          data={COVIDLDCSectionData}
-          showBorderBox={true}
-        />
-      </Section>
-      <Section className="outreach-section" dark>
+      <Section className="outreach-section">
         <div className="max-w-5xl mx-auto">
           <Title title={'Outreach and Media'} />
           <OutreachSection sawteeInMedia={sawteeInMedia} events={events} />
         </div>
       </Section>
 
-      <Section className="section videos-section">
+      <Section className="section videos-section" dark>
         <div className="max-w-5xl mx-auto">
           <Title title={'Webinar Series'} />
           <VideoCarousel posts={webinars} />

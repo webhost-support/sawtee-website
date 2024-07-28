@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 export default function SimpleList({ heading, children, className, ...rest }) {
   return (
     <div
-      className={cn('px-6 border-l-2 border-gray-500/70', className)}
+      className={cn('px-6 border-l-2 border-borderColor', className)}
       {...rest}
     >
       {heading && (

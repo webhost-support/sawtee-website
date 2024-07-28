@@ -2,14 +2,7 @@ import { PostImageWithOverlay } from '@/components/Frontend/featured-post/compon
 import { ExploreButton, GlassBox } from '@/components/Frontend/index';
 import { formatDate } from '@/lib/helpers';
 import { htmlToText } from '@/lib/utils';
-import {
-  Box,
-  Heading,
-  LinkBox,
-  LinkOverlay,
-  Stack,
-  Text,
-} from '@chakra-ui/react';
+
 import { Link } from '@inertiajs/react';
 
 const DefaultArchive = ({ posts, showFallbackImage, ...rest }) => {
@@ -40,12 +33,12 @@ export default DefaultArchive;
 const ArchivePost = ({ post, featured_image, showFallbackImage, ...rest }) => {
   return (
     <Link
-            href={
-              post.category.parent
-                ? `/category/${post.category.parent.slug}/${post.category.slug}/${post.slug}`
-                : `/category/${post.category.slug}/${post.slug}`
-            }
-          >
+      href={
+        post.category.parent
+          ? `/category/${post.category.parent.slug}/${post.category.slug}/${post.slug}`
+          : `/category/${post.category.slug}/${post.slug}`
+      }
+    >
       {showFallbackImage && (
         <PostImageWithOverlay
           height="240px"
@@ -68,33 +61,27 @@ const ArchivePost = ({ post, featured_image, showFallbackImage, ...rest }) => {
           }
         />
       )}
-        <div className='px-4 pt-4'>
-            <h3
-              as="h3"
-              className="text-lg font-medium"
-            >
-              {post.title}
-            </h3>
-          {/* <p
-          className='text-sm text-zinc-600 mt-2 line-clamp-3'
+      <div className="px-4 pt-4">
+        <h3 as="h3" className="text-lg font-medium">
+          {post.title}
+        </h3>
+        <p className="text-sm text-zinc-600 mt-2 line-clamp-3">
+          {htmlToText(post.excerpt)}
+        </p>
 
+        <div className="flex flex-wrap justify-between items-center gap-4 ">
+          <time className="text-sm text-zinc-600">
+            {formatDate(post.published_at)}
+          </time>
 
-          >{htmlToText(post.excerpt)}</p> */}
-
-        <div className='flex flex-wrap justify-between items-center gap-4 '>
-            <time className='text-sm text-zinc-600'>
-              {formatDate(post.published_at)}
-            </time>
-
-            <ExploreButton
-              size="xs"
-              text="Read more"
-              aria-label={'Read More'}
-              link={`/category/${post.category.slug}/${post.slug}`}
-            />
+          <ExploreButton
+            size="xs"
+            text="Read more"
+            aria-label={'Read More'}
+            link={`/category/${post.category.slug}/${post.slug}`}
+          />
         </div>
-        </div>
-      </Link>
-
+      </div>
+    </Link>
   );
 };

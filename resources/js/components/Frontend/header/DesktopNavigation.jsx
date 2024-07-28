@@ -12,7 +12,6 @@ import {
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {
   NavigationMenu,
@@ -21,7 +20,6 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  NavigationMenuViewport,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
@@ -33,7 +31,7 @@ export default function DesktopNavigation({ menu }) {
   const { experts } = props;
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <NavigationMenu className="max-w-full justify-center ">
+    <NavigationMenu className="max-w-full justify-center hidden lg:flex ">
       <NavigationMenuList className="gap-4">
         {menu.map(menuItem => {
           const active = menuItem.url === `${url}`;
@@ -69,11 +67,11 @@ export default function DesktopNavigation({ menu }) {
                 </NavigationMenuLink>
               </Link>
               {hasMegaMenu ? (
-                <NavigationMenuContent className="border-none bg-megaMenuBg/90 backdrop-blur-xl">
+                <NavigationMenuContent>
                   <MegaMenu item={menuItem} experts={experts} />
                 </NavigationMenuContent>
               ) : (
-                <NavigationMenuContent className="border-none bg-megaMenuBg/90 backdrop-blur-xl">
+                <NavigationMenuContent>
                   <DropDown
                     menu={menuItem.children}
                     isOpen={isOpen}

@@ -28,7 +28,8 @@ module.exports = {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         bgDarker: 'hsl(var(--background-darker))',
-        // bgBody: 'hsl(var(--bg-body))',
+        borderColor: 'hsl(var(--color-border))',
+
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
@@ -58,6 +59,13 @@ module.exports = {
           foreground: 'hsl(var(--card-foreground))',
         },
         megaMenuBg: 'hsl(var(--mega_menu_bg))',
+        brand: {
+          facebook: 'hsl(221 44% 41%)',
+          linkedin: 'hsl(201 100% 35%)',
+          twitter: 'hsl(203 89% 53%)',
+          youtube: 'hsl(0 100% 50%)',
+          x: 'hsl(0 0% 0%)',
+        },
         theme: {
           50: '#e1f8ff',
           100: '#bee4f1',

@@ -3,8 +3,8 @@ import Section from '@/components/Frontend/styles/section';
 import { Container, Flex, Heading, Text, VStack } from '@chakra-ui/react';
 import { Fragment } from 'react';
 import '../../../../css/our-team.css';
-import MainLayout from '../Layout/MainLayout';
-import { PageLayout } from '../Layout/PageLayout';
+import MainLayout from '../../../components/Layouts/MainLayout';
+import PageLayout from '../../../components/Layouts/PageLayout';
 import TeamMember from '../TeamMember';
 
 const TeamsArchive = ({ category, teams, featured_image, srcSet }) => {

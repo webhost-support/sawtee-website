@@ -1,11 +1,19 @@
-import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
-import { HStack, IconButton } from '@chakra-ui/react';
-import { useEffect, useRef, useState } from 'react';
+
+
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
 
 // import required modules
 import 'swiper/css';
 import 'swiper/css/scrollbar';
+import { Link } from '@inertiajs/react';
 import { ExploreButton } from '.';
+import { Badge } from '../ui/badge';
 
 const MultiPostsCarousel = ({
   spacing,
@@ -16,91 +24,58 @@ const MultiPostsCarousel = ({
   text,
   link,
   children,
+  data,
   ...rest
 }) => {
-  const swiperElRef = useRef(null);
-  const [progressValue, setProgressValue] = useState(0);
-  const params = {
-    breakpoints: {
-      640: {
-        slidesPerView: 1,
-        spaceBetween: 20,
-        slidesPerGroup: 1,
-      },
-      768: {
-        slidesPerView: 2,
-        spaceBetween: 40,
-        slidesPerGroup: 2,
-      },
-      1024: {
-        slidesPerView: 3,
-        spaceBetween: 50,
-        slidesPerGroup: 3,
-      },
-    },
-  };
-
-  useEffect(() => {
-    if (swiperElRef.current !== null) {
-      // listen for Swiper events using addEventListener
-      swiperElRef.current.addEventListener('swiperprogress', e => {
-        const [_, progress] = e.detail;
-        setProgressValue(progress);
-      });
-      Object.assign(swiperElRef.current, params);
-    }
-  }, []);
-
   return (
-    <swiper-container
-      ref={swiperElRef}
-      slides-per-view={1}
-      slides-per-group={1}
-      navigation={false}
-      pagination={pagination}
-      keyboard={true}
-      scrollbar={scrollbar}
-      space-between={spacing}
-      grab-cursor={true}
-      direction={direction ? direction : 'horizontal'}
-      class={'multi-post-carousel'}
-      id="multi-post-slider"
+    <Carousel
+      opts={{
+        align: 'start',
+      }}
+      className="w-full "
     >
-      <div slot="container-start">
-        <HStack w="full" justify={'space-between'} spacing={4}>
-          <HStack spacing={4} justify={{ base: 'justify-between', md: 'end' }}>
-            <IconButton
-              id="prev-button"
-              colorScheme="gray"
-              variant="outline"
-              icon={<ChevronLeftIcon w="5" h="5" />}
-              aria-label="previous button"
-              onClick={() => {
-                swiperElRef.current?.swiper.slidePrev();
-              }}
-              size={'sm'}
-              isDisabled={progressValue === 0}
-            />
-
-            <IconButton
-              id="next-button"
-              colorScheme="gray"
-              variant="outline"
-              icon={<ChevronRightIcon w="5" h="5" />}
-              aria-label="next button"
-              onClick={() => {
-                swiperElRef.current?.swiper.slideNext();
-              }}
-              size={'sm'}
-              isDisabled={progressValue === 1}
-            />
-          </HStack>
-
-          <ExploreButton size={['xs', 'sm']} text={text} px={10} link={link} />
-        </HStack>
-      </div>
-      {children}
-    </swiper-container>
+      <CarouselContent>
+        {data.map(publication => {
+          const media = publication.media.length
+            ? publication.media.filter(
+                media => media.collection_name === 'publication_featured_image'
+              )[0].original_url
+            : '/assets/SM-placeholder-150x150.png';
+          return (
+            <CarouselItem
+              key={publication.id}
+              className="sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
+            >
+              <div
+                className="relative w-[180px] mx-auto aspect-[3/4] flex items-end justify-start text-left bg-cover bg-center rounded-md overflow-hidden"
+                style={{
+                  backgroundImage: `url(${media})`,
+                  backgroundSize: 'cover',
+                  imageBlendMode: 'grayscale',
+                }}
+              >
+                <div className="absolute top-0 right-0 bottom-0 left-0 bg-gradient-to-b from-transparent to-gray-900 dark:from-gray300 dark:bg-gray-500/30" />
+                <div className="absolute top-0 right-0 left-0 ml-2 mt-3 flex justify-between items-center">
+                  <Badge className="px-2 font-sans" size={'sm'}>
+                    {publication.category.name}
+                  </Badge>
+                </div>
+                <div className="p-5 z-10">
+                  <Link
+                    href={`/publications/${publication.file.name}`}
+                    class="text-sm tracking-tight font-medium font-regular text-white hover:underline "
+                  >
+                    {publication.title}
+                  </Link>
+                </div>
+              </div>
+            </CarouselItem>
+          );
+        })}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
   );
 };
 
