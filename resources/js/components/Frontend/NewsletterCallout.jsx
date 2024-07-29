@@ -13,8 +13,9 @@ export default function NewsletterCallout() {
           newsletter.
         </h2>
         <p className="max-w-3xl mt-3 text-lg leading-6 text-slate-500 dark:text-slate-400">
-          In order to receive the newsletter, you must be subscribed to the
-          mailing list.
+          Do you want to get notified? Sign up for our newsletter and you'll be
+          among the first to find out about new publication releases, events and
+          monthly newsletter.
         </p>
       </div>
       <div className="mt-8 sm:w-full sm:max-w-md xl:mt-0 xl:ml-8">
@@ -82,7 +83,7 @@ const SubscribeForm = ({ ...rest }) => {
         type="submit"
         variant="primary"
         isLoading={processing}
-        className="flex items-center justify-center w-full px-5 py-3 text-base font-medium leading-6 transition duration-150 ease-in-out bg-theme-500 hover:bg-theme-500/90"
+        className="flex items-center justify-center w-full px-5 py-3 text-base text-white font-medium transition duration-150 ease-in-out bg-theme-500 hover:bg-theme-500/90"
       >
         Subscribe
       </PrimaryButton>

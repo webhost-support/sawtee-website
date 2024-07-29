@@ -1,4 +1,3 @@
-import { Card, CardContent } from '@/components/ui/card';
 import {
   Carousel,
   CarouselContent,
@@ -6,34 +5,22 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
-import { ExternalLinkIcon } from '@chakra-ui/icons';
-import {
-  Box,
-  Flex,
-  Heading,
-  IconButton,
-  Image,
-  LinkBox,
-  LinkOverlay,
-  Stack,
-  Text,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { cn } from '@/lib/utils';
+
 import { Link } from '@inertiajs/react';
 import { ExternalLink } from 'lucide-react';
-import { Button } from '../ui/button';
 
-export default function FeaturedSection({ features, ...rest }) {
+export default function FeaturedSection({ features, className }) {
   return (
-    <Stack
-      align={'center'}
-      spacing={{ base: 8, md: 10 }}
-      direction={{ base: 'column', lg: 'row' }}
-      {...rest}
+    <div
+      className={cn(
+        'flex flex-col items-center justify-start lg:flex-row gap-8',
+        className
+      )}
     >
       <div className="w-full space-y-5 md:space-y-10">
-        <h3 className="text-3xl md:text-4xl font-extrabold text-secondary-foreground tracking-tight">
-          <span className='relative after:content:"" after:w-full after:h-[30%] after:absolute after:bottom-0 after:left-0 after:bg-primary-100  after:bg-theme-200/50 dark:after:bg-theme-500'>
+        <h3 className="text-3xl md:text-4xl font-extrabold text-secondary-foreground tracking-tight ">
+          <span className='relative z-40 after:content:"" after:w-full after:h-[30%] after:absolute after:bottom-1 after:left-0 after:bg-primary-100 after:z-[-1]  after:bg-gradient-to-l after:from-theme-50 after:to-theme-300 dark:after:bg-gradient-to-l dark:after:from-theme-300 dark:after:to-theme-500'>
             {'Reform Monitoring Platform'}
           </span>
           <br />
@@ -83,6 +70,6 @@ export default function FeaturedSection({ features, ...rest }) {
           <CarouselNext className="dark:text-white" />
         </Carousel>
       </div>
-    </Stack>
+    </div>
   );
 }

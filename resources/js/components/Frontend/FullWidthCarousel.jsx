@@ -1,116 +1,77 @@
-import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
-import { Box, Heading, IconButton, Image, Stack, Text } from '@chakra-ui/react';
-// Import Swiper styles
-import { useEffect } from 'react';
-import { Swiper, SwiperSlide } from './Swiper';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import '../../../css/fullwidth-carousel.css';
+import { Card, CardContent } from '@/components/ui/card';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
+import Autoplay from 'embla-carousel-autoplay';
+import { useEffect, useState } from 'react';
 
 const FullWidthCarousel = ({
   slides,
   responsiveImages,
-  pagination = true,
-  navigation,
   autoplay = false,
-  effect = 'fade',
   ...rest
 }) => {
+  const [api, setApi] = useState();
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
+
   useEffect(() => {
-    const swiperEl = document.getElementById('full-width-carousel');
-    const prevButtonEl = document.getElementById('prev-button');
-    const nextButtonEl = document.getElementById('next-button');
+    if (!api) {
+      return;
+    }
 
-    prevButtonEl.addEventListener('click', () => {
-      swiperEl.swiper.slidePrev();
-    });
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
 
-    nextButtonEl.addEventListener('click', () => {
-      swiperEl.swiper.slideNext();
+    api.on('select', () => {
+      setCurrent(api.selectedScrollSnap() + 1);
     });
-  }, []);
+  }, [api]);
+
   return (
-    <Swiper
-      slidesPerView={1}
-      spaceBetween={30}
-      pagination={pagination}
-      navigation={navigation}
-      centeredSlides={true}
-      autoplay={autoplay}
-      effect={effect}
-      className="full-width-carousel"
-      id="full-width-carousel"
-      {...rest}
-    >
-      <div slot="container-start">
-        <Box
-          position="absolute"
-          top="50%"
-          inset={0}
-          transform="translateY( 45%)"
-          w={'full'}
-          zIndex={100}
-        >
-          <IconButton
-            position="absolute"
-            colorScheme="blackAlpha"
-            color={'white'}
-            id="prev-button"
-            icon={<ChevronLeftIcon w="8" h="8" />}
-            aria-label="previous"
-            left="10"
-          />
-
-          <IconButton
-            position="absolute"
-            id="next-button"
-            colorScheme="blackAlpha"
-            color={'white'}
-            aria-label="next"
-            icon={<ChevronRightIcon w="8" h="8" />}
-            right="10"
-          />
-        </Box>
-      </div>
-      {slides.map((slide, i) => {
-        return (
-          <SwiperSlide key={slide.id}>
-            <Image
-              src={`${slide.media[0].original_url}`}
-              srcSet={responsiveImages[i]}
-              alt={slide.title || 'carousel image'}
-              objectFit="cover"
-              mixBlendMode="overlay"
-              loading="lazy"
-              w="full"
-              h="full"
-              fallbackSrc="/assets/SM-placeholder-1024x512.png"
-            />
-
-            <Stack
-              spacing={4}
-              w={'full'}
-              maxW={'lg'}
-              position="absolute"
-              justify="center"
-              alignItems="center"
-              color="white"
+    <div>
+      <Carousel
+        setApi={setApi}
+        plugins={[
+          Autoplay({
+            delay: 2000,
+            stopOnInteraction: true,
+          }),
+        ]}
+        className="w-full "
+        {...rest}
+      >
+        <CarouselContent>
+          {slides?.map(slide => (
+            <CarouselItem
+              key={slide.id}
+              className="relative group p-0 flex w-full h-full justify-center items-center"
             >
-              <Heading
-                fontSize={{
-                  base: '3xl',
-                  md: '4xl',
-                  lg: '5xl',
-                }}
-              >
-                {slide.title}
-              </Heading>
-              <Text fontSize={{ base: 'md', lg: 'lg' }}>{slide.subtitle}</Text>
-            </Stack>
-          </SwiperSlide>
-        );
-      })}
-    </Swiper>
+              <img
+                src={slide.media[0].original_url}
+                alt="slide"
+                loading="lazy"
+                className="w-full grayscale  lazy group-hover:grayscale-0 transition-all duration-300 ease-in aspect-video object-cover"
+              />
+              <div className="absolute inset-0 flex items-center justify-center h-full w-full bg-black/20">
+                <span className="text-4xl font-semibold tracking-normal text-white leading-5 text-secondary-foreground">
+                  {slide.title}
+                </span>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className=" absolute left-4 top-1/2 -translate-y-1/2 z-[999] dark:text-white" />
+        <CarouselNext className=" absolute right-4 top-1/2 -translate-y-1/2 z-[999] dark:text-white" />
+        <div className=" absolute bottom-0 left-0 right-0 py-2 text-center text-md text-white">
+          {current} of {count}
+        </div>
+      </Carousel>
+    </div>
   );
 };
 

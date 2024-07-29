@@ -31,13 +31,8 @@ const VideoCarousel = ({
   const swiperElRef = useRef(null);
 
   return (
-    <Grid
-      maxW={'8xl'}
-      mx="auto"
-      gap={10}
-      gridTemplateColumns={{ base: '1fr', lg: 'repeat(5, 1fr)' }}
-    >
-      <GridItem colSpan={{ base: 1, lg: 3 }} placeSelf={'center'}>
+    <div className="w-full max-w-8xl mx-auto grid lg:grid-cols-5 gap-10">
+      <div className="lg:col-span-3 self-center">
         <swiper-container
           ref={swiperElRef}
           slides-per-view={1}
@@ -50,14 +45,7 @@ const VideoCarousel = ({
           {...rest}
         >
           <div slot="container-start">
-            <Box
-              position="absolute"
-              top="50%"
-              inset={0}
-              transform="translateY( 45%)"
-              w={'full'}
-              zIndex={100}
-            >
+            <div className="swiper-button-prev w-full z-auto absolute top-1/2 inset-0 transform:translateY(45%)">
               <IconButton
                 position="absolute"
                 colorScheme="blackAlpha"
@@ -79,7 +67,7 @@ const VideoCarousel = ({
                 right="10"
                 onClick={() => swiperElRef.current.swiper.slideNext()}
               />
-            </Box>
+            </div>
           </div>
           {posts.map(article => {
             const media =
@@ -131,8 +119,8 @@ const VideoCarousel = ({
             );
           })}
         </swiper-container>
-      </GridItem>
-      <GridItem colSpan={{ base: 1, lg: 2 }} placeSelf={'center'}>
+      </div>
+      <div className="lg:col-span-2 self-center">
         <swiper-container
           class="thumbs-swiper"
           space-between="10"
@@ -180,14 +168,19 @@ const VideoCarousel = ({
                     />
                   </Box>
 
-                  <Text fontSize={'sm'}>{article.title}</Text>
+                  <p
+                    className="text-sm text-secondary-foreground"
+                    fontSize={'sm'}
+                  >
+                    {article.title}
+                  </p>
                 </HStack>
               </swiper-slide>
             );
           })}
         </swiper-container>
-      </GridItem>
-    </Grid>
+      </div>
+    </div>
   );
 };
 

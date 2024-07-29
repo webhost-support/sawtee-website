@@ -4,10 +4,10 @@ import '../css/app.css';
 import './bootstrap';
 
 import { ThemeProvider } from '@/components/theme-provider';
-import { config, customTheme } from '@/lib/data';
-import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+// import { config, customTheme } from '@/lib/data';
+// import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { createInertiaApp } from '@inertiajs/react';
-import * as Sentry from '@sentry/react';
+// import * as Sentry from '@sentry/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
 import { register } from 'swiper/element/bundle';
@@ -24,7 +24,7 @@ import { register } from 'swiper/element/bundle';
 // });
 
 const appName = import.meta.env.VITE_APP_NAME || 'SAWTEE';
-const theme = extendTheme(customTheme);
+// const theme = extendTheme(customTheme);
 // register Swiper custom elements
 register();
 
@@ -38,11 +38,11 @@ createInertiaApp({
   setup({ el, App, props }) {
     const root = createRoot(el);
     root.render(
-      <ChakraProvider resetCSS theme={{ config, ...theme }}>
-        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-          <App {...props} />
-        </ThemeProvider>
-      </ChakraProvider>
+      //   <ChakraProvider resetCSS theme={{ config, ...theme }}>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <App {...props} />
+      </ThemeProvider>
+      //   </ChakraProvider>
     );
   },
   progress: {

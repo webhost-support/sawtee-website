@@ -29,6 +29,7 @@ module.exports = {
         foreground: 'hsl(var(--foreground))',
         bgDarker: 'hsl(var(--background-darker))',
         borderColor: 'hsl(var(--color-border))',
+        themeColor: 'hsl(var(--theme-color))',
 
         primary: {
           DEFAULT: 'hsl(var(--primary))',

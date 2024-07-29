@@ -7,7 +7,7 @@
     --background: 0 0% 100%;
     --background-darker: 0 0% 96%;
     --theme-color: 195 100% 25%;
-    --color-border: 0 0 90%;
+    --color-border: #ebebeb;
     --mega_menu_bg: 194 85% 32%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
@@ -41,7 +41,7 @@
     --background: 0 0% 15%;
     --background-darker: 0 0% 12%;
     --theme-color: 195 100% 25%;
-    --color-border: 0 0 20%;
+    --color-border: #333;
     --foreground: 0 0% 98%;
     --card: 0 0% 15%;
     --card-foreground: 0 0% 98%;
@@ -111,4 +111,48 @@
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
         var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
+
+@-webkit-keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  .xl\:animate-fade-up {
+    -webkit-animation: fade-up 1.5s both;
+    animation: fade-up 1.5s both;
+  }
+  .xl\:bg-transparent {
+    background-color: transparent;
+  }
+  .xl\:bg-white {
+    --tw-bg-opacity: 1;
+    background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  }
+  .xl\:p-2\.5 {
+    padding: 0.625rem;
+  }
+  .xl\:p-2 {
+    padding: 0.5rem;
+  }
+  .xl\:px-12 {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+  .xl\:text-8xl {
+    font-size: 5rem;
+    line-height: 1;
+  }
 

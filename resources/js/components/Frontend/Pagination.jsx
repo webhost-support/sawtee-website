@@ -2,78 +2,61 @@ import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 import { Box, Stack } from '@chakra-ui/react';
 import { Link } from '@inertiajs/react';
 import PrimaryButton from '../Backend/PrimaryButton';
-import InertiaChakraLink from './styles/inertia-chakra-link';
+import { Button } from "../ui/button";
+import InertiaChakraLink from "./styles/inertia-chakra-link";
 
 const PaginationButton = ({
-  link,
-  isDisabled,
-  label = '',
-  icon,
-  slot,
-  children,
-  ...rest
+    link,
+    isDisabled,
+    label = "",
+    icon,
+    slot,
+    children,
+    ...rest
 }) => {
-  return (
-    <InertiaChakraLink
-      as={Link}
-      href={link}
-      aria-disabled={isDisabled}
-      width="100%"
-      role="group"
-      {...rest}
-    >
-      <PrimaryButton
-        colorScheme={'primary'}
-        aria-label={label}
-        isDisabled={isDisabled}
-        variant="outline"
-        w="full"
-      >
-        {slot === 'before' && children}
-        <Box
-          className="icon"
-          boxSize="30px"
-          height="auto"
-          as={icon}
-          _groupHover={{
-            transform:
-              slot === 'before' ? 'translateX(10px)' : 'translateX(-10px)',
-          }}
-        />
-        {slot === 'after' && children}
-      </PrimaryButton>
-    </InertiaChakraLink>
-  );
+    return (
+        <Link
+            className="w-full group"
+            href={link}
+            aria-disabled={isDisabled}
+            {...rest}
+        >
+            <Button
+                aria-label={label}
+                isDisabled={isDisabled}
+                variant="outline"
+                size="lg"
+                className="w-full dark:text-white dark:bg-bgDarker dark:border-borderColor"
+            >
+                {slot === "before" && children}
+                <span>{label}</span>
+                {slot === "after" && children}
+            </Button>
+        </Link>
+    );
 };
 
-const Pagination = ({
-  links,
-  prevPage,
-  nextPage,
-  currentPage,
-  totalPages,
-  ...rest
-}) => {
-  return (
-    <Stack direction="row" spacing="40px" {...rest}>
-      <PaginationButton
-        link={prevPage}
-        isDisabled={!prevPage}
-        slot="after"
-        icon={ArrowBackIcon}
-      >
-        <span>Newer posts</span>
-      </PaginationButton>
-      <PaginationButton
-        link={nextPage}
-        slot="before"
-        isDisabled={!nextPage}
-        icon={ArrowForwardIcon}
-      >
-        <span>Older posts</span>
-      </PaginationButton>
-    </Stack>
-  );
+const Pagination = ({ links, prevPage, nextPage, currentPage, totalPages }) => {
+    return (
+        <div className="flex w-full gap-10">
+            <PaginationButton
+                link={prevPage}
+                label="Older posts"
+                isDisabled={!prevPage}
+                slot="before"
+            >
+                <ArrowBackIcon className="mr-3 md:mr-4 opacity-0 translate-x-[100%] group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-100 ease-in w-8 h-8" />
+            </PaginationButton>
+            <PaginationButton
+                link={nextPage}
+                label="Newer Posts"
+                slot="after"
+                isDisabled={!nextPage}
+            >
+                <ArrowForwardIcon className="ml-3 md:ml-4 opacity-0 -translate-x-[100%] group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-100 ease-in" />
+            </PaginationButton>
+        </div>
+    );
 };
 
 export default Pagination;

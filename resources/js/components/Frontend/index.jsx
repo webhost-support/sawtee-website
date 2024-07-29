@@ -1,37 +1,20 @@
-import FullWidthCarousel from '@/components/Frontend/FullWidthCarousel';
 import MultiPostsCarousel from '@/components/Frontend/MultiPostsSlider';
 import InertiaChakraLink from '@/components/Frontend/styles/inertia-chakra-link';
-import InertiaChakraLinkOverlay from '@/components/Frontend/styles/inertia-chakra-link-overlay';
 import Section from '@/components/Frontend/styles/section';
 import { formatDate } from '@/lib/helpers';
 import { cn } from '@/lib/utils';
-import {
-  ArrowForwardIcon,
-  ChevronRightIcon,
-  ExternalLinkIcon,
-} from '@chakra-ui/icons';
+import { ArrowForwardIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import {
   Box,
   Flex,
-  Grid,
-  GridItem,
-  HStack,
-  Heading,
-  IconButton,
   Image,
   Input,
-  LinkBox,
-  LinkOverlay,
-  ListItem,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
   ModalHeader,
   ModalOverlay,
-  SimpleGrid,
-  Skeleton,
-  Text,
   useColorModeValue,
 } from '@chakra-ui/react';
 import styled from '@emotion/styled';
@@ -39,7 +22,6 @@ import { Link } from '@inertiajs/react';
 import { ExternalLink } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Badge } from '../ui/badge';
-import { Button } from '../ui/button';
 import SimpleList from './SimpleList';
 import { Blob } from './icons';
 
@@ -67,23 +49,6 @@ export const ListVariant = {
   },
 };
 
-export const CarouselSection = ({
-  slides,
-  responsiveImages,
-  carouselHeight,
-}) => {
-  return (
-    <FullWidthCarousel
-      slides={slides}
-      navigation={false}
-      loop={true}
-      rewind={true}
-      carouselHeight={carouselHeight}
-      responsiveImages={responsiveImages}
-    />
-  );
-};
-
 export const TwoColumnImageSection = ({
   data,
   showBlobIcon = false,
@@ -91,21 +56,21 @@ export const TwoColumnImageSection = ({
   children,
 }) => {
   return (
-    <div className="grid grid-cols-2 gap-10 max-w-5xl mx-auto justify-center items-center">
+    <div className="mx-auto grid max-w-5xl grid-cols-2 items-center justify-center gap-10">
       {data.map(item => {
         return (
           <div
             key={item.id}
-            className="flex flex-1 justify-center items-center my-10 relative max-w-[30rem]"
+            className="relative my-10 flex max-w-[30rem] flex-1 items-center justify-center"
           >
             {showBorderBox && (
-              <div className="absolute border-4 left-6 -top-5 w-full h-full rounded-2xl" />
+              <div className="absolute -top-5 left-6 h-full w-full rounded-2xl border-4" />
             )}
 
             {showBlobIcon && (
               <Blob
                 className={
-                  'w-full h-[150%] absolute -top-[20%] left-0 text-theme-100 dark:text-theme-400 '
+                  'absolute -top-[20%] left-0 h-[150%] w-full text-theme-100 dark:text-theme-400'
                 }
                 w={'100%'}
                 h={'150%'}
@@ -119,13 +84,13 @@ export const TwoColumnImageSection = ({
 
             <Link
               href={item.link}
-              className="group relative rounded-2xl overflow-hidden shadow-2xl"
+              className="group relative overflow-hidden rounded-2xl shadow-2xl"
             >
-              <div className="absolute w-full h-full inset-0 bg-black/20 group-hover:bg-black/10 transition-all duration-200 ease" />
+              <div className="ease absolute inset-0 h-full w-full bg-black/20 transition-all duration-200 group-hover:bg-black/10" />
 
               <ExternalLink
                 aria-label={'Play Button'}
-                className="absolute w-12 h-12 text-white/60 z-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ease group-hover:text-white/100 "
+                className="ease absolute left-1/2 top-1/2 z-10 h-12 w-12 -translate-x-1/2 -translate-y-1/2 text-white/60 transition-all duration-200 group-hover:text-white/100"
               />
 
               <Image
@@ -149,7 +114,7 @@ export const InfoSection = () => {
   return (
     <div className="section">
       <div
-        className="grid grid-cols-2 justify-center items-center p-6 lg:p-8 min-h-96"
+        className="grid min-h-96 grid-cols-2 items-center justify-center p-6 lg:p-8"
         id="chart-wrapper"
       >
         <iframe
@@ -166,7 +131,7 @@ export const InfoSection = () => {
 
 export const OutreachSection = ({ sawteeInMedia, events }) => {
   return (
-    <div className="grid lg:grid-cols-6 gap-10">
+    <div className="grid gap-10 lg:grid-cols-6">
       <div className="md:col-span-3">
         <SimpleList heading={'sawtee in media'}>
           {sawteeInMedia.map(item => {
@@ -176,31 +141,27 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
             )[0];
 
             return (
-              <li className="mb-4 group" key={item.id}>
+              <li className="group mb-4" key={item.id}>
                 <div>
                   {file && !hasContent && (
                     <a
                       href={file?.original_url}
                       target="_blank"
                       rel="noreferrer"
-                      className="underline underline-offset-2 text-secondary-foreground group-hover:underline-offset-4 group-hover:text-primary/80 dark:group-hover:text-secondary-foreground/80"
+                      className="md:text-md text-sm leading-5 text-secondary-foreground underline underline-offset-2 group-hover:text-primary/80 group-hover:underline-offset-4 dark:group-hover:text-secondary-foreground/80 lg:text-lg"
                     >
-                      <p className="text-sm md:text-md lg:text-lg leading-5">
-                        {item.title}
-                      </p>
+                      {item.title}
                     </a>
                   )}
                   {hasContent && (
                     <Link
                       href={`/category/${item.category.slug}/${item.slug}`}
-                      className="underline underline-offset-2 text-secondary-foreground group-hover:underline-offset-4 group-hover:text-primary/80 dark:group-hover:text-secondary-foreground/80"
+                      className="md:text-md text-sm leading-5 text-secondary-foreground underline underline-offset-2 group-hover:text-primary/80 group-hover:underline-offset-4 dark:group-hover:text-secondary-foreground/80 lg:text-lg"
                     >
-                      <p className="text-sm md:text-md lg:text-lg leading-5">
-                        {item.title}
-                      </p>
+                      {item.title}
                     </Link>
                   )}
-                  <p className="text-muted-foreground text-xs mt-2">
+                  <p className="mt-2 text-xs text-muted-foreground">
                     {formatDate(item.published_at)}
                   </p>
                 </div>
@@ -231,28 +192,28 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
             return (
               <li
                 key={event.id}
-                className="group flex w-full justify-between items-center gap-4 mb-4"
+                className="group mb-4 flex w-full items-center justify-between gap-4"
               >
                 <Link
                   // w="full"
                   href={`/category/featured-events/${event.slug}`}
-                  className=" flex gap-2 w-2/3 grow"
+                  className="flex w-2/3 grow gap-2"
                 >
-                  <div className="flex flex-col w-full ">
-                    <p className="text-sm md:text-md lg:text-lg font-sans text-secondary-foreground underline underline-offset-2 group-hover:underline-offset-4 group-hover:text-primary/80 dark:group-hover:text-secondary-foreground/80 leading-5">
+                  <div className="flex w-full flex-col">
+                    <p className="md:text-md font-sans text-sm leading-5 text-secondary-foreground underline underline-offset-2 group-hover:text-primary/80 group-hover:underline-offset-4 dark:group-hover:text-secondary-foreground/80 lg:text-lg">
                       {event.title}
                     </p>
 
-                    <p className="text-muted-foreground text-xs mt-2">
+                    <p className="mt-2 text-xs text-muted-foreground">
                       {formatDate(event.published_at)}
                     </p>
                   </div>
 
                   {featured_image && (
-                    <div className="max-w-[90px] w-full aspect-auto rounded-md overflow-hidden p-1 border">
+                    <div className="aspect-auto w-full max-w-[90px] overflow-hidden rounded-md border p-1">
                       <img
                         src={featured_image}
-                        className="w-full h-full object-cover"
+                        className="h-full w-full object-cover"
                         alt={'Event cover'}
                         loading="lazy"
                       />
@@ -279,7 +240,7 @@ export const InfocusSection = ({ data }) => {
       {data.map(item => {
         return (
           <li
-            className="mb-6 flex flex-col w-full gap-3 text-zinc-700 dark:text-zinc-300"
+            className="mb-6 flex w-full flex-col gap-3 text-zinc-700 dark:text-zinc-300"
             key={item.id}
           >
             <Link
@@ -287,7 +248,7 @@ export const InfocusSection = ({ data }) => {
               target="_blank"
               href={`/category/in-focus/${item.slug}`}
             >
-              <h3 className="text-lg font-semibold font-sans text-primary dark:text-secondary-foreground hover:text-primary/80 dark:hover:text-secondary-foreground/80">
+              <h3 className="font-sans text-lg font-semibold text-primary hover:text-primary/80 dark:text-secondary-foreground dark:hover:text-secondary-foreground/80">
                 {item.title}
               </h3>
             </Link>
@@ -303,7 +264,7 @@ export const FeaturedPublications = ({ publications }) => {
   return (
     <GlassBox className="bg-white dark:bg-bgDarker">
       <SimpleList
-        className="border-none mx-auto rounded-xl max-w-lg"
+        className="mx-auto max-w-lg rounded-xl border-none"
         heading={'featured publications'}
       >
         {publications.map((publication, idx) => {
@@ -318,7 +279,7 @@ export const FeaturedPublications = ({ publications }) => {
               key={publication.id}
             >
               <Link
-                className="group flex w-full justify-between gap-6 items-center"
+                className="group flex w-full items-center justify-between gap-6"
                 href={`category/publications/${publication.category?.slug}`}
               >
                 <div className="w-2/3">
@@ -330,11 +291,11 @@ export const FeaturedPublications = ({ publications }) => {
                     {publication.category?.name}
                   </Badge>
 
-                  <p className="group-hover:underline text-sm md:text-md font-sans leading-4">
+                  <p className="md:text-md font-sans text-sm leading-4 group-hover:underline">
                     {publication.title}
                   </p>
 
-                  <p className="text-xs mt-1 ">{publication.subtitle}</p>
+                  <p className="mt-1 text-xs">{publication.subtitle}</p>
                 </div>
 
                 {media && (
@@ -370,10 +331,6 @@ export const FeaturedPublications = ({ publications }) => {
 export const PublicationsSection = ({ publications }) => {
   return (
     <MultiPostsCarousel
-      spacing={30}
-      pagination={false}
-      navigation={true}
-      scrollbar={true}
       link={'/category/publications'}
       text={'More in publications'}
       data={publications}
@@ -411,7 +368,7 @@ export const Content = styled(Section)`
   word-break: break-word;
   white-space: collapse balance;
 
-//   line-height: var(--chakra-lineHeights-taller);
+  //   line-height: var(--chakra-lineHeights-taller);
 
   * {
     max-width: 100%;
@@ -419,7 +376,7 @@ export const Content = styled(Section)`
 
   ul,
   ol {
-  list-style: inherit;
+    list-style: inherit;
     padding: 0;
     margin-left: 1rem;
   }
@@ -457,7 +414,7 @@ export const GlassBox = ({ children, className, ...rest }) => {
   return (
     <div
       className={cn(
-        'w-full rounded-md border py-4 bg-bgDarker dark:text-muted-foreground shadow-md',
+        'border-1 w-full rounded-md border-borderColor bg-bgDarker py-4 shadow-md dark:text-muted-foreground',
         className
       )}
       {...rest}
@@ -471,12 +428,12 @@ export const Title = ({ title, ...rest }) => {
   return (
     <div className="mb-12">
       <h3
-        className="text-xl md:text-2xl lg:text-3xl xl:text-4xl  font-bold text-primary flex items-center"
+        className="flex items-center text-xl font-bold text-primary md:text-2xl lg:text-3xl xl:text-4xl"
         {...rest}
       >
         {title}
       </h3>
-      <div className="h-2 w-[8%] bg-theme-500 " />
+      <div className="h-2 w-[8%] bg-theme-500" />
     </div>
   );
 };
@@ -538,7 +495,7 @@ export const ExploreButton = ({
       role="button"
       href={link ? link : '#'}
       className={cn(
-        'flex max-w-max gap-1 items-center px-6 py-2 underline underline-offset-2 rounded-md text-sm font-medium text-primary hover:underline-offset-4 hover:text-primary/70',
+        'flex max-w-max items-center gap-1 rounded-md px-6 py-2 text-sm font-medium text-primary underline underline-offset-2 hover:text-primary/70 hover:underline-offset-4',
         className
       )}
       onMouseEnter={() => setHovered(!hovered)}
@@ -546,9 +503,9 @@ export const ExploreButton = ({
     >
       {text}
       {hovered ? (
-        <ArrowForwardIcon className="w-4 h-4" />
+        <ArrowForwardIcon className="h-4 w-4" />
       ) : (
-        <ChevronRightIcon className="w-4 h-4" />
+        <ChevronRightIcon className="h-4 w-4" />
       )}
     </Link>
   );
@@ -557,9 +514,16 @@ export const ExploreButton = ({
 export const StyledChakraLink = styled(InertiaChakraLink)`
   position: relative;
   text-decoration: none;
-  font-family: ${props => (props.fontFamily ? `var(--chakra-fonts-${props.fontFamily})` : 'var(--chakra-fonts-body)')};
-  font-size: ${props => (props.fontSize ? `var(--chakra-fontSizes-${props.fontSize})` : 'var(--chakra-fontSizes-sm)')};
-  color: ${props => (props.color ? props.color : 'var(--chakra-colors-gray-700)')};
+  font-family: ${props =>
+    props.fontFamily
+      ? `var(--chakra-fonts-${props.fontFamily})`
+      : 'var(--chakra-fonts-body)'};
+  font-size: ${props =>
+    props.fontSize
+      ? `var(--chakra-fontSizes-${props.fontSize})`
+      : 'var(--chakra-fontSizes-sm)'};
+  color: ${props =>
+    props.color ? props.color : 'var(--chakra-colors-gray-700)'};
 
   &::after {
     content: '';

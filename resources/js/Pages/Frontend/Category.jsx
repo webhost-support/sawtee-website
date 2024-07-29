@@ -3,15 +3,14 @@ import WebsiteHead from '@/components/Frontend/Head';
 import Pagination from '@/components/Frontend/Pagination';
 import SidebarWidget from '@/components/Frontend/sidebarWidget';
 import SubscriptionCard from '@/components/Frontend/subscriptionCard';
-import { Grid, GridItem, VStack } from '@chakra-ui/react';
 import MainLayout from '../../components/Layouts/MainLayout';
 import PageLayout from '../../components/Layouts/PageLayout';
 import BlogArchive from './Archives/BlogArchive';
 import CovidArchive from './Archives/CovidArchive';
 import DefaultArchive from './Archives/DefaultArchive';
+import EventsArchive from './Archives/EventsArchive';
 import NewsletterArchive from './Archives/NewsletterArchive';
 import ResearchArchive from './Archives/ResearchArchive';
-import SawteeInMediaArchive from './Archives/SawteeInMediaArchive';
 
 export default function Category({
   category,
@@ -32,7 +31,7 @@ export default function Category({
   const isCovid = category.slug === 'covid';
   const isResearch = category.slug === 'research';
   const isDefault =
-    !isNewsletter && !isBlog && !isResearch && !isCovid && !isMedia;
+    !isNewsletter && !isBlog && !isResearch && !isCovid && !isEvent;
 
   return (
     <MainLayout>
@@ -59,11 +58,9 @@ export default function Category({
         title={category.name}
         showBackgroundPattern={false}
       >
-        <div className="grid  md:grid-cols-2 lg:grid-cols-6 gap-12 px-8 md:px-10 py-8 md:py-20 mx-auto">
-          <section className="flex flex-col items-center gap-12 col-span-1 lg:col-span-4 archive-list">
-            {isDefault && (
-              <DefaultArchive posts={posts.data} showFallbackImage={isEvent} />
-            )}
+        <div className="mx-auto grid gap-12 px-8 py-8 md:grid-cols-2 md:px-10 md:py-20 lg:grid-cols-6">
+          <section className="archive-list col-span-1 flex flex-col items-center gap-12 lg:col-span-4">
+            {isDefault && <DefaultArchive posts={posts.data} />}
             {isCovid && <CovidArchive posts={posts.data} />}
 
             {isResearch && <ResearchArchive posts={posts} />}
@@ -72,18 +69,20 @@ export default function Category({
 
             {isNewsletter && <NewsletterArchive posts={posts.data} />}
 
-            {isMedia && <SawteeInMediaArchive posts={posts.data} />}
+            {isEvent && <EventsArchive posts={posts.data} />}
 
-            {!isResearch && (
-              <Pagination
-                links={posts.links}
-                currentPage={posts.current_page}
-                totalPages={posts.last_page}
-                nextPage={posts.next_page_url}
-                prevPage={posts.prev_page_url}
-                width="full"
-              />
-            )}
+            <div className="w-full p-8">
+              {!isResearch && (
+                <Pagination
+                  links={posts.links}
+                  currentPage={posts.current_page}
+                  totalPages={posts.last_page}
+                  nextPage={posts.next_page_url}
+                  prevPage={posts.prev_page_url}
+                  width="full"
+                />
+              )}
+            </div>
           </section>
           <aside className="sidebar col-span-1 lg:col-span-2">
             <div className="flex flex-col gap-12">
@@ -143,7 +142,7 @@ export default function Category({
               )}
 
               {showSubscriptionBox && (
-                <GlassBox className={'p-4 w-full '}>
+                <GlassBox className={'w-full p-4'}>
                   <SubscriptionCard />
                 </GlassBox>
               )}
