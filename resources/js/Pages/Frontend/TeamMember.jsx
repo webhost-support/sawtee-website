@@ -1,4 +1,4 @@
-import { RightQuotesIcon } from '@/Components/Frontend/icons';
+import { RightQuotesIcon } from '@/components/Frontend/icons';
 import {
   Avatar,
   Icon,

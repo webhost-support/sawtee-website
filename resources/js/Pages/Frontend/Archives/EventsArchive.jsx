@@ -17,7 +17,7 @@ const EventsArchive = ({ posts, ...rest }) => {
             <GlassBox
               key={id}
               className={
-                'relative flex w-full flex-col items-start overflow-hidden border py-0 xl:flex-row xl:border-none xl:bg-transparent xl:py-4 xl:shadow-none'
+                'relative flex w-full flex-col items-start overflow-hidden shadow py-0 xl:flex-row  xl:bg-transparent xl:py-4 xl:shadow-none'
               }
               {...rest}
             >
@@ -46,7 +46,7 @@ const EventsArchive = ({ posts, ...rest }) => {
               <img
                 src={featured_image?.original_url}
                 alt={title}
-                className="mb-4 aspect-video h-full w-full rounded-b-none bg-bgDarker object-cover shadow-md xl:mb-0 xl:w-80 xl:shrink-0 xl:rounded-lg"
+                className="mb-4 aspect-video h-full w-full rounded-b-none bg-bgDarker object-cover xl:shadow-md xl:mb-0 xl:w-80 xl:shrink-0 xl:rounded-lg"
                 width="1216"
                 height="640"
               />

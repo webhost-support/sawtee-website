@@ -1,11 +1,14 @@
-import { htmlToText } from '@/lib/utils';
+import { cn, htmlToText } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import CardWithEffect from '../CardWithEffect';
 
 export default function OurWork({ themes, sections, content }) {
   const [intro, setIntro] = useState(null);
   const [sectors, setSectors] = useState(null);
+
+  const Themes = themes.filter((theme) => theme.title !== 'Covid');
+
   useEffect(() => {
     const intro = sections.find(section => section.title === 'Intro');
     const sectors = sections.filter(section => section.parent_id !== null);
@@ -27,21 +30,27 @@ export default function OurWork({ themes, sections, content }) {
         )}
       </div>
 
-      <div class="flex flex-wrap my-12 ">
-        {themes.map((theme, index) => {
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 mb-10 ">
+        {Themes?.map((theme, index) => {
+            const colSpan = index <= 1  || index === Themes.length - 2 ? 3 : 2;
+
           return (
             <div
               key={theme.title}
-              className={`w-full bg-bgDarker p-8 border-zinc-500 last:border-b-0 border-b md:w-1/2 ${(index + 1) % 3 === 0 ? 'md:border-r-0' : 'border-r'} md:border-r lg:w-1/3 hover:shadow-md transition-all duration-300 ease-in-out`}
+              className={cn("w-full bg-bgDarker last:col-span-3", `col-span-${colSpan}`)}
             >
-              <div className="flex items-center mb-6">
-                <div className="ml-4 text-xl dark:text-zinc-200">
-                  {theme.title}
+                <div class="relative h-full">
+                <span class="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-sky-500 rounded-lg" />
+
+                    <div class="relative h-full p-5 bg-bgDarker border-2 border-sky-500 rounded-lg">
+                        <div class="flex items-center -mt-1">
+                            <h3 class="my-2 ml-3 text-lg font-bold text-slate-800 dark:text-slate-300">{theme.title}</h3>
+                        </div>
+                        <p class="mt-3 mb-1 text-xs font-medium text-sky-500 uppercase">------------</p>
+                        <p class="mb-2 text-slate-700 dark:text-slate-400">{theme.description}</p>
+                    </div>
                 </div>
-              </div>
-              <p className="leading-normal text-zinc-700 line-clamp-3 dark:text-gray-200 text-md">
-                {theme.description}
-              </p>
+
             </div>
           );
         })}

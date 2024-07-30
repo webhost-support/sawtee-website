@@ -72,7 +72,6 @@ body {
     font-feature-settings: normal;
     -webkit-font-feature-settings: normal;
     -moz-font-feature-settings: normal;
-    margin: 0 !important;
 }
 
 img,
@@ -115,33 +114,9 @@ main {
     background-color: var(--color-body-bg);
 }
 
-.skip-link {
-    position: absolute;
-    left: -9999rem;
-    top: 2.5rem;
-    z-index: 999999999;
-    text-decoration: underline;
-
-    & :focus,
-    & :active {
-        display: block;
-        left: 6px;
-        top: 7px;
-        font-size: 14px;
-        font-weight: 600;
-        text-decoration: none;
-        line-height: normal;
-        padding: 15px 23px 14px;
-        z-index: 100000;
-        right: auto;
-    }
-}
-
 h1, h2, h3, h4, h5, h6 {
-    font-family: var(--chakra-fonts-heading);
+    font-family: var(--fonts-sans);
 }
-
-
 
 .scroll-container::-webkit-scrollbar {
     display: none;
@@ -152,36 +127,6 @@ h1, h2, h3, h4, h5, h6 {
     -ms-overflow-styles: none;
     scrollbar-width: none;
 }
-
-/* .chakra-ui-dark .post-content  a, .chakra-ui-dark .page-content a {
-    background-image: linear-gradient(
-        #232323 50%,
-        var(--chakra-colors-primary-300) 50%
-    ) !important;
-    transition: background 0.5s;
-    background-size: auto 175%;
-}
-
-.chakra-ui-dark .post-content  a:hover, .chakra-ui-dark .page-content  a:hover {
-    background-position-y: 100%;
-    text-decoration: none !important;
-    color: #fff !important;
-} */
-
-/* .post-content  a, .page-content a  {
-    background-image: linear-gradient(
-        white 50%,
-        var(--chakra-colors-primary-300) 50%
-    );
-    transition: background 0.5s;
-    background-size: auto 175%;
-}
-
-.post-content  a:hover, .page-content a:hover {
-    background-position-y: 100%;
-    text-decoration: none !important;
-    color: #fff !important;
-} */
 
 .post-content a, .page-content a, .primary-link {
     color: inherit;

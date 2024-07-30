@@ -1,10 +1,10 @@
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { DateFormat } from '@/lib/helpers';
 import { Link } from '@chakra-ui/react';
@@ -15,13 +15,14 @@ const CovidArchive = ({ posts }) => {
       {posts.map(post => {
         const authors = () => {
           if (post.author) {
-            let result = post.author.replace('and', ',').split(',');
+            const result = post.author.replace('and', ',').split(',');
             return result;
           }
         };
         return (
-          <Card key={post.id} className="dark:bg-bgDarker">
-            <CardContent className="flex w-full flex-col gap-4 space-y-4 p-6">
+          <Card key={post.id} className="relative border-2 border-borderColor">
+            <CardContent className="flex relative w-full h-full flex-col gap-4 space-y-4 p-6">
+            <span class="absolute -z-[1] top-0 left-0 w-full h-full mt-1 ml-1 bg-primary/90 rounded-xl" />
               <div className="flex w-full justify-between">
                 {post.genre && (
                   <Badge className="rounded-md">{post.genre}</Badge>
@@ -41,8 +42,6 @@ const CovidArchive = ({ posts }) => {
                   {post.title}
                 </h3>
               </Link>
-            </CardContent>
-            <CardFooter>
               <div className="flex flex-wrap items-center gap-x-2">
                 {post.author && (
                   <div class="flex -space-x-4 transition-all delay-150 duration-300 ease-in hover:space-x-1 rtl:space-x-reverse">
@@ -66,7 +65,9 @@ const CovidArchive = ({ posts }) => {
                   </div>
                 )}
               </div>
-            </CardFooter>
+            </CardContent>
+            {/* <CardFooter>
+            </CardFooter> */}
           </Card>
         );
       })}

@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 export default function SimpleList({ heading, children, className, ...rest }) {
   return (
     <div
-      className={cn('px-6 border-l-2 border-gray-200/30 ', className)}
+      className={cn('px-6 border-l-2 border-[var(--color-border)] ', className)}
       {...rest}
     >
       {heading && (
@@ -12,7 +12,7 @@ export default function SimpleList({ heading, children, className, ...rest }) {
           {heading}
         </h3>
       )}
-      <ul>{children}</ul>
+      <ul className='tracking-wide font-sans'>{children}</ul>
     </div>
   );
 }

@@ -1,7 +1,7 @@
-import InertiaChakraLink from '@/Components/Frontend/styles/inertia-chakra-link';
+import InertiaChakraLink from '@/components/Frontend/styles/inertia-chakra-link';
 import { Box, Button, Container } from '@chakra-ui/react';
 import { Head } from '@inertiajs/react';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 const NewsletterPost = ({ post }) => {
   const viewerConfig = {

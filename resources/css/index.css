@@ -134,25 +134,4 @@
     -webkit-animation: fade-up 1.5s both;
     animation: fade-up 1.5s both;
   }
-  .xl\:bg-transparent {
-    background-color: transparent;
-  }
-  .xl\:bg-white {
-    --tw-bg-opacity: 1;
-    background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-  }
-  .xl\:p-2\.5 {
-    padding: 0.625rem;
-  }
-  .xl\:p-2 {
-    padding: 0.5rem;
-  }
-  .xl\:px-12 {
-    padding-left: 3rem;
-    padding-right: 3rem;
-  }
-  .xl\:text-8xl {
-    font-size: 5rem;
-    line-height: 1;
-  }
 

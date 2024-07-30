@@ -1,10 +1,10 @@
-import SocialShare from '@/Components/Frontend/SocialShare';
-import { Content } from '@/Components/Frontend/index';
-import FeaturedMedia from '@/Components/Frontend/post/featured-media';
-import PostHeader from '@/Components/Frontend/post/post-header';
-import PostMeta from '@/Components/Frontend/post/post-meta';
-import { LightPatternBox } from '@/Components/Frontend/styles/pattern-box';
-import Section from '@/Components/Frontend/styles/section';
+import SocialShare from '@/components/Frontend/SocialShare';
+import { Content } from '@/components/Frontend/index';
+import FeaturedMedia from '@/components/Frontend/post/featured-media';
+import PostHeader from '@/components/Frontend/post/post-header';
+import PostMeta from '@/components/Frontend/post/post-meta';
+import { LightPatternBox } from '@/components/Frontend/styles/pattern-box';
+import Section from '@/components/Frontend/styles/section';
 import { Box, useColorModeValue } from '@chakra-ui/react';
 import readingDuration from 'reading-duration';
 

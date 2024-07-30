@@ -1,18 +1,17 @@
 
 
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
 } from '@/components/ui/carousel';
 
 // import required modules
+import { Link } from '@inertiajs/react';
 import 'swiper/css';
 import 'swiper/css/scrollbar';
-import { Link } from '@inertiajs/react';
-import { ExploreButton } from '.';
 import { Badge } from '../ui/badge';
 
 const MultiPostsCarousel = ({
@@ -47,23 +46,23 @@ const MultiPostsCarousel = ({
               className="sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
             >
               <div
-                className="relative w-[180px] mx-auto aspect-[3/4] flex items-end justify-start text-left bg-cover bg-center rounded-md overflow-hidden"
+                className="relative group w-[180px] mx-auto aspect-[3/4] flex items-end justify-start text-left bg-cover bg-center rounded-md overflow-hidden"
                 style={{
                   backgroundImage: `url(${media})`,
                   backgroundSize: 'cover',
                   imageBlendMode: 'grayscale',
                 }}
               >
-                <div className="absolute top-0 right-0 bottom-0 left-0 bg-gradient-to-b from-transparent to-gray-900 dark:from-gray300 dark:bg-gray-500/30" />
-                <div className="absolute top-0 right-0 left-0 ml-2 mt-3 flex justify-between items-center">
-                  <Badge className="px-2 font-sans" size={'sm'}>
+                <Link href={`/publications/${publication.file.name}`} className="absolute inset-0 bg-gradient-to-br from-transparent to-black/50" />
+                <div className="absolute top-3 left-4 flex justify-between items-center">
+                  <Badge className="px-2 font-sans text-[0.65rem] text-white bg-theme-600 group-hover:bg-theme-100/80 group-hover:text-theme-700 cursor-pointer transition-all duration-200 ease-in-out" >
                     {publication.category.name}
                   </Badge>
                 </div>
-                <div className="p-5 z-10">
+                <div className="p-2 z-10 group-hover:bg-black/70 rounded-b-md w-full text-sm leading-4 font-medium text-white group-hover:text-theme-400 transition-all duration-200 ease-in-out">
                   <Link
                     href={`/publications/${publication.file.name}`}
-                    class="text-sm tracking-tight font-medium font-regular text-white hover:underline "
+                    class=" hover:underline group-hover:underline "
                   >
                     {publication.title}
                   </Link>

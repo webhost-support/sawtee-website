@@ -104,7 +104,8 @@ const Home = ({
 
       {features && (
         <Section className="reform-section">
-          <div className="mx-auto max-w-7xl">
+          <div className="relative mx-auto max-w-7xl">
+            {/* <Particles className="pointer-events-none absolute inset-0" /> */}
             <FeaturedSection features={features} />
           </div>
         </Section>

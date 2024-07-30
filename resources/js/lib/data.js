@@ -1,18 +1,18 @@
 
 import {
-  ArticleIcon,
-  BookIcon,
-  FileIcon,
-  FilterIcon,
-  GlobeIcon,
-  GridPlusIcon,
-  HomeIcon,
-  LayoutIcon,
-  PageIcon,
-  SliderIcon,
-  TagIcon,
-  UserGroup,
-  Users,
+    ArticleIcon,
+    BookIcon,
+    FileIcon,
+    FilterIcon,
+    GlobeIcon,
+    GridPlusIcon,
+    HomeIcon,
+    LayoutIcon,
+    PageIcon,
+    SliderIcon,
+    TagIcon,
+    UserGroup,
+    Users,
 } from '@/components/Frontend/icons';
 
 export const feature = {
@@ -197,6 +197,76 @@ export const memberInstitutions = [
     ],
   },
 ];
+
+export const MemberLogos = [
+    {
+        id: 1,
+        name: 'Bangladesh Environmental Lawyers’ Association (BELA)',
+        logo: '/assets/belabangla.png',
+        link: 'https://www.belabangla.org/'
+    },
+    {
+        id: 2,
+        name: 'Unnayan Shamannay, Dhaka',
+        logo: '/assets/unnayanshamannay.png',
+        link: 'https://www.unsy.org/'
+    },
+    {
+        id: 3,
+        name: 'Citizen consumer and civic Action Group (CAG)',
+        logo: '/assets/cag.png',
+        link: 'https://www.cag.org.in/'
+
+    },
+    {
+        id: 4,
+        name: 'Consumer Unity & Trust Society (CUTS)',
+        logo: '/assets/cuts.png',
+        link: 'https://cuts-international.org/'
+    },
+    {
+        id: 5,
+        name: 'Development Research and Action Group (DRAG)',
+        logo: '/assets/drag.png',
+        link: 'https://dragindia.org/'
+    },
+    {
+        id: 6,
+        name: 'Society for Legal and Environmental Analysis and Development Research (LEADERS)',
+        logo: '/assets/leaders.png',
+        link: 'https://leadersnepal.org.np/'
+    },
+    {
+        id: 7,
+        name: 'Forum for Protection of Public Interest (Pro Public)',
+        logo: '/assets/propublic.png',
+        link: 'http://propublic.org/'
+    },
+    {
+        id: 8,
+        name: 'Journalists for Democracy and Human Rights (JDHR)',
+        logo: '/assets/jdhr.png',
+        link: 'http://www.jdhr.org/'
+    },
+    {
+        id: 9,
+        name: 'Sustainable Development Policy Institute (SDPI)',
+        logo: '/assets/sdpi.png',
+        link: 'https://sdpi.org/'
+    },
+    {
+        id: 10,
+        name: 'Institute of Policy Studies (IPS)',
+        logo: '/assets/ips.png',
+        link: 'https://www.ips.lk/'
+    },
+    {
+        id: 11,
+        name: 'Law & Society Trust (LST)',
+        logo: '/assets/lst.png',
+        link: 'https://www.lstlanka.org/'
+    },
+]
 
 export const aboutMenuData = {
   introText:

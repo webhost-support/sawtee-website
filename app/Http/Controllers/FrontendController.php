@@ -64,7 +64,7 @@ class FrontendController extends Controller
         $featured_publications = $featured->publications()->get();
         $publications = Publication::with(['file', 'category'])
         ->orderBy('id', "DESC")
-        ->limit(9)
+            ->limit(6)
         ->get();
 
         $slider = Slider::where('page_id', Page::where('name', 'home')->first()->id,)->firstOrFail();
@@ -78,11 +78,11 @@ class FrontendController extends Controller
             }
         }
         // dd($slidesResponsiveImages, $slides);
-        $infocus = Category::where('slug', 'in-focus')->firstOrFail()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
-        $sawteeInMedia = Category::where('slug', 'sawtee-in-media')->firstOrFail()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
-        $events = Category::where('slug', 'featured-events')->firstOrFail()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
-        $newsletters = Category::where('slug', 'newsletters')->firstOrFail()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
-        $webinars = Category::where('slug', 'webinar-series')->firstOrFail()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
+        $infocus = Category::where('slug', 'in-focus')->firstOrFail()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
+        $sawteeInMedia = Category::where('slug', 'sawtee-in-media')->firstOrFail()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
+        $events = Category::where('slug', 'featured-events')->firstOrFail()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
+        $newsletters = Category::where('slug', 'newsletters')->firstOrFail()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
+        $webinars = Category::where('slug', 'webinar-series')->firstOrFail()->posts()->where('status', 'published')->orderBy('id', 'DESC')->get();
 
         return Inertia::render('Frontend/Pages/Home', [
             'slides' => $slides->load(['media']),

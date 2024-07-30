@@ -1,15 +1,10 @@
 import { GlassBox } from '@/components/Frontend';
-import { PDFFileIcon } from '@/components/Frontend/icons';
+import { cn } from '@/lib/utils';
 import {
-  Box,
-  Circle,
-  Flex,
-  Heading,
-  Link,
-  Text,
-  VStack,
-  useColorModeValue,
+    Link,
+    Text
 } from '@chakra-ui/react';
+import { FileText } from 'lucide-react';
 
 const ResearchArchive = ({ posts }) => {
   // Get the data of the current list.
@@ -19,35 +14,24 @@ const ResearchArchive = ({ posts }) => {
   const sortedPosts = Object.entries(posts).sort(([a], [b]) => b - a);
 
   return (
-    <Box maxW="xl" mx="auto">
-      <VStack textAlign="start" align="start" mb={5} spacing={10}>
+    <div className='w-full max-w-3xl mx-auto flex flex-col gap-10 mb-5 items-start justify-start'>
         {sortedPosts.map(tagitem => {
           return (
-            <Box zIndex={5} w="full" key={tagitem[0]}>
-              <Heading fontSize={['lg', 'xl', '2xl']} fontWeight="bold" my={5}>
+            <div className='w-full z-10' key={tagitem[0]}>
+              <h2 className='text-lg md:text-xl xl:text-2xl font-bold my-5' >
                 {tagitem[0]}
-              </Heading>
+              </h2>
               <GlassBox
-                p={4}
-                rounded="xl"
-                textAlign="left"
-                display={'flex'}
-                boxShadow={'lg'}
-                flexDirection={'column'}
-                alignItems="start"
-                cursor="pointer"
-                _hover={{
-                  shadow: 'md',
-                }}
+              className={'w-full p-4 rounded-xl text-left'}
+
               >
                 {tagitem[1].map((researchItem, idx) => (
                   <ReasearchItem
                     key={researchItem.id}
-                    icon={PDFFileIcon}
-                    skipTrail={idx !== tagitem[1].length - 1 ? true : false}
-                    minH={idx !== tagitem[1].length - 1 ? 20 : 'auto'}
+                    skipTrail={idx  !== tagitem[1].length - 1}
+                    className={idx !== tagitem[1].length - 1 ? 'min-h-12' : 'min-h-auto'}
                   >
-                    <Text fontSize="sm">
+                    <h3 className='text-md md:text-lg tracking-wide text-secondary-foreground/90 hover:underline hover:underline-offset-4 hover:text-primary/80 dark:hover:text-secondary-foreground/80'>
                       <Link
                         target="_blank"
                         href={
@@ -58,55 +42,43 @@ const ResearchArchive = ({ posts }) => {
                       >
                         {researchItem.title}
                       </Link>
-                    </Text>
+                    </h3>
                   </ReasearchItem>
                 ))}
               </GlassBox>
-            </Box>
+            </div>
           );
         })}
-      </VStack>
-    </Box>
+    </div>
   );
 };
 
 export default ResearchArchive;
 
 const ReasearchItem = ({
-  icon = CheckCircleIcon,
-  boxProps = {},
   skipTrail,
   children,
-  ...props
+  className
 }) => {
   return (
-    <Flex {...props} align={'center'}>
-      <Flex flexDir="column" alignItems="center" mr={4} pos="relative">
-        <Circle
-          size={12}
-          bg={useColorModeValue('gray.600', 'gray.500')}
-          opacity={useColorModeValue(0.07, 0.15)}
-        />
-        <Box
-          as={icon}
-          size="1.25em"
-          pos="absolute"
-          left="0.85em"
-          top="0.85em"
-        />
+    <div className={cn('flex items-start ', className)} >
+      <div className='flex flex-col justify-center items-center mr-4 relative'>
+        <div
+        className='h-10 w-10 rounded-full bg-zinc-200 dark:bg-zinc-700'
+
+        >
+        <FileText className='h-5 w-5 translate-x-1/2 translate-y-1/2 text-zinc-600 dark:text-zinc-400' />
+        </div>
         {skipTrail ? (
-          <Box
-            w="1px"
-            flex={1}
-            my={1}
-            bg={useColorModeValue('gray.600', 'gray.500')}
-            opacity={useColorModeValue(0.07, 0.15)}
+          <div
+          className='w-[2px] h-12 bg-zinc-200 dark:bg-zinc-700'
+
           />
         ) : null}
-      </Flex>
-      <Box pt={{ base: 1, sm: 3 }} {...boxProps}>
+      </div>
+      <div className='' >
         {children}
-      </Box>
-    </Flex>
+      </div>
+    </div>
   );
 };

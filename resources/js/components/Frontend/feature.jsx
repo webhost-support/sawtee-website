@@ -1,9 +1,9 @@
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
 } from '@/components/ui/carousel';
 import { cn } from '@/lib/utils';
 
@@ -20,7 +20,7 @@ export default function FeaturedSection({ features, className }) {
     >
       <div className="w-full space-y-5 md:space-y-10">
         <h3 className="text-3xl md:text-4xl font-extrabold text-secondary-foreground tracking-tight ">
-          <span className='relative z-40 after:content:"" after:w-full after:h-[30%] after:absolute after:bottom-1 after:left-0 after:bg-primary-100 after:z-[-1]  after:bg-gradient-to-l after:from-theme-50 after:to-theme-300 dark:after:bg-gradient-to-l dark:after:from-theme-300 dark:after:to-theme-500'>
+          <span className='relative z-20 after:content:"" after:w-full after:h-[30%] after:absolute after:bottom-1 after:left-0 after:bg-primary-100 after:z-[-1]  after:bg-gradient-to-l after:from-theme-50 after:to-theme-300 dark:after:bg-gradient-to-l dark:after:from-theme-300 dark:after:to-theme-500'>
             {'Reform Monitoring Platform'}
           </span>
           <br />

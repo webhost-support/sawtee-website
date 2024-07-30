@@ -1,4 +1,4 @@
-import InertiaChakraLink from '@/Components/Frontend/styles/inertia-chakra-link';
+import InertiaChakraLink from '@/components/Frontend/styles/inertia-chakra-link';
 import { AspectRatio, Box, Button } from '@chakra-ui/react';
 
 const WebinarPost = ({ post }) => {

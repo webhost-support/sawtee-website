@@ -58,7 +58,7 @@ const ArchivePost = ({ post, showFallbackImage, ...rest }) => {
               : `/category/${post.category.slug}/${post.slug}`
           }
         >
-          <div className="absolute right-0 top-0 mr-3 mt-3 rounded-md bg-theme-600 px-2 py-1 font-serif text-xs font-medium text-white transition duration-500 ease-in-out hover:bg-theme-100/80 hover:text-theme-700">
+          <div className="absolute right-0 top-0 mr-3 mt-3 rounded-md bg-theme-600/80 px-2 py-1 font-serif text-xs font-medium text-white transition duration-500 ease-in-out hover:bg-theme-100/80 hover:text-theme-700 cursor-pointer">
             {post.category.name}
           </div>
         </Link>
