@@ -1,4 +1,3 @@
-import { Box, Image } from '@chakra-ui/react';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 
@@ -10,23 +9,20 @@ export default function AirBnbCard({
   return img.length > 0 ? (
     img.map(image_src => {
       return (
-        <Box w="full" key={image_src}>
+        <div key={image_src} className="h-auto w-full">
           <Zoom>
-            <Image
-              w="full"
-              maxH="337px"
-              borderRadius="12px"
+            <img
+              className="w-full max-w-full rounded-lg object-cover"
               src={image_src}
               alt={title}
-              fontSize="16px"
-              objectFit="cover"
+              loading="lazy"
             />
           </Zoom>
-        </Box>
+        </div>
       );
     })
   ) : (
-    <Box w="full">
+    <div className="w-full">
       <iframe
         width="673"
         height="489"
@@ -37,6 +33,6 @@ export default function AirBnbCard({
         referrerPolicy="strict-origin-when-cross-origin"
         allowfullscreen
       />
-    </Box>
+    </div>
   );
 }

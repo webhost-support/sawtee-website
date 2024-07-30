@@ -1,22 +1,11 @@
-import {
-  Box,
-  Grid,
-  GridItem,
-  HStack,
-  IconButton,
-  Image,
-  LinkBox,
-  LinkOverlay,
-  Text,
-} from '@chakra-ui/react';
-
 // import required modules
-import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
+import { Link } from '@inertiajs/react';
+import { ArrowLeftIcon, ArrowRightIcon, PlayCircleIcon } from 'lucide-react';
 import { useRef } from 'react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import '../../../css/video-carousel.css';
-import { PlayIcon } from './icons';
+import { Button } from '../ui/button';
 
 const VideoCarousel = ({
   posts,
@@ -31,8 +20,8 @@ const VideoCarousel = ({
   const swiperElRef = useRef(null);
 
   return (
-    <div className="w-full max-w-8xl mx-auto grid lg:grid-cols-5 gap-10">
-      <div className="lg:col-span-3 self-center">
+    <div className="max-w-8xl mx-auto grid w-full gap-10 lg:grid-cols-5">
+      <div className="h-full self-center lg:col-span-3">
         <swiper-container
           ref={swiperElRef}
           slides-per-view={1}
@@ -45,29 +34,27 @@ const VideoCarousel = ({
           {...rest}
         >
           <div slot="container-start">
-            <div className="swiper-button-prev w-full z-auto absolute top-1/2 inset-0 transform:translateY(45%)">
-              <IconButton
-                position="absolute"
-                colorScheme="blackAlpha"
-                color={'white'}
-                id="prev-button"
-                icon={<ChevronLeftIcon w="8" h="8" />}
-                aria-label="previous"
-                left="10"
-                onClick={() => swiperElRef.current.swiper.slidePrev()}
-              />
+            <Button
+              className="absolute left-10 top-1/2 z-20"
+              id="prev-button"
+              aria-label="previous"
+              size="icon"
+              variant="ghost"
+              onClick={() => swiperElRef.current.swiper.slidePrev()}
+            >
+              <ArrowLeftIcon className="h-8 w-8" />
+            </Button>
 
-              <IconButton
-                position="absolute"
-                id="next-button"
-                colorScheme="blackAlpha"
-                color={'white'}
-                aria-label="next"
-                icon={<ChevronRightIcon w="8" h="8" />}
-                right="10"
-                onClick={() => swiperElRef.current.swiper.slideNext()}
-              />
-            </div>
+            <Button
+              className="absolute right-10 top-1/2 z-20"
+              id="next-button"
+              size="icon"
+              variant="ghost"
+              aria-label="next"
+              onClick={() => swiperElRef.current.swiper.slideNext()}
+            >
+              <ArrowRightIcon className="h-8 w-8" />
+            </Button>
           </div>
           {posts.map(article => {
             const media =
@@ -78,49 +65,29 @@ const VideoCarousel = ({
                 : null;
             return (
               <swiper-slide key={article.id} class="swiper-slide video-slide">
-                <LinkBox
-                  w="full"
-                  aspectRatio={5 / 3}
-                  rounded={'xl'}
-                  overflow={'hidden'}
-                >
-                  <IconButton
+                <div className="group relative h-full w-full overflow-hidden rounded-lg border">
+                  <PlayCircleIcon
                     aria-label={'Play Button'}
-                    variant={'ghost'}
-                    color={'red.500'}
-                    opacity={0.5}
-                    _groupHover={{
-                      opacity: 1,
-                    }}
-                    icon={<PlayIcon w={16} h={16} />}
-                    size={'lg'}
-                    position={'absolute'}
-                    left={'50%'}
-                    top={'50%'}
-                    transition={'all .25s ease'}
-                    transform={'translateX(-50%) translateY(-50%)'}
+                    className="duration-250 absolute inset-1/2 -z-[1] h-12 w-12 text-red-500 opacity-50 transition-all ease-in-out group-hover:opacity-100"
                   />
-                  <LinkOverlay target="_blank" href={article.link}>
-                    <Image
-                      h="full"
-                      w="full"
-                      objectFit={'cover'}
+                  <Link target="_blank" href={article.link}>
+                    <img
+                      className="h-full w-full object-cover"
                       alt={article.title}
                       src={
                         media
                           ? media.original_url
                           : '/assets/SM-placeholder-1024x512.png'
                       }
-                      fallbackSrc="/assets/SM-placeholder-1024x512.png"
                     />
-                  </LinkOverlay>
-                </LinkBox>
+                  </Link>
+                </div>
               </swiper-slide>
             );
           })}
         </swiper-container>
       </div>
-      <div className="lg:col-span-2 self-center">
+      <div className="self-center lg:col-span-2">
         <swiper-container
           class="thumbs-swiper"
           space-between="10"
@@ -135,38 +102,19 @@ const VideoCarousel = ({
             )[0];
             return (
               <swiper-slide key={article.id} class="thumb-slide">
-                <HStack w="full" spacing={4} cursor="pointer">
-                  <Box
-                    pos="relative"
-                    w="full"
-                    maxW={'6rem'}
-                    aspectRatio={5 / 3}
-                  >
-                    <IconButton
+                <div className="group flex w-full cursor-pointer items-center gap-4">
+                  <div className="relative flex max-w-24 items-center justify-center overflow-hidden border">
+                    <PlayCircleIcon
                       aria-label={'Play Button'}
-                      variant={'ghost'}
-                      color={'red.500'}
-                      opacity={0.5}
-                      _groupHover={{
-                        opacity: 1,
-                      }}
-                      icon={<PlayIcon w={6} h={6} />}
-                      position={'absolute'}
-                      left={'50%'}
-                      top={'50%'}
-                      transition={'all .25s ease'}
-                      transform={'translateX(-50%) translateY(-50%)'}
-                      size={'xs'}
+                      className="duration-250 absolute h-6 w-6 text-red-500 opacity-50 transition-all ease-in-out group-hover:opacity-100"
                     />
-                    <Image
-                      w="full"
-                      h="full"
+                    <img
+                      className="aspect-[5/3] h-full w-full rounded-md object-cover"
                       alt={article.title}
                       src={media ? media.original_url : null}
-                      rounded="md"
                       fallbackSrc="/assets/SM-placeholder-300x150.png"
                     />
-                  </Box>
+                  </div>
 
                   <p
                     className="text-sm text-secondary-foreground"
@@ -174,7 +122,7 @@ const VideoCarousel = ({
                   >
                     {article.title}
                   </p>
-                </HStack>
+                </div>
               </swiper-slide>
             );
           })}

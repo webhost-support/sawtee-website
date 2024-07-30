@@ -78,11 +78,11 @@ class FrontendController extends Controller
             }
         }
         // dd($slidesResponsiveImages, $slides);
-        $infocus = Category::where('slug', 'in-focus')->firstOrFail()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
-        $sawteeInMedia = Category::where('slug', 'sawtee-in-media')->firstOrFail()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
-        $events = Category::where('slug', 'featured-events')->firstOrFail()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
-        $newsletters = Category::where('slug', 'newsletters')->firstOrFail()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(5)->get();
-        $webinars = Category::where('slug', 'webinar-series')->firstOrFail()->posts()->where('status', 'published')->orderBy('id', 'DESC')->get();
+        $infocus = Category::where('slug', 'in-focus')->firstOrFail()->posts()->where('status', 'published')->latest()->take(5)->get();
+        $sawteeInMedia = Category::where('slug', 'sawtee-in-media')->firstOrFail()->posts()->where('status', 'published')->latest()->take(5)->get();
+        $events = Category::where('slug', 'featured-events')->firstOrFail()->posts()->where('status', 'published')->latest()->take(5)->get();
+        $newsletters = Category::where('slug', 'newsletters')->firstOrFail()->posts()->where('status', 'published')->latest()->take(5)->get();
+        $webinars = Category::where('slug', 'webinar-series')->firstOrFail()->posts()->where('status', 'published')->latest()->take(5)->get();
 
         return Inertia::render('Frontend/Pages/Home', [
             'slides' => $slides->load(['media']),

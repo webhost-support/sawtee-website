@@ -5,7 +5,6 @@ import { formatDate } from '@/lib/helpers';
 import { cn } from '@/lib/utils';
 import { ArrowForwardIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import {
-  Box,
   Flex,
   Image,
   Input,
@@ -210,10 +209,10 @@ export const OutreachSection = ({ sawteeInMedia, events }) => {
                   </div>
 
                   {featured_image && (
-                    <div className="aspect-auto w-full max-w-[90px] overflow-hidden rounded-md border p-1">
+                    <div className="w-full max-w-[90px] overflow-hidden rounded-md border">
                       <img
                         src={featured_image}
-                        className="h-full w-full object-cover"
+                        className="aspect-auto h-full w-full object-cover"
                         alt={'Event cover'}
                         loading="lazy"
                       />
@@ -299,25 +298,14 @@ export const FeaturedPublications = ({ publications }) => {
                 </div>
 
                 {media && (
-                  <Box
-                    w="20%"
-                    maxW="80px"
-                    aspectRatio={3 / 4}
-                    overflow="hidden"
-                    border="1px solid"
-                    borderColor="gray.400"
-                    rounded="md"
-                    mx="auto"
-                    p={1}
-                  >
-                    <Image
-                      src={media}
-                      objectFit="cover"
+                  <div className="mx-auto w-[20%] max-w-20 overflow-hidden rounded-md">
+                    <img
+                      className="aspect-[3/4] h-full w-full border object-cover"
+                      src={media || '/assets/SM-placeholder-150x150.png'}
                       alt="Publication Cover"
                       loading="lazy"
-                      fallbackSrc="/assets/SM-placeholder-150x150.png"
                     />
-                  </Box>
+                  </div>
                 )}
               </Link>
             </li>
