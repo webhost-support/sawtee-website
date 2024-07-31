@@ -1,4 +1,5 @@
-import { ExploreButton, GlassBox } from '@/components/Frontend/index';
+import ExploreButton from '@/components/Frontend/ExploreButton';
+import Glassbox from '@/components/Frontend/Glassbox';
 import { formatDate } from '@/lib/helpers';
 import { Link } from '@inertiajs/react';
 
@@ -14,10 +15,10 @@ const EventsArchive = ({ posts, ...rest }) => {
           )[0];
 
           return (
-            <GlassBox
+            <Glassbox
               key={id}
               className={
-                'relative flex w-full flex-col items-start overflow-hidden shadow py-0 xl:flex-row  xl:bg-transparent xl:py-4 xl:shadow-none'
+                'relative flex w-full flex-col items-start overflow-hidden py-0 shadow xl:flex-row xl:bg-transparent xl:py-4 xl:shadow-none'
               }
               {...rest}
             >
@@ -46,11 +47,11 @@ const EventsArchive = ({ posts, ...rest }) => {
               <img
                 src={featured_image?.original_url}
                 alt={title}
-                className="mb-4 aspect-video h-full w-full rounded-b-none bg-bgDarker object-cover xl:shadow-md xl:mb-0 xl:w-80 xl:shrink-0 xl:rounded-lg"
+                className="mb-4 aspect-video h-full w-full rounded-b-none bg-bgDarker object-cover xl:mb-0 xl:w-80 xl:shrink-0 xl:rounded-lg xl:shadow-md"
                 width="1216"
                 height="640"
               />
-            </GlassBox>
+            </Glassbox>
           );
         }
       )}

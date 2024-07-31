@@ -1,4 +1,5 @@
-import { ExploreButton, GlassBox } from '@/components/Frontend/index';
+import ExploreButton from '@/components/Frontend/ExploreButton';
+import Glassbox from '@/components/Frontend/Glassbox';
 import { formatDate } from '@/lib/helpers';
 
 import { Link } from '@inertiajs/react';
@@ -32,7 +33,7 @@ const ArchivePost = ({ post, showFallbackImage, ...rest }) => {
     media => media.collection_name === 'post-featured-image'
   )[0];
   return (
-    <GlassBox className="flex flex-col overflow-hidden rounded py-0 shadow-lg">
+    <Glassbox className="flex flex-col overflow-hidden rounded py-0 shadow-lg">
       <div className="group relative overflow-hidden">
         {showFallbackImage && featured_image && (
           <Link
@@ -58,7 +59,7 @@ const ArchivePost = ({ post, showFallbackImage, ...rest }) => {
               : `/category/${post.category.slug}/${post.slug}`
           }
         >
-          <div className="absolute right-0 top-0 mr-3 mt-3 rounded-md bg-theme-600/80 px-2 py-1 font-serif text-xs font-medium text-white transition duration-500 ease-in-out hover:bg-theme-100/80 hover:text-theme-700 cursor-pointer">
+          <div className="absolute right-0 top-0 mr-3 mt-3 cursor-pointer rounded-md bg-theme-600/80 px-2 py-1 font-serif text-xs font-medium text-white transition duration-500 ease-in-out hover:bg-theme-100/80 hover:text-theme-700">
             {post.category.name}
           </div>
         </Link>
@@ -105,6 +106,6 @@ const ArchivePost = ({ post, showFallbackImage, ...rest }) => {
           title="Read more"
         />
       </div>
-    </GlassBox>
+    </Glassbox>
   );
 };

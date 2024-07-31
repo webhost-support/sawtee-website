@@ -17,7 +17,7 @@ export default function Particles({
   const canvasSize = useRef({ w: 0, h: 0 });
   const dpr = typeof window !== 'undefined' ? window.devicePixelRatio : 1;
 
-  const theme = useTheme();
+  const theme = useTheme().theme;
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -30,7 +30,7 @@ export default function Particles({
     return () => {
       window.removeEventListener('resize', initCanvas);
     };
-  }, []);
+  }, [theme]);
 
   useEffect(() => {
     onMouseMove();

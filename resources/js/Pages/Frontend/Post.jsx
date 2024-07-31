@@ -1,8 +1,7 @@
 import WebsiteHead from '@/components/Frontend/Head';
-import InertiaChakraLink from '@/components/Frontend/styles/inertia-chakra-link';
 import MainLayout from '@/components/Layouts/MainLayout';
 import PostLayout from '@/components/Layouts/PostLayout';
-import { Box, Text } from '@chakra-ui/react';
+import { Link } from '@inertiajs/react';
 import NewsletterPost from './Pages/NewsletterPost';
 import WebinarPost from './Pages/WebinarPost';
 
@@ -31,19 +30,19 @@ export default function Post({ post, featured_image, srcSet, file }) {
         {isNewsletter && <NewsletterPost post={post} />}
         {isWebinarSeries && <WebinarPost post={post} />}
         {isDefault && (
-          <Box maxW="5xl" className="default_post_content">
-            <Text
+          <div className="max-w-5xl">
+            <p
               // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
               dangerouslySetInnerHTML={{
                 __html: content,
               }}
             />
             {file && (
-              <InertiaChakraLink target="_blank" href={file}>
+              <Link target="_blank" href={file}>
                 PDF
-              </InertiaChakraLink>
+              </Link>
             )}
-          </Box>
+          </div>
         )}
       </PostLayout>
     </MainLayout>

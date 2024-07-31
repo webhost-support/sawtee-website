@@ -1,11 +1,8 @@
 import SocialShare from '@/components/Frontend/SocialShare';
-import { Content } from '@/components/Frontend/index';
 import FeaturedMedia from '@/components/Frontend/post/featured-media';
 import PostHeader from '@/components/Frontend/post/post-header';
 import PostMeta from '@/components/Frontend/post/post-meta';
 import { LightPatternBox } from '@/components/Frontend/styles/pattern-box';
-import Section from '@/components/Frontend/styles/section';
-import { Box, useColorModeValue } from '@chakra-ui/react';
 import readingDuration from 'reading-duration';
 
 const PostLayout = ({
@@ -17,8 +14,6 @@ const PostLayout = ({
   featured_image,
   srcSet,
 }) => {
-  const postHeaderColor = useColorModeValue('gray.700', 'gray.200');
-
   const readingTime = post.content
     ? readingDuration(post.content, {
         emoji: 'stopwatch',
@@ -31,34 +26,33 @@ const PostLayout = ({
     : `https://ankursingh.com.np/${post.category.slug}/${post.slug}`;
 
   return (
-    <LightPatternBox showPattern={showPattern} pt="10px" pb={'40px'}>
-      <Box maxW="5xl" mt={'20px'} mx="auto">
+    <LightPatternBox className="pb-10 pt-3" showPattern={showPattern}>
+      <div className="mx-auto mt-5 max-w-5xl">
         <PostHeader
-          px={{ base: '32px', md: '3rem' }}
-          color={postHeaderColor}
+          className={`px-8 md:px-12`}
           categories={post.category}
           heading={post.title}
         />
-      </Box>
+      </div>
 
       {/* <PostProgressBar value={scroll} /> */}
 
-      <Box maxW={{ base: 'full', md: '3xl', xl: '4xl' }} mx="auto" px={4}>
+      <div className="mx-auto max-w-full px-4 md:max-w-3xl xl:max-w-4xl">
         {!isProgramPost && featured_image && (
           <FeaturedMedia src={featured_image} rounded={'xl'} srcSet={srcSet} />
         )}
-      </Box>
+      </div>
 
       {/* Look at the settings to see if we should include the featured image */}
       {isNewsletter && (
-        <Box>
+        <div>
           {children}
           <SocialShare url={shareUrl} />
-        </Box>
+        </div>
       )}
 
       {!isNewsletter && (
-        <Content as={Section} size="md" pb="50px" className="post-content">
+        <section className="post-content pb-10 max-w-5xl">
           <PostMeta
             author={post.author}
             date={post.published_at}
@@ -71,7 +65,7 @@ const PostLayout = ({
             title={post.title}
             excerpt={post.excerpt}
           />
-        </Content>
+        </section>
       )}
     </LightPatternBox>
   );

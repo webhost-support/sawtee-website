@@ -1,18 +1,15 @@
-import {
-    ExploreButton,
-    FeaturedPublications,
-    InfocusSection,
-    OutreachSection,
-    PublicationsSection,
-    Title,
-} from '@/components/Frontend';
+import ExploreButton from '@/components/Frontend/ExploreButton';
+import { FeaturedPublications } from '@/components/Frontend/FeaturedPublications';
 import FullWidthCarousel from '@/components/Frontend/FullWidthCarousel';
 import WebsiteHead from '@/components/Frontend/Head';
+import MultiPostsCarousel from '@/components/Frontend/MultiPostsSlider';
 import NewsletterCallout from '@/components/Frontend/NewsletterCallout';
 import Particles from '@/components/Frontend/Particles';
 import SimpleList from '@/components/Frontend/SimpleList';
+import SvgBackground from '@/components/Frontend/SvgBackground';
 import VideoCarousel from '@/components/Frontend/VideoCarousel';
 import FeaturedSection from '@/components/Frontend/feature';
+import { formatDate } from '@/lib/helpers';
 import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
 import MainLayout from '../../../components/Layouts/MainLayout';
@@ -95,35 +92,44 @@ const Home = ({
       </Section>
 
       {infocus && (
-        <Section className="infocus-section" dark>
+        <Section className="infocus-section">
           <div className="mx-auto max-w-5xl">
             <Title title={'In Focus'} />
-            <InfocusSection data={infocus} />
-            <ExploreButton
-              size={['xs', 'sm']}
-              text="More In Focus"
-              px={10}
-              mt="4"
-              link={'/category/in-focus'}
-            />
-          </div>
-        </Section>
-      )}
-
-      {features && (
-        <Section className="reform-section">
-          <Particles className="pointer-events-none absolute inset-0" />
-          <div className="max-w-9xl relative mx-auto">
-            <FeaturedSection features={features} />
+            <SimpleList heading={null}>
+              {infocus.map(item => {
+                return (
+                  <li
+                    className="mb-6 flex w-full flex-col gap-3 text-zinc-700 dark:text-zinc-300"
+                    key={item.id}
+                  >
+                    <Link
+                      className="underline underline-offset-2 hover:underline-offset-4"
+                      target="_blank"
+                      href={`/category/in-focus/${item.slug}`}
+                    >
+                      <h3 className="font-sans text-lg font-semibold text-primary hover:text-primary/80 dark:text-secondary-foreground dark:hover:text-secondary-foreground/80">
+                        {item.title}
+                      </h3>
+                    </Link>
+                    <p className="text-sm">{item.excerpt}</p>
+                  </li>
+                );
+              })}
+            </SimpleList>
+            <ExploreButton text="More In Focus" link={'/category/in-focus'} />
           </div>
         </Section>
       )}
 
       {/* Add publication section here  */}
-      <Section className="publications-section" dark>
+      <Section className="publications-section">
         <div className="mx-auto max-w-5xl">
           <Title title={'Latest in Pubications'} />
-          <PublicationsSection publications={publications} />
+          <MultiPostsCarousel
+            link={'/category/publications'}
+            text={'More in publications'}
+            data={publications}
+          />
           <ExploreButton
             className="mt-8"
             text="More In Publications"
@@ -132,14 +138,107 @@ const Home = ({
         </div>
       </Section>
 
-      <Section className="outreach-section">
+      <Section>
         <div className="mx-auto max-w-5xl">
-          <Title title={'Outreach and Media'} />
-          <OutreachSection sawteeInMedia={sawteeInMedia} events={events} />
+          <Title title={'Policy Outreach'} />
+          <FeaturedEventsSection events={events} />
+          <ExploreButton
+            text="More in featured events"
+            link={'/category/featured-events'}
+          />
         </div>
       </Section>
 
-      <Section className="section videos-section" dark>
+      <Section className="outreach-section">
+        <div className="mx-auto max-w-5xl">
+          <Title title={'SAWTEE in Media & Newsletters'} />
+          <div className="grid gap-10 lg:grid-cols-6">
+            <div className="md:col-span-3">
+              <SimpleList heading={'sawtee in media'}>
+                {sawteeInMedia.map(item => {
+                  const hasContent = item.content !== null || '';
+                  const file = item.media?.filter(
+                    media => media.collection_name === 'post-files'
+                  )[0];
+
+                  return (
+                    <li className="group mb-4" key={item.id}>
+                      <div>
+                        {file && !hasContent && (
+                          <a
+                            href={file?.original_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="md:text-md text-sm leading-5 text-secondary-foreground underline underline-offset-2 group-hover:text-primary/80 group-hover:underline-offset-4 dark:group-hover:text-secondary-foreground/80 lg:text-lg"
+                          >
+                            {item.title}
+                          </a>
+                        )}
+                        {hasContent && (
+                          <Link
+                            href={`/category/${item.category.slug}/${item.slug}`}
+                            className="md:text-md text-sm leading-5 text-secondary-foreground underline underline-offset-2 group-hover:text-primary/80 group-hover:underline-offset-4 dark:group-hover:text-secondary-foreground/80 lg:text-lg"
+                          >
+                            {item.title}
+                          </Link>
+                        )}
+                        <p className="mt-2 text-xs text-muted-foreground">
+                          {formatDate(item.published_at)}
+                        </p>
+                      </div>
+                    </li>
+                  );
+                })}
+              </SimpleList>
+              <ExploreButton
+                size={['xs', 'sm']}
+                text="More in sawtee in media "
+                link={'/category/sawtee-in-media'}
+              />
+            </div>
+
+            <div className="md:col-span-3">
+              <SimpleList heading={'e-newsletters'}>
+                {newsletters.map(item => {
+                  const file = item.media.filter(
+                    m => m.collection_name === 'post-files'
+                  )[0];
+                  return (
+                    <li className="group mb-4" key={item.id}>
+                      <Link
+                        className="md:text-md font-sans text-sm leading-5 text-secondary-foreground underline underline-offset-2 group-hover:text-primary/80 group-hover:underline-offset-4 dark:group-hover:text-secondary-foreground/80 lg:text-lg"
+                        href={file?.original_url}
+                      >
+                        {item.title}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </SimpleList>
+
+              <ExploreButton
+                size="sm"
+                text="More newsletters"
+                link={'/category/newsletters'}
+              />
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      {features && (
+        <section className="reform-section dark:bg-gray-900">
+          <div className="relative mx-auto px-4 py-16 sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-xl lg:px-8 lg:py-20">
+            <SvgBackground svgStyles={'dark:text-gray-800'} />
+            <Particles className="pointer-events-none absolute inset-0" />
+            <div className="max-w-9xl relative mx-auto">
+              <FeaturedSection features={features} />
+            </div>
+          </div>
+        </section>
+      )}
+
+      <Section className="section videos-section">
         <div className="mx-auto max-w-5xl">
           <Title title={'Webinar Series'} />
           <VideoCarousel posts={webinars} />
@@ -150,36 +249,7 @@ const Home = ({
           />
         </div>
       </Section>
-      <Section className="scroll-container">
-        <div className="mx-auto max-w-5xl">
-          <Title title={'Newsletters'} />
-          <SimpleList heading={'e-newsletters'} my="10">
-            {newsletters.map(item => {
-              const file = item.media.filter(
-                m => m.collection_name === 'post-files'
-              )[0];
-              return (
-                <li className="mb-4" key={item.id}>
-                  <Link
-                    className="md:text-md text-sm leading-5 text-secondary-foreground underline underline-offset-2 group-hover:text-primary/80 group-hover:underline-offset-4 dark:group-hover:text-secondary-foreground/80"
-                    textDecor="underline"
-                    textUnderlineOffset="3px"
-                    href={file?.original_url}
-                  >
-                    {item.title}
-                  </Link>
-                </li>
-              );
-            })}
-          </SimpleList>
-        </div>
 
-        <ExploreButton
-          size="sm"
-          text="More newsletters"
-          link={'/category/newsletters'}
-        />
-      </Section>
       <Section
         py={{ base: '6', md: '12', lg: '16' }}
         px={{ base: '10', md: '16', lg: '20' }}
@@ -203,6 +273,90 @@ const Section = ({ children, title = null, className, dark }) => {
       {title && <Title title={title} />}
       {children}
     </section>
+  );
+};
+
+const Title = ({ title }) => {
+  return (
+    <div className="mb-12">
+      <h3 className="flex items-center text-xl font-bold text-primary md:text-2xl lg:text-3xl xl:text-4xl">
+        {title}
+      </h3>
+      <div className="h-2 w-[8%] bg-theme-500" />
+    </div>
+  );
+};
+
+const FeaturedEventsSection = ({ events }) => {
+  return (
+    <div class="grid grid-cols-1 gap-5 lg:grid-cols-12">
+      <div class="group lg:col-span-5">
+        <Link href={`/category/featured-events/${events[0].slug}`}>
+          <div
+            class="min-h-[300px] overflow-hidden bg-bgDarker bg-cover text-center group-hover:border-t-8 group-hover:border-theme-500/60"
+            style={{
+              backgroundImage: `url(
+                  ${
+                    events[0].media.filter(
+                      item => item.collection_name === 'post-featured-image'
+                    )[0]?.original_url
+                  }
+                )`,
+            }}
+            title={events[0].title}
+          ></div>
+        </Link>
+        <div class="mt-3 flex flex-col justify-between rounded-b bg-white leading-normal lg:rounded-b-none lg:rounded-r">
+          <div class="">
+            <Link
+              href={`/category/featured-events/${events[0].slug}`}
+              class="text-xs font-medium uppercase text-theme-600 transition duration-500 ease-in-out hover:text-gray-900"
+            >
+              {events[0].category.name}
+            </Link>
+            <Link
+              href={`/category/featured-events/${events[0].slug}`}
+              class="mb-2 block text-2xl font-bold text-gray-900 transition duration-500 ease-in-out hover:text-theme-600"
+            >
+              {events[0].title}
+            </Link>
+            <p class="mt-2 text-base text-gray-700">{events[0].excerpt}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-5 lg:col-span-7">
+        {events.map((event, index) => {
+          const featured_image =
+            event.media.length > 0
+              ? event.media.filter(
+                  item => item.collection_name === 'post-featured-image'
+                )[0]?.original_url
+              : '/assets/SM-placeholder-150x150.png';
+          return (
+            index !== 0 && (
+              <div class="group">
+                <Link href={`/category/featured-events/${event.slug}`}>
+                  <div
+                    class="h-40 overflow-hidden bg-bgDarker bg-cover text-center group-hover:border-t-4 group-hover:border-theme-500/60"
+                    style={{
+                      backgroundImage: featured_image,
+                    }}
+                    title={event.title}
+                  ></div>
+                </Link>
+                <Link
+                  href={`/category/featured-events/${event.slug}`}
+                  class="text-md my-2 inline-block font-semibold text-gray-900 transition duration-500 ease-in-out hover:text-theme-600"
+                >
+                  Trump Steps Back Into Coronavirus Spotlight
+                </Link>
+              </div>
+            )
+          );
+        })}
+      </div>
+    </div>
   );
 };
 

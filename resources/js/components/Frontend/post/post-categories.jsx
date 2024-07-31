@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
-import React from 'react';
-import InertiaChakraLink from '../styles/inertia-chakra-link';
 
 export const PostCategory = props => (
   <Button
@@ -17,11 +16,15 @@ export const PostCategories = ({
   category,
   colorScheme = 'gray',
   size = 'xs',
+  className = '',
   ...props
 }) => {
   const ParentCategory = category.parent;
   return (
-    <div className="post-categories flex flex-wrap gap-4" {...props}>
+    <div
+      className={cn('post-categories flex flex-wrap gap-4', className)}
+      {...props}
+    >
       {ParentCategory && (
         <Link href={`/category/${ParentCategory.slug}`}>
           <PostCategory

@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import { Box } from '@chakra-ui/react';
 
 const sizes = {
@@ -13,7 +14,15 @@ const sizes = {
 /**
  * @param {React.ComponentProps<typeof Box>} props
  */
-const Section = ({ size = 'lg', ...props }) => (
-  <Box as="section" mx="auto" maxW={sizes[size]} {...props} />
+const Section = ({ size = 'lg', className, children }) => (
+  <section
+    className={cn(
+      'mx-auto max-w-5xl',
+      size && `max-w-[${sizes[size]}]`,
+      className
+    )}
+  >
+    {children}
+  </section>
 );
 export default Section;

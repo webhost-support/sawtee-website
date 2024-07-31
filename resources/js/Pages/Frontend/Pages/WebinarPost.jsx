@@ -1,15 +1,15 @@
-import InertiaChakraLink from '@/components/Frontend/styles/inertia-chakra-link';
-import { AspectRatio, Box, Button } from '@chakra-ui/react';
+import { Button } from '@/components/ui/button';
+import { htmlToText } from '@/lib/utils';
 
 const WebinarPost = ({ post }) => {
   const file = post.media.filter(m => m.collection_name === 'post-files')[0];
   return (
-    <Box>
-      <Box mb="6" dangerouslySetInnerHTML={{ __html: post.content }} />
-      <InertiaChakraLink href={file.original_url}>
+    <div>
+      <div className="mb-6">{htmlToText(post.content)}</div>
+      <a target="_blank" href={file.original_url}>
         <Button>Summary of Proceedings</Button>
-      </InertiaChakraLink>
-      <AspectRatio mt={6} ratio={16 / 9}>
+      </a>
+      <div className="mt-6 aspect-video">
         <iframe
           width="700"
           height="400"
@@ -20,8 +20,8 @@ const WebinarPost = ({ post }) => {
           referrerPolicy="strict-origin-when-cross-origin"
           allowfullscreen
         ></iframe>
-      </AspectRatio>
-    </Box>
+      </div>
+    </div>
   );
 };
 

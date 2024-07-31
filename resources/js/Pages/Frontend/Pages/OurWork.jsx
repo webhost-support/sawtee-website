@@ -1,7 +1,7 @@
 import { cn, htmlToText } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
-import CardWithEffect from '../CardWithEffect';
+import CardWithEffect from '../../../components/Frontend/CardWithEffect';
 
 export default function OurWork({ themes, sections, content }) {
   const [intro, setIntro] = useState(null);

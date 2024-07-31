@@ -2,8 +2,11 @@ import { cn } from '@/lib/utils';
 import { FacebookIcon, LinkedinIcon, TwitterIcon, YoutubeIcon } from '../icons';
 
 // warning for showSocialLinks and menu.length
-export const SocialMenu = ({ menu, ...props }) => (
-  <ul className="flex mt-4 space-x-4 sm:justify-center lg:mt-0 " {...props}>
+export const SocialMenu = ({ menu, className, ...props }) => (
+  <ul
+    className={cn('mt-4 flex space-x-4 sm:justify-center lg:mt-0', className)}
+    {...props}
+  >
     {menu?.map(item => {
       const SocialIcon = icons[item.name];
       const styles = () => {
@@ -22,7 +25,7 @@ export const SocialMenu = ({ menu, ...props }) => (
       };
       return (
         <SocialMenuItem key={item.name} className={styles()} link={item.link}>
-          <SocialIcon className="w-5 h-5 text-white" />
+          <SocialIcon className="h-5 w-5 text-white" />
         </SocialMenuItem>
       );
     })}

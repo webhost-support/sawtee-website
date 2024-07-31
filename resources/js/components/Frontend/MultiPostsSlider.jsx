@@ -15,13 +15,6 @@ import 'swiper/css/scrollbar';
 import { Badge } from '../ui/badge';
 
 const MultiPostsCarousel = ({
-  spacing,
-  pagination,
-  scrollbar,
-  showCategoryTag,
-  direction,
-  text,
-  link,
   children,
   data,
   ...rest
@@ -62,7 +55,7 @@ const MultiPostsCarousel = ({
                 <div className="p-2 z-10 group-hover:bg-black/70 rounded-b-md w-full text-sm leading-4 font-medium text-white group-hover:text-theme-400 transition-all duration-200 ease-in-out">
                   <Link
                     href={`/publications/${publication.file.name}`}
-                    class=" hover:underline group-hover:underline "
+                    className=" hover:underline group-hover:underline "
                   >
                     {publication.title}
                   </Link>

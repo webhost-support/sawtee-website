@@ -1,38 +1,36 @@
-import { Box, Flex, LinkBox, LinkOverlay } from '@chakra-ui/react';
-import React from 'react';
+import { Link } from '@inertiajs/react';
+import generateGradient from '../../../lib/genarate-gradient';
 import PostCategories from '../post/post-categories';
 import {
-  PostContent,
-  PostImage,
-  PostOverlay,
-  PostTitle,
-  PrimaryPostArticle,
-  SecondaryPostArticle,
+    PostContent,
+    PostImage,
+    PostOverlay,
+    PostTitle,
+    PrimaryPostArticle,
+    SecondaryPostArticle,
 } from './components';
-import generateGradient from './genarate-gradient';
 
 export const PrimaryPostPreview = ({ data, ...props }) => {
   const { title, category, featured_media, link } = data;
 
   return (
-    <LinkBox {...props}>
+    <div {...props}>
       <PrimaryPostArticle bgImage={generateGradient()} role="group">
         <PostOverlay />
         <PostImage {...featured_media} />
         <PostContent>
-          <LinkOverlay href={link}>
+          <Link href={link}>
             <PostTitle>{title}</PostTitle>
-          </LinkOverlay>
+          </Link>
           {category.length > 0 && (
             <PostCategories
               category={category}
-              justifyContent="center"
-              w="full"
+              className="w-full justify-center"
             />
           )}
         </PostContent>
       </PrimaryPostArticle>
-    </LinkBox>
+    </div>
   );
 };
 
@@ -40,12 +38,7 @@ export const SecondaryPostPreview = ({ data, ...props }) => {
   const { title, category, link, featured_media } = data;
 
   return (
-    <LinkBox
-      flex="1"
-      rounded={props.rounded ? props.rounded : 'none'}
-      overflow="hidden"
-      {...props}
-    >
+    <div className="flex-1" {...props}>
       <SecondaryPostArticle
         bgImage={generateGradient()}
         role="group"
@@ -53,7 +46,7 @@ export const SecondaryPostPreview = ({ data, ...props }) => {
       >
         <PostOverlay />
         <PostImage {...featured_media} />
-        <PostContent padding="40px" textAlign="left" mt="0">
+        <PostContent className={'text-lfet mt-0 p-10'}>
           {category.length > 0 && (
             <PostCategories
               zIndex={50}
@@ -61,49 +54,39 @@ export const SecondaryPostPreview = ({ data, ...props }) => {
               category={category}
             />
           )}
-          <LinkOverlay href={link}>
-            <PostTitle as="h2" mt="auto" fontSize="1.65rem">
-              {title}
-            </PostTitle>
-          </LinkOverlay>
+          <Link href={link}>
+            <PostTitle className={'mt-auto text-2xl'}>{title}</PostTitle>
+          </Link>
         </PostContent>
       </SecondaryPostArticle>
-    </LinkBox>
+    </div>
   );
 };
 
 export const FeaturedPostSection = ({ data, ...props }) =>
   data.length > 2 && (
-    <Flex
-      as="section"
-      direction={{ base: 'column', lg: 'row' }}
-      gap="2"
-      rowGap={8}
-      bg="transparent"
+    <section
+      className="relative flex flex-col gap-2 gap-y-8 bg-transparent lg:flex-row"
       {...props}
     >
-      <Box width={{ base: '100%', lg: '65%' }} flexGrow="1">
-        <PrimaryPostPreview data={data[0]} rounded="xl" overflow="hidden" />
-      </Box>
-      <Flex
-        direction={{ base: 'column', md: 'row', lg: 'column' }}
-        width={{ base: '100%', lg: '35%' }}
-        flexGrow="1"
-        gap="2"
-        rowGap={8}
-      >
+      <div className="w-full grow lg:w-[65%]">
+        <PrimaryPostPreview
+          data={data[0]}
+          className="overflow-hidden rounded-xl"
+        />
+      </div>
+      <div className="flex w-full grow flex-col gap-2 gap-y-8 md:flex-row lg:w-[35%] lg:flex-col">
         {data.map((item, idx) => {
           if (idx > 0 && idx < data.length) {
             return (
               <SecondaryPostPreview
                 key={item.id}
                 data={item}
-                rounded="xl"
-                overflow="hidden"
+                className="overflow-hidden rounded-xl"
               />
             );
           }
         })}
-      </Flex>
-    </Flex>
+      </div>
+    </section>
   );

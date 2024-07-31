@@ -1,28 +1,32 @@
-import { ArrowForwardIcon, ChevronRightIcon } from '@chakra-ui/icons';
-import { Button } from '@chakra-ui/react';
+import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
+import { ArrowRightIcon, ChevronRightIcon } from 'lucide-react';
 import { useState } from 'react';
-import InertiaChakraLink from './styles/inertia-chakra-link';
 
-export const ExploreButton = ({ text = 'Explore All', link, ...rest }) => {
+const ExploreButton = ({ text = 'Explore All', link, className, ...rest }) => {
   const [hovered, setHovered] = useState(false);
 
   return (
-    <InertiaChakraLink as={Link} href={link ? link : '#'}>
-      <Button
-        variant={'link'}
-        colorScheme={'primary'}
-        aria-label={text}
-        fontWeight={'normal'}
-        onMouseEnter={() => setHovered(!hovered)}
-        onMouseLeave={() => hovered && setHovered(!hovered)}
-        rightIcon={hovered ? <ArrowForwardIcon /> : <ChevronRightIcon />}
-        href={link ? link : '#'}
-        size={'sm'}
-        {...rest}
-      >
-        {text}
-      </Button>
-    </InertiaChakraLink>
+    <Link
+      type="button"
+      role="button"
+      href={link ? link : '#'}
+      className={cn(
+        'flex max-w-max items-center gap-1 rounded-md px-6 py-2 text-sm font-medium text-primary underline underline-offset-2 hover:text-primary/70 hover:underline-offset-4',
+        className
+      )}
+      onMouseEnter={() => setHovered(!hovered)}
+      onMouseLeave={() => hovered && setHovered(!hovered)}
+      {...rest}
+    >
+      {text}
+      {hovered ? (
+        <ArrowRightIcon className="h-4 w-4" />
+      ) : (
+        <ChevronRightIcon className="h-4 w-4" />
+      )}
+    </Link>
   );
 };
+
+export default ExploreButton;

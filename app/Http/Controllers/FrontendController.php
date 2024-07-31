@@ -71,17 +71,15 @@ class FrontendController extends Controller
         $slides = Slide::where('slider_id', $slider->id)->orderBy('id', 'DESC')->take(5)->get();
         foreach ($slides as $slide) {
             $responsive = $slide->getFirstMedia('slides')?->getSrcSet('responsive');
-            // dd($responsive);
 
             if ($responsive) {
                 array_push($slidesResponsiveImages, $slide->getFirstMedia('slides')->getSrcSet('responsive'));
             }
         }
-        // dd($slidesResponsiveImages, $slides);
         $infocus = Category::where('slug', 'in-focus')->firstOrFail()->posts()->where('status', 'published')->latest()->take(5)->get();
         $sawteeInMedia = Category::where('slug', 'sawtee-in-media')->firstOrFail()->posts()->where('status', 'published')->latest()->take(5)->get();
         $events = Category::where('slug', 'featured-events')->firstOrFail()->posts()->where('status', 'published')->latest()->take(5)->get();
-        $newsletters = Category::where('slug', 'newsletters')->firstOrFail()->posts()->where('status', 'published')->latest()->take(5)->get();
+        $newsletters = Category::where('slug', 'newsletters')->firstOrFail()->posts()->where('status', 'published')->latest()->take(10)->get();
         $webinars = Category::where('slug', 'webinar-series')->firstOrFail()->posts()->where('status', 'published')->latest()->take(5)->get();
 
         return Inertia::render('Frontend/Pages/Home', [

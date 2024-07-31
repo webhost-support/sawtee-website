@@ -23,3 +23,27 @@ export const pullupVariant = {
     },
   }),
 };
+
+export const ListItemVariant = {
+  open: {
+    y: 0,
+    transition: {
+      y: { stiffness: 1000, velocity: -100 },
+    },
+  },
+  closed: {
+    y: 50,
+    transition: {
+      y: { stiffness: 1000 },
+    },
+  },
+};
+
+export const ListVariant = {
+  open: {
+    transition: { staggerChildren: 0.07, delayChildren: 0.2 },
+  },
+  closed: {
+    transition: { staggerChildren: 0.05, staggerDirection: -1 },
+  },
+};

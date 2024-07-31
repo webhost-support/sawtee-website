@@ -1,47 +1,24 @@
-import { Content } from '@/components/Frontend/index';
-import { Box, Heading } from '@chakra-ui/react';
+import { htmlToText } from '@/lib/utils';
 
 const DefaultPage = ({ sections, content, ...rest }) => {
   return (
-    <Content
-      className="page-content"
-      px={{ base: '32px', md: '0' }}
-      mx="auto"
-      py={'80px'}
-      maxW={'2xl'}
+    <section
+      className="page-content mx-auto max-w-2xl px-8 py-20 md:px-0"
       {...rest}
     >
-      {content && (
-        <Box>
-          <Box>
-            <Box
-              as="p"
-              dangerouslySetInnerHTML={{
-                __html: content,
-              }}
-            />
-          </Box>
-        </Box>
-      )}
+      {content && <p as="p">{htmlToText(content)}</p>}
 
       {sections?.map(({ title, description }) => {
         return (
-          <Box>
-            <Heading as="h3" fontSize={['lg', 'xl', '2xl']} py={'4'} mb="4">
+          <div>
+            <h3 className="mb-4 py-4 text-lg md:text-xl xl:text-2xl">
               {title}
-            </Heading>
-            <Box>
-              <Box
-                as="p"
-                dangerouslySetInnerHTML={{
-                  __html: description,
-                }}
-              />
-            </Box>
-          </Box>
+            </h3>
+            <p as="p">{htmlToText(description)}</p>
+          </div>
         );
       })}
-    </Content>
+    </section>
   );
 };
 

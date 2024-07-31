@@ -1,10 +1,10 @@
 import AirBnbCard from '@/components/Frontend/AirBnbCard';
-import { GlassBox } from '@/components/Frontend/index';
+import Glassbox from '@/components/Frontend/Glassbox';
 import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Link } from '@inertiajs/react';
@@ -17,7 +17,7 @@ export default function MediaFellows({ content, pageData }) {
         className="text-lg text-slate-800 dark:text-slate-300"
         dangerouslySetInnerHTML={{ __html: content }}
       />
-      <GlassBox className="mt-8 px-6 text-slate-800">
+      <Glassbox className="mt-8 px-6 text-slate-800">
         {pageData?.map(mediaFellow => {
           return (
             <Fragment key={mediaFellow.id}>
@@ -25,7 +25,7 @@ export default function MediaFellows({ content, pageData }) {
             </Fragment>
           );
         })}
-      </GlassBox>
+      </Glassbox>
     </div>
   );
 }

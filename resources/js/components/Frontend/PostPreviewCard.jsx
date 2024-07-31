@@ -1,19 +1,10 @@
 import { PostImageWithOverlay } from '@/components/Frontend/featured-post/components';
-import { GlassBox } from '@/components/Frontend/index';
+import Glassbox from '@/components/Frontend/Glassbox';
 import PostCategories from '@/components/Frontend/post/post-categories';
 import { formatDate } from '@/lib/helpers';
-import {
-  Box,
-  Flex,
-  HStack,
-  Heading,
-  LinkBox,
-  Text,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { htmlToText } from '@/lib/utils';
+import { useColorModeValue } from '@chakra-ui/react';
 import { Link } from '@inertiajs/react';
-import React from 'react';
-import InertiaChakraLinkOverlay from './styles/inertia-chakra-link-overlay';
 
 const PostPreviewCard = ({
   post,
@@ -27,14 +18,7 @@ const PostPreviewCard = ({
     ? media.filter(item => item.collection_name === 'post-featured-image')[0]
     : null;
   return (
-    <LinkBox
-      as={GlassBox}
-      role="group"
-      shadow="md"
-      rounded="md"
-      p={4}
-      {...rest}
-    >
+    <Glassbox className="group rounded-md p-4 shadow-md" {...rest}>
       {showImage && featured_image && (
         <PostImageWithOverlay
           borderRadius={'0.5rem 0.5rem 0 0'}
@@ -42,13 +26,10 @@ const PostPreviewCard = ({
         />
       )}
 
-      <Flex
-        mt={showImage ? 4 : 0}
-        gap={2}
-        justify={'center'}
-        direction="column"
+      <div
+        className={`flex flex-col justify-center gap-2 ${showImage ? 'mt-4' : 'mt-0'}`}
       >
-        <HStack justifyContent="space-between" alignItems={'center'}>
+        <div className="flex items-center justify-between">
           {showCategoryTag && (
             <PostCategories
               justify="flex-start"
@@ -59,35 +40,20 @@ const PostPreviewCard = ({
             />
           )}
 
-          <Box as="time" fontSize={'xs'} color={color}>
+          <time className={`text-xs text-[${color}]`}>
             {formatDate(published_at)}
-          </Box>
-        </HStack>
+          </time>
+        </div>
 
-        <InertiaChakraLinkOverlay
-          as={Link}
-          href={`/category/${category.slug}/${slug}`}
-        >
-          <Heading fontSize={{ base: 'xs', lg: 'sm' }} as="h4">
-            {title}
-          </Heading>
-        </InertiaChakraLinkOverlay>
+        <Link href={`/category/${category.slug}/${slug}`}>
+          <h4 className="text-xs lg:text-sm">{title}</h4>
+        </Link>
 
-        <Text
-          fontSize={{ base: 'xs', lg: 'sm' }}
-          overflow="hidden"
-          textOverflow="ellipsis"
-          display="-webkit-box"
-          noOfLines="3"
-          color={color}
-          sx={{
-            webkitLineClamp: '3',
-            webkitBoxOrient: 'vertical',
-          }}
-          dangerouslySetInnerHTML={{ __html: excerpt }}
-        />
-      </Flex>
-    </LinkBox>
+        <p className={`line-clamp-3 text-xs lg:text-sm text-[${color}]`}>
+          {htmlToText(excerpt)}
+        </p>
+      </div>
+    </Glassbox>
   );
 };
 

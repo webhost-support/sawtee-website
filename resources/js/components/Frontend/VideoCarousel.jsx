@@ -35,25 +35,27 @@ const VideoCarousel = ({
         >
           <div slot="container-start">
             <Button
-              className="absolute left-10 top-1/2 z-20"
+              className={
+                'absolute left-2 top-1/2 z-20 h-8 w-8 -translate-y-1/2 rounded-full'
+              }
               id="prev-button"
               aria-label="previous"
               size="icon"
               variant="ghost"
               onClick={() => swiperElRef.current.swiper.slidePrev()}
             >
-              <ArrowLeftIcon className="h-8 w-8" />
+              <ArrowLeftIcon className="h-4 w-4" />
             </Button>
 
             <Button
-              className="absolute right-10 top-1/2 z-20"
+              className="absolute right-2 top-1/2 z-20 h-8 w-8 -translate-y-1/2 rounded-full"
               id="next-button"
               size="icon"
               variant="ghost"
               aria-label="next"
               onClick={() => swiperElRef.current.swiper.slideNext()}
             >
-              <ArrowRightIcon className="h-8 w-8" />
+              <ArrowRightIcon className="h-4 w-4" />
             </Button>
           </div>
           {posts.map(article => {
@@ -68,9 +70,9 @@ const VideoCarousel = ({
                 <div className="group relative h-full w-full overflow-hidden rounded-lg border">
                   <PlayCircleIcon
                     aria-label={'Play Button'}
-                    className="duration-250 absolute inset-1/2 -z-[1] h-12 w-12 text-red-500 opacity-50 transition-all ease-in-out group-hover:opacity-100"
+                    className="duration-250 absolute left-1/2 top-1/2 -z-[1] h-12 w-12 -translate-x-1/2 -translate-y-1/2 text-red-500 opacity-50 transition-all ease-in-out group-hover:opacity-100"
                   />
-                  <Link target="_blank" href={article.link}>
+                  <Link className="" target="_blank" href={article.link}>
                     <img
                       className="h-full w-full object-cover"
                       alt={article.title}
@@ -103,23 +105,23 @@ const VideoCarousel = ({
             return (
               <swiper-slide key={article.id} class="thumb-slide">
                 <div className="group flex w-full cursor-pointer items-center gap-4">
-                  <div className="relative flex max-w-24 items-center justify-center overflow-hidden border">
+                  <div className="relative max-w-24 overflow-hidden border">
                     <PlayCircleIcon
                       aria-label={'Play Button'}
-                      className="duration-250 absolute h-6 w-6 text-red-500 opacity-50 transition-all ease-in-out group-hover:opacity-100"
+                      className="duration-250 absolute left-1/2 top-1/2 -z-[1] h-6 w-6 -translate-x-1/2 -translate-y-1/2 text-red-500 opacity-50 transition-all ease-in-out group-hover:opacity-100"
                     />
                     <img
                       className="aspect-[5/3] h-full w-full rounded-md object-cover"
                       alt={article.title}
-                      src={media ? media.original_url : null}
-                      fallbackSrc="/assets/SM-placeholder-300x150.png"
+                      src={
+                        media
+                          ? media.original_url
+                          : '/assets/SM-placeholder-300x150.png'
+                      }
                     />
                   </div>
 
-                  <p
-                    className="text-sm text-secondary-foreground"
-                    fontSize={'sm'}
-                  >
+                  <p className="text-md text-secondary-foreground">
                     {article.title}
                   </p>
                 </div>

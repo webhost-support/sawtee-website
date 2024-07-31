@@ -1,4 +1,4 @@
-import { GlassBox } from '@/components/Frontend';
+import Glassbox from '@/components/Frontend/Glassbox';
 import WebsiteHead from '@/components/Frontend/Head';
 import Pagination from '@/components/Frontend/Pagination';
 import SidebarWidget from '@/components/Frontend/sidebarWidget';
@@ -44,13 +44,13 @@ export default function Category({
             : '/assets/logo-sawtee.webp'
         }
       >
-        <script
+        {/* <script
           async
           defer
           crossOrigin="anonymous"
           src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v20.0"
           nonce="fqoExb8K"
-        />
+        /> */}
       </WebsiteHead>
       <PageLayout
         featured_image={featured_image}
@@ -114,7 +114,7 @@ export default function Category({
                   title={'In Focus'}
                 />
               )}
-              {showFacebookEmbed && (
+              {/* {showFacebookEmbed && (
                 <GlassBox className={'w-full text-center'}>
                   <div id="fb-root" />
                   <div
@@ -139,12 +139,12 @@ export default function Category({
                     </blockquote>
                   </div>
                 </GlassBox>
-              )}
+              )} */}
 
               {showSubscriptionBox && (
-                <GlassBox className={'w-full p-4'}>
+                <Glassbox className={'w-full p-4'}>
                   <SubscriptionCard />
-                </GlassBox>
+                </Glassbox>
               )}
             </div>
           </aside>
