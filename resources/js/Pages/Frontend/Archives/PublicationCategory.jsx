@@ -1,20 +1,9 @@
-import { GlassBox } from '@/components/Frontend';
+import Glassbox from '@/components/Frontend/Glassbox';
 import WebsiteHead from '@/components/Frontend/Head';
 import Pagination from '@/components/Frontend/Pagination';
+import Section from '@/components/Frontend/section';
 import SidebarWidget from '@/components/Frontend/sidebarWidget';
-import InertiaChakraLink from '@/components/Frontend/styles/inertia-chakra-link';
-import InertiaChakraLinkOverlay from '@/components/Frontend/styles/inertia-chakra-link-overlay';
-import Section from '@/components/Frontend/styles/section';
 import SubscriptionCard from '@/components/Frontend/subscriptionCard';
-import {
-  Box,
-  Grid,
-  GridItem,
-  Image,
-  LinkBox,
-  SimpleGrid,
-  Text,
-} from '@chakra-ui/react';
 import { Link } from '@inertiajs/react';
 import MainLayout from '../../../components/Layouts/MainLayout';
 import PageLayout from '../../../components/Layouts/PageLayout';
@@ -45,53 +34,17 @@ export default function Publications({
         title={category.name}
         showBackgroundPattern={false}
       >
-        <Section
-          pb="80px"
-          py={{ base: '24px', lg: '80px' }}
-          px={{ base: '32px', lg: '80px' }}
-          size={'full'}
-          mx="auto"
-        >
-          <Grid
-            templateColumns={{ base: '1fr', xl: 'repeat(6, 1fr)' }}
-            gap={10}
-            placeContent={'center'}
-          >
-            <GridItem colSpan={{ base: 1, lg: 4 }} px={4} as="section">
-              <SimpleGrid
-                minChildWidth={'140px'}
-                spacing={10}
-                spacingY={24}
-                pos="sticky"
-                top="8rem"
-              >
+        <Section className={'mx-auto max-w-full px-8 py-6 lg:px-20 lg:py-20'}>
+          <div className="grid place-content-center gap-10 md:grid-cols-4 xl:grid-cols-6">
+            <section className="sticky top-32 px-4 md:col-span-2 xl:col-span-4">
+              <div className="grid grid-cols-4 gap-6">
                 {publications.data.length > 0 &&
                   publications.data.map(publication => {
                     return (
-                      <Box key={publication.id}>
-                        <LinkBox
-                          as="article"
-                          maxW={'140px'}
-                          mx="auto"
-                          _before={{
-                            content: `''`,
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100%',
-                            borderRadius: 'var(--chakra-radii-md)',
-                            background: 'rgba(0,0,0,0.1)',
-                            backgroundBlendMode: 'overlay',
-                          }}
-                          _hover={{
-                            _before: {
-                              background: 'transparent',
-                            },
-                          }}
-                        >
-                          <InertiaChakraLinkOverlay
-                            as={Link}
+                      <div key={publication.id}>
+                        <article className="article group relative mx-auto max-w-[140px] overflow-hidden rounded-md">
+                          <div className="absolute left-0 top-0 h-full w-full bg-black/10 bg-blend-overlay group-hover:bg-transparent" />
+                          <Link
                             title={publication.title}
                             href={
                               publication.file
@@ -100,65 +53,47 @@ export default function Publications({
                             }
                             target="_blank"
                           >
-                            <Image
-                              src={`${publication.media[0]?.original_url}`}
+                            <img
+                              className="aspect-[3/4] h-full w-full rounded-md object-cover"
+                              src={
+                                `${publication.media[0]?.original_url}` ||
+                                '/assets/SM-placeholder-150x150.png'
+                              }
                               alt={publication.title}
                               title={publication.title}
-                              rounded="md"
-                              objectFit="cover"
-                              w={'140px'}
-                              aspectRatio={3 / 4}
                               loading="lazy"
-                              fallbackSrc="/assets/SM-placeholder-150x150.png"
                             />
-                          </InertiaChakraLinkOverlay>
-                        </LinkBox>
+                          </Link>
+                        </article>
                         {publication.title && (
-                          <InertiaChakraLink
-                            as={Link}
-                            href={`/publications/${publication.file.name}`}
-                          >
-                            <Text
-                              mt={4}
-                              fontSize="sm"
-                              fontWeight="semibold"
-                              textAlign="center"
-                            >
+                          <Link href={`/publications/${publication.file.name}`}>
+                            <p className="mt-4 text-center text-sm font-semibold">
                               {publication.title}
-                            </Text>
+                            </p>
                             {publication.subtitle && (
-                              <Text mt={1} fontSize="xs" textAlign="center">
+                              <p className="mt-1 text-center text-xs">
                                 {publication.subtitle}
-                              </Text>
+                              </p>
                             )}
-                          </InertiaChakraLink>
+                          </Link>
                         )}
-                      </Box>
+                      </div>
                     );
                   })}
-              </SimpleGrid>
+              </div>
               {publications.data.length >= 12 && (
                 <Pagination
+                  className="mt-12"
                   links={publications.links}
                   currentPage={publications.current_page}
                   totalPages={publications.last_page}
                   nextPage={publications.next_page_url}
                   prevPage={publications.prev_page_url}
-                  width="full"
-                  mt={12}
                 />
               )}
-            </GridItem>
+            </section>
 
-            <GridItem
-              colSpan={{ base: 1, lg: 2 }}
-              as={'aside'}
-              display={'flex'}
-              flexDirection={'column'}
-              alignItems={'center'}
-              className="sidebar"
-              gap={12}
-            >
+            <aside className="sidebar flex flex-col items-center gap-12 md:col-span-2">
               {sawteeInMedia && (
                 <SidebarWidget
                   array={sawteeInMedia}
@@ -175,12 +110,12 @@ export default function Publications({
               )}
 
               {showSubscriptionBox && (
-                <GlassBox className={'p-4 w-full '}>
+                <Glassbox className={'w-full p-4'}>
                   <SubscriptionCard />
-                </GlassBox>
+                </Glassbox>
               )}
-            </GridItem>
-          </Grid>
+            </aside>
+          </div>
         </Section>
       </PageLayout>
     </MainLayout>

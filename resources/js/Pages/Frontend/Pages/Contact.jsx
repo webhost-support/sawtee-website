@@ -11,7 +11,7 @@ import { Fragment } from 'react';
 const Contact = ({ content, pageData }) => {
   return (
     <section className="contact-page-content mx-auto w-full max-w-5xl px-4 py-12 md:px-8">
-      <div className="rounded-xl p-5 shadow-lg md:p-8">
+      <div className="rounded-xl bg-bgDarker p-6 shadow-lg md:p-12">
         <h3 className="mb-4 text-center text-2xl font-bold md:text-4xl">
           South Asia Watch on Trade, Economics and Environment (SAWTEE)
         </h3>
@@ -55,7 +55,7 @@ const Contact = ({ content, pageData }) => {
             </div>
 
             <SocialMenu
-              className="ml-0 justify-start"
+              className="sm:justify-start"
               menu={pageData.social_menus}
             />
           </div>

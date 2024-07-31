@@ -6,5 +6,6 @@ export function cn(...inputs) {
 }
 
 export function htmlToText(html) {
+    if (html == null) return;
   return html.replace(/<[^>]+>/g, '');
 }

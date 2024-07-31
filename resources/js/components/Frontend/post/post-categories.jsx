@@ -4,38 +4,27 @@ import { Link } from '@inertiajs/react';
 
 export const PostCategory = props => (
   <Button
-    px={3}
-    py={1}
-    className="category rounded-md text-sm font-semibold"
-    variant="outline"
+    className={cn(
+      'category rounded-md px-3 py-1 text-sm font-semibold',
+      props.className
+    )}
     {...props}
   />
 );
 
-export const PostCategories = ({
-  category,
-  colorScheme = 'gray',
-  size = 'xs',
-  className = '',
-  ...props
-}) => {
+export const PostCategories = ({ category, className = '', ...props }) => {
   const ParentCategory = category.parent;
   return (
     <div
-      className={cn('post-categories flex flex-wrap gap-4', className)}
+      className={cn(
+        'post-categories flex flex-wrap justify-center gap-4',
+        className
+      )}
       {...props}
     >
       {ParentCategory && (
         <Link href={`/category/${ParentCategory.slug}`}>
-          <PostCategory
-            colorScheme={colorScheme}
-            size={size}
-            fontSize={size}
-            mr="6px"
-            mb="6px"
-          >
-            {ParentCategory.name}
-          </PostCategory>
+          <PostCategory>{ParentCategory.name}</PostCategory>
         </Link>
       )}
 
@@ -46,9 +35,7 @@ export const PostCategories = ({
             : `/category/${category.slug}`
         }
       >
-        <PostCategory colorScheme={colorScheme} size={size} mr="6px" mb="6px">
-          {category.name}
-        </PostCategory>
+        <PostCategory>{category.name}</PostCategory>
       </Link>
     </div>
   );

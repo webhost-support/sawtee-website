@@ -13,8 +13,9 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { useForm } from '@inertiajs/react';
+import { PlaneIcon } from 'lucide-react';
 import React from 'react';
-import { MailBoxIcon, SendPlaneIcon } from './icons';
+import { MailBoxIcon } from './icons';
 
 const SubscriptionCard = ({
   children,
@@ -117,7 +118,7 @@ const SubscriptionCard = ({
                 type="submit"
                 mr="3"
                 isLoading={processing}
-                icon={<SendPlaneIcon />}
+                icon={<PlaneIcon />}
               />
             </InputRightElement>
           </InputGroup>

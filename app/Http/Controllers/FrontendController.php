@@ -138,9 +138,9 @@ class FrontendController extends Controller
     public function category($slug, $subcategory = null, $post = null)
     {
         $segments = request()->segments();
-        $infocus = Category::where('slug', 'in-focus')->firstOrFail()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
-        $sawteeInMedia = Category::where('slug', 'sawtee-in-media')->firstOrFail()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
-        $events = Category::where('slug', 'featured-events')->firstOrFail()->posts()->where('status', 'published')->orderBy('id', 'DESC')->take(10)->get();
+        $infocus = Category::where('slug', 'in-focus')->firstOrFail()->posts()->where('status', 'published')->latest()->take(5)->get();
+        $sawteeInMedia = Category::where('slug', 'sawtee-in-media')->firstOrFail()->posts()->where('status', 'published')->latest()->take(5)->get();
+        $events = Category::where('slug', 'featured-events')->firstOrFail()->posts()->where('status', 'published')->latest()->take(5)->get();
         $category = Category::where('slug', $slug)->firstOrFail();
         $featured_image = $category->getFirstMediaUrl('category_media');
         $category_responsive_images = $category->getFirstMedia('category_media')?->getSrcset('responsive');

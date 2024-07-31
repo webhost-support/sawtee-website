@@ -5,7 +5,6 @@ import SidebarWidget from '@/components/Frontend/sidebarWidget';
 import SubscriptionCard from '@/components/Frontend/subscriptionCard';
 import MainLayout from '../../components/Layouts/MainLayout';
 import PageLayout from '../../components/Layouts/PageLayout';
-import BlogArchive from './Archives/BlogArchive';
 import CovidArchive from './Archives/CovidArchive';
 import DefaultArchive from './Archives/DefaultArchive';
 import EventsArchive from './Archives/EventsArchive';
@@ -27,11 +26,9 @@ export default function Category({
   const isInFocus = category.slug === 'infocus';
   const isMedia = category.slug === 'sawtee-in-media';
   const isNewsletter = category.slug === 'newsletters';
-  const isBlog = category.slug === 'blog';
   const isCovid = category.slug === 'covid';
   const isResearch = category.slug === 'research';
-  const isDefault =
-    !isNewsletter && !isBlog && !isResearch && !isCovid && !isEvent;
+  const isDefault = !isNewsletter && !isResearch && !isCovid && !isEvent;
 
   return (
     <MainLayout>
@@ -43,15 +40,7 @@ export default function Category({
             ? featured_image.original_url
             : '/assets/logo-sawtee.webp'
         }
-      >
-        {/* <script
-          async
-          defer
-          crossOrigin="anonymous"
-          src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v20.0"
-          nonce="fqoExb8K"
-        /> */}
-      </WebsiteHead>
+      ></WebsiteHead>
       <PageLayout
         featured_image={featured_image}
         srcSet={srcSet}
@@ -64,9 +53,6 @@ export default function Category({
             {isCovid && <CovidArchive posts={posts.data} />}
 
             {isResearch && <ResearchArchive posts={posts} />}
-
-            {isBlog && <BlogArchive posts={posts.data} />}
-
             {isNewsletter && <NewsletterArchive posts={posts.data} />}
 
             {isEvent && <EventsArchive posts={posts.data} />}
@@ -79,7 +65,6 @@ export default function Category({
                   totalPages={posts.last_page}
                   nextPage={posts.next_page_url}
                   prevPage={posts.prev_page_url}
-                  width="full"
                 />
               )}
             </div>
@@ -114,32 +99,6 @@ export default function Category({
                   title={'In Focus'}
                 />
               )}
-              {/* {showFacebookEmbed && (
-                <GlassBox className={'w-full text-center'}>
-                  <div id="fb-root" />
-                  <div
-                    className="fb-page"
-                    data-href="https://www.facebook.com/sawteenp/"
-                    data-tabs="timeline"
-                    data-width=""
-                    data-height=""
-                    data-small-header="false"
-                    data-adapt-container-width="true"
-                    data-hide-cover="false"
-                    data-show-facepile="false"
-                  >
-                    <blockquote
-                      cite="https://www.facebook.com/sawteenp/"
-                      className="fb-xfbml-parse-ignore"
-                    >
-                      <a href="https://www.facebook.com/sawteenp/">
-                        South Asia Watch on Trade, Economics and Environment
-                        (SAWTEE)
-                      </a>
-                    </blockquote>
-                  </div>
-                </GlassBox>
-              )} */}
 
               {showSubscriptionBox && (
                 <Glassbox className={'w-full p-4'}>

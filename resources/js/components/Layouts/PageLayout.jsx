@@ -7,7 +7,7 @@ const PageLayout = ({ title, featured_image, srcSet, children }) => {
 
   return (
     <div>
-      <div class="relative z-0 w-full h-80 max-h-80 bg-gray-400/20 dark:bg-black/85 ">
+      <div class="relative z-0 h-96 max-h-96 w-full bg-white/20 dark:bg-black/75">
         {hasFeaturedImage ? (
           <FeaturedMedia
             src={featured_image}
@@ -16,17 +16,17 @@ const PageLayout = ({ title, featured_image, srcSet, children }) => {
           />
         ) : (
           <div
-            className="w-full h-full absolute inset-0 -z-[1] bg-[url(/assets/pattern-tile-green.svg)] dark:bg-[url(/assets/pattern-tile-light-fade.svg)] "
+            className="absolute inset-0 -z-[1] h-full w-full bg-[url(/assets/pattern-tile-green.svg)] dark:bg-[url(/assets/pattern-tile-light-fade.svg)]"
             style={{
               backgroundSize: '1018px',
               backgroundPosition: 'top center',
-              backgroundBlendMode: 'overlay',
+              backgroundBlendMode: 'multiply',
             }}
           />
         )}
         <PostHeader
           className={cn(
-            'absolute bottom-4 left-12 px-2 z-10 text-left',
+            'absolute bottom-4 left-12 z-10 px-2 text-left',
             hasFeaturedImage
               ? 'text-gray-100'
               : 'text-gray-800 dark:text-gray-200'

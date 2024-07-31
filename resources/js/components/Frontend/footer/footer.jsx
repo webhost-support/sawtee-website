@@ -1,26 +1,23 @@
 import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
-import { SocialMenu } from '../header/social-menu';
 import {
-    CaretRightIcon,
-    EmailIcon,
-    FaxIcon,
-    LocationPin,
-    MailBoxIcon,
-    PhoneIcon,
-} from '../icons';
+  ArrowRightIcon,
+  MailIcon,
+  PhoneIncoming,
+  PhoneOff,
+} from 'lucide-react';
+import { SocialMenu } from '../header/social-menu';
+import { EmailIcon, LocationPin } from '../icons';
 
 export default function Footer({ menu, socialMenu, setMapModal }) {
-
   return (
     <footer className="w-full bg-bgDarker text-slate-500">
-
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 gap-3 gap-y-8 py-10 max-sm:mx-auto max-sm:max-w-sm sm:grid-cols-4 md:gap-8 lg:grid-cols-5">
-          <div className="col-span-full mb-10 lg:col-span-2 lg:mb-0">
+      <div className="mx-auto max-w-7xl px-8">
+        <div className="grid max-w-sm grid-cols-2 gap-3 gap-y-8 py-10 sm:mx-auto sm:max-w-full sm:grid-cols-3 md:gap-8 lg:grid-cols-5">
+          <div className="col-span-full mb-10 flex w-full flex-col gap-5 lg:col-span-2 lg:mb-0">
             <Link
               href="/"
-              className="flex w-32 justify-center lg:justify-start"
+              className="mx-auto flex w-32 justify-center lg:mx-0 lg:justify-start"
             >
               <img
                 src="/assets/logo-sawtee.webp"
@@ -29,24 +26,26 @@ export default function Footer({ menu, socialMenu, setMapModal }) {
               />
             </Link>
 
-            <p className="py-8 text-center text-sm text-gray-500 lg:max-w-xs lg:text-left">
-              Trusted in more than 100 countries & 5 million customers. Have any
-              query ?
-            </p>
-            <a
-              href="/contact"
-              className="mx-auto block h-9 w-fit rounded-full bg-sky-600 px-5 py-2.5 text-xs text-white shadow-sm transition-all duration-500 hover:bg-sky-700 lg:mx-0"
-            >
-              Contact us
-            </a>
+            <div className="flex w-full flex-col items-center justify-center gap-3 lg:items-start">
+              <span className="text-lg text-secondary-foreground">
+                ©<Link href="/">{' SAWTEE'}</Link>{' '}
+                {new Date().getFullYear() + ' All rights reserved. '}
+              </span>
+              <div className="flex space-x-4">
+                <SocialMenu className={'mt-0'} menu={socialMenu} />
+              </div>
+            </div>
           </div>
           {Object.entries(menu).map(([key, item]) => {
             return (
-              <div key={key} className="text-left lg:mx-auto">
-                <h4 className="mb-7 text-lg font-medium text-secondary-foreground">
+              <div
+                key={key}
+                className="col-span-2 w-full justify-self-center text-left sm:col-span-1 sm:mx-auto"
+              >
+                <h4 className="mb-7 text-xl font-medium text-secondary-foreground">
                   {item.title}
                 </h4>
-                <ul className="text-sm transition-all duration-500">
+                <ul className="text-[0.9rem] transition-all duration-500">
                   {item.title.includes('Contact')
                     ? item.children?.map(child_item => {
                         const { url, title } = child_item;
@@ -75,7 +74,7 @@ export default function Footer({ menu, socialMenu, setMapModal }) {
                         if (title.includes('Phone')) {
                           return (
                             <MenuItem key={title}>
-                              <PhoneIcon />
+                              <PhoneIncoming />
                               <a className="" href={`tel:${url}`}>
                                 {title}
                               </a>
@@ -85,7 +84,7 @@ export default function Footer({ menu, socialMenu, setMapModal }) {
                         if (title.includes('Fax')) {
                           return (
                             <MenuItem key={title}>
-                              <FaxIcon />
+                              <PhoneOff />
                               <a className="" href={`tel:${url}`}>
                                 {title}
                               </a>
@@ -95,7 +94,7 @@ export default function Footer({ menu, socialMenu, setMapModal }) {
                         if (title.includes('Box')) {
                           return (
                             <MenuItem key={title}>
-                              <MailBoxIcon />
+                              <MailIcon />
                               {title}
                             </MenuItem>
                           );
@@ -105,7 +104,7 @@ export default function Footer({ menu, socialMenu, setMapModal }) {
                         const { url, title } = child_item;
                         return (
                           <MenuItem key={title}>
-                            <CaretRightIcon />
+                            <ArrowRightIcon />
                             {title.includes('SAES') ? (
                               <a
                                 href={url}
@@ -125,17 +124,6 @@ export default function Footer({ menu, socialMenu, setMapModal }) {
               </div>
             );
           })}
-        </div>
-        <div className="border-t border-gray-200 py-7">
-          <div className="flex flex-col items-center justify-center lg:flex-row lg:justify-between">
-            <span className="text-sm text-secondary-foreground">
-              ©<Link href="/">{' SAWTEE'}</Link> {new Date().getFullYear()} ,
-              All rights reserved.
-            </span>
-            <div className="mt-4 flex space-x-4 sm:justify-center lg:mt-0">
-              <SocialMenu menu={socialMenu} />
-            </div>
-          </div>
         </div>
       </div>
     </footer>

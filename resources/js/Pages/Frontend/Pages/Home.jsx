@@ -44,20 +44,21 @@ const Home = ({
     },
     {
       id: '3',
-      title: "SAWTEE's Response to Covid-19",
+      title: 'Covid-19',
       image_src: '/assets/COVID-19-South-Asia-and-LDCs.webp',
       link: '/category/covid',
       description:
-        'Donec ipsum augue, condimentum pulvinar consequat et, rhoncus sit amet ipsum. Nullam id ante dictum sapien condimentum venenatis nec eget lorem. Etiam ac cursus ipsum, eget auctor velit. Morbi non enim non nunc dignissim rutrum. Vestibulum eu enim eget .',
+        'Donec ipsum augue, condimentum pulvinar consequat et, rhoncus sit amet ipsum. Nullam id ante dictum sapien condimentum venenatis nec eget lorem. Etiam ac cursus ipsum, eget auctor velit. Morbi non enim non nunc dignissim rutrum. Vestibulum eu enim eget.',
     },
 
-    // {
-    //   id: '4',
-    //   title: "Advancing LDC's Trade Interests",
-    //   image_src: '/assets/advancing-ldc_upscaled.webp',
-    //   link: '/advancing-ldcs’-interests-in-the-wto-strengthening-participation,-securing-priorities',
-    //   description: ""
-    // },
+    {
+      id: '4',
+      title: "Advancing LDC's Trade Interests",
+      image_src: '/assets/advancing-ldc_upscaled.webp',
+      link: '/advancing-ldcs’-interests-in-the-wto-strengthening-participation,-securing-priorities',
+      description:
+        'Donec ipsum augue, condimentum pulvinar consequat et, rhoncus sit amet ipsum. Nullam id ante dictum sapien condimentum venenatis nec eget lorem. Etiam ac cursus ipsum, eget auctor velit. Morbi non enim non nunc dignissim rutrum. Vestibulum eu enim eget.',
+    },
   ];
 
   return (
@@ -120,7 +121,6 @@ const Home = ({
           </div>
         </Section>
       )}
-
       {/* Add publication section here  */}
       <Section className="publications-section">
         <div className="mx-auto max-w-5xl">
@@ -153,7 +153,7 @@ const Home = ({
         <div className="mx-auto max-w-5xl">
           <Title title={'SAWTEE in Media & Newsletters'} />
           <div className="grid gap-10 lg:grid-cols-6">
-            <div className="md:col-span-3">
+            <div className="w-full md:col-span-3">
               <SimpleList heading={'sawtee in media'}>
                 {sawteeInMedia.map(item => {
                   const hasContent = item.content !== null || '';
@@ -289,43 +289,49 @@ const Title = ({ title }) => {
 
 const FeaturedEventsSection = ({ events }) => {
   return (
-    <div class="grid grid-cols-1 gap-5 lg:grid-cols-12">
-      <div class="group lg:col-span-5">
+    <div class="grid grid-cols-1 gap-5 md:grid-cols-12">
+      <div class="group md:col-span-5">
         <Link href={`/category/featured-events/${events[0].slug}`}>
           <div
-            class="min-h-[300px] overflow-hidden bg-bgDarker bg-cover text-center group-hover:border-t-8 group-hover:border-theme-500/60"
-            style={{
-              backgroundImage: `url(
-                  ${
-                    events[0].media.filter(
-                      item => item.collection_name === 'post-featured-image'
-                    )[0]?.original_url
-                  }
-                )`,
-            }}
+            class="relative aspect-square overflow-hidden rounded-md text-center"
             title={events[0].title}
-          ></div>
+          >
+            <div className="ease absolute inset-0 top-0 z-20 hidden h-2 w-full bg-theme-500 transition-all duration-200 group-hover:block" />
+            <div className="ease absolute inset-0 z-10 h-full w-full bg-black/20 transition-all duration-200 group-hover:bg-transparent" />
+            <img
+              src={
+                events[0].media.filter(
+                  item => item.collection_name === 'post-featured-image'
+                )[0]?.original_url
+              }
+              alt="event cover"
+              loading="lazy"
+              className="aspect-video w-full object-cover grayscale transition-all duration-500 ease-linear group-hover:grayscale-0 lg:aspect-square"
+            />
+          </div>
         </Link>
-        <div class="mt-3 flex flex-col justify-between rounded-b bg-white leading-normal lg:rounded-b-none lg:rounded-r">
+        <div class="mt-3 flex flex-col justify-between rounded-b leading-normal lg:rounded-b-none lg:rounded-r">
           <div class="">
             <Link
               href={`/category/featured-events/${events[0].slug}`}
-              class="text-xs font-medium uppercase text-theme-600 transition duration-500 ease-in-out hover:text-gray-900"
+              class="text-xs font-medium uppercase text-theme-500 transition duration-500 ease-in-out hover:text-theme-600"
             >
               {events[0].category.name}
             </Link>
             <Link
               href={`/category/featured-events/${events[0].slug}`}
-              class="mb-2 block text-2xl font-bold text-gray-900 transition duration-500 ease-in-out hover:text-theme-600"
+              class="mb-2 block text-2xl font-bold leading-6 tracking-wide text-slate-800 transition duration-500 ease-in-out group-hover:text-theme-500 dark:text-slate-300 lg:text-3xl"
             >
               {events[0].title}
             </Link>
-            <p class="mt-2 text-base text-gray-700">{events[0].excerpt}</p>
+            <p class="mt-2 text-base text-slate-700 dark:text-slate-400">
+              {events[0].excerpt}
+            </p>
           </div>
         </div>
       </div>
 
-      <div class="grid grid-cols-2 gap-5 lg:col-span-7">
+      <div class="grid grid-cols-2 gap-5 md:col-span-7">
         {events.map((event, index) => {
           const featured_image =
             event.media.length > 0
@@ -338,18 +344,24 @@ const FeaturedEventsSection = ({ events }) => {
               <div class="group">
                 <Link href={`/category/featured-events/${event.slug}`}>
                   <div
-                    class="h-40 overflow-hidden bg-bgDarker bg-cover text-center group-hover:border-t-4 group-hover:border-theme-500/60"
-                    style={{
-                      backgroundImage: featured_image,
-                    }}
+                    className="relative h-40 overflow-hidden rounded-md text-center"
                     title={event.title}
-                  ></div>
+                  >
+                    <img
+                      src={featured_image}
+                      alt="event cover"
+                      loading="lazy"
+                      className="aspect-square h-full w-full object-cover grayscale transition-all duration-500 ease-linear group-hover:grayscale-0"
+                    />
+                    <div className="ease absolute inset-0 top-0 z-10 hidden h-1 w-full bg-theme-500 transition-all duration-200 group-hover:block" />
+                    <div className="ease absolute inset-0 z-10 h-full w-full bg-black/20 transition-all duration-200 group-hover:bg-transparent" />
+                  </div>
                 </Link>
                 <Link
                   href={`/category/featured-events/${event.slug}`}
-                  class="text-md my-2 inline-block font-semibold text-gray-900 transition duration-500 ease-in-out hover:text-theme-600"
+                  class="text-md my-2 inline-block font-semibold leading-5 tracking-wide text-slate-800 transition duration-500 ease-in-out group-hover:text-theme-500 dark:text-slate-300"
                 >
-                  Trump Steps Back Into Coronavirus Spotlight
+                  {event.title}
                 </Link>
               </div>
             )

@@ -1,27 +1,24 @@
 
+import { HomeIcon } from '@/components/Frontend/icons';
 import {
-    ArticleIcon,
-    BookIcon,
-    FileIcon,
-    FilterIcon,
-    GlobeIcon,
-    GridPlusIcon,
-    HomeIcon,
-    LayoutIcon,
-    PageIcon,
-    SliderIcon,
-    TagIcon,
-    UserGroup,
-    Users,
-} from '@/components/Frontend/icons';
+  BookDashed,
+  FilePenIcon,
+  FilesIcon,
+  FileUpIcon,
+  FilterX,
+  Globe2Icon,
+  LayoutDashboard,
+  MenuIcon,
+  SlidersHorizontalIcon,
+  TagsIcon,
+  UsersIcon,
+} from 'lucide-react';
 
 export const feature = {
   name: 'Reform Monitoring Platform',
   image: '/assets/Policy-Reform-Banner-green-sized.webp',
   link: '/reform-monitoring-platform',
 };
-
-
 
 const font_heading =
   'Figtree, ui-serif, system-ui, serif, "Apple Color Emoji", -apple-system, BlinkMacSystemFont, "Segoe UI Emoji",Segoe UI Symbol, "Noto Color Emoji"';
@@ -101,9 +98,6 @@ export const customTheme = {
     mono: font_mono,
   },
 };
-
-
-
 
 export const memberInstitutions = [
   {
@@ -199,74 +193,73 @@ export const memberInstitutions = [
 ];
 
 export const MemberLogos = [
-    {
-        id: 1,
-        name: 'Bangladesh Environmental Lawyers’ Association (BELA)',
-        logo: '/assets/belabangla.png',
-        link: 'https://www.belabangla.org/'
-    },
-    {
-        id: 2,
-        name: 'Unnayan Shamannay, Dhaka',
-        logo: '/assets/unnayanshamannay.png',
-        link: 'https://www.unsy.org/'
-    },
-    {
-        id: 3,
-        name: 'Citizen consumer and civic Action Group (CAG)',
-        logo: '/assets/cag.png',
-        link: 'https://www.cag.org.in/'
-
-    },
-    {
-        id: 4,
-        name: 'Consumer Unity & Trust Society (CUTS)',
-        logo: '/assets/cuts.png',
-        link: 'https://cuts-international.org/'
-    },
-    {
-        id: 5,
-        name: 'Development Research and Action Group (DRAG)',
-        logo: '/assets/drag.png',
-        link: 'https://dragindia.org/'
-    },
-    {
-        id: 6,
-        name: 'Society for Legal and Environmental Analysis and Development Research (LEADERS)',
-        logo: '/assets/leaders.png',
-        link: 'https://leadersnepal.org.np/'
-    },
-    {
-        id: 7,
-        name: 'Forum for Protection of Public Interest (Pro Public)',
-        logo: '/assets/propublic.png',
-        link: 'http://propublic.org/'
-    },
-    {
-        id: 8,
-        name: 'Journalists for Democracy and Human Rights (JDHR)',
-        logo: '/assets/jdhr.png',
-        link: 'http://www.jdhr.org/'
-    },
-    {
-        id: 9,
-        name: 'Sustainable Development Policy Institute (SDPI)',
-        logo: '/assets/sdpi.png',
-        link: 'https://sdpi.org/'
-    },
-    {
-        id: 10,
-        name: 'Institute of Policy Studies (IPS)',
-        logo: '/assets/ips.png',
-        link: 'https://www.ips.lk/'
-    },
-    {
-        id: 11,
-        name: 'Law & Society Trust (LST)',
-        logo: '/assets/lst.png',
-        link: 'https://www.lstlanka.org/'
-    },
-]
+  {
+    id: 1,
+    name: 'Bangladesh Environmental Lawyers’ Association (BELA)',
+    logo: '/assets/belabangla.png',
+    link: 'https://www.belabangla.org/',
+  },
+  {
+    id: 2,
+    name: 'Unnayan Shamannay, Dhaka',
+    logo: '/assets/unnayanshamannay.png',
+    link: 'https://www.unsy.org/',
+  },
+  {
+    id: 3,
+    name: 'Citizen consumer and civic Action Group (CAG)',
+    logo: '/assets/cag.png',
+    link: 'https://www.cag.org.in/',
+  },
+  {
+    id: 4,
+    name: 'Consumer Unity & Trust Society (CUTS)',
+    logo: '/assets/cuts.png',
+    link: 'https://cuts-international.org/',
+  },
+  {
+    id: 5,
+    name: 'Development Research and Action Group (DRAG)',
+    logo: '/assets/drag.png',
+    link: 'https://dragindia.org/',
+  },
+  {
+    id: 6,
+    name: 'Society for Legal and Environmental Analysis and Development Research (LEADERS)',
+    logo: '/assets/leaders.png',
+    link: 'https://leadersnepal.org.np/',
+  },
+  {
+    id: 7,
+    name: 'Forum for Protection of Public Interest (Pro Public)',
+    logo: '/assets/propublic.png',
+    link: 'http://propublic.org/',
+  },
+  {
+    id: 8,
+    name: 'Journalists for Democracy and Human Rights (JDHR)',
+    logo: '/assets/jdhr.png',
+    link: 'http://www.jdhr.org/',
+  },
+  {
+    id: 9,
+    name: 'Sustainable Development Policy Institute (SDPI)',
+    logo: '/assets/sdpi.png',
+    link: 'https://sdpi.org/',
+  },
+  {
+    id: 10,
+    name: 'Institute of Policy Studies (IPS)',
+    logo: '/assets/ips.png',
+    link: 'https://www.ips.lk/',
+  },
+  {
+    id: 11,
+    name: 'Law & Society Trust (LST)',
+    logo: '/assets/lst.png',
+    link: 'https://www.lstlanka.org/',
+  },
+];
 
 export const aboutMenuData = {
   introText:
@@ -282,67 +275,67 @@ export const DashBoardMenuItems = [
   },
   {
     name: 'Website',
-    icon: GlobeIcon,
+    icon: Globe2Icon,
     route: 'home',
   },
   {
     name: 'Menu',
-    icon: GridPlusIcon,
+    icon: MenuIcon,
     route: 'admin.menus.index',
   },
   {
     name: 'Pages',
-    icon: PageIcon,
+    icon: FilesIcon,
     route: 'admin.pages.index',
   },
   {
     name: 'Sections',
-    icon: LayoutIcon,
+    icon: LayoutDashboard,
     route: 'admin.sections.index',
   },
   {
     name: 'Posts',
-    icon: ArticleIcon,
+    icon: FileUpIcon,
     route: 'admin.posts.index',
   },
   {
     name: 'Themes',
-    icon: TagIcon,
+    icon: TagsIcon,
     route: 'admin.themes.index',
   },
   {
     name: 'Tags',
-    icon: TagIcon,
+    icon: TagsIcon,
     route: 'admin.tags.index',
   },
   {
     name: 'Categories',
-    icon: FilterIcon,
+    icon: FilterX,
     route: 'admin.categories.index',
   },
   {
     name: 'Publications',
-    icon: BookIcon,
+    icon: BookDashed,
     route: 'admin.publications.index',
   },
   {
     name: 'Research',
-    icon: FileIcon,
+    icon: FilePenIcon,
     route: 'admin.research.index',
   },
   {
     name: 'Team Members',
-    icon: Users,
+    icon: UsersIcon,
     route: 'admin.teams.index',
   },
   {
     name: 'Slider',
-    icon: SliderIcon,
+    icon: SlidersHorizontalIcon,
     route: 'admin.sliders.index',
   },
   {
     name: 'Subscribers',
-    icon: UserGroup,
+    icon: UsersIcon,
     route: 'admin.subscribers.list',
   },
 ];

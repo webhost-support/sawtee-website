@@ -1,23 +1,11 @@
-import { GlassBox } from '@/components/Frontend';
+import Glassbox from '@/components/Frontend/Glassbox';
 import WebsiteHead from '@/components/Frontend/Head';
+import Section from '@/components/Frontend/section';
 import SidebarWidget from '@/components/Frontend/sidebarWidget';
-import InertiaChakraLink from '@/components/Frontend/styles/inertia-chakra-link';
-import InertiaChakraLinkOverlay from '@/components/Frontend/styles/inertia-chakra-link-overlay';
-import Section from '@/components/Frontend/styles/section';
 import SubscriptionCard from '@/components/Frontend/subscriptionCard';
-import {
-  Box,
-  Divider,
-  Grid,
-  GridItem,
-  Image,
-  LinkBox,
-  SimpleGrid,
-  Text,
-  VStack,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
+import { Separator } from '@radix-ui/react-dropdown-menu';
 import React from 'react';
 import MainLayout from '../../../components/Layouts/MainLayout';
 import PageLayout from '../../../components/Layouts/PageLayout';
@@ -49,37 +37,19 @@ export default function PublicationsArchive({
         showBackgroundPattern={false}
       >
         <Section
-          pb="80px"
-          py={{ base: '24px', lg: '80px' }}
-          px={{ base: '32px', lg: '80px' }}
-          size={'full'}
-          mx="auto"
+          className={
+            'sticky top-32 mx-auto max-w-full px-8 py-6 lg:px-20 lg:py-20'
+          }
         >
-          <Grid
-            templateColumns={{
-              base: '1fr',
-              md: 'repeat(4, 1fr)',
-              xl: 'repeat(6, 1fr)',
-            }}
-            gap={10}
-            placeContent={'center'}
-          >
-            <GridItem as="section" colSpan={{ base: 1, md: 2, xl: 4 }}>
+          <div className="grid place-content-center gap-10 md:grid-cols-4 xl:grid-cols-6">
+            <section className="md:col-span-2 xl:col-span-4">
               <ItemsList
                 items={category.children}
                 publications={publications}
               />
-            </GridItem>
+            </section>
 
-            <GridItem
-              colSpan={{ base: 1, md: 2, xl: 2 }}
-              as={'aside'}
-              display={'flex'}
-              flexDirection={'column'}
-              alignItems={'center'}
-              className="sidebar"
-              gap={12}
-            >
+            <aside className="sidebar flex flex-col items-center gap-12 md:col-span-2">
               {sawteeInMedia && (
                 <SidebarWidget
                   array={sawteeInMedia}
@@ -96,64 +66,38 @@ export default function PublicationsArchive({
               )}
 
               {showSubscriptionBox && (
-                <GlassBox className={'p-4 w-full '}>
+                <Glassbox className={'w-full p-4'}>
                   <SubscriptionCard />
-                </GlassBox>
+                </Glassbox>
               )}
-            </GridItem>
-          </Grid>
+            </aside>
+          </div>
         </Section>
       </PageLayout>
     </MainLayout>
   );
 }
 
-const ItemComponent = ({ item, publications, ...rest }) => {
+const ItemComponent = ({ item, publications, className }) => {
   return (
-    <Box key={item.name} w="full" {...rest}>
-      <InertiaChakraLink
-        as={Link}
+    <div className={cn('w-full', className)} key={item.name}>
+      <Link
+        className="underline"
         title={`Explore ${item.name}`}
-        textDecor="underline"
         href={`/category/publications/${item.slug}`}
       >
-        <Text
-          as="h3"
-          id={item.name}
-          fontSize={{ base: 'xl', lg: '2xl' }}
-          pb={8}
-        >
+        <h3 className="pb-8 text-2xl lg:text-3xl" id={item.name}>
           {item.name}
-        </Text>
-      </InertiaChakraLink>
+        </h3>
+      </Link>
       {publications[item.slug] && publications[item.slug].length > 0 && (
-        <SimpleGrid minChildWidth={'140px'} spacing={10}>
+        <div className="grid grid-cols-4 gap-6">
           {publications[item.slug].map(publication => {
             return (
-              <Box key={publication.id}>
-                <LinkBox
-                  as="article"
-                  maxW={'140px'}
-                  mx="auto"
-                  _before={{
-                    content: `''`,
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    borderRadius: 'var(--chakra-radii-md)',
-                    background: 'rgba(0,0,0,0.1)',
-                    backgroundBlendMode: 'overlay',
-                  }}
-                  _hover={{
-                    _before: {
-                      background: 'transparent',
-                    },
-                  }}
-                >
-                  <InertiaChakraLinkOverlay
-                    as={Link}
+              <div key={publication.id}>
+                <article className="article group relative mx-auto max-w-[140px] overflow-hidden rounded-md">
+                  <div className="absolute left-0 top-0 h-full w-full bg-black/10 bg-blend-overlay group-hover:bg-transparent" />
+                  <Link
                     title={publication.title}
                     href={
                       publication.file
@@ -162,76 +106,64 @@ const ItemComponent = ({ item, publications, ...rest }) => {
                     }
                     target="_blank"
                   >
-                    <Image
-                      src={`${publication.media[0]?.original_url}`}
+                    <img
+                      className="aspect-[3/4] h-full w-full rounded-md object-cover"
+                      src={
+                        `${publication.media[0]?.original_url}` ||
+                        '/assets/SM-placeholder-150x150.png'
+                      }
                       alt={publication.title}
                       title={publication.title}
-                      rounded="md"
-                      objectFit="cover"
-                      w={'140px'}
-                      aspectRatio={3 / 4}
                       loading="lazy"
-                      fallbackSrc="/assets/SM-placeholder-150x150.png"
                     />
-                  </InertiaChakraLinkOverlay>
-                </LinkBox>
+                  </Link>
+                </article>
                 {publication.title && (
-                  <InertiaChakraLink
-                    as={Link}
-                    href={`/publications/${publication.file.name}`}
-                  >
-                    <Text
-                      mt={4}
-                      fontSize="sm"
-                      fontWeight="semibold"
-                      textAlign="center"
-                    >
+                  <Link href={`/publications/${publication.file.name}`}>
+                    <p className="mt-4 text-center text-sm font-semibold">
                       {publication.title}
-                    </Text>
+                    </p>
                     {publication.subtitle && (
-                      <Text mt={1} fontSize="xs" textAlign="center">
+                      <p className="mt-1 text-center text-xs">
                         {publication.subtitle}
-                      </Text>
+                      </p>
                     )}
-                  </InertiaChakraLink>
+                  </Link>
                 )}
-              </Box>
+              </div>
             );
           })}
-        </SimpleGrid>
+        </div>
       )}
       {item.children && item.children.length > 0 && (
         <React.Fragment key={item.id}>
           <ItemsList
             items={item.children}
             publications={publications}
-            ml={8}
-            pt={0}
+            className="ml-4 pt-0"
           />
         </React.Fragment>
       )}
-    </Box>
+    </div>
   );
 };
 
 // Main component that receives the data
-const ItemsList = ({ items, publications, ...rest }) => {
+const ItemsList = ({ items, publications, className }) => {
   return (
-    <VStack spacing={4} pos="sticky" top="8rem">
+    <div className="flex flex-col gap-4">
       {items.map((item, i) => (
         <React.Fragment key={item.id}>
-          <ItemComponent item={item} publications={publications} {...rest} />
+          <ItemComponent
+            className={className}
+            item={item}
+            publications={publications}
+          />
           {i < items.length - 1 && (
-            <Divider
-              my={12}
-              borderColor={useColorModeValue(
-                'blackAlpha.400',
-                'whiteAlpha.400'
-              )}
-            />
+            <Separator className="my-12 border-t-4 border-bgDarker" />
           )}
         </React.Fragment>
       ))}
-    </VStack>
+    </div>
   );
 };

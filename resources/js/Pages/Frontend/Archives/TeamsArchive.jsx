@@ -1,5 +1,5 @@
 import WebsiteHead from '@/components/Frontend/Head';
-import Section from '@/components/Frontend/styles/section';
+import Section from '@/components/Frontend/section';
 import { Container, Flex, Heading, Text, VStack } from '@chakra-ui/react';
 import { Fragment } from 'react';
 import '../../../../css/our-team.css';

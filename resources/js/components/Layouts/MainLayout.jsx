@@ -53,7 +53,7 @@ export default function MainLayout({ children, ...rest }) {
 
       <Button
         className={cn(
-          'scroll-to-top fixed bottom-20 right-12 z-50 flex h-16 items-center justify-center rounded-full bg-bgDarker/80 p-2 text-primary backdrop-blur-md transition-all duration-300 ease-in-out hover:bg-bgDarker/90 hover:text-white focus:bg-bgDarker/90 dark:text-white',
+          'scroll-to-top fixed bottom-20 right-12 z-50 flex h-16 items-center justify-center rounded-full bg-theme-100 p-2 text-theme-800 backdrop-blur-md transition-all duration-300 ease-in-out hover:bg-theme-50 hover:text-theme-700 focus:bg-theme-200 focus:text-theme-700',
           visible ? 'translate-y-0' : 'translate-y-60'
         )}
         aria-label="scroll to top"

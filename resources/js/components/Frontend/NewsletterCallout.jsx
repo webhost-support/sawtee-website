@@ -1,25 +1,24 @@
 import { useForm } from '@inertiajs/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PrimaryButton from '../Backend/PrimaryButton';
-import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 
 export default function NewsletterCallout() {
   return (
-    <div className="px-6 py-6 bg-theme-50/50 rounded-lg dark:bg-theme-700/90 md:py-12 md:px-12 lg:py-16 lg:px-16 xl:flex xl:items-center">
+    <div className="rounded-lg bg-theme-50/50 px-6 py-6 dark:bg-theme-700/50 md:px-12 md:py-12 lg:px-16 lg:py-16 xl:flex xl:items-center">
       <div className="xl:w-0 xl:flex-1">
         <h2 className="text-2xl font-extrabold leading-8 tracking-tight text-slate-600 dark:text-slate-300/80 sm:text-3xl sm:leading-9">
           Receive the latest publication releases, events and monthly
           newsletter.
         </h2>
-        <p className="max-w-3xl mt-3 text-lg leading-6 text-slate-500 dark:text-slate-400">
+        <p className="mt-3 max-w-3xl text-lg leading-6 text-slate-500 dark:text-slate-400">
           Do you want to get notified? Sign up for our newsletter and you'll be
           among the first to find out about new publication releases, events and
           monthly newsletter.
         </p>
       </div>
-      <div className="mt-8 sm:w-full sm:max-w-md xl:mt-0 xl:ml-8">
-        <div className="mt-3 sm:mt-0 sm:ml-3 sm:flex-shrink-0">
+      <div className="mt-8 sm:w-full sm:max-w-md xl:ml-8 xl:mt-0">
+        <div className="mt-3 sm:ml-3 sm:mt-0 sm:flex-shrink-0">
           <SubscribeForm />
         </div>
         <p className="mt-3 text-sm leading-5 text-slate-500 dark:text-slate-400">

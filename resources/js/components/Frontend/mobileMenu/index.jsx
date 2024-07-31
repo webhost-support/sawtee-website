@@ -12,12 +12,10 @@ import {
 } from '@chakra-ui/react';
 import { Link } from '@inertiajs/react';
 import React from 'react';
-import InertiaChakraLink from '../styles/inertia-chakra-link';
 
 const MenuLink = ({ title, url, index, isOpen, ...rest }) => {
   return (
-    <InertiaChakraLink
-      as={Link}
+    <Link
       href={url}
       display="flex"
       transition="all 0.3s"
@@ -34,7 +32,7 @@ const MenuLink = ({ title, url, index, isOpen, ...rest }) => {
         </Box>
         {title}
       </Text>
-    </InertiaChakraLink>
+    </Link>
   );
 };
 

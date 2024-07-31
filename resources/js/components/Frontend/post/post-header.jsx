@@ -13,15 +13,8 @@ const PostHeader = ({
     className={cn('post-header text-left md:text-center', className)}
     {...rest}
   >
-    {categories && (
-      <PostCategories
-        colorScheme="accent"
-        category={categories}
-        justifyContent="center"
-        size={'xs'}
-      />
-    )}
-    <h1 className="captialize font-bold text-2xl md:text-3xl xl:text-5xl my-3 lg:my-5">
+    {categories && <PostCategories category={categories} />}
+    <h1 className="captialize my-3 text-2xl font-bold text-slate-800 dark:text-slate-300 md:text-3xl lg:my-5 xl:text-5xl">
       {heading}
     </h1>
 
