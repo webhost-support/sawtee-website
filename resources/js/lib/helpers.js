@@ -1,5 +1,3 @@
-import { useBreakpointValue } from '@chakra-ui/react';
-
 export function slugify(inputString) {
   return inputString
     .toString()
@@ -45,15 +43,6 @@ export const createArrayRange = (startingNumber, endingNumber, step = 1) =>
   Array.from(
     { length: (endingNumber - startingNumber) / step + 1 },
     (value, index) => startingNumber + index * step
-  );
-
-export const getBreakpointValue = (value, fallback, ssr) =>
-  useBreakpointValue(
-    value,
-    { fallback: fallback },
-    {
-      ssr: ssr,
-    }
   );
 
 export const fetcher = async url => {

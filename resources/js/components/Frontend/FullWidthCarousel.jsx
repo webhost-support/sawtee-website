@@ -64,8 +64,8 @@ const FullWidthCarousel = ({
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="absolute left-4 top-1/2 z-[999] -translate-y-1/2 dark:text-white" />
-        <CarouselNext className="absolute right-4 top-1/2 z-[999] -translate-y-1/2 dark:text-white" />
+        <CarouselPrevious className="absolute left-4 top-1/2 z-[20] -translate-y-1/2 dark:text-white" />
+        <CarouselNext className="absolute right-4 top-1/2 z-[20] -translate-y-1/2 dark:text-white" />
         <div className="text-md absolute bottom-0 left-0 right-0 py-2 text-center text-white">
           {current} of {count}
         </div>

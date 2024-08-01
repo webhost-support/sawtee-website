@@ -1,17 +1,27 @@
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
 import {
-  ChevronsRight,
-  Mailbox,
-  MailOpen,
-  MapPinnedIcon,
-  PhoneIncoming,
-  PhoneOff,
+    ChevronsRight,
+    Mailbox,
+    MailOpen,
+    MapPinned,
+    PhoneIncoming,
+    PhoneOff,
 } from 'lucide-react';
+import { useState } from 'react';
 import { SocialMenu } from '../header/social-menu';
+import { MapModel } from '../MapModal';
 import { SubscribeForm } from '../NewsletterCallout';
 
-export default function Footer({ menu, socialMenu, setMapModal }) {
+export default function Footer({ menu, socialMenu }) {
+  const [mapModal, setMapModal] = useState(false);
+
   return (
     <footer className="w-full bg-bgDarker text-slate-500">
       <div className="mx-auto max-w-7xl px-8">
@@ -47,13 +57,29 @@ export default function Footer({ menu, socialMenu, setMapModal }) {
                         const { url, title } = child_item;
                         if (title.includes('Address')) {
                           return (
-                            <MenuItem
-                              className="cursor-pointer"
-                              onClick={() => setMapModal(true)}
-                            >
-                              <MapPinnedIcon className="h-4 w-4" />
-
-                              <p>{title}</p>
+                            <MenuItem>
+                              <MapPinned className="h-6 w-6" />
+                              <TooltipProvider>
+                                <Tooltip>
+                                  <TooltipTrigger className="relative text-left">
+                                    <a
+                                      role="button"
+                                      type="button"
+                                      className=" flex cursor-pointer break-all "
+                                      onClick={() => setMapModal(!mapModal)}
+                                    >
+                                      {title}
+                                    </a>
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    Click to view map
+                                  </TooltipContent>
+                                </Tooltip>
+                              </TooltipProvider>
+                              <MapModel
+                                isOpen={mapModal}
+                                onOpenChange={setMapModal}
+                              />
                             </MenuItem>
                           );
                         }

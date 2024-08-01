@@ -9,12 +9,9 @@ import { usePage } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import { ArrowUpToLineIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { MapModel } from '../Frontend/MapModal';
 export default function MainLayout({ children, ...rest }) {
   const [visible, setVisible] = useState(false);
-  const [mapModal, setMapModal] = useState(false);
   const [animate, setAnimate] = useState(false);
-
   const page = usePage();
   const { primaryMenu, footerMenu } = page.props;
   const url = page.url;
@@ -61,9 +58,7 @@ export default function MainLayout({ children, ...rest }) {
       <Footer
         menu={footerMenu?.length > 0 ? footerMenu : FooterMenu}
         socialMenu={socialMenu}
-        setMapModal={setMapModal}
       />
-      <MapModel isOpen={mapModal} onOpenChange={setMapModal} />
 
       <Button
         className={cn(

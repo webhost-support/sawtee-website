@@ -90,7 +90,7 @@ const Contact = ({ content, pageData }) => {
 const ActionButton = ({ href, children, ...rest }) => {
   return (
     <Button variant="link" {...rest}>
-      {href ? <Link href={href}>{children}</Link> : children}
+      {href ? <Link className='flex items-center' href={href}>{children}</Link> : children}
     </Button>
   );
 };

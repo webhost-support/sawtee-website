@@ -1,5 +1,4 @@
 import SocialShare from '@/components/Frontend/SocialShare';
-import { LightPatternBox } from '@/components/Frontend/pattern-box';
 import FeaturedMedia from '@/components/Frontend/post/featured-media';
 import PostHeader from '@/components/Frontend/post/post-header';
 import PostMeta from '@/components/Frontend/post/post-meta';
@@ -26,7 +25,7 @@ const PostLayout = ({
     : `https://ankursingh.com.np/${post.category.slug}/${post.slug}`;
 
   return (
-    <LightPatternBox className="pb-10 pt-3" showPattern={showPattern}>
+    <div className="relative z-0 pb-10 pt-10">
       <div className="mx-auto mt-5 max-w-5xl">
         <PostHeader
           className={`px-8 md:px-12`}
@@ -71,7 +70,7 @@ const PostLayout = ({
           </div>
         )}
       </div>
-    </LightPatternBox>
+    </div>
   );
 };
 
