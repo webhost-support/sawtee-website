@@ -58,9 +58,9 @@ export default function OurWork({ themes, sections, content }) {
       <div className="page_content grid md:grid-cols-2 mx-auto px-8 md:px-4 py-12 gap-8 items-center max-w-5xl">
         {sectors?.map(({ id, title, description, media, link }) => {
           return (
-            <CardWithEffect key={id} className="cards max-w-lg  p-0">
+            <CardWithEffect key={id} className="cards max-w-lg p-0">
               <img
-                className="w-full h-full object-cover aspect-square"
+                className="aspect-square h-full w-full object-cover"
                 alt="sector cover"
                 src={
                   media[0]
@@ -70,12 +70,12 @@ export default function OurWork({ themes, sections, content }) {
               />
               <Link
                 href={`/category/${link}`}
-                className="absolute group inset-0 flex flex-col justify-between items-center w-full h-full bg-bgDarker bg-blend-lighten"
+                className="group absolute inset-0 flex h-full w-full flex-col items-center justify-between bg-bgDarker bg-blend-lighten"
               >
-                <h2 className="title text-center self-start dark:text-zinc-300 py-6 text-lg md:text-2xl w-full group-hover:bg-theme-500/50">
+                <h2 className="title w-full self-start py-6 text-center text-lg group-hover:bg-sky-500/50 dark:text-zinc-300 md:text-2xl">
                   {title}
                 </h2>
-                <p className="grow flex w-full h-full px-6 dark:text-gray-200 justify-center items-center">
+                <p className="flex h-full w-full grow items-center justify-center px-6 dark:text-gray-200">
                   {description || 'Random text to check the positioning'}
                 </p>
               </Link>

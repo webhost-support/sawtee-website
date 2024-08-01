@@ -3,13 +3,10 @@ import { SubscribeForm } from './NewsletterCallout';
 
 const SubscriptionCard = ({
   children,
-  showIcon = true,
+  showIcon = false,
   showChildren = false,
-  showCheckbox = false,
-  fontSize = { base: 'md', lg: 'lg' },
   headingText = 'Subscribe to our Newsletter',
   subText,
-  consentText = 'I agree receiving emails from SAWTEE',
 }) => {
   return (
     <div className="relative w-full text-center">

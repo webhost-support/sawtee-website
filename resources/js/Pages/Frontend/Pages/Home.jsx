@@ -282,7 +282,7 @@ const Title = ({ title }) => {
       <h3 className="flex items-center text-xl font-bold text-primary md:text-2xl lg:text-3xl xl:text-4xl">
         {title}
       </h3>
-      <div className="h-2 w-[8%] bg-theme-500" />
+      <div className="h-2 w-[8%] bg-sky-500" />
     </div>
   );
 };
@@ -296,7 +296,7 @@ const FeaturedEventsSection = ({ events }) => {
             class="relative overflow-hidden rounded-md text-center"
             title={events[0].title}
           >
-            <div className="ease absolute inset-0 top-0 z-20 hidden h-2 w-full bg-theme-500 transition-all duration-200 group-hover:block" />
+            <div className="ease absolute inset-0 top-0 z-20 hidden h-2 w-full bg-sky-500 transition-all duration-200 group-hover:block" />
             <div className="ease absolute inset-0 z-10 h-full w-full bg-black/20 transition-all duration-200 group-hover:bg-transparent" />
             <img
               src={
@@ -314,13 +314,13 @@ const FeaturedEventsSection = ({ events }) => {
           <div class="">
             <Link
               href={`/category/featured-events/${events[0].slug}`}
-              class="text-xs font-medium uppercase text-theme-500 transition duration-500 ease-in-out hover:text-theme-600"
+              class="text-xs font-medium uppercase text-sky-500 transition duration-500 ease-in-out hover:text-sky-600"
             >
               {events[0].category.name}
             </Link>
             <Link
               href={`/category/featured-events/${events[0].slug}`}
-              class="mb-2 block text-2xl font-bold leading-6 tracking-wide text-slate-800 transition duration-500 ease-in-out group-hover:text-theme-500 dark:text-slate-300 lg:text-3xl"
+              class="mb-2 block text-2xl font-bold leading-6 tracking-wide text-slate-800 transition duration-500 ease-in-out group-hover:text-sky-500 dark:text-slate-300 lg:text-3xl"
             >
               {events[0].title}
             </Link>
@@ -353,13 +353,13 @@ const FeaturedEventsSection = ({ events }) => {
                       loading="lazy"
                       className="aspect-square h-full w-full object-cover grayscale transition-all duration-500 ease-linear group-hover:grayscale-0"
                     />
-                    <div className="ease absolute inset-0 top-0 z-10 hidden h-1 w-full bg-theme-500 transition-all duration-200 group-hover:block" />
+                    <div className="ease absolute inset-0 top-0 z-10 hidden h-1 w-full bg-sky-500 transition-all duration-200 group-hover:block" />
                     <div className="ease absolute inset-0 z-10 h-full w-full bg-black/20 transition-all duration-200 group-hover:bg-transparent" />
                   </div>
                 </Link>
                 <Link
                   href={`/category/featured-events/${event.slug}`}
-                  class="text-md my-2 inline-block font-semibold leading-5 tracking-wide text-slate-800 transition duration-500 ease-in-out group-hover:text-theme-500 dark:text-slate-300"
+                  class="text-md my-2 inline-block font-semibold leading-5 tracking-wide text-slate-800 transition duration-500 ease-in-out group-hover:text-sky-500 dark:text-slate-300"
                 >
                   {event.title}
                 </Link>

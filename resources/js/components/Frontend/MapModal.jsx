@@ -1,10 +1,8 @@
-import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
@@ -33,9 +31,6 @@ export const MapModel = ({ isOpen, onOpenChange }) => {
             referrerPolicy="no-referrer-when-downgrade"
           />
         </div>
-        <DialogFooter>
-          <Button onClick={() => onOpenChange(!isOpen)}>Close</Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

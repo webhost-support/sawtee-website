@@ -3,11 +3,12 @@ import FeaturedMedia from '@/components/Frontend/post/featured-media';
 import PostHeader from '@/components/Frontend/post/post-header';
 import PostMeta from '@/components/Frontend/post/post-meta';
 import readingDuration from 'reading-duration';
+import PostTags from '../Frontend/post/post-tags';
+import SidebarWidget from '../Frontend/sidebarWidget';
 
 const PostLayout = ({
   children,
-  showPattern,
-  isProgramPost,
+  relatedPosts,
   isNewsletter,
   post,
   featured_image,
@@ -25,19 +26,14 @@ const PostLayout = ({
     : `https://ankursingh.com.np/${post.category.slug}/${post.slug}`;
 
   return (
-    <div className="relative z-0 pb-10 pt-10">
+    <div className="relative w-full px-10 py-10 lg:px-20">
       <div className="mx-auto mt-5 max-w-5xl">
         <PostHeader
-          className={`px-8 md:px-12`}
+          //   className={`px-8 md:px-12`}
           categories={post.category}
           heading={post.title}
         />
-      </div>
-
-      {/* <PostProgressBar value={scroll} /> */}
-
-      <div className="mx-auto max-w-full px-4 md:max-w-3xl xl:max-w-4xl">
-        {!isProgramPost && featured_image && (
+        {featured_image && (
           <FeaturedMedia
             className={'rounded-xl'}
             src={featured_image}
@@ -51,6 +47,11 @@ const PostLayout = ({
           readingTime={readingTime}
           mt={4}
         />
+      </div>
+
+      {/* <PostProgressBar value={scroll} /> */}
+
+      <div className="w-full">
         {/* Look at the settings to see if we should include the featured image */}
         {isNewsletter && (
           <div>
@@ -60,13 +61,20 @@ const PostLayout = ({
         )}
 
         {!isNewsletter && (
-          <div className="post-content text-lg leading-8">
-            <div className="pb-10">{children}</div>
-            <SocialShare
-              url={shareUrl}
-              title={post.title}
-              excerpt={post.excerpt}
-            />
+          <div className="grid pt-10 leading-8 lg:grid-cols-12">
+            <div className="post-content ml-24 max-w-[60ch] px-14 text-lg lg:col-span-8">
+              <div className="post-content prose-base">{children}</div>
+              {post.tags.length > 0 && <PostTags tags={post.tags} />}
+
+              <SocialShare
+                url={shareUrl}
+                title={post.title}
+                excerpt={post.excerpt}
+              />
+            </div>
+            <aside className="sticky top-32 h-full w-full lg:col-span-4">
+              <SidebarWidget title="Related Posts" array={relatedPosts} />
+            </aside>
           </div>
         )}
       </div>

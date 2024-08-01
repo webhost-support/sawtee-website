@@ -91,17 +91,20 @@ const ItemComponent = ({ item, publications, className }) => {
           {publications[item.slug].map(publication => {
             return (
               <div key={publication.id}>
-                <article className="article group relative mx-auto max-w-[140px] overflow-hidden rounded-md">
-                  <div className="absolute left-0 top-0 h-full w-full bg-black/10 bg-blend-overlay group-hover:bg-transparent" />
-                  <Link
+                <article className="article mx-auto max-w-[140px] overflow-hidden rounded-md">
+                  <a
                     title={publication.title}
                     href={
                       publication.file
                         ? `/publications/${publication.file.name}`
                         : '#'
                     }
+                    className="group relative"
                     target="_blank"
+                    referrerPolicy="no-referrer"
                   >
+                    <div className="absolute left-0 top-0 h-full w-full bg-black/10 bg-blend-overlay group-hover:bg-transparent" />
+
                     <img
                       className="aspect-[3/4] h-full w-full rounded-md object-cover"
                       src={
@@ -112,10 +115,13 @@ const ItemComponent = ({ item, publications, className }) => {
                       title={publication.title}
                       loading="lazy"
                     />
-                  </Link>
+                  </a>
                 </article>
                 {publication.title && (
-                  <Link href={`/publications/${publication.file.name}`}>
+                  <a
+                    className="underline"
+                    href={`/publications/${publication.file.name}`}
+                  >
                     <p className="mt-4 text-center text-sm font-semibold">
                       {publication.title}
                     </p>
@@ -124,7 +130,7 @@ const ItemComponent = ({ item, publications, className }) => {
                         {publication.subtitle}
                       </p>
                     )}
-                  </Link>
+                  </a>
                 )}
               </div>
             );

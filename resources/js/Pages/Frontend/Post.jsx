@@ -5,7 +5,13 @@ import { Link } from '@inertiajs/react';
 import NewsletterPost from './Pages/NewsletterPost';
 import WebinarPost from './Pages/WebinarPost';
 
-export default function Post({ post, featured_image, srcSet, file }) {
+export default function Post({
+  post,
+  featured_image,
+  srcSet,
+  file,
+  relatedPosts,
+}) {
   const { category, title, content } = post;
   const isProgramme = category.parent && category.parent.slug === 'programme';
   const isNewsletter = category.slug === 'newsletters';
@@ -26,13 +32,13 @@ export default function Post({ post, featured_image, srcSet, file }) {
         srcSet={srcSet}
         isProgramPost={isProgramme}
         isNewsletter={isNewsletter}
+        relatedPosts={relatedPosts}
       >
         {isNewsletter && <NewsletterPost post={post} />}
         {isWebinarSeries && <WebinarPost post={post} />}
         {isDefault && (
-          <div className="max-w-5xl">
-            <p
-              // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+          <>
+            <div
               dangerouslySetInnerHTML={{
                 __html: content,
               }}
@@ -42,7 +48,7 @@ export default function Post({ post, featured_image, srcSet, file }) {
                 PDF
               </Link>
             )}
-          </div>
+          </>
         )}
       </PostLayout>
     </MainLayout>

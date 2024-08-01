@@ -128,19 +128,18 @@ h1, h2, h3, h4, h5, h6 {
     scrollbar-width: none;
 }
 
-.post-content a, .page-content a, .primary-link {
+/* .post-content a, .page-content a, .primary-link {
     color: inherit;
     text-decoration: underline;
 }
 
 .post-content a:hover, .page-content a:hover, .primary-link:hover{
     text-decoration: underline;
-    text-underline-offset: 3px;
-    /* color: var(--chakra-colors-primary-500); */
-}
+} */
 
-.post-meta p {
-    font-size: var(--chakra-fontSizes-sm) !important;
+
+.post-content > p:first-child {
+    padding-top: 0;
 }
 
 .post-slide {

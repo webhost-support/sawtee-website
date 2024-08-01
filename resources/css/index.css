@@ -75,6 +75,11 @@
   body {
     @apply bg-background text-foreground;
   }
+  .post-content a, .page-content a, .primary-link {
+    @apply text-sky-600 hover:text-sky-600/70 underline underline-offset-4;
+    }
+
+
 }
 
 .shadow-soft-xl {

@@ -5,7 +5,7 @@ import { Input } from '../ui/input';
 
 export default function NewsletterCallout() {
   return (
-    <div className="rounded-lg bg-theme-50/50 px-6 py-6 dark:bg-theme-700/50 md:px-12 md:py-12 lg:px-16 lg:py-16 xl:flex xl:items-center">
+    <div className="rounded-lg bg-sky-50/50 px-6 py-6 dark:bg-sky-700/50 md:px-12 md:py-12 lg:px-16 lg:py-16 xl:flex xl:items-center">
       <div className="xl:w-0 xl:flex-1">
         <h2 className="text-2xl font-extrabold leading-8 tracking-tight text-slate-600 dark:text-slate-300/80 sm:text-3xl sm:leading-9">
           Receive the latest publication releases, events and monthly
@@ -82,7 +82,7 @@ export const SubscribeForm = ({ ...rest }) => {
         type="submit"
         variant="primary"
         isLoading={processing}
-        className="flex items-center justify-center w-full px-5 py-3 text-base text-white font-medium transition duration-150 ease-in-out bg-theme-500 hover:bg-theme-500/90"
+        className="flex items-center justify-center w-full px-5 py-3 text-base text-white font-medium transition duration-150 ease-in-out bg-sky-500 hover:bg-sky-500/90"
       >
         Subscribe
       </PrimaryButton>

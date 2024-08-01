@@ -39,23 +39,26 @@ const MultiPostsCarousel = ({
               className="sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
             >
               <div
-                className="relative group w-[180px] mx-auto aspect-[3/4] flex items-end justify-start text-left bg-cover bg-center rounded-md overflow-hidden"
+                className="group relative mx-auto flex aspect-[3/4] w-[180px] items-end justify-start overflow-hidden rounded-md bg-cover bg-center text-left"
                 style={{
                   backgroundImage: `url(${media})`,
                   backgroundSize: 'cover',
                   imageBlendMode: 'grayscale',
                 }}
               >
-                <Link href={`/publications/${publication.file.name}`} className="absolute inset-0 bg-gradient-to-br from-transparent to-black/50" />
-                <div className="absolute top-3 left-4 flex justify-between items-center">
-                  <Badge className="px-2 font-sans text-[0.65rem] text-white bg-theme-600 group-hover:bg-theme-100/80 group-hover:text-theme-700 cursor-pointer transition-all duration-200 ease-in-out" >
+                <Link
+                  href={`/publications/${publication.file.name}`}
+                  className="absolute inset-0 bg-gradient-to-br from-transparent to-black/50"
+                />
+                <div className="absolute left-4 top-3 flex items-center justify-between">
+                  <Badge className="cursor-pointer bg-sky-600 px-2 font-sans text-[0.65rem] text-white transition-all duration-200 ease-in-out group-hover:bg-sky-100/80 group-hover:text-sky-700">
                     {publication.category.name}
                   </Badge>
                 </div>
-                <div className="p-2 z-10 group-hover:bg-black/70 rounded-b-md w-full text-sm leading-4 font-medium text-white group-hover:text-theme-400 transition-all duration-200 ease-in-out">
+                <div className="z-10 w-full rounded-b-md p-2 text-sm font-medium leading-4 text-white transition-all duration-200 ease-in-out group-hover:bg-black/70 group-hover:text-sky-400">
                   <Link
                     href={`/publications/${publication.file.name}`}
-                    className=" hover:underline group-hover:underline "
+                    className="hover:underline group-hover:underline"
                   >
                     {publication.title}
                   </Link>

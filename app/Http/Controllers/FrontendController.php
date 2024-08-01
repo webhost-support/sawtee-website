@@ -176,10 +176,11 @@ class FrontendController extends Controller
             $category = Category::where('slug', $subcategory)->firstOrFail();
             $post =
             Post::where("category_id", $category->id)->where("status", "published")->where('slug', $slug)->firstOrFail();
+            $related_posts = Post::where("category_id", $category->id)->where("status", "published")->where('slug', '!=', $slug)->latest(5)->get();
             $media = $post->getFirstMediaUrl('post-featured-image');
             $srcSet = $post->getFirstMedia('post-featured-image')?->getSrcSet('responsive');
             $file = $post->getFirstMediaurl('post-files');
-            return Inertia::render('Frontend/Post', ['post' => $post->load('category', 'category.parent'), 'featured_image' => $media, "srcSet" => $srcSet, 'file' => $file]);
+            return Inertia::render('Frontend/Post', ['post' => $post->load('category', 'category.parent', 'tags'), 'featured_image' => $media, "srcSet" => $srcSet, 'file' => $file, 'relatedPosts' => $related_posts]);
         }
 
         // if route is for category/category-slug/subcategory eg: sawtee.org/category/programmes/ongoing-programmes/
@@ -214,10 +215,11 @@ class FrontendController extends Controller
             if (!$category) {
                 $category = Category::with('parent')->where('slug', $segments[1])->firstOrFail();
                 $post = Post::where("category_id", $category->id)->where("status", "published")->where('slug', $segments[2])->firstOrFail();
+                $related_posts = Post::where("category_id", $category->id)->where("status", "published")->where('slug', '!=', $slug)->latest()->take(5)->get();
                 $media = $post->getFirstMediaUrl('post-featured-image');
                 $srcSet = $post->getFirstMedia('post-featured-image')?->getSrcSet('responsive');
                 $file = $post->getFirstMediaurl('post-files');
-                return Inertia::render('Frontend/Post', ['post' => $post->load('category', 'category.parent'), 'featured_image' => $media, "srcSet" => $srcSet, 'file' => $file]);
+                return Inertia::render('Frontend/Post', ['post' => $post->load('category', 'category.parent', 'tags'), 'featured_image' => $media, "srcSet" => $srcSet, 'file' => $file, 'relatedPosts' => $related_posts]);
             }
 
             return Inertia::render('Frontend/Category', [
