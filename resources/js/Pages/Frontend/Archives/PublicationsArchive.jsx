@@ -36,13 +36,9 @@ export default function PublicationsArchive({
         title={category.name}
         showBackgroundPattern={false}
       >
-        <Section
-          className={
-            'sticky top-32 mx-auto max-w-full px-8 py-6 lg:px-20 lg:py-20'
-          }
-        >
+        <Section className={'mx-auto max-w-full px-8 py-6 lg:px-20 lg:py-20'}>
           <div className="grid place-content-center gap-10 md:grid-cols-4 xl:grid-cols-6">
-            <section className="md:col-span-2 xl:col-span-4">
+            <section className="archive-list md:col-span-2 xl:col-span-4">
               <ItemsList
                 items={category.children}
                 publications={publications}

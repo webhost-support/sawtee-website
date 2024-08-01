@@ -45,32 +45,40 @@ export default function Category({
         featured_image={featured_image}
         srcSet={srcSet}
         title={category.name}
-        showBackgroundPattern={false}
       >
         <div className="mx-auto grid gap-12 px-8 py-8 md:grid-cols-2 md:px-10 md:py-20 lg:grid-cols-6">
           <section className="archive-list col-span-1 flex flex-col items-center gap-12 lg:col-span-4">
-            {isDefault && <DefaultArchive posts={posts.data} />}
-            {isCovid && <CovidArchive posts={posts.data} />}
+            <div>
+              {isDefault && <DefaultArchive posts={posts.data} />}
+              {isCovid && <CovidArchive posts={posts.data} />}
 
-            {isResearch && <ResearchArchive posts={posts} />}
-            {isNewsletter && <NewsletterArchive posts={posts.data} />}
+              {isResearch && <ResearchArchive posts={posts} />}
+              {isNewsletter && <NewsletterArchive posts={posts.data} />}
 
-            {isEvent && <EventsArchive posts={posts.data} />}
+              {isEvent && <EventsArchive posts={posts.data} />}
 
-            <div className="w-full p-8">
-              {!isResearch && (
-                <Pagination
-                  links={posts.links}
-                  currentPage={posts.current_page}
-                  totalPages={posts.last_page}
-                  nextPage={posts.next_page_url}
-                  prevPage={posts.prev_page_url}
-                />
-              )}
+              <div className="w-full p-8">
+                {!isResearch && (
+                  <Pagination
+                    links={posts.links}
+                    currentPage={posts.current_page}
+                    totalPages={posts.last_page}
+                    nextPage={posts.next_page_url}
+                    prevPage={posts.prev_page_url}
+                    className={'mt-8'}
+                  />
+                )}
+              </div>
             </div>
           </section>
           <aside className="sidebar col-span-1 lg:col-span-2">
             <div className="flex flex-col gap-12">
+              {showSubscriptionBox && (
+                <Glassbox className={'w-full p-4'}>
+                  <SubscriptionCard />
+                </Glassbox>
+              )}
+
               {!isMedia && sawteeInMedia && (
                 <SidebarWidget
                   array={sawteeInMedia}
@@ -98,12 +106,6 @@ export default function Category({
                   link={'/category/in-focus'}
                   title={'In Focus'}
                 />
-              )}
-
-              {showSubscriptionBox && (
-                <Glassbox className={'w-full p-4'}>
-                  <SubscriptionCard />
-                </Glassbox>
               )}
             </div>
           </aside>

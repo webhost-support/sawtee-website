@@ -12,11 +12,11 @@ const ExploreButton = ({ text = 'Explore All', link, className, ...rest }) => {
       role="button"
       href={link ? link : '#'}
       className={cn(
-        'flex max-w-max items-center gap-1 rounded-md px-6 py-2 text-sm font-medium text-primary underline underline-offset-2 hover:text-primary/70 hover:underline-offset-4',
+        'flex max-w-max items-center gap-1 rounded-md py-2 text-sm font-medium text-primary underline underline-offset-2 hover:text-primary/80 hover:underline-offset-4',
         className
       )}
       onMouseEnter={() => setHovered(!hovered)}
-      onMouseLeave={() => hovered && setHovered(!hovered)}
+      onMouseLeave={() => setHovered(!hovered)}
       {...rest}
     >
       {text}

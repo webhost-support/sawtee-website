@@ -34,7 +34,7 @@ export default function NewsletterCallout() {
   );
 }
 
-const SubscribeForm = ({ ...rest }) => {
+export const SubscribeForm = ({ ...rest }) => {
   const { data, setData, post, processing, errors, reset } = useForm({
     email: '',
   });

@@ -151,7 +151,7 @@ const Home = ({
 
       <Section className="outreach-section">
         <div className="mx-auto max-w-5xl">
-          <Title title={'SAWTEE in Media & Newsletters'} />
+          <Title title={'Media and Newsletters'} />
           <div className="grid gap-10 lg:grid-cols-6">
             <div className="w-full md:col-span-3">
               <SimpleList heading={'sawtee in media'}>
@@ -289,11 +289,11 @@ const Title = ({ title }) => {
 
 const FeaturedEventsSection = ({ events }) => {
   return (
-    <div class="grid grid-cols-1 gap-5 md:grid-cols-12">
+    <div class="mb-4 grid grid-cols-1 place-items-start gap-5 md:grid-cols-12">
       <div class="group md:col-span-5">
         <Link href={`/category/featured-events/${events[0].slug}`}>
           <div
-            class="relative aspect-square overflow-hidden rounded-md text-center"
+            class="relative overflow-hidden rounded-md text-center"
             title={events[0].title}
           >
             <div className="ease absolute inset-0 top-0 z-20 hidden h-2 w-full bg-theme-500 transition-all duration-200 group-hover:block" />
@@ -306,7 +306,7 @@ const FeaturedEventsSection = ({ events }) => {
               }
               alt="event cover"
               loading="lazy"
-              className="aspect-video w-full object-cover grayscale transition-all duration-500 ease-linear group-hover:grayscale-0 lg:aspect-square"
+              className="aspect-video w-full object-cover grayscale transition-all duration-500 ease-linear group-hover:grayscale-0"
             />
           </div>
         </Link>

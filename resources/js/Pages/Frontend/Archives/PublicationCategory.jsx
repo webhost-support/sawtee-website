@@ -32,14 +32,13 @@ export default function Publications({
         featured_image={featured_image}
         srcSet={srcSet}
         title={category.name}
-        showBackgroundPattern={false}
       >
         <Section className={'mx-auto max-w-full px-8 py-6 lg:px-20 lg:py-20'}>
           <div className="grid place-content-center gap-10 md:grid-cols-4 xl:grid-cols-6">
-            <section className="sticky top-32 px-4 md:col-span-2 xl:col-span-4">
-              <div className="grid grid-cols-4 gap-6">
-                {publications.data.length > 0 &&
-                  publications.data.map(publication => {
+            <section className="archive-list md:col-span-2 xl:col-span-4">
+              <div>
+                <div className="grid grid-cols-4 gap-6 gap-y-20">
+                  {publications?.data?.map(publication => {
                     return (
                       <div key={publication.id}>
                         <article className="article group relative mx-auto max-w-[140px] overflow-hidden rounded-md">
@@ -66,7 +65,10 @@ export default function Publications({
                           </Link>
                         </article>
                         {publication.title && (
-                          <Link href={`/publications/${publication.file.name}`}>
+                          <Link
+                            className="underline"
+                            href={`/publications/${publication.file.name}`}
+                          >
                             <p className="mt-4 text-center text-sm font-semibold">
                               {publication.title}
                             </p>
@@ -80,8 +82,7 @@ export default function Publications({
                       </div>
                     );
                   })}
-              </div>
-              {publications.data.length >= 12 && (
+                </div>
                 <Pagination
                   className="mt-12"
                   links={publications.links}
@@ -90,10 +91,15 @@ export default function Publications({
                   nextPage={publications.next_page_url}
                   prevPage={publications.prev_page_url}
                 />
-              )}
+              </div>
             </section>
 
             <aside className="sidebar flex flex-col items-center gap-12 md:col-span-2">
+              {showSubscriptionBox && (
+                <Glassbox className={'w-full p-4'}>
+                  <SubscriptionCard />
+                </Glassbox>
+              )}
               {sawteeInMedia && (
                 <SidebarWidget
                   array={sawteeInMedia}
@@ -107,12 +113,6 @@ export default function Publications({
                   title={'Infocus'}
                   link={'/category/infocus'}
                 />
-              )}
-
-              {showSubscriptionBox && (
-                <Glassbox className={'w-full p-4'}>
-                  <SubscriptionCard />
-                </Glassbox>
               )}
             </aside>
           </div>

@@ -152,7 +152,7 @@ h1, h2, h3, h4, h5, h6 {
     top: 8rem;
 }
 
-.archive-list > :last-child {
+.archive-list > :first-child {
     position: sticky;
     top: 8rem;
 }

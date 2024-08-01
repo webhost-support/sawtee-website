@@ -2,16 +2,18 @@
 import Footer from '@/components/Frontend/footer/footer';
 import Header from '@/components/Frontend/header/header';
 import { Button } from '@/components/ui/button';
+import { FADE_UP_ANIMATION_VARIANTS } from '@/lib/constants';
 import { FooterMenu, mobileMenu, socialMenu } from '@/lib/data';
 import { cn } from '@/lib/utils';
 import { usePage } from '@inertiajs/react';
+import { motion } from 'framer-motion';
 import { ArrowUpToLineIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { MapModel } from '../Frontend/MapModal';
-
 export default function MainLayout({ children, ...rest }) {
   const [visible, setVisible] = useState(false);
   const [mapModal, setMapModal] = useState(false);
+  const [animate, setAnimate] = useState(false);
 
   const page = usePage();
   const { primaryMenu, footerMenu } = page.props;
@@ -23,6 +25,12 @@ export default function MainLayout({ children, ...rest }) {
       setVisible(false);
     }
   };
+
+  useEffect(() => {
+    if (url) {
+      setAnimate(true);
+    }
+  }, [url]);
 
   useEffect(() => {
     window.addEventListener('scroll', toggleVisibility);
@@ -41,7 +49,13 @@ export default function MainLayout({ children, ...rest }) {
         socialLinks={socialMenu}
       />
       <main id="main" className="min-h-screen" {...rest}>
-        {children}
+        <motion.div
+          className="w-full"
+          animate={url ? 'show' : 'hidden'}
+          variant={FADE_UP_ANIMATION_VARIANTS}
+        >
+          {children}
+        </motion.div>
       </main>
 
       <Footer

@@ -15,7 +15,9 @@ const NewsletterArchive = ({ posts }) => {
           Environment
         </span>
       </div>
-      <VerticalTimeline items={posts} />
+      <div className="archive-list">
+        <VerticalTimeline items={posts} />
+      </div>
     </section>
   );
 };

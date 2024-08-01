@@ -3,9 +3,8 @@ import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 
 import { SocialMenu } from '@/components/Frontend/header/social-menu';
-import { FaxIcon, LocationPin, PhoneIcon } from '@/components/Frontend/icons';
 import { Button } from '@/components/ui/button';
-import { EmailIcon } from '@chakra-ui/icons';
+import { Mail, MapPin, Phone, PhoneOff } from 'lucide-react';
 import { Fragment } from 'react';
 
 const Contact = ({ content, pageData }) => {
@@ -32,7 +31,7 @@ const Contact = ({ content, pageData }) => {
                 return (
                   <Fragment key={number}>
                     <ActionButton href={`tel:${number}`}>
-                      <PhoneIcon className="mr-2 h-5 w-5" />
+                      <Phone className="mr-2 h-5 w-5" />
                       {number}
                     </ActionButton>
                   </Fragment>
@@ -40,16 +39,16 @@ const Contact = ({ content, pageData }) => {
               })}
 
               <ActionButton>
-                <FaxIcon className="mr-2 h-5 w-5" />
+                <PhoneOff className="mr-2 h-5 w-5" />
                 {pageData.fax}
               </ActionButton>
 
               <ActionButton href={`mailto:${pageData.email}`}>
-                <EmailIcon className="mr-2 h-5 w-5" />
+                <Mail className="mr-2 h-5 w-5" />
                 {pageData.email}
               </ActionButton>
               <ActionButton>
-                <LocationPin className="mr-2 h-5 w-5" />
+                <MapPin className="mr-2 h-5 w-5" />
                 {pageData.address}
               </ActionButton>
             </div>
@@ -90,7 +89,7 @@ const Contact = ({ content, pageData }) => {
 
 const ActionButton = ({ href, children, ...rest }) => {
   return (
-    <Button variant="ghost" {...rest}>
+    <Button variant="link" {...rest}>
       {href ? <Link href={href}>{children}</Link> : children}
     </Button>
   );
