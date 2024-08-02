@@ -7,7 +7,6 @@ import {
     TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { DateFormat } from '@/lib/helpers';
-import { Link } from '@chakra-ui/react';
 
 const CovidArchive = ({ posts }) => {
   return (
@@ -21,8 +20,8 @@ const CovidArchive = ({ posts }) => {
         };
         return (
           <Card key={post.id} className="relative border-2 border-borderColor">
-            <CardContent className="flex relative w-full h-full flex-col gap-4 space-y-4 p-6">
-            <span class="absolute -z-[1] top-0 left-0 w-full h-full mt-1 ml-1 bg-primary/90 rounded-xl" />
+            <CardContent className="relative flex h-full w-full flex-col gap-4 space-y-4 p-6">
+              <span class="absolute left-0 top-0 -z-[1] ml-1 mt-1 h-full w-full rounded-xl bg-primary/90" />
               <div className="flex w-full justify-between">
                 {post.genre && (
                   <Badge className="rounded-md">{post.genre}</Badge>
@@ -37,11 +36,11 @@ const CovidArchive = ({ posts }) => {
                   {DateFormat(post.published_at)}
                 </time>
               </div>
-              <Link href={post.link} className="primary-link">
+              <a href={post.link} className="primary-link">
                 <h3 className="text-md font-normal tracking-normal lg:text-lg lg:leading-5">
                   {post.title}
                 </h3>
-              </Link>
+              </a>
               <div className="flex flex-wrap items-center gap-x-2">
                 {post.author && (
                   <div class="flex -space-x-4 transition-all delay-150 duration-300 ease-in hover:space-x-1 rtl:space-x-reverse">

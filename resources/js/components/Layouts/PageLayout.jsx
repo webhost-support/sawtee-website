@@ -7,7 +7,7 @@ const PageLayout = ({ title, featured_image, srcSet, children }) => {
 
   return (
     <div>
-      <div class="relative z-0 h-96 max-h-96 w-full bg-white/20 dark:bg-black/75">
+      <div class="relative z-0 h-80 max-h-80 w-full bg-white/20 dark:bg-black/75">
         {hasFeaturedImage ? (
           <FeaturedMedia
             src={featured_image}

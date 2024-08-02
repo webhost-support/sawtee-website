@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
-import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 import { Link } from '@inertiajs/react';
+import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react';
 import { Button } from '../ui/button';
 
 const PaginationButton = ({
@@ -50,7 +50,7 @@ const Pagination = ({
         isDisabled={!prevPage}
         slot="before"
       >
-        <ArrowBackIcon className="mr-3 h-8 w-8 translate-x-[100%] opacity-0 transition-all duration-100 ease-in group-hover:translate-x-0 group-hover:opacity-100 md:mr-4" />
+        <ArrowLeftIcon className="mr-3 h-8 w-8 translate-x-[100%] opacity-0 transition-all duration-100 ease-in group-hover:translate-x-0 group-hover:opacity-100 md:mr-4" />
       </PaginationButton>
       <PaginationButton
         link={nextPage}
@@ -58,7 +58,7 @@ const Pagination = ({
         slot="after"
         isDisabled={!nextPage}
       >
-        <ArrowForwardIcon className="ml-3 -translate-x-[100%] opacity-0 transition-all duration-100 ease-in group-hover:translate-x-0 group-hover:opacity-100 md:ml-4" />
+        <ArrowRightIcon className="ml-3 -translate-x-[100%] opacity-0 transition-all duration-100 ease-in group-hover:translate-x-0 group-hover:opacity-100 md:ml-4" />
       </PaginationButton>
     </div>
   );

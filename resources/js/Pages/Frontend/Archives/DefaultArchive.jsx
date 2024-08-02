@@ -33,7 +33,7 @@ const ArchivePost = ({ post, showFallbackImage }) => {
     media => media.collection_name === 'post-featured-image'
   )[0];
   return (
-    <Glassbox className="flex flex-col overflow-hidden rounded shadow-lg">
+    <Glassbox className="flex flex-col justify-between overflow-hidden rounded shadow-lg">
       <div className="group relative overflow-hidden">
         {showFallbackImage && featured_image && (
           <Link
@@ -64,7 +64,7 @@ const ArchivePost = ({ post, showFallbackImage }) => {
           </div>
         </Link>
       </div>
-      <div className="space-y-4 px-6 py-4">
+      <div className="space-y-4 px-6">
         {hasContent ? (
           <Link
             href={
@@ -95,16 +95,16 @@ const ArchivePost = ({ post, showFallbackImage }) => {
         <p className="line-clamp-3 text-sm text-secondary-foreground/70">
           {post.excerpt}
         </p>
-      </div>
-      <div className="flex flex-row items-center justify-between px-6">
-        <span className="font-regular mr-1 flex flex-row items-center py-1 text-xs text-secondary-foreground/80">
-          {formatDate(post.published_at)}
-        </span>
+        <div className="flex flex-row items-center justify-between">
+          <span className="font-regular mr-1 flex flex-row items-center py-1 text-xs text-secondary-foreground/80">
+            {formatDate(post.published_at)}
+          </span>
 
-        <ExploreButton
-          link={`/category/${post.category.slug}/${post.slug}`}
-          text="Read more"
-        />
+          <ExploreButton
+            link={`/category/${post.category.slug}/${post.slug}`}
+            text="Read more"
+          />
+        </div>
       </div>
     </Glassbox>
   );

@@ -18,14 +18,16 @@ export const FeaturedPublications = ({ publications }) => {
             : '/assets/SM-placeholder-150x150.png';
           return (
             <li
-              className={idx === publications.length - 1 ? 'mb-0' : 'mb-4'}
+              className={
+                'group mb-4 flex w-full items-center justify-between gap-6 last:mb-0'
+              }
               key={publication.id}
             >
-              <Link
-                className="group flex w-full items-center justify-between gap-6"
-                href={`category/publications/${publication.category?.slug}`}
-              >
-                <div className="w-2/3">
+              <div className="max-w-2/3 grow">
+                <Link
+                  className=""
+                  href={`category/publications/${publication.category?.slug}`}
+                >
                   <Badge
                     variant="outline"
                     className="mb-2 px-2 font-sans"
@@ -33,25 +35,32 @@ export const FeaturedPublications = ({ publications }) => {
                   >
                     {publication.category?.name}
                   </Badge>
+                </Link>
 
-                  <p className="md:text-md font-sans text-sm leading-4 group-hover:underline">
+                <Link
+                  className="group-hover:opacity-80"
+                  href={`category/publications/${publication.file?.name}`}
+                >
+                  <p className="md:text-md font-sans text-sm leading-4 text-secondary-foreground group-hover:underline">
                     {publication.title}
                   </p>
 
-                  <p className="mt-1 text-xs">{publication.subtitle}</p>
-                </div>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    {publication.subtitle}
+                  </p>
+                </Link>
+              </div>
 
-                {media && (
-                  <div className="mx-auto w-[20%] max-w-20 overflow-hidden rounded-md">
-                    <img
-                      className="aspect-[3/4] h-full w-full border object-cover"
-                      src={media || '/assets/SM-placeholder-150x150.png'}
-                      alt="Publication Cover"
-                      loading="lazy"
-                    />
-                  </div>
-                )}
-              </Link>
+              {media && (
+                <div className="mx-auto w-1/3 max-w-20 overflow-hidden rounded-md">
+                  <img
+                    className="aspect-[3/4] w-full border object-cover"
+                    src={media || '/assets/SM-placeholder-150x150.png'}
+                    alt="Publication Cover"
+                    loading="lazy"
+                  />
+                </div>
+              )}
             </li>
           );
         })}

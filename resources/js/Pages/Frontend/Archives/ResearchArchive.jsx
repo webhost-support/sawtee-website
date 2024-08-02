@@ -1,12 +1,11 @@
 import Glassbox from '@/components/Frontend/Glassbox';
 import { cn } from '@/lib/utils';
-import { Link, Text } from '@chakra-ui/react';
 import { FileText } from 'lucide-react';
 
 const ResearchArchive = ({ posts }) => {
   // Get the data of the current list.
   if (!posts || posts.length <= 0)
-    return <Text fontSize={'2xl'}>"No posts found"</Text>;
+    return <p className="text-2xl">"No posts found"</p>;
 
   const sortedPosts = Object.entries(posts).sort(([a], [b]) => b - a);
 
@@ -28,7 +27,7 @@ const ResearchArchive = ({ posts }) => {
                   }
                 >
                   <h3 className="text-md tracking-wide text-secondary-foreground/90 hover:text-primary/80 hover:underline hover:underline-offset-4 dark:hover:text-secondary-foreground/80 md:text-lg">
-                    <Link
+                    <a
                       target="_blank"
                       href={
                         researchItem.file
@@ -37,7 +36,7 @@ const ResearchArchive = ({ posts }) => {
                       }
                     >
                       {researchItem.title}
-                    </Link>
+                    </a>
                   </h3>
                 </ReasearchItem>
               ))}

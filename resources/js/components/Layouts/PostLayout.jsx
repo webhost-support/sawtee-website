@@ -45,7 +45,6 @@ const PostLayout = ({
           author={post.author}
           date={post.published_at}
           readingTime={readingTime}
-          mt={4}
         />
       </div>
 
@@ -61,7 +60,7 @@ const PostLayout = ({
         )}
 
         {!isNewsletter && (
-          <div className="grid pt-10 leading-8 lg:grid-cols-12">
+          <div className="post-body grid pt-10 leading-8 lg:grid-cols-12">
             <div className="post-content ml-24 max-w-[60ch] px-14 text-lg lg:col-span-8">
               <div className="post-content prose-base">{children}</div>
               {post.tags.length > 0 && <PostTags tags={post.tags} />}

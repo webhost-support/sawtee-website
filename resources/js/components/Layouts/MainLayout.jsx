@@ -2,11 +2,9 @@
 import Footer from '@/components/Frontend/footer/footer';
 import Header from '@/components/Frontend/header/header';
 import { Button } from '@/components/ui/button';
-import { FADE_UP_ANIMATION_VARIANTS } from '@/lib/constants';
 import { FooterMenu, mobileMenu, socialMenu } from '@/lib/data';
 import { cn } from '@/lib/utils';
 import { usePage } from '@inertiajs/react';
-import { motion } from 'framer-motion';
 import { ArrowUpToLineIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 export default function MainLayout({ children, ...rest }) {
@@ -46,13 +44,7 @@ export default function MainLayout({ children, ...rest }) {
         socialLinks={socialMenu}
       />
       <main id="main" className="min-h-screen" {...rest}>
-        <motion.div
-          className="w-full"
-          animate={url ? 'show' : 'hidden'}
-          variant={FADE_UP_ANIMATION_VARIANTS}
-        >
-          {children}
-        </motion.div>
+        {children}
       </main>
 
       <Footer

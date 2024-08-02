@@ -1,4 +1,3 @@
-import { Link } from '@chakra-ui/react';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 
@@ -90,7 +89,13 @@ const Contact = ({ content, pageData }) => {
 const ActionButton = ({ href, children, ...rest }) => {
   return (
     <Button variant="link" {...rest}>
-      {href ? <Link className='flex items-center' href={href}>{children}</Link> : children}
+      {href ? (
+        <a className="flex items-center" href={href}>
+          {children}
+        </a>
+      ) : (
+        children
+      )}
     </Button>
   );
 };

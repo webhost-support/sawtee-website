@@ -9,6 +9,7 @@ import SimpleList from '@/components/Frontend/SimpleList';
 import SvgBackground from '@/components/Frontend/SvgBackground';
 import VideoCarousel from '@/components/Frontend/VideoCarousel';
 import FeaturedSection from '@/components/Frontend/feature';
+import BoxReveal from '@/components/shared/BoxReveal';
 import { formatDate } from '@/lib/helpers';
 import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
@@ -99,20 +100,19 @@ const Home = ({
             <SimpleList heading={null}>
               {infocus.map(item => {
                 return (
-                  <li
-                    className="mb-6 flex w-full flex-col gap-3 text-zinc-700 dark:text-zinc-300"
-                    key={item.id}
-                  >
+                  <li className="mb-6 flex w-full flex-col gap-3" key={item.id}>
                     <Link
                       className="underline underline-offset-2 hover:underline-offset-4"
                       target="_blank"
                       href={`/category/in-focus/${item.slug}`}
                     >
-                      <h3 className="font-sans text-lg font-semibold text-primary hover:text-primary/80 dark:text-secondary-foreground dark:hover:text-secondary-foreground/80">
+                      <h3 className="font-sans text-lg font-semibold text-secondary-foreground hover:text-secondary-foreground/80">
                         {item.title}
                       </h3>
                     </Link>
-                    <p className="text-sm">{item.excerpt}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {item.excerpt}
+                    </p>
                   </li>
                 );
               })}
@@ -279,9 +279,14 @@ const Section = ({ children, title = null, className, dark }) => {
 const Title = ({ title }) => {
   return (
     <div className="mb-12">
-      <h3 className="flex items-center text-xl font-bold text-primary md:text-2xl lg:text-3xl xl:text-4xl">
-        {title}
-      </h3>
+      <BoxReveal
+        boxColor={'rgb(14 165 233 / var(--tw-bg-opacity))'}
+        duration={0.5}
+      >
+        <h3 className="flex items-center text-xl font-bold text-primary md:text-2xl lg:text-3xl xl:text-4xl">
+          {title}
+        </h3>
+      </BoxReveal>
       <div className="h-2 w-[8%] bg-sky-500" />
     </div>
   );
@@ -296,8 +301,8 @@ const FeaturedEventsSection = ({ events }) => {
             class="relative overflow-hidden rounded-md text-center"
             title={events[0].title}
           >
-            <div className="ease absolute inset-0 top-0 z-20 hidden h-2 w-full bg-sky-500 transition-all duration-200 group-hover:block" />
-            <div className="ease absolute inset-0 z-10 h-full w-full bg-black/20 transition-all duration-200 group-hover:bg-transparent" />
+            <div className="ease absolute inset-0 top-0 z-10 hidden h-[5px] w-full bg-sky-500/80 transition-all duration-200 group-hover:block" />
+            <div className="ease absolute inset-0 z-20 h-full w-full bg-black/20 transition-all duration-200 group-hover:bg-transparent" />
             <img
               src={
                 events[0].media.filter(
@@ -320,11 +325,11 @@ const FeaturedEventsSection = ({ events }) => {
             </Link>
             <Link
               href={`/category/featured-events/${events[0].slug}`}
-              class="mb-2 block text-2xl font-bold leading-6 tracking-wide text-slate-800 transition duration-500 ease-in-out group-hover:text-sky-500 dark:text-slate-300 lg:text-3xl"
+              class="mb-2 block text-2xl font-bold leading-6 tracking-wide text-secondary-foreground transition duration-500 ease-in-out group-hover:text-sky-500/80 lg:text-3xl"
             >
               {events[0].title}
             </Link>
-            <p class="mt-2 text-base text-slate-700 dark:text-slate-400">
+            <p class="mt-2 text-base text-muted-foreground dark:text-slate-400">
               {events[0].excerpt}
             </p>
           </div>
@@ -344,7 +349,7 @@ const FeaturedEventsSection = ({ events }) => {
               <div class="group">
                 <Link href={`/category/featured-events/${event.slug}`}>
                   <div
-                    className="relative h-40 overflow-hidden rounded-md text-center"
+                    className="relative max-h-40 overflow-hidden rounded-md text-center"
                     title={event.title}
                   >
                     <img
@@ -353,13 +358,13 @@ const FeaturedEventsSection = ({ events }) => {
                       loading="lazy"
                       className="aspect-square h-full w-full object-cover grayscale transition-all duration-500 ease-linear group-hover:grayscale-0"
                     />
-                    <div className="ease absolute inset-0 top-0 z-10 hidden h-1 w-full bg-sky-500 transition-all duration-200 group-hover:block" />
-                    <div className="ease absolute inset-0 z-10 h-full w-full bg-black/20 transition-all duration-200 group-hover:bg-transparent" />
+                    <div className="ease absolute inset-0 top-0 z-10 hidden h-1 w-full bg-sky-500/80 transition-all duration-200 group-hover:block" />
+                    <div className="ease absolute inset-0 z-20 h-full w-full bg-black/20 transition-all duration-200 group-hover:bg-transparent" />
                   </div>
                 </Link>
                 <Link
                   href={`/category/featured-events/${event.slug}`}
-                  class="text-md my-2 inline-block font-semibold leading-5 tracking-wide text-slate-800 transition duration-500 ease-in-out group-hover:text-sky-500 dark:text-slate-300"
+                  class="text-md my-2 inline-block font-semibold leading-5 tracking-wide text-secondary-foreground transition duration-500 ease-in-out group-hover:text-sky-500/80"
                 >
                   {event.title}
                 </Link>
