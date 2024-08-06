@@ -88,6 +88,15 @@ class Category extends Model implements HasMedia
     $this->addMediaCollection('category_media')->singleFile();
   }
 
+
+    public function hasChildren($category)
+    {
+        if ($category->children->count()) {
+            return true;
+        }
+        return false;
+    }
+
   public function getCategoriesIds($category)
   {
     if (!empty($category)) {

@@ -1,28 +1,26 @@
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
+import InputError from '@/components/Backend/InputError';
+import PrimaryButton from '@/components/Backend/PrimaryButton';
+import { Button } from '@/components/ui/button';
 import {
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  VStack,
-  useToast,
-} from '@chakra-ui/react';
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useToast } from '@/components/ui/use-toast';
 import { useForm } from '@inertiajs/react';
 
-export default function CreateMenuForm({ isOpen, onOpen, onClose }) {
+export default function CreateMenu({ open, setOpen }) {
   const { data, setData, post, processing, errors, reset } = useForm({
     title: '',
     location: '',
   });
-  const toast = useToast();
+  const { toast } = useToast();
 
   const submit = e => {
     e.preventDefault();
@@ -31,14 +29,10 @@ export default function CreateMenuForm({ isOpen, onOpen, onClose }) {
       preserveScroll: true,
       onSuccess: () => {
         toast({
-          position: 'top-right',
           title: 'Menu Created.',
           description: 'Menu Created Successfully',
-          status: 'success',
-          duration: 6000,
-          isClosable: true,
         });
-        onClose();
+        setOpen(!open);
       },
       onError: errors => {
         console.error(errors);
@@ -52,31 +46,34 @@ export default function CreateMenuForm({ isOpen, onOpen, onClose }) {
     });
   };
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size={{ base: 'xs', md: 'md' }}>
-      <ModalOverlay />
-      <ModalContent as="form" onSubmit={submit}>
-        <ModalHeader>Add Menu</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <VStack gap="6" alignItems={'start'}>
-            <FormControl mt="4" isInvalid={errors.title}>
-              <FormLabel htmlFor="title">Menu Name</FormLabel>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Create Menu</DialogTitle>
+          <DialogDescription>Add new menu.</DialogDescription>
+        </DialogHeader>
+        <DialogClose />
+        <form onSubmit={submit}>
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="title">Menu Name</Label>
 
               <Input
                 id="title"
                 name="title"
                 placeholder="enter menu title"
+                autoFocus
                 onChange={e => setData('title', e.target.value)}
                 required
               />
 
               {errors.title && (
-                <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>
+                <InputError className="mt-2">{errors.title}</InputError>
               )}
-            </FormControl>
+            </div>
 
-            <FormControl mt="4" isInvalid={errors.location}>
-              <FormLabel htmlFor="location">Menu Location</FormLabel>
+            <div>
+              <Label htmlFor="location">Menu Location</Label>
 
               <Input
                 id="location"
@@ -87,26 +84,20 @@ export default function CreateMenuForm({ isOpen, onOpen, onClose }) {
               />
 
               {errors.location && (
-                <FormErrorMessage mt={2}>{errors.location}</FormErrorMessage>
+                <InputError className="mt-2">{errors.location}</InputError>
               )}
-            </FormControl>
-          </VStack>
-        </ModalBody>
-
-        <ModalFooter>
-          <PrimaryButton
-            colorScheme="blue"
-            type="submit"
-            isLoading={processing}
-            mr={3}
-          >
-            Add
-          </PrimaryButton>
-          <Button variant="ghost" onClick={onClose}>
-            Cancel
-          </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+            </div>
+            <DialogFooter>
+              <PrimaryButton type="submit" isLoading={processing}>
+                Add
+              </PrimaryButton>
+              <Button variant="outline" onClick={() => setOpen(!open)}>
+                Cancel
+              </Button>
+            </DialogFooter>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 }

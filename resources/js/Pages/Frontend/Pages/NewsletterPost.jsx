@@ -1,7 +1,7 @@
-import InertiaChakraLink from '@/Components/Frontend/styles/inertia-chakra-link';
-import { Box, Button, Container } from '@chakra-ui/react';
-import { Head } from '@inertiajs/react';
-import React, { useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { htmlToText } from '@/lib/utils';
+import { Head, Link } from '@inertiajs/react';
+import { useEffect } from 'react';
 
 const NewsletterPost = ({ post }) => {
   const viewerConfig = {
@@ -48,7 +48,7 @@ const NewsletterPost = ({ post }) => {
     () => document.removeEventListener('adobe_dc_view_sdk.ready');
   }, []);
   return (
-    <Box pt="40px">
+    <div className="pt-10">
       <Head>
         <script
           src="https://acrobatservices.adobe.com/view-sdk/viewer.js"
@@ -57,23 +57,19 @@ const NewsletterPost = ({ post }) => {
       </Head>
 
       {post.content ? (
-        <Container centerContent maxW="7xl">
-          <Box
-            className="newsletter-html"
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          />
-          <InertiaChakraLink href={pdf.original_url}>
-            <Button colorScheme="primary">View PDF</Button>
-          </InertiaChakraLink>
-        </Container>
+        <div className="container mx-auto max-w-7xl">
+          <div className="newsletter-html">{htmlToText(post.content)}</div>
+          <Link href={pdf.original_url}>
+            <Button variant="outline">View PDF</Button>
+          </Link>
+        </div>
       ) : (
-        <Box
+        <div
           id="adobe-dc-view"
-          className="full-window-div"
-          style={{ width: '100%', margin: '0 auto' }}
-        ></Box>
+          className="full-window-div mx-auto w-full"
+        ></div>
       )}
-    </Box>
+    </div>
   );
 };
 

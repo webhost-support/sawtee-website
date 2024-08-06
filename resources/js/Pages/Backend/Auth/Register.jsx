@@ -1,200 +1,120 @@
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import GuestLayout from '@/Pages/Backend/Layouts/GuestLayout';
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import {
-  Button,
-  Center,
-  Container,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Heading,
-  IconButton,
-  Input,
-  InputGroup,
-  InputRightElement,
-  Stack,
-  VStack,
-  useColorModeValue,
-} from '@chakra-ui/react';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { useEffect, useState } from 'react';
+import { useEffect } from "react";
+import GuestLayout from "@/components/Layouts/GuestLayout";
+import InputError from "@/components/Backend/InputError";
+import InputLabel from "@/components/Backend/InputLabel";
+import PrimaryButton from "@/components/Backend/PrimaryButton";
+import TextInput from "@/components/Backend/TextInput";
+import { Head, Link, useForm } from "@inertiajs/react";
 
 export default function Register() {
   const { data, setData, post, processing, errors, reset } = useForm({
-    name: '',
-    email: '',
-    password: '',
-    password_confirmation: '',
+    name: "",
+    email: "",
+    password: "",
+    password_confirmation: "",
   });
-
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const handlePasswordClick = () => setShowPassword(!showPassword);
-  const handleConfirmPasswordClick = () =>
-    setShowConfirmPassword(!showConfirmPassword);
 
   useEffect(() => {
     return () => {
-      reset('password', 'password_confirmation');
+      reset("password", "password_confirmation");
     };
   }, []);
 
-  const submit = e => {
+  const submit = (e) => {
     e.preventDefault();
-    post(route('register'));
-  };
 
-  const ShowButton = ({ callback }) => {
-    return (
-      <IconButton
-        h="1.75rem"
-        size="sm"
-        rounded="md"
-        bg={useColorModeValue('gray.300', 'gray.700')}
-        _hover={{
-          bg: useColorModeValue('gray.400', 'gray.800'),
-        }}
-        onClick={callback}
-        icon={showPassword ? <ViewIcon /> : <ViewOffIcon />}
-      />
-    );
+    post(route("register"));
   };
 
   return (
     <GuestLayout>
       <Head title="Register" />
 
-      <Container maxW="7xl" p={{ base: 5, md: 10 }}>
-        <Center>
-          <Stack spacing={4}>
-            <Stack align="center">
-              <Heading fontSize="2xl">Sign in to your account</Heading>
-            </Stack>
-            <VStack
-              boxSize={{ base: 'md', sm: 'lg', md: 'xl' }}
-              h="max-content !important"
-              bg={useColorModeValue('white', 'gray.700')}
-              rounded="lg"
-              boxShadow="lg"
-              p={{ base: 5, sm: 10 }}
-              spacing={8}
-              as={'form'}
-              onSubmit={submit}
-            >
-              <VStack spacing={4} w="100%">
-                <FormControl id="name" isInvalid={errors.name} isRequired>
-                  <FormLabel htmlFor="name">Name</FormLabel>
-                  <Input
-                    rounded="md"
-                    type="text"
-                    id="name"
-                    name="name"
-                    autoComplete="username"
-                    placeholder="type your username"
-                    onChange={e => setData('name', e.target.value)}
-                  />
-                  {errors.email && (
-                    <FormErrorMessage mt={2}>{errors.email}</FormErrorMessage>
-                  )}
-                </FormControl>
-                <FormControl id="email" isInvalid={errors.email} isRequired>
-                  <FormLabel htmlFor="email">Email</FormLabel>
-                  <Input
-                    rounded="md"
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="your email.."
-                    autoComplete="email"
-                    onChange={e => setData('email', e.target.value)}
-                  />
-                  {errors.email && (
-                    <FormErrorMessage mt={2}>{errors.email}</FormErrorMessage>
-                  )}
-                </FormControl>
-                <FormControl id="password" isInvalid={errors.password}>
-                  <FormLabel htmlFor="password">Password</FormLabel>
-                  <InputGroup size="md">
-                    <Input
-                      rounded="md"
-                      type={showPassword ? 'text' : 'password'}
-                      id="password"
-                      name="password"
-                      placeholder="type your secure password"
-                      autoComplete="new-password"
-                      onChange={e => setData('password', e.target.value)}
-                    />
-                    <InputRightElement width="4.5rem">
-                      <ShowButton callback={handlePasswordClick} />
-                    </InputRightElement>
-                  </InputGroup>
-                  {errors.password && (
-                    <FormErrorMessage mt={2}>
-                      {errors.password}
-                    </FormErrorMessage>
-                  )}
-                </FormControl>
-                <FormControl
-                  id="password_confirmation"
-                  isInvalid={errors.password_confirmation}
-                >
-                  <FormLabel htmlFor="password_confirmation">
-                    Confirm Password
-                  </FormLabel>
-                  <InputGroup size="md">
-                    <Input
-                      rounded="md"
-                      type={showConfirmPassword ? 'text' : 'password'}
-                      id="password_confirmation"
-                      name="password_confirmation"
-                      placeholder="type your secure password again"
-                      autoComplete="new-password"
-                      onChange={e =>
-                        setData('password_confirmation', e.target.value)
-                      }
-                    />
-                    <InputRightElement width="4.5rem">
-                      <ShowButton callback={handleConfirmPasswordClick} />
-                    </InputRightElement>
-                  </InputGroup>
-                  {errors.password_confirmation && (
-                    <FormErrorMessage mt={2}>
-                      {errors.password_confirmation}
-                    </FormErrorMessage>
-                  )}
-                </FormControl>
-              </VStack>
-              <Stack
-                direction="row"
-                justify="space-between"
-                alignItems={'center'}
-                w="100%"
-              >
-                <Link href={route('login')}>
-                  <Button
-                    fontSize={{
-                      base: 'md',
-                      sm: 'md',
-                    }}
-                    variant={'link'}
-                  >
-                    Already Registered?
-                  </Button>
-                </Link>
-                <PrimaryButton
-                  type="submit"
-                  rounded="md"
-                  isLoading={processing}
-                  minW={'64'}
-                >
-                  Register
-                </PrimaryButton>
-              </Stack>
-            </VStack>
-          </Stack>
-        </Center>
-      </Container>
+      <form onSubmit={submit}>
+        <div>
+          <InputLabel htmlFor="name" value="Name" />
+
+          <TextInput
+            id="name"
+            name="name"
+            value={data.name}
+            className="mt-1 block w-full"
+            autoComplete="name"
+            isFocused={true}
+            onChange={(e) => setData("name", e.target.value)}
+            required
+          />
+
+          <InputError message={errors.name} className="mt-2" />
+        </div>
+
+        <div className="mt-4">
+          <InputLabel htmlFor="email" value="Email" />
+
+          <TextInput
+            id="email"
+            type="email"
+            name="email"
+            value={data.email}
+            className="mt-1 block w-full"
+            autoComplete="username"
+            onChange={(e) => setData("email", e.target.value)}
+            required
+          />
+
+          <InputError message={errors.email} className="mt-2" />
+        </div>
+
+        <div className="mt-4">
+          <InputLabel htmlFor="password" value="Password" />
+
+          <TextInput
+            id="password"
+            type="password"
+            name="password"
+            value={data.password}
+            className="mt-1 block w-full"
+            autoComplete="new-password"
+            onChange={(e) => setData("password", e.target.value)}
+            required
+          />
+
+          <InputError message={errors.password} className="mt-2" />
+        </div>
+
+        <div className="mt-4">
+          <InputLabel
+            htmlFor="password_confirmation"
+            value="Confirm Password"
+          />
+
+          <TextInput
+            id="password_confirmation"
+            type="password"
+            name="password_confirmation"
+            value={data.password_confirmation}
+            className="mt-1 block w-full"
+            autoComplete="new-password"
+            onChange={(e) => setData("password_confirmation", e.target.value)}
+            required
+          />
+
+          <InputError message={errors.password_confirmation} className="mt-2" />
+        </div>
+
+        <div className="flex items-center justify-end mt-4">
+          <Link
+            href={route("login")}
+            className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Already registered?
+          </Link>
+
+          <PrimaryButton className="ms-4" disabled={processing}>
+            Register
+          </PrimaryButton>
+        </div>
+      </form>
     </GuestLayout>
   );
 }

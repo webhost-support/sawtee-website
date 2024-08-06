@@ -1,21 +1,17 @@
-import { DataTable } from '@/Components/Backend/DataTable';
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import {
-  TableDeleteAction,
-  TableEditAction,
-} from '@/Components/Backend/TableActions';
-import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
-import { Box, HStack, Text, useDisclosure } from '@chakra-ui/react';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { createColumnHelper } from '@tanstack/react-table';
-import React from 'react';
-import DeletePageModal from './Partials/DeletePageModal';
+import DataTableActions from '@/components/Backend/DataTableActions';
+import { DataTableColumnHeader } from '@/components/Backend/DatatableColumnHelper';
+import { DataTable } from '@/components/Backend/FrontDataTable';
+import PrimaryButton from '@/components/Backend/PrimaryButton';
 
-export default function Index({ auth, pages: data }) {
-  const columnHelper = createColumnHelper();
-  const { processing, get } = useForm();
-  const { onOpen, onClose, isOpen } = useDisclosure();
-  const [pageId, setPageId] = React.useState(null);
+import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
+import { useToast } from '@/components/ui/use-toast';
+import { Head, Link, useForm } from '@inertiajs/react';
+import React from 'react';
+
+export default function Index({ auth, pages }) {
+  const { processing, get, delete: destroy } = useForm();
+
+  const { toast } = useToast();
   const handleEdit = (e, id) => {
     e.preventDefault();
     get(route('admin.pages.edit', id));
@@ -23,63 +19,75 @@ export default function Index({ auth, pages: data }) {
 
   const handleDelete = (e, id) => {
     e.preventDefault();
-    setPageId(id);
-    onOpen();
+    destroy(route('admin.pages.destroy', id), {
+      onSuccess: () => {
+        toast({
+          title: 'Page deleted.',
+          description: `Page ID:${id} deleted Successfully`,
+        });
+      },
+      onError: () => {
+        toast({
+          variant: 'destructive',
+          title: 'Error.',
+          description: 'Something went wrong. Please try again.',
+        });
+      },
+    });
   };
 
-  const defaultColumns = React.useMemo(
-    () => [
-      columnHelper.accessor('name', {
-        cell: info => (
-          <Text maxW={64} title={info.getValue()}>
-            {info.getValue()}
-          </Text>
-        ),
-        header: 'Name',
-      }),
-      columnHelper.accessor('slug', {
-        cell: info => (
-          <Text maxW={64} title={info.getValue()}>
-            {info.getValue()}
-          </Text>
-        ),
-        header: 'Slug',
-      }),
-      columnHelper.accessor('sections_count', {
-        cell: info => info.getValue(),
-        header: 'Sections Count',
-      }),
-      columnHelper.accessor('id', {
-        cell: info => {
-          return (
-            <HStack spacing={4}>
-              <TableEditAction
-                onClick={e => handleEdit(e, info.getValue())}
-                isDisabled={processing}
-              />
-              <TableDeleteAction
-                onClick={e => handleDelete(e, info.getValue())}
-                isDisabled={processing}
-              />
-            </HStack>
-          );
-        },
-        header: 'Actions',
-      }),
-    ],
-    []
-  );
+  const defaultColumns = [
+    {
+      accessorKey: 'id',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="ID" />
+      ),
+    },
+    {
+      accessorKey: 'name',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Name" />
+      ),
+    },
+    {
+      accessorKey: 'slug',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Slug" />
+      ),
+    },
+    {
+      accessorKey: 'sections_count',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Sections Count" />
+      ),
+    },
+    {
+      accessorKey: 'id',
+      header: 'Actions',
+      cell: ({ row }) => (
+        <DataTableActions
+          id={row.original.id}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+        />
+      ),
+      enableHiding: false,
+    },
+  ];
 
   return (
     <AuthenticatedLayout user={auth.user}>
       <Head title="Pages" />
-      <DeletePageModal isOpen={isOpen} onClose={onClose} id={pageId} />
-      <Box mb={4}>
-        <Link href={route('admin.pages.create')}>
-          <PrimaryButton>Create New Page</PrimaryButton>
-        </Link>
-      </Box>
-      {data && <DataTable defaultColumns={defaultColumns} data={data} />}
+      <Link href={route('admin.pages.create')}>
+        <PrimaryButton>Create New Page</PrimaryButton>
+      </Link>
+      {pages && (
+        <DataTable
+          defaultColumns={defaultColumns}
+          data={pages}
+          customFilterColumn={'name'}
+        />
+      )}
     </AuthenticatedLayout>
   );
 }

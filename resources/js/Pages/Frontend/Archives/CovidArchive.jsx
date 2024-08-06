@@ -1,85 +1,76 @@
-import { GlassBox } from '@/Components/Frontend/index';
-import { DateFormat } from '@/Utils/helpers';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
 import {
-  Badge,
-  Divider,
-  HStack,
-  Heading,
-  Link,
-  SimpleGrid,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from '@/components/ui/tooltip';
+import { DateFormat } from '@/lib/helpers';
 
 const CovidArchive = ({ posts }) => {
   return (
-    <SimpleGrid
-      w="full"
-      px={[4, 8]}
-      columns={{ base: 1, md: 2 }}
-      gap={4}
-      rowGap={10}
-    >
+    <div className="grid w-full gap-x-4 gap-y-10 px-4 md:grid-cols-2 md:px-8">
       {posts.map(post => {
+        const authors = () => {
+          if (post.author) {
+            const result = post.author.replace('and', ',').split(',');
+            return result;
+          }
+        };
         return (
-          <VStack
-            as={GlassBox}
-            key={post.id}
-            borderColor={'var(--chakra-colors-gray-600)'}
-            role="group"
-            rounded="none"
-            p={6}
-            align="start"
-            justify="space-evenly"
-            transition="all 0.25s ease"
-            spacing={6}
-            _hover={{
-              shadow: 'dark-lg',
-              transform: 'scale(1.02)',
-            }}
-            w="full"
-          >
-            <HStack w="full" justify="space-between">
-              {post.genre && (
-                <Badge
-                  colorScheme="gray"
-                  px={2}
-                  py={1}
-                  rounded="md"
+          <Card key={post.id} className="relative border-2 border-borderColor">
+            <CardContent className="relative flex h-full w-full flex-col gap-4 space-y-4 p-6">
+              <span class="absolute left-0 top-0 -z-[1] ml-1 mt-1 h-full w-full rounded-xl bg-primary/90" />
+              <div className="flex w-full justify-between">
+                {post.genre && (
+                  <Badge className="rounded-md">{post.genre}</Badge>
+                )}
+
+                <time
+                  className="self-end text-sm font-medium"
                   fontSize={'xs'}
+                  fontWeight="medium"
+                  justifySelf={'flex-end'}
                 >
-                  {post.genre}
-                </Badge>
-              )}
-
-              <Text
-                as="time"
-                fontSize={'xs'}
-                fontWeight="medium"
-                justifySelf={'flex-end'}
-                dangerouslySetInnerHTML={{
-                  __html: DateFormat(post.published_at),
-                }}
-              />
-            </HStack>
-            <Link href={post.link} className="primary-link">
-              <Heading as="h3" fontSize={'md'} fontWeight={'normal'}>
-                {post.title}
-              </Heading>
-            </Link>
-            <Divider borderColor="var(--color-border)" />
-
-            <HStack align="center" __css={{ columnGap: 2, flexWrap: 'wrap' }}>
-              {post.author && (
-                <Text key={post.author} fontSize="sm">
-                  {post.author}
-                </Text>
-              )}
-            </HStack>
-          </VStack>
+                  {DateFormat(post.published_at)}
+                </time>
+              </div>
+              <a href={post.link} className="primary-link">
+                <h3 className="text-md font-normal tracking-normal lg:text-lg lg:leading-5">
+                  {post.title}
+                </h3>
+              </a>
+              <div className="flex flex-wrap items-center gap-x-2">
+                {post.author && (
+                  <div class="flex -space-x-4 transition-all delay-150 duration-300 ease-in hover:space-x-1 rtl:space-x-reverse">
+                    <TooltipProvider>
+                      {authors().map(author => (
+                        <Tooltip key={author}>
+                          <TooltipTrigger>
+                            <div class="relative inline-flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full border bg-gray-100 shadow-sm dark:bg-gray-600">
+                              <span class="font-medium text-gray-600 dark:text-gray-300">
+                                {author.split(' ')[0][0]}
+                                {author.split(' ')[1][0]}
+                              </span>
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>{author}</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      ))}
+                    </TooltipProvider>
+                  </div>
+                )}
+              </div>
+            </CardContent>
+            {/* <CardFooter>
+            </CardFooter> */}
+          </Card>
         );
       })}
-    </SimpleGrid>
+    </div>
   );
 };
 

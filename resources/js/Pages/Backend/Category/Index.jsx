@@ -1,85 +1,140 @@
-import { DataTable } from '@/Components/Backend/DataTable';
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import {
-  TableDeleteAction,
-  TableEditAction,
-} from '@/Components/Backend/TableActions';
-import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
-import { Box, HStack, useDisclosure } from '@chakra-ui/react';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { createColumnHelper } from '@tanstack/react-table';
-import React from 'react';
-import DeleteCategoryModal from './Partials/DeleteCategoryModal';
+import DataTableActions from '@/components/Backend/DataTableActions';
+import { DataTableColumnHeader } from '@/components/Backend/DatatableColumnHelper';
+import { DataTable } from '@/components/Backend/FrontDataTable';
+import PrimaryButton from '@/components/Backend/PrimaryButton';
+import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
+import { Checkbox } from '@/components/ui/checkbox';
+import { useToast } from '@/components/ui/use-toast';
+import { Head, useForm } from '@inertiajs/react';
+import React, { useState } from 'react';
+import CreateCategoryForm from './Partials/CreateCategoryForm';
+import EditCategoryForm from './Partials/EditCategoryForm';
 
-export default function Index({ auth, categories: data }) {
-  const columnHelper = createColumnHelper();
-  const { processing, get } = useForm();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+export default function Index({ auth, categories }) {
+  const { delete: destroy } = useForm();
+  const [createFormOpen, setCreateFormOpen] = useState(false);
+  const [editFormOpen, setEditFormOpen] = useState(false);
+  const [category, setCatgory] = useState(undefined);
+  const { toast } = useToast();
   const handleEdit = (e, id) => {
     e.preventDefault();
-    get(route('admin.categories.edit', id));
+    // get(route('admin.categories.edit', id));
+    const cat = categories.find(c => c.id === id);
+    setCatgory(cat);
+    setEditFormOpen(!editFormOpen);
   };
-
-  const [categoryId, setCategoryId] = React.useState(null);
 
   const handleDelete = (e, id) => {
     e.preventDefault();
-    setCategoryId(id);
-    onOpen();
+    destroy(route('admin.categories.destroy', id), {
+      preserveScroll: true,
+      onSuccess: () => {
+        toast({
+          title: `Category ID:${id} deleted.`,
+          description: 'Category deleted successfully.',
+        });
+      },
+      onError: () => {
+        toast({
+          variant: 'destructive',
+          title: 'Error.',
+          description: 'Something went wrong. Please try again.',
+        });
+      },
+    });
   };
-  console.log(data.data);
 
-  const defaultColumns = React.useMemo(
-    () => [
-      columnHelper.accessor('name', {
-        cell: info => info.getValue(),
-        header: 'Name',
-      }),
-      columnHelper.accessor('type', {
-        cell: info => info.getValue(),
-        header: 'Type',
-      }),
-      columnHelper.accessor('parent.name', {
-        cell: info => info.getValue(),
-        header: 'Parent Category',
-      }),
-      columnHelper.accessor('id', {
-        cell: info => {
-          return (
-            <HStack spacing={4}>
-              <TableEditAction
-                onClick={e => handleEdit(e, info.getValue())}
-                isDisabled={processing}
-              />
-              <TableDeleteAction
-                onClick={e => handleDelete(e, info.getValue())}
-                isDisabled={processing}
-              />
-            </HStack>
-          );
-        },
-        header: 'Actions',
-      }),
-    ],
-    []
-  );
+  const defaultColumns = [
+    {
+      id: 'select',
+      header: ({ table }) => (
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && 'indeterminate')
+          }
+          onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+          className="mx-4"
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={value => row.toggleSelected(!!value)}
+          aria-label="Select row"
+          className="mx-4"
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
+    },
+    {
+      accessorKey: 'id',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="ID" />
+      ),
+    },
+    {
+      accessorKey: 'name',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Name" />
+      ),
+    },
+    {
+      accessorKey: 'type',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Type" />
+      ),
+    },
+    {
+      accessorKey: 'parent.name',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Parent Category" />
+      ),
+    },
+    {
+      accessorKey: 'id',
+      header: 'Actions',
+      cell: ({ row }) => {
+        return (
+          <DataTableActions
+            id={row.original.id}
+            handleDelete={handleDelete}
+            handleEdit={handleEdit}
+          />
+        );
+      },
+      enableHiding: false,
+    },
+  ];
 
   return (
     <AuthenticatedLayout user={auth.user}>
       <Head title="Categories" />
-
-      <DeleteCategoryModal
-        isOpen={isOpen}
-        onClose={onClose}
-        categoryId={categoryId}
+      <PrimaryButton onClick={() => setCreateFormOpen(!createFormOpen)}>
+        Create New Category
+      </PrimaryButton>
+      <CreateCategoryForm
+        open={createFormOpen}
+        setOpen={setCreateFormOpen}
+        categories={categories}
       />
-
-      <Box mb={4}>
-        <Link href={route('admin.categories.create')}>
-          <PrimaryButton>Create New Category</PrimaryButton>
-        </Link>
-      </Box>
-      {data && <DataTable defaultColumns={defaultColumns} data={data} />}
+      {category && editFormOpen && (
+        <EditCategoryForm
+          open={editFormOpen}
+          setOpen={setEditFormOpen}
+          category={category}
+          categories={categories}
+        />
+      )}
+      {categories && (
+        <DataTable
+          defaultColumns={defaultColumns}
+          data={categories}
+          customFilterColumn={'name'}
+        />
+      )}
     </AuthenticatedLayout>
   );
 }

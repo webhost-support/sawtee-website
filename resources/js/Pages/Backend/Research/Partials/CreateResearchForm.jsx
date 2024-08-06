@@ -1,35 +1,28 @@
-import FileUpload, { PreviewImage } from '@/Components/Backend/FileUpload';
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import { FileIcon } from '@/Components/Frontend/icons';
-import { CloseIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
+import InputError from '@/components/Backend/InputError';
+import PrimaryButton from '@/components/Backend/PrimaryButton';
 import {
   Accordion,
-  AccordionButton,
-  AccordionIcon,
+  AccordionContent,
   AccordionItem,
-  AccordionPanel,
-  AspectRatio,
-  Box,
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Grid,
-  GridItem,
-  Input,
-  InputGroup,
-  InputLeftAddon,
-  InputRightAddon,
-  Textarea,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import {
   Tooltip,
-  VStack,
-  useToast,
-} from '@chakra-ui/react';
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import { useToast } from '@/components/ui/use-toast';
 import { useForm } from '@inertiajs/react';
+import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
 import { useState } from 'react';
 
 export default function CreateResearchForm() {
-  const { data, setData, post, processing, errors } = useForm({
+  const { data, setData, post, processing, errors, reset } = useForm({
     title: '',
     subtitle: '',
     description: '',
@@ -40,9 +33,7 @@ export default function CreateResearchForm() {
     meta_title: '',
     meta_description: '',
   });
-  const toast = useToast();
-  const [filename, setFilename] = useState(data.file ? data.file.name : '');
-
+  const { toast } = useToast();
   const [image, setImage] = useState(null);
 
   const submit = e => {
@@ -51,295 +42,222 @@ export default function CreateResearchForm() {
       preserveScroll: true,
       onSuccess: () =>
         toast({
-          position: 'top-right',
           title: 'Research Created.',
           description: `Research ${data.title} Successfully`,
-          status: 'success',
-          duration: 6000,
-          isClosable: true,
         }),
       onError: errors => {
-        console.error(errors);
+        for (const key in errors) {
+          if (Object.hasOwnProperty.call(errors, key)) {
+            const value = errors[key];
+            reset(key);
+            return toast({
+              title: 'Uh oh, Something went wrong',
+              description: `${key.toUpperCase()} field error` + `: ${value}`,
+            });
+          }
+        }
       },
     });
   };
 
   return (
     <form onSubmit={submit}>
-      <Grid
-        templateColumns={{
-          base: '1fr',
-          xl: 'repeat(6, minmax(100px, 1fr))',
-        }}
-        autoRows={'auto'}
-        gap={8}
-      >
-        <GridItem colSpan={{ base: 1, xl: 4 }}>
-          <VStack spacing={8} position={'sticky'} top={'2rem'}>
-            <FormControl isInvalid={errors.title} isRequired>
-              <FormLabel htmlFor="title">Title</FormLabel>
+      <div className="grid grid-cols-12 gap-4">
+        <div className="flex flex-col gap-8 col-span-12 self-center md:col-span-8 px-4">
+          <div className="mx-2">
+            <Label htmlFor="title">Title</Label>
+            <Input
+              type="text"
+              id="title"
+              name="title"
+              placeholder="enter research title"
+              className="mt-1"
+              autoComplete="title"
+              onChange={e => setData('title', e.target.value)}
+            />
 
-              <Input
-                type="text"
-                id="title"
-                name="title"
-                display="flex"
-                placeholder="enter research title"
-                mt={1}
-                autoComplete="title"
-                onChange={e => setData('title', e.target.value)}
-              />
+            {errors.title && (
+              <InputError className="mt-2">{errors.title}</InputError>
+            )}
+          </div>
 
-              {errors.title && (
-                <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>
-              )}
-            </FormControl>
+          <div className="mx-2">
+            <Label htmlFor="subtitle">Subtitle</Label>
 
-            <FormControl isInvalid={errors.subtitle}>
-              <FormLabel htmlFor="subtitle">Subtitle</FormLabel>
+            <Input
+              type="text"
+              id="subtitle"
+              name="subtitle"
+              className="mt-1"
+              placeholder="enter research subtitle"
+              autoComplete="subtitle"
+              onChange={e => setData('subtitle', e.target.value)}
+            />
 
-              <Input
-                type="text"
-                id="subtitle"
-                name="subtitle"
-                display="flex"
-                mt={1}
-                placeholder="enter research subtitle"
-                autoComplete="subtitle"
-                onChange={e => setData('subtitle', e.target.value)}
-              />
+            {errors.title && (
+              <InputError className={'mt-2'}>{errors.title}</InputError>
+            )}
+          </div>
+          <div className="mx-2">
+            <Label htmlFor="description">Description</Label>
+            <Textarea
+              name="description"
+              id="description"
+              rows={6}
+              className="mt-1"
+              resize={'vertical'}
+              placeholder="Describe your research here."
+              onChange={e => setData('description', e.target.value)}
+            />
 
-              {errors.title && (
-                <FormErrorMessage mt={2}>{errors.title}</FormErrorMessage>
-              )}
-            </FormControl>
+            {errors.description && (
+              <InputError className={'mt-2'}>{errors.description}</InputError>
+            )}
+          </div>
+        </div>
+        <div className="flex flex-col gap-8 self-center col-span-12 px-3 md:col-span-4">
+          <Accordion type="single" collapsible>
+            <AccordionItem value="item-1">
+              <AccordionTrigger>
+                <div className="flex gap-2">
+                  SEO Meta Tags
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <QuestionMarkCircledIcon className="w-3 h-3" />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Add meta-title and meta-description for SEO</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="flex flex-col justify-start gap-4">
+                  <div className="mx-2">
+                    <Label htmlFor="meta_title">Meta Title</Label>
+                    <Input
+                      id="meta_title"
+                      name="meta_title"
+                      className="mt-1"
+                      placeholder="enter meta title"
+                      onChange={e => setData('meta_title', e.target.value)}
+                    />
 
-            <FormControl mt={4} isInvalid={errors.description}>
-              <FormLabel htmlFor="description">Description</FormLabel>
+                    <InputError className="mt-2">
+                      {errors.meta_title}
+                    </InputError>
+                  </div>
 
-              <Textarea
-                name="description"
-                id="description"
-                rows={6}
-                resize={'vertical'}
-                placeholder="Describe your research here."
-                onChange={e => setData('description', e.target.value)}
-              />
+                  <div className="mx-2">
+                    <Label htmlFor="meta_description">Meta Description</Label>
+                    <Textarea
+                      id="meta_description"
+                      name="meta_description"
+                      className="block mt-1"
+                      placeholder="enter meta_description"
+                      rows={3}
+                      onChange={e =>
+                        setData('meta_description', e.target.value)
+                      }
+                    />
+                    <InputError className="mt-2">
+                      {errors.meta_description}
+                    </InputError>
+                  </div>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+          <fieldset className="mx-2">
+            <Label as="legend" htmlFor="year">
+              Year
+            </Label>
 
-              {errors.description && (
-                <FormErrorMessage mt={2}>{errors.description}</FormErrorMessage>
-              )}
-            </FormControl>
-          </VStack>
-        </GridItem>
-        <GridItem colSpan={{ base: 1, xl: 2 }}>
-          <VStack spacing={8}>
-            <Accordion allowToggle w="full">
-              <AccordionItem>
-                <h2>
-                  <AccordionButton
-                    _expanded={{
-                      bg: 'gray.600',
-                      color: 'white',
-                    }}
-                  >
-                    <Box
-                      as="span"
-                      flex="1"
-                      textAlign="left"
-                      fontWeight={'semibold'}
-                    >
-                      {'SEO Meta Tags '}
-                      <Tooltip
-                        label="Add title and description for SEO"
-                        fontSize="xs"
-                      >
-                        <QuestionOutlineIcon boxSize={3} />
-                      </Tooltip>
-                    </Box>
-                    <AccordionIcon />
-                  </AccordionButton>
-                </h2>
-                <AccordionPanel pb={4}>
-                  <VStack gap="6" alignItems={'start'}>
-                    <FormControl mt="4" isInvalid={errors.meta_title}>
-                      <FormLabel htmlFor="meta_title">Meta Title</FormLabel>
+            <Input
+              name="year"
+              id="year"
+              className="mt-1"
+              onChange={e => setData('year', Number(e.target.value))}
+            />
+            {errors.year && (
+              <InputError className={'mt-2'}>{errors.year}</InputError>
+            )}
+          </fieldset>
 
-                      <Input
-                        id="meta_title"
-                        name="meta_title"
-                        placeholder="enter meta title"
-                        onChange={e => setData('meta_title', e.target.value)}
-                      />
+          <div className="mx-2">
+            <Label htmlFor="file">File Upload</Label>
 
-                      <FormErrorMessage
-                        message={errors.meta_title}
-                        className="mt-2"
-                      />
-                    </FormControl>
+            <Input
+              type="file"
+              accept=".pdf,.doc,.docx,.ppt,.pptx"
+              id="file"
+              name="file"
+              className="mt-1"
+              onChange={e => {
+                setData('file', e.target.files[0]);
+              }}
+            />
 
-                    <FormControl mt="4" isInvalid={errors.meta_description}>
-                      <FormLabel htmlFor="meta_description">
-                        Meta Description
-                      </FormLabel>
+            {errors.file && <InputError>{errors.file}</InputError>}
+          </div>
 
-                      <Textarea
-                        id="meta_description"
-                        name="meta_description"
-                        placeholder="enter meta_description"
-                        rows={3}
-                        resize="vertical"
-                        onChange={e =>
-                          setData('meta_description', e.target.value)
-                        }
-                      />
+          <div className="mx-2">
+            <Label htmlFor="link">External Link</Label>
 
-                      <FormErrorMessage
-                        message={errors.meta_description}
-                        className="mt-2"
-                      />
-                    </FormControl>
-                  </VStack>
-                </AccordionPanel>
-              </AccordionItem>
-            </Accordion>
-            <FormControl isInvalid={errors.year} as="fieldset">
-              <FormLabel as="legend" htmlFor="year">
-                Year
-              </FormLabel>
+            <Input
+              type="text"
+              id="link"
+              name="link"
+              className="mt-1"
+              placeholder="enter research link"
+              autoComplete="link"
+              onChange={e => setData('link', e.target.value)}
+            />
 
-              <Input
-                name="year"
-                id="year"
-                onChange={e => setData('year', Number(e.target.value))}
-              />
-              {errors.year && (
-                <FormErrorMessage mt={2}>{errors.year}</FormErrorMessage>
-              )}
-            </FormControl>
+            {errors.link && (
+              <InputError className={'mt-2'}>{errors.link}</InputError>
+            )}
+          </div>
 
-            <FormControl mt={4} isInvalid={errors.file}>
-              <FormLabel htmlFor="file">File Upload</FormLabel>
-              <InputGroup>
-                <InputLeftAddon children={<FileIcon />} />
-                <Box position="relative">
-                  <Input
-                    size="md"
-                    isReadOnly
-                    placeholder={filename ? filename : 'click to select file'}
+          <div className="mx-2">
+            <Label htmlFor="image">Featured Image</Label>
+
+            {image && (
+              <div className="w-[minmax(auto, 450px)]">
+                <AspectRatio ratio={16 / 9}>
+                  <img
+                    src={image}
+                    alt="featured"
+                    className="rounded-md object-cover w-full h-full"
                   />
-                  <Input
-                    type="file"
-                    height="100%"
-                    width="100%"
-                    position="absolute"
-                    top="0"
-                    left="0"
-                    opacity="0"
-                    aria-hidden="true"
-                    accept=".pdf,.doc,.docx,.ppt,.pptx"
-                    id="file"
-                    name="file"
-                    size="md"
-                    onChange={e => {
-                      setFilename(e.target.files[0].name);
-                      setData('file', e.target.files[0]);
-                    }}
-                  />
-                </Box>
-                {filename && (
-                  <InputRightAddon
-                    children={
-                      <CloseIcon
-                        color={'red.500'}
-                        onClick={() => {
-                          setFilename(null);
-                        }}
-                      />
-                    }
-                  />
-                )}
-              </InputGroup>
-              {errors.file && (
-                <FormErrorMessage mt={2}>{errors.file}</FormErrorMessage>
-              )}
-            </FormControl>
+                </AspectRatio>
+              </div>
+            )}
 
-            <FormControl isInvalid={errors.link}>
-              <FormLabel htmlFor="link">External Link</FormLabel>
+            <Input
+              type="file"
+              accept="image/*"
+              id="image"
+              name="image"
+              className="mt-1"
+              placeholder="Browse Image"
+              onChange={e => {
+                setData('image', e.target.files[0]);
+                setImage(URL.createObjectURL(e.target.files[0]));
+              }}
+            />
+            {errors.image && (
+              <InputError className={'mt-2'}>{errors.image}</InputError>
+            )}
+          </div>
 
-              <Input
-                type="text"
-                id="link"
-                name="link"
-                display="flex"
-                placeholder="enter research link"
-                mt={1}
-                autoComplete="link"
-                onChange={e => setData('link', e.target.value)}
-              />
-
-              {errors.link && (
-                <FormErrorMessage mt={2}>{errors.link}</FormErrorMessage>
-              )}
-            </FormControl>
-
-            <FormControl mt={4} isInvalid={errors.image}>
-              <FormLabel htmlFor="image">Featured Image</FormLabel>
-
-              {image && (
-                <>
-                  <AspectRatio w={'64'} ratio={3 / 4}>
-                    <PreviewImage src={image} />
-                  </AspectRatio>
-                  <Button
-                    mt={4}
-                    size={'sm'}
-                    colorScheme="red"
-                    onClick={() => {
-                      setImage(null);
-                    }}
-                  >
-                    Remove/Change Image
-                  </Button>
-                </>
-              )}
-
-              {!image && (
-                <FileUpload>
-                  <Input
-                    type="file"
-                    height="100%"
-                    width="100%"
-                    position="absolute"
-                    top="0"
-                    left="0"
-                    opacity="0"
-                    aria-hidden="true"
-                    accept="image/*"
-                    id="image"
-                    name="image"
-                    placeholder="Browse Image"
-                    size="md"
-                    onChange={e => {
-                      setData('image', e.target.files[0]);
-
-                      setImage(URL.createObjectURL(e.target.files[0]));
-                    }}
-                  />
-                </FileUpload>
-              )}
-              {errors.image && (
-                <FormErrorMessage mt={2}>{errors.image}</FormErrorMessage>
-              )}
-            </FormControl>
-
-            <PrimaryButton type="submit" disabled={processing} mt={4} w="64">
-              Save
-            </PrimaryButton>
-          </VStack>
-        </GridItem>
-      </Grid>
+          <PrimaryButton type="submit" disabled={processing}>
+            Add
+          </PrimaryButton>
+        </div>
+      </div>
     </form>
   );
 }

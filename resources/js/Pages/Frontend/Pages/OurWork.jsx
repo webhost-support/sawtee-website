@@ -1,199 +1,88 @@
-import InertiaChakraLinkOverlay from '@/Components/Frontend/styles/inertia-chakra-link-overlay';
-import {
-  Box,
-  Collapse,
-  Container,
-  Heading,
-  Image,
-  LinkBox,
-  SimpleGrid,
-  Text,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { cn, htmlToText } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import CardWithEffect from '../../../components/Frontend/CardWithEffect';
 
 export default function OurWork({ themes, sections, content }) {
   const [intro, setIntro] = useState(null);
   const [sectors, setSectors] = useState(null);
+
+  const Themes = themes.filter((theme) => theme.title !== 'Covid');
+
   useEffect(() => {
-    const intro = sections.filter(section => section.title === 'Intro')[0];
+    const intro = sections.find(section => section.title === 'Intro');
     const sectors = sections.filter(section => section.parent_id !== null);
     intro && setIntro(intro);
     sectors && setSectors(sectors);
   }, [sections]);
-  const cardBackground = useColorModeValue('blackAlpha.100', 'blackAlpha.300');
 
   return (
-    <Container
-      className="intro"
-      pos="relative"
-      py="80px"
-      maxW="4xl"
-      px={{ base: 5, md: 10 }}
-      centerContent
-    >
-      <Heading
-        as={'h2'}
-        fontSize={{ base: 'xl', md: '2xl', lg: '4xl' }}
-        mb={6}
-        textAlign="center"
-      >
+    <div className="intro relative py-20 max-w-7xl px-5 md:px-10 mx-auto">
+      <h2 className="text-xl md:text-2xl lg:text-4xl dark:text-zinc-300 text-center mb-6">
         Thematic Areas
-      </Heading>
+      </h2>
 
-      <Box
-        display="flex"
-        flexDir="column"
-        justifyContent="center"
-        alignItems="center"
-        position="relative"
-        mb={24}
-      >
+      <div className="flex flex-col max-w-4xl mx-auto gap-8 justify-center items-center relative mb-24">
         {intro && (
-          <Text
-            as="blockquote"
-            className="blockquote"
-            m="0"
-            py={10}
-            color="var(--color-text)"
-            alignSelf={'center'}
-            dangerouslySetInnerHTML={{
-              __html: intro.description,
-            }}
-          />
+          <blockquote className="blockquote text-xl bg-bgDarker/90 m-0 py-10 dark:text-zinc-400 self-center">
+            {htmlToText(intro.description)}
+          </blockquote>
         )}
-      </Box>
+      </div>
 
-      <SimpleGrid
-        columns={{ base: 1, md: 2 }}
-        placeItems="center"
-        spacing={10}
-        mb={4}
-      >
-        {themes.map((theme, index) => {
-          const [show, setShow] = React.useState(false);
-          const handleToggle = () => setShow(!show);
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 mb-10 ">
+        {Themes?.map((theme, index) => {
+            const colSpan = index <= 1  || index === Themes.length - 2 ? 3 : 2;
+
           return (
-            <Box
+            <div
               key={theme.title}
-              bg={cardBackground}
-              p={6}
-              rounded="lg"
-              pos="relative"
-              role="group"
-              cursor={'pointer'}
-              onMouseEnter={handleToggle}
-              onMouseLeave={handleToggle}
-              id={'theme' + (index + 1)}
-              textAlign="center"
-              transition={'all .25s ease'}
+              className={cn("w-full bg-bgDarker last:col-span-3", `col-span-${colSpan}`)}
             >
-              <Collapse in={show} startingHeight={'120px'} animateOpacity>
-                <Heading
-                  as="h3"
-                  mb={3}
-                  fontWeight="semibold"
-                  fontSize={['md', 'lg']}
-                >
-                  {theme.title}
-                </Heading>
+                <div class="relative h-full">
+                <span class="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-sky-500 rounded-lg" />
 
-                <Text mt={1} fontSize={['xs', 'sm']} textAlign="center">
-                  {theme.description}
-                </Text>
-              </Collapse>
-            </Box>
+                    <div class="relative h-full p-5 bg-bgDarker border-2 border-sky-500 rounded-lg">
+                        <div class="flex items-center -mt-1">
+                            <h3 class="my-2 ml-3 text-lg font-bold text-slate-800 dark:text-slate-300">{theme.title}</h3>
+                        </div>
+                        <p class="mt-3 mb-1 text-xs font-medium text-sky-500 uppercase">------------</p>
+                        <p class="mb-2 text-slate-700 dark:text-slate-400">{theme.description}</p>
+                    </div>
+                </div>
+
+            </div>
           );
         })}
-      </SimpleGrid>
-      <SimpleGrid
-        className="page_content"
-        px={{ base: '32px', md: '16px' }}
-        paddingBlock="50px"
-        mx="auto"
-        columns={{ base: 1, md: 2 }}
-        gap="10"
-        maxW="5xl"
-      >
-        {sectors &&
-          sectors.map(({ id, title, description, media, link }) => {
-            return (
-              <LinkBox
-                className="cards"
-                key={id}
-                boxShadow={'lg'}
-                shadow={'md'}
-                rounded="xl"
-                overflow={'hidden'}
-                position="relative"
-                role="group"
-                w="full"
-                aspectRatio={4 / 3}
-                minW="25rem"
-                minH="400px"
+      </div>
+      <div className="page_content grid md:grid-cols-2 mx-auto px-8 md:px-4 py-12 gap-8 items-center max-w-5xl">
+        {sectors?.map(({ id, title, description, media, link }) => {
+          return (
+            <CardWithEffect key={id} className="cards max-w-lg p-0">
+              <img
+                className="aspect-square h-full w-full object-cover"
+                alt="sector cover"
+                src={
+                  media[0]
+                    ? media[0].original_url
+                    : '/assets/SM-placeholder-1024x512.png'
+                }
+              />
+              <Link
+                href={`/category/${link}`}
+                className="group absolute inset-0 flex h-full w-full flex-col items-center justify-between bg-bgDarker bg-blend-lighten"
               >
-                <Image
-                  w="full"
-                  h="full"
-                  objectFit={'cover'}
-                  src={
-                    media[0]
-                      ? media[0].original_url
-                      : '/assets/SM-placeholder-1024x512.png'
-                  }
-                />
-                <Box
-                  backgroundColor={'hsl(0, 0%,  0%, 0.2)'}
-                  backgroundBlendMode={'lighten'}
-                  backdropFilter={'blur(1px)'}
-                  _groupHover={{
-                    backdropFilter: 'blur(0px)',
-                  }}
-                  overflow={'hidden'}
-                  pos={'absolute'}
-                  rounded="xl"
-                  inset={'0'}
-                  w="full"
-                  h="full"
-                >
-                  <Heading
-                    as="h2"
-                    fontSize={['md', 'xl']}
-                    className="title"
-                    textAlign={'center'}
-                    py={{ base: 4, lg: 6 }}
-                  >
-                    <InertiaChakraLinkOverlay
-                      as={Link}
-                      href={`/category/${link}`}
-                    >
-                      {title}
-                    </InertiaChakraLinkOverlay>
-                  </Heading>
-                  <Text
-                    className="content"
-                    flex={1}
-                    height={'auto'}
-                    display="flex"
-                    alignItems={'center'}
-                    fontSize={{
-                      base: 'sm',
-                      md: 'md',
-                      lg: 'lg',
-                    }}
-                    fontWeight="bold"
-                    px={{ base: 4, lg: 10 }}
-                    opacity="0"
-                    textAlign={'center'}
-                  >
-                    {description}
-                  </Text>
-                </Box>
-              </LinkBox>
-            );
-          })}
-      </SimpleGrid>
-    </Container>
+                <h2 className="title w-full self-start py-6 text-center text-lg group-hover:bg-sky-500/50 dark:text-zinc-300 md:text-2xl">
+                  {title}
+                </h2>
+                <p className="flex h-full w-full grow items-center justify-center px-6 dark:text-gray-200">
+                  {description || 'Random text to check the positioning'}
+                </p>
+              </Link>
+            </CardWithEffect>
+          );
+        })}
+      </div>
+    </div>
   );
 }

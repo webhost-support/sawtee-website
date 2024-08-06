@@ -29,9 +29,9 @@ class PostController extends Controller
         $parent_and_subcategory_ids = array_merge(array($category->slug === 'programme' ? null : $category->id), $subcategory_ids);
 
         $posts = Post::with(['category', 'tags', 'theme'])
-        ->whereIn('category_id', $parent_and_subcategory_ids)
-        ->idDescending()
-        ->get();
+            ->whereIn('category_id', $parent_and_subcategory_ids)
+            ->idDescending()
+            ->get();
 
         $categories = Category::where('type', 'post')->where('parent_id', null)->get();
         return Inertia::render('Backend/Post/Index', [
@@ -60,11 +60,11 @@ class PostController extends Controller
     {
         $validated = $request->validated();
         $validated['title'] = Str::of($validated['title'])
-        ->title()
+            ->title()
             ->squish();
         $validated['meta_title'] = $validated['title'];
         $validated['excerpt'] = Str::of(Str::words($validated['content'], 30, '...'))
-        ->stripTags()
+            ->stripTags()
             ->squish();
 
         $post = Post::create($validated);
@@ -72,7 +72,6 @@ class PostController extends Controller
         if ($request->has('tags')) {
             $post->tags()->attach($request->tags);
         }
-
         if ($request->hasFile('image')) {
             $post->addMediaFromRequest('image')->toMediaCollection('post-featured-image');
         }
@@ -82,7 +81,7 @@ class PostController extends Controller
             $outputFilePath = public_path('tmp/' . $filename);
 
             $result = PdfOptimizer::open($request->file('file'))
-            ->settings(PdfSettings::SCREEN)
+                ->settings(PdfSettings::SCREEN)
                 ->colorImageResolution(144)
                 ->downSampleColorImages(true)
                 ->optimize($outputFilePath);
@@ -132,7 +131,7 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::with(['category', 'tags', 'postContentFiles'])
-        ->where('id', $id)
+            ->where('id', $id)
             ->first();
         $categories = Category::where('type', 'post')->get();
         $tags = Tag::all();
@@ -157,11 +156,11 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $validated = $request->all();
         $validated['title'] = Str::of($validated['title'])
-        ->title()
+            ->title()
             ->squish();
         $validated['meta_title'] = $validated['title'];
         $validated['excerpt'] = Str::of(Str::words($validated['content'], 30, '...'))
-        ->stripTags()
+            ->stripTags()
             ->squish();
 
         if ($request->has('tags')) {

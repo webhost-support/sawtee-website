@@ -1,4 +1,3 @@
-import { RightQuotesIcon } from '@/Components/Frontend/icons';
 import {
   Avatar,
   Icon,
@@ -7,6 +6,7 @@ import {
   VStack,
   useColorModeValue,
 } from '@chakra-ui/react';
+import { Quote } from 'lucide-react';
 
 const TeamMember = ({ member, ...rest }) => {
   const avatar = member.media.filter(
@@ -26,7 +26,7 @@ const TeamMember = ({ member, ...rest }) => {
       {...rest}
     >
       <Icon
-        as={RightQuotesIcon}
+        as={Quote}
         w={10}
         h={10}
         color="primary.400"

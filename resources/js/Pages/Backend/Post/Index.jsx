@@ -1,63 +1,54 @@
-import { FrontDataTable } from '@/Components/Backend/FrontDataTable';
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import {
-  TableDeleteAction,
-  TableEditAction,
-} from '@/Components/Backend/TableActions';
-import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
-import { HStack, Select, Tag, useDisclosure } from '@chakra-ui/react';
-import { Head, Link, router, useForm } from '@inertiajs/react';
-import { createColumnHelper } from '@tanstack/react-table';
+import DataTableActions from '@/components/Backend/DataTableActions';
+import { DataTableColumnHeader } from '@/components/Backend/DatatableColumnHelper';
+import { DataTable } from '@/components/Backend/FrontDataTable';
+import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
+import { Checkbox } from '@/components/ui/checkbox';
+import { useToast } from '@/components/ui/use-toast';
+import { Head, Link, useForm } from '@inertiajs/react';
 import React from 'react';
-import DeletePostModal from './Partials/DeletePostModal';
-export default function Index({ auth, posts, categories, categoryID }) {
-  const columnHelper = createColumnHelper();
-  const { processing, get } = useForm();
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [postId, setPostId] = React.useState(null);
 
-  const [selectedCategory, setSelectedCategory] = React.useState(categoryID);
+import PrimaryButton from '@/components/Backend/PrimaryButton';
+import TWTags from '@/components/shared/TWTags';
+
+export default function Index({ auth, posts, categories, categoryID }) {
+  const { get, delete: destroy } = useForm();
+  const { toast } = useToast();
 
   const handleDelete = (e, id) => {
     e.preventDefault();
-    setPostId(id);
-    onOpen();
+    destroy(route('admin.posts.destroy', id), {
+      preserveState: true,
+      preserveScroll: true,
+      onSuccess: () => {
+        toast({
+          title: 'Post deleted',
+          description: `Post ID:${id} deleted Successfully`,
+        });
+      },
+    });
   };
 
-  function handleCategoryFilter(e, category) {
-    e.preventDefault();
-    setSelectedCategory(category);
-    router.visit('/admin/posts', {
-      data: { category_id: category },
-      preserveState: true,
-    });
-  }
-
-  function getStatusColor(status) {
-    if (status === 'unpublished') {
-      return 'red';
+  const Status = ({ status }) => {
+    switch (status) {
+      case 'unpublished':
+        return (
+          <span className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium  ring-1 ring-inset text-red-600 ring-red-500/10 ">
+            {status}
+          </span>
+        );
+      case 'draft':
+        return (
+          <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium  ring-1 ring-inset text-blue-600 ring-blue-500/10 ">
+            {status}
+          </span>
+        );
+      default:
+        return (
+          <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium  ring-1 ring-inset text-green-600 ring-green-500/10 ">
+            {status}
+          </span>
+        );
     }
-    if (status === 'draft') {
-      return 'blue';
-    }
-    return 'green';
-  }
-
-  const TagsColumn = ({ tags }) => {
-    if (!tags.length) {
-      return 'N/A';
-    }
-    return (
-      <HStack columns={{ base: 1, lg: 2 }} spacing={2}>
-        {tags.map(tag => {
-          return (
-            <Tag colorScheme="blue" key={tag.id}>
-              {tag.name}
-            </Tag>
-          );
-        })}
-      </HStack>
-    );
   };
 
   const handleEdit = (e, post_id, category_id) => {
@@ -65,93 +56,109 @@ export default function Index({ auth, posts, categories, categoryID }) {
     get(route('admin.posts.edit', post_id, category_id));
   };
 
-  const defaultColumns = React.useMemo(
-    () => [
-      columnHelper.accessor('title', {
-        cell: info => info.getValue(),
-        header: 'Title',
-      }),
-      columnHelper.accessor('category.name', {
-        cell: info => {
-          <Tag colorScheme="green">{info.getValue()}</Tag>;
-        },
-        header: 'Category',
-      }),
-      columnHelper.accessor('theme.title', {
-        cell: info => (info.getValue() ? info.getValue() : 'N/A'),
-        header: 'Theme',
-      }),
-      columnHelper.accessor('tags', {
-        cell: info => {
-          <TagsColumn tags={info.getValue()} />;
-        },
-        header: 'Tags',
-      }),
-      columnHelper.accessor('status', {
-        cell: info => (
-          <Tag colorScheme={getStatusColor(info.getValue())}>
-            {info.getValue()}
-          </Tag>
-        ),
-        header: 'Status',
-      }),
-      columnHelper.accessor('author', {
-        cell: info => info.getValue(),
-        header: 'author',
-        enableHiding: true,
-      }),
-      columnHelper.accessor('id', {
-        cell: info => {
-          return (
-            <HStack spacing={4}>
-              <TableEditAction
-                onClick={e => handleEdit(e, info.getValue(), selectedCategory)}
-                isDisabled={processing}
-              />
-              <TableDeleteAction
-                onClick={e =>
-                  handleDelete(e, info.getValue(), selectedCategory)
-                }
-                isDisabled={processing}
-              />
-            </HStack>
-          );
-        },
-        header: 'Actions',
-      }),
-    ],
-    [selectedCategory, processing]
-  );
+  const defaultColumns = [
+    {
+      id: 'select',
+      header: ({ table }) => (
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && 'indeterminate')
+          }
+          onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+          className="mx-4"
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={value => row.toggleSelected(!!value)}
+          aria-label="Select row"
+          className="mx-4"
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
+    },
+    {
+      accessorKey: 'id',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="ID" />
+      ),
+    },
+    {
+      accessorKey: 'title',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Title" />
+      ),
+    },
+    {
+      accessorKey: 'theme',
+      header: 'Theme',
+      cell: ({ row }) => {
+        return row.original.theme ? row.original.theme.title : 'N/A';
+      },
+    },
+    {
+      accessorKey: 'tags',
+      header: 'Tags',
+      cell: ({ row }) => {
+        return (
+          <div className="flex items-center gap-1">
+            {row.original.tags?.map(tag => (
+              <TWTags key={tag.id} colorScheme="blue">
+                {tag.name}
+              </TWTags>
+            ))}
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: 'status',
+      header: 'Status',
+      cell: ({ row }) => {
+        return <Status status={row.original.status} />;
+      },
+    },
+    {
+      accessorKey: 'author',
+      header: 'Author',
+    },
+    {
+      accessorKey: 'id',
+      header: 'Actions',
+      cell: ({ row }) => {
+        return (
+          <DataTableActions
+            id={row.original.id}
+            handleDelete={handleDelete}
+            handleEdit={handleEdit}
+          />
+        );
+      },
+      enableHiding: false,
+    },
+  ];
 
   return (
     <AuthenticatedLayout user={auth.user}>
       <Head title="Posts" />
-      <DeletePostModal
-        isOpen={isOpen}
-        onClose={onClose}
-        postId={postId}
-        categoryId={selectedCategory}
-      />
-      <HStack mb={4}>
-        <Link href={route('admin.posts.create', selectedCategory)}>
-          <PrimaryButton>Create New Post</PrimaryButton>
-        </Link>
 
-        <Select
-          maxW="96"
-          name="category"
-          placeholder="Filter posts by Category"
-          onChange={e => handleCategoryFilter(e, e.target.value)}
-          defaultValue={selectedCategory}
-        >
-          {categories?.map(category => (
-            <option key={category.id} value={category.id}>
-              {category.name}
-            </option>
-          ))}
-        </Select>
-      </HStack>
-      <FrontDataTable defaultColumns={defaultColumns} data={posts} />
+      <Link href={route('admin.posts.create')}>
+        <PrimaryButton>Create New Post</PrimaryButton>
+      </Link>
+      <DataTable
+        defaultColumns={defaultColumns}
+        data={posts}
+        showTypeFilter={true}
+        typeFilterOptions={{
+          iterable: categories,
+          selectedId: categoryID,
+          route: '/admin/posts',
+        }}
+      />
     </AuthenticatedLayout>
   );
 }

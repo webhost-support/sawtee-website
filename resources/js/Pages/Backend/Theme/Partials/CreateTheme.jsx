@@ -1,28 +1,27 @@
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import {
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Textarea,
-  useToast,
-} from '@chakra-ui/react';
-import { useForm } from '@inertiajs/react';
+import PrimaryButton from '@/components/Backend/PrimaryButton';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useToast } from '@/components/ui/use-toast';
 
-export default function CreateTheme({ isOpen, onClose }) {
+import InputError from '@/components/Backend/InputError';
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Textarea } from '@/components/ui/textarea';
+import { useForm } from '@inertiajs/react';
+export default function CreateTheme({ oepn, setOpen }) {
   const { data, setData, post, processing, errors, reset } = useForm({
     title: '',
     description: '',
   });
-  const toast = useToast();
+
+  const { toast } = useToast();
 
   const submit = e => {
     e.preventDefault();
@@ -31,15 +30,11 @@ export default function CreateTheme({ isOpen, onClose }) {
       preserveScroll: true,
       onSuccess: () => {
         toast({
-          position: 'top-right',
           title: 'Theme Created.',
-          description: 'Theme Created Successfully',
-          status: 'success',
-          duration: 6000,
-          isClosable: true,
+          description: 'New theme added successfully',
         });
         reset('title', 'description');
-        onClose();
+        setOpen(false);
       },
       onError: errors => {
         errors.title && reset('title');
@@ -49,49 +44,57 @@ export default function CreateTheme({ isOpen, onClose }) {
   };
 
   return (
-    <Modal size={'xl'} isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay />
-      <ModalContent as="form" onSubmit={submit}>
-        <ModalHeader>Add new theme</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <FormControl mt="4" isInvalid={errors.title}>
-            <FormLabel htmlFor="title">Title</FormLabel>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="sm:max-w-2xl overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>Create theme</DialogTitle>
+          <DialogDescription>Add new theme.</DialogDescription>
+        </DialogHeader>
 
-            <Input
-              id="title"
-              name="title"
-              placeholder="enter theme name"
-              onChange={e => setData('title', e.target.value)}
-              required
-            />
+        <form onSubmit={submit}>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <div className="col-span-4">
+                <Label htmlFor="title">Title</Label>
 
-            <FormErrorMessage message={errors.title} className="mt-2" />
-          </FormControl>
+                <Input
+                  name="title"
+                  placeholder="enter theme name"
+                  onChange={e => setData('title', e.target.value)}
+                  required
+                />
 
-          <FormControl mt="4" isInvalid={errors.description}>
-            <FormLabel htmlFor="title">Description</FormLabel>
+                <InputError className="mt-2">{errors.title}</InputError>
+              </div>
 
-            <Textarea
-              id="description"
-              name="description"
-              rows={10}
-              placeholder="enter theme description"
-              onChange={e => setData('description', e.target.value)}
-            />
+              <div className="col-span-4">
+                <Label htmlFor="description">Description</Label>
 
-            <FormErrorMessage message={errors.description} className="mt-2" />
-          </FormControl>
-        </ModalBody>
-        <ModalFooter>
-          <PrimaryButton type="submit" isLoading={processing} mr={3}>
-            Add
-          </PrimaryButton>
-          <Button variant="solid" colorScheme="red" onClick={onClose}>
-            Cancel
-          </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+                <Textarea
+                  name="description"
+                  rows={10}
+                  placeholder="enter theme description"
+                  onChange={e => setData('description', e.target.value)}
+                />
+
+                <InputError className="mt-2">{errors.description}</InputError>
+              </div>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setOpen(!open)}>
+              Cancel
+            </Button>
+            <PrimaryButton
+              type="submit"
+              isLoading={processing}
+              //   disabled={processing}
+            >
+              Create
+            </PrimaryButton>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 }

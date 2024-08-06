@@ -1,17 +1,8 @@
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import {
-  Box,
-  Flex,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Heading,
-  Input,
-  Text,
-  VStack,
-  useColorModeValue,
-  useToast,
-} from '@chakra-ui/react';
+import InputError from '@/components/Backend/InputError';
+import InputLabel from '@/components/Backend/InputLabel';
+import PrimaryButton from '@/components/Backend/PrimaryButton';
+import TextInput from '@/components/Backend/TextInput';
+import { useToast } from '@/components/ui/use-toast';
 import { Link, useForm, usePage } from '@inertiajs/react';
 
 export default function UpdateProfileInformation({
@@ -20,7 +11,7 @@ export default function UpdateProfileInformation({
   className = '',
 }) {
   const user = usePage().props.auth.user;
-  const toast = useToast();
+    const { toast } = useToast();
   const { data, setData, patch, errors, processing, recentlySuccessful } =
     useForm({
       name: user.name,
@@ -29,114 +20,96 @@ export default function UpdateProfileInformation({
 
   const submit = e => {
     e.preventDefault();
-    patch(route('admin.profile.update'), {
-      preserveScroll: true,
+
+    patch(route('profile.update'), {
       onSuccess: () => {
         toast({
-          title: 'Success',
-          description: 'Profile information updated.',
-          status: 'success',
-          duration: 9000,
-          isClosable: true,
+          title: 'Profile updated.',
+          description: 'Your profile information has been updated.',
+        });
+      },
+      onError: () => {
+        toast({
+          variant: 'destructive',
+          title: 'Error.',
+          description: 'Something went wrong while updating your profile.',
         });
       },
     });
+
   };
 
   return (
-    <Box as="section" className={className}>
+    <section className={className}>
       <header>
-        <Heading
-          as="h2"
-          fontSize={'lg'}
-          fontWeight={'medium'}
-          color={useColorModeValue('gray.900', 'gray.100')}
-        >
+        <h2 className="text-lg font-medium text-gray-900">
           Profile Information
-        </Heading>
+        </h2>
 
-        <Text
-          mt={1}
-          fontSize={'sm'}
-          color={useColorModeValue('gray.600', 'gray.400')}
-        >
+        <p className="mt-1 text-sm text-gray-600">
           Update your account's profile information and email address.
-        </Text>
+        </p>
       </header>
 
-      <VStack
-        as="form"
-        onSubmit={submit}
-        mt={6}
-        py={6}
-        gap={4}
-        alignItems={'flex-start'}
-      >
-        <FormControl isRequired>
-          <FormLabel htmlFor="name">Name</FormLabel>
+      <form onSubmit={submit} className="mt-6 space-y-6">
+        <div>
+          <InputLabel htmlFor="name" value="Name" />
 
-          <Input
+          <TextInput
             id="name"
+            className="mt-1 block w-full"
             value={data.name}
             onChange={e => setData('name', e.target.value)}
+            required
+            isFocused
             autoComplete="name"
           />
 
-          <FormErrorMessage mt={2}>{errors.name}</FormErrorMessage>
-        </FormControl>
+          <InputError className="mt-2" message={errors.name} />
+        </div>
 
-        <FormControl isRequired>
-          <FormLabel htmlFor="email">Email</FormLabel>
+        <div>
+          <InputLabel htmlFor="email" value="Email" />
 
-          <Input
+          <TextInput
             id="email"
             type="email"
+            className="mt-1 block w-full"
             value={data.email}
             onChange={e => setData('email', e.target.value)}
+            required
             autoComplete="username"
           />
 
-          <FormErrorMessage mt={2}>{errors.email}</FormErrorMessage>
-        </FormControl>
+          <InputError className="mt-2" message={errors.email} />
+        </div>
 
         {mustVerifyEmail && user.email_verified_at === null && (
-          <Box>
-            <Text
-              as="p"
-              mt={2}
-              fontSize={'sm'}
-              color={useColorModeValue('gray.800', 'gray.200')}
-            >
+          <div>
+            <p className="text-sm mt-2 text-gray-800">
               Your email address is unverified.
               <Link
                 href={route('verification.send')}
                 method="post"
                 as="button"
-                className="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 Click here to re-send the verification email.
               </Link>
-            </Text>
+            </p>
 
             {status === 'verification-link-sent' && (
-              <Box
-                mt={2}
-                fontSize={'sm'}
-                fontWeight="md"
-                color={useColorModeValue('green.600', 'green.400')}
-              >
+              <div className="mt-2 font-medium text-sm text-green-600">
                 A new verification link has been sent to your email address.
-              </Box>
+              </div>
             )}
-          </Box>
+          </div>
         )}
 
-        <Flex justifyCenter gap={4}>
-          <PrimaryButton minW={64} type="submit" isLoading={processing}>
-            Save
-          </PrimaryButton>
-        </Flex>
-      </VStack>
-    </Box>
+        <div className="flex items-center gap-4">
+          <PrimaryButton disabled={processing}>Save</PrimaryButton>
+        </div>
+      </form>
+    </section>
   );
 }

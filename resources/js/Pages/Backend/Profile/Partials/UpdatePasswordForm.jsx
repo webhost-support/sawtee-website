@@ -1,29 +1,24 @@
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import {
-  Box,
-  Flex,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Heading,
-  Input,
-  Text,
-  VStack,
-  useColorModeValue,
-  useToast,
-} from '@chakra-ui/react';
+import InputError from '@/components/Backend/InputError';
+import InputLabel from '@/components/Backend/InputLabel';
+import PrimaryButton from '@/components/Backend/PrimaryButton';
+import TextInput from '@/components/Backend/TextInput';
+import { useToast } from '@/components/ui/use-toast';
+import { Transition } from '@headlessui/react';
 import { useForm } from '@inertiajs/react';
+
 import { useRef } from 'react';
 
 export default function UpdatePasswordForm({ className = '' }) {
+  const passwordInput = useRef();
+  const currentPasswordInput = useRef();
+  const { toast } = useToast();
+
   const { data, setData, errors, put, reset, processing, recentlySuccessful } =
     useForm({
       current_password: '',
       password: '',
       password_confirmation: '',
     });
-
-  const toast = useToast();
 
   const updatePassword = e => {
     e.preventDefault();
@@ -32,15 +27,17 @@ export default function UpdatePasswordForm({ className = '' }) {
       preserveScroll: true,
       onSuccess: () => {
         toast({
-          title: 'Success',
-          description: 'Paswword information updated.',
-          status: 'success',
-          duration: 9000,
-          isClosable: true,
+          title: 'Password updated.',
+          description: 'Your password has been updated.',
         });
         reset();
       },
       onError: errors => {
+        toast({
+          title: 'Uh oh, Something went wrong',
+          description: 'Your password could not be updated. Please try again.',
+          variant: 'destructive',
+        });
         if (errors.password) {
           reset('password', 'password_confirmation');
           passwordInput.current.focus();
@@ -55,99 +52,70 @@ export default function UpdatePasswordForm({ className = '' }) {
   };
 
   return (
-    <Box as="section" className={className}>
+    <section className={className}>
       <header>
-        <Heading
-          as="h2"
-          fontSize={'lg'}
-          fontWeight={'medium'}
-          color={useColorModeValue('gray.900', 'gray.100')}
-        >
-          Update Password
-        </Heading>
+        <h2 className="text-lg font-medium text-gray-900">Update Password</h2>
 
-        <Text
-          mt={1}
-          fontSize={'sm'}
-          color={useColorModeValue('gray.600', 'gray.400')}
-        >
+        <p className="mt-1 text-sm text-gray-600">
           Ensure your account is using a long, random password to stay secure.
-        </Text>
+        </p>
       </header>
 
-      <VStack
-        as="form"
-        gap={4}
-        onSubmit={updatePassword}
-        mt={6}
-        py={6}
-        alignItems={'start'}
-      >
-        <FormControl isRequired>
-          <FormLabel htmlFor="current_password">Current Password</FormLabel>
+      <form onSubmit={updatePassword} className="mt-6 space-y-6">
+        <div>
+          <InputLabel htmlFor="current_password" value="Current Password" />
 
-          <Input
+          <TextInput
             id="current_password"
+            ref={currentPasswordInput}
             value={data.current_password}
             onChange={e => setData('current_password', e.target.value)}
             type="password"
-            mt={1}
-            display={'block'}
-            w="full"
+            className="mt-1 block w-full"
             autoComplete="current-password"
           />
 
-          <FormErrorMessage className="mt-2">
-            {errors.current_password}
-          </FormErrorMessage>
-        </FormControl>
+          <InputError message={errors.current_password} className="mt-2" />
+        </div>
 
-        <FormControl isRequired>
-          <FormLabel htmlFor="password">New Password</FormLabel>
+        <div>
+          <InputLabel htmlFor="password" value="New Password" />
 
-          <Input
+          <TextInput
             id="password"
+            ref={passwordInput}
             value={data.password}
             onChange={e => setData('password', e.target.value)}
             type="password"
-            mt={1}
-            display={'block'}
-            w="full"
+            className="mt-1 block w-full"
             autoComplete="new-password"
           />
 
-          <FormErrorMessage className="mt-2">
-            {errors.password}
-          </FormErrorMessage>
-        </FormControl>
+          <InputError message={errors.password} className="mt-2" />
+        </div>
 
-        <FormControl isRequired>
-          <FormLabel htmlFor="password_confirmation">
-            Confirm New Password
-          </FormLabel>
+        <div>
+          <InputLabel
+            htmlFor="password_confirmation"
+            value="Confirm Password"
+          />
 
-          <Input
+          <TextInput
             id="password_confirmation"
             value={data.password_confirmation}
             onChange={e => setData('password_confirmation', e.target.value)}
             type="password"
-            mt={1}
-            display={'block'}
-            w="full"
+            className="mt-1 block w-full"
             autoComplete="new-password"
           />
 
-          <FormErrorMessage className="mt-2">
-            {errors.password_confirmation}
-          </FormErrorMessage>
-        </FormControl>
+          <InputError message={errors.password_confirmation} className="mt-2" />
+        </div>
 
-        <Flex justifyCenter gap={4} className="flex items-center gap-4">
-          <PrimaryButton type="submit" minW={64} isLoading={processing}>
-            Save
-          </PrimaryButton>
-        </Flex>
-      </VStack>
-    </Box>
+        <div className="flex items-center gap-4">
+          <PrimaryButton disabled={processing}>Save</PrimaryButton>
+        </div>
+      </form>
+    </section>
   );
 }

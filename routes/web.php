@@ -33,7 +33,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/admin', AuthenticatedSessionController::class . '@create');
-Route::get('/admin/login', AuthenticatedSessionController::class . '@create');
+Route::get('/admin/login', AuthenticatedSessionController::class . '@create')->name('admin.login');
+Route::get('/admin/logout', AuthenticatedSessionController::class . '@destroy')->name('admin.logout');
 Route::middleware(['auth', 'verified'])->prefix('admin')->as('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

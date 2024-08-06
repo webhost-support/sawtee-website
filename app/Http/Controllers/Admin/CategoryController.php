@@ -17,7 +17,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::with('parent')->latest()->paginate(10);
+        $categories = Category::whereIn('type', ['post', 'publication'])->with(['parent', 'media'])->latest()->get();
         return Inertia::render('Backend/Category/Index', [
             'categories' => $categories
         ]);
@@ -26,18 +26,11 @@ class CategoryController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        return Inertia::render('Backend/Category/Create', ['categories' => Category::all()]);
-    }
+    // public function create()
+    // {
+    //     return Inertia::render('Backend/Category/Create', ['categories' => Category::all()]);
+    // }
 
-    public function hasChildren($category)
-    {
-        if ($category->children->count()) {
-            return true;
-        }
-        return false;
-    }
 
 
     /**
@@ -71,14 +64,14 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category)
-    {
-        $categories = Category::all();
-        return Inertia::render('Backend/Category/Edit', [
-            'category' => $category->load('media'),
-            'categories' => $categories
-        ]);
-    }
+    // public function edit(Category $category)
+    // {
+    //     $categories = Category::all();
+    //     return Inertia::render('Backend/Category/Edit', [
+    //         'category' => $category->load('media'),
+    //         'categories' => $categories
+    //     ]);
+    // }
 
     /**
      * Update the specified resource in storage.

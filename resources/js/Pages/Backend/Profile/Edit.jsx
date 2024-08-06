@@ -1,49 +1,40 @@
-import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
-import { Box, useColorModeValue } from '@chakra-ui/react';
+import AuthenticatedLayout from "@/components/Layouts/AuthenticatedLayout";
 import { Head } from '@inertiajs/react';
-import DeleteUserForm from './Partials/DeleteUserForm';
-import UpdatePasswordForm from './Partials/UpdatePasswordForm';
+import DeleteUserForm from "./Partials/DeleteUserForm";
+import UpdatePasswordForm from "./Partials/UpdatePasswordForm";
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
 
 export default function Edit({ auth, mustVerifyEmail, status }) {
   return (
-    <AuthenticatedLayout user={auth.user}>
+    <AuthenticatedLayout
+      user={auth.user}
+      header={
+        <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+          Profile
+        </h2>
+      }
+    >
       <Head title="Profile" />
 
-      <Box py={12}>
-        <Box maxW="7xl" mx={'auto'} px={{ sm: 6, lg: 8 }} py={6}>
-          <Box
-            p={{ base: 4, sm: 8 }}
-            bg={useColorModeValue('white', 'gray.800')}
-            shadow={'md'}
-            rounded={'lg'}
-          >
+      <div className="py-12">
+        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+          <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
             <UpdateProfileInformationForm
               mustVerifyEmail={mustVerifyEmail}
               status={status}
               className="max-w-xl"
             />
-          </Box>
+          </div>
 
-          <Box
-            p={{ base: 4, sm: 8 }}
-            bg={useColorModeValue('white', 'gray.800')}
-            shadow={'md'}
-            rounded={'lg'}
-          >
+          <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
             <UpdatePasswordForm className="max-w-xl" />
-          </Box>
+          </div>
 
-          <Box
-            p={{ base: 4, sm: 8 }}
-            bg={useColorModeValue('white', 'gray.800')}
-            shadow={'md'}
-            rounded={'lg'}
-          >
+          <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
             <DeleteUserForm className="max-w-xl" />
-          </Box>
-        </Box>
-      </Box>
+          </div>
+        </div>
+      </div>
     </AuthenticatedLayout>
   );
 }

@@ -1,28 +1,35 @@
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
+import InputError from '@/components/Backend/InputError';
+import PrimaryButton from '@/components/Backend/PrimaryButton';
+import { Button } from '@/components/ui/button';
 import {
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
   Select,
-  useToast,
-} from '@chakra-ui/react';
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { useToast } from '@/components/ui/use-toast';
 import { useForm } from '@inertiajs/react';
 
-export default function CreateSliderForm({ isOpen, onClose, pages }) {
+
+
+export default function CreateSliderForm({ open, setOpen, pages }) {
   const { data, setData, post, processing, errors, reset } = useForm({
     name: '',
     page_id: null,
   });
-  const toast = useToast();
+  const { toast } = useToast();
 
   const submit = e => {
     e.preventDefault();
@@ -31,14 +38,10 @@ export default function CreateSliderForm({ isOpen, onClose, pages }) {
       preserveScroll: true,
       onSuccess: () => {
         toast({
-          position: 'top-right',
           title: 'Slider Created.',
           description: 'Slider Created Successfully',
-          status: 'success',
-          duration: 6000,
-          isClosable: true,
         });
-        onClose();
+        setOpen(!open);
       },
       onError: errors => {
         if (errors.title) {
@@ -49,14 +52,15 @@ export default function CreateSliderForm({ isOpen, onClose, pages }) {
   };
 
   return (
-    <Modal size={'xl'} isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay />
-      <ModalContent as="form" onSubmit={submit}>
-        <ModalHeader>Add new slider</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <FormControl mt="4" isInvalid={errors.name}>
-            <FormLabel htmlFor="name">Name</FormLabel>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Create Slider</DialogTitle>
+          <DialogDescription>Add new slider.</DialogDescription>
+        </DialogHeader>
+        <form onSubmit={submit} className="space-y-4">
+          <div>
+            <Label htmlFor="name">Name</Label>
 
             <Input
               id="name"
@@ -66,33 +70,42 @@ export default function CreateSliderForm({ isOpen, onClose, pages }) {
             />
 
             {errors.name && (
-              <FormErrorMessage mt={2}>{errors.name}</FormErrorMessage>
+              <InputError className="mt-2">{errors.name}</InputError>
             )}
-          </FormControl>
+          </div>
 
-          <FormControl isInvalid={errors.page_id}>
-            <FormLabel htmlFor="pages">Pages</FormLabel>
+          <div className="w-[280px]">
+            <Label htmlFor="pages">Pages</Label>
             <Select id="pages" name="pages" placeholder="Select pages">
-              {pages.map(page => (
-                <option key={page.id} value={page.id}>
-                  {page.name}
-                </option>
-              ))}
+              <SelectTrigger>
+                <SelectValue placeholder="Select pages" />
+              </SelectTrigger>
+
+              <SelectContent className="w-[280px]">
+                <SelectGroup>
+                  <SelectLabel>Pages</SelectLabel>
+                  {pages.map(page => (
+                    <SelectItem key={page.id} value={page.id}>
+                      {page.name}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
             </Select>
             {errors.page_id && (
-              <FormErrorMessage mt={2}>{errors.page_id}</FormErrorMessage>
+              <InputError className="mt-2">{errors.page_id}</InputError>
             )}
-          </FormControl>
-        </ModalBody>
-        <ModalFooter>
-          <PrimaryButton type="submit" isLoading={processing} mr={3}>
-            Create
-          </PrimaryButton>
-          <Button variant="solid" colorScheme="red" onClick={onClose}>
-            Cancel
-          </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+          </div>
+          <div className="space-x-2">
+            <PrimaryButton type="submit" isLoading={processing}>
+              Create
+            </PrimaryButton>
+            <Button variant="outline" onClick={() => setOpen(!open)}>
+              Cancel
+            </Button>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 }

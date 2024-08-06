@@ -1,80 +1,60 @@
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import GuestLayout from '@/Pages/Backend/Layouts/GuestLayout';
-import { Head, useForm } from '@inertiajs/react';
+import InputError from "@/components/Backend/InputError";
+import InputLabel from "@/components/Backend/InputLabel";
+import PrimaryButton from "@/components/Backend/PrimaryButton";
+import TextInput from "@/components/Backend/TextInput";
+import GuestLayout from '@/components/Layouts/GuestLayout';
+import { Head, useForm } from "@inertiajs/react";
 import { useEffect } from 'react';
 
 export default function ConfirmPassword() {
   const { data, setData, post, processing, errors, reset } = useForm({
-    password: '',
+    password: "",
   });
 
   useEffect(() => {
     return () => {
       reset('password');
     };
-  }, []);
+  }, [reset]);
 
-  const submit = e => {
+  const submit = (e) => {
     e.preventDefault();
 
-    post(route('password.confirm'));
+    post(route("password.confirm"));
   };
 
   return (
     <GuestLayout>
       <Head title="Confirm Password" />
-      <Container maxW="7xl" p={{ base: 5, md: 10 }}>
-        <Center>
-          <Stack spacing={4} boxSize={{ base: 'sm', sm: 'md', md: 'lg' }}>
-            <Stack align="center">
-              <Text
-                fontSize={'2xl'}
-                textAlign={'center'}
-                md={4}
-                color={useColorModeValue('gray.600', 'gray.400')}
-              >
-                This is a secure area of the application. Please confirm your
-                password before continuing.
-              </Text>
-            </Stack>
-            <VStack
-              boxSize={{ base: 'sm', sm: 'md', md: 'lg' }}
-              h="max-content !important"
-              bg={useColorModeValue('white', 'gray.700')}
-              rounded="lg"
-              boxShadow="lg"
-              p={{ base: 5, sm: 10 }}
-              spacing={8}
-              as={'form'}
-              onSubmit={submit}
-            >
-              <VStack spacing={4} w="100%">
-                <FormControl>
-                  <FormLabel htmlFor="password">Password</FormLabel>
 
-                  <Input
-                    id="password"
-                    type="password"
-                    name="password"
-                    value={data.password}
-                    mt={1}
-                    w={'full'}
-                    onChange={e => setData('password', e.target.value)}
-                  />
+      <div className="mb-4 text-sm text-gray-600">
+        This is a secure area of the application. Please confirm your password
+        before continuing.
+      </div>
 
-                  {errors.password && (
-                    <FormErrorMessage>{errors.password}</FormErrorMessage>
-                  )}
-                </FormControl>
+      <form onSubmit={submit}>
+        <div className="mt-4">
+          <InputLabel htmlFor="password" value="Password" />
 
-                <PrimaryButton ml={4} disabled={processing}>
-                  Confirm
-                </PrimaryButton>
-              </VStack>
-            </VStack>
-          </Stack>
-        </Center>
-      </Container>
+          <TextInput
+            id="password"
+            type="password"
+            name="password"
+            value={data.password}
+            className="mt-1 block w-full"
+            isFocused={true}
+            onChange={(e) => setData("password", e.target.value)}
+          />
+
+          <InputError message={errors.password} className="mt-2" />
+        </div>
+
+        <div className="flex items-center justify-end mt-4">
+          <PrimaryButton className="ms-4" disabled={processing}>
+            Confirm
+          </PrimaryButton>
+        </div>
+      </form>
     </GuestLayout>
   );
 }

@@ -1,27 +1,20 @@
-import { DataTable } from '@/Components/Backend/DataTable';
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import {
-  TableDeleteAction,
-  TableEditAction,
-} from '@/Components/Backend/TableActions';
-import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
-import {
-  Alert,
-  AlertIcon,
-  HStack,
-  useDisclosure,
-  useToast,
-} from '@chakra-ui/react';
+import DataTableActions from '@/components/Backend/DataTableActions';
+import PrimaryButton from '@/components/Backend/PrimaryButton';
+
+import { DataTableColumnHeader } from '@/components/Backend/DatatableColumnHelper';
+import { DataTable } from '@/components/Backend/FrontDataTable';
+import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
 import { Head, useForm } from '@inertiajs/react';
-import { createColumnHelper } from '@tanstack/react-table';
 import React from 'react';
 import CreateSliderForm from './Partials/CreateSliderForm';
 
 export default function Index({ auth, sliders, pages }) {
-  const toast = useToast();
-  const columnHelper = createColumnHelper();
+  const { toast } = useToast();
   const { processing, delete: destroy, get } = useForm();
-  const createSliderModal = useDisclosure();
+  const [sliderModal, setSliderModal] = React.useState(false);
 
   const handleEdit = (e, id) => {
     e.preventDefault();
@@ -45,57 +38,65 @@ export default function Index({ auth, sliders, pages }) {
     });
   };
 
-  const defaultColumns = React.useMemo(
-    () => [
-      columnHelper.accessor('name', {
-        cell: info => info.getValue(),
-        header: 'Name',
-      }),
-      columnHelper.accessor('id', {
-        cell: info => {
-          return (
-            <HStack spacing={4}>
-              <TableEditAction
-                onClick={e => handleEdit(e, info.getValue())}
-                isDisabled={processing}
-              />
-              <TableDeleteAction
-                onClick={e => handleDelete(e, info.getValue())}
-                isDisabled={processing}
-              />
-            </HStack>
-          );
-        },
-        header: 'Actions',
-      }),
-    ],
-    []
-  );
+  const defaultColumns = [
+    {
+      accessorKey: 'id',
+      header: ({ column }) => {
+        return <DataTableColumnHeader column={column} title="ID" />;
+      },
+    },
+    {
+      accessorKey: 'name',
+      header: ({ column }) => {
+        return <DataTableColumnHeader column={column} title="Title" />;
+      },
+    },
+    {
+      accessorKey: 'id',
+      header: 'Actions',
+      cell: ({ row }) => {
+        return (
+          <DataTableActions
+            id={row.original.id}
+            handleDelete={handleDelete}
+            handleEdit={handleEdit}
+          />
+        );
+      },
+      enableSorting: false,
+      enableHiding: false,
+    },
+  ];
 
   return (
     <AuthenticatedLayout user={auth.user}>
       <Head title="Manage Sliders" />
-      {sliders.data.length <= 0 && (
-        <Alert
-          mb="4"
-          status="warning"
-          p="4"
-          rounded="md"
-          variant={'left-accent'}
-        >
+      {sliders.length <= 0 && (
+        <Alert variant="destructive">
           <AlertIcon />
-          There are no sliders to add slides to, please create a slider first by
-          clicking the add new slider button below.
+          <AlertTitle>
+            <strong>Warning</strong>
+          </AlertTitle>
+          <AlertDescription>
+            There are no sliders to add slides to, please create a slider first
+            by clicking the add new slider button below.
+          </AlertDescription>
         </Alert>
       )}
-      <PrimaryButton mb={4} onClick={() => createSliderModal.onOpen()}>
+      <Button onClick={() => setSliderModal(!sliderModal)}>
         Create Slider
-      </PrimaryButton>
-      {sliders && <DataTable defaultColumns={defaultColumns} data={sliders} />}
-      {createSliderModal.isOpen && (
+      </Button>
+      {sliders && (
+        <DataTable
+          defaultColumns={defaultColumns}
+          data={sliders}
+          customFilterColumn={'name'}
+        />
+      )}
+      {sliderModal && (
         <CreateSliderForm
-          isOpen={createSliderModal.isOpen}
-          onClose={createSliderModal.onClose}
+          open={sliderModal}
+          setOpen={setSliderModal}
           pages={pages}
         />
       )}

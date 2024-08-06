@@ -5,7 +5,7 @@
 }
 
 .video-carousel {
-    max-height: 400px !important;
+    max-height: 100% !important;
     width: 100% !important;
     max-width: 100% !important;
     margin-left: auto;
@@ -20,6 +20,6 @@
    opacity: 0.4;
 }
 
-.thumbs-swiper .swiper-slide-thumb-active {
+.thumbs-swiper .swiper-slide-thumb-active, .thumbs-swiper .thumb-slide:hover {
    opacity: 1;
 }

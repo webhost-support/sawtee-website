@@ -1,6 +1,6 @@
 import Page404 from '@/Components/Frontend/page404';
 import { Head } from '@inertiajs/react';
-import MainLayout from '../Frontend/Layout/MainLayout';
+import MainLayout from '../../components/Layouts/MainLayout';
 
 const ErrorPage = ({ status, message }) => {
   return (

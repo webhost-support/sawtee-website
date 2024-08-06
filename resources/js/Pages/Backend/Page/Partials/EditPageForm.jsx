@@ -1,27 +1,14 @@
-import ContentEditor from '@/Components/Backend/ContentEditor';
-import FileUpload, { PreviewImage } from '@/Components/Backend/FileUpload';
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import { FileIcon } from '@/Components/Frontend/icons';
-import { CloseIcon } from '@chakra-ui/icons';
-import {
-  AspectRatio,
-  Box,
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  IconButton,
-  Input,
-  InputGroup,
-  InputLeftAddon,
-  InputRightAddon,
-  SimpleGrid,
-  Textarea,
-  VStack,
-  useColorModeValue,
-  useToast,
-} from '@chakra-ui/react';
+import ContentEditor from '@/components/Backend/ContentEditor';
+import InputError from '@/components/Backend/InputError';
+import PrimaryButton from '@/components/Backend/PrimaryButton';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/components/ui/use-toast';
+import { slugify } from '@/lib/helpers';
 import { useForm } from '@inertiajs/react';
+import { XCircleIcon } from 'lucide-react';
 import React from 'react';
 
 export default function EditPageForm({ page }) {
@@ -38,7 +25,7 @@ export default function EditPageForm({ page }) {
   const toast = useToast();
   const [slug, setSlug] = React.useState(page.slug);
   const [image, setImage] = React.useState(
-    page.media[0] ? page.media[0].preview_url : null
+    page.media[0] ? page.media[0].original_url : null
   );
   const [filename, setFilename] = React.useState(null);
   const submit = e => {
@@ -69,194 +56,158 @@ export default function EditPageForm({ page }) {
     );
   };
 
-  // Set Slug if title value changes
-  React.useEffect(() => {
-    if (data.name) {
-      setSlug(data.name.toLowerCase().replace(/\s+/g, '-'));
-      setData('slug', data.name.toLowerCase().replace(/\s+/g, '-'));
-    }
-  }, [data.name]);
-
   return (
     <form onSubmit={submit}>
-      <SimpleGrid columns={2} spacing={4}>
-        <VStack gap="6" alignItems="start">
-          <FormControl mt="4" isInvalid={errors.name} isRequired>
-            <FormLabel htmlFor="name">Name</FormLabel>
-
+      <div className="grid grid-cols-2 gap-4">
+        <div className="col-span-1 flex flex-col gap-4">
+          <div>
+            <Label htmlFor="name">Name</Label>
             <Input
               type="text"
               id="name"
               name="name"
+              placeholder="enter page name"
               value={data.name}
-              onChange={e => setData('name', e.target.value)}
+              onChange={e => {
+                setData('name', e.target.value);
+                setSlug(slugify(e.target.value));
+              }}
             />
 
-            <FormErrorMessage message={errors.name} className="mt-2" />
-          </FormControl>
-
-          <FormControl mt="4" isInvalid={errors.name}>
-            <FormLabel htmlFor="slug">Slug</FormLabel>
-
+            {errors.name && (
+              <InputError className="mt-2">{errors.name}</InputError>
+            )}
+          </div>
+          <div className="col-span-1">
+            <Label htmlFor="slug">Slug</Label>
             <Input
               type="text"
               id="slug"
-              isReadOnly
               name="slug"
-              color={useColorModeValue('blue.600', 'blue.300')}
               value={slug}
               display="flex"
               mt={1}
             />
-          </FormControl>
-        </VStack>
-        <VStack gap="6" alignItems="start">
-          <FormControl mt="4" isInvalid={errors.meta_title}>
-            <FormLabel htmlFor="meta_title">Meta Title</FormLabel>
+            {errors.slug && (
+              <InputError className="mt-2">{errors.slug}</InputError>
+            )}
+          </div>
 
-            <Input
-              id="meta_title"
-              name="meta_title"
-              value={data.meta_title}
-              onChange={e => setData('meta_title', e.target.value)}
-            />
-
-            <FormErrorMessage message={errors.meta_title} className="mt-2" />
-          </FormControl>
-
-          <FormControl mt="4" isInvalid={errors.meta_description}>
-            <FormLabel htmlFor="meta_description">Meta Description</FormLabel>
-
-            <Textarea
-              id="meta_description"
-              name="meta_description"
-              value={data.meta_description}
-              rows={3}
-              resize="vertical"
-              onChange={e => setData('meta_description', e.target.value)}
-            />
-
-            <FormErrorMessage
-              message={errors.meta_description}
-              className="mt-2"
-            />
-          </FormControl>
-        </VStack>
-      </SimpleGrid>
-      <FormControl mt={4}>
-        <FormLabel htmlFor="file">File Upload</FormLabel>
-
-        <InputGroup cursor={'pointer'}>
-          <InputLeftAddon children={<FileIcon />} />
-          <Box position="relative">
-            <Input
-              size="md"
-              isReadOnly
-              placeholder={filename ? filename : 'click to select file'}
-            />
+          <div>
+            <Label htmlFor="file">File Upload</Label>
             <Input
               type="file"
-              height="100%"
-              width="100%"
-              position="absolute"
-              cursor={'pointer'}
-              top="0"
-              left="0"
-              opacity="0"
-              aria-hidden="true"
               accept=".json"
               id="file"
               name="file"
-              size="md"
               onChange={e => {
                 setFilename(e.target.files[0].name);
                 setData('file', e.target.files[0]);
               }}
             />
-          </Box>
-          {filename && (
-            <InputRightAddon
-              children={
-                <IconButton
-                  icon={<CloseIcon />}
-                  color={'red.500'}
-                  onClick={() => {
-                    setFilename(null);
-                    setData('file', null);
-                  }}
-                />
-              }
+          </div>
+        </div>
+
+        <div className="col-span-1 flex flex-col gap-4 self-center">
+          <div className="col-span-1">
+            <Label htmlFor="meta_title">Meta Title</Label>
+
+            <Input
+              id="meta_title"
+              name="meta_title"
+              placeholder="enter meta title"
+              value={data.meta_title}
+              onChange={e => setData('meta_title', e.target.value)}
             />
-          )}
-        </InputGroup>
-      </FormControl>
-      <FormControl mt={4} isInvalid={errors.content}>
-        <FormLabel htmlFor="content">Content</FormLabel>
 
-        <ContentEditor
-          name="content"
-          id="content"
-          initialValue={data.content}
-          onChange={(evt, editor) => setData('content', editor.getContent())}
-        />
+            {errors.meta_title && (
+              <InputError className="mt-2">{errors.meta_title}</InputError>
+            )}
+          </div>
+          <div>
+            <Label htmlFor="meta_description">Meta Description</Label>
 
-        {errors.content && (
-          <FormErrorMessage mt={2}>{errors.content}</FormErrorMessage>
-        )}
-      </FormControl>
-      <FormControl mt={4} isInvalid={errors.image}>
-        <FormLabel htmlFor="image">Featured Image</FormLabel>
+            <Textarea
+              id="meta_description"
+              name="meta_description"
+              placeholder="enter meta description"
+              rows={5}
+              value={data.meta_description}
+              onChange={e => setData('meta_description', e.target.value)}
+            />
 
-        {image && (
-          <>
-            <AspectRatio w="96" ratio={16 / 9}>
-              <PreviewImage src={image} />
-            </AspectRatio>
-            <Button
-              mt={4}
-              size={'sm'}
-              colorScheme="red"
-              onClick={() => {
-                setImage(null);
-              }}
-            >
-              Remove/Change Image
-            </Button>
-          </>
-        )}
+            {errors.meta_description && (
+              <InputError className="mt-2">
+                {errors.meta_description}
+              </InputError>
+            )}
+          </div>
+        </div>
 
-        {!image && (
-          <FileUpload accept="image/.png,.jpg,.jpeg,.webp">
+        <div className="col-span-1">
+          <div>
+            <Label htmlFor="image">Hero Image</Label>
             <Input
               type="file"
-              height="100%"
-              width="100%"
-              position="absolute"
-              top="0"
-              left="0"
-              opacity="0"
-              aria-hidden="true"
               accept="image/.png,.jpg,.jpeg,.webp"
               id="image"
               name="image"
-              size="md"
               onChange={e => {
                 setData('image', e.target.files[0]);
                 setImage(URL.createObjectURL(e.target.files[0]));
               }}
             />
-          </FileUpload>
-        )}
-        {errors.image && (
-          <FormErrorMessage mt={2}>{errors.image}</FormErrorMessage>
-        )}
-      </FormControl>
 
-      <Box display="flex" gap="4" mt="4">
+            {errors.image && (
+              <InputError className="mt-2">{errors.image}</InputError>
+            )}
+          </div>
+        </div>
+        <div className="col-span-1">
+          <div className="relative mx-auto">
+            {image && (
+              <div className="w-[minmax(auto, 450px)] relative">
+                <AspectRatio ratio={16 / 9}>
+                  <div className="absolute inset-0 w-full h-full bg-slate-800/40 transition-all 200ms ease-linear hover:bg-transparent rounded-md" />
+                  <img
+                    src={image}
+                    alt="post hero"
+                    className="rounded-md object-cover w-full h-full"
+                  />
+                </AspectRatio>
+                <XCircleIcon
+                  className="absolute top-5 right-5 cursor-pointer text-white"
+                  onClick={() => {
+                    setImage(null);
+                    setData('image', null);
+                  }}
+                  aria-labelledby="Remove image"
+                  aria-hidden="true"
+                />
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="col-span-2">
+          <Label htmlFor="content">Content</Label>
+          <ContentEditor
+            name="content"
+            id="content"
+            initialValue={data.content}
+            onChange={(evt, editor) => setData('content', editor.getContent())}
+          />
+
+          {errors.content && (
+            <InputErrorMessage className="mt-2">
+              {errors.content}
+            </InputErrorMessage>
+          )}
+        </div>
+
         <PrimaryButton type="submit" isLoading={processing}>
           Save
         </PrimaryButton>
-      </Box>
+      </div>
     </form>
   );
 }

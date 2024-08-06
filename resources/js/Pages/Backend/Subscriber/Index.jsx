@@ -1,43 +1,52 @@
-import { DataTable } from '@/Components/Backend/DataTable';
-import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
-import { Tag } from '@chakra-ui/react';
+import { DataTableColumnHeader } from '@/components/Backend/DatatableColumnHelper';
+import { DataTable } from '@/components/Backend/FrontDataTable';
+import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
+import TWTags from '@/components/shared/TWTags';
 import { Head } from '@inertiajs/react';
-import { createColumnHelper } from '@tanstack/react-table';
 
 import React from 'react';
 
 export default function Index({ auth, subscribers }) {
-  const columnHelper = createColumnHelper();
-
-  const defaultColumns = React.useMemo(
-    () => [
-      columnHelper.accessor('id', {
-        cell: info => info.getValue(),
-        header: 'ID',
-      }),
-      columnHelper.accessor('email', {
-        cell: info => info.getValue(),
-        header: 'Email',
-      }),
-      columnHelper.accessor('verified_at', {
-        cell: info =>
-          info.getValue() !== null ? (
-            <Tag colorScheme="green">Verified</Tag>
-          ) : (
-            <Tag colorScheme="red">Not Verified</Tag>
-          ),
-        header: 'Verified',
-      }),
-    ],
-    []
-  );
+  const defaultColumns = [
+    {
+      accessorKey: 'id',
+      header: ({ column }) => {
+        return <DataTableColumnHeader column={column} title="ID" />;
+      },
+    },
+    {
+      accessorKey: 'email',
+      header: ({ column }) => {
+        return <DataTableColumnHeader column={column} title="Email" />;
+      },
+    },
+    {
+      accessorKey: 'verified_at',
+      header: ({ column }) => {
+        return <DataTableColumnHeader column={column} title="Verified" />;
+      },
+      cell: ({ row }) => {
+        return (
+          <TWTags colorScheme={row.original.verified_at ? 'green' : 'red'}>
+            {row.original.verified_at ? 'Verified' : 'Not Verified'}
+          </TWTags>
+        );
+      },
+    },
+  ];
 
   return (
     <AuthenticatedLayout user={auth.user}>
       <Head title="Subscribers" />
-
-      {subscribers.data && (
-        <DataTable defaultColumns={defaultColumns} data={subscribers} />
+      {subscribers.length === 0 && (
+        <p className="text-center text-gray-500">No Subscribers Found</p>
+      )}
+      {subscribers.length > 0 && (
+        <DataTable
+          defaultColumns={defaultColumns}
+          data={subscribers}
+          customFilterColumn={'email'}
+        />
       )}
     </AuthenticatedLayout>
   );

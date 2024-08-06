@@ -13,14 +13,15 @@ class TeamController extends Controller
      */
     public function index()
     {
-        $teams = Team::with('media')->paginate(10);
-        $images = array();
-        foreach ($teams as $team) {
-            $images[$team->id] = $team->getFirstMediaUrl('avatar', 'preview');
-        }
+        $teams = Team::with('media')->latest()->get();
+        // $images = array();
+        // foreach ($teams as $team) {
+        //     $images[$team->id] = $team->getFirstMediaUrl('avatar', 'preview');
+        // }
+        // dd($teams);
         return Inertia::render('Backend/Team/Index', [
             'teams' => $teams,
-            'images' => $images,
+            // 'images' => $images,
         ]);
     }
 

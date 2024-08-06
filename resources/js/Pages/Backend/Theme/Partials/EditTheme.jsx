@@ -1,29 +1,27 @@
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
+import PrimaryButton from '@/components/Backend/PrimaryButton';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useToast } from '@/components/ui/use-toast';
+
+import InputError from '@/components/Backend/InputError';
+import { Button } from '@/components/ui/button';
 import {
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Textarea,
-  useToast,
-} from '@chakra-ui/react';
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Textarea } from '@/components/ui/textarea';
 import { useForm } from '@inertiajs/react';
 
-export default function EditTheme({ themeId, themes, isOpen, onClose }) {
-  const Theme = themes.filter(t => t.id === themeId)[0];
+export default function EditTheme({ theme, open, setOpen }) {
   const { data, setData, post, processing, errors, reset } = useForm({
-    title: Theme.title,
-    description: Theme.description,
+    title: theme.title,
+    description: theme.description,
   });
-  const toast = useToast();
+  const { toast } = useToast();
 
   const submit = e => {
     e.preventDefault();
@@ -31,22 +29,17 @@ export default function EditTheme({ themeId, themes, isOpen, onClose }) {
     post(
       route('admin.themes.update', {
         _method: 'patch',
-        theme: Theme,
+        theme: theme,
       }),
       {
         preserveScroll: true,
         onSuccess: () => {
           toast({
-            position: 'top-right',
             title: 'Theme edited.',
             description: 'Theme edited Successfully',
-            status: 'success',
-            duration: 6000,
-            isClosable: true,
           });
-
           reset('title', 'description');
-          onClose();
+          setOpen(!open);
         },
         onError: errors => {
           if (errors.title) {
@@ -58,59 +51,53 @@ export default function EditTheme({ themeId, themes, isOpen, onClose }) {
   };
 
   return (
-    <Modal size={'xl'} isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay />
-      <ModalContent as="form" onSubmit={submit}>
-        <ModalHeader>Edit theme</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <FormControl mt="4" isInvalid={errors.title}>
-            <FormLabel htmlFor="title">Title</FormLabel>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="sm:max-w-2xl overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>Edit theme</DialogTitle>
+          <DialogDescription>{`Edit theme: ${theme.title}.`}</DialogDescription>
+        </DialogHeader>
 
-            <Input
-              id="title"
-              name="title"
-              placeholder="enter theme title"
-              value={data.title}
-              onChange={e => setData('title', e.target.value)}
-              required
-            />
+        <form onSubmit={submit}>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <div className="col-span-4">
+                <Label htmlFor="title">Title</Label>
 
-            {errors.title && (
-              <FormErrorMessage className="mt-2">
-                {errors.title}
-              </FormErrorMessage>
-            )}
-          </FormControl>
+                <Input
+                  name="title"
+                  placeholder="enter theme name"
+                  value={data.title}
+                  onChange={e => setData('title', e.target.value)}
+                  required
+                />
 
-          <FormControl mt="4" isInvalid={errors.description}>
-            <FormLabel htmlFor="title">Description</FormLabel>
+                <InputError className="mt-2">{errors.title}</InputError>
+              </div>
 
-            <Textarea
-              id="description"
-              name="description"
-              rows={10}
-              value={data.description}
-              placeholder="enter theme description"
-              onChange={e => setData('description', e.target.value)}
-            />
+              <div className="col-span-4">
+                <Label htmlFor="description">Description</Label>
 
-            {errors.description && (
-              <FormErrorMessage className="mt-2">
-                {errors.description}
-              </FormErrorMessage>
-            )}
-          </FormControl>
-        </ModalBody>
-        <ModalFooter>
-          <PrimaryButton type="submit" isLoading={processing} mr={3}>
-            Save
-          </PrimaryButton>
-          <Button variant="solid" colorScheme="red" onClick={onClose}>
-            Cancel
-          </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+                <Textarea
+                  name="description"
+                  rows={6}
+                  value={data.description}
+                  placeholder="enter theme description"
+                  onChange={e => setData('description', e.target.value)}
+                />
+
+                <InputError className="mt-2">{errors.description}</InputError>
+              </div>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setOpen(!open)}>
+              Cancel
+            </Button>
+            <PrimaryButton type="submit">Save</PrimaryButton>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 }

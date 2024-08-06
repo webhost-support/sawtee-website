@@ -1,193 +1,266 @@
-import FileUpload, { PreviewImage } from '@/Components/Backend/FileUpload';
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
+import InputError from '@/components/Backend/InputError';
+import PrimaryButton from '@/components/Backend/PrimaryButton';
 import {
-  Box,
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input,
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
   Select,
-  SimpleGrid,
-  Textarea,
-  VStack,
-  useToast,
-} from '@chakra-ui/react';
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/components/ui/use-toast';
 import { useForm } from '@inertiajs/react';
-import React from 'react';
-
-export default function CreateCategoryForm({ categories }) {
+import React, { useEffect, useState } from 'react';
+export default function CreateCategoryForm({ open, setOpen, categories }) {
   const { data, setData, post, processing, errors, reset } = useForm({
     name: '',
     slug: '',
-    type: 'posts',
+    type: 'post',
     parent_id: '',
     image: '',
     meta_title: '',
     meta_description: '',
   });
-  const toast = useToast();
+  const { toast } = useToast();
   const [image, setImage] = React.useState(null);
+
+  const [filteredCategories, setFilteredCategories] = useState(categories);
+
+  useEffect(() => {
+    const array = categories.filter(cat => cat.type === data.type);
+    setFilteredCategories(array);
+  }, [data.type, categories]);
+
 
   const submit = e => {
     e.preventDefault();
 
     post(route('admin.categories.store'), {
       preserveScroll: true,
-      onSuccess: () =>
+      onSuccess: () => {
         toast({
-          position: 'top-right',
           title: 'Category Created.',
           description: 'Category Created Successfully',
-          status: 'success',
-          duration: 6000,
-          isClosable: true,
-        }),
+        });
+        reset(
+          'name',
+          'slug',
+          'type',
+          'parent_id',
+          'image',
+          'meta_title',
+          'meta_description'
+        );
+        setOpen(false);
+      },
       onError: errors => {
-        if (errors.name) {
-          reset('name');
+        for (const key in errors) {
+          if (Object.hasOwnProperty.call(errors, key)) {
+            const value = errors[key];
+            reset(key);
+            return toast({
+                title: "Uh oh, Something went wrong",
+                description: `${key.toUpperCase()} field error` + `: ${value}`,
+              });
+
+          }
         }
       },
     });
   };
 
   return (
-    <VStack as="form" onSubmit={submit} gap="6" alignItems={'start'}>
-      <FormControl mt="4" isInvalid={errors.name}>
-        <FormLabel htmlFor="name">Name</FormLabel>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="sm:max-w-2xl overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>Create</DialogTitle>
+          <DialogDescription>Create new categoy.</DialogDescription>
+        </DialogHeader>
+        <form onSubmit={submit}>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <div className="col-span-4">
+                <Label htmlFor="name" className="text-right">
+                  Name
+                </Label>
+                <Input
+                  id="name"
+                  name="name"
+                  className="col-span-3"
+                  placeholder="enter category name"
+                  onChange={e => setData('name', e.target.value)}
+                  required
+                />
 
-        <Input
-          id="name"
-          name="name"
-          placeholder="enter category name"
-          onChange={e => setData('name', e.target.value)}
-          required
-        />
+                {errors.name && (
+                  <InputError className="mt-2">{errors.name}</InputError>
+                )}
+              </div>
+              <div className="col-span-4">
+                <Accordion type="single" collapsible>
+                  <AccordionItem value="item-1">
+                    <AccordionTrigger>SEO Meta Tags</AccordionTrigger>
+                    <AccordionContent>
+                      <div className="flex flex-col justify-start gap-4">
+                        <div className="col-span-4">
+                          <Label htmlFor="meta_title">Meta Title</Label>
+                          <Input
+                            id="meta_title"
+                            name="meta_title"
+                            className="mt-1"
+                            placeholder="enter meta title"
+                            onChange={e =>
+                              setData('meta_title', e.target.value)
+                            }
+                          />
 
-        {errors.name && (
-          <FormErrorMessage mt="2">{errors.name}</FormErrorMessage>
-        )}
-      </FormControl>
-      <SimpleGrid columns={2} gap={10} w="full">
-        <FormControl>
-          <FormLabel htmlFor="type">Select Category Type</FormLabel>
+                          <InputError className="mt-2">
+                            {errors.meta_title}
+                          </InputError>
+                        </div>
 
-          <Select
-            name="type"
-            id="type"
-            placeholder="Select Type"
-            onChange={e => setData('type', e.target.value)}
-          >
-            {['post', 'publication', 'research', 'team'].map(item => (
-              <option key={item} value={item}>
-                {item}
-              </option>
-            ))}
-          </Select>
-        </FormControl>
+                        <div className="col-span-4">
+                          <Label htmlFor="meta_description">
+                            Meta Description
+                          </Label>
+                          <Textarea
+                            id="meta_description"
+                            name="meta_description"
+                            className="block mt-1"
+                            placeholder="enter meta_description"
+                            rows={3}
+                            onChange={e =>
+                              setData('meta_description', e.target.value)
+                            }
+                          />
+                          <InputError className="mt-2">
+                            {errors.meta_description}
+                          </InputError>
+                        </div>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
+            </div>
+            <div className="grid grid-cols-4 items-center gap-2">
+              <div className="col-span-2">
+                <Label htmlFor="image">Featured Image</Label>
 
-        <FormControl>
-          <FormLabel htmlFor="parent_id">Select Parent</FormLabel>
+                {image && (
+                  <div className="max-w-sm">
+                    <AspectRatio ratio={16 / 9}>
+                      <img
+                        src={image}
+                        alt="featured"
+                        className="rounded-md object-cover mt-1"
+                      />
+                    </AspectRatio>
+                  </div>
+                )}
 
-          <Select
-            name="parent_id"
-            id="parent_id"
-            placeholder="Select Parent"
-            onChange={e => {
-              setData('parent_id', e.target.value);
-            }}
-          >
-            {categories &&
-              categories.map(item => (
-                <option key={item.id} value={item.id}>
-                  {item.name}
-                </option>
-              ))}
-          </Select>
-        </FormControl>
-      </SimpleGrid>
+                <Input
+                  type="file"
+                  accept="image/.png,.jpg,.jpeg,.webp"
+                  id="image"
+                  className="mt-4"
+                  name="image"
+                  onChange={e => {
+                    setData('image', e.target.files[0]);
+                    setImage(URL.createObjectURL(e.target.files[0]));
+                  }}
+                />
 
-      <FormControl>
-        <FormLabel htmlFor="image">Featured Image</FormLabel>
+                {errors.image && (
+                  <InputError className="mt-2">{errors.image}</InputError>
+                )}
+              </div>
+              <div className="col-span-2 flex flex-col gap-2">
+                <div>
+                  <Label htmlFor="type">Select Category Type</Label>
+                  <Select
+                    name="type"
+                    value={data.type}
+                    onValueChange={value => setData('type', value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select category type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Category Types</SelectLabel>
+                      </SelectGroup>
 
-        {image && (
-          <>
-            <Box w="sm">
-              <PreviewImage src={image} aspectRatio={16 / 9} />
-            </Box>
-            <Button
-              mt={4}
-              size={'sm'}
-              colorScheme="red"
-              onClick={() => {
-                setImage(null);
-              }}
-            >
-              Remove/Change Image
+                      {['post', 'publication', 'research', 'team'].map(type => (
+                        <SelectItem key={type} value={type}>
+                          {type}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                {['post', 'publication'].includes(data.type) && (
+                  <div>
+                    <Label htmlFor="parent_id">Select Parent</Label>
+                    <Select
+                      name="parent_id"
+                      value={data.parent_id}
+                      onValueChange={value => {
+                        setData('parent_id', value);
+                      }}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select parent category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel className="capitalize">{`categories with type ${data.type}`}</SelectLabel>
+                        </SelectGroup>
+
+                        {filteredCategories?.map(Category => (
+                          <SelectItem
+                            key={Category.id}
+                            value={Category.id.toString()}
+                          >
+                            {Category.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setOpen(!open)}>
+              Cancel
             </Button>
-          </>
-        )}
-
-        {!image && (
-          <FileUpload accept="image/.png,.jpg,.jpeg,.webp">
-            <Input
-              type="file"
-              height="100%"
-              width="100%"
-              position="absolute"
-              top="0"
-              left="0"
-              opacity="0"
-              aria-hidden="true"
-              accept="image/.png,.jpg,.jpeg,.webp"
-              id="image"
-              name="image"
-              size="md"
-              onChange={e => {
-                setData('image', e.target.files[0]);
-                setImage(URL.createObjectURL(e.target.files[0]));
-              }}
-            />
-          </FileUpload>
-        )}
-        {errors.image && (
-          <FormErrorMessage mt={2}>{errors.image}</FormErrorMessage>
-        )}
-      </FormControl>
-      <FormControl isInvalid={errors.meta_title}>
-        <FormLabel htmlFor="meta_title">Meta Title</FormLabel>
-
-        <Input
-          id="meta_title"
-          name="meta_title"
-          placeholder="enter meta title"
-          onChange={e => setData('meta_title', e.target.value)}
-        />
-
-        {errors.meta_title && (
-          <FormErrorMessage mt="2">{errors.meta_title}</FormErrorMessage>
-        )}
-      </FormControl>
-
-      <FormControl isInvalid={errors.meta_description}>
-        <FormLabel htmlFor="meta_description">Meta Description</FormLabel>
-
-        <Textarea
-          id="meta_description"
-          name="meta_description"
-          placeholder="enter meta_description"
-          rows={3}
-          resize="vertical"
-          onChange={e => setData('meta_description', e.target.value)}
-        />
-
-        {errors.meta_description && (
-          <FormErrorMessage mt="2">{errors.meta_description}</FormErrorMessage>
-        )}
-      </FormControl>
-      <PrimaryButton type="submit" isLoading={processing} minW="64">
-        Save
-      </PrimaryButton>
-    </VStack>
+            <Button type="submit">Save changes</Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 }

@@ -1,41 +1,24 @@
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import GuestLayout from '@/Pages/Backend/Layouts/GuestLayout';
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import {
-  Box,
-  Button,
-  Center,
-  Checkbox,
-  Container,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Heading,
-  IconButton,
-  Input,
-  InputGroup,
-  InputRightElement,
-  Stack,
-  VStack,
-  useColorModeValue,
-} from '@chakra-ui/react';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { useState } from 'react';
+import Checkbox from '@/components/Backend/Checkbox';
+import InputError from "@/components/Backend/InputError";
+import InputLabel from "@/components/Backend/InputLabel";
+import PrimaryButton from "@/components/Backend/PrimaryButton";
+import TextInput from "@/components/Backend/TextInput";
+import GuestLayout from '@/components/Layouts/GuestLayout';
+import { Head, Link, useForm } from "@inertiajs/react";
 
 export default function Login({ status, canResetPassword }) {
   const { data, setData, post, processing, errors, reset } = useForm({
-    email: '',
-    password: '',
-    remember: '',
+    email: "",
+    password: "",
+    remember: false,
   });
-  const [show, setShow] = useState(false);
-  const handleClick = () => setShow(!show);
+
 
   const submit = e => {
     e.preventDefault();
+
     post(route('login'), {
-      preserveState: true,
-      onError: errors => {
+      onError: () => {
         reset('password');
       },
     });
@@ -46,125 +29,69 @@ export default function Login({ status, canResetPassword }) {
       <Head title="Log in" />
 
       {status && (
-        <Box mb={4} fontWeight={'medium'} fontSize={'sm'} color={'green.600'}>
-          {status}
-        </Box>
+        <div className="mb-4 font-medium text-sm text-green-600">{status}</div>
       )}
 
-      <Container maxW="7xl" p={{ base: 5, md: 10 }}>
-        <Center>
-          <Stack spacing={4}>
-            <Stack align="center">
-              <Heading fontSize="2xl">Sign in to your account</Heading>
-            </Stack>
-            <VStack
-              boxSize={{ base: 'sm', sm: 'md', md: 'lg' }}
-              h="max-content !important"
-              bg={useColorModeValue('white', 'gray.700')}
-              rounded="lg"
-              boxShadow="lg"
-              p={{ base: 5, sm: 10 }}
-              spacing={8}
-              as={'form'}
-              onSubmit={submit}
+      <form onSubmit={submit}>
+        <div>
+          <InputLabel htmlFor="email" value="Email" />
+
+          <TextInput
+            id="email"
+            type="email"
+            name="email"
+            value={data.email}
+            className="mt-1 block w-full"
+            autoComplete="username"
+            isFocused={true}
+            onChange={e => setData('email', e.target.value)}
+          />
+
+          <InputError message={errors.email} className="mt-2" />
+        </div>
+
+        <div className="mt-4">
+          <InputLabel htmlFor="password" value="Password" />
+
+          <TextInput
+            id="password"
+            type="password"
+            name="password"
+            value={data.password}
+            className="mt-1 block w-full"
+            autoComplete="current-password"
+            onChange={e => setData('password', e.target.value)}
+          />
+
+          <InputError message={errors.password} className="mt-2" />
+        </div>
+
+        <div className="block mt-4">
+          <label className="flex items-center">
+            <Checkbox
+              name="remember"
+              checked={data.remember}
+              onChange={e => setData('remember', e.target.checked)}
+            />
+            <span className="ms-2 text-sm text-gray-600">Remember me</span>
+          </label>
+        </div>
+
+        <div className="flex items-center justify-end mt-4">
+          {canResetPassword && (
+            <Link
+              href={route('password.request')}
+              className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              <VStack spacing={4} w="100%">
-                <FormControl id="email" isInvalid={errors.email}>
-                  <FormLabel htmlFor="email">Email</FormLabel>
-                  <Input
-                    rounded="md"
-                    type="email"
-                    id="email"
-                    name="email"
-                    autoComplete="username"
-                    onChange={e => setData('email', e.target.value)}
-                  />
-                  {errors.email && (
-                    <FormErrorMessage mt={2}>{errors.email}</FormErrorMessage>
-                  )}
-                </FormControl>
-                <FormControl id="password" isInvalid={errors.password}>
-                  <FormLabel htmlFor="password">Password</FormLabel>
-                  <InputGroup size="md">
-                    <Input
-                      rounded="md"
-                      type={show ? 'text' : 'password'}
-                      id="password"
-                      name="password"
-                      autoComplete="current-password"
-                      onChange={e => setData('password', e.target.value)}
-                    />
-                    <InputRightElement width="4.5rem">
-                      <IconButton
-                        h="1.75rem"
-                        size="sm"
-                        rounded="md"
-                        bg={useColorModeValue('gray.300', 'gray.700')}
-                        _hover={{
-                          bg: useColorModeValue('gray.400', 'gray.800'),
-                        }}
-                        onClick={handleClick}
-                        icon={show ? <ViewIcon /> : <ViewOffIcon />}
-                      />
-                    </InputRightElement>
-                  </InputGroup>
-                  {errors.password && (
-                    <FormErrorMessage mt={2}>
-                      {errors.password}
-                    </FormErrorMessage>
-                  )}
-                </FormControl>
-              </VStack>
-              <VStack w="100%" spacing={4}>
-                <Stack
-                  direction="row"
-                  justify="space-between"
-                  w="100%"
-                  alignItems={'center'}
-                >
-                  <Checkbox
-                    colorScheme="blue"
-                    size="md"
-                    name="remember"
-                    defaultChecked={true}
-                    onChange={e => setData('remember', e.target.checked)}
-                  >
-                    Remember me
-                  </Checkbox>
-                  {canResetPassword && (
-                    <Link href={route('password.request')}>
-                      <Button
-                        fontSize={{
-                          base: 'md',
-                          sm: 'md',
-                        }}
-                        variant={'link'}
-                      >
-                        Forgot your password?
-                      </Button>
-                    </Link>
-                  )}
-                </Stack>
-                <Stack
-                  direction="row"
-                  justify="space-between"
-                  w="100%"
-                  alignItems={'center'}
-                >
-                  <PrimaryButton
-                    type="submit"
-                    rounded="md"
-                    w="100%"
-                    isLoading={processing}
-                  >
-                    Sign in
-                  </PrimaryButton>
-                </Stack>
-              </VStack>
-            </VStack>
-          </Stack>
-        </Center>
-      </Container>
+              Forgot your password?
+            </Link>
+          )}
+
+          <PrimaryButton className="ms-4" disabled={processing}>
+            Log in
+          </PrimaryButton>
+        </div>
+      </form>
     </GuestLayout>
   );
 }

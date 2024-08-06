@@ -1,108 +1,75 @@
-import Section from '@/Components/Frontend/styles/section';
-import {
-  AspectRatio,
-  Box,
-  Button,
-  Heading,
-  Image,
-  Link,
-  SimpleGrid,
-  Text,
-  Tooltip,
-  VStack,
-} from '@chakra-ui/react';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 
-import { SocialMenu } from '@/Components/Frontend/header/social-menu';
-import { FaxIcon, LocationPin, PhoneIcon } from '@/Components/Frontend/icons';
-import { EmailIcon } from '@chakra-ui/icons';
+import { SocialMenu } from '@/components/Frontend/header/social-menu';
+import { Button } from '@/components/ui/button';
+import { Mail, MapPin, Phone, PhoneOff } from 'lucide-react';
 import { Fragment } from 'react';
 
 const Contact = ({ content, pageData }) => {
   return (
-    <Section
-      px={['4', '8']}
-      py="80px"
-      w="5xl"
-      maxW="full"
-      paddingBlock="50px"
-      className={'contact-page-content'}
-    >
-      <Box p={{ sm: 5, md: 8 }} borderRadius="xl" boxShadow="lg">
-        <Heading as="h3" textAlign="center" mb={4}>
+    <section className="contact-page-content mx-auto w-full max-w-5xl px-4 py-12 md:px-8">
+      <div className="rounded-xl bg-bgDarker p-6 shadow-lg md:p-12">
+        <h3 className="mb-4 text-center text-2xl font-bold md:text-4xl">
           South Asia Watch on Trade, Economics and Environment (SAWTEE)
-        </Heading>
-        <SimpleGrid
-          columns={{ base: 1, lg: 2 }}
-          spacing={{ base: 20, sm: 3, md: 5, lg: 20 }}
-        >
-          <Box textAlign={{ base: 'center', lg: 'left' }}>
-            <Heading
-              as="h4"
-              fontSize={{ base: 'xl', md: '2xl' }}
-              textTransform={'uppercase'}
-              pb="0.75rem"
-            >
-              <Text as="span" fontWeight={'semibold'}>
+        </h3>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div>
+            <h4 className="pb-3 text-xl uppercase md:text-2xl">
+              <p className="font-semibold">
                 Working days:{' ' + 'Monday-Friday'}
-              </Text>
+              </p>
               <br />
-              <Text as="span" fontWeight={'semibold'} fontSize={'md'}>
+              <p className="text-lg font-semibold">
                 Office hours:
                 {` ${pageData.opening_hours}`}
-              </Text>
-            </Heading>
-            <VStack
-              py={{ base: 3, md: 6, lg: 8 }}
-              spacing={3}
-              alignItems={{
-                base: 'center',
-                lg: 'start',
-              }}
-            >
+              </p>
+            </h4>
+            <div className="flex flex-col items-center gap-3 py-3 md:py-6 lg:items-start lg:py-8">
               {pageData.phone_numbers.map(number => {
                 return (
                   <Fragment key={number}>
-                    <ActionButton href={`tel:${number}`} icon={<PhoneIcon />}>
+                    <ActionButton href={`tel:${number}`}>
+                      <Phone className="mr-2 h-5 w-5" />
                       {number}
                     </ActionButton>
                   </Fragment>
                 );
               })}
 
-              <ActionButton icon={<FaxIcon />}>
-                <Tooltip hasArrow placement="top" label="Fax Machine">
-                  {pageData.fax}
-                </Tooltip>
+              <ActionButton>
+                <PhoneOff className="mr-2 h-5 w-5" />
+                {pageData.fax}
               </ActionButton>
 
-              <ActionButton
-                href={`mailto:${pageData.email}`}
-                icon={<EmailIcon />}
-              >
+              <ActionButton href={`mailto:${pageData.email}`}>
+                <Mail className="mr-2 h-5 w-5" />
                 {pageData.email}
               </ActionButton>
-              <ActionButton leftIcon={<LocationPin />}>
+              <ActionButton>
+                <MapPin className="mr-2 h-5 w-5" />
                 {pageData.address}
               </ActionButton>
-            </VStack>
+            </div>
 
-            <SocialMenu ml="0" menu={pageData.social_menus} />
-          </Box>
+            <SocialMenu
+              className="sm:justify-start"
+              menu={pageData.social_menus}
+            />
+          </div>
 
-          <Box p={8} maxH="400px">
+          <div className="max-h-96 p-8">
             <Zoom>
-              <Image
-                width="full"
-                height="inherit"
+              <img
+                className="aspect-square w-full object-cover"
                 src={pageData.location_image}
+                loading="lazy"
               />
             </Zoom>
-          </Box>
-        </SimpleGrid>
+          </div>
+        </div>
         {pageData.map_url && (
-          <AspectRatio ration={16 / 9} mt="8">
+          <div className="mt-8 aspect-video">
             <iframe
               src={pageData.map_url}
               width="100%"
@@ -112,17 +79,23 @@ const Contact = ({ content, pageData }) => {
               title="map"
               referrerPolicy="no-referrer-when-downgrade"
             />
-          </AspectRatio>
+          </div>
         )}
-      </Box>
-    </Section>
+      </div>
+    </section>
   );
 };
 
-const ActionButton = ({ href, children, icon, ...rest }) => {
+const ActionButton = ({ href, children, ...rest }) => {
   return (
-    <Button variant="ghost" leftIcon={icon} {...rest}>
-      {href ? <Link href={href}>{children}</Link> : children}
+    <Button variant="link" {...rest}>
+      {href ? (
+        <a className="flex items-center" href={href}>
+          {children}
+        </a>
+      ) : (
+        children
+      )}
     </Button>
   );
 };

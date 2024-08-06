@@ -1,44 +1,32 @@
-import AirBnbCard from '@/Components/Frontend/AirBnbCard';
-import { GlassBox } from '@/Components/Frontend/index';
-import InertiaChakraLink from '@/Components/Frontend/styles/inertia-chakra-link';
+import AirBnbCard from '@/components/Frontend/AirBnbCard';
+import Glassbox from '@/components/Frontend/Glassbox';
 import {
   Accordion,
-  AccordionButton,
-  AccordionIcon,
+  AccordionContent,
   AccordionItem,
-  AccordionPanel,
-  Avatar,
-  Box,
-  HStack,
-  Heading,
-  ListItem,
-  SimpleGrid,
-  Text,
-  UnorderedList,
-} from '@chakra-ui/react';
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Link } from '@inertiajs/react';
 import { Fragment } from 'react';
 
 export default function MediaFellows({ content, pageData }) {
   return (
-    <Box
-      className="page-content"
-      px={{ base: '32px', md: '0' }}
-      mx="auto"
-      py={'80px'}
-      maxW={'2xl'}
-    >
-      <Box dangerouslySetInnerHTML={{ __html: content }} />
-      <GlassBox mt={8} px={6}>
-        {pageData &&
-          pageData.map(mediaFellow => {
-            return (
-              <Fragment key={mediaFellow.id}>
-                <Fellows mediaFellow={mediaFellow} />
-              </Fragment>
-            );
-          })}
-      </GlassBox>
-    </Box>
+    <div className="mx-auto max-w-2xl px-8 py-20 md:px-0">
+      <div
+        className="text-lg text-slate-800 dark:text-slate-300"
+        dangerouslySetInnerHTML={{ __html: content }}
+      />
+      <Glassbox className="mt-8 px-6 text-slate-800">
+        {pageData?.map(mediaFellow => {
+          return (
+            <Fragment key={mediaFellow.id}>
+              <Fellows mediaFellow={mediaFellow} />
+            </Fragment>
+          );
+        })}
+      </Glassbox>
+    </div>
   );
 }
 
@@ -47,77 +35,78 @@ export const Fellows = ({ mediaFellow }) => {
     mediaFellow;
 
   return (
-    <Box id={id} my={10}>
-      <HStack alignItems="center">
-        <Avatar name={name} src={avatar} height={'80px'} width={'80px'} />
-        <HStack ml={6}>
-          <Heading as="h2" fontSize="xl" fontFamily="heading" m="0">
-            {name}
-          </Heading>
-          <Text fontSize="xs" m="0" p="0">
-            {designation}
-          </Text>
-        </HStack>
-      </HStack>
+    <div className="my-10" id={id} my={10}>
+      <div className="flex items-center">
+        <Avatar>
+          <AvatarImage src={avatar} alt="@shadcn" />
+          <AvatarFallback>
+            {name.split(' ')[0][0]}
+            {name.split(' ')[1][0]}
+          </AvatarFallback>
+        </Avatar>
+        <div className="ml-6 flex items-center gap-4">
+          <h2 className="text-md font-sans lg:text-xl">{name}</h2>
+          <p className="text-xs">{designation}</p>
+        </div>
+      </div>
 
-      <Text my={8}>{bio}</Text>
+      <p className="my-8 text-lg">{bio}</p>
 
-      <Accordion allowToggle>
-        <AccordionItem>
-          <AccordionButton>
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value={'published_stories'}>
+          <AccordionTrigger className="text-lg">
             {'Published Stories'}
-            <AccordionIcon />
-          </AccordionButton>
-          <AccordionPanel px={['5', '10']}>
-            <UnorderedList>
-              {published_stories &&
-                published_stories.length > 0 &&
-                published_stories.map(({ title, link }) => {
-                  return (
-                    <ListItem key={title}>
-                      <InertiaChakraLink href={link}>{title}</InertiaChakraLink>
-                    </ListItem>
-                  );
-                })}
-            </UnorderedList>
+          </AccordionTrigger>
+          <AccordionContent>
+            <ol className="ml-6 list-decimal">
+              {published_stories?.map(({ title, link }) => {
+                return (
+                  <li key={title} className="text-lg">
+                    <Link
+                      className="underline hover:underline-offset-2"
+                      href={link}
+                    >
+                      {title}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ol>
 
-            <SimpleGrid minChildWidth="300px" spacing="6" mt={10}>
-              {published_stories &&
-                published_stories.length > 0 &&
-                published_stories.map(({ image_src, title, media_src }, i) => {
-                  return (
+            <div className="mt-10 grid gap-4 md:grid-cols-2">
+              {published_stories?.map(({ image_src, title, media_src }, i) => {
+                return (
+                  <div key={i} className="grid gap-4">
                     <AirBnbCard
-                      key={i}
                       img={image_src}
                       title={title}
                       mediaSrc={media_src}
                     />
-                  );
-                })}
-            </SimpleGrid>
-          </AccordionPanel>
+                  </div>
+                );
+              })}
+            </div>
+          </AccordionContent>
         </AccordionItem>
-        <AccordionItem>
-          <AccordionButton>
+        <AccordionItem value={'experience'}>
+          <AccordionTrigger className="text-lg">
             {'Experience with the Fellowship'}
-            <AccordionIcon />
-          </AccordionButton>
-          <AccordionPanel px={['5', '10']}>
+          </AccordionTrigger>
+          <AccordionContent>
             {experience.length > 0 &&
               experience.map(exp => {
                 return (
-                  <Text
-                    my={2}
-                    fontSize={'sm'}
+                  <p
+                    className="my-2 text-lg"
                     dangerouslySetInnerHTML={{
                       __html: exp,
                     }}
                   />
                 );
               })}
-          </AccordionPanel>
+          </AccordionContent>
         </AccordionItem>
       </Accordion>
-    </Box>
+    </div>
   );
 };

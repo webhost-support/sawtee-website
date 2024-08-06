@@ -1,21 +1,16 @@
-import { DataTable } from '@/Components/Backend/DataTable';
-import PrimaryButton from '@/Components/Backend/PrimaryButton';
-import {
-  TableDeleteAction,
-  TableEditAction,
-} from '@/Components/Backend/TableActions';
-import AuthenticatedLayout from '@/Pages/Backend/Layouts/AuthenticatedLayout';
-import { Box, HStack, useDisclosure } from '@chakra-ui/react';
+import DataTableActions from '@/components/Backend/DataTableActions';
+import { DataTableColumnHeader } from '@/components/Backend/DatatableColumnHelper';
+import { DataTable } from '@/components/Backend/FrontDataTable';
+import PrimaryButton from '@/components/Backend/PrimaryButton';
+import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
+import { Checkbox } from '@/components/ui/checkbox';
+import { useToast } from '@/components/ui/use-toast';
 import { Head, Link, useForm } from '@inertiajs/react';
-import { createColumnHelper } from '@tanstack/react-table';
 import React from 'react';
-import DeleteResearchModal from './Partials/DeleteResearchModal';
 
 export default function Index({ auth, researchs: data }) {
-  const columnHelper = createColumnHelper();
   const { processing, delete: destroy, get } = useForm();
-  const [researchId, setResearchId] = React.useState(null);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { toast } = useToast();
   const handleEdit = (e, id) => {
     e.preventDefault();
     get(route('admin.research.edit', id));
@@ -23,59 +18,110 @@ export default function Index({ auth, researchs: data }) {
 
   const handleDelete = (e, id) => {
     e.preventDefault();
-    setResearchId(id);
-    onOpen();
+    destroy(route('admin.research.destroy', id), {
+      onSuccess: () => {
+        toast({
+          title: 'Research deleted.',
+          description: 'Research deleted successfully.',
+        });
+      },
+      onError: () => {
+        toast({
+          variant: 'destructive',
+          title: 'Error.',
+          description: 'Something went wrong. Please try again.',
+        });
+      },
+    });
   };
 
-  const defaultColumns = React.useMemo(
-    () => [
-      columnHelper.accessor('title', {
-        cell: info => info.getValue(),
-        header: 'Title',
-      }),
-      columnHelper.accessor('subtitle', {
-        cell: info => info.getValue(),
-        header: 'Subtitle',
-      }),
-      columnHelper.accessor('description', {
-        cell: info => info.getValue(),
-        header: 'Description',
-      }),
-      columnHelper.accessor('year', {
-        cell: info => info.getValue(),
-        header: 'year',
-      }),
-      columnHelper.accessor('id', {
-        cell: info => {
-          return (
-            <HStack spacing={4}>
-              <TableEditAction
-                onClick={e => handleEdit(e, info.getValue())}
-                isDisabled={processing}
-              />
-              <TableDeleteAction
-                onClick={e => handleDelete(e, info.getValue())}
-                isDisabled={processing}
-              />
-            </HStack>
-          );
-        },
-        header: 'Actions',
-      }),
-    ],
-    []
-  );
+  const defaultColumns = [
+    {
+      id: 'select',
+      header: ({ table }) => (
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && 'indeterminate')
+          }
+          onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+          className="mx-4"
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={value => row.toggleSelected(!!value)}
+          aria-label="Select row"
+          className="mx-4"
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
+    },
+    {
+      accessorKey: 'id',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="ID" />
+      ),
+    },
+    {
+      accessorKey: 'title',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Title" />
+      ),
+    },
+    {
+      accessorKey: 'subtitle',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Subtitle" />
+      ),
+      enableSorting: false,
+    },
+    {
+      accessorKey: 'description',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Description" />
+      ),
+      enableSorting: false,
+    },
+    {
+      accessorKey: 'year',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Year" />
+      ),
+    },
+
+    {
+      accessorKey: 'id',
+      header: 'Actions',
+      cell: ({ row }) => {
+        return (
+          <DataTableActions
+            id={row.original.id}
+            handleDelete={handleDelete}
+            handleEdit={handleEdit}
+          />
+        );
+      },
+      enableHiding: false,
+    },
+  ];
 
   return (
     <AuthenticatedLayout user={auth.user}>
       <Head title="Research" />
-      <DeleteResearchModal isOpen={isOpen} onClose={onClose} id={researchId} />
-      <Box mb={4}>
-        <Link href={route('admin.research.create')}>
-          <PrimaryButton>Add New Research</PrimaryButton>
-        </Link>
-      </Box>
-      {data.data && <DataTable defaultColumns={defaultColumns} data={data} />}
+      <Link href={route('admin.research.create')}>
+        <PrimaryButton>Add New Research</PrimaryButton>
+      </Link>
+      {data && (
+        <DataTable
+          defaultColumns={defaultColumns}
+          data={data}
+          showTypeFilter={false}
+        />
+      )}
     </AuthenticatedLayout>
   );
 }

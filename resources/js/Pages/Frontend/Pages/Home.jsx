@@ -1,18 +1,19 @@
-import {
-  CarouselSection,
-  ExploreButton,
-  FeaturedPublications,
-  InfocusSection,
-  OutreachSection,
-  PublicationsSection,
-  Title,
-  TwoColumnImageSection,
-} from '@/Components/Frontend';
-import WebsiteHead from '@/Components/Frontend/Head';
-import VideoCarousel from '@/Components/Frontend/VideoCarousel';
-import { Newsletter } from '@/Components/Frontend/newsletter';
-import { Box, Grid, GridItem, useColorModeValue } from '@chakra-ui/react';
-import MainLayout from '../Layout/MainLayout';
+import ExploreButton from '@/components/Frontend/ExploreButton';
+import { FeaturedPublications } from '@/components/Frontend/FeaturedPublications';
+import FullWidthCarousel from '@/components/Frontend/FullWidthCarousel';
+import WebsiteHead from '@/components/Frontend/Head';
+import MultiPostsCarousel from '@/components/Frontend/MultiPostsSlider';
+import NewsletterCallout from '@/components/Frontend/NewsletterCallout';
+import Particles from '@/components/Frontend/Particles';
+import SimpleList from '@/components/Frontend/SimpleList';
+import SvgBackground from '@/components/Frontend/SvgBackground';
+import VideoCarousel from '@/components/Frontend/VideoCarousel';
+import FeaturedSection from '@/components/Frontend/feature';
+import BoxReveal from '@/components/shared/BoxReveal';
+import { formatDate } from '@/lib/helpers';
+import { cn } from '@/lib/utils';
+import { Link } from '@inertiajs/react';
+import MainLayout from '../../../components/Layouts/MainLayout';
 
 const Home = ({
   infocus,
@@ -25,34 +26,39 @@ const Home = ({
   webinars,
   slidesResponsiveImages,
 }) => {
-  const AboutSectionData = [
+  const features = [
     {
       id: '1',
       title: 'Reform Monitoring Platform',
       image_src: '/assets/Policy-Reform-Banner-green-sized.webp',
       link: '/reform-monitoring-platform',
+      description:
+        'The Reform Monitoring Platform intends to strengthen monitoring and evaluation of the policy reform process through an online reform tracking system to increase transparency, inclusiveness, and accountability of trade and investment related reforms.',
     },
     {
       id: '2',
       title: 'Media Fellowship',
       image_src: '/assets/Media-Fellowship-banner.webp',
       link: '/media-fellows',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id est feugiat, venenatis eros at, vestibulum arcu. Donec efficitur efficitur nisi, nec faucibus purus. Vivamus bibendum leo ac justo pellentesque accumsan. Ut cursus nisl nulla, ut hendrerit .',
     },
-  ];
-
-  const COVIDLDCSectionData = [
     {
-      id: '1',
-      title: "SAWTEE's Response to Covid-19",
+      id: '3',
+      title: 'Covid-19',
       image_src: '/assets/COVID-19-South-Asia-and-LDCs.webp',
       link: '/category/covid',
+      description:
+        'Donec ipsum augue, condimentum pulvinar consequat et, rhoncus sit amet ipsum. Nullam id ante dictum sapien condimentum venenatis nec eget lorem. Etiam ac cursus ipsum, eget auctor velit. Morbi non enim non nunc dignissim rutrum. Vestibulum eu enim eget.',
     },
 
     {
-      id: '2',
+      id: '4',
       title: "Advancing LDC's Trade Interests",
       image_src: '/assets/advancing-ldc_upscaled.webp',
       link: '/advancing-ldcs’-interests-in-the-wto-strengthening-participation,-securing-priorities',
+      description:
+        'Donec ipsum augue, condimentum pulvinar consequat et, rhoncus sit amet ipsum. Nullam id ante dictum sapien condimentum venenatis nec eget lorem. Etiam ac cursus ipsum, eget auctor velit. Morbi non enim non nunc dignissim rutrum. Vestibulum eu enim eget.',
     },
   ];
 
@@ -65,137 +71,309 @@ const Home = ({
       />
       <Section
         py={4}
-        className="carousel-section"
-        paddingLeft={{ base: '24px', lg: '0' }}
-        paddingRight={{ base: '24px', lg: '40px' }}
+        className="carousel-section px-6 lg:py-4 lg:pl-0 lg:pr-10"
       >
-        <Grid
-          templateColumns={{
-            base: '1fr',
-            lg: 'repeat(6, 1fr)',
-          }}
+        <div
+          className="grid grid-cols-1 gap-10 lg:grid-cols-6"
           id="carousel-section"
-          gap={8}
-          rowGap={20}
         >
-          <GridItem
-            colSpan={{ base: 1, lg: 4 }}
-            shadow={'xl'}
-            overflow="hidden"
-            borderRadius={{
-              base: 'var(--chakra-radii-xl)',
-              lg: '0 var(--chakra-radii-xl) var(--chakra-radii-xl) 0',
-            }}
-          >
-            <Box
-              w="full"
-              maxW="5xl"
-              mx="auto"
-              aspectRatio={16 / 9}
-              h={{ base: 'unset', md: 'full', xl: 'unset' }}
-            >
+          <div className="overflow-hidden rounded-xl shadow-xl lg:col-span-4 lg:rounded-[0_1rem_1rem_0]">
+            <div className="mx-auto w-full max-w-5xl">
               {slides && (
-                <CarouselSection
+                <FullWidthCarousel
                   slides={slides}
                   responsiveImages={slidesResponsiveImages}
                 />
               )}
-            </Box>
-          </GridItem>
-          <GridItem colSpan={{ base: 1, lg: 2 }} alignSelf={'center'}>
-            <FeaturedPublications
-              publications={featuredPublications}
-              mx="auto"
-              rounded="xl"
-              maxW="lg"
-            />
-          </GridItem>
-        </Grid>
+            </div>
+          </div>
+          <div className="self-center lg:col-span-2">
+            <FeaturedPublications publications={featuredPublications} />
+          </div>
+        </div>
       </Section>
-
-      {/* {feature && (
-            <Section className="reform-section">
-              <Box maxW="5xl" mx="auto">
-                <ReformMonitorSection feature={feature} />
-              </Box>
-            </Section>
-          )} */}
 
       {infocus && (
-        <Section className="infocus-section" bgDark={true}>
-          <Box maxW="5xl" mx="auto">
+        <Section className="infocus-section">
+          <div className="mx-auto max-w-5xl">
             <Title title={'In Focus'} />
-            <InfocusSection data={infocus} />
-            <ExploreButton
-              size={['xs', 'sm']}
-              text="More In Focus"
-              px={10}
-              mt="4"
-              link={'/category/in-focus'}
-            />
-          </Box>
+            <SimpleList heading={null}>
+              {infocus.map(item => {
+                return (
+                  <li className="mb-6 flex w-full flex-col gap-3" key={item.id}>
+                    <Link
+                      className="underline underline-offset-2 hover:underline-offset-4"
+                      target="_blank"
+                      href={`/category/in-focus/${item.slug}`}
+                    >
+                      <h3 className="font-sans text-lg font-semibold text-secondary-foreground hover:text-secondary-foreground/80">
+                        {item.title}
+                      </h3>
+                    </Link>
+                    <p className="text-sm text-muted-foreground">
+                      {item.excerpt}
+                    </p>
+                  </li>
+                );
+              })}
+            </SimpleList>
+            <ExploreButton text="More In Focus" link={'/category/in-focus'} />
+          </div>
         </Section>
       )}
-      <Section className="about-section">
-        <TwoColumnImageSection data={AboutSectionData} showBlobIcon={true} />
-      </Section>
-
       {/* Add publication section here  */}
-      <Section className="publications-section" bgDark={true}>
-        <Box maxW={'5xl'} mx="auto">
+      <Section className="publications-section">
+        <div className="mx-auto max-w-5xl">
           <Title title={'Latest in Pubications'} />
-          <PublicationsSection publications={publications} />
-        </Box>
+          <MultiPostsCarousel
+            link={'/category/publications'}
+            text={'More in publications'}
+            data={publications}
+          />
+          <ExploreButton
+            className="mt-8"
+            text="More In Publications"
+            link={'/category/publications'}
+          />
+        </div>
       </Section>
 
-      <Section className="about-section">
-        <TwoColumnImageSection
-          data={COVIDLDCSectionData}
-          showBorderBox={true}
-        />
+      <Section>
+        <div className="mx-auto max-w-5xl">
+          <Title title={'Policy Outreach'} />
+          <FeaturedEventsSection events={events} />
+          <ExploreButton
+            text="More in featured events"
+            link={'/category/featured-events'}
+          />
+        </div>
       </Section>
-      <Section className="outreach-section" bgDark={true}>
-        <Box maxW={'5xl'} mx="auto">
-          <Title title={'Outreach and Media'} />
-          <OutreachSection sawteeInMedia={sawteeInMedia} events={events} />
-        </Box>
+
+      <Section className="outreach-section">
+        <div className="mx-auto max-w-5xl">
+          <Title title={'Media and Newsletters'} />
+          <div className="grid gap-10 lg:grid-cols-6">
+            <div className="w-full md:col-span-3">
+              <SimpleList heading={'sawtee in media'}>
+                {sawteeInMedia.map(item => {
+                  const hasContent = item.content !== null || '';
+                  const file = item.media?.filter(
+                    media => media.collection_name === 'post-files'
+                  )[0];
+
+                  return (
+                    <li className="group mb-4" key={item.id}>
+                      <div>
+                        {file && !hasContent && (
+                          <a
+                            href={file?.original_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="md:text-md text-sm leading-5 text-secondary-foreground underline underline-offset-2 group-hover:text-primary/80 group-hover:underline-offset-4 dark:group-hover:text-secondary-foreground/80 lg:text-lg"
+                          >
+                            {item.title}
+                          </a>
+                        )}
+                        {hasContent && (
+                          <Link
+                            href={`/category/${item.category.slug}/${item.slug}`}
+                            className="md:text-md text-sm leading-5 text-secondary-foreground underline underline-offset-2 group-hover:text-primary/80 group-hover:underline-offset-4 dark:group-hover:text-secondary-foreground/80 lg:text-lg"
+                          >
+                            {item.title}
+                          </Link>
+                        )}
+                        <p className="mt-2 text-xs text-muted-foreground">
+                          {formatDate(item.published_at)}
+                        </p>
+                      </div>
+                    </li>
+                  );
+                })}
+              </SimpleList>
+              <ExploreButton
+                size={['xs', 'sm']}
+                text="More in sawtee in media "
+                link={'/category/sawtee-in-media'}
+              />
+            </div>
+
+            <div className="md:col-span-3">
+              <SimpleList heading={'e-newsletters'}>
+                {newsletters.map(item => {
+                  const file = item.media.filter(
+                    m => m.collection_name === 'post-files'
+                  )[0];
+                  return (
+                    <li className="group mb-4" key={item.id}>
+                      <Link
+                        className="md:text-md font-sans text-sm leading-5 text-secondary-foreground underline underline-offset-2 group-hover:text-primary/80 group-hover:underline-offset-4 dark:group-hover:text-secondary-foreground/80 lg:text-lg"
+                        href={file?.original_url}
+                      >
+                        {item.title}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </SimpleList>
+
+              <ExploreButton
+                size="sm"
+                text="More newsletters"
+                link={'/category/newsletters'}
+              />
+            </div>
+          </div>
+        </div>
       </Section>
+
+      {features && (
+        <section className="reform-section dark:bg-gray-900">
+          <div className="relative mx-auto px-4 py-16 sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-xl lg:px-8 lg:py-20">
+            <SvgBackground svgStyles={'dark:text-gray-800'} />
+            <Particles className="pointer-events-none absolute inset-0" />
+            <div className="max-w-9xl relative mx-auto">
+              <FeaturedSection features={features} />
+            </div>
+          </div>
+        </section>
+      )}
 
       <Section className="section videos-section">
-        <Box maxW="5xl" mx="auto">
+        <div className="mx-auto max-w-5xl">
           <Title title={'Webinar Series'} />
           <VideoCarousel posts={webinars} />
-        </Box>
+          <ExploreButton
+            className="mt-8"
+            text="More In Webinar Series"
+            link={'/category/webinar-series'}
+          />
+        </div>
       </Section>
+
       <Section
         py={{ base: '6', md: '12', lg: '16' }}
         px={{ base: '10', md: '16', lg: '20' }}
         className="subscribe-section"
       >
-        <Newsletter data={newsletters} />
+        <NewsletterCallout />
       </Section>
     </MainLayout>
   );
 };
 
-const Section = ({ children, title = null, bgDark, ...rest }) => {
+const Section = ({ children, title = null, className, dark }) => {
   return (
-    <Box
-      as="section"
-      mx="auto"
-      py={{ base: 12, md: 20 }}
-      px={{ base: '24px', md: '80px' }}
-      bg={
-        bgDark
-          ? useColorModeValue('blackAlpha.50', 'var(--color-darker)')
-          : 'unset'
-      }
-      className="section"
-      {...rest}
+    <section
+      className={cn(
+        'mx-auto w-full px-6 py-12 md:px-20 md:py-20',
+        dark ? 'bg-bgDarker' : 'bg-background',
+        className
+      )}
     >
       {title && <Title title={title} />}
       {children}
-    </Box>
+    </section>
+  );
+};
+
+const Title = ({ title }) => {
+  return (
+    <div className="mb-12">
+      <BoxReveal
+        boxColor={'rgb(14 165 233 / var(--tw-bg-opacity))'}
+        duration={0.5}
+      >
+        <h3 className="flex items-center text-xl font-bold text-primary md:text-2xl lg:text-3xl xl:text-4xl">
+          {title}
+        </h3>
+      </BoxReveal>
+      <div className="h-2 w-[8%] bg-sky-500" />
+    </div>
+  );
+};
+
+const FeaturedEventsSection = ({ events }) => {
+  return (
+    <div class="mb-4 grid grid-cols-1 place-items-start gap-5 md:grid-cols-12">
+      <div class="group md:col-span-5">
+        <Link href={`/category/featured-events/${events[0].slug}`}>
+          <div
+            class="relative overflow-hidden rounded-md text-center"
+            title={events[0].title}
+          >
+            <div className="ease absolute inset-0 top-0 z-10 hidden h-[5px] w-full bg-sky-500/80 transition-all duration-200 group-hover:block" />
+            <div className="ease absolute inset-0 z-20 h-full w-full bg-black/20 transition-all duration-200 group-hover:bg-transparent" />
+            <img
+              src={
+                events[0].media.filter(
+                  item => item.collection_name === 'post-featured-image'
+                )[0]?.original_url
+              }
+              alt="event cover"
+              loading="lazy"
+              className="aspect-video w-full object-cover grayscale transition-all duration-500 ease-linear group-hover:grayscale-0"
+            />
+          </div>
+        </Link>
+        <div class="mt-3 flex flex-col justify-between rounded-b leading-normal lg:rounded-b-none lg:rounded-r">
+          <div class="">
+            <Link
+              href={`/category/featured-events/${events[0].slug}`}
+              class="text-xs font-medium uppercase text-sky-500 transition duration-500 ease-in-out hover:text-sky-600"
+            >
+              {events[0].category.name}
+            </Link>
+            <Link
+              href={`/category/featured-events/${events[0].slug}`}
+              class="mb-2 block text-2xl font-bold leading-6 tracking-wide text-secondary-foreground transition duration-500 ease-in-out group-hover:text-sky-500/80 lg:text-3xl"
+            >
+              {events[0].title}
+            </Link>
+            <p class="mt-2 text-base text-muted-foreground dark:text-slate-400">
+              {events[0].excerpt}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-5 md:col-span-7">
+        {events.map((event, index) => {
+          const featured_image =
+            event.media.length > 0
+              ? event.media.filter(
+                  item => item.collection_name === 'post-featured-image'
+                )[0]?.original_url
+              : '/assets/SM-placeholder-150x150.png';
+          return (
+            index !== 0 && (
+              <div class="group">
+                <Link href={`/category/featured-events/${event.slug}`}>
+                  <div
+                    className="relative max-h-40 overflow-hidden rounded-md text-center"
+                    title={event.title}
+                  >
+                    <img
+                      src={featured_image}
+                      alt="event cover"
+                      loading="lazy"
+                      className="aspect-square h-full w-full object-cover grayscale transition-all duration-500 ease-linear group-hover:grayscale-0"
+                    />
+                    <div className="ease absolute inset-0 top-0 z-10 hidden h-1 w-full bg-sky-500/80 transition-all duration-200 group-hover:block" />
+                    <div className="ease absolute inset-0 z-20 h-full w-full bg-black/20 transition-all duration-200 group-hover:bg-transparent" />
+                  </div>
+                </Link>
+                <Link
+                  href={`/category/featured-events/${event.slug}`}
+                  class="text-md my-2 inline-block font-semibold leading-5 tracking-wide text-secondary-foreground transition duration-500 ease-in-out group-hover:text-sky-500/80"
+                >
+                  {event.title}
+                </Link>
+              </div>
+            )
+          );
+        })}
+      </div>
+    </div>
   );
 };
 

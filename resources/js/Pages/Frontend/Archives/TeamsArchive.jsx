@@ -1,10 +1,10 @@
-import WebsiteHead from '@/Components/Frontend/Head';
-import Section from '@/Components/Frontend/styles/section';
+import WebsiteHead from '@/components/Frontend/Head';
+import Section from '@/components/Frontend/section';
 import { Container, Flex, Heading, Text, VStack } from '@chakra-ui/react';
 import { Fragment } from 'react';
 import '../../../../css/our-team.css';
-import MainLayout from '../Layout/MainLayout';
-import { PageLayout } from '../Layout/PageLayout';
+import MainLayout from '../../../components/Layouts/MainLayout';
+import PageLayout from '../../../components/Layouts/PageLayout';
 import TeamMember from '../TeamMember';
 
 const TeamsArchive = ({ category, teams, featured_image, srcSet }) => {

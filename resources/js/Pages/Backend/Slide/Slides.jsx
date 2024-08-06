@@ -1,28 +1,27 @@
-import { DataTable } from '@/Components/Backend/DataTable';
-import { TableDeleteAction, TableEditAction } from '@/Components/Backend/TableActions';
-import { HStack, Image, useDisclosure, useToast } from '@chakra-ui/react';
+import DataTableActions from '@/components/Backend/DataTableActions';
+import { DataTableColumnHeader } from '@/components/Backend/DatatableColumnHelper';
+import { DataTable } from '@/components/Backend/FrontDataTable';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
 import { useForm } from '@inertiajs/inertia-react';
-import { createColumnHelper } from '@tanstack/react-table';
-import { useEffect, useMemo, useState } from 'react';
+import { PlusIcon } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import CreateSlideForm from './CreateSlideForm';
 import EditSlideForm from './EditSlideForm';
 
 const Slides = ({ slides, slider }) => {
-  const toast = useToast();
-  const columnHelper = createColumnHelper();
+  const { toast } = useToast();
   const { processing, delete: destroy } = useForm();
   const [editSlide, setEditSlide] = useState(null);
-  const editSlideModal = useDisclosure();
+  const [editSlideFormShow, setEditSlideFormShow] = useState(false);
 
   const handleEdit = (e, id) => {
     e.preventDefault();
-    const slideToEdit = slides.data.filter(slide => slide.id === id)[0];
-    if (slideToEdit) setEditSlide(slideToEdit);
-    editSlideModal.onOpen();
+    const slideToEdit = slides.find(slide => slide.id === id);
+    setEditSlide(slideToEdit);
+    setEditSlideFormShow(!editSlideFormShow);
   };
-
-  useEffect(() => {
-    !editSlideModal.isOpen && setEditSlide(null);
-  }, [editSlideModal.onToggle]);
 
   const handleDelete = (e, id) => {
     e.preventDefault();
@@ -30,74 +29,81 @@ const Slides = ({ slides, slider }) => {
       preserveScroll: true,
       onSuccess: () =>
         toast({
-          position: 'top-right',
           title: 'Slider deleted.',
           description: 'Slider deleted Successfully',
-          status: 'error',
-          duration: 6000,
-          isClosable: true,
         }),
       onError: () => console.log('Error while deleting'),
     });
   };
 
-  const defaultColumns = useMemo(
-    () => [
-      columnHelper.accessor('title', {
-        cell: info => info.getValue(),
-        header: 'Title',
-      }),
-      columnHelper.accessor('subtitle', {
-        cell: info => info.getValue(),
-        header: 'Subtitle',
-      }),
-      columnHelper.accessor('media', {
-        cell: info =>
-          info.getValue() && (
-            <Image
-              border={'1px solid var(--color-text)'}
-              width={'150px'}
-              aspectRatio={5 / 2}
-              // height="75px"
-              objectFit="cover"
-              alt="preview_image"
-              rounded="md"
-              src={info.getValue()[0].preview_url}
-            />
-          ),
-        header: 'Image',
-      }),
-
-      columnHelper.accessor('id', {
-        cell: info => {
-          return (
-            <HStack spacing={4}>
-              <TableEditAction
-                onClick={e => {
-                  handleEdit(e, info.getValue());
-                }}
-                isDisabled={processing}
+  const defaultColumns = [
+    {
+      accessorKey: 'id',
+      header: ({ column }) => {
+        return <DataTableColumnHeader column={column} title="ID" />;
+      },
+    },
+    {
+      accessorKey: 'title',
+      header: ({ column }) => {
+        return <DataTableColumnHeader column={column} title="Title" />;
+      },
+    },
+    {
+      accessorKey: 'subtitle',
+      header: ({ column }) => {
+        return <DataTableColumnHeader column={column} title="Subtitle" />;
+      },
+      enableSorting: false,
+    },
+    {
+      accessorKey: 'media',
+      header: 'Slide Image',
+      cell: ({ row }) => {
+        return (
+          <div className="w-[180px] border-2 border-slate-700 rounded-md">
+            <AspectRatio ratio={5 / 2}>
+              <img
+                src={row.original.media[0]?.preview_url}
+                alt="slide"
+                className="rounded-md object-cover w-full h-full"
               />
-              <TableDeleteAction onClick={e => handleDelete(e, info.getValue())} isDisabled={processing} />
-            </HStack>
-          );
-        },
-        header: 'Actions',
-      }),
-    ],
-    []
-  );
+            </AspectRatio>
+          </div>
+        );
+      },
+      enableSorting: false,
+    },
+    {
+      accessorKey: 'id',
+      header: 'Actions',
+      cell: ({ row }) => {
+        return (
+          <DataTableActions
+            id={row.original.id}
+            handleDelete={handleDelete}
+            handleEdit={handleEdit}
+          />
+        );
+      },
+      enableHiding: false,
+      enableSorting: false,
+    },
+  ];
   return (
     <>
-      {editSlide && (
+      {editSlideFormShow && editSlide && (
         <EditSlideForm
-          isOpen={editSlideModal.isOpen}
-          onClose={editSlideModal.onClose}
+          open={editSlideFormShow}
+          setOpen={setEditSlideFormShow}
           slide={editSlide}
           setEditSlide={setEditSlide}
         />
       )}
-      <DataTable defaultColumns={defaultColumns} data={slides} pagination={false} showColumnFilters={false} />
+
+
+
+      <DataTable defaultColumns={defaultColumns} data={slides} />
     </>
   );
 };
