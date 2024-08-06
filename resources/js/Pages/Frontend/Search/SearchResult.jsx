@@ -1,5 +1,5 @@
-import WebsiteHead from '@/Components/Frontend/Head';
-import SearchResults from '@/Components/Frontend/search/search-results';
+import WebsiteHead from '@/components/Frontend/Head';
+import SearchResults from '@/components/Frontend/search/search-results';
 import MainLayout from '../../../components/Layouts/MainLayout';
 
 export default function SearchResult({ posts, query }) {
