@@ -3,7 +3,6 @@ import InputLabel from '@/components/Backend/InputLabel';
 import PrimaryButton from '@/components/Backend/PrimaryButton';
 import TextInput from '@/components/Backend/TextInput';
 import { useToast } from '@/components/ui/use-toast';
-import { Transition } from '@headlessui/react';
 import { useForm } from '@inertiajs/react';
 
 import { useRef } from 'react';
@@ -23,7 +22,7 @@ export default function UpdatePasswordForm({ className = '' }) {
   const updatePassword = e => {
     e.preventDefault();
 
-    put(route('password.update'), {
+    put(route('admin.password.update'), {
       preserveScroll: true,
       onSuccess: () => {
         toast({

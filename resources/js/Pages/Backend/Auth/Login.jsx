@@ -4,20 +4,28 @@ import InputLabel from "@/components/Backend/InputLabel";
 import PrimaryButton from "@/components/Backend/PrimaryButton";
 import TextInput from "@/components/Backend/TextInput";
 import GuestLayout from '@/components/Layouts/GuestLayout';
-import { Head, Link, useForm } from "@inertiajs/react";
+import { useToast } from '@/components/ui/use-toast';
+import { Head, Link, useForm } from '@inertiajs/react';
 
 export default function Login({ status, canResetPassword }) {
   const { data, setData, post, processing, errors, reset } = useForm({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
     remember: false,
   });
 
+  const { toast } = useToast();
 
   const submit = e => {
     e.preventDefault();
 
     post(route('login'), {
+      onSuccess: () => {
+        toast({
+          title: 'Welcome Back',
+          description: `Today is ${new Date().toLocaleDateString()} and ${new Date().toLocaleTimeString()}, hope you have a productive day.`,
+        });
+      },
       onError: () => {
         reset('password');
       },
@@ -29,7 +37,7 @@ export default function Login({ status, canResetPassword }) {
       <Head title="Log in" />
 
       {status && (
-        <div className="mb-4 font-medium text-sm text-green-600">{status}</div>
+        <div className="mb-4 text-sm font-medium text-green-600">{status}</div>
       )}
 
       <form onSubmit={submit}>
@@ -66,7 +74,7 @@ export default function Login({ status, canResetPassword }) {
           <InputError message={errors.password} className="mt-2" />
         </div>
 
-        <div className="block mt-4">
+        <div className="mt-4 block">
           <label className="flex items-center">
             <Checkbox
               name="remember"
@@ -77,11 +85,11 @@ export default function Login({ status, canResetPassword }) {
           </label>
         </div>
 
-        <div className="flex items-center justify-end mt-4">
+        <div className="mt-4 flex items-center justify-end">
           {canResetPassword && (
             <Link
               href={route('password.request')}
-              className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
               Forgot your password?
             </Link>

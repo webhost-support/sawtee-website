@@ -33,7 +33,7 @@ export default function UserNav({ user }) {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-bold">
           {user.name.toUpperCase()}
-          <p className="text-xs leading-none text-muted-foreground m-0 p-0">
+          <p className="m-0 p-0 text-xs leading-none text-muted-foreground">
             {user.email}
           </p>
         </DropdownMenuLabel>
@@ -46,7 +46,9 @@ export default function UserNav({ user }) {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Link href="/admin/logout">Log out</Link>
+          <Link href="/admin/logout" method="post">
+            Log out
+          </Link>
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>

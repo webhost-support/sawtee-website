@@ -5,7 +5,6 @@ import { DashBoardMenuItems } from '@/lib/data';
 import { cn } from "@/lib/utils";
 import { useWindowWidth } from "@react-hook/window-size";
 import React from 'react';
-import Footer from '../ui/footer';
 
 export default function Authenticated({ user, children }) {
   const onlyWidth = useWindowWidth();
@@ -18,7 +17,7 @@ export default function Authenticated({ user, children }) {
   }
 
   return (
-    <main className="min-h-screen">
+    <main>
       <Toaster />
 
       <Sidebar
@@ -33,13 +32,12 @@ export default function Authenticated({ user, children }) {
       <div
         className={cn(
           mobileWidth || isCollapsed ? 'ml-20' : 'ml-64',
-          'relative transition-all duration-200  border-l-2 shadow-xl border-slate-700'
+          'relative border-l-2 border-slate-700 py-12 shadow-xl transition-all duration-200'
         )}
       >
-        <div className="w-full px-6 py-12 min-h-screen mx-auto rounded-xl">
+        <div className="mx-auto min-h-screen w-full rounded-xl px-6">
           {children}
         </div>
-        <Footer />
       </div>
     </main>
   );

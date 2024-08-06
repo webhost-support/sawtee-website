@@ -13,7 +13,7 @@ export default function Sidebar({ isCollapsed, menu }) {
       <aside
         className={cn(
           isCollapsed ? 'w-20' : 'w-64',
-          'ease-nav-brand absolute left-0 top-20 z-40 h-full translate-x-0 bg-white dark:bg-bgDarker antialiased transition-transform duration-200'
+          'ease-nav-brand absolute inset-y-0 left-0 z-40 mt-20 translate-x-0 bg-white antialiased transition-transform duration-200 dark:bg-bgDarker'
         )}
       >
         <ScrollArea className="h-screen w-full p-4">
@@ -38,9 +38,9 @@ export default function Sidebar({ isCollapsed, menu }) {
                           <div
                             className={cn(
                               active
-                                ? 'bg-primary dark:bg-secondary shadow-soft-2xl'
+                                ? 'shadow-soft-2xl bg-primary dark:bg-secondary'
                                 : 'bg-white dark:bg-[rgba(255,255,255,0.08)]',
-                              ' flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5 hover:dark:bg-secondary'
+                              'flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center hover:dark:bg-secondary xl:p-2.5'
                             )}
                           >
                             <menuItem.icon
@@ -84,6 +84,21 @@ export default function Sidebar({ isCollapsed, menu }) {
               );
             })}
           </ul>
+          {!isCollapsed && (
+            <div className="mt-8 flex w-full max-w-full flex-col items-center justify-center gap-4 px-3 lg:mb-0">
+              <div className="text-md text-center leading-normal">
+                © {new Date().getFullYear()} SAWTEE made &nbsp;by&nbsp;
+                <a
+                  href="/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-slate-500"
+                >
+                  Ankur Singh
+                </a>
+              </div>
+            </div>
+          )}
         </ScrollArea>
       </aside>
     );
