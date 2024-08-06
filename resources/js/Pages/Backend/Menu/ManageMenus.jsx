@@ -1,46 +1,26 @@
 
 import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { SelectTrigger } from '@/components/ui/select';
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel, SelectTrigger, SelectValue
 } from '@/components/ui/select';
 import { useToast } from '@/components/ui/use-toast';
 import { slugify } from '@/lib/helpers';
-import {
-  AccordionButton,
-  AccordionIcon,
-  AccordionPanel,
-  Box,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Grid,
-  GridItem,
-  HStack,
-  Input,
-  List,
-  ListItem,
-  Text,
-  VStack,
-  useColorModeValue,
-  useDisclosure,
-} from '@chakra-ui/react';
 import { Head, useForm } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 
+import { Input } from '@/components/ui/input';
 import MenuItemsList from './MenuList';
 import EditMenuForm from './Partials/EditMenu';
 

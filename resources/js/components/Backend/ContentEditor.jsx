@@ -1,12 +1,11 @@
-import { useColorMode } from '@chakra-ui/react';
 import { Editor } from '@tinymce/tinymce-react';
 import { useRef } from 'react';
+import { useTheme } from '../theme-provider';
 
 export default function ContentEditor(props) {
   const { initialValue, ...rest } = props;
   const editorRef = useRef(null);
-  const { colorMode } = useColorMode();
-
+  const { theme } = useTheme();
   const editorConfig = {
     license_key: 'gpl',
     initial_value: initialValue,
@@ -40,8 +39,8 @@ export default function ContentEditor(props) {
     noneditable_class: 'mceNonEditable',
     toolbar_mode: 'sliding',
     contextmenu: 'link image table',
-    skin: colorMode === 'dark' ? 'oxide-dark' : 'oxide',
-    content_css: colorMode === 'dark' ? 'dark' : 'default',
+    skin: theme === 'dark' ? 'oxide-dark' : 'oxide',
+    content_css: theme === 'dark' ? 'dark' : 'default',
     content_style:
       "body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-size:16px }",
   };

@@ -2,10 +2,10 @@ import { cn } from '@/lib/utils';
 import { Link, usePage } from '@inertiajs/react';
 import { ScrollArea } from './scroll-area';
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
 } from './tooltip';
 export default function Sidebar({ isCollapsed, menu }) {
     const { url } = usePage();
@@ -13,29 +13,34 @@ export default function Sidebar({ isCollapsed, menu }) {
       <aside
         className={cn(
           isCollapsed ? 'w-20' : 'w-64',
-          ' absolute top-20 z-40 ease-nav-brand  bg-white   antialiased transition-transform duration-200 left-0 translate-x-0'
+          'ease-nav-brand absolute left-0 top-20 z-40 h-full translate-x-0 bg-white dark:bg-bgDarker antialiased transition-transform duration-200'
         )}
       >
-        <ScrollArea className="w-full p-4 h-screen ">
-          <ul className="flex flex-col gap-1 pl-0 mb-0">
+        <ScrollArea className="h-screen w-full p-4">
+          <ul className="mb-0 flex flex-col gap-1 pl-0">
             {menu?.map(menuItem => {
               const routeLink = route(menuItem.route);
               const active = routeLink.includes(url);
               return isCollapsed ? (
-                <li key={menuItem.name} className=" w-full">
+                <li key={menuItem.name} className="w-full">
                   <TooltipProvider>
                     <Link
                       href={route(menuItem.route)}
-                      className={
-                        'flex justify-center items-center px-2 py-2 gap-2 text-foreground hover:text-muted-foreground dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white'
-                      }
+                      className={cn(
+                        'flex items-center justify-center gap-2 px-2 py-2 hover:text-muted-foreground dark:hover:text-white',
+                        active
+                          ? 'text-primary dark:text-secondary'
+                          : 'text-foreground dark:text-muted-foreground'
+                      )}
                     >
                       <Tooltip delayDuration={0}>
                         <TooltipTrigger asChild>
                           <div
                             className={cn(
-                              active ? 'bg-primary' : 'bg-white',
-                              'shadow-soft-2xl flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5'
+                              active
+                                ? 'bg-primary dark:bg-secondary shadow-soft-2xl'
+                                : 'bg-white dark:bg-[rgba(255,255,255,0.08)]',
+                              ' flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5 hover:dark:bg-secondary'
                             )}
                           >
                             <menuItem.icon
@@ -46,7 +51,7 @@ export default function Sidebar({ isCollapsed, menu }) {
                           </div>
                         </TooltipTrigger>
                         <TooltipContent side="right" className="z-50">
-                          <span className="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">
+                          <span className="ease-soft pointer-events-none ml-1 opacity-100 duration-300">
                             {menuItem.name}
                           </span>
                         </TooltipContent>
@@ -55,26 +60,20 @@ export default function Sidebar({ isCollapsed, menu }) {
                   </TooltipProvider>
                 </li>
               ) : (
-                <li
-                  key={menuItem.name}
-                  className={cn(
-                    active &&
-                      'shadow-soft-2xl flex rounded-lg items-center bg-center stroke-0 border-2 border-slate-700 ',
-                    ' w-full hover:bg-secondary xl:p-1'
-                  )}
-                >
+                <li key={menuItem.name} className={cn('mb-1 w-full')}>
                   <Link
                     href={route(menuItem.route)}
-                    className={
-                      'flex justify-start w-full mr-2 h-8 items-center px-2 gap-2 text-foreground dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white '
-                    }
+                    className={cn(
+                      'mr-2 flex h-8 w-full items-center justify-start gap-2 rounded-lg border-2 border-slate-700 bg-center px-2 text-foreground dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white',
+                      active && 'shadow-soft-2xl dark:text-white'
+                    )}
                   >
                     <menuItem.icon className="h-4 w-4" />
                     {menuItem.name && (
                       <span
                         className={cn(
                           menuItem.variant === 'default' &&
-                            'ml-1 duration-300 opacity-100 pointer-events-none ease-soft'
+                            'ease-soft pointer-events-none ml-1 opacity-100 duration-300'
                         )}
                       >
                         {menuItem.name}

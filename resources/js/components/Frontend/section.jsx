@@ -1,7 +1,4 @@
 import { cn } from '@/lib/utils';
-import { Box } from '@chakra-ui/react';
-
-
 
 /**
  * @param {React.ComponentProps<typeof Box>} props

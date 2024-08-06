@@ -1,22 +1,21 @@
-import StaggeredLetterPullUp from '@/components/shared/StaggeredLetterPullUp';
 import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
-import React from 'react';
+import { ModeToggle } from '../Frontend/header/mode-toggle';
 import { Button } from './button';
 import UserNav from './userNav';
 
 export default function Header({ user, toggleSidebar }) {
   return (
     <header className={'sticky top-0 z-50 w-full'}>
-      <nav className=" flex flex-wrap w-full items-center justify-between px-0 py-2 transition-all shadow-xl duration-250 ease-soft-in  lg:flex-nowrap lg:justify-start bg-white border-b-2 border-b-slate-700 dark:bg-gray-800 dark:border-slate-700 ">
-        <div className={cn('flex justify-between w-full h-16 px-4')}>
+      <nav className="duration-250 ease-soft-in flex w-full flex-wrap items-center justify-between border-b-2 bg-white px-0 py-2 shadow-xl transition-all dark:bg-bgDarker lg:flex-nowrap lg:justify-start">
+        <div className={cn('flex h-16 w-full justify-between px-4')}>
           <Link
             href={route('admin.dashboard')}
-            className="p-4 m-0 text-sm flex items-center whitespace-nowrap text-slate-700"
+            className="m-0 flex items-center whitespace-nowrap p-4 font-serif text-sm font-bold text-secondary-foreground"
           >
             <span
               className={
-                'font-semibold transition-all duration-200 ease-nav-brand text-center font-display text-xl md:text-3xl tracking-[-0.02em] drop-shadow-sm md:leading-[5rem]'
+                'ease-nav-brand font-display text-center text-xl font-semibold tracking-[-0.02em] drop-shadow-sm transition-all duration-200 md:text-3xl md:leading-[5rem]'
               }
             >
               SAWTEE CMS
@@ -24,14 +23,14 @@ export default function Header({ user, toggleSidebar }) {
 
             {/* <StaggeredLetterPullUp className="md:text-3xl font-bold" /> */}
           </Link>
-          <div className={cn('shrink-0 flex gap-4 items-center')}>
+          <div className={cn('flex shrink-0 items-center gap-4')}>
             <Button
-              className="p-2 hidden sm:inline"
+              className="hidden p-2 sm:inline"
               variant="ghost"
               onClick={toggleSidebar}
             >
               <svg
-                className="w-6 h-6"
+                className="h-6 w-6"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -46,7 +45,8 @@ export default function Header({ user, toggleSidebar }) {
             </Button>
           </div>
 
-          <div className="ml-auto mr-6 relative flex sm:items-center">
+          <div className="relative ml-auto mr-6 flex gap-4 sm:items-center">
+            <ModeToggle />
             <UserNav user={user} />
           </div>
         </div>
