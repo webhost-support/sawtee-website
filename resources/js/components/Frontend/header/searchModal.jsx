@@ -15,7 +15,7 @@ import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
 import { Separator } from '@radix-ui/react-dropdown-menu';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function SearchModal() {
   const [isOpen, setIsOpen] = useState(false);
