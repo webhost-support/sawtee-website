@@ -1,6 +1,5 @@
 import WebsiteHead from '@/components/Frontend/Head';
 import Section from '@/components/Frontend/section';
-import { Container, Flex, Heading, Text, VStack } from '@chakra-ui/react';
 import { Fragment } from 'react';
 import '../../../../css/our-team.css';
 import MainLayout from '../../../components/Layouts/MainLayout';
@@ -32,25 +31,19 @@ const TeamsArchive = ({ category, teams, featured_image, srcSet }) => {
           size={'full'}
           mx="auto"
         >
-          <Container maxW="5xl" p={{ base: 5, md: 10 }}>
-            <Flex justifyContent="center" mb={8}>
-              <Heading
-                as="h3"
-                fontSize="3xl"
-                fontWeight="bold"
-                mb={3}
-                textAlign="center"
-              >
+          <div className="container max-w-5xl p-5 md:p-10">
+            <div className="mb-8 flex justify-center">
+              <h3 className="mb-3 text-center text-3xl font-bold">
                 Our Experts
-              </Heading>
-            </Flex>
+              </h3>
+            </div>
 
             {!teams.data || teams.data.length <= 0 ? (
-              <Center>
-                <Text fontSize={['2xl', '4xl']}>"No posts found"</Text>
-              </Center>
+              <div className="text-center">
+                <p className="font-2xl md:text4xl">"No posts found"</p>
+              </div>
             ) : (
-              <VStack spacing={10}>
+              <div className="flex flex-col gap-10">
                 {teams.data.map(post => {
                   return (
                     <Fragment key={post.id}>
@@ -58,9 +51,9 @@ const TeamsArchive = ({ category, teams, featured_image, srcSet }) => {
                     </Fragment>
                   );
                 })}
-              </VStack>
+              </div>
             )}
-          </Container>
+          </div>
         </Section>
       </PageLayout>
     </MainLayout>

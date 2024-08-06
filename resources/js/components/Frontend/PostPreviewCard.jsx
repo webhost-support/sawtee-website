@@ -3,7 +3,6 @@ import Glassbox from '@/components/Frontend/Glassbox';
 import PostCategories from '@/components/Frontend/post/post-categories';
 import { formatDate } from '@/lib/helpers';
 import { htmlToText } from '@/lib/utils';
-import { useColorModeValue } from '@chakra-ui/react';
 import { Link } from '@inertiajs/react';
 
 const PostPreviewCard = ({
@@ -13,7 +12,6 @@ const PostPreviewCard = ({
   ...rest
 }) => {
   const { title, slug, excerpt, media, category, published_at } = post;
-  const color = useColorModeValue('gray.600', 'gray.300');
   const featured_image = media
     ? media.filter(item => item.collection_name === 'post-featured-image')[0]
     : null;
@@ -31,13 +29,7 @@ const PostPreviewCard = ({
       >
         <div className="flex items-center justify-between">
           {showCategoryTag && (
-            <PostCategories
-              justify="flex-start"
-              category={category}
-              mt="0px"
-              color={color}
-              colorScheme="black"
-            />
+            <PostCategories className="justify-start" category={category} />
           )}
 
           <time className={`text-xs text-[${color}]`}>
