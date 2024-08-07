@@ -34,14 +34,11 @@ export const SocialMenu = ({ menu, className, ...props }) => (
 
 const SocialMenuItem = ({ link, className, children }) => (
   <li
-    className={cn(
-      ' bg-gray-700 hover:bg-gray-700/90  rounded-full ',
-      className
-    )}
+    className={cn('rounded-full bg-gray-700 hover:bg-gray-700/90', className)}
   >
     <a
       href={link}
-      className="w-9 h-9 flex justify-center items-center "
+      className="flex h-9 w-9 items-center justify-center"
       target="_blank"
       rel="noopener noreferrer"
     >
@@ -58,7 +55,7 @@ const icons = {
 };
 
 const SocialNav = ({ menu, className }) => (
-  <div className={cn('block ml-auto', className)}>
+  <div className={cn('ml-auto block', className)}>
     <SocialMenu menu={menu} />
   </div>
 );

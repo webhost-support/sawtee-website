@@ -10,17 +10,19 @@ export default function FeaturedSection({ features }) {
     >
       <div
         className={cn(
-          'w-full rounded-md p-6  md:px-8 lg:w-[50%]',
+          'w-full rounded-md p-6 md:px-8 lg:w-[50%]',
           index % 2 === 0 ? 'lg:order-1' : 'order-0'
         )}
       >
-        <h2 className="text-3xl font-semibold text-secondary-foreground ">
+        <h2 className="text-3xl font-semibold text-secondary-foreground">
           <span className='after:content:"" after:bg-primary-100 relative z-20 after:absolute after:bottom-1 after:left-0 after:z-[-1] after:h-[30%] after:w-full after:bg-gradient-to-l after:from-theme-50 after:to-theme-300 dark:after:bg-gradient-to-l dark:after:from-theme-300 dark:after:to-theme-500'>
             {feature.title}
           </span>
         </h2>
 
-        <p className="text-md mt-4 text-muted-foreground">{feature.description}</p>
+        <p className="text-md mt-4 text-muted-foreground">
+          {feature.description}
+        </p>
       </div>
       <div className="relative w-full md:block lg:w-[50%]">
         <Link

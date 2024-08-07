@@ -4,15 +4,15 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Separator } from '@/components/ui/separator';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { slugify } from '@/lib/helpers';
 import { cn, htmlToText } from '@/lib/utils';
 
 export default function About({ sections, content, pageData }) {
   return (
-    <div className="page-content px-[32px] md:px-0 mx-auto py-[80px] max-w-2xl leading-8 text-lg ">
-      {sections?.map((section) => {
+    <div className="page-content mx-auto max-w-2xl px-[32px] py-[80px] text-lg leading-8 md:px-0">
+      {sections?.map(section => {
         if (section.parent_id === null) {
           return (
             <PageSection
@@ -28,7 +28,7 @@ export default function About({ sections, content, pageData }) {
   );
 }
 
- const Members = ({ memberInstitutions }) => {
+const Members = ({ memberInstitutions }) => {
   return (
     <div>
       <PageSectionTitle titleText={'Member Institutions'} />
@@ -38,12 +38,12 @@ export default function About({ sections, content, pageData }) {
           <Accordion key={id} collapsible className="w-full">
             <AccordionItem border="none" value={country}>
               <AccordionTrigger>
-                <p className="font-bold font-sans text-xl md:text-2xl text-primary">
+                <p className="font-sans text-xl font-bold text-primary md:text-2xl">
                   {country}
                 </p>
               </AccordionTrigger>
               <AccordionContent className="ml-6">
-                <ol className="space-y-2 text-zinc-700 dark:text-zinc-300 list-decimal">
+                <ol className="list-decimal space-y-2 text-zinc-700 dark:text-zinc-300">
                   {institutes.map(({ member_name, member_website_link }) => {
                     return (
                       <li key={member_name} className="text-lg">
@@ -69,7 +69,7 @@ export default function About({ sections, content, pageData }) {
   );
 };
 
- const PageSection = ({ section, sections }) => {
+const PageSection = ({ section, sections }) => {
   const { title, slug, description } = section;
 
   const isTabs = section.type === 'tabs';
@@ -86,10 +86,10 @@ export default function About({ sections, content, pageData }) {
       {isTabs && childSections.length > 0 && (
         <div className="px-6 py-4">
           <Tabs defaultValue={childSections[0].title} orientation="vertical">
-            <TabsList className="grid w-full grid-cols-3 bg-bgDarker bg-opacity-60 h-auto p-2">
+            <TabsList className="grid h-auto w-full grid-cols-3 bg-bgDarker bg-opacity-60 p-2">
               {childSections.map(({ title }) => (
                 <TabsTrigger key={title} value={title}>
-                  <p className="font-bold font-sans text-lg md:text-xl">
+                  <p className="font-sans text-lg font-bold md:text-xl">
                     {title}
                   </p>
                 </TabsTrigger>
@@ -99,10 +99,10 @@ export default function About({ sections, content, pageData }) {
               <TabsContent
                 key={title}
                 value={title}
-                className="bg-bgDarker bg-opacity-60 space-y-2 rounded-xl leading-8 p-6 text-zinc-700 dark:text-zinc-300"
+                className="space-y-2 rounded-xl bg-bgDarker bg-opacity-60 p-6 leading-8 text-zinc-700 dark:text-zinc-300"
               >
                 {description && (
-                  <p className="px-4 list-decimal">{htmlToText(description)}</p>
+                  <p className="list-decimal px-4">{htmlToText(description)}</p>
                 )}
               </TabsContent>
             ))}
@@ -116,13 +116,13 @@ export default function About({ sections, content, pageData }) {
             <Accordion key={title} collapsible className="w-full">
               <AccordionItem value={title}>
                 <AccordionTrigger>
-                  <p className="font-bold text-primary font-sans text-lg md:text-xl">
+                  <p className="font-sans text-lg font-bold text-primary md:text-xl">
                     {title}
                   </p>
                 </AccordionTrigger>
-                <AccordionContent className="bg-bgDarker rounded-md bg-opacity-60">
+                <AccordionContent className="rounded-md bg-bgDarker bg-opacity-60">
                   <div
-                    className="leading-8 p-6 text-lg text-zinc-700 dark:text-zinc-300"
+                    className="p-6 text-lg leading-8 text-zinc-700 dark:text-zinc-300"
                     // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
                     dangerouslySetInnerHTML={{
                       __html: description,
@@ -148,16 +148,15 @@ export default function About({ sections, content, pageData }) {
   );
 };
 
-
 const PageSectionTitle = ({ titleText, className }) => {
   return (
     <h2
       className={cn(
-        'font-bold text-2xl md:text-3xl lg:text-4xl py-4 mb-4 font-sans text-primary',
+        'mb-4 py-4 font-sans text-2xl font-bold text-primary md:text-3xl lg:text-4xl',
         className
       )}
     >
       {titleText}
     </h2>
   );
-}
+};

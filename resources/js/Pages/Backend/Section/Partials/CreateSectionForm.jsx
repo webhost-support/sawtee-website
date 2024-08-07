@@ -75,7 +75,7 @@ export default function CreateSectionForm({ sections, pages }) {
 
   return (
     <form onSubmit={submit}>
-      <div className="grid lg:grid-cols-[repeat(4,minmax(100px,1fr))] grid-rows-[minmax(auto, 1fr)] gap-4">
+      <div className="grid-rows-[minmax(auto, 1fr)] grid gap-4 lg:grid-cols-[repeat(4,minmax(100px,1fr))]">
         <div className="col-span-4">
           <Label htmlFor="title">Section Title</Label>
 
@@ -103,7 +103,7 @@ export default function CreateSectionForm({ sections, pages }) {
             <InputError className="mt-2">{errors.image}</InputError>
           )}
         </div>
-        <div className="col-span-2 grid grid-cols-subgrid w-full gap-4">
+        <div className="col-span-2 grid w-full grid-cols-subgrid gap-4">
           <div className="col-span-1">
             <fieldset>
               <Label as="legend" htmlFor="page_id">

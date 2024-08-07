@@ -1,11 +1,9 @@
-
-
 import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from '@/components/ui/carousel';
 
 // import required modules
@@ -14,17 +12,13 @@ import 'swiper/css';
 import 'swiper/css/scrollbar';
 import { Badge } from '../ui/badge';
 
-const MultiPostsCarousel = ({
-  children,
-  data,
-  ...rest
-}) => {
+const MultiPostsCarousel = ({ children, data, ...rest }) => {
   return (
     <Carousel
       opts={{
         align: 'start',
       }}
-      className="w-full "
+      className="w-full"
     >
       <CarouselContent>
         {data.map(publication => {

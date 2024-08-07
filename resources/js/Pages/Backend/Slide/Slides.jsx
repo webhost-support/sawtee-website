@@ -61,12 +61,12 @@ const Slides = ({ slides, slider }) => {
       header: 'Slide Image',
       cell: ({ row }) => {
         return (
-          <div className="w-[180px] border-2 border-slate-700 rounded-md">
+          <div className="w-[180px] rounded-md border-2 border-slate-700">
             <AspectRatio ratio={5 / 2}>
               <img
                 src={row.original.media[0]?.preview_url}
                 alt="slide"
-                className="rounded-md object-cover w-full h-full"
+                className="h-full w-full rounded-md object-cover"
               />
             </AspectRatio>
           </div>
@@ -100,8 +100,6 @@ const Slides = ({ slides, slider }) => {
           setEditSlide={setEditSlide}
         />
       )}
-
-
 
       <DataTable defaultColumns={defaultColumns} data={slides} />
     </>

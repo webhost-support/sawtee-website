@@ -1,29 +1,29 @@
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { cn } from "@/lib/utils";
-import { XIcon } from "lucide-react";
-import React from "react";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { cn } from '@/lib/utils';
+import { XIcon } from 'lucide-react';
+import React from 'react';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
+import { Label } from '../ui/label';
 
 export default function DropZone({
   htmlFor,
-  accept = "image/.png,.jpg,.jpeg,.webp",
-  placeholder = "Drag and drop image here, or click to select an image",
+  accept = 'image/.png,.jpg,.jpeg,.webp',
+  placeholder = 'Drag and drop image here, or click to select an image',
   defaultValue = null,
   onValueChange,
   ...props
 }) {
-  const handleDragOver = (event) => {
+  const handleDragOver = event => {
     event.stopPropagation();
     event.preventDefault();
   };
-  const handleDrop = (event) => {
+  const handleDrop = event => {
     event.stopPropagation();
     event.preventDefault();
     onValueChange(Array.from(event.dataTransfer.files)[0]);
   };
-  const handleFileSelect = (event) => {
+  const handleFileSelect = event => {
     event.stopPropagation();
     onValueChange(Array.from(event.target.files)[0]);
   };
@@ -32,15 +32,15 @@ export default function DropZone({
   };
 
   return (
-    <div className={cn("h-48", props.className)}>
+    <div className={cn('h-48', props.className)}>
       {!defaultValue && (
         <Label
           htmlFor={htmlFor}
-          className=" rounded-xl border-2 border-slate-700 border-dashed dark:border-gray-600 dark:hover:border-gray-500 h-full relative flex flex-col items-center justify-center w-full overflow-hidden cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-200"
+          className="relative flex h-full w-full cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-dashed border-slate-700 bg-gray-50 hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-800"
         >
-          <div className="flex flex-col items-center justify-center pt-5 pb-6">
+          <div className="flex flex-col items-center justify-center pb-6 pt-5">
             <svg
-              className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+              className="mb-4 h-8 w-8 text-gray-500 dark:text-gray-400"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -68,25 +68,25 @@ export default function DropZone({
             accept={accept}
             onDragOver={handleDragOver}
             onDrop={handleDrop}
-            className="opacity-0 cursor-pointer absolute inset-0 h-full w-full z-30"
+            className="absolute inset-0 z-30 h-full w-full cursor-pointer opacity-0"
             onChange={handleFileSelect}
           />
         </Label>
       )}
       {defaultValue && (
-        <div className="relative  flex flex-col items-center justify-center w-full h-full rounded-xl overflow-hidden cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-200 p-4 border-2 border-slate-700 border-dashed dark:border-gray-600 dark:hover:border-gray-500 ">
+        <div className="relative flex h-full w-full cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-dashed border-slate-700 bg-gray-50 p-4 hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-800">
           <AspectRatio ratio={16 / 9}>
             <img
               src={defaultValue}
               alt="section hero"
-              className="rounded-md object-cover w-full h-full "
+              className="h-full w-full rounded-md object-cover"
             />
           </AspectRatio>
           <Button
-            className="absolute top-2 right-2 rounded-lg"
+            className="absolute right-2 top-2 rounded-lg"
             onClick={handleRemoveFile}
           >
-            <XIcon className=" w-6 h-6 " />
+            <XIcon className="h-6 w-6" />
           </Button>
         </div>
       )}

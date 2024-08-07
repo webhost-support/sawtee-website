@@ -31,7 +31,7 @@ export default function DesktopNavigation({ menu }) {
   const { experts } = props;
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <NavigationMenu className="max-w-full justify-center hidden lg:flex ">
+    <NavigationMenu className="hidden max-w-full justify-center lg:flex">
       <NavigationMenuList className="gap-4">
         {menu.map(menuItem => {
           const active = menuItem.url === `${url}`;
@@ -47,7 +47,7 @@ export default function DesktopNavigation({ menu }) {
                     !hasMegaMenu && !hasChildren
                       ? cn(
                           navigationMenuTriggerStyle(),
-                          active ? ' dark:text-white ' : 'dark:text-white '
+                          active ? 'dark:text-white' : 'dark:text-white'
                         )
                       : cn('')
                   }
@@ -87,7 +87,6 @@ export default function DesktopNavigation({ menu }) {
     </NavigationMenu>
   );
 }
-
 
 const DropDown = ({ menu, isOpen, onToggle }) => {
   console.log(isOpen);

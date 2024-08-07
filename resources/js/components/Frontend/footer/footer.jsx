@@ -1,18 +1,18 @@
 import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
 import {
-    ChevronsRight,
-    Mailbox,
-    MailOpen,
-    MapPinned,
-    PhoneIncoming,
-    PhoneOff,
+  ChevronsRight,
+  Mailbox,
+  MailOpen,
+  MapPinned,
+  PhoneIncoming,
+  PhoneOff,
 } from 'lucide-react';
 import { useState } from 'react';
 import { SocialMenu } from '../header/social-menu';
@@ -65,7 +65,7 @@ export default function Footer({ menu, socialMenu }) {
                                     <a
                                       role="button"
                                       type="button"
-                                      className=" flex cursor-pointer break-all "
+                                      className="flex cursor-pointer break-all"
                                       onClick={() => setMapModal(!mapModal)}
                                     >
                                       {title}

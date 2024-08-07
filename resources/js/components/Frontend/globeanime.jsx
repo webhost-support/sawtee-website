@@ -140,14 +140,7 @@ const Globeanime = ({ darkMode = false }) => {
     <div
       ref={ref}
       id="functions-hero"
-      className="
-        absolute inset-0
-        -left-28 top-4 w-[150%] md:w-[150%] aspect-[978/678]
-        sm:-left-32 sm:-top-2
-        md:-left-44
-        lg:-left-10 lg:-top-10 lg:w-[150%]
-        xl:-left-32 xl:w-[150%]
-      "
+      className="absolute inset-0 -left-28 top-4 aspect-[978/678] w-[150%] sm:-left-32 sm:-top-2 md:-left-44 md:w-[150%] lg:-left-10 lg:-top-10 lg:w-[150%] xl:-left-32 xl:w-[150%]"
     >
       {/* Animated svgs in globe */}
       {svgs.map(s => (
@@ -205,14 +198,14 @@ const Globeanime = ({ darkMode = false }) => {
           key={dot.id}
           id={dot.id}
           style={{ left: dot.left, top: dot.top }}
-          className="absolute origin-center w-[2.5%] h-[3.6%] flex items-center justify-center opacity-0 transition-opacity animate-fade-in delay-75"
+          className="animate-fade-in absolute flex h-[3.6%] w-[2.5%] origin-center items-center justify-center opacity-0 transition-opacity delay-75"
         >
-          <span className="absolute inset-0 w-full h-full rounded-full bg-black dark:bg-white bg-opacity-20" />
-          <span className="absolute w-4/5 h-4/5 rounded-full bg-black dark:bg-white bg-opacity-90" />
+          <span className="absolute inset-0 h-full w-full rounded-full bg-black bg-opacity-20 dark:bg-white" />
+          <span className="absolute h-4/5 w-4/5 rounded-full bg-black bg-opacity-90 dark:bg-white" />
         </div>
       ))}
-      <div className="absolute left-[51.15%] top-[10%] w-px h-[20%] overflow-hidden">
-        <span className="absolute inset-0 w-full bg-gradient-to-t from-current to-transparent h-full delay-1200 animate-slide-in" />
+      <div className="absolute left-[51.15%] top-[10%] h-[20%] w-px overflow-hidden">
+        <span className="delay-1200 animate-slide-in absolute inset-0 h-full w-full bg-gradient-to-t from-current to-transparent" />
       </div>
       {/* Globe background */}
       <img
@@ -220,7 +213,7 @@ const Globeanime = ({ darkMode = false }) => {
         alt="globe wireframe"
         width={400}
         height={400}
-        className={`w-full h-full ${darkMode ? 'hidden' : 'block'}`} // Hide/show based on dark mode
+        className={`h-full w-full ${darkMode ? 'hidden' : 'block'}`} // Hide/show based on dark mode
         quality={100}
         priority
       />
@@ -229,7 +222,7 @@ const Globeanime = ({ darkMode = false }) => {
         alt="globe wireframe"
         width={400}
         height={400}
-        className={`w-full h-full ${darkMode ? 'block' : 'hidden'}`} // Hide/show based on dark mode
+        className={`h-full w-full ${darkMode ? 'block' : 'hidden'}`} // Hide/show based on dark mode
         quality={100}
         priority
       />

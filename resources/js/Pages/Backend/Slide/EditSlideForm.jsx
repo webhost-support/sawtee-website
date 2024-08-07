@@ -115,24 +115,24 @@ export default function EditSlideForm({ open, setOpen, slide, setEditSlide }) {
                 className={image ? 'hidden' : 'h-48'}
               />
               {image && (
-                <div className="relative  flex flex-col items-center justify-center w-full h-48 rounded-xl overflow-hidden cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-200 p-4 border-2 border-slate-700 border-dashed dark:border-gray-600 dark:hover:border-gray-500 ">
-                  <div className="w-full h-full absolute inset-0">
+                <div className="relative flex h-48 w-full cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-dashed border-slate-700 bg-gray-50 p-4 hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-800">
+                  <div className="absolute inset-0 h-full w-full">
                     <AspectRatio ratio={5 / 3}>
                       <img
                         src={image}
                         alt="section hero"
-                        className="rounded-md object-cover w-full h-full "
+                        className="h-full w-full rounded-md object-cover"
                       />
                     </AspectRatio>
                     <Button
-                      className="absolute top-2 right-2 rounded-lg"
+                      className="absolute right-2 top-2 rounded-lg"
                       onClick={() => {
                         setImage(null);
                         setFiles([]);
                         setData('image', null);
                       }}
                     >
-                      <XIcon className=" w-6 h-6 " />
+                      <XIcon className="h-6 w-6" />
                     </Button>
                   </div>
                 </div>

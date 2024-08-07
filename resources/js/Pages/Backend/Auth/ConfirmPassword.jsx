@@ -1,14 +1,14 @@
-import InputError from "@/components/Backend/InputError";
-import InputLabel from "@/components/Backend/InputLabel";
-import PrimaryButton from "@/components/Backend/PrimaryButton";
-import TextInput from "@/components/Backend/TextInput";
+import InputError from '@/components/Backend/InputError';
+import InputLabel from '@/components/Backend/InputLabel';
+import PrimaryButton from '@/components/Backend/PrimaryButton';
+import TextInput from '@/components/Backend/TextInput';
 import GuestLayout from '@/components/Layouts/GuestLayout';
-import { Head, useForm } from "@inertiajs/react";
+import { Head, useForm } from '@inertiajs/react';
 import { useEffect } from 'react';
 
 export default function ConfirmPassword() {
   const { data, setData, post, processing, errors, reset } = useForm({
-    password: "",
+    password: '',
   });
 
   useEffect(() => {
@@ -17,10 +17,10 @@ export default function ConfirmPassword() {
     };
   }, [reset]);
 
-  const submit = (e) => {
+  const submit = e => {
     e.preventDefault();
 
-    post(route("password.confirm"));
+    post(route('password.confirm'));
   };
 
   return (
@@ -43,13 +43,13 @@ export default function ConfirmPassword() {
             value={data.password}
             className="mt-1 block w-full"
             isFocused={true}
-            onChange={(e) => setData("password", e.target.value)}
+            onChange={e => setData('password', e.target.value)}
           />
 
           <InputError message={errors.password} className="mt-2" />
         </div>
 
-        <div className="flex items-center justify-end mt-4">
+        <div className="mt-4 flex items-center justify-end">
           <PrimaryButton className="ms-4" disabled={processing}>
             Confirm
           </PrimaryButton>

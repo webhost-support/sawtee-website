@@ -32,19 +32,19 @@ export default function Index({ auth, posts, categories, categoryID }) {
     switch (status) {
       case 'unpublished':
         return (
-          <span className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium  ring-1 ring-inset text-red-600 ring-red-500/10 ">
+          <span className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-600 ring-1 ring-inset ring-red-500/10">
             {status}
           </span>
         );
       case 'draft':
         return (
-          <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium  ring-1 ring-inset text-blue-600 ring-blue-500/10 ">
+          <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-600 ring-1 ring-inset ring-blue-500/10">
             {status}
           </span>
         );
       default:
         return (
-          <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium  ring-1 ring-inset text-green-600 ring-green-500/10 ">
+          <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-600 ring-1 ring-inset ring-green-500/10">
             {status}
           </span>
         );

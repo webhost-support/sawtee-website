@@ -4,7 +4,7 @@
   "scripts": {
     "commit": "cz",
     "dev": "vite",
-    "build": "vite build && vite build --ssr",
+    "build": "vite build",
     "lint": "eslint --fix .",
     "format": "prettier 'resources/{js,jsx}/**/*.{js,jsx}' --write",
     "pre-commit": "npm run format && lint-staged && pretty-quick --staged"
@@ -64,7 +64,6 @@
     "@radix-ui/react-tooltip": "^1.1.2",
     "@radix-ui/react-visually-hidden": "^1.1.0",
     "@react-hook/window-size": "^3.1.1",
-    "@sentry/react": "^7.40.0",
     "@tanstack/match-sorter-utils": "^8.15.1",
     "@tanstack/react-table": "^8.10.6",
     "@tinymce/tinymce-react": "^4.3.0",

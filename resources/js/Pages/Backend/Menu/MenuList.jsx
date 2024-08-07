@@ -1,4 +1,3 @@
-
 import {
   Accordion,
   AccordionContent,
@@ -71,11 +70,11 @@ export default function MenuItemsList({
               className="w-full"
             >
               <AccordionItem value={item.name}>
-                <div className="flex justify-between items-center gap-4">
+                <div className="flex items-center justify-between gap-4">
                   <p>
                     {item.order}. {item.name}
                   </p>
-                  <div className="ml-auto ">
+                  <div className="ml-auto">
                     {item.children && item.children.length > 0 && (
                       <AccordionTrigger>{'Submenu items'}</AccordionTrigger>
                     )}
@@ -112,7 +111,7 @@ export default function MenuItemsList({
                     <MenuItemsList
                       firstLevelMenuItems={item.children}
                       menuItems={menuItems}
-                      className="ml-1 px-4 mt-4 border-l border-text-foreground "
+                      className="border-text-foreground ml-1 mt-4 border-l px-4"
                     />
                   </AccordionContent>
                 )}

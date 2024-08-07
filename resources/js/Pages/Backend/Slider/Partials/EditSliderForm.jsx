@@ -61,9 +61,9 @@ export default function EditSliderForm({ slider, slides, pages }) {
           <AlertDescription>No slides added yet.</AlertDescription>
         </Alert>
       )}
-      <div className="grid lg:grid-cols-5 gap-4 items-end">
+      <div className="grid items-end gap-4 lg:grid-cols-5">
         <form onSubmit={submit} className="col-span-4">
-          <div className="grid grid-cols-1 lg:grid-cols-4 w-full gap-6 items-end">
+          <div className="grid w-full grid-cols-1 items-end gap-6 lg:grid-cols-4">
             <div className="col-span-2">
               <Label htmlFor="name">Name</Label>
               <Input
@@ -115,7 +115,7 @@ export default function EditSliderForm({ slider, slides, pages }) {
           onClick={() => setCreateSlide(!createSlide)}
         >
           Add slide
-          <PlusIcon className="ml-2 w-4 h-4" />
+          <PlusIcon className="ml-2 h-4 w-4" />
         </Button>
       </div>
       {createSlide && (

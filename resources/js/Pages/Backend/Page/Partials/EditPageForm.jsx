@@ -168,15 +168,15 @@ export default function EditPageForm({ page }) {
             {image && (
               <div className="w-[minmax(auto, 450px)] relative">
                 <AspectRatio ratio={16 / 9}>
-                  <div className="absolute inset-0 w-full h-full bg-slate-800/40 transition-all 200ms ease-linear hover:bg-transparent rounded-md" />
+                  <div className="200ms absolute inset-0 h-full w-full rounded-md bg-slate-800/40 transition-all ease-linear hover:bg-transparent" />
                   <img
                     src={image}
                     alt="post hero"
-                    className="rounded-md object-cover w-full h-full"
+                    className="h-full w-full rounded-md object-cover"
                   />
                 </AspectRatio>
                 <XCircleIcon
-                  className="absolute top-5 right-5 cursor-pointer text-white"
+                  className="absolute right-5 top-5 cursor-pointer text-white"
                   onClick={() => {
                     setImage(null);
                     setData('image', null);

@@ -1,18 +1,17 @@
 import { cn } from '@/lib/utils';
 
-
 export default function SimpleList({ heading, children, className, ...rest }) {
   return (
     <div
-      className={cn('px-6 border-l-2 border-[var(--color-border)] ', className)}
+      className={cn('border-l-2 border-[var(--color-border)] px-6', className)}
       {...rest}
     >
       {heading && (
-        <h3 className="text-lg md:text-xl uppercase mb-4 dark:text-secondary-foreground font-semibold">
+        <h3 className="mb-4 text-lg font-semibold uppercase dark:text-secondary-foreground md:text-xl">
           {heading}
         </h3>
       )}
-      <ul className='tracking-wide font-sans'>{children}</ul>
+      <ul className="font-sans tracking-wide">{children}</ul>
     </div>
   );
 }

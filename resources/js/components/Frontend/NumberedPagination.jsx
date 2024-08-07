@@ -61,7 +61,11 @@ const NumberedPagination = ({
       >
         <Link href={prevPage}>
           <PaginationButton isDisabled={!prevPage}>
-            {!hover[0] ? <ChevronLeft className="h-4 w-4" /> : <ArrowLeft className="h-4 w-4" />}{' '}
+            {!hover[0] ? (
+              <ChevronLeft className="h-4 w-4" />
+            ) : (
+              <ArrowLeft className="h-4 w-4" />
+            )}{' '}
             Newer Posts
           </PaginationButton>
         </Link>
@@ -90,7 +94,12 @@ const NumberedPagination = ({
       >
         <Link href={nextPage}>
           <PaginationButton isDisabled={!nextPage}>
-            Older Posts {!hover[1] ? <ChevronRight className="h-4 w-4" /> : <ArrowRight className="h-4 w-4" />}
+            Older Posts{' '}
+            {!hover[1] ? (
+              <ChevronRight className="h-4 w-4" />
+            ) : (
+              <ArrowRight className="h-4 w-4" />
+            )}
           </PaginationButton>
         </Link>
       </div>

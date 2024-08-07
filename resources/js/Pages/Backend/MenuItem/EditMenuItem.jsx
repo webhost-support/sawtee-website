@@ -22,7 +22,13 @@ import {
 import { useToast } from '@/components/ui/use-toast';
 import { useForm } from '@inertiajs/react';
 
-export default function EditMenuItem({ isOpen, onClose, item, setMenuItem, menuItems }) {
+export default function EditMenuItem({
+  isOpen,
+  onClose,
+  item,
+  setMenuItem,
+  menuItems,
+}) {
   const { data, setData, patch, processing, errors, reset } = useForm({
     title: item.title,
     name: item.name,

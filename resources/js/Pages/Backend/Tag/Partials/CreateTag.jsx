@@ -48,7 +48,7 @@ export default function CreateTag({ open, setOpen }) {
         </DialogHeader>
 
         <form onSubmit={submit}>
-          <div className="flex gap-2 items-end">
+          <div className="flex items-end gap-2">
             <div className="w-2/3">
               <Label htmlFor="name">Name</Label>
               <Input
@@ -63,7 +63,7 @@ export default function CreateTag({ open, setOpen }) {
                 <InputError className="mt-2">{errors.name}</InputError>
               )}
             </div>
-            <div className="w-1/3 flex gap-2">
+            <div className="flex w-1/3 gap-2">
               <Button variant="outline" onClick={() => setOpen(!open)}>
                 Cancel
               </Button>

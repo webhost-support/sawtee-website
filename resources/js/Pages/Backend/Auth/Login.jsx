@@ -1,8 +1,8 @@
 import Checkbox from '@/components/Backend/Checkbox';
-import InputError from "@/components/Backend/InputError";
-import InputLabel from "@/components/Backend/InputLabel";
-import PrimaryButton from "@/components/Backend/PrimaryButton";
-import TextInput from "@/components/Backend/TextInput";
+import InputError from '@/components/Backend/InputError';
+import InputLabel from '@/components/Backend/InputLabel';
+import PrimaryButton from '@/components/Backend/PrimaryButton';
+import TextInput from '@/components/Backend/TextInput';
 import GuestLayout from '@/components/Layouts/GuestLayout';
 import { useToast } from '@/components/ui/use-toast';
 import { Head, Link, useForm } from '@inertiajs/react';

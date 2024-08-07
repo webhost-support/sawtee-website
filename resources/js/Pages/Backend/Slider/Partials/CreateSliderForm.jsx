@@ -22,8 +22,6 @@ import {
 import { useToast } from '@/components/ui/use-toast';
 import { useForm } from '@inertiajs/react';
 
-
-
 export default function CreateSliderForm({ open, setOpen, pages }) {
   const { data, setData, post, processing, errors, reset } = useForm({
     name: '',

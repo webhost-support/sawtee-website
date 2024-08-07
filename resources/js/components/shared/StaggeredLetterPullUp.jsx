@@ -27,7 +27,7 @@ export default function LetterPullUp({ words = 'SAWTEE CMS', className = '' }) {
           viewport={{ once: true }}
           custom={i}
           className={cn(
-            'text-center font-display text-xl md:text-3xl font-bold tracking-[-0.02em] drop-shadow-sm md:leading-[5rem]',
+            'font-display text-center text-xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-3xl md:leading-[5rem]',
             className
           )}
         >

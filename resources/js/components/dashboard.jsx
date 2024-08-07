@@ -1,20 +1,20 @@
 import { Button } from '@/components/ui/button';
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
 } from '@/components/ui/card';
 
 export function dashboard() {
   return (
     <div className="flex min-h-screen w-full">
       <div className="flex-1 bg-muted/40 p-6">
-        <header className="flex items-center justify-between mb-6">
+        <header className="mb-6 flex items-center justify-between">
           <h1 className="text-2xl font-bold">Recent Blog Posts</h1>
           <Button variant="outline" size="sm">
-            <PlusIcon className="w-4 h-4 mr-2" />
+            <PlusIcon className="mr-2 h-4 w-4" />
             New Post
           </Button>
         </header>
@@ -24,9 +24,9 @@ export function dashboard() {
               <CardTitle>How to Build a Successful Blog</CardTitle>
               <CardDescription>
                 <div className="flex items-center gap-2 text-muted-foreground">
-                  <UserIcon className="w-4 h-4" />
+                  <UserIcon className="h-4 w-4" />
                   <span>John Doe</span>
-                  <CalendarIcon className="w-4 h-4" />
+                  <CalendarIcon className="h-4 w-4" />
                   <span>May 1, 2023</span>
                 </div>
               </CardDescription>
@@ -44,9 +44,9 @@ export function dashboard() {
               <CardTitle>The Future of Content Marketing</CardTitle>
               <CardDescription>
                 <div className="flex items-center gap-2 text-muted-foreground">
-                  <UserIcon className="w-4 h-4" />
+                  <UserIcon className="h-4 w-4" />
                   <span>Jane Smith</span>
-                  <CalendarIcon className="w-4 h-4" />
+                  <CalendarIcon className="h-4 w-4" />
                   <span>April 15, 2023</span>
                 </div>
               </CardDescription>
@@ -63,9 +63,9 @@ export function dashboard() {
               <CardTitle>SEO Strategies for Bloggers</CardTitle>
               <CardDescription>
                 <div className="flex items-center gap-2 text-muted-foreground">
-                  <UserIcon className="w-4 h-4" />
+                  <UserIcon className="h-4 w-4" />
                   <span>Michael Johnson</span>
-                  <CalendarIcon className="w-4 h-4" />
+                  <CalendarIcon className="h-4 w-4" />
                   <span>March 30, 2023</span>
                 </div>
               </CardDescription>
@@ -144,4 +144,3 @@ function UserIcon(props) {
     </svg>
   );
 }
-

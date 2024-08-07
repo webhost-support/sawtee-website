@@ -56,7 +56,6 @@ export default function EditCategoryForm({
     setFilteredCategories(array);
   }, [data.type, categories]);
 
-
   const submit = e => {
     e.preventDefault();
     post(
@@ -149,7 +148,7 @@ export default function EditCategoryForm({
                           <Textarea
                             id="meta_description"
                             name="meta_description"
-                            className="block mt-1"
+                            className="mt-1 block"
                             value={data.meta_description}
                             placeholder="enter meta_description"
                             rows={3}
@@ -178,7 +177,7 @@ export default function EditCategoryForm({
                       <img
                         src={image}
                         alt="featured"
-                        className="rounded-md object-cover mt-1"
+                        className="mt-1 rounded-md object-cover"
                       />
                     </AspectRatio>
                   </div>

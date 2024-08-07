@@ -51,7 +51,7 @@ export default function Index({ auth, sections }) {
       accessorKey: 'description',
       header: 'Description',
       cell: ({ row }) => (
-        <p className="text-sm line-clamp-2">{row.getValue('description')}</p>
+        <p className="line-clamp-2 text-sm">{row.getValue('description')}</p>
       ),
     },
     {

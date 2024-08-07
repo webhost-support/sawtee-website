@@ -7,7 +7,7 @@ export default function OurWork({ themes, sections, content }) {
   const [intro, setIntro] = useState(null);
   const [sectors, setSectors] = useState(null);
 
-  const Themes = themes.filter((theme) => theme.title !== 'Covid');
+  const Themes = themes.filter(theme => theme.title !== 'Covid');
 
   useEffect(() => {
     const intro = sections.find(section => section.title === 'Intro');
@@ -17,45 +17,53 @@ export default function OurWork({ themes, sections, content }) {
   }, [sections]);
 
   return (
-    <div className="intro relative py-20 max-w-7xl px-5 md:px-10 mx-auto">
-      <h2 className="text-xl md:text-2xl lg:text-4xl dark:text-zinc-300 text-center mb-6">
+    <div className="intro relative mx-auto max-w-7xl px-5 py-20 md:px-10">
+      <h2 className="mb-6 text-center text-xl dark:text-zinc-300 md:text-2xl lg:text-4xl">
         Thematic Areas
       </h2>
 
-      <div className="flex flex-col max-w-4xl mx-auto gap-8 justify-center items-center relative mb-24">
+      <div className="relative mx-auto mb-24 flex max-w-4xl flex-col items-center justify-center gap-8">
         {intro && (
-          <blockquote className="blockquote text-xl bg-bgDarker/90 m-0 py-10 dark:text-zinc-400 self-center">
+          <blockquote className="blockquote m-0 self-center bg-bgDarker/90 py-10 text-xl dark:text-zinc-400">
             {htmlToText(intro.description)}
           </blockquote>
         )}
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 mb-10 ">
+      <div class="mb-10 grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-6">
         {Themes?.map((theme, index) => {
-            const colSpan = index <= 1  || index === Themes.length - 2 ? 3 : 2;
+          const colSpan = index <= 1 || index === Themes.length - 2 ? 3 : 2;
 
           return (
             <div
               key={theme.title}
-              className={cn("w-full bg-bgDarker last:col-span-3", `col-span-${colSpan}`)}
+              className={cn(
+                'w-full bg-bgDarker last:col-span-3',
+                `col-span-${colSpan}`
+              )}
             >
-                <div class="relative h-full">
-                <span class="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-sky-500 rounded-lg" />
+              <div class="relative h-full">
+                <span class="absolute left-0 top-0 ml-1 mt-1 h-full w-full rounded-lg bg-sky-500" />
 
-                    <div class="relative h-full p-5 bg-bgDarker border-2 border-sky-500 rounded-lg">
-                        <div class="flex items-center -mt-1">
-                            <h3 class="my-2 ml-3 text-lg font-bold text-slate-800 dark:text-slate-300">{theme.title}</h3>
-                        </div>
-                        <p class="mt-3 mb-1 text-xs font-medium text-sky-500 uppercase">------------</p>
-                        <p class="mb-2 text-slate-700 dark:text-slate-400">{theme.description}</p>
-                    </div>
+                <div class="relative h-full rounded-lg border-2 border-sky-500 bg-bgDarker p-5">
+                  <div class="-mt-1 flex items-center">
+                    <h3 class="my-2 ml-3 text-lg font-bold text-slate-800 dark:text-slate-300">
+                      {theme.title}
+                    </h3>
+                  </div>
+                  <p class="mb-1 mt-3 text-xs font-medium uppercase text-sky-500">
+                    ------------
+                  </p>
+                  <p class="mb-2 text-slate-700 dark:text-slate-400">
+                    {theme.description}
+                  </p>
                 </div>
-
+              </div>
             </div>
           );
         })}
       </div>
-      <div className="page_content grid md:grid-cols-2 mx-auto px-8 md:px-4 py-12 gap-8 items-center max-w-5xl">
+      <div className="page_content mx-auto grid max-w-5xl items-center gap-8 px-8 py-12 md:grid-cols-2 md:px-4">
         {sectors?.map(({ id, title, description, media, link }) => {
           return (
             <CardWithEffect key={id} className="cards max-w-lg p-0">

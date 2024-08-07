@@ -1,4 +1,3 @@
-
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import {
@@ -129,7 +128,10 @@ export default function SearchModal() {
       </div>
 
       <DialogContent
-        className={cn('dark:text-white ', posts ? 'max-w-2xl transition-all duration-200 ease-out' : '')}
+        className={cn(
+          'dark:text-white',
+          posts ? 'max-w-2xl transition-all duration-200 ease-out' : ''
+        )}
       >
         <DialogHeader>
           <DialogTitle>Search</DialogTitle>
@@ -145,7 +147,7 @@ export default function SearchModal() {
               <label htmlFor="search-modal">Search</label>
             </VisuallyHidden.Root>
             <svg
-              className=" h-4 w-4 shrink-0 fill-slate-500"
+              className="h-4 w-4 shrink-0 fill-slate-500"
               width="16"
               height="16"
               viewBox="0 0 16 16"
@@ -156,12 +158,12 @@ export default function SearchModal() {
             </svg>
             <Input
               id="search-modal"
-              className="[&::-webkit-search-decoration]:none w-full appearance-none border-0 bg-white dark:bg-gray-700 py-3 text-sm placeholder-slate-400 text-black focus:outline-none"
+              className="[&::-webkit-search-decoration]:none w-full appearance-none border-0 bg-white py-3 text-sm text-black placeholder-slate-400 focus:outline-none dark:bg-gray-700"
               type="search"
               placeholder="Search"
               onChange={e => setSearchQuery(e.target.value)}
             />
-            <Separator className=" border-b-2" />
+            <Separator className="border-b-2" />
           </div>
         </form>
         <ScrollArea className="max-h-[calc(85vh-44px)]">
@@ -196,26 +198,26 @@ export default function SearchModal() {
             </div>
           )}
 
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid gap-4 md:grid-cols-2">
             {posts?.map(({ id, title, excerpt, category, slug }) => {
               return (
                 <Card
                   key={id}
-                  className="group relative z-0 before:content:'' before:absolute before:top-[-24px] before:right-[-32px] before:h-8 before:w-8 before:rounded-[32px] before:z-[-1] before:scale-100 before:origin-center before:transition-transform before:bg-sky-500/50 hover:before:scale-[32] before:duration-300 before:ease-out overflow-hidden"
+                  className="before:content:'' group relative z-0 overflow-hidden before:absolute before:right-[-32px] before:top-[-24px] before:z-[-1] before:h-8 before:w-8 before:origin-center before:scale-100 before:rounded-[32px] before:bg-sky-500/50 before:transition-transform before:duration-300 before:ease-out hover:before:scale-[32]"
                 >
-                  <CardContent class="p-4 ">
+                  <CardContent class="p-4">
                     <Link
                       href={`/category/${category.slug}/${slug}`}
-                      className="flex flex-col gap-2 "
+                      className="flex flex-col gap-2"
                     >
-                      <h5 className="text-lg font-bold leading-5 tracking-tight text-gray-900 dark:text-white ">
+                      <h5 className="text-lg font-bold leading-5 tracking-tight text-gray-900 dark:text-white">
                         {title}
                       </h5>
-                      <p className="font-normal line-clamp-2 text-gray-700 text-sm dark:text-gray-400 ">
+                      <p className="line-clamp-2 text-sm font-normal text-gray-700 dark:text-gray-400">
                         {excerpt}
                       </p>
                       <div
-                        className="absolute top-0 right-0 flex justify-center items-center h-8 w-8 bg-gray-100 rounded-[0_4px_0_32px] group-hover:bg-transparent bg-sky-500/50 overflow-hidden"
+                        className="absolute right-0 top-0 flex h-8 w-8 items-center justify-center overflow-hidden rounded-[0_4px_0_32px] bg-gray-100 bg-sky-500/50 group-hover:bg-transparent"
                         href="#"
                       >
                         <div className="go-arrow">→</div>

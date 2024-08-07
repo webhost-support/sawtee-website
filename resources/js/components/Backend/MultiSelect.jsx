@@ -100,11 +100,11 @@ export const MultiSelect = React.forwardRef(
       <div {...props} className={cn('flex flex-col gap-4', className)}>
         <div
           className={cn(
-            'flex w-full p-1 rounded-md border min-h-10 h-auto items-center justify-between bg-inherit hover:bg-inherit'
+            'flex h-auto min-h-10 w-full items-center justify-between rounded-md border bg-inherit p-1 hover:bg-inherit'
           )}
         >
           {selectedValues.length > 0 ? (
-            <div className="flex justify-between items-center w-full">
+            <div className="flex w-full items-center justify-between">
               <div className="flex flex-wrap items-center">
                 {selectedValues.slice(0, maxCount).map(value => {
                   const option = options.find(o => {
@@ -134,7 +134,7 @@ export const MultiSelect = React.forwardRef(
                 {selectedValues.length > maxCount && (
                   <Badge
                     className={cn(
-                      'bg-transparent text-foreground border-foreground/1 hover:bg-transparent',
+                      'border-foreground/1 bg-transparent text-foreground hover:bg-transparent',
                       isAnimating ? 'animate-bounce' : '',
                       multiSelectVariants({ variant })
                     )}
@@ -153,7 +153,7 @@ export const MultiSelect = React.forwardRef(
               </div>
               <div className="flex items-center justify-between">
                 <XIcon
-                  className="h-4 mx-2 cursor-pointer text-muted-foreground"
+                  className="mx-2 h-4 cursor-pointer text-muted-foreground"
                   onClick={event => {
                     event.stopPropagation();
                     handleClear();
@@ -162,8 +162,8 @@ export const MultiSelect = React.forwardRef(
               </div>
             </div>
           ) : (
-            <div className="flex items-center justify-between w-full mx-auto">
-              <span className="text-sm text-muted-foreground mx-3">
+            <div className="mx-auto flex w-full items-center justify-between">
+              <span className="mx-3 text-sm text-muted-foreground">
                 No tags selected
               </span>
             </div>
@@ -173,12 +173,12 @@ export const MultiSelect = React.forwardRef(
           <DropdownMenuTrigger asChild>
             <Button
               variant="outline"
-              className="flex w-full items-center justify-between "
+              className="flex w-full items-center justify-between"
             >
-              <span className="text-sm text-muted-foreground mx-3">
+              <span className="mx-3 text-sm text-muted-foreground">
                 {placeholder}
               </span>
-              <ChevronDown className="h-4 cursor-pointer text-muted-foreground mx-2" />
+              <ChevronDown className="mx-2 h-4 cursor-pointer text-muted-foreground" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-64">
@@ -192,7 +192,9 @@ export const MultiSelect = React.forwardRef(
               Select All
             </DropdownMenuCheckboxItem>
             {options.map(option => {
-              const selected = selectedValues.find(v => v.value === option.value);
+              const selected = selectedValues.find(
+                v => v.value === option.value
+              );
               return (
                 <DropdownMenuCheckboxItem
                   key={Math.random() + option.value}

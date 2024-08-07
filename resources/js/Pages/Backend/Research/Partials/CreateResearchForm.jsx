@@ -63,7 +63,7 @@ export default function CreateResearchForm() {
   return (
     <form onSubmit={submit}>
       <div className="grid grid-cols-12 gap-4">
-        <div className="flex flex-col gap-8 col-span-12 self-center md:col-span-8 px-4">
+        <div className="col-span-12 flex flex-col gap-8 self-center px-4 md:col-span-8">
           <div className="mx-2">
             <Label htmlFor="title">Title</Label>
             <Input
@@ -115,7 +115,7 @@ export default function CreateResearchForm() {
             )}
           </div>
         </div>
-        <div className="flex flex-col gap-8 self-center col-span-12 px-3 md:col-span-4">
+        <div className="col-span-12 flex flex-col gap-8 self-center px-3 md:col-span-4">
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
               <AccordionTrigger>
@@ -124,7 +124,7 @@ export default function CreateResearchForm() {
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <QuestionMarkCircledIcon className="w-3 h-3" />
+                        <QuestionMarkCircledIcon className="h-3 w-3" />
                       </TooltipTrigger>
                       <TooltipContent>
                         <p>Add meta-title and meta-description for SEO</p>
@@ -155,7 +155,7 @@ export default function CreateResearchForm() {
                     <Textarea
                       id="meta_description"
                       name="meta_description"
-                      className="block mt-1"
+                      className="mt-1 block"
                       placeholder="enter meta_description"
                       rows={3}
                       onChange={e =>
@@ -230,7 +230,7 @@ export default function CreateResearchForm() {
                   <img
                     src={image}
                     alt="featured"
-                    className="rounded-md object-cover w-full h-full"
+                    className="h-full w-full rounded-md object-cover"
                   />
                 </AspectRatio>
               </div>

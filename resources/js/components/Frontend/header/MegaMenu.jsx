@@ -34,7 +34,7 @@ const ListContainerVariants = {
 const AboutMegaMenu = ({ item, experts, introText, introImage, ...rest }) => {
   return (
     <ul
-      className="relative grid gap-6 px-6 mx-auto md:grid-cols-5 lg:grid-cols-7 grid-rows-auto md:grid-rows-[repeat(2, minmax(auto, 250px))] xl:grid-rows-[auto] p-4 w-[90vw] grid-cols-1 px-8 py-10 gap-4    place-items-center"
+      className="grid-rows-auto md:grid-rows-[repeat(2, minmax(auto, 250px))] relative mx-auto grid w-[90vw] grid-cols-1 place-items-center gap-4 gap-6 p-4 px-6 px-8 py-10 md:grid-cols-5 lg:grid-cols-7 xl:grid-rows-[auto]"
       {...rest}
     >
       <div className="col-span-1 self-center">
@@ -49,9 +49,9 @@ const AboutMegaMenu = ({ item, experts, introText, introImage, ...rest }) => {
                 key={child.title}
                 as={motion.li}
                 variants={ListVariants}
-                className="text-sm text-left lg:text-md font-medium relative cursor-pointer pb-4"
+                className="lg:text-md relative cursor-pointer pb-4 text-left text-sm font-medium"
               >
-                <Link className=" font-serif text-gray-200" link={child.url}>
+                <Link className="font-serif text-gray-200" link={child.url}>
                   {child.title}
                 </Link>
               </motion.li>
@@ -59,23 +59,23 @@ const AboutMegaMenu = ({ item, experts, introText, introImage, ...rest }) => {
           })}
         </motion.ul>
       </div>
-      <div className="md:col-span-3 xl:col-span-3 place-center mx-auto">
+      <div className="place-center mx-auto md:col-span-3 xl:col-span-3">
         {/* <div
           className="relative flex justify-center items-center overflow-hidden rounded-xl bg-no-repeat bg-cover bg-center px-6 py-12 after:content:' ' after:absolute after:inset-0 after:w-full after:z-10 after:h-full after:bg-[#000]/[0.4] bg-blend-multiply blur-[1px]"
           style={{
             backgroundImage: `url(${introImage})`,
           }}
         > */}
-        <div className="relative flex justify-center items-center overflow-hidden rounded-xl bg-no-repeat bg-cover bg-right-bottom  bg-black/40 w-full aspect-[16/9]">
+        <div className="relative flex aspect-[16/9] w-full items-center justify-center overflow-hidden rounded-xl bg-black/40 bg-cover bg-right-bottom bg-no-repeat">
           <Globeanime />
-          <p className="flex h-full w-full px-6 items-center justify-center text-justify text-sm text-gray-200 m-0 self-center z-20 leading-6 bg-[rgba(0,0,0,0.3)]">
+          <p className="z-20 m-0 flex h-full w-full items-center justify-center self-center bg-[rgba(0,0,0,0.3)] px-6 text-justify text-sm leading-6 text-gray-200">
             {introText}
           </p>
         </div>
       </div>
-      <div className=" md:col-span-5 xl:col-span-3 row-span-1 gap-4">
-        <p className="text-xl pb-4 font-semibold text-gray-200">Our Experts</p>
-        <div className="grid md:grid-cols-6 xl:grid-cols-3 gap-4">
+      <div className="row-span-1 gap-4 md:col-span-5 xl:col-span-3">
+        <p className="pb-4 text-xl font-semibold text-gray-200">Our Experts</p>
+        <div className="grid gap-4 md:grid-cols-6 xl:grid-cols-3">
           {experts?.map(expert => {
             return (
               <div key={expert.name} className="col-span-1">
@@ -91,10 +91,10 @@ const AboutMegaMenu = ({ item, experts, introText, introImage, ...rest }) => {
 
 const OurWorkMegaMenu = ({ item, ...rest }) => {
   return (
-    <ul className="grid p-4 w-[90vw] grid-cols-1 px-8 py-10 gap-4" {...rest}>
-      <div className="w-full flex flex-col gap-10 justify-center items-center mx-auto">
+    <ul className="grid w-[90vw] grid-cols-1 gap-4 p-4 px-8 py-10" {...rest}>
+      <div className="mx-auto flex w-full flex-col items-center justify-center gap-10">
         <Link
-          className="text-2xl font-serif text-gray-200"
+          className="font-serif text-2xl text-gray-200"
           href={item.children[0].url}
         >
           {item.children[0].title}
@@ -103,18 +103,18 @@ const OurWorkMegaMenu = ({ item, ...rest }) => {
           variants={ListContainerVariants}
           initial={'closed'}
           whileInView={'open'}
-          className="grid grid-cols-2 gap-4 w-full"
+          className="grid w-full grid-cols-2 gap-4"
         >
           {item.children[0].children.map(grandChild => {
             return (
               <motion.li
                 key={grandChild.title}
                 variants={ListVariants}
-                className="text-sm md:text-md col-span-1 relative cursor-pointer pb-3 "
+                className="md:text-md relative col-span-1 cursor-pointer pb-3 text-sm"
               >
                 <Link
                   href={grandChild.url}
-                  className="no-underline text-gray-200"
+                  className="text-gray-200 no-underline"
                 >
                   {grandChild.title}{' '}
                 </Link>
@@ -123,7 +123,7 @@ const OurWorkMegaMenu = ({ item, ...rest }) => {
           })}
         </motion.ul>
 
-        <Separator className="w-full my-4 border-b-2" />
+        <Separator className="my-4 w-full border-b-2" />
         <div className="grid grid-cols-2 gap-6">
           {item.children.map((grandChildren, idx) => {
             if (idx !== 0) {
@@ -131,7 +131,7 @@ const OurWorkMegaMenu = ({ item, ...rest }) => {
                 <div className="col-span-1 space-y-6" key={grandChildren.title}>
                   <Link
                     href={grandChildren.url}
-                    className="no-underline text-2xl text-gray-200"
+                    className="text-2xl text-gray-200 no-underline"
                   >
                     {grandChildren.title}
                   </Link>
@@ -147,11 +147,11 @@ const OurWorkMegaMenu = ({ item, ...rest }) => {
                         <motion.li
                           key={child.title}
                           variants={ListVariants}
-                          className="text-sm col-span-1 md:text-md relative cursor-pointer pb-3"
+                          className="md:text-md relative col-span-1 cursor-pointer pb-3 text-sm"
                         >
                           <Link
                             href={child.url}
-                            className="no-underline text-gray-200"
+                            className="text-gray-200 no-underline"
                           >
                             {child.title}
                           </Link>

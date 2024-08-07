@@ -1,19 +1,20 @@
-
 import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
 import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel, SelectTrigger, SelectValue
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
 } from '@/components/ui/select';
 import { useToast } from '@/components/ui/use-toast';
 import { slugify } from '@/lib/helpers';
@@ -69,7 +70,7 @@ export default function ManageMenu({
       )}
 
       {menus.length > 0 && (
-        <div className="flex space-x-4 mb-4 max-w-xl">
+        <div className="mb-4 flex max-w-xl space-x-4">
           <Select
             placeholder="Select menu to edit"
             value={desiredMenu.id}
@@ -93,13 +94,13 @@ export default function ManageMenu({
         </div>
       )}
 
-      <div className="grid md:gird-cols-2 lg:grid-cols-[400px_auto] gap-8 grid-rows-auto">
+      <div className="md:gird-cols-2 grid-rows-auto grid gap-8 lg:grid-cols-[400px_auto]">
         <div className="col-span-1">
-          <div className="py-2 px-6 bg-secondary text-secondary-foreground rounded-md">
+          <div className="rounded-md bg-secondary px-6 py-2 text-secondary-foreground">
             Add Menu Items
           </div>
           {desiredMenu && (
-            <div className="p-6 mt-6 shadow-md rounded-lg space-y-4">
+            <div className="mt-6 space-y-4 rounded-lg p-6 shadow-md">
               <AddToMenu
                 options={categories}
                 name="categories"
@@ -131,7 +132,7 @@ export default function ManageMenu({
           )}
         </div>
         <div className="col-span-1">
-          <div className="py-2 px-6 bg-secondary text-secondary-foreground rounded-md">
+          <div className="rounded-md bg-secondary px-6 py-2 text-secondary-foreground">
             Menu Structure
           </div>
           <MenuStructure
@@ -353,7 +354,7 @@ const AddToMenu = ({ options, name, menu, menuItems }) => {
 
 const MenuStructure = ({ firstLevelMenuItems, menuItems }) => {
   return (
-    <div className="p-6 mt-6 shadow-md rounded-lg">
+    <div className="mt-6 rounded-lg p-6 shadow-md">
       {firstLevelMenuItems && firstLevelMenuItems.length > 0 && (
         <MenuItemsList
           firstLevelMenuItems={firstLevelMenuItems}
@@ -363,5 +364,3 @@ const MenuStructure = ({ firstLevelMenuItems, menuItems }) => {
     </div>
   );
 };
-
-

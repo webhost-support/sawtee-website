@@ -51,7 +51,6 @@ export default function CreateCategoryForm({ open, setOpen, categories }) {
     setFilteredCategories(array);
   }, [data.type, categories]);
 
-
   const submit = e => {
     e.preventDefault();
 
@@ -79,10 +78,9 @@ export default function CreateCategoryForm({ open, setOpen, categories }) {
             const value = errors[key];
             reset(key);
             return toast({
-                title: "Uh oh, Something went wrong",
-                description: `${key.toUpperCase()} field error` + `: ${value}`,
-              });
-
+              title: 'Uh oh, Something went wrong',
+              description: `${key.toUpperCase()} field error` + `: ${value}`,
+            });
           }
         }
       },
@@ -91,7 +89,7 @@ export default function CreateCategoryForm({ open, setOpen, categories }) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-2xl overflow-y-auto">
+      <DialogContent className="overflow-y-auto sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>Create</DialogTitle>
           <DialogDescription>Create new categoy.</DialogDescription>
@@ -146,7 +144,7 @@ export default function CreateCategoryForm({ open, setOpen, categories }) {
                           <Textarea
                             id="meta_description"
                             name="meta_description"
-                            className="block mt-1"
+                            className="mt-1 block"
                             placeholder="enter meta_description"
                             rows={3}
                             onChange={e =>
@@ -173,7 +171,7 @@ export default function CreateCategoryForm({ open, setOpen, categories }) {
                       <img
                         src={image}
                         alt="featured"
-                        className="rounded-md object-cover mt-1"
+                        className="mt-1 rounded-md object-cover"
                       />
                     </AspectRatio>
                   </div>

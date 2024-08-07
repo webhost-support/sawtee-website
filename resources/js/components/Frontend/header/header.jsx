@@ -7,7 +7,7 @@ import SearchModal from './searchModal';
 
 const SiteHeader = props => (
   <header
-    className="flex justify-between items-center py-2 bg-zinc-50/50 dark:bg-bgDarker/95 backdrop-blur-xl sticky top-0 left-0 shadow-md z-40 transition-transform ease 0.25s"
+    className="ease 0.25s sticky left-0 top-0 z-40 flex items-center justify-between bg-zinc-50/50 py-2 shadow-md backdrop-blur-xl transition-transform dark:bg-bgDarker/95"
     {...props}
   />
 );
@@ -15,7 +15,7 @@ const SiteHeader = props => (
 const SiteHeaderInner = ({ className, children }) => (
   <div
     className={cn(
-      'flex justify-between items-center py-2 px-4 min-h-[5rem] w-full mx-8',
+      'mx-8 flex min-h-[5rem] w-full items-center justify-between px-4 py-2',
       className
     )}
   >
@@ -27,15 +27,15 @@ const Logo = ({ text = 'SAWTEE', src }) => {
   if (src) {
     return <img src={src} alt="Logo" className="w-32 object-cover" />;
   }
-    return (
-      <P
-        className={
-          'font-bold text-theme-500 font-sans uppercase text-center md:text-left'
-        }
-      >
-        {text}
-      </P>
-    );
+  return (
+    <P
+      className={
+        'text-center font-sans font-bold uppercase text-theme-500 md:text-left'
+      }
+    >
+      {text}
+    </P>
+  );
 };
 
 const SiteLogo = ({ src, established }) => {
@@ -61,12 +61,11 @@ const Header = ({
   children,
   ...props
 }) => {
-
   return (
     <SiteHeader {...props}>
       <SiteHeaderInner>
         <div
-          className="flex justify-between w-full"
+          className="flex w-full justify-between"
           flex={{ base: 1 }}
           align="center"
           justify={'space-between'}

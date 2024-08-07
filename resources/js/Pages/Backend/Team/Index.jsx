@@ -65,7 +65,7 @@ export default function Index({ auth, teams, images }) {
           <img
             src={row.original.media[0]?.preview_url}
             alt={row.original.name}
-            className="w-8 h-8 rounded-full"
+            className="h-8 w-8 rounded-full"
           />
         );
       },

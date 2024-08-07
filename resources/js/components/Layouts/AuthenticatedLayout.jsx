@@ -1,9 +1,9 @@
-import Header from "@/components/ui/header";
-import Sidebar from "@/components/ui/sidebar";
+import Header from '@/components/ui/header';
+import Sidebar from '@/components/ui/sidebar';
 import { Toaster } from '@/components/ui/toaster';
 import { DashBoardMenuItems } from '@/lib/data';
-import { cn } from "@/lib/utils";
-import { useWindowWidth } from "@react-hook/window-size";
+import { cn } from '@/lib/utils';
+import { useWindowWidth } from '@react-hook/window-size';
 import React from 'react';
 
 export default function Authenticated({ user, children }) {

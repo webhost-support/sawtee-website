@@ -52,7 +52,6 @@ export default function EditPublicationForm({ publication, categories, tags }) {
     });
   }, [tags, publication]);
 
-
   function setDataTags(selectedValues) {
     const array = [];
     selectedValues.map(item => {
@@ -97,7 +96,7 @@ export default function EditPublicationForm({ publication, categories, tags }) {
   return (
     <form onSubmit={submit}>
       <div className="grid grid-cols-12 gap-4">
-        <div className="flex flex-col gap-8 col-span-12 self-center md:col-span-8 px-4">
+        <div className="col-span-12 flex flex-col gap-8 self-center px-4 md:col-span-8">
           <div className="mx-2">
             <Label htmlFor="title">Title/Issue</Label>
             <Input
@@ -147,7 +146,7 @@ export default function EditPublicationForm({ publication, categories, tags }) {
             )}
           </div>
         </div>
-        <div className="flex flex-col gap-8 self-center col-span-12 px-3 md:col-span-4">
+        <div className="col-span-12 flex flex-col gap-8 self-center px-3 md:col-span-4">
           <fieldset className="mx-2">
             <Label as="legend" htmlFor="category_id">
               Category

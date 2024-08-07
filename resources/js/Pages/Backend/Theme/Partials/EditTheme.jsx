@@ -52,7 +52,7 @@ export default function EditTheme({ theme, open, setOpen }) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-2xl overflow-y-auto">
+      <DialogContent className="overflow-y-auto sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>Edit theme</DialogTitle>
           <DialogDescription>{`Edit theme: ${theme.title}.`}</DialogDescription>

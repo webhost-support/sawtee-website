@@ -11,7 +11,7 @@ export default function UpdateProfileInformation({
   className = '',
 }) {
   const user = usePage().props.auth.user;
-    const { toast } = useToast();
+  const { toast } = useToast();
   const { data, setData, patch, errors, processing, recentlySuccessful } =
     useForm({
       name: user.name,
@@ -36,7 +36,6 @@ export default function UpdateProfileInformation({
         });
       },
     });
-
   };
 
   return (

@@ -103,10 +103,7 @@ export default function Index({
             {row.original.tags?.map(tag => (
               <span
                 key={tag.id}
-                className="
-                inline-flex items-center rounded-md  px-2 py-1 text-xs font-medium  ring-1 ring-inset
-                bg-blue-50 text-blue-600 ring-blue-500/10
-                "
+                className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-600 ring-1 ring-inset ring-blue-500/10"
               >
                 {tag.name}
               </span>

@@ -45,7 +45,7 @@ export default function CreateTheme({ oepn, setOpen }) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-2xl overflow-y-auto">
+      <DialogContent className="overflow-y-auto sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>Create theme</DialogTitle>
           <DialogDescription>Add new theme.</DialogDescription>

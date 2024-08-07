@@ -1,6 +1,6 @@
 import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
-import { Head } from "@inertiajs/react";
-import EditPostForm from "./Partials/EditPostForm";
+import { Head } from '@inertiajs/react';
+import EditPostForm from './Partials/EditPostForm';
 
 export default function Edit({
   post,

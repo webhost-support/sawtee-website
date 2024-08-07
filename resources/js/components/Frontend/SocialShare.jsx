@@ -1,21 +1,19 @@
 import {
-    EmailIcon,
-    EmailShareButton,
-    FacebookIcon,
-    FacebookShareButton,
-    LinkedinIcon,
-    LinkedinShareButton,
-    TwitterShareButton,
-    XIcon,
+  EmailIcon,
+  EmailShareButton,
+  FacebookIcon,
+  FacebookShareButton,
+  LinkedinIcon,
+  LinkedinShareButton,
+  TwitterShareButton,
+  XIcon,
 } from 'react-share';
 
 const SocialShare = ({ url, title, excerpt }) => {
   return (
-    <div className='mt-8' >
-      <div className='flex gap-4'>
-        <p className='text-2xl font-semibold'>
-          Share:{' '}
-        </p>
+    <div className="mt-8">
+      <div className="flex gap-4">
+        <p className="text-2xl font-semibold">Share: </p>
         <FacebookShareButton url={url}>
           <FacebookIcon size="28px" />
         </FacebookShareButton>
