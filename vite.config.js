@@ -11,10 +11,4 @@ export default defineConfig({
     }),
     react(),
   ],
-  build: {
-    sourcemap: false,
-    commonjsOptions: {
-      transformMixedEsModules: true,
-    },
-  },
 });

@@ -52,7 +52,7 @@ Route::get('/{pages:slug}', [FrontendController::class, 'page'])->name('page.sho
 Route::get('/category/{categories:slug}/{subcategory?}/{post?}', [FrontendController::class, 'category'])->name('category.show');
 
 
-require __DIR__ . '/auth.php';
+// require __DIR__ . '/auth.php';
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->as('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

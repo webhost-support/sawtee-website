@@ -57,7 +57,7 @@ export default function Footer({ menu, socialMenu }) {
                         const { url, title } = child_item;
                         if (title.includes('Address')) {
                           return (
-                            <MenuItem>
+                            <MenuItem key={title}>
                               <MapPinned className="h-6 w-6" />
                               <TooltipProvider>
                                 <Tooltip>

@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils';
 
 const FeaturedMedia = ({ src, srcSet, alt, className }) => {
   return (
-    <picutre>
+    <picture>
       <img
         className={cn(
           'relative aspect-video h-full w-full bg-bgDarker object-cover',
@@ -14,7 +14,7 @@ const FeaturedMedia = ({ src, srcSet, alt, className }) => {
         alt={alt || 'Hero Image'}
         loading="lazy"
       />
-    </picutre>
+    </picture>
   );
 };
 
