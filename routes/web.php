@@ -1,7 +1,6 @@
 <?php
 
-
-
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\SubscriptionController;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +17,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 require __DIR__ . '/auth.php';
+
+Route::get('/admin', function () {
+    return to_route('login');
+});
+
+Route::get('/admin/login', [AuthenticatedSessionController::class, 'create'])
+    ->name('login');
+
+
+Route::post('/admin/login', [AuthenticatedSessionController::class, 'store']);
 
 Route::post('/subscribers/subscribe', [SubscriptionController::class, 'store'])->name('subscription.store');
 Route::get('/subscribers/verify/{token}', [SubscriptionController::class, 'verify'])->name('subscription.verify');

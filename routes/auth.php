@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\TeamController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SubscriptionController;
 
 Route::middleware('guest')->group(function () {
     // Route::get('register', [RegisteredUserController::class, 'create'])
