@@ -72,7 +72,7 @@ class Handler extends ExceptionHandler
                 ->with('error', $this->messages[$status]);
         }
 
-        return inertia('Errors/Error', [
+        return Inertia::render('Errors/Error', [
             'status' => $status,
             'message' => $this->messages[$status],
         ])
