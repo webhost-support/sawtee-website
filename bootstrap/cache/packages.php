@@ -10,6 +10,13 @@
       'Debugbar' => 'Barryvdh\\Debugbar\\Facades\\Debugbar',
     ),
   ),
+  'barryvdh/laravel-ide-helper' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider',
+    ),
+  ),
   'enflow/laravel-social-share' => 
   array (
     'providers' => 
@@ -103,18 +110,6 @@
     'providers' => 
     array (
       0 => 'Pest\\Laravel\\PestServiceProvider',
-    ),
-  ),
-  'sentry/sentry-laravel' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Sentry\\Laravel\\ServiceProvider',
-      1 => 'Sentry\\Laravel\\Tracing\\ServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'Sentry' => 'Sentry\\Laravel\\Facade',
     ),
   ),
   'spatie/laravel-google-fonts' => 
