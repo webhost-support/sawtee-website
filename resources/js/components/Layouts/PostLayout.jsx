@@ -40,12 +40,6 @@ const PostLayout = ({
             srcSet={srcSet}
           />
         )}
-        <PostMeta
-          className="py-4"
-          author={post.author}
-          date={post.published_at}
-          readingTime={readingTime}
-        />
       </div>
 
       {/* <PostProgressBar value={scroll} /> */}
@@ -60,8 +54,14 @@ const PostLayout = ({
         )}
 
         {!isNewsletter && (
-          <div className="post-body grid pt-10 leading-8 lg:grid-cols-12">
-            <div className="post-content ml-24 max-w-[60ch] px-14 text-lg lg:col-span-8">
+          <div className="post-body grid gap-6 pt-10 leading-8 lg:grid-cols-12">
+            <div className="post-content max-w-[60ch] text-lg lg:col-span-8 lg:ml-14">
+              <PostMeta
+                className="py-2"
+                author={post.author}
+                date={post.published_at}
+                readingTime={readingTime}
+              />
               <div className="post-content prose-base">{children}</div>
               {post.tags.length > 0 && <PostTags tags={post.tags} />}
 

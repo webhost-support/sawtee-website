@@ -1,9 +1,9 @@
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
 } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
 import { useEffect, useState } from 'react';
@@ -48,13 +48,13 @@ const FullWidthCarousel = ({
           {slides?.map(slide => (
             <CarouselItem
               key={slide.id}
-              className="group relative flex h-full w-full items-center justify-center p-0"
+              className="group relative flex w-full items-center justify-center p-0"
             >
               <img
                 src={slide.media[0].original_url}
                 alt="slide"
                 loading="lazy"
-                className="lazy aspect-video w-full object-cover grayscale transition-all duration-500 ease-in group-hover:grayscale-0"
+                className="aspect-video h-full w-full object-cover grayscale transition-all duration-500 ease-in group-hover:grayscale-0"
               />
               <div className="absolute inset-0 flex h-full w-full items-center justify-center bg-black/20">
                 <span className="text-4xl font-semibold leading-5 tracking-normal text-secondary-foreground text-white">

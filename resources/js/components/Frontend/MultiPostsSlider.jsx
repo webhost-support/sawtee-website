@@ -1,13 +1,12 @@
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
 } from '@/components/ui/carousel';
 
 // import required modules
-import { Link } from '@inertiajs/react';
 import 'swiper/css';
 import 'swiper/css/scrollbar';
 import { Badge } from '../ui/badge';
@@ -40,7 +39,9 @@ const MultiPostsCarousel = ({ children, data, ...rest }) => {
                   imageBlendMode: 'grayscale',
                 }}
               >
-                <Link
+                <a
+                  target="_blank"
+                  rel="noreferrer"
                   href={`/publications/${publication.file.name}`}
                   className="absolute inset-0 bg-gradient-to-br from-transparent to-black/50"
                 />
@@ -50,20 +51,22 @@ const MultiPostsCarousel = ({ children, data, ...rest }) => {
                   </Badge>
                 </div>
                 <div className="z-10 w-full rounded-b-md p-2 text-sm font-medium leading-4 text-white transition-all duration-200 ease-in-out group-hover:bg-black/70 group-hover:text-sky-400">
-                  <Link
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
                     href={`/publications/${publication.file.name}`}
                     className="hover:underline group-hover:underline"
                   >
                     {publication.title}
-                  </Link>
+                  </a>
                 </div>
               </div>
             </CarouselItem>
           );
         })}
       </CarouselContent>
-      <CarouselPrevious className="dark:text-white" />
-      <CarouselNext className="dark:text-white" />
+      <CarouselPrevious className="dark:text-white border-borderColor" />
+      <CarouselNext className="dark:text-white border-borderColor" />
     </Carousel>
   );
 };

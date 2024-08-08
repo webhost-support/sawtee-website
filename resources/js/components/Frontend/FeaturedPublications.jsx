@@ -37,9 +37,11 @@ export const FeaturedPublications = ({ publications }) => {
                   </Badge>
                 </Link>
 
-                <Link
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group-hover:opacity-80"
-                  href={`category/publications/${publication.file?.name}`}
+                  href={`/publications/${publication.file?.name}`}
                 >
                   <p className="md:text-md font-sans text-sm leading-4 text-secondary-foreground group-hover:underline">
                     {publication.title}
@@ -48,7 +50,7 @@ export const FeaturedPublications = ({ publications }) => {
                   <p className="mt-1 text-xs text-muted-foreground">
                     {publication.subtitle}
                   </p>
-                </Link>
+                </a>
               </div>
 
               {media && (

@@ -1,5 +1,4 @@
 // import required modules
-import { Link } from '@inertiajs/react';
 import { ArrowLeftIcon, ArrowRightIcon, PlayCircleIcon } from 'lucide-react';
 import { useRef } from 'react';
 import 'swiper/css';
@@ -70,9 +69,14 @@ const VideoCarousel = ({
                 <div className="group relative h-full w-full overflow-hidden rounded-lg border">
                   <PlayCircleIcon
                     aria-label={'Play Button'}
-                    className="duration-250 absolute left-1/2 top-1/2 -z-[1] h-12 w-12 -translate-x-1/2 -translate-y-1/2 text-red-500 opacity-50 transition-all ease-in-out group-hover:opacity-100"
+                    className="duration-250 absolute left-1/2 top-1/2 z-10 h-12 w-12 -translate-x-1/2 -translate-y-1/2 text-red-500 opacity-50 transition-all ease-in-out group-hover:opacity-100"
                   />
-                  <Link className="" target="_blank" href={article.link}>
+                  <a
+                    className="z-20"
+                    target="_blank"
+                    rel="noreferrer"
+                    href={article.link}
+                  >
                     <img
                       className="h-full w-full object-cover"
                       alt={article.title}
@@ -82,7 +86,7 @@ const VideoCarousel = ({
                           : '/assets/SM-placeholder-1024x512.png'
                       }
                     />
-                  </Link>
+                  </a>
                 </div>
               </swiper-slide>
             );
@@ -108,7 +112,7 @@ const VideoCarousel = ({
                   <div className="relative max-w-24 overflow-hidden border">
                     <PlayCircleIcon
                       aria-label={'Play Button'}
-                      className="duration-250 absolute left-1/2 top-1/2 -z-[1] h-6 w-6 -translate-x-1/2 -translate-y-1/2 text-red-500 opacity-50 transition-all ease-in-out group-hover:opacity-100"
+                      className="duration-250 absolute left-1/2 top-1/2 h-6 w-6 -translate-x-1/2 -translate-y-1/2 text-red-500 opacity-50 transition-all ease-in-out group-hover:opacity-100"
                     />
                     <img
                       className="aspect-[5/3] h-full w-full rounded-md object-cover"

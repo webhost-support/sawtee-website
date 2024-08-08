@@ -9,7 +9,7 @@ import SimpleList from '@/components/Frontend/SimpleList';
 import SvgBackground from '@/components/Frontend/SvgBackground';
 import VideoCarousel from '@/components/Frontend/VideoCarousel';
 import FeaturedSection from '@/components/Frontend/feature';
-import BoxReveal from '@/components/shared/BoxReveal';
+import { FadeText } from '@/components/shared/FadeText';
 import { formatDate } from '@/lib/helpers';
 import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
@@ -77,7 +77,7 @@ const Home = ({
           className="grid grid-cols-1 gap-10 lg:grid-cols-6"
           id="carousel-section"
         >
-          <div className="overflow-hidden rounded-xl shadow-xl lg:col-span-4 lg:rounded-[0_1rem_1rem_0]">
+          <div className="overflow-hidden rounded-xl place-self-center shadow-xl lg:col-span-4 lg:rounded-[0_1rem_1rem_0]">
             <div className="mx-auto w-full max-w-5xl">
               {slides && (
                 <FullWidthCarousel
@@ -205,12 +205,14 @@ const Home = ({
                   )[0];
                   return (
                     <li className="group mb-4" key={item.id}>
-                      <Link
+                      <a
                         className="md:text-md font-sans text-sm leading-5 text-secondary-foreground underline underline-offset-2 group-hover:text-primary/80 group-hover:underline-offset-4 dark:group-hover:text-secondary-foreground/80 lg:text-lg"
                         href={file?.original_url}
+                        target='_blank'
+                        rel='noreferrer'
                       >
                         {item.title}
-                      </Link>
+                      </a>
                     </li>
                   );
                 })}
@@ -279,15 +281,13 @@ const Section = ({ children, title = null, className, dark }) => {
 const Title = ({ title }) => {
   return (
     <div className="mb-12">
-      <BoxReveal
-        boxColor={'rgb(14 165 233 / var(--tw-bg-opacity))'}
-        duration={0.5}
+      <FadeText
+        text={title}
+        className="flex items-center text-xl font-bold text-primary md:text-2xl lg:text-3xl xl:text-4xl"
       >
-        <h3 className="flex items-center text-xl font-bold text-primary md:text-2xl lg:text-3xl xl:text-4xl">
-          {title}
-        </h3>
-      </BoxReveal>
-      <div className="h-2 w-[8%] bg-sky-500" />
+        {title}
+      </FadeText>
+      <div className="h-2 w-[8%] bg-gradient-to-l from-theme-50 to-theme-300 dark:bg-gradient-to-l dark:from-theme-300 dark:to-theme-500" />
     </div>
   );
 };
