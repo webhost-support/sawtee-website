@@ -1,18 +1,15 @@
+import { useEffect } from 'react';
 import { Input } from '../ui/input';
 
 // A debounced input react component
 function DebouncedInput({
   className,
-  value: initialValue,
+  value,
+  setValue,
   onChange,
   debounce = 500,
   ...props
 }) {
-  const [value, setValue] = useState(initialValue);
-
-  useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {

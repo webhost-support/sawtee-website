@@ -249,8 +249,11 @@ class FrontendController extends Controller
         $query = $request->query();
         // $publications = Publication::search($request->search)->get();
         // $research = Research::search($request->search)->get();
-        $posts = Post::search($query['query'])->get();
+
+        $posts = Post::search($query['query'])->paginate(15);
+
+        // dd($posts);
         // $result = array_merge($posts, $publications, $research);
-        return response()->json($posts->load('category'));
+        return response()->json($posts);
     }
 }
