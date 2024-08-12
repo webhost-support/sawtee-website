@@ -62,7 +62,7 @@ const PostLayout = ({
                 date={post.published_at}
                 readingTime={readingTime}
               />
-              <div className="post-content prose-base">{children}</div>
+              <div className="post-content prose-base text-lg">{children}</div>
               {post.tags.length > 0 && <PostTags tags={post.tags} />}
 
               <SocialShare
@@ -72,7 +72,7 @@ const PostLayout = ({
               />
             </div>
             <aside className="sticky top-32 h-full w-full lg:col-span-4">
-              <SidebarWidget title="Related Posts" array={relatedPosts} />
+              <SidebarWidget title="Related Posts" array={relatedPosts} link={`/${post.category.slug}`} />
             </aside>
           </div>
         )}

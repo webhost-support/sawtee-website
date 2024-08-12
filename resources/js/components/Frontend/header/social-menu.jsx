@@ -1,5 +1,10 @@
 import { cn } from '@/lib/utils';
-import { FacebookIcon, LinkedinIcon, TwitterIcon, YoutubeIcon } from '../icons';
+import {
+  FacebookIcon,
+  LinkedinIcon,
+  TwitterIcon,
+  YoutubeIcon,
+} from '../../shared/icons';
 
 // warning for showSocialLinks and menu.length
 export const SocialMenu = ({ menu, className, ...props }) => (

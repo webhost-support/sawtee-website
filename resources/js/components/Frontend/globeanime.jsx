@@ -1,10 +1,11 @@
 'use client';
 import anime from 'animejs';
-import React, { useEffect, useRef, useState } from 'react';
-import { useTheme } from '../theme-provider';
+import { useEffect, useRef } from 'react';
 
 const Globeanime = ({ darkMode = false }) => {
   const ref = useRef(null);
+
+  const stopColor= darkMode ? '#FFFFFF' : '#000000';
 
   const dots = [
     {
@@ -174,17 +175,17 @@ const Globeanime = ({ darkMode = false }) => {
               {/* Define colors for both light and dark modes */}
               <stop
                 offset="0"
-                stopColor={darkMode ? '#000000' : '#FFFFFF'}
+                stopColor={stopColor}
                 stopOpacity="0"
               />
               <stop
                 offset="0.5"
-                stopColor={darkMode ? '#000000' : '#FFFFFF'}
+                stopColor={stopColor}
                 stopOpacity="0.6"
               />
               <stop
                 offset="1"
-                stopColor={darkMode ? '#000000' : '#FFFFFF'}
+                stopColor={stopColor}
                 stopOpacity="0"
               />
             </linearGradient>
@@ -209,7 +210,7 @@ const Globeanime = ({ darkMode = false }) => {
       </div>
       {/* Globe background */}
       <img
-        src="/assets/globe-light.svg"
+        src="/assets/globe.svg"
         alt="globe wireframe"
         width={400}
         height={400}
@@ -218,7 +219,7 @@ const Globeanime = ({ darkMode = false }) => {
         priority
       />
       <img
-        src="/assets/globe.svg"
+        src="/assets/globe-light.svg"
         alt="globe wireframe"
         width={400}
         height={400}

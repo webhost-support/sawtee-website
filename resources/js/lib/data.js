@@ -1,4 +1,4 @@
-import { HomeIcon } from '@/components/Frontend/icons';
+import { HomeIcon } from '@/components/shared/icons';
 import {
   BookDashed,
   FilePenIcon,

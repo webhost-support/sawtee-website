@@ -17,7 +17,7 @@ const SidebarWidget = ({ array, title, link, ...rest }) => {
             <li className="group mb-4" key={post.id}>
               <Link
                 className="text-secondary-foreground/90 underline underline-offset-2 group-hover:text-primary/80 group-hover:underline-offset-4 dark:group-hover:text-secondary-foreground/80"
-                href={`${link}/${post.slug}`}
+                href={`${post.slug}`}
               >
                 <p className="lg:text-md text-sm leading-5">{post.title}</p>
               </Link>
@@ -27,7 +27,11 @@ const SidebarWidget = ({ array, title, link, ...rest }) => {
             </li>
           );
         })}
-        <ExploreButton text={`More ${title}`} link={link} className="p-0" />
+        <ExploreButton
+          text={`More ${title}`}
+          link={link ?? `${array[0].category.slug / array[0].slug}`}
+          className="p-0"
+        />
       </SimpleList>
     </Glassbox>
   );

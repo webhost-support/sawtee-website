@@ -1,6 +1,6 @@
 import { Editor } from '@tinymce/tinymce-react';
 import { useRef } from 'react';
-import { useTheme } from '../theme-provider';
+import { useTheme } from '../shared/theme-provider';
 
 export default function ContentEditor(props) {
   const { initialValue, ...rest } = props;

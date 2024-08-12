@@ -1,35 +1,30 @@
-import React, { useState } from 'react';
-
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuPortal,
+    DropdownMenuSub,
+    DropdownMenuSubContent,
+    DropdownMenuSubTrigger,
+    DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
+    NavigationMenu,
+    NavigationMenuContent,
+    NavigationMenuItem,
+    NavigationMenuLink,
+    NavigationMenuList,
+    NavigationMenuTrigger,
+    navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
 import { Link, usePage } from '@inertiajs/react';
+import React from 'react';
 import MegaMenu from './MegaMenu';
 
 export default function DesktopNavigation({ menu }) {
   const { url, props } = usePage();
   const { experts } = props;
-  const [isOpen, setIsOpen] = useState(false);
   return (
     <NavigationMenu className="hidden max-w-full justify-center lg:flex">
       <NavigationMenuList className="gap-4">
@@ -51,32 +46,25 @@ export default function DesktopNavigation({ menu }) {
                         )
                       : cn('')
                   }
-                  onMouseEnter={() =>
-                    !hasMegaMenu && !hasChildren && setIsOpen(!isOpen)
-                  }
                 >
-                  {hasChildren ? (
+                  {hasMegaMenu && (
                     <NavigationMenuTrigger
                       className={cn(active && ' ', 'dark:text-white')}
                     >
                       {menuItem.title}
                     </NavigationMenuTrigger>
-                  ) : (
-                    menuItem.title
                   )}
+
+                  {!hasMegaMenu && hasChildren && (
+                    <DropDown menuItem={menuItem} />
+                  )}
+
+                  {!hasMegaMenu && !hasChildren && menuItem.title}
                 </NavigationMenuLink>
               </Link>
-              {hasMegaMenu ? (
+              {hasMegaMenu && (
                 <NavigationMenuContent>
                   <MegaMenu item={menuItem} experts={experts} />
-                </NavigationMenuContent>
-              ) : (
-                <NavigationMenuContent>
-                  <DropDown
-                    menu={menuItem.children}
-                    isOpen={isOpen}
-                    onToggle={setIsOpen}
-                  />
                 </NavigationMenuContent>
               )}
             </NavigationMenuItem>
@@ -88,34 +76,49 @@ export default function DesktopNavigation({ menu }) {
   );
 }
 
-const DropDown = ({ menu, isOpen, onToggle }) => {
-  console.log(isOpen);
+const DropDown = ({ className, menuItem }) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+
   return (
-    <DropdownMenu open={isOpen} onOpenChange={onToggle}>
-      {menu.menu?.map(menuItem => {
-        return (
-          <DropdownMenuItem key={menuItem.title}>
-            {menuItem.children.length > 0 ? (
-              <DropdownMenuSub>
-                <DropdownMenuSubTrigger>
-                  <Link href={menuItem.url}>{menuItem.title}</Link>
-                </DropdownMenuSubTrigger>
-                <DropdownMenuPortal>
-                  <DropdownMenuSubContent>
-                    {menuItem.children.map(child => (
-                      <DropdownMenuItem key={child.title}>
-                        {child.title}
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuSubContent>
-                </DropdownMenuPortal>
-              </DropdownMenuSub>
-            ) : (
-              <Link href={menuItem.url}>{menuItem.title}</Link>
-            )}
-          </DropdownMenuItem>
-        );
-      })}
+    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
+      <DropdownMenuTrigger
+        className={cn(navigationMenuTriggerStyle(), "w-full justify-between cursor-pointer")}
+        onMouseEnter={() => setIsOpen(!isOpen)}
+      >
+        {menuItem.title}
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        {menuItem.children?.map(item => {
+          return (
+            <DropdownMenuItem className="cursor-pointer"  key={item.title}>
+              {item.children.length > 0 ? <SubMenu item={item} /> : item.title}
+            </DropdownMenuItem>
+          );
+        })}
+      </DropdownMenuContent>
     </DropdownMenu>
+  );
+};
+
+const SubMenu = ({ item }) => {
+  return (
+    <DropdownMenuSub>
+      <DropdownMenuSubTrigger>{item.title}</DropdownMenuSubTrigger>
+      <DropdownMenuPortal>
+        <DropdownMenuSubContent>
+          {item.children?.map(subitem => {
+            return (
+              <DropdownMenuItem key={subitem.title}>
+                {subitem.children.length > 0 ? (
+                  <SubMenu item={subitem} />
+                ) : (
+                  subitem.title
+                )}
+              </DropdownMenuItem>
+            );
+          })}
+        </DropdownMenuSubContent>
+      </DropdownMenuPortal>
+    </DropdownMenuSub>
   );
 };

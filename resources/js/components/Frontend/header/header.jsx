@@ -58,6 +58,8 @@ const Header = ({
   mobileMenu = null,
   socialLinks = null,
   showSocialLinks = false,
+  showMobileMenu = false,
+  setShowMobileMenu = () => {},
   children,
   ...props
 }) => {
@@ -72,9 +74,27 @@ const Header = ({
         >
           <SiteLogo src={'/assets/logo-sawtee.svg'} established={null} />
           <DesktopNavigation menu={menu} />
-          <div className="flex gap-4">
+          <div className="hidden gap-4 lg:flex">
             <ModeToggle />
             <SearchModal />
+          </div>
+          <div className='block lg:hidden'>
+            <button onClick={() => setShowMobileMenu(!showMobileMenu)} className="text-primary hover:opacity-80" id="open-sidebar">
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+              </svg>
+            </button>
           </div>
         </div>
       </SiteHeaderInner>
@@ -84,11 +104,7 @@ const Header = ({
         transition={{ enter: { duration: 0.5 } }}
         style={{ overflow: 'scroll' }}
       >
-        <MobileMenu
-          menu={mobileMenu}
-          socialLinks={socialLinks}
-          showSocialLinks={true}
-        />
+        
       </Collapse> */}
     </SiteHeader>
   );

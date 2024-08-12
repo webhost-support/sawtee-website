@@ -1,6 +1,6 @@
 import { Link } from '@inertiajs/react';
 import { ExternalLink } from 'lucide-react';
-import { Blob } from './icons';
+import { Blob } from '../shared/icons';
 
 export const TwoColumnImageSection = ({
   data,

@@ -7,9 +7,10 @@ import { cn } from '@/lib/utils';
 import { usePage } from '@inertiajs/react';
 import { ArrowUpToLineIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import MobileMenu from '../Frontend/mobileMenu';
 export default function MainLayout({ children, ...rest }) {
   const [visible, setVisible] = useState(false);
-  const [animate, setAnimate] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
   const page = usePage();
   const { primaryMenu, footerMenu } = page.props;
   const url = page.url;
@@ -20,12 +21,6 @@ export default function MainLayout({ children, ...rest }) {
       setVisible(false);
     }
   };
-
-  useEffect(() => {
-    if (url) {
-      setAnimate(true);
-    }
-  }, [url]);
 
   useEffect(() => {
     window.addEventListener('scroll', toggleVisibility);
@@ -42,7 +37,23 @@ export default function MainLayout({ children, ...rest }) {
         menu={primaryMenu}
         mobileMenu={mobileMenu}
         socialLinks={socialMenu}
+        showMobileMenu={showMobileMenu}
+        setShowMobileMenu={setShowMobileMenu}
       />
+
+      <div
+        className={cn(
+          'absolute z-40 min-h-screen w-fit transform overflow-y-auto bg-gray-800 px-8 text-white transition-all duration-300 ease-in-out',
+          !showMobileMenu ? '-translate-x-full' : 'translate-x-0'
+        )}
+        id="sidebar"
+      >
+        <MobileMenu
+          menu={mobileMenu}
+          socialLinks={socialMenu}
+          showSocialLinks={true}
+        />
+      </div>
       <main id="main" className="min-h-screen" {...rest}>
         {children}
       </main>

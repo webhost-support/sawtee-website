@@ -80,7 +80,6 @@ export default function SearchModal() {
     };
   }, [isOpen]);
 
-  console.log(posts);
 
   useEffect(() => {
     if (entry?.isIntersecting) {

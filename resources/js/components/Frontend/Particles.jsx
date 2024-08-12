@@ -1,6 +1,6 @@
 import MousePosition from '@/lib/mouse-position';
 import { useEffect, useRef } from 'react';
-import { useTheme } from '../theme-provider';
+import { useTheme } from '../shared/theme-provider';
 
 export default function Particles({
   className = '',

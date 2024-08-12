@@ -34,7 +34,7 @@ const ListContainerVariants = {
 const AboutMegaMenu = ({ item, experts, introText, introImage, ...rest }) => {
   return (
     <ul
-      className="grid-rows-auto md:grid-rows-[repeat(2, minmax(auto, 250px))] relative mx-auto grid w-[90vw] grid-cols-1 place-items-center gap-4 gap-6 p-4 px-6 px-8 py-10 md:grid-cols-5 lg:grid-cols-7 xl:grid-rows-[auto]"
+      className="grid-rows-auto md:grid-rows-[repeat(2, minmax(auto, 250px))] relative mx-auto grid w-[90vw] grid-cols-1 place-items-center gap-4 p-4 px-6 py-10 md:grid-cols-5 md:gap-6 md:px-8 lg:grid-cols-7 xl:grid-rows-[auto]"
       {...rest}
     >
       <div className="col-span-1 self-center">
@@ -51,7 +51,10 @@ const AboutMegaMenu = ({ item, experts, introText, introImage, ...rest }) => {
                 variants={ListVariants}
                 className="lg:text-md relative cursor-pointer pb-4 text-left text-sm font-medium"
               >
-                <Link className="font-serif text-gray-200" link={child.url}>
+                <Link
+                  className="font-serif text-secondary-foreground"
+                  link={child.url}
+                >
                   {child.title}
                 </Link>
               </motion.li>
@@ -60,21 +63,18 @@ const AboutMegaMenu = ({ item, experts, introText, introImage, ...rest }) => {
         </motion.ul>
       </div>
       <div className="place-center mx-auto md:col-span-3 xl:col-span-3">
-        {/* <div
-          className="relative flex justify-center items-center overflow-hidden rounded-xl bg-no-repeat bg-cover bg-center px-6 py-12 after:content:' ' after:absolute after:inset-0 after:w-full after:z-10 after:h-full after:bg-[#000]/[0.4] bg-blend-multiply blur-[1px]"
-          style={{
-            backgroundImage: `url(${introImage})`,
-          }}
-        > */}
-        <div className="relative flex aspect-[16/9] w-full items-center justify-center overflow-hidden rounded-xl bg-black/40 bg-cover bg-right-bottom bg-no-repeat">
+
+        <div className="relative flex aspect-[16/9] w-full items-center justify-center overflow-hidden rounded-xl bg-cover bg-right-bottom bg-no-repeat bg-bgDarker">
           <Globeanime />
-          <p className="z-20 m-0 flex h-full w-full items-center justify-center self-center bg-[rgba(0,0,0,0.3)] px-6 text-justify text-sm leading-6 text-gray-200">
+          <p className="z-20 m-0 flex h-full w-full items-center justify-center self-center px-6 text-justify text-sm leading-6 text-secondary-foreground  bg-[rgba(0,0,0,0.4)] ">
             {introText}
           </p>
         </div>
       </div>
       <div className="row-span-1 gap-4 md:col-span-5 xl:col-span-3">
-        <p className="pb-4 text-xl font-semibold text-gray-200">Our Experts</p>
+        <p className="pb-4 text-xl font-semibold text-secondary-foreground">
+          Our Experts
+        </p>
         <div className="grid gap-4 md:grid-cols-6 xl:grid-cols-3">
           {experts?.map(expert => {
             return (
@@ -94,7 +94,7 @@ const OurWorkMegaMenu = ({ item, ...rest }) => {
     <ul className="grid w-[90vw] grid-cols-1 gap-4 p-4 px-8 py-10" {...rest}>
       <div className="mx-auto flex w-full flex-col items-center justify-center gap-10">
         <Link
-          className="font-serif text-2xl text-gray-200"
+          className="font-serif text-2xl text-secondary-foreground"
           href={item.children[0].url}
         >
           {item.children[0].title}
@@ -114,7 +114,7 @@ const OurWorkMegaMenu = ({ item, ...rest }) => {
               >
                 <Link
                   href={grandChild.url}
-                  className="text-gray-200 no-underline"
+                  className="text-secondary-foreground no-underline"
                 >
                   {grandChild.title}{' '}
                 </Link>
@@ -131,7 +131,7 @@ const OurWorkMegaMenu = ({ item, ...rest }) => {
                 <div className="col-span-1 space-y-6" key={grandChildren.title}>
                   <Link
                     href={grandChildren.url}
-                    className="text-2xl text-gray-200 no-underline"
+                    className="text-2xl text-secondary-foreground no-underline"
                   >
                     {grandChildren.title}
                   </Link>
@@ -151,7 +151,7 @@ const OurWorkMegaMenu = ({ item, ...rest }) => {
                         >
                           <Link
                             href={child.url}
-                            className="text-gray-200 no-underline"
+                            className="text-secondary-foreground no-underline"
                           >
                             {child.title}
                           </Link>
