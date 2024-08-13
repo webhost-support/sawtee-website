@@ -1,16 +1,37 @@
 import ContentEditor from '@/components/Backend/ContentEditor';
 import InputError from '@/components/Backend/InputError';
 import PrimaryButton from '@/components/Backend/PrimaryButton';
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import pageTemplates from '../pageTemplates';
+
+import { Button } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
 import { slugify } from '@/lib/helpers';
 import { useForm } from '@inertiajs/react';
 import { XCircleIcon } from 'lucide-react';
 import React from 'react';
-
 export default function EditPageForm({ page }) {
   const { data, setData, post, processing, errors, reset } = useForm({
     name: page.name,
@@ -19,18 +40,32 @@ export default function EditPageForm({ page }) {
     image: null,
     meta_title: page.meta_title,
     meta_description: page.meta_description,
+    page_template: page.page_template,
     file: null,
   });
+  const [showData, setShowData] = React.useState(false);
 
-  const toast = useToast();
+  const { toast } = useToast();
   const [slug, setSlug] = React.useState(page.slug);
   const [image, setImage] = React.useState(
     page.media[0] ? page.media[0].original_url : null
   );
   const [filename, setFilename] = React.useState(null);
+
+  React.useEffect(() => {
+    if (data.page_template === ('About' || 'Contact' || 'MediaFellows')) {
+      toast({
+        title: 'Please add page data file',
+        variant: 'destructive',
+        description:
+          "This template depend upon the json data provided to the template. Please add json data to the template. May throw error if you don't.",
+      });
+    }
+  }, [data.page_template]);
+
   const submit = e => {
     e.preventDefault();
-
+    console.log(data);
     post(
       route('admin.pages.update', {
         _method: 'patch',
@@ -60,7 +95,7 @@ export default function EditPageForm({ page }) {
     <form onSubmit={submit}>
       <div className="grid grid-cols-2 gap-4">
         <div className="col-span-1 flex flex-col gap-4">
-          <div>
+          <div className="col-span-1">
             <Label htmlFor="name">Name</Label>
             <Input
               type="text"
@@ -86,6 +121,7 @@ export default function EditPageForm({ page }) {
               name="slug"
               value={slug}
               display="flex"
+              onChange={e => setSlug(e.target.value)}
               mt={1}
             />
             {errors.slug && (
@@ -93,8 +129,17 @@ export default function EditPageForm({ page }) {
             )}
           </div>
 
-          <div>
-            <Label htmlFor="file">File Upload</Label>
+          <div className="col-span-1">
+            <Label htmlFor="file">Add JSON Data File</Label>
+
+            <Button
+              type="button"
+              variant="link"
+              className="ml-4 inline-flex"
+              onClick={() => setShowData(!showData)}
+            >
+              View Page Data
+            </Button>
             <Input
               type="file"
               accept=".json"
@@ -105,6 +150,25 @@ export default function EditPageForm({ page }) {
                 setData('file', e.target.files[0]);
               }}
             />
+          </div>
+          <div className="col-span-1">
+            <div>
+              <Label htmlFor="image">Hero Image</Label>
+              <Input
+                type="file"
+                accept="image/.png,.jpg,.jpeg,.webp"
+                id="image"
+                name="image"
+                onChange={e => {
+                  setData('image', e.target.files[0]);
+                  setImage(URL.createObjectURL(e.target.files[0]));
+                }}
+              />
+
+              {errors.image && (
+                <InputError className="mt-2">{errors.image}</InputError>
+              )}
+            </div>
           </div>
         </div>
 
@@ -142,27 +206,32 @@ export default function EditPageForm({ page }) {
               </InputError>
             )}
           </div>
-        </div>
-
-        <div className="col-span-1">
-          <div>
-            <Label htmlFor="image">Hero Image</Label>
-            <Input
-              type="file"
-              accept="image/.png,.jpg,.jpeg,.webp"
-              id="image"
-              name="image"
-              onChange={e => {
-                setData('image', e.target.files[0]);
-                setImage(URL.createObjectURL(e.target.files[0]));
-              }}
-            />
-
-            {errors.image && (
-              <InputError className="mt-2">{errors.image}</InputError>
-            )}
+          <div className="col-span-1">
+            <Label htmlFor="page_template">Page Template</Label>
+            <Select
+              placeholder="Select menu to edit"
+              value={data.page_template}
+              name="page_template"
+              id="page_template"
+              onValueChange={value => setData('page_template', value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select page template" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Page Templates</SelectLabel>
+                  {pageTemplates?.map(template => (
+                    <SelectItem key={template} value={template}>
+                      {template}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
         </div>
+
         <div className="col-span-1">
           <div className="relative mx-auto">
             {image && (
@@ -203,6 +272,11 @@ export default function EditPageForm({ page }) {
             </InputErrorMessage>
           )}
         </div>
+        <ShowPageData
+          open={showData}
+          onOpenChange={setShowData}
+          data={page.pageData}
+        />
 
         <PrimaryButton type="submit" isLoading={processing}>
           Save
@@ -211,3 +285,23 @@ export default function EditPageForm({ page }) {
     </form>
   );
 }
+
+const ShowPageData = ({ open, onOpenChange, data }) => {
+  return (
+    <AlertDialog open={open} onOpenChange={onOpenChange}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Page Data from the JSON file</AlertDialogTitle>
+          <AlertDialogDescription>
+            <ScrollArea className="max-h-[500px] overflow-auto">
+              <pre>{JSON.stringify(data, null, 2)}</pre>
+            </ScrollArea>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};

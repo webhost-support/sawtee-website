@@ -151,6 +151,16 @@ h1, h2, h3, h4, h5, h6 {
     top: 8rem;
 } */
 
+
+pre {
+    font-family: 'Courier New', monospace;
+    color: #333;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 10px;
+    white-space: pre-wrap;
+}
 .archive-list > :first-child {
     position: sticky;
     top: 8rem;

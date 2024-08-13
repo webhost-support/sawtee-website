@@ -20,7 +20,7 @@ class Page extends Model implements HasMedia
     use HasFactory;
     use InteractsWithMedia;
     use HasSlug;
-    protected $fillable = ['name', 'slug', 'content', 'meta_title', 'meta_description'];
+    protected $fillable = ['name', 'slug', 'content', 'meta_title', 'meta_description', 'page_template'];
 
     protected $casts = ['pageData' => 'json'];
     /**

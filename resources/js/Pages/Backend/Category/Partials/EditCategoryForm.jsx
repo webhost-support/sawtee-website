@@ -1,35 +1,35 @@
 import InputError from '@/components/Backend/InputError';
 import PrimaryButton from '@/components/Backend/PrimaryButton';
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
 } from '@/components/ui/accordion';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Button } from '@/components/ui/button';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
 import { useForm } from '@inertiajs/react';
+import { XIcon } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 
 export default function EditCategoryForm({
@@ -79,6 +79,7 @@ export default function EditCategoryForm({
               reset(key);
               return toast({
                 title: 'Uh oh, Something went wrong',
+                variant: 'destructive',
                 description: `${key.toUpperCase()} field error` + `: ${value}`,
               });
             }
@@ -172,14 +173,21 @@ export default function EditCategoryForm({
                 <Label htmlFor="image">Featured Image</Label>
 
                 {image && (
-                  <div className="max-w-sm">
-                    <AspectRatio ratio={16 / 9}>
+                  <div className="relative max-w-sm rounded-md overflow-hidden border-2 border-dashed border-gray-300">
                       <img
                         src={image}
                         alt="featured"
-                        className="mt-1 rounded-md object-cover"
+                        className="w-full h-full rounded-md object-cover"
                       />
-                    </AspectRatio>
+                    <div
+                      className="absolute right-0 top-0"
+                      onClick={() => {
+                        setImage(null);
+                        setData('image', null);
+                      }}
+                    >
+                      <XIcon className="h-6 w-6 text-red-500" />
+                    </div>
                   </div>
                 )}
 

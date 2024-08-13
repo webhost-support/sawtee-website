@@ -268,7 +268,7 @@ const Section = ({ children, title = null, className, dark }) => {
     <section
       className={cn(
         'mx-auto w-full px-6 py-12 md:px-20 md:py-20',
-        dark ? 'bg-bgDarker' : 'bg-background',
+        dark ? 'bg-bgDarker' : 'bg-bodyBackground',
         className
       )}
     >

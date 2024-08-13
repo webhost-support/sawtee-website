@@ -47,11 +47,11 @@ export default function Page({
 
 const PageContent = ({ page, sections, themes }) => {
   const { slug, content, pageData } = page;
-  switch (slug) {
-    case 'our-work':
+  switch (page.page_template) {
+    case 'OurWork':
       return <OurWork themes={themes} sections={sections} content={content} />;
 
-    case 'about':
+    case 'About':
       return (
         <About
           sections={sections}
@@ -61,16 +61,16 @@ const PageContent = ({ page, sections, themes }) => {
         />
       );
 
-    case 'contact':
+    case 'Contact':
       return <Contact content={content} pageData={pageData} />;
 
-    case 'media-fellows':
+    case 'MediaFellows':
       return <MediaFellows content={content} pageData={pageData} />;
 
-    case 'reform-monitoring-platform':
+    case 'ReformMonitor':
       return <ReformMonitor content={content} />;
 
     default:
-      return <DefaultPage sections={sections} content={content} size={'md'} />;
+      return <DefaultPage sections={sections} content={content} />;
   }
 };

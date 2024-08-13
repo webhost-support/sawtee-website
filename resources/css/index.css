@@ -5,6 +5,7 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
+    --body-background: 45 29% 97%;
     --background-darker: 0 0% 96%;
     --theme-color: 195 100% 25%;
     --color-border: #ebebeb;
@@ -73,7 +74,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-bodyBackground dark:bg-background text-foreground;
   }
 
   .post-content a,

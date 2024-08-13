@@ -1,20 +1,20 @@
 import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
 } from '@/components/ui/select';
 import { useToast } from '@/components/ui/use-toast';
 import { slugify } from '@/lib/helpers';
@@ -34,15 +34,15 @@ export default function ManageMenu({
   desiredMenu,
   menuItems,
 }) {
-  //   const editMenu = useDisclosure();
   const [firstLevelMenuItems, setFirstLevelMenuItems] = useState(null);
   const { get } = useForm();
   const [editMenu, setEditMenu] = useState(false);
+  const [menu, setMenu] = useState(desiredMenu);
   const { toast } = useToast();
 
-  const handleMenuSlected = (e, id) => {
-    e.preventDefault();
+  const handleMenuSlected = id => {
     get(route('admin.manage.menus', id));
+    setMenu(menus.find(menu => menu.id === id));
   };
 
   useEffect(() => {
@@ -65,7 +65,7 @@ export default function ManageMenu({
         <EditMenuForm
           open={editMenu}
           setOpen={setEditMenu}
-          menu={desiredMenu}
+          menu={menu}
         />
       )}
 
@@ -73,7 +73,7 @@ export default function ManageMenu({
         <div className="mb-4 flex max-w-xl space-x-4">
           <Select
             placeholder="Select menu to edit"
-            value={desiredMenu.id}
+            value={menu.id}
             onValueChange={value => handleMenuSlected(value)}
           >
             <SelectTrigger>
@@ -99,33 +99,33 @@ export default function ManageMenu({
           <div className="rounded-md bg-secondary px-6 py-2 text-secondary-foreground">
             Add Menu Items
           </div>
-          {desiredMenu && (
+          {menu && (
             <div className="mt-6 space-y-4 rounded-lg p-6 shadow-md">
               <AddToMenu
                 options={categories}
                 name="categories"
-                menu={desiredMenu}
+                menu={menu}
                 menuItems={menuItems}
               />
 
               <AddToMenu
                 options={pages}
                 name="pages"
-                menu={desiredMenu}
+                menu={menu}
                 menuItems={menuItems}
               />
 
               <AddToMenu
                 options={sections}
                 name="sections"
-                menu={desiredMenu}
+                menu={menu}
                 pages={pages}
                 menuItems={menuItems}
               />
 
               <AddToMenu
                 name="custom link"
-                menu={desiredMenu}
+                menu={menu}
                 menuItems={menuItems}
               />
             </div>

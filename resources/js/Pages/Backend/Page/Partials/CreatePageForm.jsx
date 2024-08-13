@@ -4,12 +4,22 @@ import PrimaryButton from '@/components/Backend/PrimaryButton';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
 import { slugify } from '@/lib/helpers';
 import { useForm } from '@inertiajs/react';
 import { XCircleIcon } from 'lucide-react';
 import React from 'react';
+import pageTemplates from '../pageTemplates';
 
 export default function CreatePageForm() {
   const { data, setData, post, processing, errors, reset } = useForm({
@@ -19,6 +29,7 @@ export default function CreatePageForm() {
     image: '',
     meta_title: '',
     meta_description: '',
+    page_template: 'DefaultPage',
     file: null,
   });
   const { toast } = useToast();
@@ -26,9 +37,19 @@ export default function CreatePageForm() {
   const [image, setImage] = React.useState(null);
   const [filename, setFilename] = React.useState(null);
 
+  React.useEffect(() => {
+    if (data.page_template === ('About' || 'Contact' || 'MediaFellows')) {
+      toast({
+        title: 'Please add json page data',
+        description:
+          "These pages depend upon the json data provided to the template. Please add json data to the template. May throw error if you don't.",
+      });
+    }
+  }, [data.page_template]);
+
   const submit = e => {
     e.preventDefault();
-
+    console.log(data);
     post(route('admin.pages.store'), {
       preserveScroll: true,
       onSuccess: () =>
@@ -71,7 +92,8 @@ export default function CreatePageForm() {
               type="text"
               id="slug"
               name="slug"
-              value={slug}
+              value={slug ? slug : ''}
+              onChange={e => setData('slug', e.target.value)}
               display="flex"
               mt={1}
             />
@@ -126,6 +148,30 @@ export default function CreatePageForm() {
                 {errors.meta_description}
               </InputError>
             )}
+          </div>
+          <div>
+            <Label htmlFor="page_template">Page Template</Label>
+            <Select
+              placeholder="Select menu to edit"
+              value={data.page_template}
+              name="page_template"
+              id="page_template"
+              onValueChange={value => setData('page_template', value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select page template" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Page Templates</SelectLabel>
+                  {pageTemplates?.map(template => (
+                    <SelectItem key={template} value={template}>
+                      {template}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
         </div>
 
