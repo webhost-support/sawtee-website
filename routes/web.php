@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\SubscriptionController;
 use Illuminate\Support\Facades\Route;
@@ -17,6 +16,7 @@ use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\TeamController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
 /*
 |--------------------------------------------------------------------------
@@ -29,17 +29,17 @@ use App\Http\Controllers\ProfileController;
 |
 */
 
+require __DIR__ . '/auth.php';
 
 Route::get('/admin', function () {
     return to_route('login');
 });
 
 Route::get('/admin/login', [AuthenticatedSessionController::class, 'create'])
-    ->name('login');
+->name('login');
 
 
 Route::post('/admin/login', [AuthenticatedSessionController::class, 'store']);
-
 Route::post('/subscribers/subscribe', [SubscriptionController::class, 'store'])->name('subscription.store');
 Route::get('/subscribers/verify/{token}', [SubscriptionController::class, 'verify'])->name('subscription.verify');
 Route::get('/unsubscribe/{email}', [SubscriptionController::class, 'unsubscribe'])->name('unsubscribe');
@@ -52,7 +52,6 @@ Route::get('/{pages:slug}', [FrontendController::class, 'page'])->name('page.sho
 Route::get('/category/{categories:slug}/{subcategory?}/{post?}', [FrontendController::class, 'category'])->name('category.show');
 
 
-// require __DIR__ . '/auth.php';
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->as('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

@@ -4,16 +4,19 @@ import { Toaster } from '@/components/ui/toaster';
 import { DashBoardMenuItems } from '@/lib/data';
 import { cn } from '@/lib/utils';
 import { useWindowWidth } from '@react-hook/window-size';
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function Authenticated({ user, children }) {
   const onlyWidth = useWindowWidth();
-  const [isCollapsed, setIsCollapsed] = React.useState(false);
+  const [collapse, setCollapse] = useState(false);
+  const isCollapsed = React.useMemo(() => {
+    return onlyWidth < 768 ? true : collapse;
+  }, [onlyWidth, collapse]);
 
   const mobileWidth = onlyWidth < 768;
 
   function toggleSidebar() {
-    setIsCollapsed(!isCollapsed);
+    setCollapse(!collapse);
   }
 
   return (

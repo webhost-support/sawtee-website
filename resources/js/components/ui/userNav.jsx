@@ -46,7 +46,7 @@ export default function UserNav({ user }) {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Link href="/admin/logout" method="post">
+          <Link href={route('admin.logout')} method="post">
             Log out
           </Link>
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>

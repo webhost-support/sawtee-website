@@ -2,10 +2,10 @@ import { cn } from '@/lib/utils';
 import { Link, usePage } from '@inertiajs/react';
 import { ScrollArea } from './scroll-area';
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
 } from './tooltip';
 export default function Sidebar({ isCollapsed, menu }) {
   const { url } = usePage();
@@ -26,6 +26,7 @@ export default function Sidebar({ isCollapsed, menu }) {
                 <TooltipProvider>
                   <Link
                     href={route(menuItem.route)}
+                    preserveState
                     className={cn(
                       'flex items-center justify-center gap-2 px-2 py-2 hover:text-muted-foreground dark:hover:text-white',
                       active
@@ -38,9 +39,9 @@ export default function Sidebar({ isCollapsed, menu }) {
                         <div
                           className={cn(
                             active
-                              ? 'shadow-soft-2xl bg-primary dark:bg-secondary'
-                              : 'bg-white dark:bg-[rgba(255,255,255,0.08)]',
-                            'flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center hover:dark:bg-secondary xl:p-2.5'
+                              ? 'shadow-soft-2xl bg-primary dark:bg-muted'
+                              : 'bg-secondary dark:bg-[rgba(255,255,255,0.08)]',
+                            'flex items-center justify-center rounded-lg bg-center stroke-0 text-center hover:dark:bg-secondary xl:p-2.5'
                           )}
                         >
                           <menuItem.icon
@@ -64,11 +65,12 @@ export default function Sidebar({ isCollapsed, menu }) {
                 <Link
                   href={route(menuItem.route)}
                   className={cn(
-                    'mr-2 flex h-8 w-full items-center justify-start gap-2 rounded-lg border-2 border-slate-700 bg-center px-2 text-foreground dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white',
-                    active && 'shadow-soft-2xl dark:text-white'
+                    'mr-2 flex w-full items-center justify-start gap-2 rounded-lg border-2 border-slate-700 bg-center px-2 py-2 text-foreground dark:bg-[rgba(255,255,255,0.08)] dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white',
+                    active &&
+                      'shadow-soft-2xl bg-primary text-white dark:bg-muted'
                   )}
                 >
-                  <menuItem.icon className="h-4 w-4" />
+                  <menuItem.icon className="h-6 w-6" />
                   {menuItem.name && (
                     <span
                       className={cn(
@@ -84,22 +86,22 @@ export default function Sidebar({ isCollapsed, menu }) {
             );
           })}
         </ul>
-        {!isCollapsed && (
-          <div className="mt-8 flex w-full max-w-full flex-col items-center justify-center gap-4 px-3 lg:mb-0">
-            <div className="text-md text-center leading-normal">
-              © {new Date().getFullYear()} SAWTEE made &nbsp;by&nbsp;
-              <a
-                href="/"
-                target="_blank"
-                rel="noreferrer"
-                className="text-slate-500"
-              >
-                Ankur Singh
-              </a>
-            </div>
-          </div>
-        )}
       </ScrollArea>
+      {!isCollapsed && (
+        <div className="mt-8 flex w-full max-w-full flex-col items-center justify-center gap-4 px-3 lg:mb-0">
+          <div className="text-md text-center leading-normal">
+            © {new Date().getFullYear()} SAWTEE made &nbsp;by&nbsp;
+            <a
+              href="/"
+              target="_blank"
+              rel="noreferrer"
+              className="text-slate-500"
+            >
+              Ankur Singh
+            </a>
+          </div>
+        </div>
+      )}
     </aside>
   );
 }
