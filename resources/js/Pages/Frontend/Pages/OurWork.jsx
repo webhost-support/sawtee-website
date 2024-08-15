@@ -22,15 +22,28 @@ export default function OurWork({ themes, sections, content }) {
         Thematic Areas
       </h2>
 
-      <div className="relative mx-auto mb-24 flex max-w-4xl flex-col items-center justify-center gap-8">
-        {intro && (
-          <blockquote className="blockquote m-0 self-center bg-bgDarker/90 py-10 text-xl dark:text-zinc-400">
-            {htmlToText(intro.description)}
-          </blockquote>
-        )}
-      </div>
+      {intro && (
+        <div className="relative mx-auto mb-24 flex max-w-4xl flex-col items-center justify-center gap-8">
+          <figure class="mx-auto max-w-screen-md text-center">
+            <svg
+              class="mx-auto mb-3 h-10 w-10 text-gray-400 dark:text-gray-600"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 18 14"
+            >
+              <path d="M6 0H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3H2a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Zm10 0h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3h-1a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Z" />
+            </svg>
+            <blockquote>
+              <p class="text-2xl font-medium italic text-gray-900 dark:text-white">
+                {htmlToText(intro.description)}
+              </p>
+            </blockquote>
+          </figure>
+        </div>
+      )}
 
-      <div class="mb-10 grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-6">
+      <div class="mx-auto mb-10 grid max-w-5xl grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-6">
         {Themes?.map((theme, index) => {
           const colSpan = index <= 1 || index === Themes.length - 2 ? 3 : 2;
 
@@ -41,19 +54,18 @@ export default function OurWork({ themes, sections, content }) {
                 'w-full bg-bgDarker last:col-span-3',
                 `col-span-${colSpan}`
               )}
+              id={`theme${theme.id}`}
             >
               <div class="relative h-full">
                 <span class="absolute left-0 top-0 ml-1 mt-1 h-full w-full rounded-lg bg-sky-500" />
 
-                <div class="relative h-full rounded-lg border-2 border-sky-500 bg-bgDarker p-5">
+                <div class="relative h-full space-y-2 rounded-lg border-2 border-sky-500 bg-bgDarker p-5">
                   <div class="-mt-1 flex items-center">
-                    <h3 class="my-2 ml-3 text-lg font-bold text-slate-800 dark:text-slate-300">
+                    <h3 class="my-2 text-xl font-bold text-slate-800 dark:text-slate-300">
                       {theme.title}
                     </h3>
                   </div>
-                  <p class="mb-1 mt-3 text-xs font-medium uppercase text-sky-500">
-                    ------------
-                  </p>
+
                   <p class="mb-2 text-slate-700 dark:text-slate-400">
                     {theme.description}
                   </p>
@@ -80,7 +92,7 @@ export default function OurWork({ themes, sections, content }) {
                 href={`/category/${link}`}
                 className="group absolute inset-0 flex h-full w-full flex-col items-center justify-between bg-bgDarker bg-blend-lighten"
               >
-                <h2 className="title w-full self-start py-6 text-center text-lg group-hover:bg-sky-500/50 dark:text-zinc-300 md:text-2xl">
+                <h2 className="title w-full self-start py-6 text-center text-lg group-hover:bg-sky-500 dark:text-zinc-300 md:text-2xl">
                   {title}
                 </h2>
                 <p className="flex h-full w-full grow items-center justify-center px-6 dark:text-gray-200">

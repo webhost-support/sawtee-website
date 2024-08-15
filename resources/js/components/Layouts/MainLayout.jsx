@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { FooterMenu, mobileMenu, socialMenu } from '@/lib/data';
 import { cn } from '@/lib/utils';
 import { usePage } from '@inertiajs/react';
+import { useWindowWidth } from '@react-hook/window-size';
 import { ArrowUpToLineIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import MobileMenu from '../Frontend/mobileMenu';
@@ -14,6 +15,8 @@ export default function MainLayout({ children, ...rest }) {
   const page = usePage();
   const { primaryMenu, footerMenu } = page.props;
   const url = page.url;
+  const onlyWidth = useWindowWidth();
+
   const toggleVisibility = () => {
     if (window.scrollY > 570) {
       setVisible(true);
@@ -21,6 +24,8 @@ export default function MainLayout({ children, ...rest }) {
       setVisible(false);
     }
   };
+
+  const mobileWidth = onlyWidth < 768;
 
   useEffect(() => {
     window.addEventListener('scroll', toggleVisibility);
@@ -41,19 +46,21 @@ export default function MainLayout({ children, ...rest }) {
         setShowMobileMenu={setShowMobileMenu}
       />
 
-      <div
-        className={cn(
-          'absolute z-40 min-h-screen w-fit transform overflow-y-auto bg-gray-800 px-8 text-white transition-all duration-300 ease-in-out',
-          !showMobileMenu ? '-translate-x-full' : 'translate-x-0'
-        )}
-        id="sidebar"
-      >
-        <MobileMenu
-          menu={mobileMenu}
-          socialLinks={socialMenu}
-          showSocialLinks={true}
-        />
-      </div>
+      {mobileWidth && (
+        <div
+          className={cn(
+            'absolute z-30 min-h-screen w-fit transform overflow-y-auto bg-popover text-secondary-foreground transition-all duration-300 ease-in-out',
+            !showMobileMenu ? '-translate-x-full' : 'translate-x-0'
+          )}
+          id="sidebar"
+        >
+          <MobileMenu
+            menu={mobileMenu}
+            socialLinks={socialMenu}
+            showSocialLinks={true}
+          />
+        </div>
+      )}
       <main id="main" className="min-h-screen" {...rest}>
         {children}
       </main>

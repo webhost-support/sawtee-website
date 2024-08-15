@@ -7,7 +7,7 @@ import SearchModal from './searchModal';
 
 const SiteHeader = props => (
   <header
-    className="ease 0.25s sticky left-0 top-0 z-40 flex items-center justify-between bg-zinc-50/50 py-2 shadow-md backdrop-blur-xl transition-transform dark:bg-bgDarker/95"
+    className="ease 0.25s sticky left-0 top-0 z-40 flex items-center justify-between bg-white py-2 shadow-md backdrop-blur-xl transition-transform dark:bg-bgDarker"
     {...props}
   />
 );
@@ -15,7 +15,7 @@ const SiteHeader = props => (
 const SiteHeaderInner = ({ className, children }) => (
   <div
     className={cn(
-      'mx-8 flex min-h-[5rem] w-full items-center justify-between px-4 py-2',
+      'mx-8 flex h-16 w-full items-center justify-between px-4 py-2',
       className
     )}
   >
@@ -78,8 +78,12 @@ const Header = ({
             <ModeToggle />
             <SearchModal />
           </div>
-          <div className='block lg:hidden'>
-            <button onClick={() => setShowMobileMenu(!showMobileMenu)} className="text-primary hover:opacity-80" id="open-sidebar">
+          <div className="block lg:hidden">
+            <button
+              onClick={() => setShowMobileMenu(!showMobileMenu)}
+              className="text-primary hover:opacity-80"
+              id="open-sidebar"
+            >
               <svg
                 className="h-6 w-6"
                 fill="none"
@@ -104,7 +108,7 @@ const Header = ({
         transition={{ enter: { duration: 0.5 } }}
         style={{ overflow: 'scroll' }}
       >
-        
+
       </Collapse> */}
     </SiteHeader>
   );

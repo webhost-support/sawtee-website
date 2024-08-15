@@ -16,7 +16,7 @@ const PostLayout = ({
 }) => {
   const readingTime = post.content
     ? readingDuration(post.content, {
-        emoji: 'stopwatch',
+        emoji: false,
         wordsPerMinute: 225,
       })
     : null;
@@ -54,7 +54,7 @@ const PostLayout = ({
         )}
 
         {!isNewsletter && (
-          <div className="post-body grid gap-6 pt-10 leading-8 lg:grid-cols-12">
+          <div className="post-body mx-auto grid max-w-7xl gap-6 pt-10 leading-8 lg:grid-cols-12">
             <div className="post-content max-w-[60ch] text-lg lg:col-span-8 lg:ml-14">
               <PostMeta
                 className="py-2"
@@ -62,7 +62,9 @@ const PostLayout = ({
                 date={post.published_at}
                 readingTime={readingTime}
               />
-              <div className="post-content prose-base text-lg">{children}</div>
+              <div className="post-content prose-base text-lg text-secondary-foreground">
+                {children}
+              </div>
               {post.tags.length > 0 && <PostTags tags={post.tags} />}
 
               <SocialShare
@@ -72,7 +74,11 @@ const PostLayout = ({
               />
             </div>
             <aside className="sticky top-32 h-full w-full lg:col-span-4">
-              <SidebarWidget title="Related Posts" array={relatedPosts} link={`/${post.category.slug}`} />
+              <SidebarWidget
+                title="Related Posts"
+                array={relatedPosts}
+                link={`/${post.category.slug}`}
+              />
             </aside>
           </div>
         )}

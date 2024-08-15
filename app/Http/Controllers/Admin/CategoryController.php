@@ -91,6 +91,11 @@ class CategoryController extends Controller
             $validated['meta_title'] = $validated['name'];
         }
 
+        if (!$request->image) {
+            $media = $category->getFirstMedia('category_media');
+            $media->delete();
+        }
+
         if ($request->image) {
             $category->addMediaFromRequest('image')->toMediaCollection('category_media');
         }

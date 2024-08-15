@@ -67,7 +67,7 @@ const AboutMegaMenu = ({ item, experts, introText, introImage, ...rest }) => {
       <div className="place-center mx-auto md:col-span-3 xl:col-span-3">
         <div className="relative flex aspect-[16/9] w-full items-center justify-center overflow-hidden rounded-xl bg-bgDarker bg-cover bg-right-bottom bg-no-repeat dark:bg-[rgba(0,0,0,0.4)]">
           <Globeanime darkMode={theme === 'dark'} />
-          <p className="flex h-full w-full items-center justify-center self-center bg-background/40 p-6 text-justify text-sm leading-6 text-secondary-foreground saturate-150 backdrop-blur-[1px]">
+          <p className="flex h-full w-full items-center justify-center self-center p-6 text-justify text-sm leading-6 text-secondary-foreground">
             {introText}
           </p>
         </div>

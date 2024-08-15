@@ -15,6 +15,7 @@ import { Link } from '@inertiajs/react';
 import { Separator } from '@radix-ui/react-dropdown-menu';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import { useIntersectionObserver } from '@uidotdev/usehooks';
+import { SearchIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 export default function SearchModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -80,10 +81,8 @@ export default function SearchModal() {
     };
   }, [isOpen]);
 
-
   useEffect(() => {
     if (entry?.isIntersecting) {
-      console.log(entry.isIntersecting);
       const URL = `/search?query=${searchQuery}&page=${postData?.current_page + 1}`;
       const xhr = new XMLHttpRequest();
       xhr.open('GET', URL);
@@ -107,7 +106,10 @@ export default function SearchModal() {
     >
       <div className="text-center">
         <DialogTrigger asChild>
-          <Button className="relative inline-flex w-full max-w-xs items-center justify-between whitespace-nowrap rounded-lg border border-slate-300 bg-white py-3.5 pl-4 pr-3 text-sm text-slate-400 outline-none hover:border-slate-400 focus-visible:border-indigo-400 focus-visible:bg-white focus-visible:ring-2 focus-visible:ring-indigo-100">
+          <Button
+            variant="outline"
+            className="relative inline-flex w-full max-w-xs items-center justify-between whitespace-nowrap rounded-lg border py-3.5 pl-4 pr-3 text-sm"
+          >
             <div className="flex items-center justify-center">
               <svg
                 className="mr-3 h-4 w-4 shrink-0 fill-slate-500"
@@ -151,44 +153,40 @@ export default function SearchModal() {
       <DialogContent
         className={cn(
           'dark:text-white',
-          posts ? 'max-w-3xl transition-all duration-200 ease-out' : 'max-w-lg'
+          posts
+            ? 'max-w-3xl px-0 transition-all duration-200 ease-out'
+            : 'max-w-lg'
         )}
       >
-        <DialogHeader>
-          <DialogTitle>Search</DialogTitle>
+        <DialogHeader className={'px-6'}>
+          <DialogTitle>
+            <SearchIcon className="inline-flex h-4 w-4 shrink-0" />
+            {' Search'}
+          </DialogTitle>
           <DialogDescription>
             {searchQuery && posts
               ? `Found ${postData.total} ${postData.total > 1 ? 'results' : 'result'} for "${searchQuery}"`
               : 'Start typing to search the website'}
           </DialogDescription>
+          <form onSubmit={handleSubmit} className="">
+            <div className="flex items-center gap-2">
+              <VisuallyHidden.Root>
+                <label htmlFor="search-modal">Search</label>
+              </VisuallyHidden.Root>
+
+              <Input
+                id="search-modal"
+                className="[&::-webkit-search-decoration]:none placeholder-text-muted-foreground w-full appearance-none border bg-bgDarker py-3 text-sm"
+                type="search"
+                placeholder="Search"
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+              />
+              <Separator className="border border-b-2" />
+            </div>
+          </form>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="">
-          <div className="flex items-center gap-2">
-            <VisuallyHidden.Root>
-              <label htmlFor="search-modal">Search</label>
-            </VisuallyHidden.Root>
-            <svg
-              className="h-4 w-4 shrink-0 fill-slate-500"
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <title>search icon</title>
-              <path d="m14.707 13.293-1.414 1.414-2.4-2.4 1.414-1.414 2.4 2.4ZM6.8 12.6A5.8 5.8 0 1 1 6.8 1a5.8 5.8 0 0 1 0 11.6Zm0-2a3.8 3.8 0 1 0 0-7.6 3.8 3.8 0 0 0 0 7.6Z" />
-            </svg>
-            <Input
-              id="search-modal"
-              className="[&::-webkit-search-decoration]:none placeholder-text-muted-foreground w-full appearance-none border-0 bg-bgDarker py-3 text-sm text-black dark:bg-gray-700"
-              type="search"
-              placeholder="Search"
-              value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-            />
-            <Separator className="border border-b-2" />
-          </div>
-        </form>
-        <ScrollArea className="max-h-[calc(85vh-44px)]">
+        <ScrollArea className="max-h-[calc(85vh-44px)] px-6">
           {!posts && searchQuery && (
             <div class="flex h-20 items-center justify-center space-x-2 bg-white dark:invert">
               <span class="sr-only">Loading...</span>
@@ -203,7 +201,7 @@ export default function SearchModal() {
               return (
                 <Card
                   key={id}
-                  className="before:content:'' group relative z-0 overflow-hidden before:absolute before:right-[-32px] before:top-[-24px] before:z-[-1] before:h-8 before:w-8 before:origin-center before:scale-100 before:rounded-[32px] before:bg-sky-500/50 before:transition-transform before:duration-300 before:ease-out hover:before:scale-[32]"
+                  className="before:content:'' group relative z-0 overflow-hidden before:absolute before:right-[-32px] before:top-[-24px] before:z-[-1] before:h-8 before:w-8 before:origin-center before:scale-100 before:rounded-[32px] before:bg-sky-500/50 before:transition-transform before:duration-300 before:ease-out hover:before:scale-[32] dark:bg-bgDarker"
                 >
                   <CardContent class="p-4">
                     <Link
@@ -213,9 +211,11 @@ export default function SearchModal() {
                       <h5 className="text-lg font-bold leading-5 tracking-tight text-gray-900 dark:text-white">
                         {title}
                       </h5>
-                      <p className="line-clamp-2 text-sm font-normal text-gray-700 dark:text-gray-400">
-                        {excerpt}
-                      </p>
+                      <p
+                        className="line-clamp-2 text-sm font-normal text-gray-700 dark:text-gray-400"
+                        dangerouslySetInnerHTML={{ __html: excerpt }}
+                      />
+
                       <div
                         className="absolute right-0 top-0 flex h-8 w-8 items-center justify-center overflow-hidden rounded-[0_4px_0_32px] bg-gray-100 bg-sky-500/50 group-hover:bg-transparent"
                         href="#"

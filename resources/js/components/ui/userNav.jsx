@@ -39,13 +39,13 @@ export default function UserNav({ user }) {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          <DropdownMenuItem className="dark:hover:bg-bgDarker">
             <Link href={'/admin/profile'}>Profile</Link>
             <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem className="dark:hover:bg-bgDarker">
           <Link href={route('admin.logout')} method="post">
             Log out
           </Link>

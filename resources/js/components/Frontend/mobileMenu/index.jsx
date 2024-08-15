@@ -4,6 +4,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
 import { ChevronDownIcon } from 'lucide-react';
@@ -13,7 +14,7 @@ const MenuLink = ({ title, url, index, isOpen, ...rest }) => {
   return (
     <Link
       href={url}
-      className="flex p-4 no-underline hover:underline"
+      className="flex p-4 text-primary-foreground no-underline hover:underline"
       {...rest}
     >
       <p>
@@ -26,11 +27,15 @@ const MenuLink = ({ title, url, index, isOpen, ...rest }) => {
 
 const DropDownMenu = ({ menuItem, index, className }) => {
   return (
-    <ul className={cn('w-full list-none space-y-4', className)}>
+    <ul className={'w-full list-none space-y-4'}>
       <Collapsible>
-        <li className="group flex w-full items-center justify-between gap-4 border-b-2 border-b-gray-500 text-lg">
+        <li
+          className={
+            'group flex w-full items-center justify-between gap-4 border-b-2 border-b-gray-500 text-lg'
+          }
+        >
           <MenuLink
-            className="flex p-4 no-underline hover:underline"
+            className={cn('flex p-4 no-underline hover:underline', className)}
             title={menuItem.title}
             url={menuItem.url}
             index={`0${index + 1}`}
@@ -51,7 +56,7 @@ const DropDownMenu = ({ menuItem, index, className }) => {
           {menuItem?.children?.map((child, index) => (
             <React.Fragment key={child.title}>
               <DropDownMenu
-                  className={'ml-4'}
+                className={'ml-4'}
                 menuItem={child}
                 index={index}
                 padding={'5px'}
@@ -71,7 +76,7 @@ const MobileMenu = ({
   socialLinks = null,
 }) => {
   return (
-    <div className="">
+    <ScrollArea className="h-screen px-8">
       {menu &&
         menu.map((menuItem, index) => (
           <React.Fragment key={menuItem.title}>
@@ -83,7 +88,7 @@ const MobileMenu = ({
           <SocialMenu ml="0" menu={socialLinks} />
         </div>
       )}
-    </div>
+    </ScrollArea>
   );
 };
 

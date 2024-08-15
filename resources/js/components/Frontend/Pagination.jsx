@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
-import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react';
+import { MoveLeft, MoveRight } from 'lucide-react';
 import { Button } from '../ui/button';
 
 const PaginationButton = ({
@@ -21,10 +21,10 @@ const PaginationButton = ({
     >
       <Button
         aria-label={label}
-        isDisabled={isDisabled}
+        disabled={isDisabled}
         variant="outline"
         size="lg"
-        className="w-full dark:border-borderColor dark:bg-bgDarker dark:text-white"
+        className="w-full disabled:pointer-events-none disabled:cursor-not-allowed dark:border-borderColor dark:bg-bgDarker dark:text-white"
       >
         {slot === 'before' && children}
         <span>{label}</span>
@@ -42,23 +42,24 @@ const Pagination = ({
   totalPages,
   className,
 }) => {
+  console.log(currentPage, totalPages);
   return (
     <div className={cn('flex w-full gap-10', className)}>
       <PaginationButton
         link={prevPage}
         label="Older posts"
-        isDisabled={!prevPage}
+        isDisabled={currentPage === 1}
         slot="before"
       >
-        <ArrowLeftIcon className="mr-3 h-8 w-8 translate-x-[100%] opacity-0 transition-all duration-100 ease-in group-hover:translate-x-0 group-hover:opacity-100 md:mr-4" />
+        <MoveLeft className="mr-3 translate-x-[100%] opacity-0 transition-all duration-100 ease-in group-hover:translate-x-0 group-hover:opacity-100 md:mr-4" />
       </PaginationButton>
       <PaginationButton
         link={nextPage}
         label="Newer Posts"
         slot="after"
-        isDisabled={!nextPage}
+        isDisabled={totalPages === currentPage}
       >
-        <ArrowRightIcon className="ml-3 -translate-x-[100%] opacity-0 transition-all duration-100 ease-in group-hover:translate-x-0 group-hover:opacity-100 md:ml-4" />
+        <MoveRight className="ml-3 -translate-x-[100%] opacity-0 transition-all duration-100 ease-in group-hover:translate-x-0 group-hover:opacity-100 md:ml-4" />
       </PaginationButton>
     </div>
   );
