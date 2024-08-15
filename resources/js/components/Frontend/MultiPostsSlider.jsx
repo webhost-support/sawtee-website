@@ -50,12 +50,13 @@ const MultiPostsCarousel = ({ children, data, ...rest }) => {
                     {publication.category.name}
                   </Badge>
                 </div>
-                <div className="z-10 w-full rounded-b-md p-2 text-sm font-medium leading-4 text-white transition-all duration-200 ease-in-out group-hover:bg-black/70 group-hover:text-sky-400">
+                <div className="z-10 w-full rounded-b-md p-2 text-sm font-medium leading-4 text-white backdrop-blur-[2px] transition-all duration-200 ease-in-out group-hover:bg-black/20">
                   <a
                     target="_blank"
                     rel="noreferrer"
+                    title={publication.title}
                     href={`/publications/${publication.file.name}`}
-                    className="hover:underline group-hover:underline"
+                    className="hover:underline group-hover:underline line-clamp-1"
                   >
                     {publication.title}
                   </a>

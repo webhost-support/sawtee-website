@@ -86,9 +86,12 @@
   .post-body > aside > :last-child {
     @apply sticky top-32;
   }
+  .dropdown:hover > a svg {
+    transform: rotate(180deg);
+  }
   .dropdown:hover > .dropdown-menu {
     display: block;
-}
+  }
 }
 
 .shadow-soft-xl {

@@ -1,3 +1,4 @@
+import { useTheme } from '@/components/shared/theme-provider';
 import { Separator } from '@/components/ui/separator';
 import { aboutMenuData } from '@/lib/data';
 import { Link } from '@inertiajs/react';
@@ -32,9 +33,10 @@ const ListContainerVariants = {
 };
 
 const AboutMegaMenu = ({ item, experts, introText, introImage, ...rest }) => {
+  const { theme } = useTheme();
   return (
     <ul
-      className="grid-rows-auto md:grid-rows-[repeat(2, minmax(auto, 250px))] relative mx-auto grid w-[90vw] grid-cols-1 place-items-center gap-4 p-4 px-6 py-10 md:grid-cols-5 md:gap-6 md:px-8 lg:grid-cols-7 xl:grid-rows-[auto]"
+      className="grid-rows-auto md:grid-rows-[repeat(2, minmax(auto, 250px))] relative mx-auto grid w-[80vw] grid-cols-1 place-items-center gap-4 p-4 px-6 py-10 md:grid-cols-5 md:gap-6 md:px-8 lg:grid-cols-7 xl:grid-rows-[auto]"
       {...rest}
     >
       <div className="col-span-1 self-center">
@@ -63,10 +65,9 @@ const AboutMegaMenu = ({ item, experts, introText, introImage, ...rest }) => {
         </motion.ul>
       </div>
       <div className="place-center mx-auto md:col-span-3 xl:col-span-3">
-
-        <div className="relative flex aspect-[16/9] w-full items-center justify-center overflow-hidden rounded-xl bg-cover bg-right-bottom bg-no-repeat bg-bgDarker">
-          <Globeanime />
-          <p className="z-20 m-0 flex h-full w-full items-center justify-center self-center px-6 text-justify text-sm leading-6 text-secondary-foreground  bg-[rgba(0,0,0,0.4)] ">
+        <div className="relative flex aspect-[16/9] w-full items-center justify-center overflow-hidden rounded-xl bg-bgDarker bg-cover bg-right-bottom bg-no-repeat dark:bg-[rgba(0,0,0,0.4)]">
+          <Globeanime darkMode={theme === 'dark'} />
+          <p className="flex h-full w-full items-center justify-center self-center bg-background/40 p-6 text-justify text-sm leading-6 text-secondary-foreground saturate-150 backdrop-blur-[1px]">
             {introText}
           </p>
         </div>
@@ -91,7 +92,7 @@ const AboutMegaMenu = ({ item, experts, introText, introImage, ...rest }) => {
 
 const OurWorkMegaMenu = ({ item, ...rest }) => {
   return (
-    <ul className="grid w-[90vw] grid-cols-1 gap-4 p-4 px-8 py-10" {...rest}>
+    <ul className="grid w-[80vw] grid-cols-1 gap-4 p-4 px-8 py-10" {...rest}>
       <div className="mx-auto flex w-full flex-col items-center justify-center gap-10">
         <Link
           className="font-serif text-2xl text-secondary-foreground"

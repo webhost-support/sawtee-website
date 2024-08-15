@@ -35,12 +35,12 @@ export default function FeaturedSection({ features }) {
             alt={feature.title}
             loading="lazy"
           />
-          <div className="absolute inset-0 z-30 h-full w-full bg-black opacity-20 transition-opacity group-hover:opacity-30" />
+          <div className="absolute inset-0 z-20 h-full w-full bg-black opacity-20 transition-opacity group-hover:opacity-40" />
 
           <ExternalLink
             aria-label={'Play Button'}
             className={
-              'transform:translateX(-50%) transform:translateY(-50%) absolute z-20 h-12 w-12 text-white/70 transition-all duration-150 ease-in-out group-hover:text-white'
+              'transform:translateX(-50%) transform:translateY(-50%) absolute z-30 h-12 w-12 text-white/70 transition-all duration-150 ease-in-out group-hover:text-white'
             }
           />
         </Link>

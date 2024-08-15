@@ -41,17 +41,19 @@ const navigationMenuTriggerStyle = cva(
 );
 
 const NavigationMenuTrigger = React.forwardRef(
-  ({ className, children, ...props }, ref) => (
+  ({ className, children, hasChildren, ...props }, ref) => (
     <NavigationMenuPrimitive.Trigger
       ref={ref}
-      className={cn(navigationMenuTriggerStyle(), 'group', className)}
+      className={cn(navigationMenuTriggerStyle(), '', className)}
       {...props}
     >
       {children}{' '}
-      <ChevronDownIcon
-        className="relative top-[1px] ml-1 h-3 w-3 transition duration-300 group-data-[state=open]:rotate-180"
-        aria-hidden="true"
-      />
+      {hasChildren && (
+        <ChevronDownIcon
+          className="relative top-[1px] ml-1 h-3 w-3 transition duration-300 group-data-[state=open]:rotate-180"
+          aria-hidden="true"
+        />
+      )}
     </NavigationMenuPrimitive.Trigger>
   )
 );
@@ -75,7 +77,7 @@ const NavigationMenuLink = NavigationMenuPrimitive.Link;
 
 const NavigationMenuViewport = React.forwardRef(
   ({ className, ...props }, ref) => (
-    <div className={cn('absolute -left-20 top-full flex justify-center')}>
+    <div className={cn('absolute left-0 top-full flex justify-center')}>
       <NavigationMenuPrimitive.Viewport
         className={cn(
           'origin-top-center relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-md border bg-popover text-popover-foreground shadow data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 md:w-[var(--radix-navigation-menu-viewport-width)]',
