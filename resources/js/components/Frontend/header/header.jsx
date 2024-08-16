@@ -1,15 +1,19 @@
 import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
-// import MobileMenu from '../mobileMenu';
 import DesktopNavigation from './DesktopNavigation';
 import { ModeToggle } from './mode-toggle';
 import SearchModal from './searchModal';
 
-const SiteHeader = props => (
+const SiteHeader = ({ className, children, rest }) => (
   <header
-    className="ease 0.25s sticky left-0 top-0 z-40 flex items-center justify-between bg-white py-2 shadow-md backdrop-blur-xl transition-transform dark:bg-bgDarker"
-    {...props}
-  />
+    className={cn(
+      'ease 0.25s sticky top-0 z-40 flex items-center justify-between bg-white py-2 shadow-md backdrop-blur-xl transition-transform dark:bg-bgDarker',
+      className
+    )}
+    {...rest}
+  >
+    {children}
+  </header>
 );
 
 const SiteHeaderInner = ({ className, children }) => (
@@ -61,6 +65,7 @@ const Header = ({
   showMobileMenu = false,
   setShowMobileMenu = () => {},
   children,
+  visible,
   ...props
 }) => {
   return (
@@ -102,14 +107,6 @@ const Header = ({
           </div>
         </div>
       </SiteHeaderInner>
-      {/* <Collapse
-        in={isOpen}
-        animateOpacity
-        transition={{ enter: { duration: 0.5 } }}
-        style={{ overflow: 'scroll' }}
-      >
-
-      </Collapse> */}
     </SiteHeader>
   );
 };

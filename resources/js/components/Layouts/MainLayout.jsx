@@ -16,6 +16,7 @@ export default function MainLayout({ children, ...rest }) {
   const { primaryMenu, footerMenu } = page.props;
   const url = page.url;
   const onlyWidth = useWindowWidth();
+  const mobileWidth = onlyWidth < 768;
 
   const toggleVisibility = () => {
     if (window.scrollY > 570) {
@@ -25,19 +26,18 @@ export default function MainLayout({ children, ...rest }) {
     }
   };
 
-  const mobileWidth = onlyWidth < 768;
 
   useEffect(() => {
     window.addEventListener('scroll', toggleVisibility);
     return () => window.removeEventListener('scroll', toggleVisibility);
-  });
+  }, [window.scrollY]);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <>
+    <main id="main">
       <Header
         menu={primaryMenu}
         mobileMenu={mobileMenu}
@@ -61,9 +61,9 @@ export default function MainLayout({ children, ...rest }) {
           />
         </div>
       )}
-      <main id="main" className="min-h-screen" {...rest}>
+      <div className="min-h-screen" {...rest}>
         {children}
-      </main>
+      </div>
 
       <Footer
         menu={footerMenu?.length > 0 ? footerMenu : FooterMenu}
@@ -81,6 +81,6 @@ export default function MainLayout({ children, ...rest }) {
       >
         <ArrowUpToLineIcon className="scroll-icon h-6 w-6 animate-bounce" />
       </Button>
-    </>
+    </main>
   );
 }

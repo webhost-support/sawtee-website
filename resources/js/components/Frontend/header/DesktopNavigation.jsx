@@ -68,7 +68,7 @@ export default function DesktopNavigation({ menu }) {
                 </Link>
               </NavigationMenuLink>
               {hasMegaMenu && (
-                <NavigationMenuContent>
+                <NavigationMenuContent className="z-40">
                   <MegaMenu item={menuItem} experts={experts} />
                 </NavigationMenuContent>
               )}
