@@ -42,7 +42,6 @@ const Pagination = ({
   totalPages,
   className,
 }) => {
-  console.log(currentPage, totalPages);
   return (
     <div className={cn('flex w-full gap-10', className)}>
       <PaginationButton

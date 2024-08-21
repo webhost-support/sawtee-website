@@ -24,7 +24,7 @@ const EventsArchive = ({ posts, ...rest }) => {
             >
               <div className="order-1 flex flex-col justify-between gap-2 px-4 xl:ml-6 xl:min-h-[180px]">
                 <h3 className="text-md font-semibold text-slate-800 dark:text-slate-300 xl:text-lg">
-                  <time class="mb-1 block text-sm font-normal text-slate-600 dark:text-slate-300">
+                  <time className="mb-1 block text-sm font-normal text-slate-600 dark:text-slate-300">
                     {formatDate(published_at)}
                   </time>
                   <Link

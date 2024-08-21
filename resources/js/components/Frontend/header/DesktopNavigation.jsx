@@ -38,7 +38,7 @@ export default function DesktopNavigation({ menu }) {
           return (
             <NavigationMenuItem
               key={menuItem.title}
-              className={!hasMegaMenu && 'dropdown'}
+              className={!hasMegaMenu ? 'dropdown' : ''}
             >
               <NavigationMenuLink
                 asChild
@@ -47,7 +47,7 @@ export default function DesktopNavigation({ menu }) {
               >
                 <Link href={menuItem.url}>
                   <NavigationMenuTrigger
-                    className={cn(active && ' ', 'relative dark:text-white')}
+                    className={cn('relative dark:text-white')}
                     hasChildren={hasChildren}
                   >
                     {menuItem.title}
@@ -91,7 +91,7 @@ const DropDown = ({ className, menuItem }) => {
     >
       <div className="rounded-lg bg-popover p-4">
         {menuItem.children?.map(item => {
-          return <ListItem item={item} href={item.url} />;
+          return <ListItem key={item.title} item={item} href={item.url} />;
         })}
       </div>
     </ul>
@@ -109,7 +109,7 @@ const ListItem = React.forwardRef(({ className, item, ...props }, ref) => {
         )}
         {...props}
       >
-        <span class="mr-1 font-medium leading-none">{item.title}</span>
+        <span className="mr-1 font-medium leading-none">{item.title}</span>
         {item.children.length > 0 && (
           <ChevronDownIcon
             className="relative top-[1px] ml-1 h-3 w-3 transition duration-300"

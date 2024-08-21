@@ -245,15 +245,20 @@ class FrontendController extends Controller
 
     public function search(Request $request)
     {
+        if ($request->query()) {
+            $query = $request->query();
+            // dd($query);
+            // $publications = Publication::search($request->search)->get();
+            // $research = Research::search($request->search)->get();
 
-        $query = $request->query();
-        // $publications = Publication::search($request->search)->get();
-        // $research = Research::search($request->search)->get();
+            $posts = Post::search($query['query'])->paginate(10);
 
-        $posts = Post::search($query['query'])->paginate(15);
+            // dd($posts);
+            // $result = array_merge($posts, $publications, $research);
+            // return response()->json($posts);
+            return Inertia::render('Frontend/SearchPage', ['posts' => $posts, 'query' => $query['query']]);
+        }
+        return Inertia::render('Frontend/SearchPage', ['posts' => null]);
 
-        // dd($posts);
-        // $result = array_merge($posts, $publications, $research);
-        return response()->json($posts);
     }
 }

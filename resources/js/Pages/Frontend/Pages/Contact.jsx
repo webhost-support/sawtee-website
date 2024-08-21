@@ -19,7 +19,6 @@ const Contact = ({ content, pageData }) => {
               <p className="font-semibold">
                 Working days:{' ' + 'Monday-Friday'}
               </p>
-              <br />
               <p className="text-lg font-semibold">
                 Office hours:
                 {` ${pageData.opening_hours}`}

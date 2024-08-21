@@ -7,6 +7,7 @@ const PostHeader = ({
   description,
   color,
   className,
+  children,
   ...rest
 }) => (
   <div
@@ -14,11 +15,14 @@ const PostHeader = ({
     {...rest}
   >
     {categories && <PostCategories category={categories} />}
-    <h1 className="captialize my-3 text-2xl font-bold text-slate-800 dark:text-slate-300 md:text-3xl lg:my-5 xl:text-5xl">
-      {heading}
-    </h1>
+    {heading && (
+      <h1 className="captialize my-3 text-2xl font-bold text-slate-800 dark:text-slate-300 md:text-3xl lg:my-5 xl:text-5xl">
+        {heading}
+      </h1>
+    )}
 
-    {/* {description && <Text>{description}</Text>} */}
+    {description && <Text>{description}</Text>}
+    {children}
   </div>
 );
 

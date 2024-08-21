@@ -1,5 +1,6 @@
 import ExploreButton from '@/components/Frontend/ExploreButton';
 import Glassbox from '@/components/Frontend/Glassbox';
+import PostPreviewCard from '@/components/Frontend/PostPreviewCard';
 import { formatDate } from '@/lib/helpers';
 
 import { Link } from '@inertiajs/react';
@@ -9,15 +10,17 @@ const DefaultArchive = ({ posts, showFallbackImage, ...rest }) => {
 
   return (
     <div className="grid grid-cols-1 gap-10 p-8 xl:grid-cols-2" {...rest}>
-      {posts.map(post => {
-        return (
-          <ArchivePost
-            key={post.id}
-            post={post}
-            showFallbackImage={showFallbackImage}
-          />
-        );
-      })}
+      {posts.map(
+        post => (
+          <PostPreviewCard key={post.id} post={post} showCategoryTag={true} />
+        )
+
+        //   <ArchivePost
+        //     key={post.id}
+        //     post={post}
+        //     showFallbackImage={showFallbackImage}
+        //   />
+      )}
     </div>
   );
 };

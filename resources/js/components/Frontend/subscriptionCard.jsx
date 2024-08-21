@@ -20,7 +20,10 @@ const SubscriptionCard = ({
 
       {showChildren && <div>{children}</div>}
 
-      <SubscribeForm />
+      <SubscribeForm
+        inputStyles={'border-borderColor dark:border-slate-700'}
+        buttonStyles={'bg-primary dark:text-slate-700 text-white'}
+      />
     </div>
   );
 };

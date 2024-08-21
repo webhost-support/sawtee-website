@@ -1,66 +1,29 @@
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
-import { Link } from '@inertiajs/react';
+import { router } from '@inertiajs/react';
 import { Separator } from '@radix-ui/react-dropdown-menu';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
-import { useIntersectionObserver } from '@uidotdev/usehooks';
 import { SearchIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 export default function SearchModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [posts, setPosts] = useState(null);
-  const [postData, setPostData] = useState([]);
-  const [ref, entry] = useIntersectionObserver({
-    threshold: 0,
-    root: null,
-    rootMargin: '0px',
-  });
   function handleSubmit(e) {
     e.preventDefault();
-    const URL = `/search?query=${searchQuery}`;
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', URL);
-    xhr.onload = () => {
-      if (xhr.status === 200) {
-        setPostData(JSON.parse(xhr.responseText));
-      }
-    };
-    xhr.send();
+    router.visit(`/search`, {
+    data: { query: searchQuery, page: 1 },
+    });
+    setIsOpen(false);
   }
-
-  function handleQueryChange(query) {
-    const URL = `/search?query=${query}`;
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', URL);
-    xhr.onload = () => {
-      if (xhr.status === 200) {
-        setPostData(JSON.parse(xhr.responseText));
-      }
-    };
-    xhr.send();
-  }
-
-  useEffect(() => {
-    if (!postData) return;
-    setPosts(postData.data);
-  }, [postData]);
-
-  useEffect(() => {
-    !searchQuery && setPostData(null);
-    searchQuery && handleQueryChange(searchQuery);
-  }, [searchQuery]);
 
   useEffect(() => {
     const handleKeyDown = event => {
@@ -81,27 +44,12 @@ export default function SearchModal() {
     };
   }, [isOpen]);
 
-  useEffect(() => {
-    if (entry?.isIntersecting) {
-      const URL = `/search?query=${searchQuery}&page=${postData?.current_page + 1}`;
-      const xhr = new XMLHttpRequest();
-      xhr.open('GET', URL);
-      xhr.onload = () => {
-        if (xhr.status === 200) {
-          setPosts([...posts, ...JSON.parse(xhr.responseText).data]);
-        }
-      };
-      xhr.send();
-    }
-  }, [entry]);
-
   return (
     <Dialog
       open={isOpen}
       onOpenChange={() => {
         setIsOpen(!isOpen);
         setSearchQuery(null);
-        setPostData(null);
       }}
     >
       <div className="text-center">
@@ -150,23 +98,14 @@ export default function SearchModal() {
         </DialogTrigger>
       </div>
 
-      <DialogContent
-        className={cn(
-          'dark:text-white',
-          posts
-            ? 'max-w-3xl px-0 transition-all duration-200 ease-out'
-            : 'max-w-lg'
-        )}
-      >
+      <DialogContent className={cn('max-w-lg dark:text-white')}>
         <DialogHeader className={'px-6'}>
           <DialogTitle>
             <SearchIcon className="inline-flex h-4 w-4 shrink-0" />
             {' Search'}
           </DialogTitle>
           <DialogDescription>
-            {searchQuery && posts
-              ? `Found ${postData.total} ${postData.total > 1 ? 'results' : 'result'} for "${searchQuery}"`
-              : 'Start typing to search the website'}
+            {'Start typing to search the website'}
           </DialogDescription>
           <form onSubmit={handleSubmit} className="">
             <div className="flex items-center gap-2">
@@ -186,50 +125,6 @@ export default function SearchModal() {
             </div>
           </form>
         </DialogHeader>
-        <ScrollArea className="max-h-[calc(85vh-44px)] px-6">
-          {!posts && searchQuery && (
-            <div class="flex h-20 items-center justify-center space-x-2 bg-white dark:invert">
-              <span class="sr-only">Loading...</span>
-              <div class="h-6 w-6 animate-bounce rounded-full bg-black [animation-delay:-0.3s]"></div>
-              <div class="h-6 w-6 animate-bounce rounded-full bg-black [animation-delay:-0.15s]"></div>
-              <div class="h-6 w-6 animate-bounce rounded-full bg-black"></div>
-            </div>
-          )}
-
-          <div className="grid gap-4 md:grid-cols-2">
-            {posts?.map(({ id, title, excerpt, category, slug }) => {
-              return (
-                <Card
-                  key={id}
-                  className="before:content:'' group relative z-0 overflow-hidden before:absolute before:right-[-32px] before:top-[-24px] before:z-[-1] before:h-8 before:w-8 before:origin-center before:scale-100 before:rounded-[32px] before:bg-sky-500/50 before:transition-transform before:duration-300 before:ease-out hover:before:scale-[32] dark:bg-bgDarker"
-                >
-                  <CardContent class="p-4">
-                    <Link
-                      href={`/category/${category.slug}/${slug}`}
-                      className="flex flex-col gap-2"
-                    >
-                      <h5 className="text-lg font-bold leading-5 tracking-tight text-gray-900 dark:text-white">
-                        {title}
-                      </h5>
-                      <p
-                        className="line-clamp-2 text-sm font-normal text-gray-700 dark:text-gray-400"
-                        dangerouslySetInnerHTML={{ __html: excerpt }}
-                      />
-
-                      <div
-                        className="absolute right-0 top-0 flex h-8 w-8 items-center justify-center overflow-hidden rounded-[0_4px_0_32px] bg-gray-100 bg-sky-500/50 group-hover:bg-transparent"
-                        href="#"
-                      >
-                        <div className="go-arrow">→</div>
-                      </div>
-                    </Link>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-          {posts && <div ref={ref} className="-translate-y-20" />}
-        </ScrollArea>
       </DialogContent>
     </Dialog>
   );

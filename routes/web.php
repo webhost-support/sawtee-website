@@ -47,6 +47,7 @@ Route::get('/unsubscribe/{email}', [SubscriptionController::class, 'unsubscribe'
 // Route::post('/subscribe', [SubscriptionController::class, 'subscribe'])->name('subscribe');
 Route::get('/search', [FrontendController::class, 'search'])->name('search');
 
+
 Route::get('/', [FrontendController::class, 'index'])->name('home');
 Route::get('/{pages:slug}', [FrontendController::class, 'page'])->name('page.show');
 Route::get('/category/{categories:slug}/{subcategory?}/{post?}', [FrontendController::class, 'category'])->name('category.show');

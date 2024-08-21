@@ -1,7 +1,9 @@
+import { cn } from '@/lib/utils';
 import { useForm } from '@inertiajs/react';
-import { useState } from 'react';
-import PrimaryButton from '../Backend/PrimaryButton';
+import { useEffect, useState } from 'react';
+import InputError from '../Backend/InputError';
 import { Input } from '../ui/input';
+import { AnimatedSubscribeButton } from './AnimatedSubscribeButton';
 
 export default function NewsletterCallout() {
   return (
@@ -34,12 +36,23 @@ export default function NewsletterCallout() {
   );
 }
 
-export const SubscribeForm = ({ ...rest }) => {
+export const SubscribeForm = ({ inputStyles, buttonStyles, ...rest }) => {
   const { data, setData, post, processing, errors, reset } = useForm({
     email: '',
   });
 
   const [message, setMessage] = useState(null);
+  const [subscribed, setSubscribed] = useState(false);
+  const [borderColor, setBorderColor] = useState('border-sky-500');
+  useEffect(() => {
+    if (subscribed) {
+      setMessage(`${data.email} has subscribed successfully.`);
+      setTimeout(() => {
+        setMessage(null) && setSubscribed(false);
+      }, 5000);
+      reset('email');
+    }
+  }, [subscribed]);
 
   const submit = e => {
     e.preventDefault();
@@ -47,14 +60,20 @@ export const SubscribeForm = ({ ...rest }) => {
       preserveScroll: true,
       preserveState: true,
       onSuccess: () => {
-        setMessage(`${data.email} has subscribed successfully.`);
+        setSubscribed(true);
         setTimeout(() => {
-          setMessage(null);
+          setMessage(null) && setSubscribed(false);
         }, 5000);
         reset('email');
       },
       onError: errors => {
-        console.log(errors);
+        setBorderColor('border-red-500');
+        setTimeout(() => {
+          setMessage(null);
+          setBorderColor('border-sky-500');
+        }, 5000);
+        reset('email');
+        setMessage(`Error: ${errors.email}.`);
       },
     });
   };
@@ -69,7 +88,11 @@ export const SubscribeForm = ({ ...rest }) => {
         type="email"
         id="email"
         name="email"
-        className="h-9 p-3 text-sm"
+        required
+        className={cn(
+          `h-12 p-3 text-sm text-primary dark:border-sky-300 ${borderColor}`,
+          inputStyles
+        )}
         placeholder="Enter your email address"
         value={data.email}
         onChange={e => {
@@ -78,16 +101,24 @@ export const SubscribeForm = ({ ...rest }) => {
       />
       {errors.email && <InputError mt={2}>{errors.email}</InputError>}
 
-      <PrimaryButton
-        type="submit"
-        variant="primary"
-        isLoading={processing}
-        className="flex w-full items-center justify-center bg-sky-800 px-5 py-3 text-base font-medium text-white saturate-150 backdrop-blur-sm transition duration-150 ease-in-out hover:opacity-80 dark:bg-[rgba(0,0,0,0.4)] dark:hover:bg-[rgba(0,0,0,0.6)]"
-      >
-        Subscribe
-      </PrimaryButton>
+      <AnimatedSubscribeButton
+        className={cn(
+          `w-full dark:text-secondary-foreground ${processing && 'opacity-50'}`,
+          buttonStyles
+        )}
+        isSubscribed={subscribed}
+        isLoading={processing}  
+        initialText={'Subscribe '}
+        changeText={'Subscribed '}
+      />
 
-      {message && <p className="text-sm text-lime-400">{message}</p>}
+      {message && (
+        <p
+          className={`text-sm ${errors.email ? 'text-red-500' : 'text-green-500'}`}
+        >
+          {message}
+        </p>
+      )}
     </form>
   );
 };
