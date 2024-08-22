@@ -109,36 +109,34 @@ export default function EditSectionForm({ sections, section, pages }) {
         </div>
         <div className="col-span-2 grid w-full grid-cols-subgrid gap-4">
           <div className="col-span-1">
-            <fieldset>
-              <Label as="legend" htmlFor="page_id">
-                For Page
-              </Label>
+            <Label as="legend" htmlFor="page_id">
+              For Page
+            </Label>
 
-              <Select
-                name="page_id"
-                id="page_id"
-                value={data.page_id.toString()}
-                onValueChange={value => {
-                  setData('page_id', value);
-                }}
-              >
-                <SelectTrigger className="mt-1">
-                  <SelectValue placeholder="Select Page" />
-                </SelectTrigger>
-                <SelectContent className="w-[300px]">
-                  <SelectGroup>
-                    <SelectLabel>Pages</SelectLabel>
-                    {pages &&
-                      pages.length > 0 &&
-                      pages.map(item => (
-                        <SelectItem key={item.id} value={item.id.toString()}>
-                          {item.name}
-                        </SelectItem>
-                      ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </fieldset>
+            <Select
+              name="page_id"
+              id="page_id"
+              value={data.page_id.toString()}
+              onValueChange={value => {
+                setData('page_id', value);
+              }}
+            >
+              <SelectTrigger className="mt-1">
+                <SelectValue placeholder="Select Page" />
+              </SelectTrigger>
+              <SelectContent className="w-[300px]">
+                <SelectGroup>
+                  <SelectLabel>Pages</SelectLabel>
+                  {pages &&
+                    pages.length > 0 &&
+                    pages.map(item => (
+                      <SelectItem key={item.id} value={item.id.toString()}>
+                        {item.name}
+                      </SelectItem>
+                    ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="col-span-1">

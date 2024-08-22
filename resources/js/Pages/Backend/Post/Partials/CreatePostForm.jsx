@@ -1,39 +1,37 @@
 import ContentEditor from '@/components/Backend/ContentEditor';
+import DropZone from '@/components/Backend/DropZone';
 import InputError from '@/components/Backend/InputError';
 import { MultiSelect } from '@/components/Backend/MultiSelect';
 import PrimaryButton from '@/components/Backend/PrimaryButton';
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
 } from '@/components/ui/accordion';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { useToast } from '@/components/ui/use-toast';
 import { useForm } from '@inertiajs/react';
 import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
-import { XCircleIcon } from 'lucide-react';
 import React from 'react';
-import DropZone from '@/components/Backend/DropZone';
 
 export default function CreatePostForm({ categories, themes, tags }) {
   const { data, setData, post, processing, errors, reset } = useForm({

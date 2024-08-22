@@ -1,31 +1,30 @@
+import DropZone from '@/components/Backend/DropZone';
 import InputError from '@/components/Backend/InputError';
-import PrimaryButton from '@/components/Backend/PrimaryButton';
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
 } from '@/components/ui/accordion';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Button } from '@/components/ui/button';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
@@ -50,6 +49,20 @@ export default function CreateCategoryForm({ open, setOpen, categories }) {
     const array = categories.filter(cat => cat.type === data.type);
     setFilteredCategories(array);
   }, [data.type, categories]);
+
+  function setDataImage(image) {
+    if (image) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        setImage(e.target.result);
+      };
+      reader.readAsDataURL(image);
+      setData('image', image);
+    } else {
+      setImage(null);
+      setData('image', null);
+    }
+  }
 
   const submit = e => {
     e.preventDefault();
@@ -165,28 +178,11 @@ export default function CreateCategoryForm({ open, setOpen, categories }) {
               <div className="col-span-2">
                 <Label htmlFor="image">Featured Image</Label>
 
-                {image && (
-                  <div className="max-w-sm">
-                    <AspectRatio ratio={16 / 9}>
-                      <img
-                        src={image}
-                        alt="featured"
-                        className="mt-1 rounded-md object-cover"
-                      />
-                    </AspectRatio>
-                  </div>
-                )}
-
-                <Input
-                  type="file"
-                  accept="image/.png,.jpg,.jpeg,.webp"
-                  id="image"
-                  className="mt-4"
-                  name="image"
-                  onChange={e => {
-                    setData('image', e.target.files[0]);
-                    setImage(URL.createObjectURL(e.target.files[0]));
-                  }}
+                <DropZone
+                  htmlFor={'image'}
+                  onValueChange={setDataImage}
+                  defaultValue={image}
+                  //   className="h-64"
                 />
 
                 {errors.image && (
@@ -209,7 +205,7 @@ export default function CreateCategoryForm({ open, setOpen, categories }) {
                         <SelectLabel>Category Types</SelectLabel>
                       </SelectGroup>
 
-                      {['post', 'publication', 'research', 'team'].map(type => (
+                      {['post', 'publication'].map(type => (
                         <SelectItem key={type} value={type}>
                           {type}
                         </SelectItem>
@@ -234,7 +230,7 @@ export default function CreateCategoryForm({ open, setOpen, categories }) {
                         <SelectGroup>
                           <SelectLabel className="capitalize">{`categories with type ${data.type}`}</SelectLabel>
                         </SelectGroup>
-
+                        <SelectItem value={null}>Select Parent</SelectItem>
                         {filteredCategories?.map(Category => (
                           <SelectItem
                             key={Category.id}

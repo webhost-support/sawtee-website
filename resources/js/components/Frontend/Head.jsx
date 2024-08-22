@@ -1,6 +1,6 @@
 import { Head } from '@inertiajs/react';
 
-const WebsiteHead = ({ title, description, image, children }) => {
+const WebsiteHead = ({ title, description, image, url, children }) => {
   return (
     <Head>
       <title>{title}</title>
@@ -12,14 +12,18 @@ const WebsiteHead = ({ title, description, image, children }) => {
         property="og:title"
         content={`SAWTEE | ${title}`}
       />
-      <meta head-key="og:type" property="og:type" content="post page" />
+      <meta head-key="og:type" property="og:type" content="article" />
       <meta
         head-key="og:description"
         property="og:description"
         content={description}
       />
-      <meta head-key="og:image" property="og:image" content={image} />
-      <meta head-key="og:url" property="og:url" content="/" />
+      <meta
+        head-key="og:image"
+        property="og:image"
+        content={image ?? '/assets/logo.png'}
+      />
+      <meta head-key="og:url" property="og:url" content={url ?? '/'} />
       <meta
         head-key="og:site_name"
         property="og:site_name"
@@ -30,6 +34,9 @@ const WebsiteHead = ({ title, description, image, children }) => {
         name="twitter:card"
         content="summary_large_image"
       />
+      <meta property="fb:app_id" content="SAWTEENP" />
+      <meta name="twitter:site" content="@sawteebnp" />
+      <meta property="og:image" content="{{asset('images/logo.png')}}" />
       {children}
     </Head>
   );

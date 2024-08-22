@@ -1,48 +1,45 @@
 import ContentEditor from '@/components/Backend/ContentEditor';
+import DropZone from '@/components/Backend/DropZone';
 import InputError from '@/components/Backend/InputError';
 import { MultiSelect } from '@/components/Backend/MultiSelect';
 import PrimaryButton from '@/components/Backend/PrimaryButton';
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
 } from '@/components/ui/accordion';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
 } from '@/components/ui/popover';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
 import { useForm } from '@inertiajs/react';
-import { CalendarIcon } from '@radix-ui/react-icons';
-import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
-import { XCircleIcon } from 'lucide-react';
+import { CalendarIcon, QuestionMarkCircledIcon } from '@radix-ui/react-icons';
 import React from 'react';
-import DropZone from '@/components/Backend/DropZone';
 
 export default function EditPostForm({
   post: postData,
@@ -98,18 +95,18 @@ export default function EditPostForm({
     setData('tags', array);
   }
 
-  function setDataImage(array) {
+  function setDataImage(image) {
     if (image) {
-      const reader = new FileReader();
-      reader.onload = e => {
-        setImage(e.target.result);
-      };
-      reader.readAsDataURL(image);
-      setData('image', image);
-    } else {
-      setImage(null);
-      setData('image', null);
-    }
+        const reader = new FileReader();
+        reader.onload = e => {
+          setImage(e.target.result);
+        };
+        reader.readAsDataURL(image);
+        setData('image', image);
+      } else {
+        setImage(null);
+        setData('image', null);
+      }
   }
 
   const submit = e => {
@@ -336,17 +333,7 @@ export default function EditPostForm({
               defaultValue={image}
             />
 
-            {/* <Input
-              type="file"
-              accept="image/.png,.jpg,.jpeg,.webp"
-              id="image"
-              className="mt-2"
-              name="image"
-              onChange={e => {
-                setData('image', e.target.files[0]);
-                setImageUrl(URL.createObjectURL(e.target.files[0]));
-              }}
-            /> */}
+           
           </div>
           {selectedCategory === ('Covid' || 'Opinion in Lead' || 'Blog') && (
             <div className="mx-2">

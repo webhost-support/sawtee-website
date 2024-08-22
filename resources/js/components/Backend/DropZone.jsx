@@ -1,7 +1,6 @@
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { cn } from '@/lib/utils';
 import { XIcon } from 'lucide-react';
-import React from 'react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
@@ -74,7 +73,7 @@ export default function DropZone({
         </Label>
       )}
       {defaultValue && (
-        <div className="relative flex h-full w-full cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-dashed border-slate-700 bg-gray-50 p-4 hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-800">
+        <div className="relative flex h-full w-full cursor-pointer overflow-hidden rounded-xl border-2 border-dashed border-slate-700 bg-gray-50 hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-800">
           <AspectRatio ratio={16 / 9}>
             <img
               src={defaultValue}
@@ -83,10 +82,12 @@ export default function DropZone({
             />
           </AspectRatio>
           <Button
-            className="absolute right-2 top-2 rounded-lg"
+            size="icon"
+            variant="destructive"
+            className="absolute right-2 top-2 rounded-lg opacity-80"
             onClick={handleRemoveFile}
           >
-            <XIcon className="h-6 w-6" />
+            <XIcon className="h-4 w-4" />
           </Button>
         </div>
       )}

@@ -82,6 +82,9 @@ class SectionController extends Controller
         if ($request->hasFile('image')) {
             $section->addMediaFromRequest('image')->toMediaCollection('section-media');
         }
+        if (!$request->image) {
+            $section->clearMediaCollection('section-media');
+        }
         $section->update($request->all());
         return redirect()->route('admin.sections.index');
     }

@@ -21,70 +21,72 @@ const PostLayout = ({
       })
     : null;
 
-  const shareUrl = post.category.parent
-    ? `https://ankursingh.com.np/${post.category.parent.slug}/${post.category.slug}/${post.slug}`
-    : `https://ankursingh.com.np/${post.category.slug}/${post.slug}`;
+    const shareUrl = post.category.parent
+      ? `https://ankursingh.com.np/${post.category.parent.slug}/${post.category.slug}/${post.slug}`
+      : `https://ankursingh.com.np/${post.category.slug}/${post.slug}`;
 
-  return (
-    <div className="relative w-full px-10 py-10 lg:px-20">
-      <div className="mx-auto mt-5 max-w-5xl">
-        <PostHeader
-          //   className={`px-8 md:px-12`}
-          categories={post.category}
-          heading={post.title}
-        />
-        {featured_image && (
-          <FeaturedMedia
-            className={'rounded-xl'}
-            src={featured_image}
-            srcSet={srcSet}
+    return (
+      <div className="relative w-full px-10 py-10 lg:px-20">
+        <div className="mx-auto mt-5 max-w-5xl">
+          <PostHeader
+            //   className={`px-8 md:px-12`}
+            categories={post.category}
+            heading={post.title}
           />
-        )}
-      </div>
+          {featured_image && (
+            <FeaturedMedia
+              className={'rounded-xl'}
+              src={featured_image}
+              srcSet={srcSet}
+            />
+          )}
+        </div>
 
-      {/* <PostProgressBar value={scroll} /> */}
+        {/* <PostProgressBar value={scroll} /> */}
 
-      <div className="w-full">
-        {/* Look at the settings to see if we should include the featured image */}
-        {isNewsletter && (
-          <div>
-            {children}
-            <SocialShare url={shareUrl} />
-          </div>
-        )}
-
-        {!isNewsletter && (
-          <div className="post-body mx-auto grid max-w-7xl gap-6 pt-10 leading-8 lg:grid-cols-12">
-            <div className="post-content max-w-[60ch] text-lg lg:col-span-8 lg:ml-14">
-              <PostMeta
-                className="py-2"
-                author={post.author}
-                date={post.published_at}
-                readingTime={readingTime}
-              />
-              <div className="post-content prose-base text-lg text-secondary-foreground">
-                {children}
-              </div>
-              {post.tags.length > 0 && <PostTags tags={post.tags} />}
-
-              <SocialShare
-                url={shareUrl}
-                title={post.title}
-                excerpt={post.excerpt}
-              />
+        <div className="w-full">
+          {/* Look at the settings to see if we should include the featured image */}
+          {isNewsletter && (
+            <div>
+              {children}
+              <SocialShare url={shareUrl} />
             </div>
-            <aside className="sticky top-32 h-full w-full lg:col-span-4">
-              <SidebarWidget
-                title="Related Posts"
-                array={relatedPosts}
-                link={`/${post.category.slug}`}
-              />
-            </aside>
-          </div>
-        )}
+          )}
+
+          {!isNewsletter && (
+            <div className="post-body mx-auto grid max-w-7xl gap-6 pt-10 leading-8 lg:grid-cols-12">
+              <div className="post-content max-w-[60ch] text-lg lg:col-span-8 lg:ml-14">
+                <PostMeta
+                  className="py-2"
+                  author={post.author}
+                  date={post.published_at}
+                  readingTime={readingTime}
+                />
+                <div className="post-content prose-base text-lg text-secondary-foreground">
+                  {children}
+                </div>
+                {post.tags.length > 0 && <PostTags tags={post.tags} />}
+
+                <SocialShare
+                  url={shareUrl}
+                  title={post.title}
+                  excerpt={post.excerpt}
+                />
+
+                {/* <div className="sharethis-sticky-share-buttons"></div> */}
+              </div>
+              <aside className="sticky top-32 h-full w-full lg:col-span-4">
+                <SidebarWidget
+                  title="Related Posts"
+                  array={relatedPosts}
+                  link={`/${post.category.slug}`}
+                />
+              </aside>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
-  );
+    );
 };
 
 export default PostLayout;

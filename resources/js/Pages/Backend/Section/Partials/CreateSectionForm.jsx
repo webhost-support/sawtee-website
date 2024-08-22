@@ -5,13 +5,13 @@ import PrimaryButton from '@/components/Backend/PrimaryButton';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
 } from '@/components/ui/select';
 import { useToast } from '@/components/ui/use-toast';
 import { useForm } from '@inertiajs/react';
@@ -105,7 +105,6 @@ export default function CreateSectionForm({ sections, pages }) {
         </div>
         <div className="col-span-2 grid w-full grid-cols-subgrid gap-4">
           <div className="col-span-1">
-            <fieldset>
               <Label as="legend" htmlFor="page_id">
                 For Page
               </Label>
@@ -133,7 +132,6 @@ export default function CreateSectionForm({ sections, pages }) {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-            </fieldset>
           </div>
 
           <div className="col-span-1">

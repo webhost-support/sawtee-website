@@ -154,7 +154,22 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $post = Post::findOrFail($id);
-        $validated = $request->all();
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'nullable|string',
+            'excerpt' => 'nullable|string|max:1000',
+            'category_id' => 'required|numeric|exists:categories,id',
+            'theme_id' => 'nullable|numeric|exists:themes,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'author' => 'nullable|string|max:255',
+            'status' => 'required|string|max:255',
+            'file' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx|max:10240',
+            'link' => 'nullable|string|max:255',
+            'genre' => 'nullable|string|max:255',
+            'published_at' => 'nullable|date',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string|max:255'
+        ]);
         $validated['title'] = Str::of($validated['title'])
             ->title()
             ->squish();
@@ -165,6 +180,9 @@ class PostController extends Controller
 
         if ($request->has('tags')) {
             $post->tags()->sync($request->tags);
+        }
+        if (!$request->image) {
+            $post->clearMediaCollection('post-featured-image');
         }
         if ($request->hasFile('image')) {
             $post->addMediaFromRequest('image')->toMediaCollection('post-featured-image');

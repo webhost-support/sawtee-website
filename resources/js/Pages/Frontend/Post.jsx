@@ -1,7 +1,6 @@
 import WebsiteHead from '@/components/Frontend/Head';
 import MainLayout from '@/components/Layouts/MainLayout';
 import PostLayout from '@/components/Layouts/PostLayout';
-import { Link } from '@inertiajs/react';
 import NewsletterPost from './Pages/NewsletterPost';
 import WebinarPost from './Pages/WebinarPost';
 
@@ -17,14 +16,23 @@ export default function Post({
   const isNewsletter = category.slug === 'newsletters';
   const isWebinarSeries = category.slug === 'webinar-series';
   const isDefault = !isNewsletter && !isWebinarSeries;
-
+  const shareUrl = post.category.parent
+    ? `https://ankursingh.com.np/${post.category.parent.slug}/${post.category.slug}/${post.slug}`
+    : `https://ankursingh.com.np/${post.category.slug}/${post.slug}`;
   return (
     <MainLayout>
       <WebsiteHead
         title={`${category.name} | ${title}`}
         description={post.meta_description}
         image={featured_image ? featured_image : '/assets/logo-sawtee.webp'}
-      />
+        url={shareUrl}
+      >
+        {/* <script
+          type="text/javascript"
+          src="https://platform-api.sharethis.com/js/sharethis.js#property=66c5af84260e03001afdc219&product=inilne-share-buttons&source=platform"
+          async="async"
+        /> */}
+      </WebsiteHead>
 
       <PostLayout
         post={post}
@@ -44,9 +52,9 @@ export default function Post({
               }}
             />
             {file && (
-              <Link target="_blank" href={file}>
+              <a target="_blank" href={file}>
                 PDF
-              </Link>
+              </a>
             )}
           </>
         )}

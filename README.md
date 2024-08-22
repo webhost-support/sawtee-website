@@ -1,66 +1,60 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## About SAWTEE CMS
 
-## About Laravel
+  <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://ankursingh.com.np/assets/logo-sawtee.svg" width="400" alt="Laravel Logo"></a></p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+SAWTEE CMS is a custom content management system built using [Laravel](https://laravel.com/) and [Inertia](https://inertiajs.com/) to suit the needs of [SAWTEE](https://sawtee.org).
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+The app has two parts, a [backend](https://ankursingh.com.np/admin) necessary to manage content for the website and a [frontend](https://ankursingh.com.np)(website).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+# Setup local development
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+These are the steps required to setup the local development.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+This is a Laravel application. That means it requires this setup:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- PHP 8.1 or newer
+- HTTP server with PHP support (eg: Apache, Nginx, Caddy)
+- Composer
+- MySQL
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+You can find more details on the [Laravel documentation website](https://laravel.com/docs/master/installation).
 
-### Premium Partners
+Here are the steps that we suggest you to follow:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+1. Install PHP and a web server like Nginx. If you are on macOS, or linux we recommend [Valet](https://laravel.com/docs/9.x/valet) or [Linux Valet](https://cpriego.github.io/valet-linux/) and [Linux Valet Plus](https://valetlinux.plus/).
+2. Install MySQL.
+3. Clone the repo into your local machine
 
-## Contributing
+```bash
+git clone https://github.com/SAWTEE/sawtee-website.git && cd sawtee-website
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+4. install composer dependencies
 
-## Code of Conduct
+```bash
+# inside the projects root folder 
+composer install --no-progress --no-interaction --prefer-dist --optimize-autoloader
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+5. install node dependencies
 
-## Security Vulnerabilities
+```bash
+# using npm, pnpm or yarn
+npm install
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+6. generate and configure `.env` file
+	1. `cp .env.example .env`
+    2. `php artisan key:generate --no-interaction` (generates APP_KEY)
+8. run database migrations `php artisan migrate --force`
+9. generate dummy data
+    1. `php artisan db:seed`
+10. `npm run build` to generate the proper JS and CSS files
+11. `npm run dev` and head to your browser and enter http://localhost:3000 for the frontend and http://localhost:3000/admin for backend.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

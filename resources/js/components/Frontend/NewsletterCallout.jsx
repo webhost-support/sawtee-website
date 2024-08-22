@@ -43,7 +43,7 @@ export const SubscribeForm = ({ inputStyles, buttonStyles, ...rest }) => {
 
   const [message, setMessage] = useState(null);
   const [subscribed, setSubscribed] = useState(false);
-  const [borderColor, setBorderColor] = useState('border-sky-500');
+  const [borderColor, setBorderColor] = useState('border-sky-700/90');
   useEffect(() => {
     if (subscribed) {
       setMessage(`${data.email} has subscribed successfully.`);
@@ -90,7 +90,7 @@ export const SubscribeForm = ({ inputStyles, buttonStyles, ...rest }) => {
         name="email"
         required
         className={cn(
-          `h-12 p-3 text-sm text-primary dark:border-sky-300 ${borderColor}`,
+          `h-12 p-3 text-sm text-primary dark:border-sky-400/80 ${borderColor}`,
           inputStyles
         )}
         placeholder="Enter your email address"
@@ -103,11 +103,11 @@ export const SubscribeForm = ({ inputStyles, buttonStyles, ...rest }) => {
 
       <AnimatedSubscribeButton
         className={cn(
-          `w-full dark:text-secondary-foreground ${processing && 'opacity-50'}`,
+          `w-full bg-primary ${processing && 'opacity-50'}`,
           buttonStyles
         )}
         isSubscribed={subscribed}
-        isLoading={processing}  
+        isLoading={processing}
         initialText={'Subscribe '}
         changeText={'Subscribed '}
       />

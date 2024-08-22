@@ -92,8 +92,7 @@ class CategoryController extends Controller
         }
 
         if (!$request->image) {
-            $media = $category->getFirstMedia('category_media');
-            $media->delete();
+            $category->clearMediaCollection('category_media');
         }
 
         if ($request->image) {

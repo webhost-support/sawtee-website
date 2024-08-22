@@ -5,11 +5,11 @@ import * as React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
+    DropdownMenu,
+    DropdownMenuCheckboxItem,
+    DropdownMenuContent,
+    DropdownMenuLabel,
+    DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
 import { cn } from '@/lib/utils';
@@ -58,6 +58,7 @@ export const MultiSelect = React.forwardRef(
     const [selectedValues, setSelectedValues] = React.useState(defaultValue);
     const [isAnimating, setIsAnimating] = React.useState(false);
 
+
     React.useEffect(() => {
       if (JSON.stringify(selectedValues) !== JSON.stringify(defaultValue)) {
         setSelectedValues(selectedValues);
@@ -65,8 +66,9 @@ export const MultiSelect = React.forwardRef(
     }, [defaultValue, selectedValues]);
 
     const toggleOption = value => {
+      console.log(value);
       const newSelectedValues = selectedValues.includes(value)
-        ? selectedValues.filter(v => v !== value)
+        ? selectedValues.filter(v => v.value !== value.value)
         : [...selectedValues, value];
       setSelectedValues(newSelectedValues);
       onValueChange(newSelectedValues);
@@ -103,13 +105,13 @@ export const MultiSelect = React.forwardRef(
             'flex h-auto min-h-10 w-full items-center justify-between rounded-md border bg-inherit p-1 hover:bg-inherit'
           )}
         >
-          {selectedValues.length > 0 ? (
+          {selectedValues?.length > 0 ? (
             <div className="flex w-full items-center justify-between">
               <div className="flex flex-wrap items-center">
-                {selectedValues.slice(0, maxCount).map(value => {
-                  const option = options.find(o => {
-                    return o.value === value.value;
-                  });
+                {selectedValues?.slice(0, maxCount).map(value => {
+                  const option = options?.find(
+                    opt => opt.value === value.value
+                  );
 
                   return (
                     <Badge
@@ -186,12 +188,14 @@ export const MultiSelect = React.forwardRef(
             <DropdownMenuCheckboxItem
               key="all"
               onCheckedChange={toggleAll}
-              checked={selectedValues.length === options.length}
+              checked={
+                selectedValues && selectedValues?.length === options.length
+              }
               className="cursor-pointer"
             >
               Select All
             </DropdownMenuCheckboxItem>
-            {options.map(option => {
+            {options?.map(option => {
               const selected = selectedValues.find(
                 v => v.value === option.value
               );

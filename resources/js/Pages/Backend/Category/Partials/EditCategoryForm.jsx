@@ -1,3 +1,4 @@
+import DropZone from '@/components/Backend/DropZone';
 import InputError from '@/components/Backend/InputError';
 import PrimaryButton from '@/components/Backend/PrimaryButton';
 import {
@@ -29,7 +30,6 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
 import { useForm } from '@inertiajs/react';
-import { XIcon } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 
 export default function EditCategoryForm({
@@ -55,6 +55,20 @@ export default function EditCategoryForm({
     const array = categories.filter(cat => cat.type === data.type);
     setFilteredCategories(array);
   }, [data.type, categories]);
+
+  function setDataImage(image) {
+    if (image) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        setImage(e.target.result);
+      };
+      reader.readAsDataURL(image);
+      setData('image', image);
+    } else {
+      setImage(null);
+      setData('image', null);
+    }
+  }
 
   const submit = e => {
     e.preventDefault();
@@ -172,36 +186,14 @@ export default function EditCategoryForm({
               <div className="col-span-2">
                 <Label htmlFor="image">Featured Image</Label>
 
-                {image && (
-                  <div className="relative max-w-sm rounded-md overflow-hidden border-2 border-dashed border-gray-300">
-                      <img
-                        src={image}
-                        alt="featured"
-                        className="w-full h-full rounded-md object-cover"
-                      />
-                    <div
-                      className="absolute right-0 top-0"
-                      onClick={() => {
-                        setImage(null);
-                        setData('image', null);
-                      }}
-                    >
-                      <XIcon className="h-6 w-6 text-red-500" />
-                    </div>
-                  </div>
-                )}
 
-                <Input
-                  type="file"
-                  accept="image/.png,.jpg,.jpeg,.webp"
-                  id="image"
-                  className="mt-4"
-                  name="image"
-                  onChange={e => {
-                    setData('image', e.target.files[0]);
-                    setImage(URL.createObjectURL(e.target.files[0]));
-                  }}
+                <DropZone
+                  htmlFor={'image'}
+                  onValueChange={setDataImage}
+                  defaultValue={image}
+                //   className="h-64"
                 />
+
 
                 {errors.image && (
                   <InputError className="mt-2">{errors.image}</InputError>
@@ -248,7 +240,7 @@ export default function EditCategoryForm({
                         <SelectGroup>
                           <SelectLabel>Parent</SelectLabel>
                         </SelectGroup>
-
+                        <SelectItem value={null}>Select Parent</SelectItem>
                         {filteredCategories?.map(Category => (
                           <SelectItem
                             key={Category.id}

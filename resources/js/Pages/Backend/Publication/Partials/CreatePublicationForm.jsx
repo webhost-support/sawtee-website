@@ -1,17 +1,17 @@
+import DropZone from '@/components/Backend/DropZone';
 import InputError from '@/components/Backend/InputError';
 import { MultiSelect } from '@/components/Backend/MultiSelect';
 import PrimaryButton from '@/components/Backend/PrimaryButton';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
@@ -30,8 +30,18 @@ export default function CreatePublicationForm({ categories, tags }) {
     tags: [],
   });
   const [image, setImage] = useState(null);
-  const [postTags, setPostTags] = useState([]);
-  const [tagOptions, setTagOptions] = useState([]);
+  const [tagOptions, setTagOptions] = useState(() => {
+    const tagsarray = [];
+    tags?.map(tag => {
+      tagsarray.push({
+        value: tag.id,
+        label: tag.name,
+        id: undefined,
+      });
+    });
+
+    return tagsarray;
+  });
   const [publicationTags, setPublicationTags] = React.useState([]);
   const { toast } = useToast();
 
@@ -43,6 +53,20 @@ export default function CreatePublicationForm({ categories, tags }) {
       ]);
     });
   }, [tags]);
+
+  function setDataImage(image) {
+    if (image) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        setImage(e.target.result);
+      };
+      reader.readAsDataURL(image);
+      setData('image', image);
+    } else {
+      setImage(null);
+      setData('image', null);
+    }
+  }
 
   const submit = e => {
     e.preventDefault();
@@ -72,7 +96,7 @@ export default function CreatePublicationForm({ categories, tags }) {
     const array = [];
     selectedValues.map(item => {
       array.push({
-        post_id: item.id,
+        publication_id: undefined,
         tag_id: item.value,
       });
     });
@@ -90,7 +114,6 @@ export default function CreatePublicationForm({ categories, tags }) {
               required
               id="title"
               name="title"
-              autoFoucs
               className="mt-1"
               onChange={e => setData('title', e.target.value)}
             />
@@ -178,28 +201,11 @@ export default function CreatePublicationForm({ categories, tags }) {
           </div>
           <div className="mx-2">
             <Label htmlFor="image">Featured Image</Label>
-            {image && (
-              <div className="w-[minmax(auto, 450px)]">
-                <AspectRatio ratio={16 / 9}>
-                  <img
-                    src={image}
-                    alt="featured"
-                    className="rounded-md object-cover"
-                  />
-                </AspectRatio>
-              </div>
-            )}
-
-            <Input
-              type="file"
-              accept="image/.png,.jpg,.jpeg,.webp"
-              id="image"
-              className="mt-1"
-              name="image"
-              onChange={e => {
-                setData('image', e.target.files[0]);
-                setImage(URL.createObjectURL(e.target.files[0]));
-              }}
+            <DropZone
+              htmlFor={'image'}
+              defaultValue={image}
+              onValueChange={setDataImage}
+              className="h-64 w-48"
             />
 
             {errors.image && (

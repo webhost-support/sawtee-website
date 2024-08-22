@@ -18,16 +18,15 @@ export default function Category({
   sawteeInMedia,
   events,
   showSubscriptionBox = true,
-  showFacebookEmbed = true,
   featured_image,
   srcSet,
 }) {
-  const isEvent = category.slug === 'featured-events';
-  const isInFocus = category.slug === 'infocus';
-  const isMedia = category.slug === 'sawtee-in-media';
-  const isNewsletter = category.slug === 'newsletters';
-  const isCovid = category.slug === 'covid';
-  const isResearch = category.slug === 'research';
+  const isEvent = category.slug.includes('featured-events');
+  const isInFocus = category.slug.includes('infocus');
+  const isMedia = category.slug.includes('sawtee-in-media');
+  const isNewsletter = category.slug.includes('newsletters');
+  const isCovid = category.slug.includes('covid');
+  const isResearch = category.slug.includes('research');
   const isDefault = !isNewsletter && !isResearch && !isCovid && !isEvent;
 
   return (

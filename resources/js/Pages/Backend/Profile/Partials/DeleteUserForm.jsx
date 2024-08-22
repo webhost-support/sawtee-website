@@ -1,12 +1,21 @@
 import DangerButton from '@/components/Backend/DangerButton';
 import InputError from '@/components/Backend/InputError';
-import InputLabel from '@/components/Backend/InputLabel';
-import Modal from '@/components/Backend/Modal';
-import SecondaryButton from '@/components/Backend/SecondaryButton';
-import TextInput from '@/components/Backend/TextInput';
 import { useToast } from '@/components/ui/use-toast';
 import { useForm } from '@inertiajs/react';
 import { useRef, useState } from 'react';
+
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 export default function DeleteUserForm({ className = '' }) {
   const [confirmingUserDeletion, setConfirmingUserDeletion] = useState(false);
@@ -54,7 +63,9 @@ export default function DeleteUserForm({ className = '' }) {
   return (
     <section className={`space-y-6 ${className}`}>
       <header>
-        <h2 className="text-lg font-medium text-secondary-foreground">Delete Account</h2>
+        <h2 className="text-lg font-medium text-secondary-foreground">
+          Delete Account
+        </h2>
 
         <p className="mt-1 text-sm text-muted-foreground">
           Once your account is deleted, all of its resources and data will be
@@ -63,9 +74,68 @@ export default function DeleteUserForm({ className = '' }) {
         </p>
       </header>
 
-      <DangerButton onClick={confirmUserDeletion}>Delete Account</DangerButton>
+      <DangerButton onClick={() => confirmUserDeletion()}>
+        Delete Account
+      </DangerButton>
+      <Dialog open={confirmingUserDeletion} onOpenChange={() => closeModal()}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Delete account</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete your account?
+            </DialogDescription>
+          </DialogHeader>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Once your account is deleted, all of its resources and data will be
+            permanently deleted. Please enter your password to confirm you would
+            like to permanently delete your account.
+          </p>
+          <form onSubmit={deleteUser} className="dark:bg-bgDarker">
+            <div className="grid gap-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <div className="col-span-4">
+                  <Label htmlFor="password" className="text-right">
+                    Password
+                  </Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    name="password"
+                    ref={passwordInput}
+                    value={data.password}
+                    onChange={e => setData('password', e.target.value)}
+                    //   className="mt-1 block w-3/4"
+                    isFocused
+                    placeholder="Password"
+                    className="col-span-3"
+                  />
+                </div>
+              </div>
+              <InputError message={errors.password} className="mt-2" />
+            </div>
+          </form>
+          <DialogFooter>
+            <div className="mt-6 flex justify-end">
+              <DialogClose asChild>
+                <Button type="button" variant="secondary">
+                  Close
+                </Button>
+              </DialogClose>
 
-      <Modal show={confirmingUserDeletion} onClose={closeModal}>
+              <Button
+                variant="destructive"
+                type="submit"
+                className="ms-3"
+                disabled={processing}
+              >
+                Delete Account
+              </Button>
+            </div>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* <Modal show={confirmingUserDeletion} onClose={closeModal}>
         <form onSubmit={deleteUser} className="p-6 dark:bg-bgDarker">
           <h2 className="text-lg font-medium text-secondary-foreground">
             Are you sure you want to delete your account?
@@ -107,7 +177,7 @@ export default function DeleteUserForm({ className = '' }) {
             </DangerButton>
           </div>
         </form>
-      </Modal>
+      </Modal> */}
     </section>
   );
 }

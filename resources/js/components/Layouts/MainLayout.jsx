@@ -2,7 +2,7 @@
 import Footer from '@/components/Frontend/footer/footer';
 import Header from '@/components/Frontend/header/header';
 import { Button } from '@/components/ui/button';
-import { FooterMenu, mobileMenu, socialMenu } from '@/lib/data';
+import { mobileMenu, socialMenu } from '@/lib/data';
 import { cn } from '@/lib/utils';
 import { usePage } from '@inertiajs/react';
 import { useWindowWidth } from '@react-hook/window-size';
@@ -14,7 +14,6 @@ export default function MainLayout({ children, ...rest }) {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const page = usePage();
   const { primaryMenu, footerMenu } = page.props;
-  const url = page.url;
   const onlyWidth = useWindowWidth();
   const mobileWidth = onlyWidth < 768;
 
@@ -25,7 +24,6 @@ export default function MainLayout({ children, ...rest }) {
       setVisible(false);
     }
   };
-
 
   useEffect(() => {
     window.addEventListener('scroll', toggleVisibility);
@@ -65,10 +63,7 @@ export default function MainLayout({ children, ...rest }) {
         {children}
       </div>
 
-      <Footer
-        menu={footerMenu?.length > 0 ? footerMenu : FooterMenu}
-        socialMenu={socialMenu}
-      />
+      <Footer menu={footerMenu} socialMenu={socialMenu} />
 
       <Button
         className={cn(
