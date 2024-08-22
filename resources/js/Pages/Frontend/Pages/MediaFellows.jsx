@@ -1,10 +1,10 @@
 import AirBnbCard from '@/components/Frontend/AirBnbCard';
 import Glassbox from '@/components/Frontend/Glassbox';
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Link } from '@inertiajs/react';
@@ -45,8 +45,8 @@ export const Fellows = ({ mediaFellow }) => {
           </AvatarFallback>
         </Avatar>
         <div className="ml-6 flex items-center gap-4">
-          <h2 className="text-md font-sans lg:text-xl">{name}</h2>
-          <p className="text-xs">{designation}</p>
+          <h2 className="text-lg font-sans lg:text-xl">{name}</h2>
+          <p className="text-sm">{designation}</p>
         </div>
       </div>
 
@@ -93,17 +93,16 @@ export const Fellows = ({ mediaFellow }) => {
             {'Experience with the Fellowship'}
           </AccordionTrigger>
           <AccordionContent>
-            {experience.length > 0 &&
-              experience.map(exp => {
-                return (
-                  <p
-                    className="my-2 text-lg"
-                    dangerouslySetInnerHTML={{
-                      __html: exp,
-                    }}
-                  />
-                );
-              })}
+            {experience?.map(exp => {
+              return (
+                <p
+                  className="my-2 text-lg experience-text"
+                  dangerouslySetInnerHTML={{
+                    __html: exp,
+                  }}
+                />
+              );
+            })}
           </AccordionContent>
         </AccordionItem>
       </Accordion>

@@ -47,6 +47,7 @@ export default function Page({
 
 const PageContent = ({ page, sections, themes }) => {
   const { slug, content, pageData } = page;
+  console.log(page.page_template);
   switch (page.page_template) {
     case 'OurWork':
       return <OurWork themes={themes} sections={sections} content={content} />;

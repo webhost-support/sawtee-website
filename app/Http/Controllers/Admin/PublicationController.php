@@ -64,6 +64,11 @@ class PublicationController extends Controller
 
     $validated['slug'] = Str::slug($slug, '-');
     $publication = Publication::create($validated);
+
+        if (!$request->image) {
+            $publication->clearMediaCollection('publication_featured_image');
+        }
+
     if ($request->hasFile('image')) {
       $publication->addMediaFromRequest('image')->toMediaCollection('publication_featured_image');
     }
@@ -116,6 +121,9 @@ class PublicationController extends Controller
     if ($request->has('tags')) {
         $publication->tags()->attach($request->tags);
     }
+        if (!$request->image) {
+            $publication->clearMediaCollection('publication_featured_image');
+        }
 
     if ($request->hasFile('image')) {
       $publication->addMediaFromRequest('image')->toMediaCollection('publication_featured_image');

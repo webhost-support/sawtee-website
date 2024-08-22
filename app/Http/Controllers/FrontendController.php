@@ -61,7 +61,7 @@ class FrontendController extends Controller
     {
         $slidesResponsiveImages = array();
         $featured = Tag::where('name', 'featured')->firstOrFail();
-        $featured_publications = $featured->publications()->get();
+        $featured_publications = $featured->publications()->latest()->limit(4)->get();
         $publications = Publication::with(['file', 'category'])
         ->orderBy('id', "DESC")
             ->limit(6)

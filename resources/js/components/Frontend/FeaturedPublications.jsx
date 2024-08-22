@@ -19,7 +19,7 @@ export const FeaturedPublications = ({ publications }) => {
           return (
             <li
               className={
-                'group mb-4 flex w-full items-center justify-between gap-6 last:mb-0'
+                'group mb-4 flex w-full items-center cursor-pointer justify-between gap-6 last:mb-0'
               }
               key={publication.id}
             >
@@ -43,7 +43,7 @@ export const FeaturedPublications = ({ publications }) => {
                   className="group-hover:opacity-80"
                   href={`/publications/${publication.file?.name}`}
                 >
-                  <p className="md:text-md font-sans text-sm leading-4 text-secondary-foreground group-hover:underline">
+                  <p className="md:text-md font-sans text-sm leading-4 font-semibold text-secondary-foreground group-hover:underline">
                     {publication.title}
                   </p>
 
@@ -54,10 +54,10 @@ export const FeaturedPublications = ({ publications }) => {
               </div>
 
               {media && (
-                <div className="mx-auto w-1/3 max-w-20 overflow-hidden rounded-md">
+                <div className="mx-auto h-[90px] w-1/3 max-w-16 overflow-hidden rounded-md">
                   <img
-                    className="aspect-[3/4] w-full border object-cover"
-                    src={media || '/assets/SM-placeholder-150x150.png'}
+                    className="h-full w-full border object-cover"
+                    src={media}
                     alt="Publication Cover"
                     loading="lazy"
                   />
