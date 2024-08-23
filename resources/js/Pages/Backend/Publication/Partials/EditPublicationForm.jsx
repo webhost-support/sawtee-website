@@ -56,15 +56,15 @@ export default function EditPublicationForm({ publication, categories, tags }) {
   });
 
   function setDataTags(selectedValues) {
-    console.log(selectedValues);
     const array = [];
-    selectedValues.map(item => {
-      array.push({
-        publication_id: item.id,
-        tag_id: item.value,
+    selectedValues.length > 0 &&
+      selectedValues.map(item => {
+        array.push({
+          publication_id: item.id,
+          tag_id: item.value,
+        });
       });
-    });
-    array.length > 0 && setData('tags', array);
+    setData('tags', array);
   }
 
   function setDataImage(image) {

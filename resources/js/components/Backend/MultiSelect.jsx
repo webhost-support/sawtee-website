@@ -66,7 +66,6 @@ export const MultiSelect = React.forwardRef(
     }, [defaultValue, selectedValues]);
 
     const toggleOption = value => {
-      console.log(value);
       const newSelectedValues = selectedValues.includes(value)
         ? selectedValues.filter(v => v.value !== value.value)
         : [...selectedValues, value];

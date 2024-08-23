@@ -119,7 +119,7 @@ class PublicationController extends Controller
     $validated['slug'] = Str::slug($slug, '-');
 
     if ($request->has('tags')) {
-        $publication->tags()->attach($request->tags);
+            $publication->tags()->sync($request->tags);
     }
         if (!$request->image) {
             $publication->clearMediaCollection('publication_featured_image');

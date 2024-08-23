@@ -94,12 +94,13 @@ export default function CreatePublicationForm({ categories, tags }) {
 
   function setDataTags(selectedValues) {
     const array = [];
-    selectedValues.map(item => {
-      array.push({
-        publication_id: undefined,
-        tag_id: item.value,
+    selectedValues.length > 0 &&
+      selectedValues.map(item => {
+        array.push({
+          publication_id: item.id,
+          tag_id: item.value,
+        });
       });
-    });
     setData('tags', array);
   }
 
