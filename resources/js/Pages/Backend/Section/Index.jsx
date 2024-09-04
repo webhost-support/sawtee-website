@@ -5,7 +5,6 @@ import PrimaryButton from '@/components/Backend/PrimaryButton';
 import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
 import { useToast } from '@/components/ui/use-toast';
 import { Head, Link, useForm } from '@inertiajs/react';
-import React from 'react';
 export default function Index({ auth, sections }) {
   const { toast } = useToast();
   const { processing, delete: destroy, get } = useForm();
@@ -47,13 +46,7 @@ export default function Index({ auth, sections }) {
         return <DataTableColumnHeader column={column} title="Type" />;
       },
     },
-    {
-      accessorKey: 'description',
-      header: 'Description',
-      cell: ({ row }) => (
-        <p className="line-clamp-2 text-sm">{row.getValue('description')}</p>
-      ),
-    },
+
     {
       accessorKey: 'parent_id',
       header: 'Parent Section',

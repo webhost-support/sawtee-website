@@ -96,7 +96,6 @@ export default function CreateSectionForm({ sections, pages }) {
             htmlFor={'image'}
             onValueChange={setDataImage}
             defaultValue={image}
-            className="h-64"
           />
 
           {errors.image && (
@@ -105,33 +104,33 @@ export default function CreateSectionForm({ sections, pages }) {
         </div>
         <div className="col-span-2 grid w-full grid-cols-subgrid gap-4">
           <div className="col-span-1">
-              <Label as="legend" htmlFor="page_id">
-                For Page
-              </Label>
+            <Label as="legend" htmlFor="page_id">
+              For Page
+            </Label>
 
-              <Select
-                name="page_id"
-                id="page_id"
-                onValueChange={value => {
-                  setData('page_id', value);
-                }}
-              >
-                <SelectTrigger className="mt-1">
-                  <SelectValue placeholder="Select Page" />
-                </SelectTrigger>
-                <SelectContent className="w-[300px]">
-                  <SelectGroup>
-                    <SelectLabel>Pages</SelectLabel>
-                    {pages &&
-                      pages.length > 0 &&
-                      pages.map(item => (
-                        <SelectItem key={item.id} value={item.id.toString()}>
-                          {item.name}
-                        </SelectItem>
-                      ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+            <Select
+              name="page_id"
+              id="page_id"
+              onValueChange={value => {
+                setData('page_id', value);
+              }}
+            >
+              <SelectTrigger className="mt-1">
+                <SelectValue placeholder="Select Page" />
+              </SelectTrigger>
+              <SelectContent className="w-[300px]">
+                <SelectGroup>
+                  <SelectLabel>Pages</SelectLabel>
+                  {pages &&
+                    pages.length > 0 &&
+                    pages.map(item => (
+                      <SelectItem key={item.id} value={item.id.toString()}>
+                        {item.name}
+                      </SelectItem>
+                    ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="col-span-1">

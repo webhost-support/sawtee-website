@@ -126,6 +126,47 @@ class FrontendController extends Controller
     }
 
 
+    public function tags($slug, $post = null)
+    {
+        $infocus = Category::where('slug', 'in-focus')->firstOrFail()->posts()->where('status', 'published')->latest()->take(5)->get();
+        $sawteeInMedia = Category::where('slug', 'sawtee-in-media')->firstOrFail()->posts()->where('status', 'published')->latest()->take(5)->get();
+        $events = Category::where('slug', 'featured-events')->firstOrFail()->posts()->where('status', 'published')->latest()->take(5)->get();
+        $tag = Tag::where('name', str_replace('-', ' ', $slug))->firstOrFail();
+
+        $posts = $tag->posts()->paginate(10);
+        if (!$post) {
+            $post = $tag->publications()->paginate(10);
+        }
+        return Inertia::render('Frontend/Archives/TagsArchive', [
+            'tag' => $tag,
+            'posts' => $posts,
+            'infocus' => $infocus,
+            'sawteeInMedia' => $sawteeInMedia,
+            'events' => $events->load(['category', 'media']),
+
+        ]);
+    }
+
+    public function themes($slug, $post = null)
+    {
+        $infocus = Category::where('slug', 'in-focus')->firstOrFail()->posts()->where('status', 'published')->latest()->take(5)->get();
+        $sawteeInMedia = Category::where('slug', 'sawtee-in-media')->firstOrFail()->posts()->where('status', 'published')->latest()->take(5)->get();
+        $events = Category::where('slug', 'featured-events')->firstOrFail()->posts()->where('status', 'published')->latest()->take(5)->get();
+        $theme = Theme::where('title', str_replace('-', ' ', $slug))->firstOrFail();
+
+        $posts = $theme->posts()->paginate(10);
+
+        return Inertia::render('Frontend/Archives/ThemesArchive', [
+            'theme' => $theme,
+            'posts' => $posts,
+            'infocus' => $infocus,
+            'sawteeInMedia' => $sawteeInMedia,
+            'events' => $events->load(['category', 'media']),
+
+        ]);
+    }
+
+
     /**
      * Retrieves the category, subcategory, and post information based on the provided slugs.
      *
@@ -170,20 +211,22 @@ class FrontendController extends Controller
         }
 
 
+
+
         // if route is for category/subcategory/post eg: sawtee.org/programmes/ongoing-programmes/post-slug
         if ($subcategory && $post) {
-            $slug = $segments[3];
+            $post_slug = $segments[3];
             $category = Category::where('slug', $subcategory)->firstOrFail();
             $post =
-            Post::where("category_id", $category->id)->where("status", "published")->where('slug', $slug)->firstOrFail();
-            $related_posts = Post::where("category_id", $category->id)->where("status", "published")->where('slug', '!=', $slug)->latest(5)->get();
+            Post::where("category_id", $category->id)->where("status", "published")->where('slug', $post_slug)->firstOrFail();
+            $related_posts = Post::where("category_id", $category->id)->where("status", "published")->where('slug', '!=', $post_slug)->latest(5)->get();
             $media = $post->getFirstMediaUrl('post-featured-image');
             $srcSet = $post->getFirstMedia('post-featured-image')?->getSrcSet('responsive');
             $file = $post->getFirstMediaurl('post-files');
             return Inertia::render('Frontend/Post', ['post' => $post->load('category', 'category.parent', 'tags'), 'featured_image' => $media, "srcSet" => $srcSet, 'file' => $file, 'relatedPosts' => $related_posts]);
         }
 
-        // if route is for category/category-slug/subcategory eg: sawtee.org/category/programmes/ongoing-programmes/
+        // if route is for category/category-post_slug/subcategory eg: sawtee.org/category/programmes/ongoing-programmes/
         if ($subcategory) {
             $category = Category::with('parent')->where('slug', $subcategory)->first();
             if ($slug === 'publications') {

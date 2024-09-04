@@ -112,6 +112,13 @@
       0 => 'Pest\\Laravel\\PestServiceProvider',
     ),
   ),
+  'rahulalam31/laravel-abuse-ip' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'RahulAlam31\\LaravelAbuseIp\\AbuseIPServiceProvider',
+    ),
+  ),
   'spatie/laravel-google-fonts' => 
   array (
     'providers' => 

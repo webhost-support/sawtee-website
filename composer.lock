@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "73fbfe7a5bbc959c3f4afd89b3e98e64",
+    "content-hash": "5126fd70592a4f1d63f6308d22a2ff5a",
     "packages": [
         {
             "name": "brick/math",
@@ -3784,6 +3784,78 @@
                 "source": "https://github.com/bobthecow/psysh/tree/v0.11.21"
             },
             "time": "2023-09-17T21:15:54+00:00"
+        },
+        {
+            "name": "rahulalam31/laravel-abuse-ip",
+            "version": "1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rahulalam31/Laravel-Abuse-IP.git",
+                "reference": "7a91303b83c6733ffcfab6c737cd57cdefcbb0d4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rahulalam31/Laravel-Abuse-IP/zipball/7a91303b83c6733ffcfab6c737cd57cdefcbb0d4",
+                "reference": "7a91303b83c6733ffcfab6c737cd57cdefcbb0d4",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "^7.0|^7.9",
+                "illuminate/cache": "^8.0|^9.0|^10.0|^11.0",
+                "illuminate/config": "^8.0|^9.0|^10.0|^11.0",
+                "illuminate/console": "^8.0|^9.0|^10.0|^11.0",
+                "illuminate/contracts": "^8.0|^9.0|^10.0|^11.0",
+                "illuminate/support": "^8.0|^9.0|^10.0|^11.0",
+                "illuminate/validation": "^8.0|^9.0|^10.0|^11.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "larastan/larastan": "^2.9",
+                "laravel/pint": "^1.16",
+                "mockery/mockery": "1.7.x-dev",
+                "orchestra/testbench": "^8.18",
+                "phpunit/phpunit": "^10.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "RahulAlam31\\LaravelAbuseIp\\AbuseIPServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "RahulAlam31\\LaravelAbuseIp\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "rahulalam31",
+                    "email": "rahulalam31@users.noreply.github.com"
+                }
+            ],
+            "description": "Block ip address of all spammer's around the world.",
+            "keywords": [
+                "Laravel Security",
+                "abuseipdb",
+                "framework",
+                "laravel",
+                "spam protection"
+            ],
+            "support": {
+                "issues": "https://github.com/rahulalam31/Laravel-Abuse-IP/issues",
+                "source": "https://github.com/rahulalam31/Laravel-Abuse-IP/tree/1.4"
+            },
+            "time": "2024-08-21T07:15:01+00:00"
         },
         {
             "name": "ralouphie/getallheaders",

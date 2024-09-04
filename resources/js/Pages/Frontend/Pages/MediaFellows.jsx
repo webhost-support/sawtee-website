@@ -74,10 +74,6 @@ export const Fellows = ({ mediaFellow }) => {
             </ol>
 
             <div className="mt-10 grid gap-4 md:grid-cols-2">
-              {/* <FullWidthCarousel
-                slides={published_stories}
-                // responsiveImages={slidesResponsiveImages}
-              /> */}
               {published_stories?.map(({ image_src, title, media_src }, i) => {
                 return (
                   <div key={i} className="grid gap-4">

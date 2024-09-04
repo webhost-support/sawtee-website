@@ -26,11 +26,7 @@ const PostLayout = ({
   return (
     <div className="relative w-full px-10 py-10 lg:px-20">
       <div className="mx-auto mt-5 max-w-5xl">
-        <PostHeader
-          //   className={`px-8 md:px-12`}
-          categories={post.category}
-          heading={post.title}
-        />
+        <PostHeader categories={post.category} heading={post.title} />
         {featured_image && (
           <FeaturedMedia
             className={'rounded-xl'}
@@ -39,8 +35,6 @@ const PostLayout = ({
           />
         )}
       </div>
-
-      {/* <PostProgressBar value={scroll} /> */}
 
       <div className="w-full">
         {/* Look at the settings to see if we should include the featured image */}

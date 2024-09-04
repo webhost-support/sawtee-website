@@ -73,12 +73,8 @@ export default function EditPageForm({ page }) {
         preserveScroll: true,
         onSuccess: () =>
           toast({
-            position: 'top-right',
             title: 'Page Edited.',
             description: 'Page Edited Successfully',
-            status: 'success',
-            duration: 6000,
-            isClosable: true,
           }),
         onError: errors => {
           if (errors.name) {

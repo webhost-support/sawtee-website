@@ -47,7 +47,7 @@ export default function EditPostForm({
   tags,
   themes,
 }) {
-  const { data, setData, post, processing, errors } = useForm({
+  const { data, setData, post, processing, errors, reset } = useForm({
     title: postData.title,
     slug: postData.slug,
     category_id: postData.category_id,
@@ -124,14 +124,14 @@ export default function EditPostForm({
             description: 'Post edited Successfully',
           }),
         onError: errors => {
-          if (Object.hasOwnProperty.call(errors, key)) {
-            const value = errors[key];
-            reset(key);
-            return toast({
-              title: 'Uh oh, Something went wrong',
-              description: `${key.toUpperCase()} field error` + `: ${value}`,
-            });
-          }
+            for (const [key, value] of Object.entries(errors)) {
+              reset(key);
+              return toast({
+                title: 'Uh oh, Something went wrong',
+                description: `${key.toUpperCase()} field error` + `: ${value}`,
+              });
+            }
+
         },
       }
     );

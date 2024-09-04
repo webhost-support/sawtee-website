@@ -5,13 +5,13 @@ import PrimaryButton from '@/components/Backend/PrimaryButton';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
 } from '@/components/ui/select';
 import { useToast } from '@/components/ui/use-toast';
 
@@ -104,7 +104,6 @@ export default function EditSectionForm({ sections, section, pages }) {
             htmlFor={'image'}
             onValueChange={setDataImage}
             defaultValue={image}
-            className="h-64"
           />
         </div>
         <div className="col-span-2 grid w-full grid-cols-subgrid gap-4">

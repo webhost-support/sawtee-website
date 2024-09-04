@@ -50,11 +50,13 @@ Route::get('/search', [FrontendController::class, 'search'])->name('search');
 
 Route::get('/', [FrontendController::class, 'index'])->name('home');
 Route::get('/{pages:slug}', [FrontendController::class, 'page'])->name('page.show');
+Route::get('/tags/{tags:slug}/{subcategory?}/{post?}', [FrontendController::class, 'tags']);
+Route::get('/themes/{themes:slug}/{subcategory?}/{post?}', [FrontendController::class, 'themes']);
 Route::get('/category/{categories:slug}/{subcategory?}/{post?}', [FrontendController::class, 'category'])->name('category.show');
 
 
 
-Route::middleware(['auth', 'verified'])->prefix('admin')->as('admin.')->group(function () {
+Route::middleware(['auth', 'verified', 'abuseip'])->prefix('admin')->as('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
