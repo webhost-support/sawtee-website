@@ -206,7 +206,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
           </fieldset>
           <div className="mx-2">
             <Label as="legend" htmlFor="published_at">
-              Published At
+              Published at
             </Label>
 
             <Input

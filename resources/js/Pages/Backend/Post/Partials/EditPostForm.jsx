@@ -200,7 +200,7 @@ export default function EditPostForm({
             <Label htmlFor="excerpt">Excerpt</Label>
             <Textarea
               id="excerpt"
-              value={data.excerpt}
+              value={data.excerpt ?? ''}
               className="mt-1 block w-full"
               rows={8}
               onChange={e => setData('excerpt', e.target.value)}
@@ -332,8 +332,6 @@ export default function EditPostForm({
               onValueChange={setDataImage}
               defaultValue={image}
             />
-
-           
           </div>
           {selectedCategory === ('Covid' || 'Opinion in Lead' || 'Blog') && (
             <div className="mx-2">
@@ -449,7 +447,7 @@ export default function EditPostForm({
                       id="meta_description"
                       name="meta_description"
                       className="mt-1 block"
-                      value={data.meta_description}
+                      value={data.meta_description ?? ''}
                       placeholder="enter meta_description"
                       rows={3}
                       onChange={e =>

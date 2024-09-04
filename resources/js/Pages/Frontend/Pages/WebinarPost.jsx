@@ -6,9 +6,11 @@ const WebinarPost = ({ post }) => {
   return (
     <div>
       <div className="mb-6">{htmlToText(post.content)}</div>
-      <a target="_blank" href={file.original_url}>
-        <Button>Summary of Proceedings</Button>
-      </a>
+      <Button>
+        <a target="_blank" href={file?.original_url}>
+          Summary of Proceedings
+        </a>
+      </Button>
       <div className="mt-6 aspect-video">
         <iframe
           width="700"
@@ -18,7 +20,7 @@ const WebinarPost = ({ post }) => {
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="strict-origin-when-cross-origin"
-          allowfullscreen
+          allowfullscreen={true}
         ></iframe>
       </div>
     </div>

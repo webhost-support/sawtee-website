@@ -77,15 +77,15 @@ export default function PublicationsArchive({
 const ItemComponent = ({ item, publications, className }) => {
   return (
     <div className={cn('w-full', className)} key={item.name}>
-      <Link
-        className="underline"
-        title={`Explore ${item.name}`}
-        href={`/category/publications/${item.slug}`}
-      >
-        <h3 className="pb-8 text-2xl lg:text-3xl" id={item.name}>
+      <h3 className="pb-8 text-2xl lg:text-3xl" id={item.name}>
+        <Link
+          className="underline"
+          title={`Explore ${item.name}`}
+          href={`/category/publications/${item.slug}`}
+        >
           {item.name}
-        </h3>
-      </Link>
+        </Link>
+      </h3>
       {publications[item.slug] && publications[item.slug].length > 0 && (
         <div className="grid grid-cols-4 gap-6">
           {publications[item.slug].map(publication => {
@@ -93,7 +93,6 @@ const ItemComponent = ({ item, publications, className }) => {
               <div key={publication.id}>
                 <article className="article mx-auto max-w-[140px] overflow-hidden rounded-md">
                   <a
-                    title={publication.title}
                     href={
                       publication.file
                         ? `/publications/${publication.file.name}`
@@ -120,6 +119,7 @@ const ItemComponent = ({ item, publications, className }) => {
                 {publication.title && (
                   <a
                     className="underline"
+                    target="_blank"
                     href={`/publications/${publication.file.name}`}
                   >
                     <p className="mt-4 text-center text-sm font-semibold">

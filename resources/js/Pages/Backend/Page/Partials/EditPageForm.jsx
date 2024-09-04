@@ -1,36 +1,34 @@
 import ContentEditor from '@/components/Backend/ContentEditor';
+import DropZone from '@/components/Backend/DropZone';
 import InputError from '@/components/Backend/InputError';
 import PrimaryButton from '@/components/Backend/PrimaryButton';
 import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
+    AlertDialog,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import pageTemplates from '../pageTemplates';
-
-import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
 import { slugify } from '@/lib/helpers';
+import { pageTemplates } from '@/lib/pageTemplates';
 import { useForm } from '@inertiajs/react';
-import { XCircleIcon } from 'lucide-react';
 import React from 'react';
 export default function EditPageForm({ page }) {
   const { data, setData, post, processing, errors, reset } = useForm({
@@ -50,7 +48,7 @@ export default function EditPageForm({ page }) {
   const [image, setImage] = React.useState(
     page.media[0] ? page.media[0].original_url : null
   );
-  const [filename, setFilename] = React.useState(null);
+
 
   React.useEffect(() => {
     if (data.page_template === ('About' || 'Contact' || 'MediaFellows')) {
@@ -91,44 +89,57 @@ export default function EditPageForm({ page }) {
     );
   };
 
+  function setDataImage(image) {
+    if (image) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        setImage(e.target.result);
+      };
+      reader.readAsDataURL(image);
+      setData('image', image);
+    } else {
+      setImage(null);
+      setData('image', null);
+    }
+  }
+
   return (
     <form onSubmit={submit}>
       <div className="grid grid-cols-2 gap-4">
+        <div className="col-span-2">
+          <Label htmlFor="name">Name</Label>
+          <Input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="enter page name"
+            value={data.name}
+            onChange={e => {
+              setData('name', e.target.value);
+              setSlug(slugify(e.target.value));
+            }}
+          />
+
+          {errors.name && (
+            <InputError className="mt-2">{errors.name}</InputError>
+          )}
+        </div>
+        <div className="col-span-2">
+          <Label htmlFor="slug">Slug</Label>
+          <Input
+            type="text"
+            id="slug"
+            name="slug"
+            value={slug}
+            display="flex"
+            onChange={e => setSlug(e.target.value)}
+            mt={1}
+          />
+          {errors.slug && (
+            <InputError className="mt-2">{errors.slug}</InputError>
+          )}
+        </div>
         <div className="col-span-1 flex flex-col gap-4">
-          <div className="col-span-1">
-            <Label htmlFor="name">Name</Label>
-            <Input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="enter page name"
-              value={data.name}
-              onChange={e => {
-                setData('name', e.target.value);
-                setSlug(slugify(e.target.value));
-              }}
-            />
-
-            {errors.name && (
-              <InputError className="mt-2">{errors.name}</InputError>
-            )}
-          </div>
-          <div className="col-span-1">
-            <Label htmlFor="slug">Slug</Label>
-            <Input
-              type="text"
-              id="slug"
-              name="slug"
-              value={slug}
-              display="flex"
-              onChange={e => setSlug(e.target.value)}
-              mt={1}
-            />
-            {errors.slug && (
-              <InputError className="mt-2">{errors.slug}</InputError>
-            )}
-          </div>
-
           <div className="col-span-1">
             <Label htmlFor="file">Add JSON Data File</Label>
 
@@ -151,28 +162,7 @@ export default function EditPageForm({ page }) {
               }}
             />
           </div>
-          <div className="col-span-1">
-            <div>
-              <Label htmlFor="image">Hero Image</Label>
-              <Input
-                type="file"
-                accept="image/.png,.jpg,.jpeg,.webp"
-                id="image"
-                name="image"
-                onChange={e => {
-                  setData('image', e.target.files[0]);
-                  setImage(URL.createObjectURL(e.target.files[0]));
-                }}
-              />
 
-              {errors.image && (
-                <InputError className="mt-2">{errors.image}</InputError>
-              )}
-            </div>
-          </div>
-        </div>
-
-        <div className="col-span-1 flex flex-col gap-4 self-center">
           <div className="col-span-1">
             <Label htmlFor="meta_title">Meta Title</Label>
 
@@ -188,7 +178,7 @@ export default function EditPageForm({ page }) {
               <InputError className="mt-2">{errors.meta_title}</InputError>
             )}
           </div>
-          <div>
+          <div className="col-span-1">
             <Label htmlFor="meta_description">Meta Description</Label>
 
             <Textarea
@@ -196,7 +186,7 @@ export default function EditPageForm({ page }) {
               name="meta_description"
               placeholder="enter meta description"
               rows={5}
-              value={data.meta_description}
+              value={data.meta_description ?? ''}
               onChange={e => setData('meta_description', e.target.value)}
             />
 
@@ -233,29 +223,14 @@ export default function EditPageForm({ page }) {
         </div>
 
         <div className="col-span-1">
-          <div className="relative mx-auto">
-            {image && (
-              <div className="w-[minmax(auto, 450px)] relative">
-                <AspectRatio ratio={16 / 9}>
-                  <div className="200ms absolute inset-0 h-full w-full rounded-md bg-slate-800/40 transition-all ease-linear hover:bg-transparent" />
-                  <img
-                    src={image}
-                    alt="post hero"
-                    className="h-full w-full rounded-md object-cover"
-                  />
-                </AspectRatio>
-                <XCircleIcon
-                  className="absolute right-5 top-5 cursor-pointer text-white"
-                  onClick={() => {
-                    setImage(null);
-                    setData('image', null);
-                  }}
-                  aria-labelledby="Remove image"
-                  aria-hidden="true"
-                />
-              </div>
-            )}
-          </div>
+          <DropZone
+            htmlFor="image"
+            onValueChange={setDataImage}
+            defaultValue={image}
+          />
+          {errors.image && (
+            <InputError className="mt-2">{errors.image}</InputError>
+          )}
         </div>
         <div className="col-span-2">
           <Label htmlFor="content">Content</Label>

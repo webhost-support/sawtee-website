@@ -6,7 +6,7 @@ const PageLayout = ({ title, featured_image, srcSet, children }) => {
   const hasFeaturedImage = featured_image && featured_image !== '';
 
   return (
-    <div>
+    <>
       <div className="relative z-0 h-80 max-h-80 w-full bg-white/20 dark:bg-black/75">
         {hasFeaturedImage ? (
           <FeaturedMedia
@@ -35,7 +35,7 @@ const PageLayout = ({ title, featured_image, srcSet, children }) => {
         />
       </div>
       {children}
-    </div>
+    </>
   );
 };
 

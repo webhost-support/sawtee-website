@@ -7,7 +7,6 @@ import {
     AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Link } from '@inertiajs/react';
 import { Fragment } from 'react';
 
 export default function MediaFellows({ content, pageData }) {
@@ -45,7 +44,7 @@ export const Fellows = ({ mediaFellow }) => {
           </AvatarFallback>
         </Avatar>
         <div className="ml-6 flex items-center gap-4">
-          <h2 className="text-lg font-sans lg:text-xl">{name}</h2>
+          <h2 className="font-sans text-lg lg:text-xl">{name}</h2>
           <p className="text-sm">{designation}</p>
         </div>
       </div>
@@ -62,18 +61,23 @@ export const Fellows = ({ mediaFellow }) => {
               {published_stories?.map(({ title, link }) => {
                 return (
                   <li key={title} className="text-lg">
-                    <Link
+                    <a
+                      target="_blank"
                       className="underline hover:underline-offset-2"
                       href={link}
                     >
                       {title}
-                    </Link>
+                    </a>
                   </li>
                 );
               })}
             </ol>
 
             <div className="mt-10 grid gap-4 md:grid-cols-2">
+              {/* <FullWidthCarousel
+                slides={published_stories}
+                // responsiveImages={slidesResponsiveImages}
+              /> */}
               {published_stories?.map(({ image_src, title, media_src }, i) => {
                 return (
                   <div key={i} className="grid gap-4">
@@ -96,7 +100,7 @@ export const Fellows = ({ mediaFellow }) => {
             {experience?.map(exp => {
               return (
                 <p
-                  className="my-2 text-lg experience-text"
+                  className="experience-text my-2 text-lg"
                   dangerouslySetInnerHTML={{
                     __html: exp,
                   }}

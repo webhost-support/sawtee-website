@@ -6,7 +6,7 @@ import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/components/ui/use-toast';
 import { Head, useForm } from '@inertiajs/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import CreateTheme from './Partials/CreateTheme';
 import EditTheme from './Partials/EditTheme';
 
@@ -86,7 +86,7 @@ export default function Index({ auth, themes: data }) {
       accessorKey: 'description',
       header: 'Description',
       cell: ({ row }) => (
-        <p className="line-clamp-[2]">{row.original.description}</p>
+        <span className="line-clamp-[2]">{row.original.description}</span>
       ),
     },
     {

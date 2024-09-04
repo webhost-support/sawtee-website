@@ -51,7 +51,7 @@ const FullWidthCarousel = ({
               className="group relative flex w-full items-center justify-center p-0"
             >
               <img
-                src={slide.media[0].original_url}
+                src={slide.media[0]?.original_url}
                 alt="slide"
                 loading="lazy"
                 className="aspect-video h-full w-full object-cover grayscale transition-all duration-500 ease-in group-hover:grayscale-0"

@@ -13,7 +13,7 @@ export default function Sidebar({ isCollapsed, menu }) {
     <aside
       className={cn(
         isCollapsed ? 'w-20' : 'w-64',
-        'ease-nav-brand absolute inset-y-0 left-0 z-40 mt-20 translate-x-0 bg-white antialiased transition-transform duration-200 dark:bg-bgDarker'
+        'ease-nav-brand absolute inset-y-0 left-0 z-40 mt-20 translate-x-0 bg-white antialiased shadow-lg transition-transform duration-200 dark:bg-bgDarker'
       )}
     >
       <ScrollArea className="h-screen w-full p-4">

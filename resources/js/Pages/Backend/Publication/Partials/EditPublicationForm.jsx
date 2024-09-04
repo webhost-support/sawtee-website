@@ -155,7 +155,7 @@ export default function EditPublicationForm({ publication, categories, tags }) {
               name="description"
               id="description"
               rows={10}
-              value={data.description}
+              value={data.description ?? ''}
               onChange={e => setData('description', e.target.value)}
             />
 
@@ -219,7 +219,6 @@ export default function EditPublicationForm({ publication, categories, tags }) {
               htmlFor={'image'}
               onValueChange={setDataImage}
               defaultValue={image}
-              className="h-64 w-48"
             />
 
             {errors.image && (

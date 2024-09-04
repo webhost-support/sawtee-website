@@ -1,4 +1,3 @@
-import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { cn } from '@/lib/utils';
 import { XIcon } from 'lucide-react';
 import { Button } from '../ui/button';
@@ -31,12 +30,12 @@ export default function DropZone({
   };
 
   return (
-    <div className={cn('h-48', props.className)}>
-      {!defaultValue && (
-        <Label
-          htmlFor={htmlFor}
-          className="relative flex h-full w-full cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-dashed border-slate-700 bg-gray-50 hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-800"
-        >
+    <div className={cn('relative', props.className)}>
+      <Label
+        htmlFor={htmlFor}
+        className="flex aspect-video h-auto w-full cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-dashed border-slate-700 bg-gray-50 hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-800"
+      >
+        {!defaultValue && (
           <div className="flex flex-col items-center justify-center pb-6 pt-5">
             <svg
               className="mb-4 h-8 w-8 text-gray-500 dark:text-gray-400"
@@ -58,39 +57,37 @@ export default function DropZone({
               drop
             </p>
             <p className="text-xs text-gray-500 dark:text-gray-400">{accept}</p>
+            <Input
+              id={htmlFor}
+              name={htmlFor}
+              type="file"
+              placeholder={placeholder}
+              accept={accept}
+              onDragOver={handleDragOver}
+              onDrop={handleDrop}
+              className="absolute inset-0 z-30 h-full w-full cursor-pointer opacity-0"
+              onChange={handleFileSelect}
+            />
           </div>
-          <Input
-            id={htmlFor}
-            name={htmlFor}
-            type="file"
-            placeholder={placeholder}
-            accept={accept}
-            onDragOver={handleDragOver}
-            onDrop={handleDrop}
-            className="absolute inset-0 z-30 h-full w-full cursor-pointer opacity-0"
-            onChange={handleFileSelect}
-          />
-        </Label>
-      )}
-      {defaultValue && (
-        <div className="relative flex h-full w-full cursor-pointer overflow-hidden rounded-xl border-2 border-dashed border-slate-700 bg-gray-50 hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-800">
-          <AspectRatio ratio={16 / 9}>
+        )}
+        {defaultValue && (
+          <div className="h-64 w-full">
             <img
               src={defaultValue}
               alt="section hero"
               className="h-full w-full rounded-md object-cover"
             />
-          </AspectRatio>
-          <Button
-            size="icon"
-            variant="destructive"
-            className="absolute right-2 top-2 rounded-lg opacity-80"
-            onClick={handleRemoveFile}
-          >
-            <XIcon className="h-4 w-4" />
-          </Button>
-        </div>
-      )}
+            <Button
+              className="absolute right-2 top-2 rounded-full opacity-60 hover:opacity-100"
+              onClick={handleRemoveFile}
+              variant="destructive"
+              size="icon"
+            >
+              <XIcon className="h-4 w-4 text-white" />
+            </Button>
+          </div>
+        )}
+      </Label>
     </div>
   );
 }

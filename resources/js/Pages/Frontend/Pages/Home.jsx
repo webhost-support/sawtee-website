@@ -352,7 +352,7 @@ const FeaturedEventsSection = ({ events }) => {
               : '/assets/SM-placeholder-150x150.png';
           return (
             index !== 0 && (
-              <div class="group">
+              <div className="group" key={event.id}>
                 <Link href={`/category/featured-events/${event.slug}`}>
                   <div
                     className="relative max-h-40 overflow-hidden rounded-md text-center"

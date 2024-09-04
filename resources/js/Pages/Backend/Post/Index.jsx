@@ -5,7 +5,6 @@ import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/components/ui/use-toast';
 import { Head, Link, useForm } from '@inertiajs/react';
-import React from 'react';
 
 import PrimaryButton from '@/components/Backend/PrimaryButton';
 import TWTags from '@/components/shared/TWTags';
@@ -104,15 +103,11 @@ export default function Index({ auth, posts, categories, categoryID }) {
       accessorKey: 'tags',
       header: 'Tags',
       cell: ({ row }) => {
-        return (
-          <div className="flex items-center gap-1">
-            {row.original.tags?.map(tag => (
-              <TWTags key={tag.id} colorScheme="blue">
-                {tag.name}
-              </TWTags>
-            ))}
-          </div>
-        );
+        return row.original.tags?.map(tag => (
+          <TWTags key={tag.id} colorScheme="blue" className="ml-2">
+            {tag.name}
+          </TWTags>
+        ));
       },
     },
     {

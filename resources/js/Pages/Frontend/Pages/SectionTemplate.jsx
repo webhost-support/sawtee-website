@@ -9,7 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { slugify } from '@/lib/helpers';
 import { cn, htmlToText } from '@/lib/utils';
 
-export default function About({ sections, content, pageData }) {
+export default function SectionTemplate({ sections, content, pageData }) {
   return (
     <div className="page-content mx-auto max-w-2xl px-[32px] py-[80px] text-lg leading-8 md:px-0">
       {sections?.map(section => {

@@ -50,6 +50,7 @@ class PageController extends Controller
             $validated["meta_title"] = $validated['name'];
         }
 
+
         $page = Page::create($validated);
         if ($request->image) {
             $page->addMediaFromRequest('image')->toMediaCollection('page-media');
@@ -108,6 +109,10 @@ class PageController extends Controller
         }
         if ($request->image) {
             $page->addMediaFromRequest('image')->toMediaCollection('page-media');
+        }
+        if (!$request->image) {
+            $media = $page->getFirstMedia('page-media');
+            $media?->delete();
         }
         if($request->file){
             $file = $request->file;

@@ -157,7 +157,7 @@ const AddToMenu = ({ options, name, menu, menuItems }) => {
     order: '',
     parent_id: '',
   });
-  const toast = useToast();
+  const { toast } = useToast();
 
   function handleSelected(selected) {
     let url = '';
@@ -195,12 +195,8 @@ const AddToMenu = ({ options, name, menu, menuItems }) => {
       preserveScroll: true,
       onSuccess: () => {
         toast({
-          position: 'top-right',
           title: 'Menu Created.',
           description: 'Menu Created Successfully',
-          status: 'success',
-          duration: 6000,
-          isClosable: true,
         });
 
         reset('name', 'title', 'order', 'parent_id', 'url');
@@ -303,15 +299,15 @@ const AddToMenu = ({ options, name, menu, menuItems }) => {
                 id="parent_id"
                 placeholder="Select parent"
                 value={data.parent_id}
-                onChange={e => {
+                onValueChange={value => {
                   const order =
                     menuItems.filter(
-                      menuItem => menuItem.id === Number(e.target.value)
+                      menuItem => menuItem.id === Number(value)
                     )[0].children.length + 1;
                   setData({
                     ...data,
                     order: order,
-                    parent_id: e.target.value,
+                    parent_id: value,
                   });
                 }}
               >

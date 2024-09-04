@@ -115,7 +115,6 @@ export default function EditTeamForm({ team }) {
             id="order"
             name="order"
             value={data.order}
-            defaultValue={data.order}
             onChange={e => setData('order', e.target.value)}
           />
           {errors.order && <InputError mt={2}>{errors.order}</InputError>}

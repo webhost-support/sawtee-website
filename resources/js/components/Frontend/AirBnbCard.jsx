@@ -9,10 +9,10 @@ export default function AirBnbCard({
   return img.length > 0 ? (
     img.map(image_src => {
       return (
-        <div key={image_src} className="h-auto w-full">
+        <div key={image_src} className="h-auto max-h-64 w-full overflow-hidden">
           <Zoom>
             <img
-              className="w-full max-w-full rounded-lg object-cover"
+              className="h-full w-full max-w-full rounded-lg object-cover"
               src={image_src}
               alt={title}
               loading="lazy"

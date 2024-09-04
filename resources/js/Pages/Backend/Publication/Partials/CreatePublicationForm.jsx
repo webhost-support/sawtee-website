@@ -206,7 +206,6 @@ export default function CreatePublicationForm({ categories, tags }) {
               htmlFor={'image'}
               defaultValue={image}
               onValueChange={setDataImage}
-              className="h-64 w-48"
             />
 
             {errors.image && (

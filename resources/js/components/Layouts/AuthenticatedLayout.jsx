@@ -35,7 +35,7 @@ export default function Authenticated({ user, children }) {
       <div
         className={cn(
           mobileWidth || isCollapsed ? 'ml-20' : 'ml-64',
-          'relative border-l-2 border-slate-700 py-12 shadow-xl transition-all duration-200'
+          'relative border-l-2 border-slate-700 py-12 shadow-xl transition-all duration-200 dark:bg-bgDarker'
         )}
       >
         <div className="mx-auto min-h-screen w-full rounded-xl px-6">

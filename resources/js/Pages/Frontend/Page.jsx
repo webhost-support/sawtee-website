@@ -1,12 +1,12 @@
 import WebsiteHead from '@/components/Frontend/Head';
 import MainLayout from '../../components/Layouts/MainLayout';
 import PageLayout from '../../components/Layouts/PageLayout';
-import About from './Pages/About';
 import Contact from './Pages/Contact';
 import DefaultPage from './Pages/DefaultPage';
 import MediaFellows from './Pages/MediaFellows';
 import OurWork from './Pages/OurWork';
 import ReformMonitor from './Pages/ReformMonitor';
+import SectionTemplate from './Pages/SectionTemplate';
 
 export default function Page({
   page,
@@ -51,9 +51,9 @@ const PageContent = ({ page, sections, themes }) => {
     case 'OurWork':
       return <OurWork themes={themes} sections={sections} content={content} />;
 
-    case 'About':
+    case 'SectionTemplate':
       return (
-        <About
+        <SectionTemplate
           sections={sections}
           content={content}
           pageData={pageData}

@@ -6,7 +6,6 @@ import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/components/ui/use-toast';
 import { Head, Link, useForm } from '@inertiajs/react';
-import React from 'react';
 
 export default function Index({
   auth,
@@ -98,18 +97,14 @@ export default function Index({
         <DataTableColumnHeader column={column} title="Tags" />
       ),
       cell: ({ row }) => {
-        return (
-          <div className="flex items-center gap-1">
-            {row.original.tags?.map(tag => (
-              <span
-                key={tag.id}
-                className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-600 ring-1 ring-inset ring-blue-500/10"
-              >
-                {tag.name}
-              </span>
-            ))}
-          </div>
-        );
+        return row.original.tags?.map(tag => (
+          <span
+            key={tag.id}
+            className="ml-2 inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-600 ring-1 ring-inset ring-blue-500/10"
+          >
+            {tag.name}
+          </span>
+        ));
       },
     },
     {
