@@ -16,7 +16,7 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
 import { slugify } from '@/lib/helpers';
-import pageTemplates from '@/lib/pageTemplates';
+import { pageTemplates } from '@/lib/pageTemplates';
 import { useForm } from '@inertiajs/react';
 import React from 'react';
 
