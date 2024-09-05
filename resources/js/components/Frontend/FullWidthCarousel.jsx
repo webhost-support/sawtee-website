@@ -41,7 +41,7 @@ const FullWidthCarousel = ({
             stopOnInteraction: true,
           }),
         ]}
-        className="w-full"
+        className="max-h-[600px] w-full max-w-6xl"
         {...rest}
       >
         <CarouselContent>
@@ -54,7 +54,7 @@ const FullWidthCarousel = ({
                 src={slide.media[0]?.original_url}
                 alt="slide"
                 loading="lazy"
-                className="aspect-video h-full w-full object-cover grayscale transition-all duration-500 ease-in group-hover:grayscale-0"
+                className="h-full w-full object-cover grayscale transition-all duration-500 ease-in group-hover:grayscale-0"
               />
               <div className="absolute inset-0 flex h-full w-full items-center justify-center bg-black/20">
                 <span className="text-4xl font-semibold leading-5 tracking-normal text-secondary-foreground text-white">

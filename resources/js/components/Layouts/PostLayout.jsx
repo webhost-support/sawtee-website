@@ -71,7 +71,7 @@ const PostLayout = ({
               <SidebarWidget
                 title="Related Posts"
                 array={relatedPosts}
-                link={`/${post.category.slug}`}
+                link={`/category/${post.category.slug}`}
               />
             </aside>
           </div>

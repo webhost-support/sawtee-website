@@ -54,20 +54,19 @@ function getPosts($category, $slug)
 class FrontendController extends Controller
 {
     /**
-     * Retrieves a page by its slug and loads associated sections and themes if necessary.
+     * Retrieves data for the home page and renders the 'Frontend/Pages/Home' view.
      *
-     * @param datatype $slug The slug of the page to retrieve
-     * @throws ModelNotFoundException if the page is not found
      * @return \Inertia\Response
      */
-    public function page($slug = 'home')
+    public function index()
     {
+        $home_page_sections = HomePageSection::all();
         $slidesResponsiveImages = array();
         $featured = Tag::where('name', 'featured')->firstOrFail();
-        $featured_publications = $featured->publications()->latest()->limit(4)->get();
+        $featured_publications = $featured->publications()->latest()->limit(5)->get();
         $publications = Publication::with(['file', 'category'])
-        ->orderBy('id', "DESC")
-        ->limit(6)
+            ->orderBy('id', "DESC")
+            ->limit(6)
             ->get();
 
         $slider = Slider::where('name', 'Home Page Slider')->firstOrFail();
@@ -85,7 +84,29 @@ class FrontendController extends Controller
         $newsletters = Category::where('slug', 'newsletters')->firstOrFail()->posts()->where('status', 'published')->latest()->take(10)->get();
         $webinars = Category::where('slug', 'webinar-series')->firstOrFail()->posts()->where('status', 'published')->latest()->take(5)->get();
 
+        return Inertia::render('Frontend/Pages/Home', [
+            'slides' => $slides->load(['media']),
+            'infocus' => $infocus->load(['category']),
+            'sawteeInMedia' => $sawteeInMedia->load(['category']),
+            'events' => $events->load(['category', 'media', 'tags']),
+            'featuredPublications' => $featured_publications->load(['category']),
+            'publications' => $publications,
+            'newsletters' => $newsletters->load(['category', 'media']),
+            'webinars' => $webinars->load(['media']),
+            'slidesResponsiveImages' => $slidesResponsiveImages,
+            'homePageSections' => $home_page_sections
+        ]);
+    }
 
+    /**
+     * Retrieves a page by its slug and loads associated sections and themes if necessary.
+     *
+     * @param datatype $slug The slug of the page to retrieve
+     * @throws ModelNotFoundException if the page is not found
+     * @return \Inertia\Response
+     */
+    public function page($slug)
+    {
         $page = Page::where('slug', $slug)->firstOrFail();
         $sections = Section::where('page_id', $page->id)->get();
         $themes = null;
@@ -94,21 +115,8 @@ class FrontendController extends Controller
             $themes = Theme::all();
         }
 
-        if ($slug === 'home' || $slug === '') {
-            // return to_route('home');
-            $home_page_sections = HomePageSection::all();
-            return Inertia::render('Frontend/Pages/Home', [
-                'slides' => $slides->load(['media']),
-                'infocus' => $infocus->load(['category']),
-                'sawteeInMedia' => $sawteeInMedia->load(['category']),
-                'events' => $events->load(['category', 'media', 'tags']),
-                'featuredPublications' => $featured_publications->load(['category']),
-                'publications' => $publications,
-                'newsletters' => $newsletters->load(['category', 'media']),
-                'webinars' => $webinars->load(['media']),
-                'slidesResponsiveImages' => $slidesResponsiveImages,
-                'homePageSections' => $home_page_sections
-            ]);
+        if ($slug === 'home') {
+            return to_route('home');
         }
 
         return Inertia::render('Frontend/Page', [
@@ -160,6 +168,8 @@ class FrontendController extends Controller
 
         ]);
     }
+
+
 
 
     /**

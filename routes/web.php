@@ -48,8 +48,8 @@ Route::get('/unsubscribe/{email}', [SubscriptionController::class, 'unsubscribe'
 
 Route::get('/search', [FrontendController::class, 'search'])->name('search');
 
-
-Route::get('/{pages:slug?}', [FrontendController::class, 'page'])->name('home');
+Route::get('/', [FrontendController::class, 'index'])->name('home');
+Route::get('/{pages:slug?}', [FrontendController::class, 'page'])->name('page.show');
 Route::get('/tags/{tags:slug}/{subcategory?}/{post?}', [FrontendController::class, 'tags']);
 Route::get('/themes/{themes:slug}/{subcategory?}/{post?}', [FrontendController::class, 'themes']);
 Route::get('/category/{categories:slug}/{subcategory?}/{post?}', [FrontendController::class, 'category'])->name('category.show');

@@ -17,7 +17,7 @@ const SidebarWidget = ({ array, title, link, ...rest }) => {
             <li className="group mb-4" key={post.id}>
               <Link
                 className="text-secondary-foreground underline underline-offset-2 group-hover:text-primary/80 group-hover:underline-offset-4 dark:group-hover:text-secondary-foreground/80"
-                href={`${post.slug}`}
+                href={`/category/${post.category.slug}/${post.slug}`}
               >
                 <p className="lg:text-md text-sm leading-5">{post.title}</p>
               </Link>

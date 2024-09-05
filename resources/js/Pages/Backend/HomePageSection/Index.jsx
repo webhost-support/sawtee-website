@@ -48,18 +48,21 @@ export default function Index({ auth, sections }) {
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Name" />
       ),
+      enableSorting: true,
     },
     {
       accessorKey: 'description',
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Desription" />
       ),
+      enableSorting: false,
     },
     {
       accessorKey: 'order',
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Order" />
       ),
+      enableSorting: true,
     },
     {
       accessorKey: 'show',

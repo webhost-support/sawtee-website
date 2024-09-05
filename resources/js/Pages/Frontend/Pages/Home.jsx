@@ -64,24 +64,30 @@ const Home = ({
     },
   ];
 
+  const FeaturedPublicationSectionIsVisible = homePageSections?.find(
+    h => h.name === 'Featured Publication'
+  );
+
   return (
     <MainLayout>
+      {console.log(FeaturedPublicationSectionIsVisible)}
       <WebsiteHead
         title={'Home'}
         description="Explore South Asia's dynamic journey since the 1980s, navigating global integration and economic challenges."
         image={'/assets/logo-sawtee.webp'}
       />
-      <Section
-        py={4}
-        className="carousel-section px-6 lg:py-4 lg:pl-0 lg:pr-10"
-      >
+      <Section py={4} className="carousel-section px-6 lg:py-4">
         <div
-          className="grid grid-cols-1 gap-10 lg:grid-cols-6"
+          className={cn(
+            'grid grid-cols-1 gap-10',
+            FeaturedPublicationSectionIsVisible?.show === 1 &&
+              'mx-auto lg:grid-cols-6'
+          )}
           id="carousel-section"
         >
           {/* Carousel Section */}
           {slides &&
-            homePageSections.find(h => h.name === 'Carousel')?.show && (
+            homePageSections?.find(h => h.name === 'Carousel')?.show && (
               <CarouselSection
                 slides={slides}
                 slidesResponsiveImages={slidesResponsiveImages}
@@ -89,8 +95,7 @@ const Home = ({
             )}
           {/* Featured Publication Section */}
           {featuredPublications &&
-            homePageSections.find(h => h.name === 'Featured Publication')
-              ?.show && (
+            FeaturedPublicationSectionIsVisible?.show === 1 && (
               <div className="self-center lg:col-span-2">
                 <FeaturedPublications publications={featuredPublications} />
               </div>
@@ -98,17 +103,17 @@ const Home = ({
         </div>
       </Section>
       {/* Infocus Section */}
-      {infocus && homePageSections.find(h => h.name === 'Infocus')?.show && (
+      {infocus && homePageSections?.find(h => h.name === 'Infocus')?.show && (
         <InfocusSection infocus={infocus} />
       )}
       {/* Add publication section here  */}
       {publications &&
-        homePageSections.find(h => h.name === 'Latest Publications')?.show && (
+        homePageSections?.find(h => h.name === 'Latest Publications')?.show && (
           <LatestPublicationSection publications={publications} />
         )}
       {/* Events Section */}
       {events &&
-        homePageSections.find(h => h.name === 'Policy Outreach')?.show && (
+        homePageSections?.find(h => h.name === 'Policy Outreach')?.show && (
           <PolicyOutreachSection events={events} />
         )}
       {features && (
@@ -134,21 +139,20 @@ const Home = ({
             }
           />
           <div className="grid gap-10 lg:grid-cols-6">
-            {homePageSections.find(h => h.name === 'Sawtee in Media')?.show && (
-              <MediaSesction sawteeInMedia={sawteeInMedia} />
-            )}
+            {homePageSections?.find(h => h.name === 'Sawtee in Media')
+              ?.show && <MediaSesction sawteeInMedia={sawteeInMedia} />}
 
-            {homePageSections.find(h => h.name === 'Newsletter')?.show && (
+            {homePageSections?.find(h => h.name === 'Newsletter')?.show && (
               <NewsletterSection newsletters={newsletters} />
             )}
           </div>
         </div>
       </Section>
-      {homePageSections.find(h => h.name === 'Webinar')?.show && (
+      {homePageSections?.find(h => h.name === 'Webinar')?.show && (
         <WebinarSection webinars={webinars} />
       )}
       ·
-      {homePageSections.find(h => h.name === 'Newsletter Callout')?.show && (
+      {homePageSections?.find(h => h.name === 'Newsletter Callout')?.show && (
         <NewsletterCalloutSection />
       )}
     </MainLayout>
@@ -186,11 +190,11 @@ const Title = ({ title }) => {
 
 const FeaturedEventsSection = ({ events }) => {
   return (
-    <div class="mb-4 grid grid-cols-1 place-items-start gap-5 md:grid-cols-12">
-      <div class="group md:col-span-5">
+    <div className="mb-4 grid grid-cols-1 place-items-start gap-5 md:grid-cols-12">
+      <div className="group md:col-span-5">
         <Link href={`/category/featured-events/${events[0].slug}`}>
           <div
-            class="relative overflow-hidden rounded-md text-center"
+            className="relative overflow-hidden rounded-md text-center"
             title={events[0].title}
           >
             <div className="ease absolute inset-0 top-0 z-10 hidden h-[5px] w-full bg-sky-500/80 transition-all duration-200 group-hover:block" />
@@ -207,28 +211,28 @@ const FeaturedEventsSection = ({ events }) => {
             />
           </div>
         </Link>
-        <div class="mt-3 flex flex-col justify-between rounded-b leading-normal lg:rounded-b-none lg:rounded-r">
-          <div class="">
+        <div className="mt-3 flex flex-col justify-between rounded-b leading-normal lg:rounded-b-none lg:rounded-r">
+          <div className="">
             <Link
               href={`/category/featured-events/${events[0].slug}`}
-              class="text-xs font-medium uppercase text-sky-500 transition duration-500 ease-in-out hover:text-sky-600"
+              className="text-xs font-medium uppercase text-sky-500 transition duration-500 ease-in-out hover:text-sky-600"
             >
               {events[0].category.name}
             </Link>
             <Link
               href={`/category/featured-events/${events[0].slug}`}
-              class="mb-2 block text-2xl font-bold leading-6 tracking-wide text-secondary-foreground transition duration-500 ease-in-out group-hover:text-sky-500/80 lg:text-3xl"
+              className="mb-2 block text-2xl font-bold leading-6 tracking-wide text-secondary-foreground transition duration-500 ease-in-out group-hover:text-sky-500/80 lg:text-3xl"
             >
               {events[0].title}
             </Link>
-            <p class="mt-2 text-base text-muted-foreground dark:text-slate-400">
+            <p className="mt-2 text-base text-muted-foreground dark:text-slate-400">
               {events[0].excerpt}
             </p>
           </div>
         </div>
       </div>
 
-      <div class="grid grid-cols-2 gap-5 md:col-span-7">
+      <div className="grid grid-cols-2 gap-5 md:col-span-7">
         {events.map((event, index) => {
           const featured_image =
             event.media.length > 0
@@ -256,7 +260,7 @@ const FeaturedEventsSection = ({ events }) => {
                 </Link>
                 <Link
                   href={`/category/featured-events/${event.slug}`}
-                  class="text-md my-2 inline-block font-semibold leading-5 tracking-wide text-secondary-foreground transition duration-500 ease-in-out group-hover:text-sky-500/80"
+                  className="text-md my-2 inline-block font-semibold leading-5 tracking-wide text-secondary-foreground transition duration-500 ease-in-out group-hover:text-sky-500/80"
                 >
                   {event.title}
                 </Link>
@@ -273,13 +277,11 @@ export default Home;
 
 export const CarouselSection = ({ slides, slidesResponsiveImages }) => {
   return (
-    <div className="place-self-center overflow-hidden rounded-xl shadow-xl lg:col-span-4 lg:rounded-[0_1rem_1rem_0]">
-      <div className="mx-auto w-full max-w-5xl">
-        <FullWidthCarousel
-          slides={slides}
-          responsiveImages={slidesResponsiveImages}
-        />
-      </div>
+    <div className="place-self-center overflow-hidden rounded-md shadow-xl lg:col-span-4">
+      <FullWidthCarousel
+        slides={slides}
+        responsiveImages={slidesResponsiveImages}
+      />
     </div>
   );
 };
