@@ -5,6 +5,7 @@ use App\Http\Controllers\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\HomePageSectionController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\PublicationController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\TeamController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,12 +46,10 @@ Route::post('/subscribers/subscribe', [SubscriptionController::class, 'store'])-
 Route::get('/subscribers/verify/{token}', [SubscriptionController::class, 'verify'])->name('subscription.verify');
 Route::get('/unsubscribe/{email}', [SubscriptionController::class, 'unsubscribe'])->name('unsubscribe');
 
-// Route::post('/subscribe', [SubscriptionController::class, 'subscribe'])->name('subscribe');
 Route::get('/search', [FrontendController::class, 'search'])->name('search');
 
 
-Route::get('/', [FrontendController::class, 'index'])->name('home');
-Route::get('/{pages:slug}', [FrontendController::class, 'page'])->name('page.show');
+Route::get('/{pages:slug?}', [FrontendController::class, 'page'])->name('home');
 Route::get('/tags/{tags:slug}/{subcategory?}/{post?}', [FrontendController::class, 'tags']);
 Route::get('/themes/{themes:slug}/{subcategory?}/{post?}', [FrontendController::class, 'themes']);
 Route::get('/category/{categories:slug}/{subcategory?}/{post?}', [FrontendController::class, 'category'])->name('category.show');
@@ -72,9 +72,10 @@ Route::middleware(['auth', 'verified', 'abuseip'])->prefix('admin')->as('admin.'
     Route::resource('/sliders', SliderController::class);
     Route::resource('/slides', SlideController::class);
     Route::resource('/pages', PageController::class);
+    Route::resource('/home-page-sections', HomePageSectionController::class);
     Route::resource('/teams', TeamController::class);
 
-
+    // Route::get('/manage-home-page-section', HomePageSectionController::class, 'manage')->name('manage.home.page.sections');
     Route::get('/posts{categoryId?}', [PostController::class, 'index'])->name('posts.index');
     Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::get('/posts/edit/{id}', [PostController::class, 'edit'])->name('posts.edit');

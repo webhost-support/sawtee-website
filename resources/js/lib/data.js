@@ -7,6 +7,7 @@ import {
   FilterX,
   Globe2Icon,
   LayoutDashboard,
+  LayoutTemplate,
   MenuIcon,
   SlidersHorizontalIcon,
   TagsIcon,
@@ -198,6 +199,11 @@ export const DashBoardMenuItems = [
     name: 'Website',
     icon: Globe2Icon,
     route: 'home',
+  },
+  {
+    name: 'Home Page Sections',
+    icon: LayoutTemplate,
+    route: 'admin.home-page-sections.index',
   },
   {
     name: 'Menu',

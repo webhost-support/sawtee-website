@@ -7,9 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Page;
 use File;
 use Inertia\Inertia;
-use Illuminate\Support\Str;
 
-// use Jawira\CaseConverter\Convert;
 
 class PageController extends Controller
 {
@@ -99,7 +97,7 @@ class PageController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048','meta_title' => 'nullable|string|max:255',
+            // 'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048','meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string|max:255',
             'page_template' => 'nullable|string|max:255',
 

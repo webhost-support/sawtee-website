@@ -63,7 +63,6 @@ export default function EditPageForm({ page }) {
 
   const submit = e => {
     e.preventDefault();
-    console.log(data);
     post(
       route('admin.pages.update', {
         _method: 'patch',

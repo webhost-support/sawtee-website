@@ -26,6 +26,7 @@ const Home = ({
   newsletters,
   webinars,
   slidesResponsiveImages,
+  homePageSections,
 }) => {
   const features = [
     {
@@ -78,78 +79,38 @@ const Home = ({
           className="grid grid-cols-1 gap-10 lg:grid-cols-6"
           id="carousel-section"
         >
-          <div className="place-self-center overflow-hidden rounded-xl shadow-xl lg:col-span-4 lg:rounded-[0_1rem_1rem_0]">
-            <div className="mx-auto w-full max-w-5xl">
-              {slides && (
-                <FullWidthCarousel
-                  slides={slides}
-                  responsiveImages={slidesResponsiveImages}
-                />
-              )}
-            </div>
-          </div>
-          <div className="self-center lg:col-span-2">
-            <FeaturedPublications publications={featuredPublications} />
-          </div>
+          {/* Carousel Section */}
+          {slides &&
+            homePageSections.find(h => h.name === 'Carousel')?.show && (
+              <CarouselSection
+                slides={slides}
+                slidesResponsiveImages={slidesResponsiveImages}
+              />
+            )}
+          {/* Featured Publication Section */}
+          {featuredPublications &&
+            homePageSections.find(h => h.name === 'Featured Publication')
+              ?.show && (
+              <div className="self-center lg:col-span-2">
+                <FeaturedPublications publications={featuredPublications} />
+              </div>
+            )}
         </div>
       </Section>
-
-      {infocus && (
-        <Section className="infocus-section">
-          <div className="mx-auto max-w-5xl">
-            <Title title={'In Focus'} />
-            <SimpleList heading={null}>
-              {infocus.map(item => {
-                return (
-                  <li className="mb-6 flex w-full flex-col gap-3" key={item.id}>
-                    <Link
-                      className="underline underline-offset-2 hover:underline-offset-4"
-                      target="_blank"
-                      href={`/category/in-focus/${item.slug}`}
-                    >
-                      <h3 className="font-sans text-lg font-semibold text-secondary-foreground hover:text-secondary-foreground/80">
-                        {item.title}
-                      </h3>
-                    </Link>
-                    <p className="text-sm text-muted-foreground">
-                      {item.excerpt}
-                    </p>
-                  </li>
-                );
-              })}
-            </SimpleList>
-            <ExploreButton text="More In Focus" link={'/category/in-focus'} />
-          </div>
-        </Section>
+      {/* Infocus Section */}
+      {infocus && homePageSections.find(h => h.name === 'Infocus')?.show && (
+        <InfocusSection infocus={infocus} />
       )}
       {/* Add publication section here  */}
-      <Section className="publications-section">
-        <div className="mx-auto max-w-5xl">
-          <Title title={'Latest in Pubications'} />
-          <MultiPostsCarousel
-            link={'/category/publications'}
-            text={'More in publications'}
-            data={publications}
-          />
-          <ExploreButton
-            className="mt-8"
-            text="More In Publications"
-            link={'/category/publications'}
-          />
-        </div>
-      </Section>
-
-      <Section>
-        <div className="mx-auto max-w-5xl">
-          <Title title={'Policy Outreach'} />
-          <FeaturedEventsSection events={events} />
-          <ExploreButton
-            text="More in featured events"
-            link={'/category/featured-events'}
-          />
-        </div>
-      </Section>
-
+      {publications &&
+        homePageSections.find(h => h.name === 'Latest Publications')?.show && (
+          <LatestPublicationSection publications={publications} />
+        )}
+      {/* Events Section */}
+      {events &&
+        homePageSections.find(h => h.name === 'Policy Outreach')?.show && (
+          <PolicyOutreachSection events={events} />
+        )}
       {features && (
         <section className="reform-section dark:bg-gray-900">
           <div className="relative mx-auto px-4 py-16 sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-xl lg:px-8 lg:py-20">
@@ -161,110 +122,35 @@ const Home = ({
           </div>
         </section>
       )}
-
       <Section className="outreach-section">
         <div className="mx-auto max-w-5xl">
-          <Title title={'Media and Newsletters'} />
+          <Title
+            title={
+              sawteeInMedia && newsletters
+                ? 'Media and Newsletters'
+                : sawteeInMedia && !newsletters
+                  ? 'Media'
+                  : 'Newsletters'
+            }
+          />
           <div className="grid gap-10 lg:grid-cols-6">
-            <div className="w-full md:col-span-3">
-              <SimpleList heading={'sawtee in media'}>
-                {sawteeInMedia.map(item => {
-                  const hasContent = item.content !== null || '';
-                  const file = item.media?.filter(
-                    media => media.collection_name === 'post-files'
-                  )[0];
+            {homePageSections.find(h => h.name === 'Sawtee in Media')?.show && (
+              <MediaSesction sawteeInMedia={sawteeInMedia} />
+            )}
 
-                  return (
-                    <li className="group mb-4" key={item.id}>
-                      <div>
-                        {file && !hasContent && (
-                          <a
-                            href={file?.original_url}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="md:text-md text-sm leading-5 text-secondary-foreground underline underline-offset-2 group-hover:text-primary/80 group-hover:underline-offset-4 dark:group-hover:text-secondary-foreground/80 lg:text-lg"
-                          >
-                            {item.title}
-                          </a>
-                        )}
-                        {hasContent && (
-                          <Link
-                            href={`/category/${item.category.slug}/${item.slug}`}
-                            className="md:text-md text-sm leading-5 text-secondary-foreground underline underline-offset-2 group-hover:text-primary/80 group-hover:underline-offset-4 dark:group-hover:text-secondary-foreground/80 lg:text-lg"
-                          >
-                            {item.title}
-                          </Link>
-                        )}
-                        <p className="mt-2 text-xs text-muted-foreground">
-                          {formatDate(item.published_at)}
-                        </p>
-                      </div>
-                    </li>
-                  );
-                })}
-              </SimpleList>
-              <ExploreButton
-                size={['xs', 'sm']}
-                text="More in sawtee in media "
-                link={'/category/sawtee-in-media'}
-              />
-            </div>
-
-            <div className="md:col-span-3">
-              <SimpleList
-                heading={'SAWTEE e-newsletters'}
-                className={'relative flex w-full flex-col'}
-              >
-                {newsletters.map(item => {
-                  const file = item.media.filter(
-                    m => m.collection_name === 'post-files'
-                  )[0];
-                  return (
-                    <li key={item.id}>
-                      <ListItem>
-                        <a
-                          className="md:text-md font-sans text-sm leading-5 text-secondary-foreground underline underline-offset-2 group-hover:text-primary/80 group-hover:underline-offset-4 dark:group-hover:text-secondary-foreground/80 lg:text-lg"
-                          href={file?.original_url}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          {item.title}
-                        </a>
-                      </ListItem>
-                    </li>
-                  );
-                })}
-              </SimpleList>
-
-              <ExploreButton
-                size="sm"
-                text="More newsletters"
-                link={'/category/newsletters'}
-              />
-            </div>
+            {homePageSections.find(h => h.name === 'Newsletter')?.show && (
+              <NewsletterSection newsletters={newsletters} />
+            )}
           </div>
         </div>
       </Section>
-
-      <Section className="section videos-section">
-        <div className="mx-auto max-w-5xl">
-          <Title title={'Webinar Series'} />
-          <VideoCarousel posts={webinars} />
-          <ExploreButton
-            className="mt-8"
-            text="More In Webinar Series"
-            link={'/category/webinar-series'}
-          />
-        </div>
-      </Section>
-
-      <Section
-        py={{ base: '6', md: '12', lg: '16' }}
-        px={{ base: '10', md: '16', lg: '20' }}
-        className="subscribe-section"
-      >
-        <NewsletterCallout />
-      </Section>
+      {homePageSections.find(h => h.name === 'Webinar')?.show && (
+        <WebinarSection webinars={webinars} />
+      )}
+      ·
+      {homePageSections.find(h => h.name === 'Newsletter Callout')?.show && (
+        <NewsletterCalloutSection />
+      )}
     </MainLayout>
   );
 };
@@ -383,6 +269,194 @@ const FeaturedEventsSection = ({ events }) => {
   );
 };
 
-
-
 export default Home;
+
+export const CarouselSection = ({ slides, slidesResponsiveImages }) => {
+  return (
+    <div className="place-self-center overflow-hidden rounded-xl shadow-xl lg:col-span-4 lg:rounded-[0_1rem_1rem_0]">
+      <div className="mx-auto w-full max-w-5xl">
+        <FullWidthCarousel
+          slides={slides}
+          responsiveImages={slidesResponsiveImages}
+        />
+      </div>
+    </div>
+  );
+};
+
+export const InfocusSection = ({ infocus }) => {
+  return (
+    <Section className="infocus-section">
+      <div className="mx-auto max-w-5xl">
+        <Title title={'In Focus'} />
+        <SimpleList heading={null}>
+          {infocus.map(item => {
+            return (
+              <li className="mb-6 flex w-full flex-col gap-3" key={item.id}>
+                <Link
+                  className="underline underline-offset-2 hover:underline-offset-4"
+                  target="_blank"
+                  href={`/category/in-focus/${item.slug}`}
+                >
+                  <h3 className="font-sans text-lg font-semibold text-secondary-foreground hover:text-secondary-foreground/80">
+                    {item.title}
+                  </h3>
+                </Link>
+                <p className="text-sm text-muted-foreground">{item.excerpt}</p>
+              </li>
+            );
+          })}
+        </SimpleList>
+        <ExploreButton text="More In Focus" link={'/category/in-focus'} />
+      </div>
+    </Section>
+  );
+};
+
+export const LatestPublicationSection = ({ publications }) => {
+  return (
+    <Section className="publications-section">
+      <div className="mx-auto max-w-5xl">
+        <Title title={'Latest in Pubications'} />
+        <MultiPostsCarousel
+          link={'/category/publications'}
+          text={'More in publications'}
+          data={publications}
+        />
+        <ExploreButton
+          className="mt-8"
+          text="More In Publications"
+          link={'/category/publications'}
+        />
+      </div>
+    </Section>
+  );
+};
+
+export const PolicyOutreachSection = ({ events }) => {
+  return (
+    <Section>
+      <div className="mx-auto max-w-5xl">
+        <Title title={'Policy Outreach'} />
+        <FeaturedEventsSection events={events} />
+        <ExploreButton
+          text="More in featured events"
+          link={'/category/featured-events'}
+        />
+      </div>
+    </Section>
+  );
+};
+
+export const MediaSesction = ({ sawteeInMedia }) => {
+  return (
+    <div className="w-full md:col-span-3">
+      <SimpleList heading={'sawtee in media'}>
+        {sawteeInMedia.map(item => {
+          const hasContent = item.content !== null || '';
+          const file = item.media?.filter(
+            media => media.collection_name === 'post-files'
+          )[0];
+
+          return (
+            <li className="group mb-4" key={item.id}>
+              <div>
+                {file && !hasContent && (
+                  <a
+                    href={file?.original_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="md:text-md text-sm leading-5 text-secondary-foreground underline underline-offset-2 group-hover:text-primary/80 group-hover:underline-offset-4 dark:group-hover:text-secondary-foreground/80 lg:text-lg"
+                  >
+                    {item.title}
+                  </a>
+                )}
+                {hasContent && (
+                  <Link
+                    href={`/category/${item.category.slug}/${item.slug}`}
+                    className="md:text-md text-sm leading-5 text-secondary-foreground underline underline-offset-2 group-hover:text-primary/80 group-hover:underline-offset-4 dark:group-hover:text-secondary-foreground/80 lg:text-lg"
+                  >
+                    {item.title}
+                  </Link>
+                )}
+                <p className="mt-2 text-xs text-muted-foreground">
+                  {formatDate(item.published_at)}
+                </p>
+              </div>
+            </li>
+          );
+        })}
+      </SimpleList>
+      <ExploreButton
+        size={['xs', 'sm']}
+        text="More in sawtee in media "
+        link={'/category/sawtee-in-media'}
+      />
+    </div>
+  );
+};
+
+export const NewsletterSection = ({ newsletters }) => {
+  return (
+    <div className="md:col-span-3">
+      <SimpleList
+        heading={'SAWTEE e-newsletters'}
+        className={'relative flex w-full flex-col'}
+      >
+        {newsletters.map(item => {
+          const file = item.media.filter(
+            m => m.collection_name === 'post-files'
+          )[0];
+          return (
+            <li key={item.id}>
+              <ListItem>
+                <a
+                  className="md:text-md font-sans text-sm leading-5 text-secondary-foreground underline underline-offset-2 group-hover:text-primary/80 group-hover:underline-offset-4 dark:group-hover:text-secondary-foreground/80 lg:text-lg"
+                  href={file?.original_url}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {item.title}
+                </a>
+              </ListItem>
+            </li>
+          );
+        })}
+      </SimpleList>
+
+      <ExploreButton
+        size="sm"
+        text="More newsletters"
+        link={'/category/newsletters'}
+      />
+    </div>
+  );
+};
+
+export const WebinarSection = ({ webinars }) => {
+  return (
+    <Section className="section videos-section">
+      <div className="mx-auto max-w-5xl">
+        <Title title={'Webinar Series'} />
+        <VideoCarousel posts={webinars} />
+        <ExploreButton
+          className="mt-8"
+          text="More In Webinar Series"
+          link={'/category/webinar-series'}
+        />
+      </div>
+    </Section>
+  );
+};
+
+export const NewsletterCalloutSection = () => {
+  return (
+    <Section
+      py={{ base: '6', md: '12', lg: '16' }}
+      px={{ base: '10', md: '16', lg: '20' }}
+      className="subscribe-section"
+    >
+      <NewsletterCallout />
+    </Section>
+  );
+};
