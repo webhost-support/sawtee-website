@@ -7,21 +7,40 @@ import {
     AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Fragment } from 'react';
+import { mediaFellowshipData } from '@/lib/data';
 
-export default function MediaFellows({ content, pageData }) {
+export default function MediaFellows() {
+  const sortByYear = mediaFellowshipData.sort(
+    (a, b) => Number(b.year) - Number(a.year)
+  );
+
   return (
     <div className="mx-auto max-w-2xl px-8 py-20 md:px-0">
-      <div
-        className="text-lg text-slate-800 dark:text-slate-300"
-        dangerouslySetInnerHTML={{ __html: content }}
-      />
       <Glassbox className="mt-8 px-6 text-slate-800">
-        {pageData?.map(mediaFellow => {
+        {sortByYear?.map(({ year, description, fellows }, i) => {
           return (
-            <Fragment key={mediaFellow.id}>
-              <Fellows mediaFellow={mediaFellow} />
-            </Fragment>
+            <Accordion
+              type="single"
+              collapsible
+              defaultValue={year}
+              className="w-full"
+            >
+              <AccordionItem value={year}>
+                <AccordionTrigger className="text-xl font-bold">
+                  {'SAWTEE Media Fellowship ' + year}
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div
+                    className="text-lg text-slate-800 dark:text-slate-300"
+                    dangerouslySetInnerHTML={{ __html: description }}
+                  />
+
+                  {fellows.map(fellow => {
+                    return <Fellow mediaFellow={fellow} />;
+                  })}
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           );
         })}
       </Glassbox>
@@ -29,7 +48,7 @@ export default function MediaFellows({ content, pageData }) {
   );
 }
 
-export const Fellows = ({ mediaFellow }) => {
+export const Fellow = ({ mediaFellow }) => {
   const { id, name, avatar, designation, bio, published_stories, experience } =
     mediaFellow;
 
@@ -37,7 +56,7 @@ export const Fellows = ({ mediaFellow }) => {
     <div className="my-10" id={id} my={10}>
       <div className="flex items-center">
         <Avatar>
-          <AvatarImage src={avatar} alt="@shadcn" />
+          <AvatarImage src={avatar} alt={name} />
           <AvatarFallback>
             {name.split(' ')[0][0]}
             {name.split(' ')[1][0]}

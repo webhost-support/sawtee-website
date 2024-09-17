@@ -65,7 +65,7 @@ const PageContent = ({ page, sections, themes }) => {
       return <Contact content={content} pageData={pageData} />;
 
     case 'MediaFellows':
-      return <MediaFellows content={content} pageData={pageData} />;
+      return <MediaFellows />;
 
     case 'ReformMonitor':
       return <ReformMonitor content={content} />;

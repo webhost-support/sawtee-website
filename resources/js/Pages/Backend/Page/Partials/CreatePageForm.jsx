@@ -200,7 +200,10 @@ export default function CreatePageForm() {
           <ContentEditor
             name="content"
             id="content"
-            onChange={(evt, editor) => setData('content', editor.getContent())}
+            onChange={(evt, editor) => {
+              console.log(editor.getContent());
+              setData('content', editor.getContent());
+            }}
           />
 
           {errors.content && (

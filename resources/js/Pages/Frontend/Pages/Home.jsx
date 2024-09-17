@@ -43,7 +43,7 @@ const Home = ({
       image_src: '/assets/Media-Fellowship-banner.webp',
       link: '/media-fellows',
       description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id est feugiat, venenatis eros at, vestibulum arcu. Donec efficitur efficitur nisi, nec faucibus purus. Vivamus bibendum leo ac justo pellentesque accumsan. Ut cursus nisl nulla, ut hendrerit .',
+        'SAWTEE is delighted to announce an exciting fellowship opportunity for journalists in Nepal. This fellowship presents a unique opportunity for journalists to deepen their knowledge, expand their network, and contribute to the public’s understanding of critical issues at the intersection of trade and climate change.',
     },
     {
       id: '3',
@@ -60,7 +60,7 @@ const Home = ({
       image_src: '/assets/advancing-ldc_upscaled.webp',
       link: '/advancing-ldcs’-interests-in-the-wto-strengthening-participation,-securing-priorities',
       description:
-        'Donec ipsum augue, condimentum pulvinar consequat et, rhoncus sit amet ipsum. Nullam id ante dictum sapien condimentum venenatis nec eget lorem. Etiam ac cursus ipsum, eget auctor velit. Morbi non enim non nunc dignissim rutrum. Vestibulum eu enim eget.',
+        'This project seeks to undertake a range of activities towards strengthened participation of the LDCs in the WTO by addressing their felt-demands by pursuing a multi-pronged implementation strategy in view of the proposed project. ',
     },
   ];
 
@@ -70,7 +70,6 @@ const Home = ({
 
   return (
     <MainLayout>
-      {console.log(FeaturedPublicationSectionIsVisible)}
       <WebsiteHead
         title={'Home'}
         description="Explore South Asia's dynamic journey since the 1980s, navigating global integration and economic challenges."
@@ -151,7 +150,6 @@ const Home = ({
       {homePageSections?.find(h => h.name === 'Webinar')?.show && (
         <WebinarSection webinars={webinars} />
       )}
-      ·
       {homePageSections?.find(h => h.name === 'Newsletter Callout')?.show && (
         <NewsletterCalloutSection />
       )}

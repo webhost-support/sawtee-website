@@ -24,9 +24,9 @@ export default function OurWork({ themes, sections, content }) {
 
       {intro && (
         <div className="relative mx-auto mb-24 flex max-w-4xl flex-col items-center justify-center gap-8">
-          <figure class="mx-auto max-w-screen-md text-center">
+          <figure className="mx-auto max-w-screen-md text-center">
             <svg
-              class="mx-auto mb-3 h-10 w-10 text-gray-400 dark:text-gray-600"
+              className="mx-auto mb-3 h-10 w-10 text-gray-400 dark:text-gray-600"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="currentColor"
@@ -35,7 +35,7 @@ export default function OurWork({ themes, sections, content }) {
               <path d="M6 0H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3H2a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Zm10 0h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3h-1a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Z" />
             </svg>
             <blockquote>
-              <p class="text-2xl font-medium italic text-gray-900 dark:text-white">
+              <p className="text-2xl font-medium italic text-gray-900 dark:text-white">
                 {htmlToText(intro.description)}
               </p>
             </blockquote>
@@ -43,7 +43,7 @@ export default function OurWork({ themes, sections, content }) {
         </div>
       )}
 
-      <div class="mx-auto mb-10 grid max-w-5xl grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-6">
+      <div className="mx-auto mb-10 grid max-w-5xl grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-6">
         {Themes?.map((theme, index) => {
           const colSpan = index <= 1 || index === Themes.length - 2 ? 3 : 2;
 
@@ -56,17 +56,17 @@ export default function OurWork({ themes, sections, content }) {
               )}
               id={`theme${theme.id}`}
             >
-              <div class="relative h-full">
-                <span class="absolute left-0 top-0 ml-1 mt-1 h-full w-full rounded-lg bg-sky-500" />
+              <div className="relative h-full">
+                <span className="absolute left-0 top-0 ml-1 mt-1 h-full w-full rounded-lg bg-theme-500" />
 
-                <div class="relative h-full space-y-2 rounded-lg border-2 border-sky-500 bg-bgDarker p-5">
-                  <div class="-mt-1 flex items-center">
-                    <h3 class="my-2 text-xl font-bold text-slate-800 dark:text-slate-300">
+                <div className="relative h-full space-y-2 rounded-lg border-2 border-theme-500 bg-bgDarker p-5">
+                  <div className="-mt-1 flex items-center">
+                    <h3 className="my-2 text-xl font-bold text-slate-800 dark:text-slate-300">
                       {theme.title}
                     </h3>
                   </div>
 
-                  <p class="mb-2 text-slate-700 dark:text-slate-400">
+                  <p className="mb-2 text-slate-700 dark:text-slate-400">
                     {theme.description}
                   </p>
                 </div>
@@ -77,6 +77,7 @@ export default function OurWork({ themes, sections, content }) {
       </div>
       <div className="page_content mx-auto grid max-w-5xl items-center gap-8 px-8 py-12 md:grid-cols-2 md:px-4">
         {sectors?.map(({ id, title, description, media, link }) => {
+          console.log(media);
           return (
             <CardWithEffect key={id} className="cards max-w-lg p-0">
               <img
@@ -90,14 +91,14 @@ export default function OurWork({ themes, sections, content }) {
               />
               <Link
                 href={`/category/${link}`}
-                className="group absolute inset-0 flex h-full w-full flex-col items-center justify-between bg-bgDarker bg-blend-lighten"
+                className="group absolute inset-0 flex h-full w-full flex-col items-center justify-between"
               >
-                <h2 className="title w-full self-start py-6 text-center text-lg group-hover:bg-sky-500 dark:text-zinc-300 md:text-2xl">
+                <h2 className="title group-hover:bg-theme-500/70text-zinc-300 w-full self-start py-6 text-center text-lg md:text-2xl">
                   {title}
                 </h2>
-                <p className="flex h-full w-full grow items-center justify-center px-6 dark:text-gray-200">
-                  {description || 'Random text to check the positioning'}
-                </p>
+                {/* <p className="flex w-full items-center justify-center bg-[rgba(0,0,0,0.5)] px-6 py-2 text-gray-200">
+                  {description ?? 'Random text to check the positioning'}
+                </p> */}
               </Link>
             </CardWithEffect>
           );

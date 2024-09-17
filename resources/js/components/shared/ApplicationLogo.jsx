@@ -6,7 +6,7 @@ export default function ApplicationLogo(props) {
       viewBox="0 0 256 255"
       // width="256" height="255"
       fill="currentColor"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
       xmlns="http://www.w3.org/2000/svg"
     >
       <title>Application Logo</title>

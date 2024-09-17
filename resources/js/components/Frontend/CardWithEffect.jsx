@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 
-const CardWithEffect = ({ children }) => {
+const CardWithEffect = ({ children, className }) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
 
@@ -14,7 +14,7 @@ const CardWithEffect = ({ children }) => {
     <div
       className={cn(
         'relative flex-1 cursor-pointer overflow-hidden rounded-xl border bg-bgDarker p-4 dark:border-[#33313d]',
-        cn
+        className
       )}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
