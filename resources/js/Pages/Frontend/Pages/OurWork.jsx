@@ -77,7 +77,6 @@ export default function OurWork({ themes, sections, content }) {
       </div>
       <div className="page_content mx-auto grid max-w-5xl items-center gap-8 px-8 py-12 md:grid-cols-2 md:px-4">
         {sectors?.map(({ id, title, description, media, link }) => {
-          console.log(media);
           return (
             <CardWithEffect key={id} className="cards max-w-lg p-0">
               <img

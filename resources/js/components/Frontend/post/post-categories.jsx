@@ -22,11 +22,11 @@ export const PostCategories = ({ category, className = '', ...props }) => {
       )}
       {...props}
     >
-      {ParentCategory && (
+      {/* {ParentCategory && (
         <Link href={`/category/${ParentCategory.slug}`}>
           <PostCategory>{ParentCategory.name}</PostCategory>
         </Link>
-      )}
+      )} */}
 
       <Link
         href={

@@ -52,7 +52,7 @@ export default function EditPostForm({
     slug: postData.slug,
     category_id: postData.category_id,
     theme_id: postData.theme_id,
-    content: postData.content ? postData.content : ' ',
+    content: postData.content,
     excerpt: postData.excerpt,
     status: postData.status,
     author: postData.author,
@@ -97,16 +97,16 @@ export default function EditPostForm({
 
   function setDataImage(image) {
     if (image) {
-        const reader = new FileReader();
-        reader.onload = e => {
-          setImage(e.target.result);
-        };
-        reader.readAsDataURL(image);
-        setData('image', image);
-      } else {
-        setImage(null);
-        setData('image', null);
-      }
+      const reader = new FileReader();
+      reader.onload = e => {
+        setImage(e.target.result);
+      };
+      reader.readAsDataURL(image);
+      setData('image', image);
+    } else {
+      setImage(null);
+      setData('image', null);
+    }
   }
 
   const submit = e => {
@@ -124,14 +124,13 @@ export default function EditPostForm({
             description: 'Post edited Successfully',
           }),
         onError: errors => {
-            for (const [key, value] of Object.entries(errors)) {
-              reset(key);
-              return toast({
-                title: 'Uh oh, Something went wrong',
-                description: `${key.toUpperCase()} field error` + `: ${value}`,
-              });
-            }
-
+          for (const [key, value] of Object.entries(errors)) {
+            reset(key);
+            return toast({
+              title: 'Uh oh, Something went wrong',
+              description: `${key.toUpperCase()} field error` + `: ${value}`,
+            });
+          }
         },
       }
     );
@@ -185,11 +184,11 @@ export default function EditPostForm({
             <ContentEditor
               // type="classic"
               name="content"
-              initialValue=""
+              initialValue={data.content}
               id="content"
-              onChange={(evt, editor) =>
-                setData('content', editor.getContent())
-              }
+              onChange={(evt, editor) => {
+                setData('content', editor.getContent());
+              }}
             />
 
             {errors.content && (

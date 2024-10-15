@@ -97,6 +97,7 @@ class PageController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'content' => 'nullable|string',
             // 'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048','meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string|max:255',
             'page_template' => 'nullable|string|max:255',
@@ -105,6 +106,7 @@ class PageController extends Controller
         if (!$request->meta_title) {
             $validated["meta_title"] = $validated['name'];
         }
+
         if ($request->image) {
             $page->addMediaFromRequest('image')->toMediaCollection('page-media');
         }

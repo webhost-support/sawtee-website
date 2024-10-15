@@ -232,9 +232,8 @@ export default function EditPageForm({ page }) {
           <ContentEditor
             name="content"
             id="content"
-            initialValue={data.content ?? ''}
+            initialValue={data.content}
             onChange={(evt, editor) => {
-              console.log(editor.getContent());
               setData('content', editor.getContent());
             }}
           />

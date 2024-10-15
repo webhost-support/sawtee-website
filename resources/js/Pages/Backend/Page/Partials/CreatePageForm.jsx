@@ -47,7 +47,6 @@ export default function CreatePageForm() {
 
   const submit = e => {
     e.preventDefault();
-    console.log(data);
     post(route('admin.pages.store'), {
       preserveScroll: true,
       onSuccess: () =>
@@ -201,7 +200,6 @@ export default function CreatePageForm() {
             name="content"
             id="content"
             onChange={(evt, editor) => {
-              console.log(editor.getContent());
               setData('content', editor.getContent());
             }}
           />
