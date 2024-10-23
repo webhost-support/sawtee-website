@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import CardWithEffect from '../../../components/Frontend/CardWithEffect';
 
-export default function OurWork({ themes, sections, content }) {
+export default function OurWork({ themes, sections }) {
   const [intro, setIntro] = useState(null);
   const [sectors, setSectors] = useState(null);
 
@@ -95,9 +95,11 @@ export default function OurWork({ themes, sections, content }) {
                 <h2 className="title group-hover:bg-theme-500/70text-zinc-300 w-full self-start py-6 text-center text-lg md:text-2xl">
                   {title}
                 </h2>
-                {/* <p className="flex w-full items-center justify-center bg-[rgba(0,0,0,0.5)] px-6 py-2 text-gray-200">
-                  {description ?? 'Random text to check the positioning'}
-                </p> */}
+                {description && (
+                  <p className="flex w-full items-center justify-center bg-[rgba(0,0,0,0.5)] px-6 py-2 text-gray-200">
+                    {description}
+                  </p>
+                )}
               </Link>
             </CardWithEffect>
           );

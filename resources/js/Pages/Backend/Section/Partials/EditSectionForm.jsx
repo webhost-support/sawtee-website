@@ -23,9 +23,9 @@ export default function EditSectionForm({ sections, section, pages }) {
     title: section.title,
     description: section.description,
     type: section.type,
-    link: section.link || '',
-    parent_id: section.parent_id || '',
-    order: section.order || 0,
+    link: section.link ?? '',
+    parent_id: section.parent_id ?? '',
+    order: section.order ?? 0,
     page_id: section.page_id,
   });
 
@@ -219,7 +219,7 @@ export default function EditSectionForm({ sections, section, pages }) {
                   <SelectGroup>
                     <SelectLabel>Sections</SelectLabel>
                     {sections?.map(item => (
-                      <SelectItem key={item.id} value={item.id.toString()}>
+                      <SelectItem key={item.id} value={item.id}>
                         {item.title}
                       </SelectItem>
                     ))}
