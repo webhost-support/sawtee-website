@@ -69,8 +69,8 @@ class FrontendController extends Controller
             ->limit(6)
             ->get();
 
-        $slider = Slider::where('name', 'Home Page Slider')->firstOrFail();
-        $slides = Slide::where('slider_id', $slider->id)->orderBy('id', 'DESC')->take(5)->get();
+        $slider = Slider::latest()->has('page', 'Home')->first();
+        $slides = $slider ? Slide::where('slider_id', $slider->id)->with('media')->orderBy('id', 'DESC')->take(5)->get() : Array();
         foreach ($slides as $slide) {
             $responsive = $slide->getFirstMedia('slides')?->getSrcSet('responsive');
 
@@ -85,7 +85,7 @@ class FrontendController extends Controller
         $webinars = Category::where('slug', 'webinar-series')->firstOrFail()->posts()->where('status', 'published')->latest()->take(5)->get();
 
         return Inertia::render('Frontend/Pages/Home', [
-            'slides' => $slides->load(['media']),
+            'slides' => $slides,
             'infocus' => $infocus->load(['category']),
             'sawteeInMedia' => $sawteeInMedia->load(['category']),
             'events' => $events->load(['category', 'media', 'tags']),

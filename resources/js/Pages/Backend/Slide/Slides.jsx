@@ -2,12 +2,9 @@ import DataTableActions from '@/components/Backend/DataTableActions';
 import { DataTableColumnHeader } from '@/components/Backend/DatatableColumnHelper';
 import { DataTable } from '@/components/Backend/FrontDataTable';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
-import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { useForm } from '@inertiajs/inertia-react';
-import { PlusIcon } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import CreateSlideForm from './CreateSlideForm';
+import {  useState } from 'react';
 import EditSlideForm from './EditSlideForm';
 
 const Slides = ({ slides, slider }) => {

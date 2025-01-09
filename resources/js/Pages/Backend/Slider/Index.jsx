@@ -1,6 +1,5 @@
 import DataTableActions from '@/components/Backend/DataTableActions';
-import PrimaryButton from '@/components/Backend/PrimaryButton';
-
+import { AlertCircleIcon } from 'lucide-react';
 import { DataTableColumnHeader } from '@/components/Backend/DatatableColumnHelper';
 import { DataTable } from '@/components/Backend/FrontDataTable';
 import AuthenticatedLayout from '@/components/Layouts/AuthenticatedLayout';
@@ -72,8 +71,8 @@ export default function Index({ auth, sliders, pages }) {
     <AuthenticatedLayout user={auth.user}>
       <Head title="Manage Sliders" />
       {sliders.length <= 0 && (
-        <Alert variant="destructive">
-          <AlertIcon />
+        <Alert variant="destructive" className="mb-8">
+          <AlertCircleIcon />
           <AlertTitle>
             <strong>Warning</strong>
           </AlertTitle>

@@ -30,7 +30,7 @@ export const AnimatedSubscribeButton = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <Button className="w-full">
+          <Button className={cn("w-full", className)}>
             <motion.span
               key="action"
               className="relative inline-flex h-full w-full items-center font-semibold"
@@ -52,7 +52,7 @@ export const AnimatedSubscribeButton = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <Button className="w-full">
+          <Button className={cn("w-full", className)}>
             <motion.span
               key="reaction"
               className="relative inline-flex items-center font-semibold"

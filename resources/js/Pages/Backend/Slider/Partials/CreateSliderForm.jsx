@@ -32,6 +32,8 @@ export default function CreateSliderForm({ open, setOpen, pages }) {
   const submit = e => {
     e.preventDefault();
 
+    console.log(data);
+
     post(route('admin.sliders.store'), {
       preserveScroll: true,
       onSuccess: () => {
@@ -74,7 +76,7 @@ export default function CreateSliderForm({ open, setOpen, pages }) {
 
           <div className="w-[280px]">
             <Label htmlFor="pages">Pages</Label>
-            <Select id="pages" name="pages" placeholder="Select pages">
+            <Select id="pages" name="pages" onValueChange={value => setData('page_id', value)} placeholder="Select pages">
               <SelectTrigger>
                 <SelectValue placeholder="Select pages" />
               </SelectTrigger>
