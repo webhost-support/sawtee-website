@@ -84,18 +84,21 @@ const Home = ({
           )}
           id="carousel-section"
         >
-          {/* Carousel Section */}
-          {slides &&
-            homePageSections?.find(h => h.name === 'Carousel')?.show && (
-              <CarouselSection
-                slides={slides}
-                slidesResponsiveImages={slidesResponsiveImages}
-              />
-            )}
+          <div className="place-self-center overflow-hidden rounded-md shadow-xl lg:col-span-4">
+
+            {/* Carousel Section */}
+            {slides &&
+              homePageSections?.find(h => h.name === 'Carousel')?.show ? (
+                <CarouselSection
+                  slides={slides}
+                  slidesResponsiveImages={slidesResponsiveImages}
+                />
+              ) : null}
+            </div>
           {/* Featured Publication Section */}
           {featuredPublications &&
             FeaturedPublicationSectionIsVisible?.show === 1 && (
-              <div className="self-center lg:col-span-2">
+              <div className={slides ? "self-center lg:col-span-2" : "self-end lg:col-span-2"}>
                 <FeaturedPublications publications={featuredPublications} />
               </div>
             )}
@@ -275,12 +278,11 @@ export default Home;
 
 export const CarouselSection = ({ slides, slidesResponsiveImages }) => {
   return (
-    <div className="place-self-center overflow-hidden rounded-md shadow-xl lg:col-span-4">
       <FullWidthCarousel
         slides={slides}
         responsiveImages={slidesResponsiveImages}
       />
-    </div>
+
   );
 };
 
