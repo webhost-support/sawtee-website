@@ -56,7 +56,7 @@ const Home = ({
 
     {
       id: '4',
-      title: "Advancing LDC's Trade Interests",
+      title: "Advancing LDC's Trade Interest",
       image_src: '/assets/advancing-ldc_upscaled.webp',
       link: '/advancing-ldcs’-interests-in-the-wto-strengthening-participation,-securing-priorities',
       description:
