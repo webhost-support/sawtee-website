@@ -75,7 +75,7 @@ const Home = ({
         description="Explore South Asia's dynamic journey since the 1980s, navigating global integration and economic challenges."
         image={'/assets/logo-sawtee.webp'}
       />
-      <Section py={4} className="carousel-section px-6 lg:py-4">
+      <Section py={4} className="px-6 carousel-section lg:py-4">
         <div
           className={cn(
             'grid grid-cols-1 gap-10',
@@ -84,21 +84,26 @@ const Home = ({
           )}
           id="carousel-section"
         >
-          <div className="place-self-center overflow-hidden rounded-md shadow-xl lg:col-span-4">
-
+          <div className="overflow-hidden rounded-md shadow-xl place-self-center lg:col-span-4">
             {/* Carousel Section */}
             {slides &&
-              homePageSections?.find(h => h.name === 'Carousel')?.show ? (
-                <CarouselSection
-                  slides={slides}
-                  slidesResponsiveImages={slidesResponsiveImages}
-                />
-              ) : null}
-            </div>
+            homePageSections?.find(h => h.name === 'Carousel')?.show ? (
+              <CarouselSection
+                slides={slides}
+                slidesResponsiveImages={slidesResponsiveImages}
+              />
+            ) : null}
+          </div>
           {/* Featured Publication Section */}
           {featuredPublications &&
             FeaturedPublicationSectionIsVisible?.show === 1 && (
-              <div className={slides ? "self-center lg:col-span-2" : "self-end lg:col-span-2"}>
+              <div
+                className={
+                  slides
+                    ? 'self-center lg:col-span-2'
+                    : 'self-end lg:col-span-2'
+                }
+              >
                 <FeaturedPublications publications={featuredPublications} />
               </div>
             )}
@@ -120,17 +125,17 @@ const Home = ({
         )}
       {features && (
         <section className="reform-section dark:bg-gray-900">
-          <div className="relative mx-auto px-4 py-16 sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-xl lg:px-8 lg:py-20">
+          <div className="relative px-4 py-16 mx-auto sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-xl lg:px-8 lg:py-20">
             <SvgBackground svgStyles={'dark:text-gray-800'} />
-            <Particles className="pointer-events-none absolute inset-0" />
-            <div className="max-w-9xl relative mx-auto">
+            <Particles className="absolute inset-0 pointer-events-none" />
+            <div className="relative mx-auto max-w-9xl">
               <FeaturedSection features={features} />
             </div>
           </div>
         </section>
       )}
       <Section className="outreach-section">
-        <div className="mx-auto max-w-5xl">
+        <div className="max-w-5xl mx-auto">
           <Title
             title={
               sawteeInMedia && newsletters
@@ -191,15 +196,15 @@ const Title = ({ title }) => {
 
 const FeaturedEventsSection = ({ events }) => {
   return (
-    <div className="mb-4 grid grid-cols-1 place-items-start gap-5 md:grid-cols-12">
+    <div className="grid grid-cols-1 gap-5 mb-4 place-items-start md:grid-cols-12">
       <div className="group md:col-span-5">
         <Link href={`/category/featured-events/${events[0].slug}`}>
           <div
-            className="relative overflow-hidden rounded-md text-center"
+            className="relative overflow-hidden text-center rounded-md"
             title={events[0].title}
           >
             <div className="ease absolute inset-0 top-0 z-10 hidden h-[5px] w-full bg-sky-500/80 transition-all duration-200 group-hover:block" />
-            <div className="ease absolute inset-0 z-20 h-full w-full bg-black/20 transition-all duration-200 group-hover:bg-transparent" />
+            <div className="absolute inset-0 z-20 w-full h-full transition-all duration-200 ease bg-black/20 group-hover:bg-transparent" />
             <img
               src={
                 events[0].media.filter(
@@ -208,21 +213,21 @@ const FeaturedEventsSection = ({ events }) => {
               }
               alt="event cover"
               loading="lazy"
-              className="aspect-video w-full object-cover grayscale transition-all duration-500 ease-linear group-hover:grayscale-0"
+              className="object-cover w-full transition-all duration-500 ease-linear aspect-video"
             />
           </div>
         </Link>
-        <div className="mt-3 flex flex-col justify-between rounded-b leading-normal lg:rounded-b-none lg:rounded-r">
+        <div className="flex flex-col justify-between mt-3 leading-normal rounded-b lg:rounded-b-none lg:rounded-r">
           <div className="">
             <Link
               href={`/category/featured-events/${events[0].slug}`}
-              className="text-xs font-medium uppercase text-sky-500 transition duration-500 ease-in-out hover:text-sky-600"
+              className="text-xs font-medium uppercase transition duration-500 ease-in-out text-sky-500 hover:text-sky-600"
             >
               {events[0].category.name}
             </Link>
             <Link
               href={`/category/featured-events/${events[0].slug}`}
-              className="mb-2 block text-2xl font-bold leading-6 tracking-wide text-secondary-foreground transition duration-500 ease-in-out group-hover:text-sky-500/80 lg:text-3xl"
+              className="block mb-2 text-2xl font-bold leading-6 tracking-wide transition duration-500 ease-in-out text-secondary-foreground group-hover:text-sky-500/80 lg:text-3xl"
             >
               {events[0].title}
             </Link>
@@ -246,22 +251,22 @@ const FeaturedEventsSection = ({ events }) => {
               <div className="group" key={event.id}>
                 <Link href={`/category/featured-events/${event.slug}`}>
                   <div
-                    className="relative max-h-40 overflow-hidden rounded-md text-center"
+                    className="relative overflow-hidden text-center rounded-md max-h-40"
                     title={event.title}
                   >
                     <img
                       src={featured_image}
                       alt="event cover"
                       loading="lazy"
-                      className="aspect-square h-full w-full object-cover grayscale transition-all duration-500 ease-linear group-hover:grayscale-0"
+                      className="object-cover w-full h-full transition-all duration-500 ease-linear aspect-square"
                     />
-                    <div className="ease absolute inset-0 top-0 z-10 hidden h-1 w-full bg-sky-500/80 transition-all duration-200 group-hover:block" />
-                    <div className="ease absolute inset-0 z-20 h-full w-full bg-black/20 transition-all duration-200 group-hover:bg-transparent" />
+                    <div className="absolute inset-0 top-0 z-10 hidden w-full h-1 transition-all duration-200 ease bg-sky-500/80 group-hover:block" />
+                    <div className="absolute inset-0 z-20 w-full h-full transition-all duration-200 ease bg-black/20 group-hover:bg-transparent" />
                   </div>
                 </Link>
                 <Link
                   href={`/category/featured-events/${event.slug}`}
-                  className="text-md my-2 inline-block font-semibold leading-5 tracking-wide text-secondary-foreground transition duration-500 ease-in-out group-hover:text-sky-500/80"
+                  className="inline-block my-2 font-semibold leading-5 tracking-wide transition duration-500 ease-in-out text-md text-secondary-foreground group-hover:text-sky-500/80"
                 >
                   {event.title}
                 </Link>
@@ -289,12 +294,12 @@ export const CarouselSection = ({ slides, slidesResponsiveImages }) => {
 export const InfocusSection = ({ infocus }) => {
   return (
     <Section className="infocus-section">
-      <div className="mx-auto max-w-5xl">
+      <div className="max-w-5xl mx-auto">
         <Title title={'In Focus'} />
         <SimpleList heading={null}>
           {infocus.map(item => {
             return (
-              <li className="mb-6 flex w-full flex-col gap-3" key={item.id}>
+              <li className="flex flex-col w-full gap-3 mb-6" key={item.id}>
                 <Link
                   className="underline underline-offset-2 hover:underline-offset-4"
                   target="_blank"
@@ -318,7 +323,7 @@ export const InfocusSection = ({ infocus }) => {
 export const LatestPublicationSection = ({ publications }) => {
   return (
     <Section className="publications-section">
-      <div className="mx-auto max-w-5xl">
+      <div className="max-w-5xl mx-auto">
         <Title title={'Latest in Pubications'} />
         <MultiPostsCarousel
           link={'/category/publications'}
@@ -338,7 +343,7 @@ export const LatestPublicationSection = ({ publications }) => {
 export const PolicyOutreachSection = ({ events }) => {
   return (
     <Section>
-      <div className="mx-auto max-w-5xl">
+      <div className="max-w-5xl mx-auto">
         <Title title={'Policy Outreach'} />
         <FeaturedEventsSection events={events} />
         <ExploreButton
@@ -361,14 +366,14 @@ export const MediaSesction = ({ sawteeInMedia }) => {
           )[0];
 
           return (
-            <li className="group mb-4" key={item.id}>
+            <li className="mb-4 group" key={item.id}>
               <div>
                 {file && !hasContent && (
                   <a
                     href={file?.original_url}
                     target="_blank"
                     rel="noreferrer"
-                    className="md:text-md text-sm leading-5 text-secondary-foreground underline underline-offset-2 group-hover:text-primary/80 group-hover:underline-offset-4 dark:group-hover:text-secondary-foreground/80 lg:text-lg"
+                    className="text-sm leading-5 underline md:text-md text-secondary-foreground underline-offset-2 group-hover:text-primary/80 group-hover:underline-offset-4 dark:group-hover:text-secondary-foreground/80 lg:text-lg"
                   >
                     {item.title}
                   </a>
@@ -376,7 +381,7 @@ export const MediaSesction = ({ sawteeInMedia }) => {
                 {hasContent && (
                   <Link
                     href={`/category/${item.category.slug}/${item.slug}`}
-                    className="md:text-md text-sm leading-5 text-secondary-foreground underline underline-offset-2 group-hover:text-primary/80 group-hover:underline-offset-4 dark:group-hover:text-secondary-foreground/80 lg:text-lg"
+                    className="text-sm leading-5 underline md:text-md text-secondary-foreground underline-offset-2 group-hover:text-primary/80 group-hover:underline-offset-4 dark:group-hover:text-secondary-foreground/80 lg:text-lg"
                   >
                     {item.title}
                   </Link>
@@ -413,7 +418,7 @@ export const NewsletterSection = ({ newsletters }) => {
             <li key={item.id}>
               <ListItem>
                 <a
-                  className="md:text-md font-sans text-sm leading-5 text-secondary-foreground underline underline-offset-2 group-hover:text-primary/80 group-hover:underline-offset-4 dark:group-hover:text-secondary-foreground/80 lg:text-lg"
+                  className="font-sans text-sm leading-5 underline md:text-md text-secondary-foreground underline-offset-2 group-hover:text-primary/80 group-hover:underline-offset-4 dark:group-hover:text-secondary-foreground/80 lg:text-lg"
                   href={file?.original_url}
                   target="_blank"
                   rel="noreferrer"
@@ -438,7 +443,7 @@ export const NewsletterSection = ({ newsletters }) => {
 export const WebinarSection = ({ webinars }) => {
   return (
     <Section className="section videos-section">
-      <div className="mx-auto max-w-5xl">
+      <div className="max-w-5xl mx-auto">
         <Title title={'Webinar Series'} />
         <VideoCarousel posts={webinars} />
         <ExploreButton

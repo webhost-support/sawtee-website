@@ -48,16 +48,16 @@ const FullWidthCarousel = ({
           {slides?.map(slide => (
             <CarouselItem
               key={slide.id}
-              className="group relative flex w-full items-center justify-center p-0"
+              className="relative flex items-center justify-center w-full p-0 group"
             >
               <img
                 src={slide.media[0]?.original_url}
                 alt="slide"
                 loading="lazy"
-                className="h-full w-full object-cover grayscale transition-all duration-500 ease-in group-hover:grayscale-0"
+                className="object-cover w-full duration-500 ease-in h-fulltransition-all"
               />
-              <div className="absolute inset-0 flex h-full w-full items-center justify-center bg-black/20">
-                <span className="text-4xl font-semibold leading-5 tracking-normal text-secondary-foreground text-white">
+              <div className="absolute inset-0 flex items-center justify-center w-full h-full bg-black/20">
+                <span className="text-4xl font-semibold leading-5 tracking-normal text-white text-secondary-foreground">
                   {slide.title}
                 </span>
               </div>
@@ -66,7 +66,7 @@ const FullWidthCarousel = ({
         </CarouselContent>
         <CarouselPrevious className="absolute left-4 top-1/2 z-[20] -translate-y-1/2 dark:text-white" />
         <CarouselNext className="absolute right-4 top-1/2 z-[20] -translate-y-1/2 dark:text-white" />
-        <div className="text-md absolute bottom-0 left-0 right-0 py-2 text-center text-white">
+        <div className="absolute bottom-0 left-0 right-0 py-2 text-center text-white text-md">
           {current} of {count}
         </div>
       </Carousel>
