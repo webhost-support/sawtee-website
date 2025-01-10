@@ -69,7 +69,7 @@ class FrontendController extends Controller
             ->limit(6)
             ->get();
 
-        $slider = Slider::where('page_id', Page::where('name', 'home')->first()->id)->latest()->first();
+        $slider = Slider::latest()->first();
         // dd($slider);
         $slides = $slider ? Slide::where('slider_id', $slider->id)->with('media')->orderBy('id', 'DESC')->take(5)->get() : Array();
         foreach ($slides as $slide) {
