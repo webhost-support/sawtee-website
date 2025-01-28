@@ -13,6 +13,7 @@ export default defineConfig({
   ],
   ssr: {
     noExternal: [
+      '@inertiajs/server',
       'lodash',
       'laravel-precognition',
       'laravel-precognition-react',
