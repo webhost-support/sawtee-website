@@ -11,4 +11,12 @@ export default defineConfig({
     }),
     react(),
   ],
+  ssr: {
+    noExternal: [
+      'lodash',
+      'laravel-precognition',
+      'laravel-precognition-react',
+      'laravel-precognition-react-inertia',
+    ],
+  },
 });
