@@ -36,7 +36,7 @@
     "vite": "^4.0.0"
   },
   "volta": {
-    "node": "21.3.0"
+    "node": "18.20.4"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.2",
