@@ -20,7 +20,7 @@ createServer(page =>
       global.route = (name, params, absolute) =>
         route(name, params, absolute, {
           ...page.props.ziggy,
-          location: new URL(page.props.ziggy.location),
+          location: new URL(page.props.ziggy.url),
         });
 
       return <App {...props} />;

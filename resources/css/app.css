@@ -208,10 +208,6 @@ swiper-container {
     backdrop-filter: blur(3px);
 }
 
-.chakra-ui-dark .blockquote {
-    /* background: var(--chakra-colors-blackAlpha-300); */
-}
-
 .blockquote::after {
     content: "";
 }

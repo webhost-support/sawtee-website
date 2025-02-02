@@ -1,4 +1,5 @@
-// import Footer from '@/components/Frontend/footer';
+import { useEffect, useState } from 'react';
+import { ThemeProvider } from '@/components/shared/theme-provider';
 import Footer from '@/components/Frontend/footer/footer';
 import Header from '@/components/Frontend/header/header';
 import { Button } from '@/components/ui/button';
@@ -7,7 +8,8 @@ import { cn } from '@/lib/utils';
 import { usePage } from '@inertiajs/react';
 import { useWindowWidth } from '@react-hook/window-size';
 import { ArrowUpToLineIcon } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { register } from 'swiper/element/bundle';
+
 import MobileMenu from '../Frontend/mobileMenu';
 export default function MainLayout({ children, ...rest }) {
   const [visible, setVisible] = useState(false);
@@ -33,49 +35,52 @@ export default function MainLayout({ children, ...rest }) {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+  register();
 
   return (
-    <main id="main">
-      <Header
-        menu={primaryMenu}
-        mobileMenu={mobileMenu}
-        socialLinks={socialMenu}
-        showMobileMenu={showMobileMenu}
-        setShowMobileMenu={setShowMobileMenu}
-      />
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <main id="main">
+        <Header
+          menu={primaryMenu}
+          mobileMenu={mobileMenu}
+          socialLinks={socialMenu}
+          showMobileMenu={showMobileMenu}
+          setShowMobileMenu={setShowMobileMenu}
+        />
 
-      {mobileWidth && (
-        <div
-          className={cn(
-            'absolute z-30 min-h-screen w-fit transform overflow-y-auto bg-popover text-secondary-foreground transition-all duration-300 ease-in-out',
-            !showMobileMenu ? '-translate-x-full' : 'translate-x-0'
-          )}
-          id="sidebar"
-        >
-          <MobileMenu
-            menu={mobileMenu}
-            socialLinks={socialMenu}
-            showSocialLinks={true}
-          />
-        </div>
-      )}
-      <div className="min-h-screen" {...rest}>
-        {children}
-      </div>
-
-      <Footer menu={footerMenu} socialMenu={socialMenu} />
-
-      <Button
-        className={cn(
-          'group scroll-to-top fixed bottom-20 right-12 z-50 flex w-10 h-10 items-center justify-center rounded-full bg-sky-100 p-2 text-sky-800 backdrop-blur-md transition-all duration-300 ease-in-out hover:bg-sky-200 hover:text-sky-700 focus:bg-sky-200 focus:text-sky-700 dark:bg-sky-200 dark:hover:bg-sky-300',
-          visible ? 'translate-y-0' : 'translate-y-60'
+        {mobileWidth && (
+          <div
+            className={cn(
+              'absolute z-30 min-h-screen w-fit transform overflow-y-auto bg-popover text-secondary-foreground transition-all duration-300 ease-in-out',
+              !showMobileMenu ? '-translate-x-full' : 'translate-x-0'
+            )}
+            id="sidebar"
+          >
+            <MobileMenu
+              menu={mobileMenu}
+              socialLinks={socialMenu}
+              showSocialLinks={true}
+            />
+          </div>
         )}
-        aria-label="scroll to top"
-        onClick={scrollToTop}
-        size="icon"
-      >
-        <ArrowUpToLineIcon className="scroll-icon h-5 w-5" />
-      </Button>
-    </main>
+        <div className="min-h-screen" {...rest}>
+          {children}
+        </div>
+
+        <Footer menu={footerMenu} socialMenu={socialMenu} />
+
+        <Button
+          className={cn(
+            'scroll-to-top group fixed bottom-20 right-12 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-sky-100 p-2 text-sky-800 backdrop-blur-md transition-all duration-300 ease-in-out hover:bg-sky-200 hover:text-sky-700 focus:bg-sky-200 focus:text-sky-700 dark:bg-sky-200 dark:hover:bg-sky-300',
+            visible ? 'translate-y-0' : 'translate-y-60'
+          )}
+          aria-label="scroll to top"
+          onClick={scrollToTop}
+          size="icon"
+        >
+          <ArrowUpToLineIcon className="w-5 h-5 scroll-icon" />
+        </Button>
+      </main>
+    </ThemeProvider>
   );
 }

@@ -1,14 +1,11 @@
-import { ThemeProvider } from '@/components/shared/theme-provider';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
-import { register } from 'swiper/element/bundle';
 import '../css/app.css';
 import '../css/index.css';
 import './bootstrap';
 
 const appName = import.meta.env.VITE_APP_NAME ?? 'SAWTEE';
-register();
 
 createInertiaApp({
   title: title => `${appName} | ${title}`,
@@ -19,11 +16,7 @@ createInertiaApp({
     ),
   setup({ el, App, props }) {
     const root = createRoot(el);
-    root.render(
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <App {...props} />
-      </ThemeProvider>
-    );
+    root.render(<App {...props} />);
   },
   progress: {
     delay: 250,
