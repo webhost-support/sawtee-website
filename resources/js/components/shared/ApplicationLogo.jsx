@@ -2,9 +2,10 @@ export default function ApplicationLogo(props) {
   return (
     <svg
       {...props}
-      xml:space="preserve"
+      xmlSpace="preserve"
       viewBox="0 0 256 255"
-      // width="256" height="255"
+      width="256"
+      height="255"
       fill="currentColor"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       xmlns="http://www.w3.org/2000/svg"
