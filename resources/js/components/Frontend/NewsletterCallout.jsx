@@ -103,8 +103,8 @@ export const SubscribeForm = ({ inputStyles, buttonStyles, ...rest }) => {
 
       <AnimatedSubscribeButton
         className={cn(
-          `w-full bg-sky-800 hover:bg-sky-600 ${processing && 'opacity-50'}`,
-          buttonStyles
+          buttonStyles,
+          `w-full bg-sky-800 hover:bg-sky-600 ${processing && 'opacity-50'} text-white`
         )}
         isSubscribed={subscribed}
         isLoading={processing}

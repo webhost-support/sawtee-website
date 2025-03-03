@@ -22,7 +22,7 @@ const SubscriptionCard = ({
 
       <SubscribeForm
         inputStyles={'border-borderColor dark:border-slate-700'}
-        buttonStyles={'bg-primary dark:text-slate-700 text-white'}
+        // buttonStyles={'bg-primary text-white'}
       />
     </div>
   );
