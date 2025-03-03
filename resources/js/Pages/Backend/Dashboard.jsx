@@ -70,7 +70,7 @@ export default function Dashboard({ auth, posts, publications, researchs }) {
 
 const StatsCard = ({ title, stat, icon }) => {
   return (
-    <div className="shadow-soft-xl relative mb-4 flex min-w-0 flex-col break-words rounded-2xl bg-white bg-clip-border">
+    <div className="shadow-soft-xl relative mb-4 flex min-w-0 flex-col break-words rounded-2xl bg-white bg-clip-border dark:bg-[rgba(255,255,255,0.08)]">
       <div className="flex-auto p-4">
         <div className="-mx-3 flex flex-row">
           <div className="w-2/3 max-w-full flex-none px-3">
@@ -81,9 +81,9 @@ const StatsCard = ({ title, stat, icon }) => {
               <h5 className="mb-0 font-bold">
                 {' '}
                 {stat}{' '}
-                <span className="font-weight-bolder text-sm leading-normal text-lime-500">
+                {/* <span className="text-sm leading-normal font-weight-bolder text-lime-500">
                   +55%
-                </span>
+                </span> */}
               </h5>
             </div>
           </div>
