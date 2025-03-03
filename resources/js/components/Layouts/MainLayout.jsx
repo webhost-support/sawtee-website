@@ -71,14 +71,14 @@ export default function MainLayout({ children, ...rest }) {
 
         <Button
           className={cn(
-            'scroll-to-top group fixed bottom-20 right-12 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-sky-100 p-2 text-sky-800 backdrop-blur-md transition-all duration-300 ease-in-out hover:bg-sky-200 hover:text-sky-700 focus:bg-sky-200 focus:text-sky-700 dark:bg-sky-200 dark:hover:bg-sky-300',
+            'scroll-to-top group fixed bottom-20 right-12 z-50 flex h-10 w-10 items-center justify-center rounded-full p-2 backdrop-blur-md transition-all duration-300 ease-in-out',
             visible ? 'translate-y-0' : 'translate-y-60'
           )}
           aria-label="scroll to top"
           onClick={scrollToTop}
           size="icon"
         >
-          <ArrowUpToLineIcon className="w-5 h-5 scroll-icon" />
+          <ArrowUpToLineIcon className="scroll-icon h-5 w-5" />
         </Button>
       </main>
     </ThemeProvider>
