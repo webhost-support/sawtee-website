@@ -46,7 +46,7 @@ const Pagination = ({
     <div className={cn('flex w-full gap-10', className)}>
       <PaginationButton
         link={prevPage}
-        label="Older posts"
+        label="Newer posts"
         isDisabled={currentPage === 1}
         slot="before"
       >
@@ -54,7 +54,7 @@ const Pagination = ({
       </PaginationButton>
       <PaginationButton
         link={nextPage}
-        label="Newer Posts"
+        label="Older Posts"
         slot="after"
         isDisabled={totalPages === currentPage}
       >
