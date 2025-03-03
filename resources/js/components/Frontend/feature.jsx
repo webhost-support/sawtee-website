@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
 import { ExternalLink } from 'lucide-react';
+import Title from '@/components/Frontend/title';
 
 export default function FeaturedSection({ features }) {
   return features.map((feature, index) => (
@@ -14,11 +15,12 @@ export default function FeaturedSection({ features }) {
           index % 2 === 0 ? 'lg:order-1' : 'order-0'
         )}
       >
-        <h2 className="text-3xl font-semibold text-secondary-foreground">
+        {/* <h2 className="text-3xl font-semibold text-secondary-foreground">
           <span className='after:content:"" after:bg-primary-100 relative z-20 after:absolute after:bottom-1 after:left-0 after:z-[-1] after:h-[30%] after:w-full after:bg-gradient-to-l after:from-theme-50 after:to-theme-300 dark:after:bg-gradient-to-l dark:after:from-theme-300 dark:after:to-theme-500'>
             {feature.title}
           </span>
-        </h2>
+        </h2> */}
+        <Title title={feature.title} underlineStyles={'w-[20%]'} />
 
         <p className="text-md mt-4 text-muted-foreground">
           {feature.description}

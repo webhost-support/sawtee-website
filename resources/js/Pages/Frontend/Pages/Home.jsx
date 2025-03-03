@@ -9,7 +9,7 @@ import SimpleList from '@/components/Frontend/SimpleList';
 import SvgBackground from '@/components/Frontend/SvgBackground';
 import VideoCarousel from '@/components/Frontend/VideoCarousel';
 import FeaturedSection from '@/components/Frontend/feature';
-import { FadeText } from '@/components/shared/FadeText';
+import Title from '@/components/Frontend/title';
 import ListItem from '@/components/shared/ListItem';
 import { formatDate } from '@/lib/helpers';
 import { cn } from '@/lib/utils';
@@ -180,19 +180,19 @@ const Section = ({ children, title = null, className, dark }) => {
   );
 };
 
-const Title = ({ title }) => {
-  return (
-    <div className="mb-12">
-      <FadeText
-        text={title}
-        className="flex items-center text-xl font-bold text-primary md:text-2xl lg:text-3xl xl:text-4xl"
-      >
-        {title}
-      </FadeText>
-      <div className="h-2 w-[8%] bg-gradient-to-l from-theme-50 to-theme-300 dark:bg-gradient-to-l dark:from-theme-300 dark:to-theme-500" />
-    </div>
-  );
-};
+// const Title = ({ title }) => {
+//   return (
+//     <div className="relative mb-12">
+//       <FadeText
+//         text={title}
+//         className="flex items-center text-xl font-bold text-primary md:text-2xl lg:text-3xl xl:text-4xl"
+//       >
+//         {title}
+//       </FadeText>
+//       <div className="h-2 w-[8%] bg-gradient-to-l from-theme-50 to-theme-300 dark:bg-gradient-to-l dark:from-theme-300 dark:to-theme-500" />
+//     </div>
+//   );
+// };
 
 const FeaturedEventsSection = ({ events }) => {
   return (
