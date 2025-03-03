@@ -5,22 +5,20 @@ import { formatDate } from '@/lib/helpers';
 
 import { Link } from '@inertiajs/react';
 
-const DefaultArchive = ({ posts, showFallbackImage, ...rest }) => {
+const DefaultArchive = ({ posts, showFallbackImage = false, ...rest }) => {
   if (!posts || posts.length <= 0) return 'No posts found';
 
   return (
     <div className="grid grid-cols-1 gap-10 p-8 xl:grid-cols-2" {...rest}>
-      {posts.map(
-        post => (
-          <PostPreviewCard key={post.id} post={post} showCategoryTag={true} />
-        )
+      {posts.map(post => (
+        // <PostPreviewCard key={post.id} post={post} showCategoryTag={true} />
 
-        //   <ArchivePost
-        //     key={post.id}
-        //     post={post}
-        //     showFallbackImage={showFallbackImage}
-        //   />
-      )}
+        <ArchivePost
+          key={post.id}
+          post={post}
+          showFallbackImage={showFallbackImage}
+        />
+      ))}
     </div>
   );
 };
@@ -36,8 +34,8 @@ const ArchivePost = ({ post, showFallbackImage }) => {
     media => media.collection_name === 'post-featured-image'
   )[0];
   return (
-    <Glassbox className="flex flex-col justify-between overflow-hidden rounded shadow-lg">
-      <div className="group relative overflow-hidden">
+    <Glassbox className="flex flex-col justify-start overflow-hidden rounded shadow-md">
+      <div className="group relative mb-2 overflow-hidden">
         {showFallbackImage && featured_image && (
           <Link
             href={

@@ -19,9 +19,8 @@ const CovidArchive = ({ posts }) => {
           }
         };
         return (
-          <Card key={post.id} className="relative border-2 border-borderColor">
-            <CardContent className="relative flex h-full w-full flex-col gap-4 space-y-4 p-6">
-              <span class="absolute left-0 top-0 -z-[1] ml-1 mt-1 h-full w-full rounded-xl bg-primary/90" />
+          <Card key={post.id} className="rounded-md bg-bgDarker shadow-md">
+            <CardContent className="flex h-full w-full flex-col gap-4 space-y-4 p-6">
               <div className="flex w-full justify-between">
                 {post.genre && (
                   <Badge className="rounded-md">{post.genre}</Badge>
@@ -43,15 +42,16 @@ const CovidArchive = ({ posts }) => {
               </a>
               <div className="flex flex-wrap items-center gap-x-2">
                 {post.author && (
-                  <div class="flex -space-x-4 transition-all delay-150 duration-300 ease-in hover:space-x-1 rtl:space-x-reverse">
+                  <div class="flex -space-x-4 transition-all duration-300 ease-in hover:space-x-1 rtl:space-x-reverse">
                     <TooltipProvider>
                       {authors().map(author => (
                         <Tooltip key={author}>
                           <TooltipTrigger>
                             <div class="relative inline-flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full border bg-gray-100 shadow-sm dark:bg-gray-600">
                               <span class="font-medium text-gray-600 dark:text-gray-300">
-                                {author.split(' ')[0][0]}
-                                {author.split(' ')[1][0]}
+                                {author.split(' ').map(initial => {
+                                  return initial[0];
+                                })}
                               </span>
                             </div>
                           </TooltipTrigger>
@@ -65,8 +65,6 @@ const CovidArchive = ({ posts }) => {
                 )}
               </div>
             </CardContent>
-            {/* <CardFooter>
-            </CardFooter> */}
           </Card>
         );
       })}
