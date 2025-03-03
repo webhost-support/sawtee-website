@@ -57,7 +57,7 @@ export default function PublicationsArchive({
                 <SidebarWidget
                   array={infocus}
                   title={'Infocus'}
-                  link={'/category/infocus'}
+                  link={'/category/in-focus'}
                 />
               )}
 
