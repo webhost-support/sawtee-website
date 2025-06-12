@@ -15,7 +15,7 @@ export default function Post({
   const isProgramme = category.parent && category.parent.slug === 'programme';
   // const isNewsletter = category.slug === 'newsletters';
   const isWebinarSeries = category.slug === 'webinar-series';
-  const isDefault = !isNewsletter && !isWebinarSeries;
+  const isDefault = !isWebinarSeries;
   const shareUrl = post.category.parent
     ? `https://info.sawtee.org/${post.category.parent.slug}/${post.category.slug}/${post.slug}`
     : `https://info.sawtee.org/${post.category.slug}/${post.slug}`;
