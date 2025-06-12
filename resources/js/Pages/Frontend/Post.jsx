@@ -13,12 +13,12 @@ export default function Post({
 }) {
   const { category, title, content } = post;
   const isProgramme = category.parent && category.parent.slug === 'programme';
-  const isNewsletter = category.slug === 'newsletters';
+  // const isNewsletter = category.slug === 'newsletters';
   const isWebinarSeries = category.slug === 'webinar-series';
   const isDefault = !isNewsletter && !isWebinarSeries;
   const shareUrl = post.category.parent
-    ? `https://ankursingh.com.np/${post.category.parent.slug}/${post.category.slug}/${post.slug}`
-    : `https://ankursingh.com.np/${post.category.slug}/${post.slug}`;
+    ? `https://info.sawtee.org/${post.category.parent.slug}/${post.category.slug}/${post.slug}`
+    : `https://info.sawtee.org/${post.category.slug}/${post.slug}`;
   return (
     <MainLayout>
       <WebsiteHead
@@ -40,10 +40,10 @@ export default function Post({
         featured_image={featured_image}
         srcSet={srcSet}
         isProgramPost={isProgramme}
-        isNewsletter={isNewsletter}
+        // isNewsletter={isNewsletter}
         relatedPosts={relatedPosts}
       >
-        {isNewsletter && <NewsletterPost post={post} />}
+        {/* {isNewsletter && <NewsletterPost post={post} />} */}
         {isWebinarSeries && <WebinarPost post={post} />}
         {isDefault && (
           <>

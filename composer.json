@@ -21,7 +21,7 @@
     "mostafaznv/pdf-optimizer": "^1.1",
     "rahulalam31/laravel-abuse-ip": "^1.4",
     "spatie/laravel-google-fonts": "^1.4",
-    "spatie/laravel-medialibrary": "*",
+    "spatie/laravel-medialibrary": "^10.0.0",
     "spatie/laravel-sluggable": "^3.6",
     "tightenco/ziggy": "^1.0"
   },

@@ -7,7 +7,7 @@ import SidebarWidget from '../Frontend/sidebarWidget';
 const PostLayout = ({
   children,
   relatedPosts,
-  isNewsletter,
+  // isNewsletter,
   post,
   featured_image,
   srcSet,
@@ -19,9 +19,9 @@ const PostLayout = ({
       })
     : null;
 
-  const shareUrl = post.category.parent
-    ? `https://ankursingh.com.np/${post.category.parent.slug}/${post.category.slug}/${post.slug}`
-    : `https://ankursingh.com.np/${post.category.slug}/${post.slug}`;
+  // const shareUrl = post.category.parent
+  //   ? `https://ankursingh.com.np/${post.category.parent.slug}/${post.category.slug}/${post.slug}`
+  //   : `https://ankursingh.com.np/${post.category.slug}/${post.slug}`;
 
   return (
     <div className="relative w-full px-10 py-10 lg:px-20">
@@ -38,44 +38,42 @@ const PostLayout = ({
 
       <div className="w-full">
         {/* Look at the settings to see if we should include the featured image */}
-        {isNewsletter && (
+        {/* {isNewsletter && (
           <div>
             {children}
-            {/* <SocialShare url={shareUrl} /> */}
+
           </div>
-        )}
+        )} */}
 
-        {!isNewsletter && (
-          <div className="post-body mx-auto grid max-w-7xl gap-6 pt-10 leading-8 lg:grid-cols-12">
-            <div className="post-content max-w-[60ch] text-lg lg:col-span-8 lg:ml-14">
-              <PostMeta
-                className="py-2"
-                author={post.author}
-                date={post.published_at}
-                readingTime={readingTime}
-                tags={post.tags}
-              />
-              <div className="post-content prose-base text-lg text-secondary-foreground">
-                {children}
-              </div>
+        <div className="post-body mx-auto grid max-w-7xl gap-6 pt-10 leading-8 lg:grid-cols-12">
+          <div className="post-content max-w-[60ch] text-lg lg:col-span-8 lg:ml-14">
+            <PostMeta
+              className="py-2"
+              author={post.author}
+              date={post.published_at}
+              readingTime={readingTime}
+              tags={post.tags}
+            />
+            <div className="post-content prose-base text-lg text-secondary-foreground">
+              {children}
+            </div>
 
-              {/* <SocialShare
+            {/* <SocialShare
                 url={shareUrl}
                 title={post.title}
                 excerpt={post.excerpt}
               /> */}
 
-              <div className="sharethis-sticky-share-buttons"></div>
-            </div>
-            <aside className="sticky top-32 h-full w-full lg:col-span-4">
-              <SidebarWidget
-                title="Related Posts"
-                array={relatedPosts}
-                link={`/category/${post.category.slug}`}
-              />
-            </aside>
+            <div className="sharethis-sticky-share-buttons"></div>
           </div>
-        )}
+          <aside className="sticky top-32 h-full w-full lg:col-span-4">
+            <SidebarWidget
+              title="Related Posts"
+              array={relatedPosts}
+              link={`/category/${post.category.slug}`}
+            />
+          </aside>
+        </div>
       </div>
     </div>
   );

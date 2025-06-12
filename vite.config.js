@@ -14,4 +14,10 @@ export default defineConfig({
   ssr: {
     noExternal: ['laravel-vite-plugin', '@inertiajs/server'],
   },
+  server: {
+    cors: {
+      origin:
+        /^https?:\/\/(?:(?:[^:]+\.)?localhost|sawtee\.test|127\.0\.0\.1|\[::1\])(?::\d+)?$/,
+    },
+  },
 });

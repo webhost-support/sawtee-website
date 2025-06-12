@@ -54,7 +54,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
     meta_description: '',
   });
   const { toast } = useToast();
-  const [selectedCategory, setSelectedCategory] = React.useState(null);
+  const [selectedCategory, setSelectedCategory] = React.useState("Programme");
   const [tagOptions, setTagOptions] = React.useState([]);
   const [image, setImage] = React.useState(null);
   const [postTags, setPostTags] = React.useState([]);
@@ -264,7 +264,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
               defaultValue={image}
             />
           </div>
-          {selectedCategory === ('Covid' || 'Opinion in Lead' || 'Blog') && (
+          {['Covid' , 'Opinion in Lead' , 'Blog'].includes(selectedCategory) && (
             <div className="mx-2">
               <TooltipProvider>
                 <Label htmlFor="author">
@@ -313,8 +313,7 @@ export default function CreatePostForm({ categories, themes, tags }) {
               )}
             </div>
           )}
-          {selectedCategory ===
-            ('Covid' || 'Opinion in Lead' || 'Webinar Series') && (
+          {['Covid', 'Opinion in Lead', 'Webinar Series'].includes(selectedCategory) && (
             <div className="mx-2">
               <Label htmlFor="link">External Link</Label>
 
