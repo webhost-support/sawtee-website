@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    name: 🎉 Deploy to cPanel via FTP
+    name: 🎉 Deploy to cPanel via SSH
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -108,14 +108,3 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           source: "./*"
           target: ${{ secrets.SSH_TARGET_DIR }}
-          exclude: |
-            **/.git*
-            **/node_modules/**
-            **/vendor/**
-            .env
-            .github/**
-            tests/**
-            README.md
-            composer.lock
-            package-lock.json
-            yarn.lock 
