@@ -7,6 +7,7 @@ on:
 
 jobs:
   deploy:
+    name: 🎉 Deploy to cPanel via FTP
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -98,8 +99,8 @@ jobs:
             npm run build
           fi
 
-      - name: Upload to FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4
+      - name: 📂 Upload files to FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
